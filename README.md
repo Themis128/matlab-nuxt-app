@@ -100,25 +100,19 @@ A comprehensive MATLAB and Nuxt.js project for deep learning experiments, mobile
 
 </div>
 
-### Web Interface - MATLAB Capabilities Checker
-
-<div align="center">
-
-![Web Interface](docs/images/web-interface-screenshot.png)
-*Interactive web interface for checking MATLAB capabilities*
-
-</div>
-
-### MATLAB Capabilities Results
-
-<div align="center">
-
-![Capabilities Results](docs/images/capabilities-results.png)
-*Comprehensive MATLAB capabilities report with toolboxes, GPU info, and system details*
-
-</div>
-
 > **Note:** All visualizations are generated programmatically using `docs/generate_all_visualizations.m`. See [docs/images/IMAGES_GALLERY.md](docs/images/IMAGES_GALLERY.md) for detailed descriptions of each visualization.
+
+### Additional Screenshots (Optional)
+
+The following screenshots can be added to showcase the web interface:
+- **Web Interface Screenshot** (`docs/images/web-interface-screenshot.png`) - Capture the Nuxt.js web interface at `http://localhost:3000`
+- **Capabilities Results** (`docs/images/capabilities-results.png`) - Screenshot of the MATLAB capabilities results page
+
+To add these screenshots:
+1. Start the dev server: `npm run dev`
+2. Open `http://localhost:3000` in your browser
+3. Take screenshots and save them to `docs/images/` directory
+4. They will automatically display in this section
 
 ## 🚀 Features
 
