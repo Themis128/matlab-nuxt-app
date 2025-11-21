@@ -1,6 +1,7 @@
 import { exec } from 'child_process'
 import { promisify } from 'util'
 import { join } from 'path'
+import { readFileSync, writeFileSync, unlinkSync } from 'fs'
 
 const execAsync = promisify(exec)
 
@@ -35,7 +36,7 @@ export default defineEventHandler(async (event): Promise<RamResponse> => {
 
     // Read MATLAB configuration
     const configPath = join(projectRoot, 'matlab.config.json')
-    const config = JSON.parse(require('fs').readFileSync(configPath, 'utf-8'))
+    const config = JSON.parse(readFileSync(configPath, 'utf-8'))
     const matlabPath = config.matlab.installPath
     const matlabExe = join(matlabPath, 'matlab.exe')
 
@@ -54,7 +55,7 @@ exit(0);
 
     // Write temporary script
     const tempScriptPath = join(projectRoot, 'temp_predict_ram.m')
-    require('fs').writeFileSync(tempScriptPath, matlabScript)
+    writeFileSync(tempScriptPath, matlabScript)
 
     // Run MATLAB
     const matlabCommand = `"${matlabExe}" -batch "run('${tempScriptPath.replace(/\\/g, '/')}')"`
@@ -67,7 +68,7 @@ exit(0);
 
     // Clean up temp file
     try {
-      require('fs').unlinkSync(tempScriptPath)
+      unlinkSync(tempScriptPath)
     } catch (e) {
       // Ignore cleanup errors
     }

@@ -69,6 +69,8 @@ layers_ae = [
     transposedConv2dLayer(2, 16, 'Stride', 2, 'Name', 'dec_transconv2')
     reluLayer('Name', 'dec_relu2')
     convolution2dLayer(3, 1, 'Padding', 'same', 'Name', 'dec_conv')
+    % Add regression output layer for autoencoder (reconstruction task)
+    regressionLayer('Name', 'output')
 ];
 
 lgraph_ae = layerGraph(layers_ae);

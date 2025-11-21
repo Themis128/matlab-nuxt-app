@@ -24,7 +24,14 @@
     "readtable",
     "ismember",
     "strcmp",
-    "omitnan"
+    "omitnan",
+    "iscategorical",
+    "cellstr",
+    "istable",
+    "iscell",
+    "isfinite",
+    "isnumeric",
+    "strrep"
   ],
   "ignorePaths": [
     "node_modules/**",

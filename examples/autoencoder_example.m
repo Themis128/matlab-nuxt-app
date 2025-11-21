@@ -30,6 +30,9 @@ decoderLayers = [
 
     convolution2dLayer(3, 1, 'Padding', 'same', 'Name', 'dec_conv')
     % Output should match input size: 28x28x1
+
+    % Add regression output layer for autoencoder (reconstruction task)
+    regressionLayer('Name', 'output')
 ];
 
 % Combine encoder and decoder
