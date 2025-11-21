@@ -19,6 +19,87 @@ A comprehensive MATLAB and Nuxt.js project for deep learning experiments, mobile
 
 ## 📸 Visual Showcase
 
+### Model Performance Comparison
+
+<div align="center">
+
+![Model Comparison](docs/images/model-comparison.png)
+
+**Model Performance Overview** - This comprehensive visualization compares all trained models in the project:
+- **R² Scores:** Regression model performance metrics (higher is better, max 1.0)
+- **Classification Accuracy:** Accuracy scores for classification models
+- **Architecture Complexity:** Number of layers in each model
+- **Model Types Distribution:** Breakdown of regression vs classification models
+
+*Includes: Price Prediction Models (Lightweight, Wide, Deep), Brand Classification, RAM Prediction, and Battery Prediction models*
+
+</div>
+
+### Price Prediction Results
+
+<div align="center">
+
+![Price Prediction](docs/images/price-prediction.png)
+
+**Price Prediction Model Performance** - Visualization showing the price prediction model's performance:
+- **Predicted vs Actual:** Scatter plot comparing predicted prices against actual prices
+- **Residual Analysis:** Distribution of prediction errors
+- **Model Performance Metrics:** R² score, RMSE, and MAE values
+- **Feature Importance:** Which features contribute most to price predictions
+
+*The model demonstrates strong predictive capability with high R² scores and normally distributed residuals, indicating good model fit*
+
+</div>
+
+### Network Architecture Visualization
+
+<div align="center">
+
+![Network Visualization](docs/images/network-visualization.png)
+
+**Deep Learning Network Architectures** - Complete layer-by-layer breakdown of network structures:
+- **Layer Structure:** Complete layer-by-layer breakdown of each network
+- **Connection Patterns:** How data flows through the network
+- **Layer Types:** Fully connected, convolutional, LSTM, and other layer types
+- **Parameter Counts:** Number of trainable parameters in each layer
+
+*Shows: Lightweight regression networks, Wide networks with multiple input branches, Deep networks with multiple hidden layers, and Hybrid networks*
+
+</div>
+
+### Training Progress
+
+<div align="center">
+
+![Training Progress](docs/images/training-progress.png)
+
+**Training Process Tracking** - Plots tracking the training process of deep learning models:
+- **Loss Curves:** Training and validation loss over epochs
+- **Accuracy Curves:** Classification accuracy improvement over time
+- **Learning Rate Schedule:** How the learning rate changes during training
+- **Early Stopping Indicators:** Points where training was stopped to prevent overfitting
+
+*Models show consistent convergence with validation loss tracking training loss, indicating good generalization*
+
+</div>
+
+### Dataset Analysis
+
+<div align="center">
+
+![Dataset Analysis](docs/images/dataset-analysis.png)
+
+**Mobile Phones Dataset Analysis** - Comprehensive analysis of the mobile phones dataset:
+- **Data Distribution:** Histograms and density plots of key features
+- **Correlation Matrix:** Relationships between different features
+- **Missing Data Patterns:** Visualization of data completeness
+- **Feature Statistics:** Mean, median, standard deviation for all features
+- **Outlier Detection:** Identification of unusual data points
+
+*Insights: Balanced distribution across brands, strong correlations between related features (e.g., RAM and price), clean dataset with minimal missing values*
+
+</div>
+
 ### Web Interface - MATLAB Capabilities Checker
 
 <div align="center">
@@ -37,31 +118,7 @@ A comprehensive MATLAB and Nuxt.js project for deep learning experiments, mobile
 
 </div>
 
-### Deep Learning Network Visualizations
-
-<div align="center">
-
-![Network Visualization](docs/images/network-visualization.png)
-*Neural network architecture visualization*
-
-![Training Progress](docs/images/training-progress.png)
-*Training progress and metrics*
-
-</div>
-
-### Mobile Phones Dataset Analysis
-
-<div align="center">
-
-![Dataset Analysis](docs/images/dataset-analysis.png)
-*Mobile phones dataset analysis and insights*
-
-![Price Prediction](docs/images/price-prediction.png)
-*Price prediction model results*
-
-</div>
-
-> **Note:** Screenshots are placeholders. Add your actual screenshots to the `docs/images/` directory and they will automatically display here.
+> **Note:** All visualizations are generated programmatically using `docs/generate_all_visualizations.m`. See [docs/images/IMAGES_GALLERY.md](docs/images/IMAGES_GALLERY.md) for detailed descriptions of each visualization.
 
 ## 🚀 Features
 
