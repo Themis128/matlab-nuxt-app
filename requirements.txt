@@ -1,0 +1,8 @@
+# Python requirements for MATLAB capabilities checker
+# Note: MATLAB Engine for Python requires separate installation from MathWorks
+
+# If you want to use MATLAB Engine API, install it via:
+# cd "C:\Program Files\MATLAB\R2026a\extern\engines\python"
+# python setup.py install
+
+# No additional Python packages required for CLI approach
