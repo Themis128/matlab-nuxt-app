@@ -467,9 +467,18 @@ To add screenshots to this README:
 
 1. **Generate MATLAB visualizations automatically:**
    ```matlab
-   run('docs/generate_visualizations.m')
+   run('generate_visualizations.m')
    ```
-   This creates: network visualizations, training progress, dataset analysis, and price prediction charts.
+   Or use the comprehensive generator:
+   ```matlab
+   run('docs/generate_all_visualizations.m')
+   ```
+   This creates visualizations using your actual trained models:
+   - Model performance comparisons
+   - Price prediction results (using your trained model)
+   - Dataset analysis charts (from your actual data)
+   - Network architecture diagrams
+   - Training progress plots
 
 2. **Capture web interface screenshots manually:**
    - Start dev server: `npm run dev`

@@ -192,9 +192,13 @@ fprintf('\nStep 8: Evaluating model...\n');
 YPred_normalized = predict(net, XTest);
 YPred = YPred_normalized * y_std + y_mean;  % Denormalize
 
+% Ensure column vectors
+YPred = YPred(:);
+YTest_original = YTest_original(:);
+
 % Calculate metrics
-mse = mean((YPred - YTest_original).^2);
-mae = mean(abs(YPred - YTest_original));
+mse = mean((YPred - YTest_original).^2, 'all');
+mae = mean(abs(YPred - YTest_original), 'all');
 rmse = sqrt(mse);
 
 % R-squared
@@ -203,7 +207,7 @@ ss_tot = sum((YTest_original - mean(YTest_original)).^2);
 r2 = 1 - (ss_res / ss_tot);
 
 % Mean Absolute Percentage Error
-mape = mean(abs((YTest_original - YPred) ./ YTest_original)) * 100;
+mape = mean(abs((YTest_original - YPred) ./ YTest_original), 'all') * 100;
 
 fprintf('   Test Set Performance:\n');
 fprintf('      Mean Squared Error (MSE): %.2f\n', mse);

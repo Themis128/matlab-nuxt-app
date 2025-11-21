@@ -34,11 +34,11 @@ fprintf('   Required toolboxes:\n');
 for i = 1:size(requiredToolboxes, 1)
     toolboxName = requiredToolboxes{i, 1};
     toolboxKeyword = requiredToolboxes{i, 2};
-    
+
     % Check if toolbox is available
     isAvailable = any(contains(toolboxNames, toolboxName, 'IgnoreCase', true)) || ...
                   any(contains(toolboxNames, toolboxKeyword, 'IgnoreCase', true));
-    
+
     if isAvailable
         fprintf('   ✓ %s - Available\n', toolboxName);
     else
@@ -123,4 +123,3 @@ fprintf('  4. View .mat files: view_mat_file(''path/to/file.mat'')\n\n');
 fprintf('To reload this configuration later:\n');
 fprintf('  load(''matlab_env_config.mat'');\n');
 fprintf('  addpath(envConfig.paths{:});\n\n');
-

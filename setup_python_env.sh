@@ -66,4 +66,3 @@ echo ""
 echo "To use the .mat file viewer:"
 echo "  python view_mat_file.py path/to/file.mat"
 echo ""
-

@@ -1,0 +1,270 @@
+
+	Prerelease License -- for engineering feedback and testing
+	purposes only. Not for sale.
+
+=== MATLAB Capabilities Report ===
+
+1. VERSION INFORMATION:
+   MATLAB Version: 26.1.0.3030274 (R2026a) Prerelease
+   Release: 2026a
+   Java Version: Java is not loaded
+
+2. INSTALLED TOOLBOXES:
+   - 5G Toolbox (Version: 26.1)
+     Description: Design, simulate, and verify 5G wireless communication systems. Includes support for 5G NR physical layer, link-level simulation, and waveform generation.
+   - AUTOSAR Blockset (Version: 26.1)
+     Description: Design and simulate AUTOSAR software components and compositions. Supports Classic and Adaptive AUTOSAR platforms.
+   - Aerospace Blockset (Version: 26.1)
+     Description: Model and simulate aircraft, spacecraft, and propulsion systems. Includes flight dynamics, environmental models, and visualization tools.
+   - Aerospace Toolbox (Version: 26.1)
+     Description: Analyze and visualize aerospace vehicle motion using standard models and algorithms. Includes coordinate transformations and flight parameters.
+   - Antenna Toolbox (Version: 26.1)
+     Description: Design, analyze, and visualize antenna elements and arrays. Includes electromagnetic solvers and radiation pattern analysis.
+   - Audio Toolbox (Version: 26.1)
+     Description: Design, test, and deploy audio processing systems. Includes audio I/O, signal processing, and machine learning for audio applications.
+   - Automated Driving Toolbox (Version: 26.1)
+     Description: Design, simulate, and test automated driving systems. Includes sensor models, perception algorithms, and path planning.
+   - Bioinformatics Toolbox (Version: 26.1)
+     Description: Analyze and visualize biological data. Includes sequence analysis, microarray data analysis, and protein structure analysis.
+   - Bluetooth Toolbox (Version: 26.1)
+     Description: Design, simulate, and analyze Bluetooth communication systems. Supports Bluetooth Classic and Bluetooth Low Energy (BLE).
+   - C2000 Microcontroller Blockset (Version: 26.1)
+     Description: Design and deploy applications for Texas Instruments C2000 microcontrollers using Simulink.
+   - Communications Toolbox (Version: 26.1)
+     Description: Design, simulate, and analyze communications systems. Includes modulation, coding, channel models, and receiver algorithms.
+   - Computer Vision Toolbox (Version: 26.1)
+     Description: Design and test computer vision and video processing systems. Includes object detection, tracking, and image classification.
+   - Control System Toolbox (Version: 26.1)
+     Description: Design and analyze control systems. Includes PID tuning, state-space models, frequency response analysis, and controller design.
+   - Curve Fitting Toolbox (Version: 26.1)
+     Description: Fit curves and surfaces to data. Includes linear and nonlinear parametric fitting, smoothing, and post-processing tools.
+   - DDS Blockset (Version: 26.1)
+     Description: Design and simulate Data Distribution Service (DDS) applications for distributed systems.
+   - DSP HDL Toolbox (Version: 26.1)
+     Description: Design and implement digital signal processing algorithms on FPGAs and ASICs using HDL code generation.
+   - DSP System Toolbox (Version: 26.1)
+     Description: Design and simulate signal processing systems. Includes filters, transforms, spectral analysis, and adaptive algorithms.
+   - Data Acquisition Toolbox (Version: 26.1)
+     Description: Acquire and output data from data acquisition hardware. Supports analog and digital I/O, counters, and triggers.
+   - Database Toolbox (Version: 26.1)
+     Description: Connect to and interact with relational databases. Includes SQL query execution and database management tools.
+   - Datafeed Toolbox (Version: 26.1)
+     Description: Connect to financial data services and retrieve market data. Supports real-time and historical data feeds.
+   - Deep Learning HDL Toolbox (Version: 26.1)
+     Description: Design and implement deep learning networks on FPGAs and ASICs using HDL code generation.
+   - Deep Learning Toolbox (Version: 26.1)
+     Description: Design, train, and deploy deep neural networks. Includes pretrained models, transfer learning, and GPU acceleration.
+   - Econometrics Toolbox (Version: 26.1)
+     Description: Model and analyze economic and financial time series data. Includes regression, ARIMA, GARCH, and state-space models.
+   - Embedded Coder (Version: 26.1)
+     Description: Generate optimized C and C++ code from MATLAB code and Simulink models for embedded systems.
+   - Financial Instruments Toolbox (Version: 26.1)
+     Description: Price and analyze financial instruments. Includes derivatives, fixed-income securities, and risk metrics.
+   - Financial Toolbox (Version: 26.1)
+     Description: Perform financial calculations and analysis. Includes portfolio optimization, time value of money, and cash flow analysis.
+   - Fixed-Point Designer (Version: 26.1)
+     Description: Design and simulate fixed-point algorithms. Includes automatic data type selection and quantization analysis.
+   - Fuzzy Logic Toolbox (Version: 26.1)
+     Description: Design and simulate fuzzy inference systems. Includes membership functions, rule-based systems, and fuzzy clustering.
+   - GPU Coder (Version: 26.1)
+     Description: Generate optimized CUDA code from MATLAB code for NVIDIA GPUs. Accelerates computationally intensive algorithms.
+   - Global Optimization Toolbox (Version: 26.1)
+     Description: Solve optimization problems with multiple local minima. Includes genetic algorithms, simulated annealing, and particle swarm.
+   - HDL Coder (Version: 26.1)
+     Description: Generate synthesizable VHDL and Verilog code from MATLAB code and Simulink models for FPGA and ASIC designs.
+   - HDL Verifier (Version: 26.1)
+     Description: Verify HDL implementations using cosimulation and FPGA-in-the-loop testing.
+   - Image Acquisition Toolbox (Version: 26.1)
+     Description: Acquire images and video from cameras and frame grabbers. Supports various hardware interfaces and formats.
+   - Image Processing Toolbox (Version: 26.1)
+     Description: Process, analyze, and visualize images. Includes filtering, segmentation, morphology, and geometric transformations.
+   - Industrial Communication Toolbox (Version: 26.1)
+     Description: Design and simulate industrial communication protocols including Modbus, OPC, and EtherCAT.
+   - Instrument Control Toolbox (Version: 26.1)
+     Description: Control test and measurement instruments. Supports GPIB, VISA, TCP/IP, and serial communication.
+   - LTE Toolbox (Version: 26.1)
+     Description: Design, simulate, and verify LTE and LTE-Advanced communication systems. Includes physical layer and link-level simulation.
+   - Lidar Toolbox (Version: 26.1)
+     Description: Process, analyze, and visualize lidar point clouds. Includes object detection, segmentation, and registration algorithms.
+   - MATLAB (Version: 26.1)
+     Description: Core MATLAB environment for numerical computation, visualization, and programming. Includes built-in functions for math, graphics, and data analysis.
+   - MATLAB Coder (Version: 26.1)
+     Description: Generate C and C++ code from MATLAB code. Includes MEX functions and standalone executables.
+   - MATLAB Compiler (Version: 26.1)
+     Description: Package MATLAB applications as standalone executables, web apps, and software components.
+   - MATLAB Compiler SDK (Version: 26.1)
+     Description: Create C/C++, .NET, Java, and Python libraries from MATLAB code for integration with other applications.
+   - MATLAB Report Generator (Version: 26.1)
+     Description: Automatically generate reports from MATLAB results. Includes Word, PDF, HTML, and XML formats.
+   - MATLAB Test (Version: 26.1)
+     Description: Write, run, and manage unit tests for MATLAB code. Includes test frameworks and code coverage analysis.
+   - Mapping Toolbox (Version: 26.1)
+     Description: Display and analyze geographic data. Includes map projections, geodetic calculations, and terrain analysis.
+   - Medical Imaging Toolbox (Version: 26.1)
+     Description: Process and analyze medical images. Includes DICOM support, image registration, and segmentation tools.
+   - Mixed-Signal Blockset (Version: 26.1)
+     Description: Model and simulate mixed-signal systems with analog and digital components.
+   - Model Predictive Control Toolbox (Version: 26.1)
+     Description: Design and simulate model predictive controllers for constrained multivariable systems.
+   - Model-Based Calibration Toolbox (Version: 26.1)
+     Description: Calibrate engine and powertrain models. Includes design of experiments and optimization tools.
+   - Motor Control Blockset (Version: 26.1)
+     Description: Design and simulate motor control systems. Includes field-oriented control and sensorless control algorithms.
+   - Navigation Toolbox (Version: 26.1)
+     Description: Design and simulate navigation and tracking systems. Includes INS, GPS, and sensor fusion algorithms.
+   - Optimization Toolbox (Version: 26.1)
+     Description: Solve linear, nonlinear, and mixed-integer optimization problems. Includes solvers for constrained and unconstrained optimization.
+   - Parallel Computing Toolbox (Version: 26.1)
+     Description: Execute MATLAB code in parallel on multicore processors, GPUs, and computer clusters.
+   - Partial Differential Equation Toolbox (Version: 26.1)
+     Description: Solve partial differential equations using finite element analysis. Includes structural, thermal, and electromagnetic analysis.
+   - Phased Array System Toolbox (Version: 26.1)
+     Description: Design and simulate phased array radar and communication systems. Includes beamforming and direction-of-arrival estimation.
+   - Powertrain Blockset (Version: 26.1)
+     Description: Model and simulate vehicle powertrain systems. Includes engine, transmission, and driveline components.
+   - Predictive Maintenance Toolbox (Version: 26.1)
+     Description: Design condition monitoring and predictive maintenance algorithms. Includes feature extraction and remaining useful life estimation.
+   - RF Blockset (Version: 26.1)
+     Description: Model and simulate RF systems and circuits. Includes amplifiers, mixers, filters, and RF impairments.
+   - RF PCB Toolbox (Version: 26.1)
+     Description: Design and analyze RF printed circuit boards. Includes electromagnetic simulation and impedance matching.
+   - RF Toolbox (Version: 26.1)
+     Description: Design, analyze, and visualize RF components and networks. Includes S-parameters, impedance matching, and filter design.
+   - ROS Toolbox (Version: 26.1)
+     Description: Design, simulate, and deploy ROS-based robotics applications. Includes ROS node generation and message handling.
+   - Radar Toolbox (Version: 26.1)
+     Description: Design, simulate, and analyze radar systems. Includes waveform design, target detection, and tracking algorithms.
+   - Raspberry Pi Blockset (Version: 25.2)
+     Description: Deploy Simulink models to Raspberry Pi hardware for real-time execution.
+   - Reinforcement Learning Toolbox (Version: 26.1)
+     Description: Design, train, and simulate reinforcement learning agents. Includes DQN, DDPG, and PPO algorithms.
+   - Requirements Toolbox (Version: 26.1)
+     Description: Manage requirements and link them to models and code. Supports requirements traceability and validation.
+   - Risk Management Toolbox (Version: 26.1)
+     Description: Measure and manage financial risk. Includes value-at-risk, credit risk, and market risk analysis.
+   - Robotics System Toolbox (Version: 26.1)
+     Description: Design, simulate, and test robotics applications. Includes robot kinematics, dynamics, and motion planning.
+   - Robust Control Toolbox (Version: 26.1)
+     Description: Design robust controllers for systems with uncertainty. Includes H-infinity and mu-synthesis methods.
+   - Satellite Communications Toolbox (Version: 26.1)
+     Description: Design, simulate, and analyze satellite communication systems. Includes link budget analysis and waveform generation.
+   - Sensor Fusion and Tracking Toolbox (Version: 26.1)
+     Description: Design and simulate multi-sensor tracking and navigation systems. Includes Kalman filters and particle filters.
+   - SerDes Toolbox (Version: 26.1)
+     Description: Design and analyze serializer/deserializer (SerDes) systems for high-speed digital communication.
+   - Signal Integrity Toolbox (Version: 26.1)
+     Description: Analyze signal integrity in high-speed digital systems. Includes eye diagrams, jitter analysis, and channel modeling.
+   - Signal Processing Toolbox (Version: 26.1)
+     Description: Analyze, filter, and transform signals. Includes spectral analysis, filter design, and time-frequency analysis.
+   - SimBiology (Version: 26.1)
+     Description: Model, simulate, and analyze biological systems. Includes pharmacokinetics, pharmacodynamics, and systems biology.
+   - SimEvents (Version: 26.1)
+     Description: Model and simulate discrete-event systems. Includes queues, servers, and event-driven processes.
+   - Simscape (Version: 26.1)
+     Description: Model and simulate physical systems using physical modeling. Includes mechanical, electrical, hydraulic, and thermal components.
+   - Simscape Battery (Version: 26.1)
+     Description: Model and simulate battery systems. Includes cell models, thermal effects, and aging.
+   - Simscape Driveline (Version: 26.1)
+     Description: Model and simulate vehicle driveline systems. Includes transmissions, differentials, and clutches.
+   - Simscape Electrical (Version: 26.1)
+     Description: Model and simulate electrical systems. Includes motors, generators, power electronics, and electrical networks.
+   - Simscape Fluids (Version: 26.1)
+     Description: Model and simulate fluid systems. Includes hydraulic and pneumatic components, pumps, and valves.
+   - Simscape Multibody (Version: 26.1)
+     Description: Model and simulate 3D mechanical systems. Includes rigid and flexible bodies, joints, and forces.
+   - Simulink (Version: 26.1)
+     Description: Model, simulate, and analyze dynamic systems using block diagrams. Includes continuous and discrete-time simulation.
+   - Simulink 3D Animation (Version: 26.1)
+     Description: Create 3D animations and virtual reality visualizations of Simulink models.
+   - Simulink Check (Version: 26.1)
+     Description: Verify Simulink models for compliance with modeling standards and best practices.
+   - Simulink Code Inspector (Version: 26.1)
+     Description: Analyze generated code from Simulink models for quality and compliance.
+   - Simulink Coder (Version: 26.1)
+     Description: Generate C and C++ code from Simulink models for real-time applications and embedded systems.
+   - Simulink Compiler (Version: 26.1)
+     Description: Package Simulink models as standalone executables and web apps.
+   - Simulink Control Design (Version: 26.1)
+     Description: Design and analyze control systems in Simulink. Includes linearization, PID tuning, and frequency response.
+   - Simulink Coverage (Version: 26.1)
+     Description: Measure model and code coverage for Simulink models and generated code.
+   - Simulink Design Optimization (Version: 26.1)
+     Description: Optimize Simulink model parameters. Includes parameter estimation and response optimization.
+   - Simulink Design Verifier (Version: 26.1)
+     Description: Prove properties and find design errors in Simulink models using formal methods.
+   - Simulink Desktop Real-Time (Version: 26.1)
+     Description: Execute Simulink models in real-time on desktop computers with data acquisition hardware.
+   - Simulink Fault Analyzer (Version: 26.1)
+     Description: Analyze fault propagation and system reliability in Simulink models.
+   - Simulink PLC Coder (Version: 26.1)
+     Description: Generate IEC 61131-3 structured text and ladder logic from Simulink models for PLCs.
+   - Simulink Real-Time (Version: 26.1)
+     Description: Execute Simulink models in real-time on Speedgoat target hardware.
+   - Simulink Report Generator (Version: 26.1)
+     Description: Automatically generate reports from Simulink models and simulation results.
+   - Simulink Test (Version: 26.1)
+     Description: Create, manage, and execute systematic tests for Simulink models.
+   - SoC Blockset (Version: 26.1)
+     Description: Design and simulate system-on-chip (SoC) architectures. Includes processor, memory, and interconnect modeling.
+   - Spreadsheet Link (Version: 26.1)
+     Description: Exchange data between MATLAB and Microsoft Excel spreadsheets.
+   - Stateflow (Version: 26.1)
+     Description: Model and simulate state machines and flow charts. Includes hierarchical states, parallel states, and event-driven behavior.
+   - Statistics and Machine Learning Toolbox (Version: 26.1)
+     Description: Analyze data and build machine learning models. Includes descriptive statistics, hypothesis testing, and supervised/unsupervised learning.
+   - Symbolic Math Toolbox (Version: 26.1)
+     Description: Perform symbolic mathematics. Includes calculus, linear algebra, equation solving, and formula manipulation.
+   - System Composer (Version: 26.1)
+     Description: Design system architectures and allocate requirements. Includes system modeling and analysis.
+   - System Identification Toolbox (Version: 26.1)
+     Description: Build mathematical models from measured data. Includes linear and nonlinear system identification.
+   - Text Analytics Toolbox (Version: 26.1)
+     Description: Analyze and process text data. Includes natural language processing, sentiment analysis, and topic modeling.
+   - UAV Toolbox (Version: 26.1)
+     Description: Design, simulate, and deploy unmanned aerial vehicle (UAV) applications. Includes flight control and mission planning.
+   - Vehicle Dynamics Blockset (Version: 26.1)
+     Description: Model and simulate vehicle dynamics. Includes tire models, suspension systems, and vehicle handling.
+   - Vehicle Network Toolbox (Version: 26.1)
+     Description: Design and analyze vehicle network communication. Supports CAN, LIN, and FlexRay protocols.
+   - Vision HDL Toolbox (Version: 26.1)
+     Description: Design vision algorithms for FPGAs using HDL code generation. Includes image processing and computer vision.
+   - WLAN Toolbox (Version: 26.1)
+     Description: Design, simulate, and analyze wireless local area network (WLAN) systems. Supports IEEE 802.11 standards.
+   - Wavelet Toolbox (Version: 26.1)
+     Description: Analyze signals and images using wavelets. Includes continuous and discrete wavelet transforms, and denoising.
+   - Wireless HDL Toolbox (Version: 26.1)
+     Description: Design wireless communication algorithms for FPGAs using HDL code generation.
+   - Wireless Network Toolbox (Version: 26.1)
+     Description: Design, simulate, and analyze wireless network protocols and systems.
+   - Wireless Testbench (Version: 26.1)
+     Description: Test and validate wireless communication systems using hardware-in-the-loop testing.
+
+3. SYSTEM INFORMATION:
+   Computer: PCWIN64
+   Architecture: win64
+
+4. KEY CAPABILITIES CHECK:
+   Image Processing: true
+   Statistics & ML: true
+   Signal Processing: true
+   Control Systems: true
+   Optimization: true
+   Parallel Computing: true
+   Deep Learning: true
+   Symbolic Math: true
+
+5. MEMORY INFORMATION:
+   Available Memory: 9.07 GB
+   Total Memory: 34.07 GB
+
+6. GPU INFORMATION:
+   GPU Available: Yes
+   GPU Name: NVIDIA GeForce RTX 3070 Laptop GPU
+   GPU Memory: 7.46 GB
+
+7. LICENSE INFORMATION:
+   Active Licenses: 2
+   - distrib_computing_toolbox
+   - matlab
+
+=== End of Report ===

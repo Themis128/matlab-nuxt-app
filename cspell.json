@@ -1,0 +1,35 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "fprintf",
+    "conv",
+    "relu",
+    "softmax",
+    "lgraph",
+    "fullfile",
+    "exportgraphics",
+    "xlabel",
+    "ylabel",
+    "ylim",
+    "sgtitle",
+    "xtickangle",
+    "fileparts",
+    "mfilename",
+    "fullpath",
+    "isnan",
+    "rmse",
+    "RMSE",
+    "sprintf",
+    "readtable",
+    "ismember",
+    "strcmp",
+    "omitnan"
+  ],
+  "ignorePaths": [
+    "node_modules/**",
+    "**/node_modules/**",
+    "package-lock.json"
+  ],
+  "flagWords": []
+}

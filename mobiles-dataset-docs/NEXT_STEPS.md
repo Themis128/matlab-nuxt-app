@@ -5,6 +5,11 @@
 - ✅ Documentation organized
 - ✅ Insights extraction script created
 - ✅ Example network architectures prepared
+- ✅ Price prediction model training script created
+- ✅ Brand classification model training script created
+- ✅ Model evaluation script created
+- ✅ Visualization script created
+- ✅ Prediction functions created (price and brand)
 
 ## Recommended Next Steps
 
@@ -100,13 +105,20 @@ The fastest way to get started is to build a price prediction model:
 
 2. **Build and train price prediction model:**
    ```matlab
-   run('train_price_prediction_model.m')  % We'll create this next
+   run('train_price_prediction_model.m')
    ```
 
 3. **Evaluate and use:**
    ```matlab
+   % Evaluate model
+   run('evaluate_model.m')
+
+   % Visualize results
+   run('visualize_results.m')
+
    % Make predictions
-   predictedPrice = predictPrice(model, [6, 4000, 6.1, 174, 2024]);
+   price = predict_price(6, 4000, 6.1, 174, 2024, 'Apple');
+   brand = predict_brand(6, 4000, 6.1, 174, 2024, 999);
    ```
 
 ## File Structure After Next Steps
@@ -116,27 +128,32 @@ mobiles-dataset-docs/
 ├── README.md
 ├── NEXT_STEPS.md (this file)
 ├── extract_all_insights.m
-├── train_price_prediction_model.m (to be created)
-├── train_brand_classification_model.m (to be created)
-├── predict_price.m (prediction function)
-├── evaluate_model.m (evaluation script)
-├── visualize_results.m (visualization script)
+├── train_price_prediction_model.m ✅
+├── train_brand_classification_model.m ✅
+├── predict_price.m ✅
+├── predict_brand.m ✅
+├── evaluate_model.m ✅
+├── visualize_results.m ✅
 └── trained_models/
     ├── price_predictor.mat
-    └── brand_classifier.mat
+    ├── price_prediction_results.mat
+    ├── brand_classifier.mat
+    ├── brand_classification_results.mat
+    └── figures/ (visualization outputs)
 ```
 
 ## Priority Order
 
 1. **High Priority:**
    - ✅ Extract insights (understand data)
-   - 🔲 Build price prediction model
-   - 🔲 Train and evaluate
+   - ✅ Build price prediction model
+   - ✅ Train and evaluate
+   - ✅ Create visualizations
 
 2. **Medium Priority:**
-   - 🔲 Create visualizations
-   - 🔲 Build brand classification model
-   - 🔲 Save and deploy models
+   - ✅ Build brand classification model
+   - ✅ Save and deploy models
+   - ✅ Create prediction functions
 
 3. **Low Priority:**
    - 🔲 Advanced features (recommendation system)
@@ -152,6 +169,36 @@ Before building models, consider:
 
 ## Ready to Start?
 
-The next immediate step is to **extract insights** to understand your data, then build a **price prediction model**.
+All scripts have been created! You can now:
 
-Would you like me to create the complete training pipeline script?
+1. **Run the complete pipeline:**
+   ```matlab
+   cd mobiles-dataset-docs
+   run('run_all_steps.m')
+   ```
+
+2. **Train price prediction model:**
+   ```matlab
+   run('train_price_prediction_model.m')
+   run('evaluate_model.m')
+   run('visualize_results.m')
+   ```
+
+3. **Train brand classification model:**
+   ```matlab
+   run('train_brand_classification_model.m')
+   ```
+
+4. **Make predictions:**
+   ```matlab
+   price = predict_price(6, 4000, 6.1, 174, 2024, 'Apple');
+   brand = predict_brand(6, 4000, 6.1, 174, 2024, 999);
+   ```
+
+## Next Actions
+
+- Run the training scripts to create models
+- Evaluate model performance
+- Generate visualizations
+- Test predictions on new data
+- Fine-tune hyperparameters if needed

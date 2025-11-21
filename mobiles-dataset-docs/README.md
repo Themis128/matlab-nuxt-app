@@ -33,8 +33,25 @@ Located in the `examples/` subdirectory:
 - **`download_mobiles_dataset.sh`** - Shell script to download the dataset from Kaggle
 
 ### 🚀 Training Scripts
-- **`train_price_prediction_model.m`** - Complete training pipeline for price prediction
-- **`predict_price.m`** - Function to make price predictions using trained model
+- **Price Prediction Models:**
+  - `train_price_prediction_model.m` - Standard model (128→64→32)
+  - `train_price_prediction_deep.m` - Deep model (256→128→64→32→16)
+  - `train_price_prediction_wide.m` - Wide model (512→256→128)
+  - `train_price_prediction_lightweight.m` - Lightweight model (64→32)
+- **Classification Models:**
+  - `train_brand_classification_model.m` - Brand classification
+- **Feature Prediction Models:**
+  - `train_ram_prediction_model.m` - RAM prediction
+  - `train_battery_prediction_model.m` - Battery capacity prediction
+- **Utility Scripts:**
+  - `train_all_models.m` - Train all models at once
+  - `evaluate_model.m` - Comprehensive model evaluation
+  - `visualize_results.m` - Visualization script
+- **Prediction Functions:**
+  - `predict_price.m` - Price prediction
+  - `predict_brand.m` - Brand prediction
+  - `predict_ram.m` - RAM prediction
+  - `predict_battery.m` - Battery prediction
 
 ## Quick Start
 
@@ -68,10 +85,26 @@ This will:
    run('train_price_prediction_model.m')
    ```
 
-4. **Make Predictions:**
+4. **Evaluate and Visualize:**
    ```matlab
+   run('evaluate_model.m')
+   run('visualize_results.m')
+   ```
+
+5. **Train Brand Classification Model:**
+   ```matlab
+   run('train_brand_classification_model.m')
+   ```
+
+6. **Make Predictions:**
+   ```matlab
+   % Price prediction
    price = predict_price(6, 4000, 6.1, 174, 2024, 'Apple');
    fprintf('Predicted price: $%.0f\n', price);
+
+   % Brand classification
+   brand = predict_brand(6, 4000, 6.1, 174, 2024, 999);
+   fprintf('Predicted brand: %s\n', brand);
    ```
 
 ### Other Scripts

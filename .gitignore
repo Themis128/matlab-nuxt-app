@@ -1,60 +1,55 @@
-# Nuxt dev/build outputs
-.output
-.nuxt
-.nitro
-.cache
-dist
-
-# Node dependencies
-node_modules
-
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# OS
-.DS_Store
-Thumbs.db
-
-# IDE
-.idea
-.vscode
-*.swp
-*.swo
-*~
-
-# Environment
-.env
-.env.local
-.env.*.local
-
-# MATLAB reports
-matlab-capabilities-report.txt
-
-# Build outputs
-*.tsbuildinfo
-
 # Python
+venv/
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
-venv/
 env/
 ENV/
+*.egg-info/
+dist/
+build/
 
-# Kaggle credentials
+# MATLAB
+*.asv
+*.autosave
+*.m~
+*.fig
+*.slx~
+*.prj
+*.mlappinstall
+*.mlpkginstall
+
+# Data files
+*.mat
+!examples/*.mat  # Keep example .mat files
+preprocessed/
+trained_models/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node
+node_modules/
+.nuxt/
+.output/
+.nitro/
+.cache/
+
+# Environment
+.env
+.env.local
+*.log
+
+# Kaggle credentials (keep structure, ignore content)
 kaggle.json
-
-# Large datasets (uncomment if you don't want to commit datasets)
-# *.csv
-# *.mat
-# *.zip
-
-# Temporary files
-*.tmp
-*.temp

@@ -17,4 +17,3 @@ echo ""
 
 # Keep shell open
 exec $SHELL
-

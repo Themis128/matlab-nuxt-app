@@ -16,4 +16,3 @@ echo You can now use:
 echo   python view_mat_file.py path/to/file.mat
 echo.
 cmd /k
-

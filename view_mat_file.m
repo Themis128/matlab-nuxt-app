@@ -6,24 +6,24 @@
 %   view_mat_file('path/to/file.mat', 'output.txt')  % Save to file
 
 function view_mat_file(mat_file, output_file)
-    
+
     if nargin < 1
         error('Please provide a .mat file path');
     end
-    
+
     if ~exist(mat_file, 'file')
         error('File not found: %s', mat_file);
     end
-    
+
     fprintf('=== Loading .mat file: %s ===\n\n', mat_file);
-    
+
     % Load file info first
     file_info = whos('-file', mat_file);
-    
+
     fprintf('Variables in file:\n');
     fprintf('  %-20s %-15s %-20s %s\n', 'Name', 'Size', 'Bytes', 'Class');
     fprintf('  %s\n', repmat('-', 1, 70));
-    
+
     total_bytes = 0;
     for i = 1:length(file_info)
         var = file_info(i);
@@ -36,20 +36,20 @@ function view_mat_file(mat_file, output_file)
     end
     fprintf('  %s\n', repmat('-', 1, 70));
     fprintf('  Total: %d bytes\n\n', total_bytes);
-    
+
     % Load and display contents
     fprintf('=== Variable Contents ===\n\n');
-    
+
     data = load(mat_file);
     var_names = fieldnames(data);
-    
+
     for i = 1:length(var_names)
         var_name = var_names{i};
         var_data = data.(var_name);
-        
+
         fprintf('Variable: %s\n', var_name);
         fprintf('  Type: %s\n', class(var_data));
-        
+
         if isnumeric(var_data) || islogical(var_data)
             fprintf('  Size: %s\n', mat2str(size(var_data)));
             if numel(var_data) <= 100
@@ -96,10 +96,10 @@ function view_mat_file(mat_file, output_file)
             fprintf('  Value:\n');
             disp(var_data);
         end
-        
+
         fprintf('\n');
     end
-    
+
     % Save to file if requested
     if nargin >= 2 && ~isempty(output_file)
         fid = fopen(output_file, 'w');
@@ -107,7 +107,7 @@ function view_mat_file(mat_file, output_file)
             warning('Could not open output file: %s', output_file);
             return;
         end
-        
+
         % Write summary to file
         fprintf(fid, '=== MATLAB .mat File Contents ===\n');
         fprintf(fid, 'File: %s\n\n', mat_file);
@@ -117,12 +117,12 @@ function view_mat_file(mat_file, output_file)
             fprintf(fid, '  %s: %s (%s, %d bytes)\n', ...
                 var.name, mat2str(var.size), var.class, var.bytes);
         end
-        
+
         fprintf(fid, '\n=== Detailed Contents ===\n\n');
         for i = 1:length(var_names)
             var_name = var_names{i};
             var_data = data.(var_name);
-            
+
             fprintf(fid, 'Variable: %s\n', var_name);
             fprintf(fid, '  Type: %s\n', class(var_data));
             if isnumeric(var_data) || islogical(var_data)
@@ -140,12 +140,11 @@ function view_mat_file(mat_file, output_file)
             end
             fprintf(fid, '\n');
         end
-        
+
         fclose(fid);
         fprintf('✓ Contents saved to: %s\n', output_file);
     end
-    
-    fprintf('=== Done ===\n');
-    
-end
 
+    fprintf('=== Done ===\n');
+
+end

@@ -53,28 +53,28 @@ def convert_numpy(obj):
 def view_mat_file(mat_path, output_format='json', output_path=None):
     """View contents of a .mat file"""
     mat_path = Path(mat_path)
-    
+
     if not mat_path.exists():
         print(f"Error: File not found: {mat_path}")
         return False
-    
+
     if not HAS_SCIPY:
         print("Error: scipy is required to read .mat files")
         print("Install with: pip install scipy")
         return False
-    
+
     try:
         # Load .mat file
         print(f"Loading {mat_path}...")
         data = scipy.io.loadmat(str(mat_path), simplify_cells=True)
-        
+
         # Remove MATLAB metadata
         data_clean = {k: v for k, v in data.items() if not k.startswith('__')}
-        
+
         # Convert numpy arrays
         if HAS_NUMPY:
             data_clean = convert_numpy(data_clean)
-        
+
         # Generate output
         if output_format == 'json':
             output = json.dumps(data_clean, indent=2, default=str)
@@ -82,7 +82,7 @@ def view_mat_file(mat_path, output_format='json', output_path=None):
             output = format_text_output(data_clean)
         else:
             output = json.dumps(data_clean, indent=2, default=str)
-        
+
         # Write output
         if output_path:
             output_file = Path(output_path)
@@ -93,9 +93,9 @@ def view_mat_file(mat_path, output_format='json', output_path=None):
             print("MAT File Contents:")
             print("="*60 + "\n")
             print(output)
-        
+
         return True
-        
+
     except Exception as e:
         print(f"Error reading .mat file: {e}")
         return False
@@ -105,7 +105,7 @@ def format_text_output(data, indent=0):
     """Format data as readable text"""
     output = []
     prefix = "  " * indent
-    
+
     if isinstance(data, dict):
         for key, value in data.items():
             if isinstance(value, (dict, list)):
@@ -124,7 +124,7 @@ def format_text_output(data, indent=0):
             output.append(f"{prefix}... ({len(data) - 20} more items)")
     else:
         output.append(f"{prefix}{data}")
-    
+
     return "\n".join(output)
 
 
@@ -134,12 +134,11 @@ def main():
     parser.add_argument('-f', '--format', choices=['json', 'text'], default='json',
                        help='Output format (default: json)')
     parser.add_argument('-o', '--output', help='Output file path (optional)')
-    
+
     args = parser.parse_args()
-    
+
     view_mat_file(args.mat_file, args.format, args.output)
 
 
 if __name__ == '__main__':
     main()
-

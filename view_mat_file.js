@@ -1,7 +1,7 @@
 /**
  * MATLAB .mat File Viewer (Node.js)
  * Converts .mat files to readable JSON format
- * 
+ *
  * Requires: npm install mat-file-reader
  * Usage: node view_mat_file.js <file.mat> [output.json]
  */
@@ -21,27 +21,27 @@ try {
 
 function viewMatFile(matPath, outputPath) {
     const filePath = path.resolve(matPath);
-    
+
     if (!fs.existsSync(filePath)) {
         console.error(`Error: File not found: ${filePath}`);
         process.exit(1);
     }
-    
+
     console.log(`Loading ${filePath}...`);
-    
+
     try {
         // Read .mat file
         const fileBuffer = fs.readFileSync(filePath);
         const matFile = matFileReader(fileBuffer);
-        
+
         const result = {};
         const variables = matFile.variables();
-        
+
         console.log('\n=== Variables in file ===\n');
         variables.forEach(varName => {
             const varData = matFile.read(varName);
             result[varName] = formatData(varData);
-            
+
             console.log(`Variable: ${varName}`);
             console.log(`  Type: ${typeof varData}`);
             if (Array.isArray(varData)) {
@@ -59,10 +59,10 @@ function viewMatFile(matPath, outputPath) {
             }
             console.log('');
         });
-        
+
         // Output JSON
         const jsonOutput = JSON.stringify(result, null, 2);
-        
+
         if (outputPath) {
             fs.writeFileSync(outputPath, jsonOutput, 'utf-8');
             console.log(`✓ Output saved to: ${outputPath}`);
@@ -70,7 +70,7 @@ function viewMatFile(matPath, outputPath) {
             console.log('\n=== JSON Output ===\n');
             console.log(jsonOutput);
         }
-        
+
     } catch (error) {
         console.error(`Error reading .mat file: ${error.message}`);
         process.exit(1);
@@ -110,4 +110,3 @@ if (args.length === 0) {
 }
 
 viewMatFile(args[0], args[1]);
-
