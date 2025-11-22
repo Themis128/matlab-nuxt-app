@@ -36,6 +36,8 @@ screenSize = zeros(nRows, 1);
 weight = zeros(nRows, 1);
 priceUSD = zeros(nRows, 1);
 year = zeros(nRows, 1);
+frontCamera = zeros(nRows, 1);
+backCamera = zeros(nRows, 1);
 
 % Helper function to extract numbers from strings
 extractNumber = @(str, pattern) ...
@@ -233,6 +235,73 @@ else
     warning('Year column not found');
 end
 
+% Parse Front Camera
+fprintf('   Parsing Front Camera...\n');
+frontCamColName = 'Front_Camera';
+if ~ismember(frontCamColName, colNames)
+    altNames = {'FrontCamera', 'Front_Camera', 'FrontCamera_MP'};
+    for alt = altNames
+        if ismember(alt{1}, colNames)
+            frontCamColName = alt{1};
+            break;
+        end
+    end
+end
+
+if ismember(frontCamColName, colNames)
+    frontCamCol = data.(frontCamColName);
+    for i = 1:nRows
+        if iscell(frontCamCol(i))
+            camStr = frontCamCol{i};
+        else
+            camStr = string(frontCamCol(i));
+        end
+        % Extract MP value (e.g., "12 MP" or "12MP" or "12")
+        camNum = regexp(camStr, '(\d+)', 'match', 'once');
+        if ~isempty(camNum)
+            frontCamera(i) = str2double(camNum);
+        end
+    end
+    fprintf('      ✓ Front Camera parsed: %d valid values\n', sum(~isnan(frontCamera) & frontCamera > 0));
+else
+    warning('Front Camera column not found');
+end
+
+% Parse Back Camera
+fprintf('   Parsing Back Camera...\n');
+backCamColName = 'Back_Camera';
+if ~ismember(backCamColName, colNames)
+    altNames = {'BackCamera', 'Back_Camera', 'BackCamera_MP', 'Rear_Camera', 'RearCamera'};
+    for alt = altNames
+        if ismember(alt{1}, colNames)
+            backCamColName = alt{1};
+            break;
+        end
+    end
+end
+
+if ismember(backCamColName, colNames)
+    backCamCol = data.(backCamColName);
+    for i = 1:nRows
+        if iscell(backCamCol(i))
+            camStr = backCamCol{i};
+        else
+            camStr = string(backCamCol(i));
+        end
+        % Extract MP value - handle formats like "48 MP", "48+12 MP", "48MP"
+        % Take the first/largest number (main camera)
+        camNums = regexp(camStr, '(\d+)', 'match');
+        if ~isempty(camNums)
+            % Convert all matches to numbers and take max (main camera)
+            camValues = cellfun(@str2double, camNums);
+            backCamera(i) = max(camValues);
+        end
+    end
+    fprintf('      ✓ Back Camera parsed: %d valid values\n', sum(~isnan(backCamera) & backCamera > 0));
+else
+    warning('Back Camera column not found');
+end
+
 %% Parse Company Names
 fprintf('\nStep 4: Parsing company names...\n');
 companyColName = 'CompanyName';
@@ -304,14 +373,16 @@ screenSize_clean = screenSize(validIdx_clean);
 weight_clean = weight(validIdx_clean);
 priceUSD_clean = priceUSD(validIdx_clean);
 year_clean = year(validIdx_clean);
+frontCamera_clean = frontCamera(validIdx_clean);
+backCamera_clean = backCamera(validIdx_clean);
 companies_clean = companies(validIdx_clean);
 
 % Create summary table
 summaryTable = table(ram_clean, battery_clean, screenSize_clean, ...
                      weight_clean, priceUSD_clean, year_clean, ...
-                     companies_clean, ...
+                     frontCamera_clean, backCamera_clean, companies_clean, ...
                      'VariableNames', {'RAM_GB', 'Battery_mAh', 'ScreenSize_inches', ...
-                     'Weight_g', 'Price_USD', 'Year', 'Company'});
+                     'Weight_g', 'Price_USD', 'Year', 'FrontCamera_MP', 'BackCamera_MP', 'Company'});
 
 fprintf('   ✓ Clean dataset created\n');
 fprintf('   Final dataset size: %d rows\n', height(summaryTable));
@@ -333,6 +404,16 @@ fprintf('   Price (USD)      |  $%5.0f  |  $%5.0f  |  $%5.0f\n', ...
     min(priceUSD_clean), max(priceUSD_clean), mean(priceUSD_clean));
 fprintf('   Year             |  %6.0f  |  %6.0f  |  %6.0f\n', ...
     min(year_clean), max(year_clean), mean(year_clean));
+if sum(~isnan(frontCamera_clean) & frontCamera_clean > 0) > 0
+    fprintf('   Front Camera (MP) |  %6.0f  |  %6.0f  |  %6.1f\n', ...
+        min(frontCamera_clean(frontCamera_clean > 0)), ...
+        max(frontCamera_clean), mean(frontCamera_clean(frontCamera_clean > 0)));
+end
+if sum(~isnan(backCamera_clean) & backCamera_clean > 0) > 0
+    fprintf('   Back Camera (MP)  |  %6.0f  |  %6.0f  |  %6.1f\n', ...
+        min(backCamera_clean(backCamera_clean > 0)), ...
+        max(backCamera_clean), mean(backCamera_clean(backCamera_clean > 0)));
+end
 fprintf('   ----------------------------------------\n');
 
 %% Save Preprocessed Data
@@ -346,6 +427,8 @@ assignin('base', 'screenSize_clean', screenSize_clean);
 assignin('base', 'weight_clean', weight_clean);
 assignin('base', 'priceUSD_clean', priceUSD_clean);
 assignin('base', 'year_clean', year_clean);
+assignin('base', 'frontCamera_clean', frontCamera_clean);
+assignin('base', 'backCamera_clean', backCamera_clean);
 assignin('base', 'companies_clean', companies_clean);
 assignin('base', 'validIdx_clean', validIdx_clean);
 
@@ -356,7 +439,7 @@ end
 
 save('preprocessed/preprocessed_data.mat', 'summaryTable', 'ram_clean', ...
      'battery_clean', 'screenSize_clean', 'weight_clean', 'priceUSD_clean', ...
-     'year_clean', 'companies_clean', 'validIdx_clean');
+     'year_clean', 'frontCamera_clean', 'backCamera_clean', 'companies_clean', 'validIdx_clean');
 
 writetable(summaryTable, 'preprocessed/preprocessed_data.csv');
 

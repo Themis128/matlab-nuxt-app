@@ -23,6 +23,9 @@ This directory contains all documentation, scripts, and resources related to the
 - **`MODELS_SUMMARY.md`** - Summary of model capabilities
 - **`PRESENTATION_GUIDE.md`** - Guide for presenting results
 - **`NEXT_STEPS.md`** - Recommended next steps for improvement
+- **`NEW_FEATURES_GUIDE.md`** - ⭐ NEW: Comprehensive guide to all new features (camera prediction, similar phones, market segments, regional analysis)
+- **`ADDITIONAL_POSSIBILITIES.md`** - Complete list of additional possibilities with the dataset
+- **`IMPLEMENTATION_SUMMARY.md`** - Summary of newly implemented features
 
 ### 🔧 Analysis Scripts
 - **`preprocess_dataset.m`** - Comprehensive data preprocessing, cleaning, and preparation
@@ -58,6 +61,9 @@ Located in the `examples/` subdirectory:
 - **Feature Prediction Models:**
   - `train_ram_prediction_model.m` - RAM prediction (original)
   - `train_battery_prediction_model.m` - Battery capacity prediction
+  - `train_front_camera_prediction_model.m` - ⭐ NEW: Front camera MP prediction
+  - `train_back_camera_prediction_model.m` - ⭐ NEW: Back camera MP prediction
+  - `train_all_new_models.m` - ⭐ NEW: Train all new models at once
   - `tune_models.m` - Tuned RAM prediction with enhanced features
 - **Utility Scripts:**
   - `train_all_models.m` - Train all standard models
@@ -76,9 +82,16 @@ Located in the `examples/` subdirectory:
   - `predict_ram_enhanced.m` - Enhanced RAM prediction
   - `predict_battery.m` - Battery prediction
   - `predict_battery_enhanced.m` - Enhanced battery prediction
+  - `predict_front_camera.m` - ⭐ NEW: Front camera prediction
+  - `predict_back_camera.m` - ⭐ NEW: Back camera prediction
 - **Feature Engineering:**
   - `add_enhanced_features.m` - Add enhanced features to dataset
   - `implement_quick_improvements.m` - Implement quick model improvements
+- **⭐ NEW: Advanced Analysis Scripts:**
+  - `find_similar_phones.m` - Find phones with similar specifications
+  - `analyze_market_segments.m` - Market segmentation (Budget/Mid-Range/Premium)
+  - `analyze_regional_prices.m` - Regional price analysis across 5 regions
+  - `visualize_new_features.m` - Generate all visualizations for screenshots
 
 ## Quick Start
 
@@ -111,7 +124,7 @@ This will:
    ```matlab
    % Train all standard models
    run('train_all_models_comprehensive.m')
-   
+
    % Or train enhanced models (recommended for best accuracy)
    run('train_all_models_enhanced.m')
    ```
@@ -132,11 +145,11 @@ This will:
    % Price prediction (standard)
    price = predict_price(6, 4000, 6.1, 174, 2024, 'Apple');
    fprintf('Predicted price: $%.0f\n', price);
-   
+
    % Enhanced price prediction (best accuracy)
    price_enhanced = predict_price_enhanced(6, 4000, 6.1, 174, 2024, 'Apple');
    fprintf('Enhanced predicted price: $%.0f\n', price_enhanced);
-   
+
    % Ensemble prediction (combines multiple models)
    price_ensemble = predict_price_ensemble(6, 4000, 6.1, 174, 2024, 'Apple');
    fprintf('Ensemble predicted price: $%.0f\n', price_ensemble);
@@ -144,10 +157,25 @@ This will:
    % Brand classification
    brand = predict_brand(6, 4000, 6.1, 174, 2024, 999);
    fprintf('Predicted brand: %s\n', brand);
-   
+
    % RAM prediction (uses tuned model if available)
    ram = predict_ram(4000, 6.1, 174, 2024, 999, 'Apple');
    fprintf('Predicted RAM: %d GB\n', ram);
+
+   % ⭐ NEW: Camera predictions
+   front_cam = predict_front_camera(6, 4000, 6.1, 174, 2024, 999, 'Apple');
+   back_cam = predict_back_camera(6, 4000, 6.1, 174, 2024, 999, 'Apple');
+   fprintf('Predicted cameras: Front=%d MP, Back=%d MP\n', front_cam, back_cam);
+
+   % ⭐ NEW: Find similar phones
+   similar = find_similar_phones(6, 4000, 6.1, 174, 2024, 999, 'Apple', 5);
+   fprintf('Found %d similar phones\n', height(similar));
+
+   % ⭐ NEW: Market segmentation
+   segments = analyze_market_segments();
+
+   % ⭐ NEW: Regional price analysis
+   regional = analyze_regional_prices();
    ```
 
 ### Other Scripts
@@ -182,6 +210,35 @@ This will:
 3. **Competitive Analysis** - Brand positioning, value-for-money, market gaps
 4. **Recommendations** - Similar phone finder, budget-based suggestions
 5. **Anomaly Detection** - Overpriced/underpriced phones, data quality issues
+
+## ⭐ New Features (Latest Update)
+
+### Camera Prediction Models
+- Predict front and back camera MP from phone specifications
+- High accuracy neural network models
+- Usage: `predict_front_camera()`, `predict_back_camera()`
+
+### Similar Phone Finder
+- Find phones with similar specifications
+- Uses cosine similarity and weighted distance
+- Usage: `find_similar_phones()`
+
+### Market Segmentation
+- Automatic clustering into Budget/Mid-Range/Premium segments
+- K-means analysis with detailed statistics
+- Usage: `analyze_market_segments()`
+
+### Regional Price Analysis
+- Compare prices across 5 regions (Pakistan, India, China, USA, Dubai)
+- Calculate conversion factors
+- Usage: `analyze_regional_prices()`
+
+### Visualizations
+- Comprehensive visualization script for all features
+- Screenshot-ready PNG files
+- Usage: `visualize_new_features.m`
+
+**See `NEW_FEATURES_GUIDE.md` for complete documentation!**
 
 ## Notes
 
