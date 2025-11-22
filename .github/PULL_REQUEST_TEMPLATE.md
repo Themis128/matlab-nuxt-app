@@ -1,36 +1,55 @@
-# Pull Request
+## 📝 Description
 
-## Description
-Please provide a clear and concise description of what this PR does.
+Brief description of changes in this PR.
 
-## Type of Change
-- [ ] Bug fix
-- [ ] New feature
-- [ ] Documentation update
-- [ ] Performance improvement
-- [ ] Code refactoring
-- [ ] Other (please describe):
+## 🎯 Type of Change
 
-## Changes Made
--
--
--
+- [ ] 🐛 Bug fix
+- [ ] ✨ New feature
+- [ ] 🔧 Model improvement
+- [ ] 📚 Documentation
+- [ ] 🎨 Visualization
+- [ ] ⚡ Performance improvement
+- [ ] 🔒 Security fix
+- [ ] 🧹 Code cleanup
 
-## Testing
-- [ ] I have tested this locally
-- [ ] I have added/updated tests
-- [ ] All existing tests pass
+## 🔗 Related Issue
 
-## Checklist
-- [ ] My code follows the project's style guidelines
-- [ ] I have commented my code, particularly in hard-to-understand areas
-- [ ] I have updated the documentation accordingly
-- [ ] My changes generate no new warnings
-- [ ] I have added tests that prove my fix is effective or that my feature works
-- [ ] New and existing unit tests pass locally with my changes
+Closes #(issue number)
 
-## Related Issues
-Closes #
+## 🧪 Testing
 
-## Screenshots (if applicable)
-Add screenshots to help explain your changes.
+- [ ] I've tested the changes locally
+- [ ] I've run existing tests
+- [ ] I've added new tests (if applicable)
+- [ ] All tests pass
+
+## 📊 Model Changes (if applicable)
+
+- **Model:** [e.g., Price Prediction]
+- **Performance Before:** [e.g., R² = 0.95]
+- **Performance After:** [e.g., R² = 0.98]
+- **Files Changed:** [e.g., `train_price_prediction_model.m`]
+
+## 📸 Screenshots/Visualizations
+
+If applicable, add screenshots or visualizations showing the changes.
+
+## ✅ Checklist
+
+- [ ] Code follows project style guidelines
+- [ ] Comments added for complex code
+- [ ] Documentation updated
+- [ ] No new warnings or errors
+- [ ] Tests pass
+- [ ] Model performance maintained or improved (if applicable)
+
+## 📝 Additional Notes
+
+Any additional information reviewers should know.
+
+---
+
+**Reviewer Notes:**
+- Focus areas: ___________
+- Questions: ___________

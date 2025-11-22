@@ -1,51 +1,80 @@
-# Security Notes
+# Security Policy
 
-## glob Package Vulnerability
+## 🔒 Supported Versions
 
-There is a reported high-severity vulnerability in the `glob` package (versions 10.2.0 - 11.0.3) related to command injection in the CLI tool.
+We actively support the following versions with security updates:
 
-**Important:** This vulnerability only affects the `glob` command-line tool when used with the `-c/--cmd` flag. Since this Nuxt application uses `glob` as a library dependency (not as a CLI tool), **this vulnerability does not affect our application**.
+| Version | Supported          |
+| ------- | ------------------ |
+| Latest  | :white_check_mark: |
+| < Latest| :x:                |
 
-The vulnerability is tracked in:
-- GitHub Advisory: [GHSA-5j98-mcp5-4vw2](https://github.com/advisories/GHSA-5j98-mcp5-4vw2)
-- Affected versions: 10.2.0 - 11.0.3
+## 🚨 Reporting a Vulnerability
 
-**Current Status:**
-- ✅ **FIXED:** Downgraded to `glob@10.1.0` via npm overrides (safe version, before vulnerability)
-- The package is used as a library dependency by:
-  - `@nuxt/ui` → `tailwindcss` → `sucrase`
-  - `nuxt` → `nitropack` → `@vercel/nft`
-- No CLI usage of `glob` in this project
-- Vulnerability resolved by using version 10.1.0 (before affected range 10.2.0-11.0.3)
+If you discover a security vulnerability, please **DO NOT** open a public issue.
 
-**Action Required:**
-- ✅ Monitor for updates to `glob` that fix this issue
-- ✅ Consider alternative packages if a fix is not available
-- ✅ This is a low-priority issue for our use case since we don't use the CLI
+Instead, please report it by:
 
-**Fix Status:**
-- ✅ **RESOLVED:** Fixed by downgrading to `glob@10.1.0` (safe version)
-- ✅ All nested dependencies forced to use safe version via npm overrides
-- ✅ npm audit now shows: `found 0 vulnerabilities`
-- Last fixed: Current
-- Method: npm overrides targeting all nested dependency paths
+1. **Email:** [Your email] (if you have one set up)
+2. **Private Security Advisory:** Use GitHub's [Private Vulnerability Reporting](https://github.com/Themis128/matlab-nuxt-app/security/advisories/new)
 
-**Fix Applied:**
-- ✅ Downgraded `glob` from `11.0.3` to `10.1.0` (safe version, before vulnerability range)
-- ✅ Added comprehensive npm overrides for all nested dependencies:
-  - `@vercel/nft > glob`
-  - `archiver-utils > glob`
-  - `replace-in-file > glob`
-  - `sucrase > glob`
-- ✅ Verified fix: `npm audit` shows **0 vulnerabilities**
-- ✅ All nested dependencies now use `glob@10.1.0`
+### What to Include
 
-**Future Updates:**
-1. Monitor for `glob@11.1.0+` which should fix the vulnerability
-2. When available, update override to: `"glob": "^11.1.0"`
-3. Run `npm install` to apply update
+- Description of the vulnerability
+- Steps to reproduce
+- Potential impact
+- Suggested fix (if you have one)
 
-**Alternative Packages (if needed):**
-- `fast-glob` - Faster alternative with similar API
-- `node-glob` - Older, more stable version (v7.x)
-- `minimatch` - Lower-level pattern matching (used by glob internally)
+### Response Time
+
+- We will acknowledge your report within 48 hours
+- We will provide a detailed response within 7 days
+- We will keep you informed of our progress
+
+## 🛡️ Security Best Practices
+
+### For Users
+
+- Keep MATLAB and dependencies updated
+- Review code before running
+- Use trusted data sources
+- Validate inputs
+
+### For Contributors
+
+- Follow secure coding practices
+- Validate all inputs
+- Avoid hardcoded credentials
+- Review dependencies for vulnerabilities
+
+## 🔍 Known Security Considerations
+
+### MATLAB Scripts
+
+- Always review MATLAB scripts before running
+- Be cautious with `eval()` or dynamic code execution
+- Validate file paths and inputs
+
+### Web Interface (Nuxt)
+
+- Input validation on all API endpoints
+- Sanitize user inputs
+- Use environment variables for secrets
+- Keep dependencies updated
+
+### Data Handling
+
+- Validate dataset sources
+- Check data integrity
+- Handle sensitive data appropriately
+
+## 📝 Security Updates
+
+Security updates will be:
+- Released as patches for supported versions
+- Documented in release notes
+- Tagged with security labels
+
+---
+
+**Thank you for helping keep this project secure!** 🔐
