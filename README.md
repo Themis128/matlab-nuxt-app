@@ -437,6 +437,8 @@ run('train_all_models_enhanced.m')
 - **[README_MAT_FILES.md](README_MAT_FILES.md)** - Guide for working with .mat files
 - **[docs/SCREENSHOT_GUIDE.md](docs/SCREENSHOT_GUIDE.md)** - Complete guide for adding screenshots and visualizations
 - **[docs/images/README.md](docs/images/README.md)** - Screenshot requirements and tips
+- **[docs/QUICK_REFERENCE.md](docs/QUICK_REFERENCE.md)** - Quick reference for repository setup
+- **[docs/VISUALIZATION_README.md](docs/VISUALIZATION_README.md)** - Visualization generation guide
 
 ## 💻 Usage Examples
 

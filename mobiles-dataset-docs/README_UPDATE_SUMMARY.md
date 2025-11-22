@@ -82,4 +82,3 @@ git push origin master
 | Brand | 55.65% | **65.22%** | **+9.6%** |
 
 **All models are now production-ready with exceptional accuracy!** 🎉
-

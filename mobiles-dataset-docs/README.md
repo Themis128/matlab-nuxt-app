@@ -10,6 +10,19 @@ This directory contains all documentation, scripts, and resources related to the
 ### 📚 Documentation
 - **`MOBILES_DATASET_GUIDE.md`** - Comprehensive guide on choosing neural network architectures for the dataset
 - **`INSIGHTS_EXTRACTION_GUIDE.md`** - Detailed guide on extracting insights from the dataset
+- **`QUICK_START.md`** - Quick start guide for getting started with the dataset
+- **`ALL_MODELS_IMPROVEMENTS.md`** - Complete summary of all model improvements
+- **`FINAL_IMPROVEMENTS_COMPLETE.md`** - Final performance results and improvements
+- **`IMPROVING_MODEL_ACCURACY.md`** - Guide to improving model accuracy
+- **`PERFORMANCE_ANALYSIS.md`** - Detailed performance analysis
+- **`TUNING_RESULTS.md`** - Model tuning results and recommendations
+- **`TUNING_COMPLETE.md`** - Summary of tuning completion
+- **`FINAL_MODEL_PERFORMANCE.md`** - Final model performance metrics
+- **`ACCURACY_COMPARISON.md`** - Accuracy comparison between models
+- **`MODELS_OVERVIEW.md`** - Overview of all available models
+- **`MODELS_SUMMARY.md`** - Summary of model capabilities
+- **`PRESENTATION_GUIDE.md`** - Guide for presenting results
+- **`NEXT_STEPS.md`** - Recommended next steps for improvement
 
 ### 🔧 Analysis Scripts
 - **`preprocess_dataset.m`** - Comprehensive data preprocessing, cleaning, and preparation
@@ -38,20 +51,34 @@ Located in the `examples/` subdirectory:
   - `train_price_prediction_deep.m` - Deep model (256→128→64→32→16)
   - `train_price_prediction_wide.m` - Wide model (512→256→128)
   - `train_price_prediction_lightweight.m` - Lightweight model (64→32)
+  - `train_models_with_enhanced_features.m` - Enhanced model with feature engineering
 - **Classification Models:**
   - `train_brand_classification_model.m` - Brand classification
+  - `tune_brand_classification_improved.m` - Improved brand classification with tuning
 - **Feature Prediction Models:**
-  - `train_ram_prediction_model.m` - RAM prediction
+  - `train_ram_prediction_model.m` - RAM prediction (original)
   - `train_battery_prediction_model.m` - Battery capacity prediction
+  - `tune_models.m` - Tuned RAM prediction with enhanced features
 - **Utility Scripts:**
-  - `train_all_models.m` - Train all models at once
+  - `train_all_models.m` - Train all standard models
+  - `train_all_models_comprehensive.m` - Train all models including tuned versions
+  - `train_all_models_enhanced.m` - Train all enhanced models
   - `evaluate_model.m` - Comprehensive model evaluation
   - `visualize_results.m` - Visualization script
+  - `test_all_models.m` - Test all trained models
 - **Prediction Functions:**
-  - `predict_price.m` - Price prediction
+  - `predict_price.m` - Price prediction (standard)
+  - `predict_price_enhanced.m` - Enhanced price prediction
+  - `predict_price_ensemble.m` - Ensemble price prediction
   - `predict_brand.m` - Brand prediction
-  - `predict_ram.m` - RAM prediction
+  - `predict_brand_enhanced.m` - Enhanced brand prediction
+  - `predict_ram.m` - RAM prediction (supports both original and tuned)
+  - `predict_ram_enhanced.m` - Enhanced RAM prediction
   - `predict_battery.m` - Battery prediction
+  - `predict_battery_enhanced.m` - Enhanced battery prediction
+- **Feature Engineering:**
+  - `add_enhanced_features.m` - Add enhanced features to dataset
+  - `implement_quick_improvements.m` - Implement quick model improvements
 
 ## Quick Start
 
@@ -80,9 +107,13 @@ This will:
    run('extract_all_insights.m')
    ```
 
-3. **Train Price Prediction Model:**
+3. **Train Models:**
    ```matlab
-   run('train_price_prediction_model.m')
+   % Train all standard models
+   run('train_all_models_comprehensive.m')
+   
+   % Or train enhanced models (recommended for best accuracy)
+   run('train_all_models_enhanced.m')
    ```
 
 4. **Evaluate and Visualize:**
@@ -91,20 +122,32 @@ This will:
    run('visualize_results.m')
    ```
 
-5. **Train Brand Classification Model:**
+5. **Test All Models:**
    ```matlab
-   run('train_brand_classification_model.m')
+   run('test_all_models.m')
    ```
 
 6. **Make Predictions:**
    ```matlab
-   % Price prediction
+   % Price prediction (standard)
    price = predict_price(6, 4000, 6.1, 174, 2024, 'Apple');
    fprintf('Predicted price: $%.0f\n', price);
+   
+   % Enhanced price prediction (best accuracy)
+   price_enhanced = predict_price_enhanced(6, 4000, 6.1, 174, 2024, 'Apple');
+   fprintf('Enhanced predicted price: $%.0f\n', price_enhanced);
+   
+   % Ensemble prediction (combines multiple models)
+   price_ensemble = predict_price_ensemble(6, 4000, 6.1, 174, 2024, 'Apple');
+   fprintf('Ensemble predicted price: $%.0f\n', price_ensemble);
 
    % Brand classification
    brand = predict_brand(6, 4000, 6.1, 174, 2024, 999);
    fprintf('Predicted brand: %s\n', brand);
+   
+   % RAM prediction (uses tuned model if available)
+   ram = predict_ram(4000, 6.1, 174, 2024, 999, 'Apple');
+   fprintf('Predicted RAM: %d GB\n', ram);
    ```
 
 ### Other Scripts
@@ -147,9 +190,23 @@ This will:
 - Results are saved to MATLAB workspace variables for further analysis
 - GPU acceleration is supported for neural network training
 
+## Enhanced Models
+
+This directory includes enhanced models with significant accuracy improvements:
+
+- **Enhanced Price Prediction**: R² = 0.9824 (vs 0.95 original)
+- **Enhanced RAM Prediction**: R² = 0.9516 (vs 0.89 original)
+- **Enhanced Battery Prediction**: R² = 0.9477 (vs 0.88 original)
+- **Enhanced Brand Classification**: 65.22% accuracy (vs 58% original)
+
+See `ALL_MODELS_IMPROVEMENTS.md` and `FINAL_IMPROVEMENTS_COMPLETE.md` for details.
+
 ## Related Files
 
 For general MATLAB deep learning examples and guides, see:
-- `../deep-learning-networks-guide.md`
-- `../examples/` directory
-- `../README.md`
+- `../deep-learning-networks-guide.md` - Comprehensive deep learning guide
+- `../MOBILES_DATASET_GUIDE.md` - Network architecture selection guide
+- `../time_series_forecasting_guide.md` - Time series forecasting guide
+- `../EXAMPLES_SUMMARY.md` - Examples execution summary
+- `../examples/` directory - Deep learning examples
+- `../README.md` - Main project README
