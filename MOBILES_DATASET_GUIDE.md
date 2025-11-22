@@ -1,17 +1,19 @@
 # Mobile Phones Dataset - Network Architecture Guide
 
-## Dataset: abdulmalik1518/mobiles-dataset-2025
+**Dataset:** abdulmalik1518/mobiles-dataset-2025
 
 This guide helps you choose the right neural network architecture based on your dataset structure.
 
 ## Step 1: Analyze Your Dataset
 
 First, run the analysis script to understand your data:
+
 ```matlab
 run('analyze_mobiles_dataset.m')
 ```
 
 Or download and check manually:
+
 ```bash
 kaggle datasets download abdulmalik1518/mobiles-dataset-2025
 unzip mobiles-dataset-2025.zip
