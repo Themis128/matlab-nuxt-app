@@ -378,31 +378,13 @@
     return results.value.models.filter( (model: PhoneModel) => selectedBrands.value.includes( model.company ) )
   } )
 
+  // Use mobile image composable for image handling
+  const { getImagePath: generateImagePath, handleImageError } = useMobileImage()
+
   // Get image path for a model
-  const getImagePath = ( model: PhoneModel ): string | undefined =>
+  const getImagePath = ( model: PhoneModel ): string =>
   {
-    // Construct image path based on model name (matching scraper output format)
-    const sanitizedName = `${ model.company } ${ model.modelName }`
-      .replace( /[<>:"/\\|?*]/g, '_' )
-      .replace( /\s+/g, '_' )
-      .substring( 0, 100 )
-
-    // Try different possible paths (matching scraper output)
-    const possiblePaths = [
-      `/mobile_images/${ sanitizedName }/${ sanitizedName }_1.jpg`,
-      `/mobile_images/${ sanitizedName }/${ sanitizedName }_2.jpg`,
-      `/mobile_images/${ sanitizedName }/${ sanitizedName }_3.jpg`
-    ]
-
-    // Return first path (browser will handle 404 if image doesn't exist)
-    return possiblePaths[ 0 ]
-  }
-
-  // Handle image load errors
-  const handleImageError = ( event: Event ) =>
-  {
-    const img = event.target as HTMLImageElement
-    img.style.display = 'none'
+    return generateImagePath(model.company, model.modelName, 1)
   }
 
   // Set page metadata
