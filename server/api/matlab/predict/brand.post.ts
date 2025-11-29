@@ -42,16 +42,27 @@ export default defineEventHandler(async (event): Promise<BrandResponse> => {
 
     // Create MATLAB command to call predict_brand
     const matlabScript = `
-cd('${mobilesDir.replace(/\\/g, '/')}');
-try
+  try
+    % Ensure project paths are available
+    cd('${projectRoot.replace(/\\/g, '/')}');
+    if exist('setup_matlab_env.m', 'file')
+      run('setup_matlab_env.m');
+    else
+      addpath(genpath(pwd));
+    end
+
+    % Move to mobiles dataset docs folder
+    cd('${mobilesDir.replace(/\\/g, '/')}');
+
+    % Call prediction function
     brand = predict_brand(${body.ram}, ${body.battery}, ${body.screen}, ${body.weight}, ${body.year}, ${body.price});
     fprintf('BRAND_RESULT:%s\\n', char(brand));
-catch ME
+  catch ME
     fprintf('ERROR:%s\\n', ME.message);
     exit(1);
-end
-exit(0);
-`
+  end
+  exit(0);
+  `
 
     // Write temporary script
     const tempScriptPath = join(projectRoot, 'temp_predict_brand.m')
@@ -61,8 +72,8 @@ exit(0);
     const matlabCommand = `"${matlabExe}" -batch "run('${tempScriptPath.replace(/\\/g, '/')}')"`
 
     const { stdout, stderr } = await execAsync(matlabCommand, {
-      maxBuffer: 10 * 1024 * 1024,
-      timeout: 30000,
+      maxBuffer: 20 * 1024 * 1024,
+      timeout: 60000,
       cwd: projectRoot
     })
 

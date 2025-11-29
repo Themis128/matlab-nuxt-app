@@ -276,11 +276,52 @@ Edit `matlab.config.json` with your MATLAB installation path:
 
 ## 🎯 Quick Start
 
-### Start the Web App
+### Start Both Servers (Recommended)
 ```bash
-npm run dev
+# Start Python API and Nuxt dev server together
+npm run dev:all
 ```
 Visit `http://localhost:3000` to explore AI predictions and dataset analysis.
+Python API runs on `http://localhost:8000`.
+
+### Start Servers Individually
+```bash
+# Terminal 1: Start Python API
+cd python_api
+python api.py
+
+# Terminal 2: Start Nuxt dev server
+npm run dev
+```
+
+### VS Code Development
+Use the integrated VS Code task:
+1. Open Command Palette (`Ctrl+Shift+P` or `Cmd+Shift+P`)
+2. Select "Tasks: Run Task"
+3. Choose "Dev: Nuxt + Python"
+
+Or use the debug configuration:
+1. Go to Run and Debug (`Ctrl+Shift+D` or `Cmd+Shift+D`)
+2. Select "Dev: Nuxt + Python" from the dropdown
+3. Press F5 to start both servers with debugging
+
+### Code Quality Checks
+```bash
+# TypeScript type checking
+npm run typecheck
+
+# ESLint code linting
+npm run lint
+
+# Run E2E tests
+npm test
+
+# Run tests with UI
+npm run test:ui
+
+# View test report
+npm run test:report
+```
 
 <div align="center">
 
@@ -340,13 +381,36 @@ run('train_all_models_enhanced.m')
 
 ```
 .
-├── app.vue                      # Root Nuxt app component
+├── app.vue                      # Root Nuxt app component with NuxtLayout
+├── layouts/
+│   └── default.vue             # Default layout with navigation
 ├── pages/                       # Nuxt pages
-│   └── index.vue               # Main capabilities checker page
+│   ├── index.vue               # Home page
+│   ├── demo.vue                # AI predictions demo
+│   ├── search.vue              # Advanced search
+│   ├── recommendations.vue     # Find by price
+│   └── compare.vue             # Compare models
 ├── server/                      # Server-side API
-│   └── api/
-│       └── matlab/
-│           └── capabilities.get.ts  # MATLAB capabilities API endpoint
+│   ├── api/
+│   │   ├── health.get.ts       # Python API health check
+│   │   ├── predict/            # Nuxt prediction endpoints
+│   │   ├── matlab/             # MATLAB integration endpoints
+│   │   └── dataset/            # Dataset query endpoints
+│   └── utils/
+│       └── python-api.ts       # Python API client utility
+├── composables/                 # Vue composables
+│   ├── useApiStatus.ts         # API health with exponential backoff
+│   ├── usePredictionValidation.ts  # Input validation
+│   └── usePredictionHistory.ts # localStorage persistence
+├── stores/                      # Pinia stores
+│   ├── apiStore.ts             # Python API state
+│   ├── predictionValidationStore.ts
+│   └── predictionHistoryStore.ts
+├── python_api/                  # FastAPI prediction server
+│   ├── api.py                  # Main FastAPI app
+│   ├── predictions_sklearn.py  # scikit-learn models (preferred)
+│   ├── predictions_tensorflow.py  # TensorFlow fallback
+│   └── trained_models/         # .pkl and .h5 model files
 ├── examples/                    # Deep learning examples
 │   ├── cnn_example.m           # CNN for image classification
 │   ├── lstm_example.m          # LSTM for sequences
@@ -369,6 +433,18 @@ run('train_all_models_enhanced.m')
 │   ├── generate_enhanced_visualizations.m  # Enhanced visualizations ⭐
 │   ├── trained_models/         # Saved models (including enhanced) ⭐
 │   └── preprocessed/           # Preprocessed data (including enhanced features) ⭐
+├── tests/                       # Playwright E2E tests
+│   ├── recommendations.spec.ts # Recommendations page tests
+│   ├── search.spec.ts          # Search functionality tests
+│   ├── prediction-api-integration.spec.ts # API tests
+│   └── helpers/                # Test utilities and fixtures
+├── .vscode/                     # VS Code configuration
+│   ├── settings.json           # Workspace settings
+│   ├── extensions.json         # Recommended extensions
+│   ├── tasks.json              # Dev tasks (Nuxt + Python)
+│   └── launch.json             # Debug configurations
+├── .eslintrc.cjs               # ESLint configuration
+├── playwright.config.ts        # Playwright test config
 ├── check_matlab_capabilities.m  # MATLAB capabilities script
 ├── check-capabilities.js       # Node.js CLI script
 ├── check-capabilities.py       # Python CLI script
@@ -380,10 +456,46 @@ run('train_all_models_enhanced.m')
 ├── view_mat_file.js            # Node.js .mat file viewer
 ├── matlab.config.json          # MATLAB configuration
 ├── nuxt.config.ts              # Nuxt configuration
-├── package.json                 # Node.js dependencies
+├── package.json                 # Node.js dependencies & scripts
 ├── requirements.txt             # Python dependencies
 └── README.md                    # This file
 ```
+
+## 🔧 Development Scripts
+
+### NPM Scripts
+```bash
+# Development
+npm run dev              # Start Nuxt dev server only
+npm run dev:python       # Start Python API only
+npm run dev:all          # Start both servers with concurrently (recommended)
+
+# Building & Production
+npm run build            # Build Nuxt app for production
+npm run preview          # Preview production build
+npm run generate         # Generate static site
+
+# Code Quality
+npm run typecheck        # Run TypeScript type checking
+npm run lint             # Run ESLint
+
+# Testing
+npm test                 # Run Playwright E2E tests
+npm run test:ui          # Run tests with Playwright UI
+npm run test:report      # Show last test report
+
+# Utilities
+npm run check            # Check MATLAB capabilities
+npm run mat:view         # View .mat files with Node.js
+```
+
+### VS Code Tasks
+- **Dev: Nuxt + Python** - Starts both servers in PowerShell background job + Nuxt dev
+
+### VS Code Debug Configurations
+- **Debug Nuxt Server** - Attach debugger to Nuxt dev server
+- **Run Python API** - Launch Python API with debugger
+- **Dev: Nuxt + Python (Compound)** - Start and debug both servers simultaneously
 
 ## 📚 Documentation
 
@@ -413,6 +525,23 @@ run('train_all_models_enhanced.m')
 - **[docs/images/README.md](docs/images/README.md)** - Screenshot requirements and tips
 - **[docs/QUICK_REFERENCE.md](docs/QUICK_REFERENCE.md)** - Quick reference for repository setup
 - **[docs/VISUALIZATION_README.md](docs/VISUALIZATION_README.md)** - Visualization generation guide
+
+## 🔒 Security & Audits
+
+- Dev-only advisory: A high-severity `node-forge` advisory may appear via the Nuxt CLI toolchain (`nuxt → @nuxt/cli → listhen`). It affects local development tooling only and is not included in production output.
+- Verify production is clean:
+  ```powershell
+  npm audit --omit=dev
+  ```
+- Recommended practice:
+  - Keep the Nuxt dev server bound to `localhost` and do not expose dev ports publicly.
+  - In CI, fail audits only on production issues using `npm audit --omit=dev`.
+- Track upstream fixes by re-checking periodically:
+  ```powershell
+  npm ls node-forge
+  npm audit
+  npm audit --omit=dev
+  ```
 
 ## 💻 Usage Examples
 

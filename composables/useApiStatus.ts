@@ -8,6 +8,7 @@ export const useApiStatus = () => {
     isChecking: false,
     lastChecked: null as number | null,
     error: null as string | null,
+    backoffMs: 30000,
   })
 
   const checkApiHealth = async () => {
@@ -37,14 +38,30 @@ export const useApiStatus = () => {
     }
   }
 
-  // Auto-check on mount and periodically
+  // Auto-check on mount and periodically with exponential backoff when offline
   onMounted(() => {
-    checkApiHealth()
-    // Check every 30 seconds
-    const interval = setInterval(checkApiHealth, 30000)
+    let timer: ReturnType<typeof setTimeout> | null = null
+
+    const scheduleNext = () => {
+      if (timer) clearTimeout(timer)
+      const delay = status.value.isOnline ? 30000 : Math.min(status.value.backoffMs, 10 * 60 * 1000)
+      timer = setTimeout(async () => {
+        await checkApiHealth()
+        // Increase backoff if still offline, reset when online
+        if (!status.value.isOnline) {
+          status.value.backoffMs = Math.min(status.value.backoffMs * 2, 10 * 60 * 1000)
+        } else {
+          status.value.backoffMs = 30000
+        }
+        scheduleNext()
+      }, delay)
+    }
+
+    // Initial check then schedule
+    checkApiHealth().finally(scheduleNext)
 
     onUnmounted(() => {
-      clearInterval(interval)
+      if (timer) clearTimeout(timer)
     })
   })
 

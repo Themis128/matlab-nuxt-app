@@ -313,13 +313,12 @@
 
     try
     {
-      const data = await $fetch<ModelsByPriceResponse>( '/api/dataset/models-by-price', {
-        params: {
-          price: searchPrice.value,
-          tolerance: tolerance.value,
-          maxResults: 100
-        }
-      } )
+      const searchParams = new URLSearchParams()
+      searchParams.append('price', searchPrice.value.toString())
+      searchParams.append('tolerance', tolerance.value.toString())
+      searchParams.append('maxResults', '100')
+
+      const data = await $fetch<ModelsByPriceResponse>( `/api/dataset/models-by-price?${searchParams.toString()}` )
       results.value = data
       // Clear any previous errors
       error.value = null
@@ -376,7 +375,7 @@
     }
 
     // Filter by selected brands
-    return results.value.models.filter( model => selectedBrands.value.includes( model.company ) )
+    return results.value.models.filter( (model: PhoneModel) => selectedBrands.value.includes( model.company ) )
   } )
 
   // Get image path for a model

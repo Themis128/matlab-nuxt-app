@@ -170,7 +170,7 @@
               <!-- Selection Checkbox -->
               <div class="absolute top-3 left-3 z-10">
                 <UCheckbox :model-value=" isModelSelected( model ) "
-                  @update:model-value=" ( selected ) => toggleModelSelection( model, selected ) "
+                  @update:model-value=" ( selected: boolean ) => toggleModelSelection( model, selected ) "
                   :disabled=" !isModelSelected( model ) && selectedModelsForComparison.length >= 5 " />
               </div>
 
@@ -391,7 +391,7 @@
   }
 
   // Watch for brand changes and update available models
-  watch( () => filters.value.brands, async ( newBrands ) =>
+  watch( () => filters.value.brands, async ( newBrands: string[] ) =>
   {
     await fetchAvailableModels( newBrands )
   }, { deep: true } )
@@ -404,36 +404,34 @@
 
     try
     {
-      // Build query parameters
-      const params: any = {
-        sortBy: sortBy.value,
-        sortOrder: sortOrder.value,
-        limit,
-        offset
-      }
+      const searchParams = new URLSearchParams()
+      searchParams.append('sortBy', sortBy.value)
+      searchParams.append('sortOrder', sortOrder.value)
+      searchParams.append('limit', limit.toString())
+      searchParams.append('offset', offset.toString())
 
       if ( filters.value.brands.length > 0 )
       {
-        params.brand = filters.value.brands
+        filters.value.brands.forEach((b: string) => searchParams.append('brand', b))
       }
-      if ( filters.value.minPrice != undefined ) params.minPrice = filters.value.minPrice
-      if ( filters.value.maxPrice != undefined ) params.maxPrice = filters.value.maxPrice
-      if ( filters.value.minRam != undefined ) params.minRam = filters.value.minRam
-      if ( filters.value.maxRam != undefined ) params.maxRam = filters.value.maxRam
-      if ( filters.value.minBattery != undefined ) params.minBattery = filters.value.minBattery
-      if ( filters.value.maxBattery != undefined ) params.maxBattery = filters.value.maxBattery
-      if ( filters.value.minScreen != undefined ) params.minScreen = filters.value.minScreen
-      if ( filters.value.maxScreen != undefined ) params.maxScreen = filters.value.maxScreen
+      if ( filters.value.minPrice != undefined ) searchParams.append('minPrice', filters.value.minPrice.toString())
+      if ( filters.value.maxPrice != undefined ) searchParams.append('maxPrice', filters.value.maxPrice.toString())
+      if ( filters.value.minRam != undefined ) searchParams.append('minRam', filters.value.minRam.toString())
+      if ( filters.value.maxRam != undefined ) searchParams.append('maxRam', filters.value.maxRam.toString())
+      if ( filters.value.minBattery != undefined ) searchParams.append('minBattery', filters.value.minBattery.toString())
+      if ( filters.value.maxBattery != undefined ) searchParams.append('maxBattery', filters.value.maxBattery.toString())
+      if ( filters.value.minScreen != undefined ) searchParams.append('minScreen', filters.value.minScreen.toString())
+      if ( filters.value.maxScreen != undefined ) searchParams.append('maxScreen', filters.value.maxScreen.toString())
       if ( filters.value.years.length > 0 )
       {
-        params.year = filters.value.years
+        filters.value.years.forEach((y: number) => searchParams.append('year', y.toString()))
       }
-      if ( filters.value.minStorage != undefined ) params.minStorage = filters.value.minStorage
-      if ( filters.value.maxStorage != undefined ) params.maxStorage = filters.value.maxStorage
-      if ( filters.value.processor ) params.processor = filters.value.processor
-      if ( filters.value.modelName ) params.modelName = filters.value.modelName
+      if ( filters.value.minStorage != undefined ) searchParams.append('minStorage', filters.value.minStorage.toString())
+      if ( filters.value.maxStorage != undefined ) searchParams.append('maxStorage', filters.value.maxStorage.toString())
+      if ( filters.value.processor ) searchParams.append('processor', filters.value.processor)
+      if ( filters.value.modelName ) searchParams.append('modelName', filters.value.modelName)
 
-      const data = await $fetch<SearchResponse>( 'http://localhost:8000/api/dataset/search', { params } )
+      const data = await $fetch<SearchResponse>( `http://localhost:8000/api/dataset/search?${searchParams.toString()}` )
       results.value = data
     } catch ( err: any )
     {
