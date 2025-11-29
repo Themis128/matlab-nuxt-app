@@ -1,0 +1,144 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [master, main]
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+env:
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  SERVER_HOST: ${{ secrets.SERVER_HOST }}
+  SERVER_USER: ${{ secrets.SERVER_USER }}
+  SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+  SERVER_PORT: ${{ secrets.SERVER_PORT }}
+
+jobs:
+  deploy-docker:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate Docker secrets
+        run: |
+          if [ -z "${{ secrets.DOCKER_USERNAME }}" ] || [ -z "${{ secrets.DOCKER_PASSWORD }}" ]; then
+            echo "::error::DOCKER_USERNAME and DOCKER_PASSWORD secrets must be configured"
+            exit 1
+          fi
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ env.DOCKER_PASSWORD }}
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Build and push Python API
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./deployment/Dockerfile
+          push: true
+          tags: |
+            ${{ env.DOCKER_USERNAME }}/matlab-python-api:latest
+            ${{ env.DOCKER_USERNAME }}/matlab-python-api:${{ steps.version.outputs.VERSION }}
+          cache-from: type=registry,ref=${{ env.DOCKER_USERNAME }}/matlab-python-api:latest
+          cache-to: type=inline
+          platforms: linux/amd64
+
+      - name: Build and push Nuxt App
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./deployment/Dockerfile.nuxt
+          push: true
+          tags: |
+            ${{ env.DOCKER_USERNAME }}/matlab-nuxt-app:latest
+            ${{ env.DOCKER_USERNAME }}/matlab-nuxt-app:${{ steps.version.outputs.VERSION }}
+          cache-from: type=registry,ref=${{ env.DOCKER_USERNAME }}/matlab-nuxt-app:latest
+          cache-to: type=inline
+          platforms: linux/amd64
+
+      - name: Summary
+        run: |
+          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Python API: \`${{ env.DOCKER_USERNAME }}/matlab-python-api:${{ steps.version.outputs.VERSION }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Nuxt App: \`${{ env.DOCKER_USERNAME }}/matlab-nuxt-app:${{ steps.version.outputs.VERSION }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- 🚀 Images pushed to Docker Hub" >> $GITHUB_STEP_SUMMARY
+          echo "- 📦 Version: ${{ steps.version.outputs.VERSION }}" >> $GITHUB_STEP_SUMMARY
+
+  deploy-server:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate server secrets
+        run: |
+          if [ -z "${{ secrets.SERVER_HOST }}" ] || [ -z "${{ secrets.SERVER_USER }}" ] || [ -z "${{ secrets.SERVER_SSH_KEY }}" ]; then
+            echo "::error::SERVER_HOST, SERVER_USER, and SERVER_SSH_KEY secrets must be configured"
+            exit 1
+          fi
+
+      - name: Deploy to server via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ env.SERVER_HOST }}
+          username: ${{ env.SERVER_USER }}
+          key: ${{ env.SERVER_SSH_KEY }}
+          port: ${{ env.SERVER_PORT || '22' }}
+          script: |
+            set -e
+            cd /var/www/matlab-mobile-dataset || exit 1
+            echo "Pulling latest code..."
+            git pull origin master || exit 1
+            echo "Activating virtual environment..."
+            source venv/bin/activate || exit 1
+            echo "Installing Python dependencies..."
+            pip install -r python_api/requirements.txt || exit 1
+            echo "Cleaning and installing Node dependencies..."
+            rm -rf node_modules package-lock.json
+            npm install || exit 1
+            echo "Building application..."
+            npm run build || exit 1
+            echo "Restarting services..."
+            sudo systemctl restart python-api nuxt-app || exit 1
+            echo "Waiting for services to start..."
+            sleep 15
+            echo "Running health checks..."
+            curl -f http://localhost:8000/health || { echo "Python API health check failed"; exit 1; }
+            curl -f http://localhost:3000/ || { echo "Nuxt app health check failed"; exit 1; }
+            echo "✅ Deployment successful"
+
+      - name: Run health checks
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ env.SERVER_HOST }}
+          username: ${{ env.SERVER_USER }}
+          key: ${{ env.SERVER_SSH_KEY }}
+          port: ${{ env.SERVER_PORT || '22' }}
+          script: |
+            cd /var/www/matlab-mobile-dataset/deployment || exit 1
+            if [ -f health_check.sh ]; then
+              bash health_check.sh || exit 1
+            else
+              echo "⚠️ health_check.sh not found, skipping detailed checks"
+            fi
+
+      - name: Summary
+        run: |
+          echo "## Server Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Code updated on server" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Services restarted" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Health checks passed" >> $GITHUB_STEP_SUMMARY
