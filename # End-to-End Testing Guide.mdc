@@ -1,0 +1,155 @@
+# End-to-End Testing Guide
+
+## Test Environment Setup
+
+Following the project's dual-service architecture:
+
+```powershell
+# Terminal 1: Start Python API (required for all tests)
+cd python_api
+python api.py  # Runs on http://localhost:8000
+
+# Terminal 2: Start Nuxt dev server
+npm run dev  # Runs on http://localhost:3000
+
+# Terminal 3: Run tests
+npm test  # Runs all E2E tests
+
+# Or run specific test files:
+npm test tests/analytics.spec.ts
+npm test tests/prediction-api-integration.spec.ts
+```
+
+## Test Structure
+
+### Analytics Tests (`analytics.spec.ts`)
+
+Tests the comprehensive analytics dashboard:
+
+- **Overview Loading**: Verifies dataset stats, cards, and initial data load
+- **Tab Navigation**: Tests all 6 analytics tabs (Summary, Outliers, Distributions, Brands, Segments, Trends)
+- **Chart Rendering**: Validates Chart.js visualizations (Pie, Bar, Line, Doughnut)
+- **Report Generation**: Tests JSON report download functionality
+- **Error Handling**: Validates graceful degradation when API is unavailable
+- **API Integration**: Direct Python API endpoint testing
+
+### Test Patterns
+
+**Following project conventions from `copilot-instructions.md`:**
+
+```typescript
+// Pattern 1: Page navigation with loading state
+await page.goto('/analytics')
+await expect(page.locator('text=Dataset Overview')).toBeVisible({ timeout: 10000 })
+
+// Pattern 2: API endpoint testing (validates Python API)
+const response = await request.get('http://localhost:8000/api/analytics/eda/summary')
+expect(response.ok()).toBeTruthy()
+
+// Pattern 3: Error state handling (matches apiStore.ts pattern)
+await context.route('**/api/analytics/**', route => route.abort())
+await expect(page.locator('text=/error|failed/i')).toBeVisible()
+
+// Pattern 4: Download testing (report generation)
+const downloadPromise = page.waitForEvent('download')
+await page.click('text=Generate Report')
+const download = await downloadPromise
+expect(download.suggestedFilename()).toMatch(/analytics_report_.*\.json/)
+```
+
+## Running Tests
+
+```powershell
+# Run all tests
+npm test
+
+# Run specific test file
+npm test tests/analytics.spec.ts
+
+# Run with UI mode (interactive debugging)
+npm run test:ui
+
+# Generate HTML report
+npm run test:report
+```
+
+## CI/CD Integration
+
+Tests run automatically on GitHub Actions (see `.github/workflows/test.yml`):
+
+- Retries: 2 attempts per test (handles flakiness)
+- Screenshots: Captured on failure
+- Videos: Recorded for failed tests
+- Artifacts: Uploaded to GitHub for debugging
+
+## Test Data
+
+Analytics tests use the main dataset:
+- **Path**: `data/Mobiles Dataset (2025).csv` or `mobiles-dataset-docs/Mobiles Dataset (2025).csv`
+- **Records**: 930 mobile phones
+- **Features**: Base features + enhanced features (if available)
+
+## Troubleshooting
+
+**Tests fail with "Target closed" errors:**
+```powershell
+# Ensure Python API is running and healthy
+curl http://localhost:8000/health
+```
+
+**Tests timeout waiting for data:**
+```powershell
+# Check dataset exists
+ls "data/Mobiles Dataset (2025).csv"
+# Or
+ls "mobiles-dataset-docs/Mobiles Dataset (2025).csv"
+```
+
+**Chart rendering failures:**
+```powershell
+# Verify chart.js and vue-chartjs are installed
+npm list chart.js vue-chartjs
+```
+
+**API integration tests fail:**
+```powershell
+# Verify Python dependencies
+cd python_api
+pip list | findstr "scipy matplotlib seaborn pandas"
+```
+
+## Adding New Tests
+
+Follow the project's test patterns:
+
+1. **Create test file**: `tests/your-feature.spec.ts`
+2. **Import Playwright**: `import { test, expect } from '@playwright/test'`
+3. **Use beforeEach**: Navigate to page in setup
+4. **Add timeouts**: Use `{ timeout: 10000 }` for API-dependent assertions
+5. **Test error states**: Validate graceful degradation
+6. **Document**: Add summary to this README
+
+Example:
+```typescript
+test.describe('Your Feature', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/your-page')
+  })
+
+  test('should load data', async ({ page }) => {
+    await expect(page.locator('text=Expected Content')).toBeVisible({ timeout: 10000 })
+  })
+})
+```
+
+## Test Coverage
+
+Current E2E test coverage:
+
+- ✅ Prediction API integration (`prediction-api-integration.spec.ts`)
+- ✅ Compare page (`compare.spec.ts`)
+- ✅ Dashboard (`dashboard.spec.ts`)
+- ✅ Explore page (`explore.spec.ts`)
+- ✅ **Analytics dashboard (`analytics.spec.ts`)** ← New
+- ⏳ MATLAB integration tests (planned)
+- ⏳ Model training workflows (planned)

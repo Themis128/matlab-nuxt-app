@@ -8,6 +8,8 @@
  * Usage: node create-github-project.js [--org ORGANIZATION] [--user]
  */
 
+/* eslint-disable no-console, @typescript-eslint/no-unused-vars */
+
 import { execSync } from 'child_process'
 import { readFileSync } from 'fs'
 

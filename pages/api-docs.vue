@@ -346,7 +346,7 @@ onMounted(async () => {
     } else {
       pythonApiStatus.value = 'unhealthy'
     }
-  } catch (error) {
+  } catch {
     pythonApiStatus.value = 'unreachable'
   }
 })

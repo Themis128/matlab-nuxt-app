@@ -6,6 +6,8 @@
  * Usage: node view_mat_file.js <file.mat> [output.json]
  */
 
+/* eslint-disable no-console, @typescript-eslint/no-unused-vars */
+
 import fs from 'node:fs'
 import path from 'node:path'
 import { spawnSync } from 'node:child_process'

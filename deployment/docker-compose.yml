@@ -1,0 +1,91 @@
+version: '3.8'
+
+services:
+  python-api:
+    build:
+      context: ..
+      dockerfile: deployment/Dockerfile
+    container_name: matlab_python_api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../data:/app/data:ro
+      - ../python_api/trained_models:/app/trained_models:ro
+      - ../mobiles-dataset-docs/preprocessed:/app/preprocessed:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+    restart: unless-stopped
+    networks:
+      - matlab-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  nuxt-app:
+    build:
+      context: ..
+      dockerfile: deployment/Dockerfile.nuxt
+    container_name: matlab_nuxt_app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NUXT_PUBLIC_API_BASE=http://python-api:8000
+      - NUXT_API_SECRET=${NUXT_API_SECRET:-your-secret-key-here}
+    depends_on:
+      - python-api
+    restart: unless-stopped
+    networks:
+      - matlab-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  redis:
+    image: redis:7-alpine
+    container_name: matlab_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+    networks:
+      - matlab-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  nginx:
+    image: nginx:alpine
+    container_name: matlab_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - nuxt-app
+      - python-api
+    restart: unless-stopped
+    networks:
+      - matlab-network
+
+volumes:
+  redis-data:
+    driver: local
+
+networks:
+  matlab-network:
+    driver: bridge

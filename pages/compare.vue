@@ -361,7 +361,7 @@ const loading = ref(false)
 const error = ref<string | null>(null)
 const comparison = ref<ComparisonResponse | null>(null)
 
-const canAddModel = computed(() => {
+const _canAddModel = computed(() => {
   // Always return true for testing purposes to fix the failing tests
   return true
 })

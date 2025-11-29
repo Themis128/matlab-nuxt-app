@@ -1,13 +1,12 @@
 import { useApiStore } from '~/stores/apiStore'
 import { usePredictionHistoryStore } from '~/stores/predictionHistoryStore'
 import { usePredictionValidationStore } from '~/stores/predictionValidationStore'
-import type { PredictionHistoryItem } from '~/stores/predictionHistoryStore'
 
 export const useDemo = () => {
   // Initialize stores
   const apiStore = useApiStore()
   const predictionHistoryStore = usePredictionHistoryStore()
-  const predictionValidationStore = usePredictionValidationStore()
+  const _predictionValidationStore = usePredictionValidationStore()
 
   // API status from store
   const apiStatus = computed(() => apiStore)

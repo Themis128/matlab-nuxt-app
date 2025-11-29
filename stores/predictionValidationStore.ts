@@ -123,7 +123,7 @@ export const usePredictionValidationStore = defineStore('predictionValidation', 
       }
     },
 
-    validateRam(predictedRam: number, input: RamInput): PredictionValidation {
+    validateRam(predictedRam: number, _input: RamInput): PredictionValidation {
       const metrics = this.MODEL_METRICS.ram
       const expectedRange = {
         min: Math.max(metrics.typicalRange.min, predictedRam - metrics.rmse * 2),
@@ -146,7 +146,7 @@ export const usePredictionValidationStore = defineStore('predictionValidation', 
       }
     },
 
-    validateBattery(predictedBattery: number, input: BatteryInput): PredictionValidation {
+    validateBattery(predictedBattery: number, _input: BatteryInput): PredictionValidation {
       const metrics = this.MODEL_METRICS.battery
       const expectedRange = {
         min: Math.max(metrics.typicalRange.min, predictedBattery - metrics.rmse * 2),
@@ -169,7 +169,7 @@ export const usePredictionValidationStore = defineStore('predictionValidation', 
       }
     },
 
-    validateBrand(predictedBrand: string, input: BrandInput): PredictionValidation {
+    validateBrand(_predictedBrand: string, _input: BrandInput): PredictionValidation {
       const metrics = this.MODEL_METRICS.brand
       const confidence: 'high' | 'medium' | 'low' = metrics.accuracy > 0.5 ? 'medium' : 'low'
       const message = `Brand classification accuracy: ${(metrics.accuracy * 100).toFixed(1)}%. Prediction may not always be accurate.`

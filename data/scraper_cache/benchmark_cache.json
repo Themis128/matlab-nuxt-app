@@ -5578,5 +5578,1031 @@
       "multi_core": null
     },
     "performance_tier": "unknown"
+  },
+  "huawei p60": {
+    "model_name": "Huawei P60",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei p60 pro": {
+    "model_name": "Huawei P60 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei p60 art": {
+    "model_name": "Huawei P60 Art",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei mate x3": {
+    "model_name": "Huawei Mate X3",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei mate 60": {
+    "model_name": "Huawei Mate 60",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei mate 60 pro": {
+    "model_name": "Huawei Mate 60 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei mate 60 pro+": {
+    "model_name": "Huawei Mate 60 Pro+",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei nova 11": {
+    "model_name": "Huawei Nova 11",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei nova 11 pro": {
+    "model_name": "Huawei Nova 11 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei nova 11 ultra": {
+    "model_name": "Huawei Nova 11 Ultra",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei pura 70": {
+    "model_name": "Huawei Pura 70",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei pura 70 pro": {
+    "model_name": "Huawei Pura 70 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei pura 70 pro+": {
+    "model_name": "Huawei Pura 70 Pro+",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei pura 70 ultra": {
+    "model_name": "Huawei Pura 70 Ultra",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei mate 70": {
+    "model_name": "Huawei Mate 70",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei mate 70 pro": {
+    "model_name": "Huawei Mate 70 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei mate 70 pro+": {
+    "model_name": "Huawei Mate 70 Pro+",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei mate x6": {
+    "model_name": "Huawei Mate X6",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei nova 12": {
+    "model_name": "Huawei Nova 12",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei nova 12 pro": {
+    "model_name": "Huawei Nova 12 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei mate xt 256gb": {
+    "model_name": "Huawei Mate XT 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei mate xt 512gb": {
+    "model_name": "Huawei Mate XT 512GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei nova 13 256gb": {
+    "model_name": "Huawei Nova 13 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei nova 13 512gb": {
+    "model_name": "Huawei Nova 13 512GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei nova 13 pro 256gb": {
+    "model_name": "Huawei Nova 13 Pro 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei nova 13 pro 512gb": {
+    "model_name": "Huawei Nova 13 Pro 512GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "nokia g42 128gb": {
+    "model_name": "Nokia G42 5G 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "nokia g20 6b": {
+    "model_name": "Nokia G20 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "nokia g20 128gb": {
+    "model_name": "Nokia G20 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "nokia c32 6b": {
+    "model_name": "Nokia C32 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "nokia c32 128gb": {
+    "model_name": "Nokia C32 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "nokia g21 6b": {
+    "model_name": "Nokia G21 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "nokia g21 128gb": {
+    "model_name": "Nokia G21 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "nokia c22 6b": {
+    "model_name": "Nokia C22 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "nokia c22 128gb": {
+    "model_name": "Nokia C22 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "nokia g400 128gb": {
+    "model_name": "Nokia G400 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "sony xperia 1 iv 256gb": {
+    "model_name": "Sony Xperia 1 IV 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "sony xperia 5 iv 128gb": {
+    "model_name": "Sony Xperia 5 IV 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "sony xperia 10 iv 128gb": {
+    "model_name": "Sony Xperia 10 IV 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "sony xperia 1 v 256gb": {
+    "model_name": "Sony Xperia 1 V 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "sony xperia 5 v 128gb": {
+    "model_name": "Sony Xperia 5 V 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "sony xperia 10 v 128gb": {
+    "model_name": "Sony Xperia 10 V 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "sony xperia 1 vi 256gb": {
+    "model_name": "Sony Xperia 1 VI 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "sony xperia 5 vi 128gb": {
+    "model_name": "Sony Xperia 5 VI 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "sony xperia 10 vi 128gb": {
+    "model_name": "Sony Xperia 10 VI 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "nokia t21": {
+    "model_name": "Nokia T21",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei matepad pro 12.2 512gb": {
+    "model_name": "Huawei MatePad Pro 12.2 512GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "huawei matepad pro 13.2 512gb": {
+    "model_name": "Huawei MatePad Pro 13.2 512GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "google pixel 3a 6b": {
+    "model_name": "Google Pixel 3a 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "google pixel 3a xl 6b": {
+    "model_name": "Google Pixel 3a XL 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "google pixel 4 6b": {
+    "model_name": "Google Pixel 4 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "google pixel 4 xl 6b": {
+    "model_name": "Google Pixel 4 XL 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "google pixel 4a 128gb": {
+    "model_name": "Google Pixel 4a 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "google pixel 5 128gb": {
+    "model_name": "Google Pixel 5 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "google pixel 5a 128gb": {
+    "model_name": "Google Pixel 5a 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "google pixel 6 128gb": {
+    "model_name": "Google Pixel 6 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "google pixel 6 pro 256gb": {
+    "model_name": "Google Pixel 6 Pro 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "google pixel 6a 128gb": {
+    "model_name": "Google Pixel 6a 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "google pixel 7 128gb": {
+    "model_name": "Google Pixel 7 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "google pixel 7 pro 256gb": {
+    "model_name": "Google Pixel 7 Pro 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "google pixel 7a 128gb": {
+    "model_name": "Google Pixel 7a 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "google pixel 8 128gb": {
+    "model_name": "Google Pixel 8 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "google pixel 8 pro 256gb": {
+    "model_name": "Google Pixel 8 Pro 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "google pixel 8a 128gb": {
+    "model_name": "Google Pixel 8a 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "google pixel 9 128gb": {
+    "model_name": "Google Pixel 9 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "google pixel 9 pro 256gb": {
+    "model_name": "Google Pixel 9 Pro 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "google pixel 9 pro xl 512gb": {
+    "model_name": "Google Pixel 9 Pro XL 512GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "google pixel 9 pro fold 512gb": {
+    "model_name": "Google Pixel 9 Pro Fold 512GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo spark go 1s 6b": {
+    "model_name": "Tecno Spark Go 1S 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo megapad 11 256gb": {
+    "model_name": "Tecno Megapad 11 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo pop 9 6b": {
+    "model_name": "Tecno Pop 9 4G 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo megapad 128gb": {
+    "model_name": "Tecno Megapad 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo camon 30s 256gb": {
+    "model_name": "Tecno Camon 30S 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo spark 30c 128gb": {
+    "model_name": "Tecno Spark 30C 5G 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo spark 30 128gb": {
+    "model_name": "Tecno Spark 30 5G 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo spark 30 pro 256gb": {
+    "model_name": "Tecno Spark 30 Pro 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo phantom v fold2 512gb": {
+    "model_name": "Tecno Phantom V Fold2 512GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo phantom v flip2 256gb": {
+    "model_name": "Tecno Phantom V Flip2 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo pova 6 neo 256gb": {
+    "model_name": "Tecno Pova 6 Neo 5G 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo spark go 1 6b": {
+    "model_name": "Tecno Spark Go 1 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo camon 30s pro 512gb": {
+    "model_name": "Tecno Camon 30S Pro 512GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo spark 20p 128gb": {
+    "model_name": "Tecno Spark 20P 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo spark 20 pro 256gb": {
+    "model_name": "Tecno Spark 20 Pro 5G 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo camon 30 premier 512gb": {
+    "model_name": "Tecno Camon 30 Premier 512GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo camon 30 pro 512gb": {
+    "model_name": "Tecno Camon 30 Pro 512GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo camon 30 256gb": {
+    "model_name": "Tecno Camon 30 5G 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo camon 30 128gb": {
+    "model_name": "Tecno Camon 30 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo pova 6 pro 512gb": {
+    "model_name": "Tecno Pova 6 Pro 512GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo spark 20 pro+ 256gb": {
+    "model_name": "Tecno Spark 20 Pro+ 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo spark 20 pro 128gb": {
+    "model_name": "Tecno Spark 20 Pro 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo spark 20 128gb": {
+    "model_name": "Tecno Spark 20 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo spark 20c 128gb": {
+    "model_name": "Tecno Spark 20C 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo spark go 2024 6b": {
+    "model_name": "Tecno Spark Go 2024 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo pop 8 6b": {
+    "model_name": "Tecno Pop 8 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo camon 20s pro 512gb": {
+    "model_name": "Tecno Camon 20s Pro 5G 512GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo camon 20s pro 256gb": {
+    "model_name": "Tecno Camon 20s Pro 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo camon 20s 256gb": {
+    "model_name": "Tecno Camon 20s 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo camon 20 premier 512gb": {
+    "model_name": "Tecno Camon 20 Premier 512GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo camon 20 pro 256gb": {
+    "model_name": "Tecno Camon 20 Pro 5G 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo camon 20 pro 128gb": {
+    "model_name": "Tecno Camon 20 Pro 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo camon 20 128gb": {
+    "model_name": "Tecno Camon 20 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo pova 512gb": {
+    "model_name": "Tecno Pova 5G 512GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "teo pova 5 256gb": {
+    "model_name": "Tecno Pova 5 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix xpad": {
+    "model_name": "Infinix Xpad",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix xpad lite": {
+    "model_name": "Infinix Xpad Lite",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix xpad pro": {
+    "model_name": "Infinix Xpad Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 50": {
+    "model_name": "Infinix Hot 50",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 50i": {
+    "model_name": "Infinix Hot 50i",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 50 pro": {
+    "model_name": "Infinix Hot 50 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 50 pro+": {
+    "model_name": "Infinix Hot 50 Pro+",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix gt 20 pro": {
+    "model_name": "Infinix GT 20 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix note 40x": {
+    "model_name": "Infinix Note 40X 5G",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix note 40s": {
+    "model_name": "Infinix Note 40S",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix note 40": {
+    "model_name": "Infinix Note 40 5G",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
   }
 }

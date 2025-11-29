@@ -11,13 +11,6 @@ interface ColumnInfo {
   sample: string[]
 }
 
-interface FeatureCheck {
-  found: boolean
-  column?: string
-  count?: number
-  percentage?: number
-}
-
 interface DatasetAnalysis {
   datasetPath: string | null
   totalRows: number
@@ -33,7 +26,7 @@ interface DatasetAnalysis {
   }
 }
 
-export default defineEventHandler(async (event): Promise<DatasetAnalysis> => {
+export default defineEventHandler(async (): Promise<DatasetAnalysis> => {
   try {
     const projectRoot = process.cwd()
     const datasetPaths = [

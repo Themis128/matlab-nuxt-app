@@ -521,16 +521,9 @@ const fetchAvailableModels = async (brands: string[]) => {
 
   try {
     const params = brands.map(brand => `brands=${encodeURIComponent(brand)}`).join('&')
-    console.log(
-      'Fetching models for brands:',
-      brands,
-      'URL:',
-      `http://localhost:8000/api/dataset/models-by-company?${params}`
-    )
     const models = await $fetch<string[]>(
       `http://localhost:8000/api/dataset/models-by-company?${params}`
     )
-    console.log('Fetched models:', models)
     availableModels.value = models
   } catch (err) {
     console.error('Error fetching models:', err)

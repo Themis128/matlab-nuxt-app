@@ -68,7 +68,7 @@ const initializeTheme = async () => {
 }
 
 // Methods
-const toggleTheme = async (enabled: boolean) => {
+const toggleTheme = async (_enabled: boolean) => {
   // Import store dynamically to avoid SSR issues
   const { useUserPreferencesStore } = await import('~/stores/userPreferencesStore')
   const userPreferencesStore = useUserPreferencesStore()

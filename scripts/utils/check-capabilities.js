@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { exec } from 'child_process'
 import { readFileSync, writeFileSync } from 'fs'
 import { join, dirname } from 'path'

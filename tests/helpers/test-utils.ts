@@ -2,6 +2,8 @@
  * Reusable test utilities and helpers for Playwright tests
  */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { expect, type Page, type Locator } from '@playwright/test'
 
 /**

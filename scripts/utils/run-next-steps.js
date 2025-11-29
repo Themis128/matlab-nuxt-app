@@ -3,6 +3,8 @@
  * This script runs the next steps after initial model training
  */
 
+/* eslint-disable no-console */
+
 import { exec } from 'child_process'
 import { readFileSync } from 'fs'
 import { join, dirname } from 'path'

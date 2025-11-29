@@ -1,6 +1,4 @@
-import { callPythonAPI } from '~/server/utils/python-api'
-
-export default defineEventHandler(async event => {
+export default defineEventHandler(async () => {
   // Set CORS headers
   setHeader(event, 'Access-Control-Allow-Origin', '*')
   setHeader(event, 'Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')

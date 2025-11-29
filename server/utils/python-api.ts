@@ -22,9 +22,8 @@ export async function callPythonAPI<T>(
     // Let the calling code handle errors appropriately
     const data = await response.json()
     return data
-  } catch (error) {
+  } catch {
     // Python API not available, return null to fallback
-    console.log(`Python API not available at ${pythonApiUrl}${endpoint}`)
   }
 
   return null

@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { waitForPageLoad, waitForApiHealth, verifyApiResponse } from './helpers/test-utils'
+import { waitForApiHealth, verifyApiResponse } from './helpers/test-utils'
 import {
   validPhoneSpecs,
   budgetPhoneSpecs,

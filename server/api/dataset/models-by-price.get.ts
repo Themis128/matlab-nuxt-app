@@ -58,12 +58,10 @@ export default defineEventHandler(async (event): Promise<ModelsByPriceResponse> 
     ]
 
     let datasetContent: string | null = null
-    let datasetPath: string | null = null
 
     for (const path of datasetPaths) {
       try {
         datasetContent = readFileSync(path, 'utf-8')
-        datasetPath = path
         break
       } catch {
         continue
@@ -170,32 +168,19 @@ export default defineEventHandler(async (event): Promise<ModelsByPriceResponse> 
       return null
     }
 
-    // Debug: Log column indices found
-    console.log('Column indices:', {
-      modelName: modelNameIdx,
-      company: companyIdx,
-      price: priceIdx,
-      ram: ramIdx,
-      battery: batteryIdx,
-      screen: screenIdx,
-      weight: weightIdx,
-      year: yearIdx,
-    })
-    console.log('Price range:', { min: minPrice, max: maxPrice, requested: price })
-
     // Parse dataset and filter by price
     const models: PhoneModel[] = []
     const brandsSet = new Set<string>()
-    let processedCount = 0
-    let priceMatchCount = 0
-    let missingRequiredCount = 0
+    let _processedCount = 0
+    let _priceMatchCount = 0
+    let _missingRequiredCount = 0
 
     for (let i = 1; i < lines.length; i++) {
       const rawLine = lines[i] ?? ''
-      const values = parseCSVLine(rawLine).map(v => v.replace(/^"|"$/g, '').trim())
+      const values = parseCSVLine(rawLine).map(v => v.replace(/^"|"/g, '').trim())
 
       if (values.length < headers.length) continue
-      processedCount++
+      _processedCount++
 
       // Extract price
       const phonePrice = priceIdx !== -1 ? extractNumber(values[priceIdx]) : null
@@ -203,7 +188,7 @@ export default defineEventHandler(async (event): Promise<ModelsByPriceResponse> 
 
       // Check price range
       if (phonePrice < minPrice || phonePrice > maxPrice) continue
-      priceMatchCount++
+      _priceMatchCount++
 
       // Extract required fields
       const phoneRam = ramIdx !== -1 ? extractNumber(values[ramIdx]) : null
@@ -214,7 +199,7 @@ export default defineEventHandler(async (event): Promise<ModelsByPriceResponse> 
 
       // Skip if required fields are missing
       if (!phoneRam || !phoneBattery || !phoneScreen || !phoneWeight || !phoneYear) {
-        missingRequiredCount++
+        _missingRequiredCount++
         continue
       }
 
@@ -271,14 +256,6 @@ export default defineEventHandler(async (event): Promise<ModelsByPriceResponse> 
 
     // Limit results
     const limitedModels = models.slice(0, maxResults)
-
-    // Debug logging
-    console.log('Search results:', {
-      processedRows: processedCount,
-      priceMatches: priceMatchCount,
-      missingRequired: missingRequiredCount,
-      finalModels: models.length,
-    })
 
     return {
       models: limitedModels,

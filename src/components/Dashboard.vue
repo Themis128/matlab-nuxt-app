@@ -6,7 +6,6 @@
 </template>
 
 <script setup>
-import { defineComponent } from 'vue'
 import ApexCharts from 'vue3-apexcharts'
 
 const chartOptions = {

@@ -14,7 +14,7 @@ interface DatasetStatistics {
   yearDistribution: Record<string, number>
 }
 
-export default defineEventHandler(async (event): Promise<DatasetStatistics> => {
+export default defineEventHandler(async (): Promise<DatasetStatistics> => {
   try {
     const projectRoot = process.cwd()
     const csvPath = join(projectRoot, 'data', 'Mobiles Dataset (2025).csv')

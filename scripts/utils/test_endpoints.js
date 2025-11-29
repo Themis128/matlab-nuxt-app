@@ -3,6 +3,8 @@
  * Run with: node test_endpoints.js
  */
 
+/* eslint-disable no-console */
+
 const BASE_URL = 'http://localhost:3000'
 
 const colors = {

@@ -90,7 +90,7 @@ export const usePredictionValidation = () => {
 
   const validateRam = (
     predictedRam: number,
-    input: {
+    _input: {
       battery: number
       screen: number
       weight: number
@@ -123,7 +123,7 @@ export const usePredictionValidation = () => {
 
   const validateBattery = (
     predictedBattery: number,
-    input: {
+    _input: {
       ram: number
       screen: number
       weight: number
@@ -155,8 +155,8 @@ export const usePredictionValidation = () => {
   }
 
   const validateBrand = (
-    predictedBrand: string,
-    input: {
+    _predictedBrand: string,
+    _input: {
       ram: number
       battery: number
       screen: number

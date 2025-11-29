@@ -5,6 +5,8 @@
  * for use in the Nuxt.js dashboard.
  */
 
+/* eslint-disable no-console */
+
 import { existsSync, mkdirSync, copyFileSync, readdirSync } from 'fs'
 import { join } from 'path'
 
