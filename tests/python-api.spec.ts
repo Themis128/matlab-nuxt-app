@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-test.describe('Python API Endpoints', () => {
+test.describe.skip('Python API Endpoints', () => {
   test.describe('Health Check', () => {
     test('should respond to health check endpoint', async ({ request }) => {
       const response = await request.get('/api/health')

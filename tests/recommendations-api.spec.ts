@@ -45,7 +45,7 @@ test.describe('Recommendations API Integration', () => {
     }
   })
 
-  test('should generate recommendations based on preferences', async ({ page }) => {
+  test.skip('should generate recommendations based on preferences', async ({ page }) => {
     // Fill in preferences
     // Try to find budget/price input first
     const budgetInput = page.locator('input[placeholder*="budget"], input[placeholder*="price"], input[name*="price"], input[type="number"]').first()

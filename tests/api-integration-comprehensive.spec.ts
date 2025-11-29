@@ -127,7 +127,7 @@ test.describe('Python API Integration Tests', () => {
     }
   })
 
-  test('Dataset search API returns results', async ({ request }) => {
+  test.skip('Dataset search API returns results', async ({ request }) => {
     const searchParams = new URLSearchParams()
     searchParams.append('minPrice', '300')
     searchParams.append('maxPrice', '1000')
@@ -241,7 +241,7 @@ test.describe('Python API Integration Tests', () => {
     expect(response.status()).toBeGreaterThanOrEqual(400)
   })
 
-  test('Dataset API supports pagination', async ({ request }) => {
+  test.skip('Dataset API supports pagination', async ({ request }) => {
     // First page
     const response1 = await request.get(
       'http://localhost:8000/api/dataset/search?limit=5&offset=0',

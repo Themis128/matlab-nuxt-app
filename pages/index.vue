@@ -141,6 +141,12 @@
   </div>
 </template>
 
-<script setup lang="ts">
-  // Landing page component - no script needed for static content
+<script setup>
+// Set page title
+useHead({
+  title: 'Mobile Finder - MATLAB Deep Learning & Mobile Dataset Analysis',
+  meta: [
+    { name: 'description', content: 'Explore deep learning models, analyze mobile phone datasets, and discover insights with MATLAB and modern web technologies' }
+  ]
+})
 </script>

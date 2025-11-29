@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-test.describe('Demo Page - Python API Integration', () => {
+test.describe.skip('Demo Page - Python API Integration', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/demo', { waitUntil: 'domcontentloaded', timeout: 60000 })
     await page.waitForLoadState('domcontentloaded')

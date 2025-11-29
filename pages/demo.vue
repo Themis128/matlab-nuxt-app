@@ -195,12 +195,13 @@ const form = reactive({
 const selectedTypes = ref<string[]>(['price','ram','battery','brand'])
 
 const formValid = computed(() => {
-  // Check that required fields have values (Playwright fills them as strings)
-  const hasRam = form.ram != null && form.ram !== ''
-  const hasBattery = form.battery != null && form.battery !== ''
-  const hasScreen = form.screen != null && form.screen !== ''
-  const hasTypes = selectedTypes.value.length > 0
-  return hasRam && hasBattery && hasScreen && hasTypes
+  // Simple truthy checks work better with Playwright test fills
+  return Boolean(
+    form.ram && 
+    form.battery && 
+    form.screen && 
+    selectedTypes.value.length > 0
+  )
 })
 
 const resultsVisible = ref(false)

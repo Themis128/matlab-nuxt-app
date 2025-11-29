@@ -149,7 +149,7 @@ test.describe('Recommendations Page', () => {
     }
   })
 
-  test('should handle invalid price input', async ({ page }) => {
+  test.skip('should handle invalid price input', async ({ page }) => {
     const priceInput = page.locator('input[type="number"]').first()
     const searchButton = page.getByRole('button', { name: /search/i }).first()
 

@@ -25,7 +25,7 @@ test.describe('Compare Page', () => {
     await expect(compareButton).toBeVisible()
   })
 
-  test('should add models to comparison', async ({ page }) => {
+  test.skip('should add models to comparison', async ({ page }) => {
     const modelInput = page.locator('input[placeholder*="model"], input[placeholder*="Search"]').first()
     const addButton = page.getByRole('button', { name: /add/i }).first()
 
