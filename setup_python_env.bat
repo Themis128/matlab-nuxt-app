@@ -50,6 +50,9 @@ echo Installing required packages...
 echo This may take a few minutes...
 python -m pip install -r requirements.txt
 
+echo Installing API-specific packages...
+python -m pip install -r python_api\requirements.txt
+
 if errorlevel 1 (
     echo ERROR: Failed to install requirements
     pause

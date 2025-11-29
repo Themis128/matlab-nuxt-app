@@ -8,7 +8,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "dev:python": "cd python_api && python api.py",
-    "dev:all": "concurrently -t -n PY,NUXT -c blue,green \"cd python_api && python api.py\" \"nuxt dev\"",
+    "dev:all": "concurrently -t -n PY,NUXT -c blue,green \"cd python_api && ..\\venv\\Scripts\\python api.py\" \"nuxt dev\"",
     "typecheck": "nuxi typecheck || vue-tsc --noEmit --skipLibCheck && tsc -p tsconfig.json --noEmit",
     "lint": "eslint . --ext .js,.ts,.vue --max-warnings=0",
     "generate": "nuxt generate",
@@ -17,7 +17,7 @@
     "check": "node check-capabilities.js",
     "check:matlab": "node check-capabilities.js",
     "next-steps": "node run-next-steps.js",
-    "test": "playwright test",
+    "test": "set NUXT_TEST=1&& playwright test",
     "test:ui": "playwright test --ui",
     "test:report": "playwright show-report",
     "mat:view": "node view_mat_file.js"

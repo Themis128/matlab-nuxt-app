@@ -50,6 +50,7 @@
   @click="addModelFromSearch"
   color="primary"
   icon="i-heroicons-plus"
+  data-testid="add-model"
 >
   Add
 </UButton>

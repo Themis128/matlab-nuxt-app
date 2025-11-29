@@ -23,8 +23,8 @@ test.describe('Search Page - Advanced Search & Filtering', () => {
     
     // Check filter sections are present
     await expect(page.getByText(/Price Range/i)).toBeVisible()
-    await expect(page.getByText(/RAM/i)).toBeVisible()
-    await expect(page.getByText(/Battery/i)).toBeVisible()
+    await expect(page.getByText(/RAM/i).first()).toBeVisible()
+    await expect(page.getByText(/Battery/i).first()).toBeVisible()
     
     // Check search button
     await expect(page.getByRole('button', { name: /Search/i })).toBeVisible()

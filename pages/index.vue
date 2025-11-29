@@ -4,9 +4,7 @@
       <div class="max-w-6xl mx-auto">
         <!-- Header -->
         <div class="mb-8 text-center">
-          <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            MATLAB Deep Learning & Mobile Dataset Analysis
-          </h1>
+          <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">Mobile Finder</h1>
           <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
             Explore deep learning models, analyze mobile phone datasets, and discover insights with MATLAB and modern
             web technologies.

@@ -99,7 +99,7 @@ test.describe('Recommendations Page - Find Models by Price', () => {
     
     // Increase tolerance to 50%
     await toleranceSlider.fill('0.5')
-    await expect(page.getByText(/50%/)).toBeVisible()
+    await expect(page.locator('span').filter({ hasText: /^50%$/ }).first()).toBeVisible()
     
     // Click recommend again
     await clickWithRetry(recommendButton)
@@ -180,9 +180,9 @@ test.describe('Recommendations Page - Find Models by Price', () => {
     const recommendButton = page.getByRole('button', { name: /Recommend/i })
     const toleranceSlider = page.locator('input[type="range"]').first()
     
-    // Search with very narrow price range (1%)
+    // Search with very narrow price range (5% - minimum allowed)
     await fillFormField(priceInput, '99999')
-    await toleranceSlider.fill('0.01')
+    await toleranceSlider.fill('0.05')
     
     await clickWithRetry(recommendButton)
     

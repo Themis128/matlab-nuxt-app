@@ -259,6 +259,7 @@
 </template>
 
 <script setup lang="ts">
+import { useHead } from '#imports'
     // Page meta
     useHead( {
         title: 'AI Model Dashboard - Mobile Finder',

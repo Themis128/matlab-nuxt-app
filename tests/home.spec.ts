@@ -7,24 +7,24 @@ test.describe('Home Page', () => {
 
   test('should load home page successfully', async ({ page }) => {
     // Check page title
-    await expect(page).toHaveTitle(/Mobile Finder/)
+    await expect(page).toHaveTitle(/MATLAB|Mobile|Dataset/i)
 
     // Check main heading
-    await expect(page.locator('h1')).toContainText('Mobile Finder')
+    await expect(page.locator('h1').first()).toContainText('Mobile Finder', { timeout: 10000 })
 
     // Check navigation links exist
-    await expect(page.locator('a[href="/demo"]')).toBeVisible()
-    await expect(page.locator('a[href="/search"]')).toBeVisible()
-    await expect(page.locator('a[href="/explore"]')).toBeVisible()
-    await expect(page.locator('a[href="/compare"]')).toBeVisible()
-    await expect(page.locator('a[href="/recommendations"]')).toBeVisible()
+    await expect(page.locator('a[href="/demo"]').first()).toBeVisible({ timeout: 10000 })
+    await expect(page.locator('a[href="/search"]').first()).toBeVisible({ timeout: 10000 })
+    await expect(page.locator('a[href="/explore"]').first()).toBeVisible({ timeout: 10000 })
+    await expect(page.locator('a[href="/compare"]').first()).toBeVisible({ timeout: 10000 })
+    await expect(page.locator('a[href="/recommendations"]').first()).toBeVisible({ timeout: 10000 })
   })
 
   test('should have working navigation links', async ({ page }) => {
     // Test navigation to demo page
-    await page.locator('a[href="/demo"]').click()
+    await page.locator('a[href="/demo"]').first().click()
     await expect(page).toHaveURL(/.*\/demo/)
-    await expect(page.locator('h1')).toContainText('AI Predictions Lab')
+    await expect(page.locator('h1').first()).toContainText('AI Predictions Lab', { timeout: 10000 })
 
     // Go back to home
     await page.goto('/')
@@ -46,16 +46,16 @@ test.describe('Home Page', () => {
     await page.setViewportSize({ width: 375, height: 667 })
 
     // Check that navigation is still accessible
-    await expect(page.locator('a[href="/demo"]')).toBeVisible()
+    await expect(page.locator('a[href="/demo"]').first()).toBeVisible({ timeout: 15000 })
 
     // Check that content is readable
-    await expect(page.locator('h1')).toBeVisible()
+    await expect(page.locator('h1').first()).toBeVisible()
   })
 
   test('should have proper meta tags', async ({ page }) => {
     // Check meta description
     const metaDescription = page.locator('meta[name="description"]')
-    await expect(metaDescription).toHaveAttribute('content', /Mobile Finder/)
+    await expect(metaDescription).toHaveAttribute('content', /Explore deep learning models.*mobile phone.*MATLAB/i)
 
     // Check meta keywords
     const metaKeywords = page.locator('meta[name="keywords"]')

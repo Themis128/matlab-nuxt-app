@@ -1,0 +1,4 @@
+
+> matlab-nuxt-app@1.0.0 test
+> set NUXT_TEST=1&& playwright test --project=chromium --reporter=json
+

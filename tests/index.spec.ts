@@ -9,7 +9,7 @@ test.describe('Home Page', () => {
     await expect(page).toHaveTitle(/Mobile Finder/i, { timeout: 10000 })
 
     // Check main heading
-    await expect(page.locator('h1:has-text("Mobile Finder")').first()).toBeVisible({ timeout: 10000 })
+    await expect(page.locator('h1').first()).toContainText('Mobile Finder', { timeout: 10000 })
   })
 
   test('should display navigation links', async ({ page }) => {
@@ -26,29 +26,28 @@ test.describe('Home Page', () => {
     await page.goto('/')
     await page.waitForLoadState('networkidle')
 
-    // Check feature badges exist (using contains text)
-    await expect(page.locator('text=900+ Models').first()).toBeVisible({ timeout: 10000 })
-    await expect(page.locator('text=20+ Brands').first()).toBeVisible({ timeout: 10000 })
-    await expect(page.locator('text=AI-Powered Predictions').first()).toBeVisible({ timeout: 10000 })
+    // Check for performance metrics badges (actual page content)
+    const hasMetrics = await page.locator('text=/98.24%|95.16%|94.77%/').first().isVisible({ timeout: 5000 }).catch(() => false)
+    expect(hasMetrics).toBeTruthy()
   })
 
   test('should have quick action cards', async ({ page }) => {
     await page.goto('/')
     await page.waitForLoadState('networkidle')
 
-    // Check quick action cards exist
-    await expect(page.locator('h3:has-text("Advanced Search")').first()).toBeVisible({ timeout: 10000 })
-    await expect(page.locator('h3:has-text("Find by Price")').first()).toBeVisible({ timeout: 10000 })
-    await expect(page.locator('h3:has-text("Explore Dataset")').first()).toBeVisible({ timeout: 10000 })
-    await expect(page.locator('h3:has-text("AI Predictions")').first()).toBeVisible({ timeout: 10000 })
+    // Check quick action cards exist (matching actual page content)
+    await expect(page.locator('h3:has-text("AI Predictions Demo")').first()).toBeVisible({ timeout: 10000 })
+    await expect(page.locator('h3:has-text("Smart Search")').first()).toBeVisible({ timeout: 10000 })
+    await expect(page.locator('h3:has-text("Dataset Explorer")').first()).toBeVisible({ timeout: 10000 })
+    await expect(page.locator('h3:has-text("Model Performance Dashboard")').first()).toBeVisible({ timeout: 10000 })
   })
 
   test('should navigate to search page', async ({ page }) => {
     await page.goto('/')
     await page.waitForLoadState('networkidle')
 
-    // Find and click the Advanced Search card
-    const card = page.locator('.cursor-pointer').filter({ hasText: 'Advanced Search' }).first()
+    // Find and click the Smart Search card
+    const card = page.locator('.cursor-pointer, a[href="/search"]').filter({ hasText: 'Smart Search' }).first()
     await card.click({ timeout: 10000 })
 
     // Wait for navigation

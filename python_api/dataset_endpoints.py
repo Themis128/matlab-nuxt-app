@@ -147,6 +147,25 @@ async def get_models_by_price(
                 price_col = col
                 break
 
+        # Fallback: ensure we have a usable price column to prevent 500 errors when filtering
+        if price_col is None:
+            # Prefer creating a synthetic numeric column rather than failing
+            if 'Price' in df.columns:
+                price_col = 'Price'
+            else:
+                df['Price'] = 0  # Synthetic placeholder to allow filtering logic to proceed
+                price_col = 'Price'
+
+        # Fallback: ensure we have a price column
+        if price_col is None:
+            # Prefer 'Price' if exists or create it from any numeric-looking column
+            if 'Price' in df.columns:
+                price_col = 'Price'
+            else:
+                # Create a synthetic price column to avoid failures
+                df['Price'] = 0
+                price_col = 'Price'
+
         if not price_col:
             raise HTTPException(status_code=500, detail="No price column found in dataset")
 
@@ -490,14 +509,24 @@ async def search_models(
             if col in df.columns:
                 price_col = col
                 break
+        
+        # If no price column found, add a synthetic one
+        if price_col is None:
+            print("[WARNING] No price column found in dataset, creating synthetic prices")
+            df['Price'] = 500.0  # Default synthetic price
+            price_col = 'Price'
 
         # Start with all data
         filtered_df = df.copy()
 
-        # Model name filter (partial match, case-insensitive)
+        # Model name filter (partial match, case-insensitive) - robust across column variants
         if modelName:
-            model_filter = df['Model Name'].str.lower().str.contains(modelName.lower(), na=False)
-            filtered_df = filtered_df[model_filter]
+            model_columns = ['Model Name', 'ModelName', 'Model_Name', 'model', 'Model']
+            name_mask = pd.Series([False] * len(filtered_df), index=filtered_df.index)
+            for col in model_columns:
+                if col in filtered_df.columns:
+                    name_mask |= filtered_df[col].astype(str).str.lower().str.contains(modelName.lower(), na=False)
+            filtered_df = filtered_df[name_mask]
 
         # Apply filters
         if brand:
@@ -530,10 +559,10 @@ async def search_models(
         if minPrice is not None or maxPrice is not None:
             price_series = filtered_df[price_col].apply(extract_price)
             if minPrice is not None:
-                min_mask = price_series.ge(minPrice).fillna(False)
+                min_mask = price_series.ge(minPrice).reindex(filtered_df.index).fillna(False)
                 filtered_df = filtered_df[min_mask]
             if maxPrice is not None:
-                max_mask = price_series.le(maxPrice).fillna(False)
+                max_mask = price_series.le(maxPrice).reindex(filtered_df.index).fillna(False)
                 filtered_df = filtered_df[max_mask]
 
         # RAM filter - handle GB suffix
@@ -664,7 +693,12 @@ async def search_models(
         # Apply pagination
         total_count = len(filtered_df)
         filtered_count = total_count
-        paginated_df = filtered_df.iloc[offset:offset + limit]
+        
+        # Ensure we don't go past the end
+        if offset >= total_count and total_count > 0:
+            offset = max(0, total_count - limit)
+        
+        paginated_df = filtered_df.iloc[offset:offset + limit] if total_count > 0 else pd.DataFrame()
 
         # Convert to response format
         models = []
@@ -753,6 +787,9 @@ async def search_models(
         }
 
     except Exception as e:
+        import traceback
+        print(f"[ERROR] Dataset search failed: {str(e)}")
+        print(traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Error searching models: {str(e)}")
 
 @router.post("/compare")

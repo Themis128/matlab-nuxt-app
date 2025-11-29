@@ -2,7 +2,7 @@
     <div class="flex items-center gap-3">
         <UIcon name="i-heroicons-sun" class="w-5 h-5 text-yellow-500" />
         <UToggle :model-value=" isDarkMode " @update:model-value=" toggleTheme "
-            class="data-[state=on]:bg-purple-600" />
+            class="bg-green-500 data-[state=on]:bg-purple-600" />
         <UIcon name="i-heroicons-moon" class="w-5 h-5 text-purple-600 dark:text-purple-400" />
         <UBadge v-if=" currentTheme !== 'system' " :color=" currentTheme === 'dark' ? 'purple' : 'yellow' "
             variant="soft" size="xs">

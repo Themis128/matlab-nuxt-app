@@ -13,11 +13,11 @@ test.describe('Recommendations Page', () => {
   test('should have price search form', async ({ page }) => {
     // Check for price input
     const priceInput = page.locator('input[type="number"]').first()
-    await expect(priceInput).toBeVisible({ timeout: 10000 })
+    await expect(priceInput).toBeVisible({ timeout: 15000 })
 
-    // Check for search button
-    const searchButton = page.getByRole('button', { name: /search/i }).first()
-    await expect(searchButton).toBeVisible()
+    // Check for recommend button (not search button)
+    const recommendButton = page.getByRole('button', { name: /recommend/i }).first()
+    await expect(recommendButton).toBeVisible({ timeout: 15000 })
   })
 
   test('should search models by price', async ({ page }) => {
@@ -48,25 +48,18 @@ test.describe('Recommendations Page', () => {
 
   test('should display price range information', async ({ page }) => {
     const priceInput = page.locator('input[type="number"]').first()
-    const searchButton = page.getByRole('button', { name: /search/i }).first()
+    const recommendButton = page.getByRole('button', { name: /recommend/i }).first()
 
     await priceInput.clear()
     await priceInput.type('800', { delay: 100 })
     await page.waitForTimeout(500)
 
-    const isEnabled = await searchButton.isEnabled({ timeout: 3000 }).catch(() => false)
-    if (isEnabled) {
-      await searchButton.click()
-    } else {
-      await priceInput.press('Enter')
-    }
-
+    await recommendButton.click({ timeout: 10000 })
     await page.waitForLoadState('domcontentloaded')
     await page.waitForTimeout(2000)
 
-    // Look for price range display
-    const priceRange = page.locator('text=/\$|price|range/i').first()
-    await expect(priceRange).toBeVisible({ timeout: 10000 })
+    // Look for price range display in the blue info box
+    await expect(page.locator('text=/Searching for models between/i').first()).toBeVisible({ timeout: 10000 })
   })
 
   test('should have price tolerance slider', async ({ page }) => {

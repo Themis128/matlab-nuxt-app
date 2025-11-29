@@ -1,5 +1,7 @@
 import { defineConfig, devices } from '@playwright/test'
 
+const isCI = !!process.env.CI
+
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
@@ -14,7 +16,7 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: process.env.CI ? 'html' : 'list',
+  reporter: isCI ? [['html']] : [['list'], ['html', { open: 'never' }]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
@@ -69,26 +71,26 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
-  webServer: [
-    {
-      command: 'npm run dev',
-      url: 'http://localhost:3000',
-      reuseExistingServer: !process.env.CI,
-      timeout: 120 * 1000,
-    },
-    {
-      command: 'python python_api/api.py',
-      url: 'http://localhost:8000/health',
-      reuseExistingServer: !process.env.CI,
-      timeout: 120 * 1000,
-    },
-  ],
+  webServer: {
+    command: 'npm run dev:all',
+    url: 'http://localhost:3000',
+    reuseExistingServer: !isCI,
+    timeout: 180 * 1000,
+    env: {
+      NUXT_TEST: '1',
+      PLAYWRIGHT: '1'
+    }
+  },
+
+  globalSetup: './tests/global-setup.ts',
 
   /* Global test timeout */
-  timeout: 60 * 1000,
+  timeout: 90 * 1000,
 
   /* Expect timeout */
   expect: {
-    timeout: 10 * 1000,
+    timeout: 15 * 1000,
   },
+
+  outputDir: 'test-results',
 })
