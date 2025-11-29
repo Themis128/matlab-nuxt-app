@@ -1,6 +1,7 @@
 {
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
+    "module": "ES2022",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "types": ["node"]
   }

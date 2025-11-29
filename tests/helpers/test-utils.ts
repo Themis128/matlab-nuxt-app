@@ -7,7 +7,7 @@ import { expect, type Page, type Locator } from '@playwright/test'
 /**
  * Wait for page to be fully loaded and hydrated
  */
-export async function waitForPageLoad(page: Page, timeout = 5000) {
+export async function waitForPageLoad(page: Page, timeout = 15000) {
   await page.waitForLoadState('networkidle', { timeout })
   await page.waitForLoadState('domcontentloaded', { timeout })
 }

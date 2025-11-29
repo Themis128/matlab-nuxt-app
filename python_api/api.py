@@ -36,11 +36,13 @@ except ImportError:
 try:
     from predictions_sklearn import predict_price, predict_ram, predict_battery, predict_brand
     print("[OK] Using scikit-learn models for predictions")
-except ImportError:
+except (ImportError, Exception) as e:
+    print(f"[INFO] sklearn predictions unavailable: {type(e).__name__}")
     try:
         from predictions_tensorflow import predict_price, predict_ram, predict_battery, predict_brand
         print("[OK] Using TensorFlow models for predictions")
-    except ImportError:
+    except (ImportError, Exception) as tf_error:
+        print(f"[INFO] TensorFlow predictions unavailable: {type(tf_error).__name__}")
         # Fallback to basic predictions
         from predictions import predict_price, predict_ram, predict_battery, predict_brand
         print("[WARN] Using basic predictions (trained models not available)")

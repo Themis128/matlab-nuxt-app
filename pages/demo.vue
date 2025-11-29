@@ -107,7 +107,7 @@
 
           <!-- Actions -->
           <div class="flex flex-wrap gap-4">
-            <button @click="runPredictions" :disabled="!formValid" class="px-4 py-2 rounded-md bg-primary-500 text-white disabled:opacity-75 disabled:cursor-not-allowed">Run AI Predictions</button>
+            <button @click="runPredictions" class="px-4 py-2 rounded-md bg-primary-500 text-white">Run AI Predictions</button>
             <button type="button" @click="clearForm" class="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100">Clear Form</button>
           </div>
 
