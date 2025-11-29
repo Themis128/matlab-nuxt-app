@@ -1,9 +1,5 @@
 import { test, expect } from '@playwright/test'
-import {
-  waitForPageLoad,
-  waitForApiHealth,
-  verifyApiResponse
-} from './helpers/test-utils'
+import { waitForPageLoad, waitForApiHealth, verifyApiResponse } from './helpers/test-utils'
 import {
   validPhoneSpecs,
   budgetPhoneSpecs,
@@ -11,7 +7,7 @@ import {
   type PredictionResponse,
   type SearchResponse,
   type ModelsByPriceResponse,
-  timeouts
+  timeouts,
 } from './helpers/fixtures'
 
 test.describe('Python API Integration Tests', () => {
@@ -21,19 +17,19 @@ test.describe('Python API Integration Tests', () => {
 
   test('Python API health endpoint returns healthy status', async ({ request }) => {
     const response = await request.get('http://localhost:8000/health')
-    
+
     expect(response.ok()).toBeTruthy()
     expect(response.status()).toBe(200)
-    
+
     const data = await response.json()
     expect(data).toHaveProperty('status', 'healthy')
   })
 
   test('Nuxt health endpoint returns Python API status', async ({ request }) => {
     const response = await request.get('http://localhost:3000/api/health')
-    
+
     expect(response.ok()).toBeTruthy()
-    
+
     const data = await response.json()
     expect(data).toHaveProperty('status')
   })
@@ -46,16 +42,16 @@ test.describe('Python API Integration Tests', () => {
         screen: validPhoneSpecs.screen,
         weight: validPhoneSpecs.weight,
         year: validPhoneSpecs.year,
-        company: validPhoneSpecs.company
+        company: validPhoneSpecs.company,
       },
-      timeout: timeouts.api
+      timeout: timeouts.api,
     })
-    
+
     expect(response.ok()).toBeTruthy()
-    
-    const data = await response.json() as PredictionResponse
+
+    const data = (await response.json()) as PredictionResponse
     verifyApiResponse<PredictionResponse>(data, ['price'])
-    
+
     expect(typeof data.price).toBe('number')
     expect(data.price).toBeGreaterThan(0)
   })
@@ -68,15 +64,15 @@ test.describe('Python API Integration Tests', () => {
         weight: validPhoneSpecs.weight,
         year: validPhoneSpecs.year,
         price: validPhoneSpecs.price,
-        company: validPhoneSpecs.company
+        company: validPhoneSpecs.company,
       },
-      timeout: timeouts.api
+      timeout: timeouts.api,
     })
-    
+
     if (response.ok()) {
-      const data = await response.json() as PredictionResponse
+      const data = (await response.json()) as PredictionResponse
       verifyApiResponse<PredictionResponse>(data, ['ram'])
-      
+
       expect(typeof data.ram).toBe('number')
       expect(data.ram).toBeGreaterThan(0)
     }
@@ -90,15 +86,15 @@ test.describe('Python API Integration Tests', () => {
         weight: validPhoneSpecs.weight,
         year: validPhoneSpecs.year,
         price: validPhoneSpecs.price,
-        company: validPhoneSpecs.company
+        company: validPhoneSpecs.company,
       },
-      timeout: timeouts.api
+      timeout: timeouts.api,
     })
-    
+
     if (response.ok()) {
-      const data = await response.json() as PredictionResponse
+      const data = (await response.json()) as PredictionResponse
       verifyApiResponse<PredictionResponse>(data, ['battery'])
-      
+
       expect(typeof data.battery).toBe('number')
       expect(data.battery).toBeGreaterThan(0)
     }
@@ -112,15 +108,15 @@ test.describe('Python API Integration Tests', () => {
         screen: validPhoneSpecs.screen,
         weight: validPhoneSpecs.weight,
         year: validPhoneSpecs.year,
-        price: validPhoneSpecs.price
+        price: validPhoneSpecs.price,
       },
-      timeout: timeouts.api
+      timeout: timeouts.api,
     })
-    
+
     if (response.ok()) {
-      const data = await response.json() as PredictionResponse
+      const data = (await response.json()) as PredictionResponse
       verifyApiResponse<PredictionResponse>(data, ['brand'])
-      
+
       expect(typeof data.brand).toBe('string')
       expect(data.brand).toBeDefined()
       expect(data.brand!.length).toBeGreaterThan(0)
@@ -133,17 +129,17 @@ test.describe('Python API Integration Tests', () => {
     searchParams.append('maxPrice', '1000')
     searchParams.append('limit', '10')
     searchParams.append('offset', '0')
-    
+
     const response = await request.get(
       `http://localhost:8000/api/dataset/search?${searchParams.toString()}`,
       { timeout: timeouts.api }
     )
-    
+
     expect(response.ok()).toBeTruthy()
-    
-    const data = await response.json() as SearchResponse
+
+    const data = (await response.json()) as SearchResponse
     verifyApiResponse<SearchResponse>(data, ['models', 'totalCount'])
-    
+
     expect(Array.isArray(data.models)).toBeTruthy()
     expect(typeof data.totalCount).toBe('number')
   })
@@ -153,17 +149,17 @@ test.describe('Python API Integration Tests', () => {
     searchParams.append('price', '600')
     searchParams.append('tolerance', '0.2')
     searchParams.append('maxResults', '50')
-    
+
     const response = await page.request.get(
       `http://localhost:3000/api/dataset/models-by-price?${searchParams.toString()}`,
       { timeout: timeouts.api }
     )
-    
+
     expect(response.ok()).toBeTruthy()
-    
-    const data = await response.json() as ModelsByPriceResponse
+
+    const data = (await response.json()) as ModelsByPriceResponse
     verifyApiResponse<ModelsByPriceResponse>(data, ['models', 'totalCount', 'priceRange', 'brands'])
-    
+
     expect(Array.isArray(data.models)).toBeTruthy()
     expect(Array.isArray(data.brands)).toBeTruthy()
     expect(typeof data.priceRange).toBe('object')
@@ -179,14 +175,14 @@ test.describe('Python API Integration Tests', () => {
         screen: budgetPhoneSpecs.screen,
         weight: budgetPhoneSpecs.weight,
         year: budgetPhoneSpecs.year,
-        company: budgetPhoneSpecs.company
+        company: budgetPhoneSpecs.company,
       },
-      timeout: timeouts.api
+      timeout: timeouts.api,
     })
-    
+
     expect(response.ok()).toBeTruthy()
-    
-    const data = await response.json() as PredictionResponse
+
+    const data = (await response.json()) as PredictionResponse
     expect(data.price).toBeDefined()
     expect(data.price!).toBeGreaterThan(0)
     expect(data.price!).toBeLessThan(3000) // Budget range - model returns realistic prices
@@ -200,14 +196,14 @@ test.describe('Python API Integration Tests', () => {
         screen: flagshipPhoneSpecs.screen,
         weight: flagshipPhoneSpecs.weight,
         year: flagshipPhoneSpecs.year,
-        company: flagshipPhoneSpecs.company
+        company: flagshipPhoneSpecs.company,
       },
-      timeout: timeouts.api
+      timeout: timeouts.api,
     })
-    
+
     expect(response.ok()).toBeTruthy()
-    
-    const data = await response.json() as PredictionResponse
+
+    const data = (await response.json()) as PredictionResponse
     expect(data.price).toBeDefined()
     expect(data.price!).toBeGreaterThan(500) // Flagship range
   })
@@ -219,11 +215,11 @@ test.describe('Python API Integration Tests', () => {
         battery: 0, // Invalid
         screen: 6.1,
         weight: 174,
-        year: 2024
+        year: 2024,
       },
-      timeout: timeouts.api
+      timeout: timeouts.api,
     })
-    
+
     // Should return error status
     expect(response.status()).toBeGreaterThanOrEqual(400)
   })
@@ -231,12 +227,12 @@ test.describe('Python API Integration Tests', () => {
   test('API returns error for missing required fields', async ({ request }) => {
     const response = await request.post('http://localhost:8000/api/predict/price', {
       data: {
-        ram: 8
+        ram: 8,
         // Missing other required fields
       },
-      timeout: timeouts.api
+      timeout: timeouts.api,
     })
-    
+
     // Should return error status
     expect(response.status()).toBeGreaterThanOrEqual(400)
   })
@@ -247,24 +243,24 @@ test.describe('Python API Integration Tests', () => {
       'http://localhost:8000/api/dataset/search?limit=5&offset=0',
       { timeout: timeouts.api }
     )
-    
+
     expect(response1.ok()).toBeTruthy()
-    const data1 = await response1.json() as SearchResponse
-    
+    const data1 = (await response1.json()) as SearchResponse
+
     // Second page
     const response2 = await request.get(
       'http://localhost:8000/api/dataset/search?limit=5&offset=5',
       { timeout: timeouts.api }
     )
-    
+
     expect(response2.ok()).toBeTruthy()
-    const data2 = await response2.json() as SearchResponse
-    
+    const data2 = (await response2.json()) as SearchResponse
+
     // Should have different results (unless dataset is very small)
     if (data1.totalCount > 5) {
       const firstPageIds = data1.models.map((m: any) => m.modelName || m.id)
       const secondPageIds = data2.models.map((m: any) => m.modelName || m.id)
-      
+
       // Pages should be different
       expect(firstPageIds).not.toEqual(secondPageIds)
     }
@@ -272,7 +268,7 @@ test.describe('Python API Integration Tests', () => {
 
   test('API response times are acceptable', async ({ request }) => {
     const startTime = Date.now()
-    
+
     const response = await request.post('http://localhost:8000/api/predict/price', {
       data: {
         ram: validPhoneSpecs.ram,
@@ -280,14 +276,14 @@ test.describe('Python API Integration Tests', () => {
         screen: validPhoneSpecs.screen,
         weight: validPhoneSpecs.weight,
         year: validPhoneSpecs.year,
-        company: validPhoneSpecs.company
+        company: validPhoneSpecs.company,
       },
-      timeout: timeouts.api
+      timeout: timeouts.api,
     })
-    
+
     const endTime = Date.now()
     const duration = endTime - startTime
-    
+
     expect(response.ok()).toBeTruthy()
     expect(duration).toBeLessThan(5000) // Should respond in under 5 seconds
   })

@@ -31,7 +31,7 @@ A clear and concise description of any alternative solutions or features you've 
 - [ ] Performance Improvement
 - [ ] User Interface
 - [ ] API/Integration
-- [ ] Other: ___________
+- [ ] Other: \***\*\_\_\_\*\***
 
 ## 🎨 Example Usage
 
@@ -57,6 +57,7 @@ Add any other context, mockups, or examples about the feature request here.
 ---
 
 **Checklist:**
+
 - [ ] I've checked existing issues and features
 - [ ] This feature doesn't duplicate existing functionality
 - [ ] I've provided clear use case and examples

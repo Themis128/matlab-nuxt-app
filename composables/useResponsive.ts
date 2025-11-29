@@ -60,6 +60,6 @@ export const useResponsive = () => {
     smaller: breakpoints.smaller,
     between: breakpoints.between,
     greaterOrEqual: breakpoints.greaterOrEqual,
-    smallerOrEqual: breakpoints.smallerOrEqual
+    smallerOrEqual: breakpoints.smallerOrEqual,
   }
 }

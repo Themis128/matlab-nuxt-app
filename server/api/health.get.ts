@@ -1,6 +1,6 @@
 import { callPythonAPI } from '~/server/utils/python-api'
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async event => {
   // Set CORS headers
   setHeader(event, 'Access-Control-Allow-Origin', '*')
   setHeader(event, 'Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
     try {
       const response = await fetch(`${pythonApiUrl}/health`, {
         method: 'GET',
-        signal: AbortSignal.timeout(3000)
+        signal: AbortSignal.timeout(3000),
       })
 
       if (response.ok) {
@@ -37,8 +37,8 @@ export default defineEventHandler(async (event) => {
           status: 'unhealthy',
           message: 'Python API is not available',
           error: e instanceof Error ? e.message : 'Unknown error',
-          timestamp: new Date().toISOString()
-        }
+          timestamp: new Date().toISOString(),
+        },
       })
     }
   } catch (error: unknown) {
@@ -51,8 +51,8 @@ export default defineEventHandler(async (event) => {
         status: 'error',
         message: 'Health check failed',
         error: error instanceof Error ? error.message : 'Unknown error',
-        timestamp: new Date().toISOString()
-      }
+        timestamp: new Date().toISOString(),
+      },
     })
   }
 })

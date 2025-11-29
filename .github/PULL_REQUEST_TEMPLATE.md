@@ -51,5 +51,6 @@ Any additional information reviewers should know.
 ---
 
 **Reviewer Notes:**
-- Focus areas: ___________
-- Questions: ___________
+
+- Focus areas: \***\*\_\_\_\*\***
+- Questions: \***\*\_\_\_\*\***

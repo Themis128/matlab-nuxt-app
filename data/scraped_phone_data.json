@@ -1,0 +1,387 @@
+{
+  "Apple iPhone 16 128GB": {
+    "model_name": "Apple iPhone 16 128GB",
+    "gsmarena": {
+      "model_name": "Apple iPhone 16 128GB"
+    },
+    "benchmarks": {
+      "model_name": "Apple iPhone 16 128GB",
+      "antutu": null,
+      "geekbench": {
+        "single_core": null,
+        "multi_core": null
+      },
+      "performance_tier": "unknown"
+    },
+    "reviews": {
+      "model_name": "Apple iPhone 16 128GB",
+      "rating": null,
+      "review_count": 0,
+      "sentiment": {
+        "positive": 0.0,
+        "neutral": 0.0,
+        "negative": 0.0
+      },
+      "common_keywords": []
+    }
+  },
+  "Apple iPhone 16 256GB": {
+    "model_name": "Apple iPhone 16 256GB",
+    "gsmarena": {
+      "model_name": "Apple iPhone 16 256GB"
+    },
+    "benchmarks": {
+      "model_name": "Apple iPhone 16 256GB",
+      "antutu": null,
+      "geekbench": {
+        "single_core": null,
+        "multi_core": null
+      },
+      "performance_tier": "unknown"
+    },
+    "reviews": {
+      "model_name": "Apple iPhone 16 256GB",
+      "rating": null,
+      "review_count": 0,
+      "sentiment": {
+        "positive": 0.0,
+        "neutral": 0.0,
+        "negative": 0.0
+      },
+      "common_keywords": []
+    }
+  },
+  "Apple iPhone 16 512GB": {
+    "model_name": "Apple iPhone 16 512GB",
+    "gsmarena": {
+      "model_name": "Apple iPhone 16 512GB"
+    },
+    "benchmarks": {
+      "model_name": "Apple iPhone 16 512GB",
+      "antutu": null,
+      "geekbench": {
+        "single_core": null,
+        "multi_core": null
+      },
+      "performance_tier": "unknown"
+    },
+    "reviews": {
+      "model_name": "Apple iPhone 16 512GB",
+      "rating": null,
+      "review_count": 0,
+      "sentiment": {
+        "positive": 0.0,
+        "neutral": 0.0,
+        "negative": 0.0
+      },
+      "common_keywords": []
+    }
+  },
+  "Apple iPhone 16 Plus 128GB": {
+    "model_name": "Apple iPhone 16 Plus 128GB",
+    "gsmarena": {
+      "model_name": "Apple iPhone 16 Plus 128GB"
+    },
+    "benchmarks": {
+      "model_name": "Apple iPhone 16 Plus 128GB",
+      "antutu": null,
+      "geekbench": {
+        "single_core": null,
+        "multi_core": null
+      },
+      "performance_tier": "unknown"
+    },
+    "reviews": {
+      "model_name": "Apple iPhone 16 Plus 128GB",
+      "rating": null,
+      "review_count": 0,
+      "sentiment": {
+        "positive": 0.0,
+        "neutral": 0.0,
+        "negative": 0.0
+      },
+      "common_keywords": []
+    }
+  },
+  "Apple iPhone 16 Plus 256GB": {
+    "model_name": "Apple iPhone 16 Plus 256GB",
+    "gsmarena": {
+      "model_name": "Apple iPhone 16 Plus 256GB"
+    },
+    "benchmarks": {
+      "model_name": "Apple iPhone 16 Plus 256GB",
+      "antutu": null,
+      "geekbench": {
+        "single_core": null,
+        "multi_core": null
+      },
+      "performance_tier": "unknown"
+    },
+    "reviews": {
+      "model_name": "Apple iPhone 16 Plus 256GB",
+      "rating": null,
+      "review_count": 0,
+      "sentiment": {
+        "positive": 0.0,
+        "neutral": 0.0,
+        "negative": 0.0
+      },
+      "common_keywords": []
+    }
+  },
+  "Apple iPhone 16 Plus 512GB": {
+    "model_name": "Apple iPhone 16 Plus 512GB",
+    "gsmarena": {
+      "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+      "display": {
+        "refresh_rate": 68.0,
+        "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+        "peak_brightness_nits": 68.0,
+        "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+      },
+      "camera": {
+        "main_mp": 50,
+        "main_aperture": 1.7,
+        "sensor_size": "1/1.31\"",
+        "has_ois": true,
+        "max_video": "8K",
+        "max_video_fps": 30
+      },
+      "battery": {},
+      "build": {
+        "ip_rating": "IP68",
+        "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+      },
+      "performance": {
+        "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+        "gpu": "Adreno 840"
+      },
+      "user_rating": {},
+      "model_name": "Apple iPhone 16 Plus 512GB"
+    },
+    "benchmarks": {
+      "model_name": "Apple iPhone 16 Plus 512GB",
+      "antutu": null,
+      "geekbench": {
+        "single_core": null,
+        "multi_core": null
+      },
+      "performance_tier": "unknown"
+    },
+    "reviews": {
+      "model_name": "Apple iPhone 16 Plus 512GB",
+      "rating": null,
+      "review_count": 0,
+      "sentiment": {
+        "positive": 0.0,
+        "neutral": 0.0,
+        "negative": 0.0
+      },
+      "common_keywords": []
+    }
+  },
+  "Apple iPhone 16 Pro 128GB": {
+    "model_name": "Apple iPhone 16 Pro 128GB",
+    "gsmarena": {
+      "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+      "display": {
+        "refresh_rate": 68.0,
+        "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+        "peak_brightness_nits": 68.0,
+        "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+      },
+      "camera": {
+        "main_mp": 50,
+        "main_aperture": 1.7,
+        "sensor_size": "1/1.31\"",
+        "has_ois": true,
+        "max_video": "8K",
+        "max_video_fps": 30
+      },
+      "battery": {},
+      "build": {
+        "ip_rating": "IP68",
+        "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+      },
+      "performance": {
+        "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+        "gpu": "Adreno 840"
+      },
+      "user_rating": {},
+      "model_name": "Apple iPhone 16 Pro 128GB"
+    },
+    "benchmarks": {
+      "model_name": "Apple iPhone 16 Pro 128GB",
+      "antutu": null,
+      "geekbench": {
+        "single_core": null,
+        "multi_core": null
+      },
+      "performance_tier": "unknown"
+    },
+    "reviews": {
+      "model_name": "Apple iPhone 16 Pro 128GB",
+      "rating": null,
+      "review_count": 0,
+      "sentiment": {
+        "positive": 0.0,
+        "neutral": 0.0,
+        "negative": 0.0
+      },
+      "common_keywords": []
+    }
+  },
+  "Apple iPhone 16 Pro 256GB": {
+    "model_name": "Apple iPhone 16 Pro 256GB",
+    "gsmarena": {
+      "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+      "display": {
+        "refresh_rate": 68.0,
+        "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+        "peak_brightness_nits": 68.0,
+        "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+      },
+      "camera": {
+        "main_mp": 50,
+        "main_aperture": 1.7,
+        "sensor_size": "1/1.31\"",
+        "has_ois": true,
+        "max_video": "8K",
+        "max_video_fps": 30
+      },
+      "battery": {},
+      "build": {
+        "ip_rating": "IP68",
+        "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+      },
+      "performance": {
+        "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+        "gpu": "Adreno 840"
+      },
+      "user_rating": {},
+      "model_name": "Apple iPhone 16 Pro 256GB"
+    },
+    "benchmarks": {
+      "model_name": "Apple iPhone 16 Pro 256GB",
+      "antutu": null,
+      "geekbench": {
+        "single_core": null,
+        "multi_core": null
+      },
+      "performance_tier": "unknown"
+    },
+    "reviews": {
+      "model_name": "Apple iPhone 16 Pro 256GB",
+      "rating": null,
+      "review_count": 0,
+      "sentiment": {
+        "positive": 0.0,
+        "neutral": 0.0,
+        "negative": 0.0
+      },
+      "common_keywords": []
+    }
+  },
+  "Apple iPhone 16 Pro 512GB": {
+    "model_name": "Apple iPhone 16 Pro 512GB",
+    "gsmarena": {
+      "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+      "display": {
+        "refresh_rate": 68.0,
+        "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+        "peak_brightness_nits": 68.0,
+        "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+      },
+      "camera": {
+        "main_mp": 50,
+        "main_aperture": 1.7,
+        "sensor_size": "1/1.31\"",
+        "has_ois": true,
+        "max_video": "8K",
+        "max_video_fps": 30
+      },
+      "battery": {},
+      "build": {
+        "ip_rating": "IP68",
+        "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+      },
+      "performance": {
+        "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+        "gpu": "Adreno 840"
+      },
+      "user_rating": {},
+      "model_name": "Apple iPhone 16 Pro 512GB"
+    },
+    "benchmarks": {
+      "model_name": "Apple iPhone 16 Pro 512GB",
+      "antutu": null,
+      "geekbench": {
+        "single_core": null,
+        "multi_core": null
+      },
+      "performance_tier": "unknown"
+    },
+    "reviews": {
+      "model_name": "Apple iPhone 16 Pro 512GB",
+      "rating": null,
+      "review_count": 0,
+      "sentiment": {
+        "positive": 0.0,
+        "neutral": 0.0,
+        "negative": 0.0
+      },
+      "common_keywords": []
+    }
+  },
+  "Apple iPhone 16 Pro Max 128GB": {
+    "model_name": "Apple iPhone 16 Pro Max 128GB",
+    "gsmarena": {
+      "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+      "display": {
+        "refresh_rate": 68.0,
+        "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+        "peak_brightness_nits": 68.0,
+        "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+      },
+      "camera": {
+        "main_mp": 50,
+        "main_aperture": 1.7,
+        "sensor_size": "1/1.31\"",
+        "has_ois": true,
+        "max_video": "8K",
+        "max_video_fps": 30
+      },
+      "battery": {},
+      "build": {
+        "ip_rating": "IP68",
+        "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+      },
+      "performance": {
+        "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+        "gpu": "Adreno 840"
+      },
+      "user_rating": {},
+      "model_name": "Apple iPhone 16 Pro Max 128GB"
+    },
+    "benchmarks": {
+      "model_name": "Apple iPhone 16 Pro Max 128GB",
+      "antutu": null,
+      "geekbench": {
+        "single_core": null,
+        "multi_core": null
+      },
+      "performance_tier": "unknown"
+    },
+    "reviews": {
+      "model_name": "Apple iPhone 16 Pro Max 128GB",
+      "rating": null,
+      "review_count": 0,
+      "sentiment": {
+        "positive": 0.0,
+        "neutral": 0.0,
+        "negative": 0.0
+      },
+      "common_keywords": []
+    }
+  }
+}

@@ -1,21 +1,20 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+  <div
+    class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
+  >
     <div class="container mx-auto px-4 py-8">
       <div class="max-w-6xl mx-auto">
         <!-- Loading State -->
         <div v-if="loading" class="text-center py-12">
-          <UIcon name="i-heroicons-arrow-path" class="w-12 h-12 mx-auto text-gray-400 animate-spin mb-4" />
+          <UIcon
+            name="i-heroicons-arrow-path"
+            class="w-12 h-12 mx-auto text-gray-400 animate-spin mb-4"
+          />
           <p class="text-gray-600 dark:text-gray-400">Loading model details...</p>
         </div>
 
         <!-- Error State -->
-        <UAlert
-          v-if="error"
-          color="red"
-          variant="soft"
-          :title="error"
-          class="mb-6"
-        />
+        <UAlert v-if="error" color="red" variant="soft" :title="error" class="mb-6" />
 
         <!-- Model Details -->
         <div v-if="model && !loading">
@@ -33,7 +32,10 @@
             <div class="flex flex-col md:flex-row gap-6">
               <!-- Model Image -->
               <div class="flex-shrink-0">
-                <div v-if="model.imageUrl" class="w-full md:w-96 h-96 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden">
+                <div
+                  v-if="model.imageUrl"
+                  class="w-full md:w-96 h-96 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden"
+                >
                   <img
                     :src="model.imageUrl"
                     :alt="model.modelName"
@@ -41,7 +43,10 @@
                     @error="handleImageError"
                   />
                 </div>
-                <div v-else class="w-full md:w-96 h-96 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
+                <div
+                  v-else
+                  class="w-full md:w-96 h-96 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center"
+                >
                   <UIcon name="i-heroicons-device-phone-mobile" class="w-24 h-24 text-gray-400" />
                 </div>
               </div>
@@ -58,11 +63,7 @@
 
                 <!-- Quick Actions -->
                 <div class="flex gap-4 mb-6">
-                  <UButton
-                    @click="addToComparison"
-                    color="primary"
-                    icon="i-heroicons-scale"
-                  >
+                  <UButton @click="addToComparison" color="primary" icon="i-heroicons-scale">
                     Compare
                   </UButton>
                   <UButton
@@ -94,23 +95,33 @@
                 <h2 class="text-2xl font-semibold">Core Specifications</h2>
               </template>
               <div class="p-6 space-y-4">
-                <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                <div
+                  class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700"
+                >
                   <span class="text-gray-600 dark:text-gray-400">Price</span>
                   <span class="font-semibold text-lg">${{ model.price.toLocaleString() }}</span>
                 </div>
-                <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                <div
+                  class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700"
+                >
                   <span class="text-gray-600 dark:text-gray-400">RAM</span>
                   <span class="font-semibold">{{ model.ram }} GB</span>
                 </div>
-                <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                <div
+                  class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700"
+                >
                   <span class="text-gray-600 dark:text-gray-400">Battery</span>
                   <span class="font-semibold">{{ model.battery }} mAh</span>
                 </div>
-                <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                <div
+                  class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700"
+                >
                   <span class="text-gray-600 dark:text-gray-400">Screen Size</span>
                   <span class="font-semibold">{{ model.screenSize }}"</span>
                 </div>
-                <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                <div
+                  class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700"
+                >
                   <span class="text-gray-600 dark:text-gray-400">Weight</span>
                   <span class="font-semibold">{{ model.weight }}g</span>
                 </div>
@@ -127,27 +138,45 @@
                 <h2 class="text-2xl font-semibold">Additional Specifications</h2>
               </template>
               <div class="p-6 space-y-4">
-                <div v-if="model.storage" class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                <div
+                  v-if="model.storage"
+                  class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700"
+                >
                   <span class="text-gray-600 dark:text-gray-400">Storage</span>
                   <span class="font-semibold">{{ model.storage }} GB</span>
                 </div>
-                <div v-if="model.processor" class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                <div
+                  v-if="model.processor"
+                  class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700"
+                >
                   <span class="text-gray-600 dark:text-gray-400">Processor</span>
                   <span class="font-semibold">{{ model.processor }}</span>
                 </div>
-                <div v-if="model.frontCamera" class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                <div
+                  v-if="model.frontCamera"
+                  class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700"
+                >
                   <span class="text-gray-600 dark:text-gray-400">Front Camera</span>
                   <span class="font-semibold">{{ model.frontCamera }} MP</span>
                 </div>
-                <div v-if="model.backCamera" class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                <div
+                  v-if="model.backCamera"
+                  class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700"
+                >
                   <span class="text-gray-600 dark:text-gray-400">Back Camera</span>
                   <span class="font-semibold">{{ model.backCamera }} MP</span>
                 </div>
-                <div v-if="model.displayType" class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                <div
+                  v-if="model.displayType"
+                  class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700"
+                >
                   <span class="text-gray-600 dark:text-gray-400">Display Type</span>
                   <span class="font-semibold">{{ model.displayType }}</span>
                 </div>
-                <div v-if="model.refreshRate" class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                <div
+                  v-if="model.refreshRate"
+                  class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700"
+                >
                   <span class="text-gray-600 dark:text-gray-400">Refresh Rate</span>
                   <span class="font-semibold">{{ model.refreshRate }} Hz</span>
                 </div>
@@ -155,7 +184,12 @@
                   <span class="text-gray-600 dark:text-gray-400">Resolution</span>
                   <span class="font-semibold">{{ model.resolution }}</span>
                 </div>
-                <div v-if="!model.storage && !model.processor && !model.frontCamera && !model.backCamera" class="text-center py-4 text-gray-500">
+                <div
+                  v-if="
+                    !model.storage && !model.processor && !model.frontCamera && !model.backCamera
+                  "
+                  class="text-center py-4 text-gray-500"
+                >
                   No additional specifications available
                 </div>
               </div>
@@ -178,10 +212,17 @@
                   <div class="p-4">
                     <div class="flex justify-between items-start mb-2">
                       <div>
-                        <h3 class="font-bold text-gray-900 dark:text-white">{{ similar.model.modelName }}</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ similar.model.company }}</p>
+                        <h3 class="font-bold text-gray-900 dark:text-white">
+                          {{ similar.model.modelName }}
+                        </h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                          {{ similar.model.company }}
+                        </p>
                       </div>
-                      <UBadge :color="similar.similarityScore > 80 ? 'green' : 'yellow'" variant="soft">
+                      <UBadge
+                        :color="similar.similarityScore > 80 ? 'green' : 'yellow'"
+                        variant="soft"
+                      >
                         {{ Math.round(similar.similarityScore) }}% match
                       </UBadge>
                     </div>
@@ -273,11 +314,13 @@ const loadSimilarModels = async () => {
         weight: model.value.weight,
         year: model.value.year,
         price: model.value.price,
-        limit: 6
-      }
+        limit: 6,
+      },
     })
     // Filter out the current model
-    similarModels.value = data.models.filter(s => s.model.modelName !== model.value?.modelName).slice(0, 6)
+    similarModels.value = data.models
+      .filter(s => s.model.modelName !== model.value?.modelName)
+      .slice(0, 6)
   } catch (err) {
     console.error('Error loading similar models:', err)
   }
@@ -295,7 +338,9 @@ const addToComparison = () => {
 
 const findSimilar = () => {
   if (model.value) {
-    navigateTo(`/search?brand=${encodeURIComponent(model.value.company)}&minRam=${model.value.ram - 2}&maxRam=${model.value.ram + 2}`)
+    navigateTo(
+      `/search?brand=${encodeURIComponent(model.value.company)}&minRam=${model.value.ram - 2}&maxRam=${model.value.ram + 2}`
+    )
   }
 }
 
@@ -318,7 +363,12 @@ onMounted(() => {
 useHead({
   title: model.value ? `${model.value.modelName} - Mobile Finder` : 'Model Details - Mobile Finder',
   meta: [
-    { name: 'description', content: model.value ? `Complete specifications for ${model.value.modelName}` : 'View mobile phone model details' }
-  ]
+    {
+      name: 'description',
+      content: model.value
+        ? `Complete specifications for ${model.value.modelName}`
+        : 'View mobile phone model details',
+    },
+  ],
 })
 </script>

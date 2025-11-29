@@ -7,7 +7,9 @@ test.describe('Dashboard Page', () => {
   })
 
   test('should load dashboard page', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: /Dashboard|Deep Learning/i }).first()).toBeVisible({ timeout: 10000 })
+    await expect(
+      page.getByRole('heading', { name: /Dashboard|Deep Learning/i }).first()
+    ).toBeVisible({ timeout: 10000 })
   })
 
   test('should display model performance metrics', async ({ page }) => {

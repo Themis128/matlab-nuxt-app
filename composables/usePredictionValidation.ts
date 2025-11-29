@@ -30,14 +30,17 @@ const MODEL_METRICS = {
 }
 
 export const usePredictionValidation = () => {
-  const validatePrice = (predictedPrice: number, input: {
-    ram: number
-    battery: number
-    screen: number
-    weight: number
-    year: number
-    company: string
-  }): PredictionValidation => {
+  const validatePrice = (
+    predictedPrice: number,
+    input: {
+      ram: number
+      battery: number
+      screen: number
+      weight: number
+      year: number
+      company: string
+    }
+  ): PredictionValidation => {
     const metrics = MODEL_METRICS.price
     const expectedRange = {
       min: Math.max(metrics.typicalRange.min, predictedPrice - metrics.rmse * 2),
@@ -45,8 +48,8 @@ export const usePredictionValidation = () => {
     }
 
     // Check if prediction is within typical range
-    const inRange = predictedPrice >= metrics.typicalRange.min &&
-                    predictedPrice <= metrics.typicalRange.max
+    const inRange =
+      predictedPrice >= metrics.typicalRange.min && predictedPrice <= metrics.typicalRange.max
 
     // Determine confidence based on R² and whether it's in range
     let confidence: 'high' | 'medium' | 'low' = 'medium'
@@ -85,22 +88,25 @@ export const usePredictionValidation = () => {
     }
   }
 
-  const validateRam = (predictedRam: number, input: {
-    battery: number
-    screen: number
-    weight: number
-    year: number
-    price: number
-    company: string
-  }): PredictionValidation => {
+  const validateRam = (
+    predictedRam: number,
+    input: {
+      battery: number
+      screen: number
+      weight: number
+      year: number
+      price: number
+      company: string
+    }
+  ): PredictionValidation => {
     const metrics = MODEL_METRICS.ram
     const expectedRange = {
       min: Math.max(metrics.typicalRange.min, predictedRam - metrics.rmse * 2),
       max: Math.min(metrics.typicalRange.max, predictedRam + metrics.rmse * 2),
     }
 
-    const inRange = predictedRam >= metrics.typicalRange.min &&
-                    predictedRam <= metrics.typicalRange.max
+    const inRange =
+      predictedRam >= metrics.typicalRange.min && predictedRam <= metrics.typicalRange.max
 
     const confidence: 'high' | 'medium' | 'low' = metrics.r2 > 0.6 ? 'medium' : 'low'
     const message = inRange
@@ -115,22 +121,25 @@ export const usePredictionValidation = () => {
     }
   }
 
-  const validateBattery = (predictedBattery: number, input: {
-    ram: number
-    screen: number
-    weight: number
-    year: number
-    price: number
-    company: string
-  }): PredictionValidation => {
+  const validateBattery = (
+    predictedBattery: number,
+    input: {
+      ram: number
+      screen: number
+      weight: number
+      year: number
+      price: number
+      company: string
+    }
+  ): PredictionValidation => {
     const metrics = MODEL_METRICS.battery
     const expectedRange = {
       min: Math.max(metrics.typicalRange.min, predictedBattery - metrics.rmse * 2),
       max: Math.min(metrics.typicalRange.max, predictedBattery + metrics.rmse * 2),
     }
 
-    const inRange = predictedBattery >= metrics.typicalRange.min &&
-                    predictedBattery <= metrics.typicalRange.max
+    const inRange =
+      predictedBattery >= metrics.typicalRange.min && predictedBattery <= metrics.typicalRange.max
 
     const confidence: 'high' | 'medium' | 'low' = metrics.r2 > 0.7 ? 'high' : 'medium'
     const message = inRange
@@ -145,14 +154,17 @@ export const usePredictionValidation = () => {
     }
   }
 
-  const validateBrand = (predictedBrand: string, input: {
-    ram: number
-    battery: number
-    screen: number
-    weight: number
-    year: number
-    price: number
-  }): PredictionValidation => {
+  const validateBrand = (
+    predictedBrand: string,
+    input: {
+      ram: number
+      battery: number
+      screen: number
+      weight: number
+      year: number
+      price: number
+    }
+  ): PredictionValidation => {
     const metrics = MODEL_METRICS.brand
     const confidence: 'high' | 'medium' | 'low' = metrics.accuracy > 0.5 ? 'medium' : 'low'
     const message = `Brand classification accuracy: ${(metrics.accuracy * 100).toFixed(1)}%. Prediction may not always be accurate.`

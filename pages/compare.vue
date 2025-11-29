@@ -1,12 +1,12 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+  <div
+    class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
+  >
     <div class="container mx-auto px-4 py-8">
       <div class="max-w-7xl mx-auto">
         <!-- Header -->
         <div class="mb-8">
-          <h1 class="text-5xl font-bold text-gray-900 dark:text-white mb-3">
-            Compare Models
-          </h1>
+          <h1 class="text-5xl font-bold text-gray-900 dark:text-white mb-3">Compare Models</h1>
           <p class="text-xl text-gray-600 dark:text-gray-400">
             Side-by-side comparison of mobile phone models
           </p>
@@ -42,18 +42,27 @@
                 icon="i-heroicons-magnifying-glass"
                 class="flex-1"
                 @keyup.enter="addModelFromSearch"
-                @update:model-value="(val) => { searchQuery = val; handleSearchInput(val) }"
+                @update:model-value="
+                  val => {
+                    searchQuery = val
+                    handleSearchInput(val)
+                  }
+                "
                 @input="handleSearchInput"
-                @blur="() => { nextTick() }"
+                @blur="
+                  () => {
+                    nextTick()
+                  }
+                "
               />
-<UButton
-  @click="addModelFromSearch"
-  color="primary"
-  icon="i-heroicons-plus"
-  data-testid="add-model"
->
-  Add
-</UButton>
+              <UButton
+                @click="addModelFromSearch"
+                color="primary"
+                icon="i-heroicons-plus"
+                data-testid="add-model"
+              >
+                Add
+              </UButton>
               <UButton
                 @click="compareModels"
                 :disabled="selectedModels.length < 2 || loading"
@@ -63,12 +72,7 @@
               >
                 Compare
               </UButton>
-              <UButton
-                @click="clearAll"
-                color="gray"
-                variant="outline"
-                icon="i-heroicons-trash"
-              >
+              <UButton @click="clearAll" color="gray" variant="outline" icon="i-heroicons-trash">
                 Clear All
               </UButton>
             </div>
@@ -80,17 +84,14 @@
         </UCard>
 
         <!-- Error State -->
-        <UAlert
-          v-if="error"
-          color="red"
-          variant="soft"
-          :title="error"
-          class="mb-6"
-        />
+        <UAlert v-if="error" color="red" variant="soft" :title="error" class="mb-6" />
 
         <!-- Loading State -->
         <div v-if="loading" class="text-center py-12">
-          <UIcon name="i-heroicons-arrow-path" class="w-12 h-12 mx-auto text-gray-400 animate-spin mb-4" />
+          <UIcon
+            name="i-heroicons-arrow-path"
+            class="w-12 h-12 mx-auto text-gray-400 animate-spin mb-4"
+          />
           <p class="text-gray-600 dark:text-gray-400">Loading comparison...</p>
         </div>
 
@@ -105,7 +106,9 @@
               <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 <div v-for="diff in comparison.differences" :key="diff.field" class="text-center">
                   <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">{{ diff.field }}</div>
-                  <div class="font-semibold text-green-600 dark:text-green-400">{{ diff.best }}</div>
+                  <div class="font-semibold text-green-600 dark:text-green-400">
+                    {{ diff.best }}
+                  </div>
                   <div class="text-xs text-gray-400">vs</div>
                   <div class="font-semibold text-red-600 dark:text-red-400">{{ diff.worst }}</div>
                   <div class="text-xs text-gray-500 mt-1">{{ diff.difference }}</div>
@@ -123,7 +126,9 @@
               <table class="w-full">
                 <thead>
                   <tr class="border-b border-gray-200 dark:border-gray-700">
-                    <th class="text-left py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">Specification</th>
+                    <th class="text-left py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">
+                      Specification
+                    </th>
                     <th
                       v-for="model in comparison.models"
                       :key="model.modelName"
@@ -131,7 +136,9 @@
                     >
                       <div class="font-bold">{{ model.modelName }}</div>
                       <div class="text-sm text-gray-500">{{ model.company }}</div>
-                      <div class="text-lg text-primary mt-1">${{ model.price.toLocaleString() }}</div>
+                      <div class="text-lg text-primary mt-1">
+                        ${{ model.price.toLocaleString() }}
+                      </div>
                     </th>
                   </tr>
                 </thead>
@@ -196,7 +203,10 @@
                       {{ model.year }}
                     </td>
                   </tr>
-                  <tr v-if="comparison.models.some(m => m.storage)" class="border-b border-gray-100 dark:border-gray-800">
+                  <tr
+                    v-if="comparison.models.some(m => m.storage)"
+                    class="border-b border-gray-100 dark:border-gray-800"
+                  >
                     <td class="py-3 px-4 font-semibold">Storage</td>
                     <td
                       v-for="model in comparison.models"
@@ -206,7 +216,10 @@
                       {{ model.storage || 'N/A' }} {{ model.storage ? 'GB' : '' }}
                     </td>
                   </tr>
-                  <tr v-if="comparison.models.some(m => m.processor)" class="border-b border-gray-100 dark:border-gray-800">
+                  <tr
+                    v-if="comparison.models.some(m => m.processor)"
+                    class="border-b border-gray-100 dark:border-gray-800"
+                  >
                     <td class="py-3 px-4 font-semibold">Processor</td>
                     <td
                       v-for="model in comparison.models"
@@ -216,7 +229,10 @@
                       {{ model.processor || 'N/A' }}
                     </td>
                   </tr>
-                  <tr v-if="comparison.models.some(m => m.frontCamera)" class="border-b border-gray-100 dark:border-gray-800">
+                  <tr
+                    v-if="comparison.models.some(m => m.frontCamera)"
+                    class="border-b border-gray-100 dark:border-gray-800"
+                  >
                     <td class="py-3 px-4 font-semibold">Front Camera</td>
                     <td
                       v-for="model in comparison.models"
@@ -257,7 +273,9 @@
                 />
               </div>
               <div v-else class="p-4">
-                <div class="w-full h-48 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
+                <div
+                  class="w-full h-48 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center"
+                >
                   <UIcon name="i-heroicons-device-phone-mobile" class="w-16 h-16 text-gray-400" />
                 </div>
               </div>
@@ -424,8 +442,8 @@ const compareModels = async () => {
     const data = await $fetch<ComparisonResponse>('/api/dataset/compare', {
       method: 'POST',
       body: {
-        modelNames: selectedModels.value
-      }
+        modelNames: selectedModels.value,
+      },
     })
     comparison.value = data
     saveToLocalStorage()
@@ -450,7 +468,10 @@ const navigateTo = (path: string) => {
 useHead({
   title: 'Compare Models - Mobile Finder',
   meta: [
-    { name: 'description', content: 'Compare mobile phone models side by side with detailed specifications' }
-  ]
+    {
+      name: 'description',
+      content: 'Compare mobile phone models side by side with detailed specifications',
+    },
+  ],
 })
 </script>

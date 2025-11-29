@@ -46,7 +46,9 @@ export default defineEventHandler(async (event): Promise<SearchResponse> => {
     const query = getQuery(event)
 
     // Parse query parameters
-    const brands = query.brand ? (Array.isArray(query.brand) ? query.brand : [query.brand]).map(b => String(b)) : undefined
+    const brands = query.brand
+      ? (Array.isArray(query.brand) ? query.brand : [query.brand]).map(b => String(b))
+      : undefined
     const minPrice = query.minPrice ? parseFloat(String(query.minPrice)) : undefined
     const maxPrice = query.maxPrice ? parseFloat(String(query.maxPrice)) : undefined
     const minRam = query.minRam ? parseFloat(String(query.minRam)) : undefined
@@ -55,7 +57,9 @@ export default defineEventHandler(async (event): Promise<SearchResponse> => {
     const maxBattery = query.maxBattery ? parseFloat(String(query.maxBattery)) : undefined
     const minScreen = query.minScreen ? parseFloat(String(query.minScreen)) : undefined
     const maxScreen = query.maxScreen ? parseFloat(String(query.maxScreen)) : undefined
-    const years = query.year ? (Array.isArray(query.year) ? query.year : [query.year]).map(y => parseInt(String(y))) : undefined
+    const years = query.year
+      ? (Array.isArray(query.year) ? query.year : [query.year]).map(y => parseInt(String(y)))
+      : undefined
     const minStorage = query.minStorage ? parseFloat(String(query.minStorage)) : undefined
     const maxStorage = query.maxStorage ? parseFloat(String(query.maxStorage)) : undefined
     const processor = query.processor ? String(query.processor) : undefined
@@ -86,7 +90,7 @@ export default defineEventHandler(async (event): Promise<SearchResponse> => {
     if (!datasetContent) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'Dataset file not found'
+        statusMessage: 'Dataset file not found',
       })
     }
 
@@ -115,12 +119,13 @@ export default defineEventHandler(async (event): Promise<SearchResponse> => {
     if (lines.length < 2) {
       throw createError({
         statusCode: 500,
-        statusMessage: 'Dataset file is empty or invalid'
+        statusMessage: 'Dataset file is empty or invalid',
       })
     }
 
     // Parse header
-    const headers = parseCSVLine(lines[0]).map(h => h.replace(/^"|"$/g, '').trim())
+    const headerLine = lines[0] ?? ''
+    const headers = parseCSVLine(headerLine).map(h => h.replace(/^"|"$/g, '').trim())
 
     // Find column indices
     const getColumnIndex = (exactName: string, fallbackNames: string[] = []): number => {
@@ -151,9 +156,10 @@ export default defineEventHandler(async (event): Promise<SearchResponse> => {
     const resolutionIdx = getColumnIndex('Resolution', ['resolution'])
 
     // Helper to extract number
-    const extractNumber = (str: string): number | null => {
+    const extractNumber = (str: string | undefined): number | null => {
       if (!str || str.trim() === '' || str.toLowerCase() === 'nan') return null
-      const cleaned = str.toString()
+      const cleaned = str
+        .toString()
         .replace(/(USD|PKR|INR|CNY|AED|\$)/gi, '')
         .replace(/[$,\s]/g, '')
         .replace(/(mAh|GB|MP|g|inches|"|'|Hz|TB|MB)/gi, '')
@@ -170,26 +176,35 @@ export default defineEventHandler(async (event): Promise<SearchResponse> => {
     const imageDir = join(projectRoot, 'public', 'mobile_images')
 
     for (let i = 1; i < lines.length; i++) {
-      const values = parseCSVLine(lines[i]).map(v => v.replace(/^"|"$/g, '').trim())
+      const values = parseCSVLine(lines[i] ?? '').map(v => v.replace(/^"|"$/g, '').trim())
 
       if (values.length < headers.length) continue
 
       // Extract values
-      const phonePrice = priceIdx !== -1 ? extractNumber(values[priceIdx]) : null
-      const phoneRam = ramIdx !== -1 ? extractNumber(values[ramIdx]) : null
-      const phoneBattery = batteryIdx !== -1 ? extractNumber(values[batteryIdx]) : null
-      const phoneScreen = screenIdx !== -1 ? extractNumber(values[screenIdx]) : null
-      const phoneWeight = weightIdx !== -1 ? extractNumber(values[weightIdx]) : null
-      const phoneYear = yearIdx !== -1 ? extractNumber(values[yearIdx]) : null
-      const phoneStorage = storageIdx !== -1 ? extractNumber(values[storageIdx]) : null
-      const phoneProcessor = processorIdx !== -1 ? (values[processorIdx] || '').toLowerCase() : ''
-      const company = (companyIdx !== -1 ? values[companyIdx] : '').toLowerCase()
+      const phonePrice =
+        priceIdx !== -1 && values[priceIdx] ? extractNumber(values[priceIdx]) : null
+      const phoneRam = ramIdx !== -1 && values[ramIdx] ? extractNumber(values[ramIdx]) : null
+      const phoneBattery =
+        batteryIdx !== -1 && values[batteryIdx] ? extractNumber(values[batteryIdx]) : null
+      const phoneScreen =
+        screenIdx !== -1 && values[screenIdx] ? extractNumber(values[screenIdx]) : null
+      const phoneWeight =
+        weightIdx !== -1 && values[weightIdx] ? extractNumber(values[weightIdx]) : null
+      const phoneYear = yearIdx !== -1 && values[yearIdx] ? extractNumber(values[yearIdx]) : null
+      const phoneStorage =
+        storageIdx !== -1 && values[storageIdx] ? extractNumber(values[storageIdx]) : null
+      const phoneProcessor =
+        processorIdx !== -1 && values[processorIdx] ? values[processorIdx].toLowerCase() : ''
+      const companyRaw = companyIdx !== -1 && values[companyIdx] ? values[companyIdx] : ''
+      const company = companyRaw.toLowerCase()
 
       // Skip if required fields are missing
-      if (!phonePrice || !phoneRam || !phoneBattery || !phoneScreen || !phoneWeight || !phoneYear) continue
+      if (!phonePrice || !phoneRam || !phoneBattery || !phoneScreen || !phoneWeight || !phoneYear)
+        continue
 
       // Apply filters
-      if (brands && brands.length > 0 && !brands.some(b => company.includes(b.toLowerCase()))) continue
+      if (brands && brands.length > 0 && !brands.some(b => company.includes(b.toLowerCase())))
+        continue
       if (minPrice !== undefined && phonePrice < minPrice) continue
       if (maxPrice !== undefined && phonePrice > maxPrice) continue
       if (minRam !== undefined && phoneRam < minRam) continue
@@ -234,14 +249,17 @@ export default defineEventHandler(async (event): Promise<SearchResponse> => {
         screenSize: phoneScreen,
         weight: phoneWeight,
         year: phoneYear,
-        frontCamera: frontCameraIdx !== -1 ? extractNumber(values[frontCameraIdx]) : undefined,
-        backCamera: backCameraIdx !== -1 ? extractNumber(values[backCameraIdx]) : undefined,
-        storage: phoneStorage || undefined,
-        processor: processorIdx !== -1 ? (values[processorIdx] || undefined) : undefined,
-        displayType: displayTypeIdx !== -1 ? (values[displayTypeIdx] || undefined) : undefined,
-        refreshRate: refreshRateIdx !== -1 ? extractNumber(values[refreshRateIdx]) : undefined,
-        resolution: resolutionIdx !== -1 ? (values[resolutionIdx] || undefined) : undefined,
-        imageUrl
+        frontCamera:
+          frontCameraIdx !== -1 ? (extractNumber(values[frontCameraIdx]) ?? undefined) : undefined,
+        backCamera:
+          backCameraIdx !== -1 ? (extractNumber(values[backCameraIdx]) ?? undefined) : undefined,
+        storage: phoneStorage ?? undefined,
+        processor: processorIdx !== -1 ? values[processorIdx] || undefined : undefined,
+        displayType: displayTypeIdx !== -1 ? values[displayTypeIdx] || undefined : undefined,
+        refreshRate:
+          refreshRateIdx !== -1 ? (extractNumber(values[refreshRateIdx]) ?? undefined) : undefined,
+        resolution: resolutionIdx !== -1 ? values[resolutionIdx] || undefined : undefined,
+        imageUrl,
       })
     }
 
@@ -289,27 +307,42 @@ export default defineEventHandler(async (event): Promise<SearchResponse> => {
       filteredCount: totalCount,
       filters: {
         brands: brands,
-        priceRange: minPrice !== undefined || maxPrice !== undefined ? { min: minPrice || 0, max: maxPrice || Infinity } : undefined,
-        ramRange: minRam !== undefined || maxRam !== undefined ? { min: minRam || 0, max: maxRam || Infinity } : undefined,
-        batteryRange: minBattery !== undefined || maxBattery !== undefined ? { min: minBattery || 0, max: maxBattery || Infinity } : undefined,
-        screenRange: minScreen !== undefined || maxScreen !== undefined ? { min: minScreen || 0, max: maxScreen || Infinity } : undefined,
+        priceRange:
+          minPrice !== undefined || maxPrice !== undefined
+            ? { min: minPrice || 0, max: maxPrice || Infinity }
+            : undefined,
+        ramRange:
+          minRam !== undefined || maxRam !== undefined
+            ? { min: minRam || 0, max: maxRam || Infinity }
+            : undefined,
+        batteryRange:
+          minBattery !== undefined || maxBattery !== undefined
+            ? { min: minBattery || 0, max: maxBattery || Infinity }
+            : undefined,
+        screenRange:
+          minScreen !== undefined || maxScreen !== undefined
+            ? { min: minScreen || 0, max: maxScreen || Infinity }
+            : undefined,
         years: years,
-        storageRange: minStorage !== undefined || maxStorage !== undefined ? { min: minStorage || 0, max: maxStorage || Infinity } : undefined,
-        processor: processor
+        storageRange:
+          minStorage !== undefined || maxStorage !== undefined
+            ? { min: minStorage || 0, max: maxStorage || Infinity }
+            : undefined,
+        processor: processor,
       },
       pagination: {
         limit,
         offset,
-        hasMore: offset + limit < totalCount
-      }
+        hasMore: offset + limit < totalCount,
+      },
     }
   } catch (error: unknown) {
-    if (error.statusCode) {
+    if ((error as any)?.statusCode) {
       throw error
     }
     throw createError({
       statusCode: 500,
-      statusMessage: `Failed to search models: ${error instanceof Error ? error.message : 'Unknown error'}`
+      statusMessage: `Failed to search models: ${error instanceof Error ? error.message : 'Unknown error'}`,
     })
   }
 })

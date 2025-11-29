@@ -18,6 +18,7 @@ back_cam = predict_back_camera(ram, battery, screenSize, weight, year, price, co
 ```
 
 **Example:**
+
 ```matlab
 front = predict_front_camera(8, 5000, 6.7, 200, 2024, 899, 'Samsung');
 back = predict_back_camera(8, 5000, 6.7, 200, 2024, 899, 'Samsung');
@@ -33,6 +34,7 @@ similar = find_similar_phones(ram, battery, screenSize, weight, year, price, com
 ```
 
 **Example:**
+
 ```matlab
 similar = find_similar_phones(8, 5000, 6.7, 200, 2024, 899, 'Samsung', 5);
 disp(similar);
@@ -48,6 +50,7 @@ segments = analyze_market_segments();
 ```
 
 **Access Results:**
+
 ```matlab
 segments.Budget.avgPrice      % Average price in budget segment
 segments.('Mid-Range').count  % Number of mid-range phones
@@ -64,6 +67,7 @@ regional = analyze_regional_prices();
 ```
 
 **Access Results:**
+
 ```matlab
 regional.Pakistan.mean              % Average price in Pakistan
 regional.India.conversionFactor      % Conversion factor vs USA
@@ -82,6 +86,7 @@ run('visualize_new_features.m')
 **Output Location:** `visualizations/` folder
 
 **Generated Files:**
+
 - `camera_prediction_performance.png`
 - `market_segmentation.png`
 - `segment_characteristics.png`
@@ -94,14 +99,17 @@ run('visualize_new_features.m')
 ## 📁 File Locations
 
 ### Models
+
 - `trained_models/front_camera_predictor.mat`
 - `trained_models/back_camera_predictor.mat`
 
 ### Results
+
 - `analysis_results/market_segments.mat`
 - `analysis_results/regional_price_analysis.mat`
 
 ### Visualizations
+
 - `visualizations/*.png`
 
 ---
@@ -132,6 +140,7 @@ run('train_all_new_models.m')
 ## 💡 Common Use Cases
 
 ### 1. Complete Phone Spec Prediction
+
 ```matlab
 ram = 8; battery = 5000; screen = 6.7; weight = 200; year = 2024; price = 899; company = 'Samsung';
 front_cam = predict_front_camera(ram, battery, screen, weight, year, price, company);
@@ -139,12 +148,14 @@ back_cam = predict_back_camera(ram, battery, screen, weight, year, price, compan
 ```
 
 ### 2. Find Budget Alternatives
+
 ```matlab
 similar = find_similar_phones(8, 5000, 6.7, 200, 2024, 1299, 'Apple', 10);
 cheaper = similar(similar.Price_USD < 1299, :);
 ```
 
 ### 3. Market Analysis
+
 ```matlab
 segments = analyze_market_segments();
 fprintf('Premium phones: %d\n', segments.Premium.count);
@@ -156,6 +167,7 @@ fprintf('Avg premium price: $%.0f\n', segments.Premium.avgPrice);
 ## ⚠️ Prerequisites
 
 1. **Preprocess data first:**
+
    ```matlab
    run('preprocess_dataset.m')
    ```

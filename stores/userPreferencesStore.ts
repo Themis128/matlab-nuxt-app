@@ -32,21 +32,19 @@ const defaultPreferences: UserPreferences = {
     batteryCapacity: [2000, 7000],
     ram: [4, 8, 12, 16],
     storage: [64, 128, 256, 512],
-    brands: []
+    brands: [],
   },
   notifications: {
     priceAlerts: true,
     apiStatus: true,
-    updates: false
-  }
+    updates: false,
+  },
 }
 
 export const useUserPreferencesStore = defineStore('userPreferences', {
   state: (): UserPreferences => ({
-    ...defaultPreferences
+    ...defaultPreferences,
   }),
-
-  persist: true,
 
   actions: {
     /**
@@ -129,14 +127,14 @@ export const useUserPreferencesStore = defineStore('userPreferences', {
      */
     setNotificationSettings(settings: Partial<UserPreferences['notifications']>) {
       Object.assign(this.notifications, settings)
-    }
+    },
   },
 
   getters: {
     /**
      * Get current theme (resolved if 'system')
      */
-    getResolvedTheme: (state) => {
+    getResolvedTheme: state => {
       if (state.theme !== 'system') return state.theme
 
       // If system preference, detect from browser
@@ -150,14 +148,14 @@ export const useUserPreferencesStore = defineStore('userPreferences', {
     /**
      * Check if a brand filter is active
      */
-    isBrandFilterActive: (state) => (brand: string) => {
+    isBrandFilterActive: state => (brand: string) => {
       return state.searchFilters.brands.includes(brand)
     },
 
     /**
      * Get active filters count
      */
-    activeFiltersCount: (state) => {
+    activeFiltersCount: state => {
       let count = 0
 
       // Check price range (not default)
@@ -171,7 +169,10 @@ export const useUserPreferencesStore = defineStore('userPreferences', {
       }
 
       // Check battery
-      if (state.searchFilters.batteryCapacity[0] !== 2000 || state.searchFilters.batteryCapacity[1] !== 7000) {
+      if (
+        state.searchFilters.batteryCapacity[0] !== 2000 ||
+        state.searchFilters.batteryCapacity[1] !== 7000
+      ) {
         count++
       }
 
@@ -191,6 +192,6 @@ export const useUserPreferencesStore = defineStore('userPreferences', {
       }
 
       return count
-    }
-  }
+    },
+  },
 })

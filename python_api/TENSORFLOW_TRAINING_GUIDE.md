@@ -11,6 +11,7 @@ pip install -r requirements.txt
 ```
 
 Required packages:
+
 - TensorFlow 2.15.0
 - scikit-learn 1.3.2
 - pandas 2.1.3
@@ -21,6 +22,7 @@ Required packages:
 ### Step 1: Prepare Dataset
 
 Make sure your CSV file is in the project root:
+
 ```
 Mobiles Dataset (2025).csv
 ```
@@ -33,6 +35,7 @@ python train_models.py
 ```
 
 This will:
+
 1. Load and preprocess the dataset
 2. Train 4 models:
    - Price Prediction
@@ -55,6 +58,7 @@ print(f"Predicted price: ${price}")
 ## 📊 Model Architectures
 
 ### Price Prediction Model
+
 ```
 Input (24 features)
   ↓
@@ -68,6 +72,7 @@ Dense(1)  # Regression output
 ```
 
 ### RAM/Battery Prediction Models
+
 ```
 Input (N features)
   ↓
@@ -79,6 +84,7 @@ Dense(1)  # Regression output
 ```
 
 ### Brand Classification Model
+
 ```
 Input (6 features)
   ↓
@@ -117,6 +123,7 @@ python_api/trained_models/
 ## 📈 Expected Performance
 
 Based on MATLAB models:
+
 - **Price Prediction**: R² ≈ 0.98, RMSE ≈ $47
 - **RAM Prediction**: R² ≈ 0.95, RMSE ≈ 0.60 GB
 - **Battery Prediction**: R² ≈ 0.94, RMSE ≈ 142 mAh
@@ -145,16 +152,19 @@ train_price_model(data, epochs=150, batch_size=32)  # Custom parameters
 ## 🐛 Troubleshooting
 
 ### Out of Memory
+
 - Reduce batch size: `batch_size=32`
 - Reduce model size: fewer neurons in layers
 
 ### Poor Performance
+
 - Train for more epochs
 - Adjust learning rate
 - Add more layers/neurons
 - Check data quality
 
 ### Model Not Loading
+
 - Check file paths
 - Verify TensorFlow version
 - Check model file exists

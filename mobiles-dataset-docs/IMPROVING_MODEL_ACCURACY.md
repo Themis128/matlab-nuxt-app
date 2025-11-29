@@ -2,18 +2,19 @@
 
 ## 🎯 Current Performance & Improvement Targets
 
-| Model | Current | Target | Gap |
-|-------|---------|--------|-----|
-| Price Prediction | R² = 0.8138 | R² = 0.85-0.90 | +4-10% |
-| Brand Classification | 55.65% | 70-80% | +14-24% |
-| RAM Prediction | R² = 0.6629 | R² = 0.75-0.80 | +13-21% |
-| Battery Prediction | R² = 0.7489 | R² = 0.80-0.85 | +7-14% |
+| Model                | Current     | Target         | Gap     |
+| -------------------- | ----------- | -------------- | ------- |
+| Price Prediction     | R² = 0.8138 | R² = 0.85-0.90 | +4-10%  |
+| Brand Classification | 55.65%      | 70-80%         | +14-24% |
+| RAM Prediction       | R² = 0.6629 | R² = 0.75-0.80 | +13-21% |
+| Battery Prediction   | R² = 0.7489 | R² = 0.80-0.85 | +7-14%  |
 
 ---
 
 ## 📊 Strategy 1: Data Improvements
 
 ### 1.1 Collect More Data
+
 **Impact:** High (especially for brand classification)
 **Effort:** Medium
 
@@ -28,6 +29,7 @@
 ```
 
 **Action Items:**
+
 - Scrape more mobile phone data from websites
 - Use data augmentation (add noise, create synthetic samples)
 - Combine multiple datasets
@@ -36,6 +38,7 @@
 ---
 
 ### 1.2 Improve Data Quality
+
 **Impact:** High
 **Effort:** Low-Medium
 
@@ -47,6 +50,7 @@
 ```
 
 **Action Items:**
+
 - Remove extreme outliers (prices > $3000, RAM > 16GB)
 - Fill missing values intelligently
 - Standardize brand names (POCO vs Poco)
@@ -55,6 +59,7 @@
 ---
 
 ### 1.3 Data Augmentation
+
 **Impact:** Medium
 **Effort:** Low
 
@@ -65,6 +70,7 @@
 ```
 
 **Action Items:**
+
 - Add 1-2% random noise to features
 - Oversample minority brands
 - Create synthetic samples for rare combinations
@@ -75,10 +81,12 @@
 ## 🔧 Strategy 2: Feature Engineering
 
 ### 2.1 Add More Features
+
 **Impact:** Very High
 **Effort:** Medium
 
 **Missing Features That Could Help:**
+
 ```matlab
 % Camera specifications
 camera_mp = [12, 48, 64, 108];  % Megapixels
@@ -108,6 +116,7 @@ wireless_charging = [0, 1];
 ```
 
 **Action Items:**
+
 - Collect camera, processor, storage, display specs
 - Add OS information
 - Include connectivity features
@@ -116,6 +125,7 @@ wireless_charging = [0, 1];
 ---
 
 ### 2.2 Create Interaction Features
+
 **Impact:** High
 **Effort:** Low
 
@@ -140,6 +150,7 @@ is_recent = year >= 2023;
 ```
 
 **Action Items:**
+
 - Add price-to-feature ratios
 - Create brand segments
 - Add temporal features
@@ -148,6 +159,7 @@ is_recent = year >= 2023;
 ---
 
 ### 2.3 Polynomial Features
+
 **Impact:** Medium
 **Effort:** Low
 
@@ -161,6 +173,7 @@ price_squared = price.^2;
 ```
 
 **Action Items:**
+
 - Add polynomial terms for RAM, Battery, Price
 - Use feature selection to keep only useful ones
 - **Expected Improvement:** +2-5% accuracy
@@ -170,6 +183,7 @@ price_squared = price.^2;
 ## 🏗️ Strategy 3: Architecture Improvements
 
 ### 3.1 Try Different Architectures
+
 **Impact:** Medium-High
 **Effort:** Medium
 
@@ -188,6 +202,7 @@ price_squared = price.^2;
 ```
 
 **Action Items:**
+
 - Try residual connections for deep networks
 - Experiment with attention layers
 - Use ensemble methods
@@ -196,6 +211,7 @@ price_squared = price.^2;
 ---
 
 ### 3.2 Hyperparameter Tuning
+
 **Impact:** Medium
 **Effort:** Medium
 
@@ -211,6 +227,7 @@ price_squared = price.^2;
 ```
 
 **Action Items:**
+
 - Use grid search or random search
 - Implement Bayesian optimization
 - Use cross-validation
@@ -221,6 +238,7 @@ price_squared = price.^2;
 ## 🎯 Strategy 4: Advanced Techniques
 
 ### 4.1 Ensemble Methods
+
 **Impact:** Very High
 **Effort:** Medium
 
@@ -238,6 +256,7 @@ final_brand = mode([brand1, brand2, brand3, brand4, brand5]);
 ```
 
 **Action Items:**
+
 - Train multiple models with different:
   - Architectures (lightweight, wide, deep)
   - Random seeds
@@ -248,6 +267,7 @@ final_brand = mode([brand1, brand2, brand3, brand4, brand5]);
 ---
 
 ### 4.2 Stacking
+
 **Impact:** High
 **Effort:** High
 
@@ -264,6 +284,7 @@ final_prediction = meta_model.predict(base_predictions);
 ```
 
 **Action Items:**
+
 - Train 5-7 base models
 - Train meta-model (simpler) on their predictions
 - **Expected Improvement:** +3-10% accuracy
@@ -271,6 +292,7 @@ final_prediction = meta_model.predict(base_predictions);
 ---
 
 ### 4.3 Cross-Validation & Better Splits
+
 **Impact:** Medium
 **Effort:** Low
 
@@ -284,6 +306,7 @@ final_prediction = meta_model.predict(base_predictions);
 ```
 
 **Action Items:**
+
 - Implement k-fold cross-validation
 - Use stratified splits for brand classification
 - **Expected Improvement:** +1-3% accuracy (more reliable)
@@ -297,6 +320,7 @@ final_prediction = meta_model.predict(base_predictions);
 **Current:** R² = 0.8138 (Lightweight model)
 
 **Improvements:**
+
 ```matlab
 % 1. Add more features (camera, processor, storage)
 % 2. Use ensemble of all 4 price models
@@ -314,6 +338,7 @@ final_prediction = meta_model.predict(base_predictions);
 **Current:** 55.65% accuracy
 
 **Improvements:**
+
 ```matlab
 % 1. Collect more data (especially for minority brands)
 % 2. Use class weights (already tried, but refine)
@@ -337,6 +362,7 @@ final_prediction = meta_model.predict(base_predictions);
 **Current:** R² = 0.6629 (Tuned model)
 
 **Improvements:**
+
 ```matlab
 % 1. Add processor features (processor determines RAM needs)
 % 2. Add OS features (iOS vs Android RAM usage)
@@ -354,6 +380,7 @@ final_prediction = meta_model.predict(base_predictions);
 **Current:** R² = 0.7489 (already excellent)
 
 **Improvements:**
+
 ```matlab
 % 1. Add screen features (OLED uses less battery)
 % 2. Add processor efficiency features
@@ -369,6 +396,7 @@ final_prediction = meta_model.predict(base_predictions);
 ## 📝 Implementation Priority
 
 ### Quick Wins (Low Effort, Medium Impact):
+
 1. ✅ Add interaction features (price ratios, brand segments)
 2. ✅ Implement ensemble of existing models
 3. ✅ Add polynomial features
@@ -377,6 +405,7 @@ final_prediction = meta_model.predict(base_predictions);
 **Expected:** +5-10% accuracy improvement
 
 ### Medium-Term (Medium Effort, High Impact):
+
 1. ✅ Collect more data (especially for brand classification)
 2. ✅ Add missing features (camera, processor, storage)
 3. ✅ Implement stacking
@@ -385,6 +414,7 @@ final_prediction = meta_model.predict(base_predictions);
 **Expected:** +10-20% accuracy improvement
 
 ### Long-Term (High Effort, Very High Impact):
+
 1. ✅ Large-scale data collection
 2. ✅ Advanced architectures (attention, residual)
 3. ✅ Comprehensive feature engineering
@@ -397,6 +427,7 @@ final_prediction = meta_model.predict(base_predictions);
 ## 🛠️ Practical Implementation Scripts
 
 ### Script 1: Add Interaction Features
+
 ```matlab
 % File: add_interaction_features.m
 % Adds price ratios, brand segments, temporal features
@@ -421,6 +452,7 @@ X_enhanced = [X_original, price_per_ram, price_per_battery, price_per_screen, ..
 ```
 
 ### Script 2: Ensemble Model
+
 ```matlab
 % File: ensemble_price_prediction.m
 % Combines predictions from multiple models
@@ -444,6 +476,7 @@ ensemble_pred = weights(1)*pred1 + weights(2)*pred2 + weights(3)*pred3 + weights
 ```
 
 ### Script 3: Hyperparameter Tuning
+
 ```matlab
 % File: hyperparameter_tuning.m
 % Systematic search for best hyperparameters
@@ -470,32 +503,35 @@ end
 
 ## 📊 Expected Results Summary
 
-| Strategy | Effort | Impact | Expected Improvement |
-|----------|--------|--------|---------------------|
-| **Add More Features** | Medium | Very High | +10-20% |
-| **Ensemble Methods** | Medium | Very High | +5-15% |
-| **More Data** | High | High | +5-15% |
-| **Feature Engineering** | Low-Medium | High | +5-10% |
-| **Hyperparameter Tuning** | Medium | Medium | +2-5% |
-| **Advanced Architectures** | High | Medium-High | +3-8% |
+| Strategy                   | Effort     | Impact      | Expected Improvement |
+| -------------------------- | ---------- | ----------- | -------------------- |
+| **Add More Features**      | Medium     | Very High   | +10-20%              |
+| **Ensemble Methods**       | Medium     | Very High   | +5-15%               |
+| **More Data**              | High       | High        | +5-15%               |
+| **Feature Engineering**    | Low-Medium | High        | +5-10%               |
+| **Hyperparameter Tuning**  | Medium     | Medium      | +2-5%                |
+| **Advanced Architectures** | High       | Medium-High | +3-8%                |
 
 ---
 
 ## 🎯 Recommended Action Plan
 
 ### Phase 1 (1-2 weeks): Quick Wins
+
 1. ✅ Add interaction features
 2. ✅ Create ensemble model
 3. ✅ Improve hyperparameter tuning
 4. **Target:** +5-10% improvement
 
 ### Phase 2 (1 month): Medium-Term
+
 1. ✅ Collect more data
 2. ✅ Add missing features (camera, processor)
 3. ✅ Try XGBoost for brand classification
 4. **Target:** +10-20% improvement
 
 ### Phase 3 (2-3 months): Long-Term
+
 1. ✅ Large-scale data collection
 2. ✅ Advanced architectures
 3. ✅ Comprehensive feature engineering
@@ -511,10 +547,11 @@ end
 4. **Start with Quick Wins:** Interaction features and ensembles are easy and effective
 
 **Most Impactful Actions:**
+
 1. 🥇 Add more features (camera, processor, storage)
 2. 🥈 Implement ensemble methods
 3. 🥉 Collect more training data
 
 ---
 
-*Start with quick wins, then move to more comprehensive improvements!*
+_Start with quick wins, then move to more comprehensive improvements!_

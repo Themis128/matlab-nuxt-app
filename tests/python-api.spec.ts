@@ -37,8 +37,8 @@ test.describe.skip('Python API Endpoints', () => {
           screen: 6.5,
           weight: 174,
           year: 2024,
-          company: 'Apple'
-        }
+          company: 'Apple',
+        },
       })
 
       // Should return 200 (success) or 503 (Python API unavailable) or 500 (error)
@@ -64,8 +64,8 @@ test.describe.skip('Python API Endpoints', () => {
           front_camera: 12,
           back_camera: 48,
           storage: 128,
-          processor: 'Snapdragon 8 Gen 2'
-        }
+          processor: 'Snapdragon 8 Gen 2',
+        },
       })
 
       expect([200, 500, 503]).toContain(response.status())
@@ -80,8 +80,8 @@ test.describe.skip('Python API Endpoints', () => {
       const response = await request.post('/api/predict/price', {
         data: {
           // Missing required fields
-          ram: 8
-        }
+          ram: 8,
+        },
       })
 
       // Should return 400 (bad request) or 500 (server error) or 503 (API unavailable)
@@ -98,7 +98,7 @@ test.describe.skip('Python API Endpoints', () => {
 
     test('should handle empty request body', async ({ request }) => {
       const response = await request.post('/api/predict/price', {
-        data: {}
+        data: {},
       })
 
       // Should return 400 (bad request) or 500 (server error) or 503 (API unavailable)
@@ -123,8 +123,8 @@ test.describe.skip('Python API Endpoints', () => {
           weight: 174,
           year: 2024,
           price: 999,
-          company: 'Apple'
-        }
+          company: 'Apple',
+        },
       })
 
       expect([200, 400, 500, 503]).toContain(response.status())
@@ -148,8 +148,8 @@ test.describe.skip('Python API Endpoints', () => {
           company: 'Samsung',
           front_camera: 12,
           back_camera: 48,
-          storage: 256
-        }
+          storage: 256,
+        },
       })
 
       expect([200, 400, 500, 503]).toContain(response.status())
@@ -170,8 +170,8 @@ test.describe.skip('Python API Endpoints', () => {
           weight: 174,
           year: 2024,
           price: 999,
-          company: 'Apple'
-        }
+          company: 'Apple',
+        },
       })
 
       expect([200, 400, 500, 503]).toContain(response.status())
@@ -195,8 +195,8 @@ test.describe.skip('Python API Endpoints', () => {
           company: 'Samsung',
           front_camera: 12,
           back_camera: 48,
-          storage: 128
-        }
+          storage: 128,
+        },
       })
 
       expect([200, 400, 500, 503]).toContain(response.status())
@@ -217,8 +217,8 @@ test.describe.skip('Python API Endpoints', () => {
           screen: 6.5,
           weight: 174,
           year: 2024,
-          price: 999
-        }
+          price: 999,
+        },
       })
 
       expect([200, 400, 500, 503]).toContain(response.status())
@@ -242,8 +242,8 @@ test.describe.skip('Python API Endpoints', () => {
           price: 999,
           front_camera: 12,
           back_camera: 48,
-          storage: 128
-        }
+          storage: 128,
+        },
       })
 
       expect([200, 400, 500, 503]).toContain(response.status())
@@ -264,8 +264,8 @@ test.describe.skip('Python API Endpoints', () => {
           screen: 6.5,
           weight: 174,
           price: 999,
-          year: 2024
-        }
+          year: 2024,
+        },
       })
 
       expect([200, 400, 404, 500]).toContain(response.status())
@@ -293,8 +293,8 @@ test.describe.skip('Python API Endpoints', () => {
           predictedPrice: 999,
           predictedRam: 8,
           predictedBattery: 5000,
-          company: 'Apple'
-        }
+          company: 'Apple',
+        },
       })
 
       expect([200, 400, 404, 500]).toContain(response.status())
@@ -309,8 +309,8 @@ test.describe.skip('Python API Endpoints', () => {
     test('should handle find closest model with minimal data', async ({ request }) => {
       const response = await request.post('/api/find-closest-model', {
         data: {
-          price: 999
-        }
+          price: 999,
+        },
       })
 
       // Should still work with minimal data
@@ -336,8 +336,8 @@ test.describe.skip('Python API Endpoints', () => {
           battery: 5000,
           screen: 6.5,
           weight: 174,
-          year: 2024
-        }
+          year: 2024,
+        },
       })
       expect(response.status()).toBe(404)
     })
@@ -349,8 +349,8 @@ test.describe.skip('Python API Endpoints', () => {
           screen: 6.5,
           weight: 174,
           year: 2024,
-          price: 999
-        }
+          price: 999,
+        },
       })
       expect(response.status()).toBe(404)
     })
@@ -362,8 +362,8 @@ test.describe.skip('Python API Endpoints', () => {
           screen: 6.5,
           weight: 174,
           year: 2024,
-          price: 999
-        }
+          price: 999,
+        },
       })
       expect(response.status()).toBe(404)
     })
@@ -376,8 +376,8 @@ test.describe.skip('Python API Endpoints', () => {
           screen: 6.5,
           weight: 174,
           year: 2024,
-          price: 999
-        }
+          price: 999,
+        },
       })
       expect(response.status()).toBe(404)
     })
@@ -389,8 +389,8 @@ test.describe.skip('Python API Endpoints', () => {
           battery: 5000,
           screen: 6.5,
           weight: 174,
-          price: 999
-        }
+          price: 999,
+        },
       })
       expect(response.status()).toBe(404)
     })

@@ -29,20 +29,17 @@ Describe the improvement you'd like to see.
 - [ ] Hyperparameter tuning
 - [ ] Data preprocessing
 - [ ] Training strategy
-- [ ] Other: ___________
+- [ ] Other: \***\*\_\_\_\*\***
 
 ## 📝 Detailed Description
 
 Describe your improvement idea in detail:
 
-1. **What to change:**
-   -
+1. ## **What to change:**
 
-2. **Why this will help:**
-   -
+2. ## **Why this will help:**
 
-3. **How to implement:**
-   -
+3. ## **How to implement:**
 
 ## 🧪 Testing Plan
 
@@ -63,6 +60,7 @@ Add any other context, research papers, or examples here.
 ---
 
 **Checklist:**
+
 - [ ] I've reviewed the current model implementation
 - [ ] I've checked similar improvements in issues
 - [ ] I've provided clear improvement plan

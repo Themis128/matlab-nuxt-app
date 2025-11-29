@@ -9,7 +9,7 @@ const colors = {
   green: '\x1b[32m',
   red: '\x1b[31m',
   yellow: '\x1b[33m',
-  reset: '\x1b[0m'
+  reset: '\x1b[0m',
 }
 
 async function testEndpoint(name, method, url, body = null) {
@@ -18,7 +18,7 @@ async function testEndpoint(name, method, url, body = null) {
   try {
     const options = {
       method,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
     }
 
     if (body) {
@@ -48,7 +48,7 @@ async function runTests() {
 
   const results = {
     passed: 0,
-    failed: 0
+    failed: 0,
   }
 
   // Test 1: Advanced Search
@@ -85,14 +85,9 @@ async function runTests() {
 
   // Test 3: Model Comparison
   console.log('3. Testing Model Comparison Endpoint')
-  const compare = await testEndpoint(
-    'Compare Models',
-    'POST',
-    `${BASE_URL}/api/dataset/compare`,
-    {
-      modelNames: ['iPhone 16 128GB', 'Samsung Galaxy S24']
-    }
-  )
+  const compare = await testEndpoint('Compare Models', 'POST', `${BASE_URL}/api/dataset/compare`, {
+    modelNames: ['iPhone 16 128GB', 'Samsung Galaxy S24'],
+  })
   if (compare.success) results.passed++
   else results.failed++
 
@@ -100,20 +95,15 @@ async function runTests() {
 
   // Test 4: Similar Models
   console.log('4. Testing Similar Models Endpoint')
-  const similar = await testEndpoint(
-    'Similar Models',
-    'POST',
-    `${BASE_URL}/api/dataset/similar`,
-    {
-      ram: 8,
-      battery: 4000,
-      screenSize: 6.1,
-      weight: 174,
-      year: 2024,
-      price: 799,
-      limit: 5
-    }
-  )
+  const similar = await testEndpoint('Similar Models', 'POST', `${BASE_URL}/api/dataset/similar`, {
+    ram: 8,
+    battery: 4000,
+    screenSize: 6.1,
+    weight: 174,
+    year: 2024,
+    price: 799,
+    limit: 5,
+  })
   if (similar.success) results.passed++
   else results.failed++
 
@@ -144,7 +134,9 @@ async function runTests() {
   console.log('='.repeat(50))
 
   if (results.failed === 0) {
-    console.log(`\n${colors.green}🎉 All tests passed! Your endpoints are working correctly!${colors.reset}`)
+    console.log(
+      `\n${colors.green}🎉 All tests passed! Your endpoints are working correctly!${colors.reset}`
+    )
   } else {
     console.log(`\n${colors.yellow}⚠️  Some tests failed. Check the errors above.${colors.reset}`)
     console.log('Make sure:')

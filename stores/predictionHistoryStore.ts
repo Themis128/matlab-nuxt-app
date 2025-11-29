@@ -19,7 +19,7 @@ const MAX_HISTORY = 50 // Keep last 50 predictions
 
 export const usePredictionHistoryStore = defineStore('predictionHistory', {
   state: () => ({
-    history: [] as PredictionHistoryItem[]
+    history: [] as PredictionHistoryItem[],
   }),
 
   actions: {
@@ -73,7 +73,7 @@ export const usePredictionHistoryStore = defineStore('predictionHistory', {
 
       this.history = []
       localStorage.removeItem(STORAGE_KEY)
-    }
+    },
   },
 
   getters: {
@@ -87,8 +87,10 @@ export const usePredictionHistoryStore = defineStore('predictionHistory', {
     /**
      * Get history items by model type
      */
-    getHistoryByModel: (state) => (model: string): PredictionHistoryItem[] => {
-      return state.history.filter(item => item.model === model)
-    }
-  }
+    getHistoryByModel:
+      state =>
+      (model: string): PredictionHistoryItem[] => {
+        return state.history.filter(item => item.model === model)
+      },
+  },
 })

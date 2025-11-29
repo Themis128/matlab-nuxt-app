@@ -46,10 +46,18 @@ test.describe('AI Predictions Demo Page', () => {
     await expect(page.locator('text=Enhanced Model Performance')).toBeVisible()
 
     // Check performance cards - use more specific selectors
-    await expect(page.locator('[class*="text-green"][class*="font-bold"]').filter({ hasText: '98.24%' })).toBeVisible()
-    await expect(page.locator('[class*="text-blue"][class*="font-bold"]').filter({ hasText: '95.16%' })).toBeVisible()
-    await expect(page.locator('[class*="text-purple"][class*="font-bold"]').filter({ hasText: '94.77%' })).toBeVisible()
-    await expect(page.locator('[class*="text-orange"][class*="font-bold"]').filter({ hasText: '65.22%' })).toBeVisible()
+    await expect(
+      page.locator('[class*="text-green"][class*="font-bold"]').filter({ hasText: '98.24%' })
+    ).toBeVisible()
+    await expect(
+      page.locator('[class*="text-blue"][class*="font-bold"]').filter({ hasText: '95.16%' })
+    ).toBeVisible()
+    await expect(
+      page.locator('[class*="text-purple"][class*="font-bold"]').filter({ hasText: '94.77%' })
+    ).toBeVisible()
+    await expect(
+      page.locator('[class*="text-orange"][class*="font-bold"]').filter({ hasText: '65.22%' })
+    ).toBeVisible()
 
     // Check improvement percentages
     await expect(page.locator('text=+20.7% improvement')).toBeVisible()
@@ -110,15 +118,15 @@ test.describe('AI Predictions Demo Page', () => {
     await page.fill('input[placeholder="8"]', '8')
     await page.fill('input[placeholder="4000"]', '4000')
     await page.fill('input[placeholder="6.1"]', '6.1')
-    
+
     // Ensure only price prediction is checked
     await page.locator('input[type="checkbox"][value="ram"]').uncheck()
     await page.locator('input[type="checkbox"][value="battery"]').uncheck()
     await page.locator('input[type="checkbox"][value="brand"]').uncheck()
-    
+
     // Wait for Vue to update reactive state after unchecking
     await page.waitForTimeout(500)
-    
+
     // Submit prediction
     await page.locator('button:has-text("Run AI Predictions")').click()
 
@@ -129,7 +137,10 @@ test.describe('AI Predictions Demo Page', () => {
     await expect(page.locator('text=98.24% Accuracy')).toBeVisible()
 
     // Should show a price (numeric value)
-    const priceElement = page.locator('[class*="font-bold"][class*="text-green"]').filter({ hasText: /\$/ }).first()
+    const priceElement = page
+      .locator('[class*="font-bold"][class*="text-green"]')
+      .filter({ hasText: /\$/ })
+      .first()
     const priceText = await priceElement.textContent()
     const price = parseFloat(priceText?.replace(/[$,]/g, '') || '0')
     expect(price).toBeGreaterThan(0)
@@ -141,13 +152,13 @@ test.describe('AI Predictions Demo Page', () => {
     await page.fill('input[placeholder="8"]', '8')
     await page.fill('input[placeholder="4000"]', '4000')
     await page.fill('input[placeholder="6.1"]', '6.1')
-    
+
     // Verify all checkboxes are checked (they are by default)
     await expect(page.locator('input[type="checkbox"][value="price"]')).toBeChecked()
     await expect(page.locator('input[type="checkbox"][value="ram"]')).toBeChecked()
     await expect(page.locator('input[type="checkbox"][value="battery"]')).toBeChecked()
     await expect(page.locator('input[type="checkbox"][value="brand"]')).toBeChecked()
-    
+
     // Submit
     await page.locator('button:has-text("Run AI Predictions")').click()
 
@@ -179,7 +190,9 @@ test.describe('AI Predictions Demo Page', () => {
     // Check RAM prediction features - use more specific selectors
     await expect(page.locator('text=RAM Prediction Features')).toBeVisible()
     // Find elements within the RAM prediction section
-    const ramFeatures = page.locator('h3:has-text("RAM Prediction Features")').locator('xpath=following-sibling::div[1]')
+    const ramFeatures = page
+      .locator('h3:has-text("RAM Prediction Features")')
+      .locator('xpath=following-sibling::div[1]')
     await expect(ramFeatures.locator('text=Battery Capacity')).toBeVisible()
     await expect(ramFeatures.locator('text=Screen Size')).toBeVisible()
     await expect(ramFeatures.locator('text=Launch Year')).toBeVisible()
@@ -203,7 +216,7 @@ test.describe('AI Predictions Demo Page', () => {
     await page.fill('input[placeholder="8"]', '8')
     await page.fill('input[placeholder="4000"]', '4000')
     await page.fill('input[placeholder="6.1"]', '6.1')
-    
+
     // Submit
     await page.locator('button:has-text("Run AI Predictions")').click()
 

@@ -41,7 +41,7 @@ export default defineEventHandler(async (event): Promise<ModelsByPriceResponse> 
     if (!price || isNaN(price) || price <= 0) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'Invalid price parameter. Please provide a valid price number.'
+        statusMessage: 'Invalid price parameter. Please provide a valid price number.',
       })
     }
 
@@ -73,7 +73,7 @@ export default defineEventHandler(async (event): Promise<ModelsByPriceResponse> 
     if (!datasetContent) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'Dataset file not found'
+        statusMessage: 'Dataset file not found',
       })
     }
 
@@ -102,7 +102,7 @@ export default defineEventHandler(async (event): Promise<ModelsByPriceResponse> 
     if (lines.length < 2) {
       throw createError({
         statusCode: 500,
-        statusMessage: 'Dataset file is empty or invalid'
+        statusMessage: 'Dataset file is empty or invalid',
       })
     }
 
@@ -130,34 +130,31 @@ export default defineEventHandler(async (event): Promise<ModelsByPriceResponse> 
     const screenIdx = getColumnIndex('Screen Size', ['screen', 'display'])
     const weightIdx = getColumnIndex('Mobile Weight', ['weight'])
     const yearIdx = getColumnIndex('Launched Year', ['year', 'launched'])
-    const frontCameraIdx = headers.findIndex(h =>
-      h.toLowerCase().includes('front') && h.toLowerCase().includes('camera')
+    const frontCameraIdx = headers.findIndex(
+      h => h.toLowerCase().includes('front') && h.toLowerCase().includes('camera')
     )
-    const backCameraIdx = headers.findIndex(h =>
-      h.toLowerCase().includes('back') && h.toLowerCase().includes('camera')
+    const backCameraIdx = headers.findIndex(
+      h => h.toLowerCase().includes('back') && h.toLowerCase().includes('camera')
     )
-    const storageIdx = headers.findIndex(h =>
-      h.toLowerCase().includes('storage') || h.toLowerCase().includes('internal')
+    const storageIdx = headers.findIndex(
+      h => h.toLowerCase().includes('storage') || h.toLowerCase().includes('internal')
     )
-    const processorIdx = headers.findIndex(h =>
-      h.toLowerCase().includes('processor')
+    const processorIdx = headers.findIndex(h => h.toLowerCase().includes('processor'))
+    const displayTypeIdx = headers.findIndex(
+      h => h.toLowerCase().includes('display type') || h.toLowerCase().includes('screen type')
     )
-    const displayTypeIdx = headers.findIndex(h =>
-      h.toLowerCase().includes('display type') || h.toLowerCase().includes('screen type')
+    const refreshRateIdx = headers.findIndex(
+      h => h.toLowerCase().includes('refresh') || h.toLowerCase().includes('hz')
     )
-    const refreshRateIdx = headers.findIndex(h =>
-      h.toLowerCase().includes('refresh') || h.toLowerCase().includes('hz')
-    )
-    const resolutionIdx = headers.findIndex(h =>
-      h.toLowerCase().includes('resolution')
-    )
+    const resolutionIdx = headers.findIndex(h => h.toLowerCase().includes('resolution'))
 
     // Helper to extract number from string (handles formats like "$999", "USD 799", "999", "1,199", "3,600mAh", etc.)
-    const extractNumber = (str: string): number | null => {
+    const extractNumber = (str: string | undefined): number | null => {
       if (!str || str.trim() === '' || str.toLowerCase() === 'nan') return null
 
       // Remove common currency symbols (USD, $, PKR, INR, CNY, etc.), commas, spaces
-      let cleaned = str.toString()
+      let cleaned = str
+        .toString()
         .replace(/(USD|PKR|INR|CNY|AED|\$)/gi, '') // Remove currency codes
         .replace(/[$,\s]/g, '') // Remove $, commas, spaces
 
@@ -182,7 +179,7 @@ export default defineEventHandler(async (event): Promise<ModelsByPriceResponse> 
       battery: batteryIdx,
       screen: screenIdx,
       weight: weightIdx,
-      year: yearIdx
+      year: yearIdx,
     })
     console.log('Price range:', { min: minPrice, max: maxPrice, requested: price })
 
@@ -194,7 +191,8 @@ export default defineEventHandler(async (event): Promise<ModelsByPriceResponse> 
     let missingRequiredCount = 0
 
     for (let i = 1; i < lines.length; i++) {
-      const values = parseCSVLine(lines[i]).map(v => v.replace(/^"|"$/g, '').trim())
+      const rawLine = lines[i] ?? ''
+      const values = parseCSVLine(rawLine).map(v => v.replace(/^"|"$/g, '').trim())
 
       if (values.length < headers.length) continue
       processedCount++
@@ -233,13 +231,17 @@ export default defineEventHandler(async (event): Promise<ModelsByPriceResponse> 
       brandsSet.add(company)
 
       // Extract optional fields
-      const frontCamera = frontCameraIdx !== -1 ? extractNumber(values[frontCameraIdx]) : undefined
-      const backCamera = backCameraIdx !== -1 ? extractNumber(values[backCameraIdx]) : undefined
-      const storage = storageIdx !== -1 ? extractNumber(values[storageIdx]) : undefined
-      const processor = processorIdx !== -1 ? (values[processorIdx] || undefined) : undefined
-      const displayType = displayTypeIdx !== -1 ? (values[displayTypeIdx] || undefined) : undefined
-      const refreshRate = refreshRateIdx !== -1 ? extractNumber(values[refreshRateIdx]) : undefined
-      const resolution = resolutionIdx !== -1 ? (values[resolutionIdx] || undefined) : undefined
+      const frontCamera =
+        frontCameraIdx !== -1 ? (extractNumber(values[frontCameraIdx]) ?? undefined) : undefined
+      const backCamera =
+        backCameraIdx !== -1 ? (extractNumber(values[backCameraIdx]) ?? undefined) : undefined
+      const storage =
+        storageIdx !== -1 ? (extractNumber(values[storageIdx]) ?? undefined) : undefined
+      const processor = processorIdx !== -1 ? values[processorIdx] || undefined : undefined
+      const displayType = displayTypeIdx !== -1 ? values[displayTypeIdx] || undefined : undefined
+      const refreshRate =
+        refreshRateIdx !== -1 ? (extractNumber(values[refreshRateIdx]) ?? undefined) : undefined
+      const resolution = resolutionIdx !== -1 ? values[resolutionIdx] || undefined : undefined
 
       models.push({
         modelName,
@@ -256,7 +258,7 @@ export default defineEventHandler(async (event): Promise<ModelsByPriceResponse> 
         processor,
         displayType,
         refreshRate,
-        resolution
+        resolution,
       })
     }
 
@@ -275,7 +277,7 @@ export default defineEventHandler(async (event): Promise<ModelsByPriceResponse> 
       processedRows: processedCount,
       priceMatches: priceMatchCount,
       missingRequired: missingRequiredCount,
-      finalModels: models.length
+      finalModels: models.length,
     })
 
     return {
@@ -285,17 +287,17 @@ export default defineEventHandler(async (event): Promise<ModelsByPriceResponse> 
         min: minPrice,
         max: maxPrice,
         requested: price,
-        tolerance: tolerance
+        tolerance: tolerance,
       },
-      brands: Array.from(brandsSet).sort()
+      brands: Array.from(brandsSet).sort(),
     }
   } catch (error: unknown) {
-    if (error.statusCode) {
+    if ((error as any)?.statusCode) {
       throw error
     }
     throw createError({
       statusCode: 500,
-      statusMessage: `Failed to query models by price: ${error instanceof Error ? error.message : 'Unknown error'}`
+      statusMessage: `Failed to query models by price: ${error instanceof Error ? error.message : 'Unknown error'}`,
     })
   }
 })

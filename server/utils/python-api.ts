@@ -15,7 +15,7 @@ export async function callPythonAPI<T>(
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
-      signal: AbortSignal.timeout(5000) // 5 second timeout
+      signal: AbortSignal.timeout(5000), // 5 second timeout
     })
 
     // Return the response data regardless of status code

@@ -1,6 +1,7 @@
 # Next Steps - Mobile Phones Dataset Project
 
 ## Current Status ✅
+
 - ✅ Dataset downloaded and extracted
 - ✅ Documentation organized
 - ✅ Insights extraction script created
@@ -14,6 +15,7 @@
 ## Recommended Next Steps
 
 ### Step 1: Extract Insights (Understand Your Data) 🔍
+
 **Goal:** Understand the dataset structure and relationships before building models.
 
 ```matlab
@@ -22,6 +24,7 @@ run('extract_all_insights.m')
 ```
 
 **What you'll learn:**
+
 - Which features most impact price
 - Market trends and technology evolution
 - Brand positioning and value analysis
@@ -32,21 +35,25 @@ run('extract_all_insights.m')
 ---
 
 ### Step 2: Build a Complete Training Pipeline 🚀
+
 **Goal:** Create a working neural network that can predict prices or classify brands.
 
 **Options:**
 
 #### Option A: Price Prediction (Regression)
+
 - **Input:** RAM, Battery, Screen Size, Weight, Year, etc.
 - **Output:** Price in USD
 - **Use Case:** Market analysis, pricing strategy
 
 #### Option B: Brand Classification
+
 - **Input:** Phone specifications
 - **Output:** Brand name (Apple, Samsung, etc.)
 - **Use Case:** Brand identification, market segmentation
 
 #### Option C: Feature Prediction
+
 - **Input:** Some specifications
 - **Output:** Missing feature (e.g., predict RAM from other specs)
 - **Use Case:** Data completion, product design
@@ -56,13 +63,16 @@ run('extract_all_insights.m')
 ---
 
 ### Step 3: Train and Evaluate the Model 📊
+
 **Goal:** Train your neural network and measure its performance.
 
 **Metrics to track:**
+
 - **For Regression (Price):** Mean Squared Error (MSE), Mean Absolute Error (MAE), R²
 - **For Classification (Brand):** Accuracy, Precision, Recall, F1-Score
 
 **Training process:**
+
 1. Split data: 70% train, 15% validation, 15% test
 2. Train model with GPU acceleration
 3. Monitor training progress
@@ -72,9 +82,11 @@ run('extract_all_insights.m')
 ---
 
 ### Step 4: Create Visualizations 📈
+
 **Goal:** Visualize results and insights.
 
 **Visualizations to create:**
+
 - Training loss curves
 - Prediction vs. actual scatter plots
 - Feature importance charts
@@ -84,9 +96,11 @@ run('extract_all_insights.m')
 ---
 
 ### Step 5: Deploy and Use the Model 🎯
+
 **Goal:** Make the model usable for predictions.
 
 **Options:**
+
 - Save model for future use
 - Create prediction function
 - Build API endpoint (if using web interface)
@@ -99,16 +113,19 @@ run('extract_all_insights.m')
 The fastest way to get started is to build a price prediction model:
 
 1. **Run insights extraction:**
+
    ```matlab
    run('extract_all_insights.m')
    ```
 
 2. **Build and train price prediction model:**
+
    ```matlab
    run('train_price_prediction_model.m')
    ```
 
 3. **Evaluate and use:**
+
    ```matlab
    % Evaluate model
    run('evaluate_model.m')
@@ -163,6 +180,7 @@ mobiles-dataset-docs/
 ## Questions to Answer
 
 Before building models, consider:
+
 - **What do you want to predict?** (Price, Brand, Features?)
 - **What's your use case?** (Market analysis, Product recommendation, Data completion?)
 - **What's your success metric?** (Accuracy, Error margin, Speed?)
@@ -172,12 +190,14 @@ Before building models, consider:
 All scripts have been created! You can now:
 
 1. **Run the complete pipeline:**
+
    ```matlab
    cd mobiles-dataset-docs
    run('run_all_steps.m')
    ```
 
 2. **Train price prediction model:**
+
    ```matlab
    run('train_price_prediction_model.m')
    run('evaluate_model.m')
@@ -185,6 +205,7 @@ All scripts have been created! You can now:
    ```
 
 3. **Train brand classification model:**
+
    ```matlab
    run('train_brand_classification_model.m')
    ```

@@ -49,14 +49,14 @@ export default defineEventHandler(async (event): Promise<ComparisonResponse> => 
     if (!body.modelNames || !Array.isArray(body.modelNames) || body.modelNames.length < 2) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'At least 2 model names are required for comparison'
+        statusMessage: 'At least 2 model names are required for comparison',
       })
     }
 
     if (body.modelNames.length > 5) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'Maximum 5 models can be compared at once'
+        statusMessage: 'Maximum 5 models can be compared at once',
       })
     }
 
@@ -82,7 +82,7 @@ export default defineEventHandler(async (event): Promise<ComparisonResponse> => 
     if (!datasetContent) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'Dataset file not found'
+        statusMessage: 'Dataset file not found',
       })
     }
 
@@ -111,13 +111,15 @@ export default defineEventHandler(async (event): Promise<ComparisonResponse> => 
     if (lines.length < 2) {
       throw createError({
         statusCode: 500,
-        statusMessage: 'Dataset file is empty or invalid'
+        statusMessage: 'Dataset file is empty or invalid',
       })
     }
 
     // Parse header
     const headerLine = lines[0]
-    const headers = headerLine ? parseCSVLine(headerLine).map(h => h.replace(/^"|"$/g, '').trim()) : []
+    const headers = headerLine
+      ? parseCSVLine(headerLine).map(h => h.replace(/^"|"$/g, '').trim())
+      : []
 
     // Find column indices
     const getColumnIndex = (exactName: string, fallbackNames: string[] = []): number => {
@@ -150,7 +152,8 @@ export default defineEventHandler(async (event): Promise<ComparisonResponse> => 
     // Helper to extract number
     const extractNumber = (str: string): number | null => {
       if (!str || str.trim() === '' || str.toLowerCase() === 'nan') return null
-      const cleaned = str.toString()
+      const cleaned = str
+        .toString()
         .replace(/(USD|PKR|INR|CNY|AED|\$)/gi, '')
         .replace(/[$,\s]/g, '')
         .replace(/(mAh|GB|MP|g|inches|"|'|Hz|TB|MB)/gi, '')
@@ -172,7 +175,9 @@ export default defineEventHandler(async (event): Promise<ComparisonResponse> => 
 
       for (let i = 1; i < lines.length; i++) {
         const currentLine = lines[i]
-        const values = currentLine ? parseCSVLine(currentLine).map(v => v.replace(/^"|"$/g, '').trim()) : []
+        const values = currentLine
+          ? parseCSVLine(currentLine).map(v => v.replace(/^"|"$/g, '').trim())
+          : []
 
         if (values.length === 0 || values.length < headers.length) continue
 
@@ -180,23 +185,31 @@ export default defineEventHandler(async (event): Promise<ComparisonResponse> => 
         const currentModelName = (modelNameValue || '').toLowerCase()
 
         // Check if model name matches
-        if (!currentModelName.includes(searchNameLower) && !searchNameLower.includes(currentModelName)) {
+        if (
+          !currentModelName.includes(searchNameLower) &&
+          !searchNameLower.includes(currentModelName)
+        ) {
           continue
         }
 
         // Extract values
-        const phonePrice = priceIdx !== -1 && values[priceIdx] ? extractNumber(values[priceIdx]) : null
+        const phonePrice =
+          priceIdx !== -1 && values[priceIdx] ? extractNumber(values[priceIdx]) : null
         const phoneRam = ramIdx !== -1 && values[ramIdx] ? extractNumber(values[ramIdx]) : null
-        const phoneBattery = batteryIdx !== -1 && values[batteryIdx] ? extractNumber(values[batteryIdx]) : null
-        const phoneScreen = screenIdx !== -1 && values[screenIdx] ? extractNumber(values[screenIdx]) : null
-        const phoneWeight = weightIdx !== -1 && values[weightIdx] ? extractNumber(values[weightIdx]) : null
+        const phoneBattery =
+          batteryIdx !== -1 && values[batteryIdx] ? extractNumber(values[batteryIdx]) : null
+        const phoneScreen =
+          screenIdx !== -1 && values[screenIdx] ? extractNumber(values[screenIdx]) : null
+        const phoneWeight =
+          weightIdx !== -1 && values[weightIdx] ? extractNumber(values[weightIdx]) : null
         const phoneYear = yearIdx !== -1 && values[yearIdx] ? extractNumber(values[yearIdx]) : null
 
-        if (!phonePrice || !phoneRam || !phoneBattery || !phoneScreen || !phoneWeight || !phoneYear) continue
+        if (!phonePrice || !phoneRam || !phoneBattery || !phoneScreen || !phoneWeight || !phoneYear)
+          continue
 
-        const modelName = (modelNameValue || '') || 'Unknown Model'
+        const modelName = modelNameValue || '' || 'Unknown Model'
         const companyValue = companyIdx !== -1 ? values[companyIdx] : ''
-        const company = (companyValue || '') || 'Unknown Brand'
+        const company = companyValue || '' || 'Unknown Brand'
 
         // Check for image
         const imageBaseName = modelName.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '_')
@@ -231,7 +244,7 @@ export default defineEventHandler(async (event): Promise<ComparisonResponse> => 
           displayType: displayTypeIdx !== -1 ? values[displayTypeIdx] : undefined,
           refreshRate: getOptionalNumber(refreshRateIdx),
           resolution: resolutionIdx !== -1 ? values[resolutionIdx] : undefined,
-          imageUrl
+          imageUrl,
         })
 
         found = true
@@ -241,7 +254,7 @@ export default defineEventHandler(async (event): Promise<ComparisonResponse> => 
       if (!found) {
         throw createError({
           statusCode: 404,
-          statusMessage: `Model "${searchName}" not found in dataset`
+          statusMessage: `Model "${searchName}" not found in dataset`,
         })
       }
     }
@@ -258,7 +271,7 @@ export default defineEventHandler(async (event): Promise<ComparisonResponse> => 
       min: Math.min(...values),
       max: Math.max(...values),
       avg: values.reduce((a, b) => a + b, 0) / values.length,
-      diff: Math.max(...values) - Math.min(...values)
+      diff: Math.max(...values) - Math.min(...values),
     })
 
     const comparison = {
@@ -267,7 +280,7 @@ export default defineEventHandler(async (event): Promise<ComparisonResponse> => 
       battery: calculateStats(batteries),
       screenSize: calculateStats(screens),
       weight: calculateStats(weights),
-      year: calculateStats(years)
+      year: calculateStats(years),
     }
 
     // Find differences
@@ -280,7 +293,7 @@ export default defineEventHandler(async (event): Promise<ComparisonResponse> => 
         field: 'Price',
         best: priceBest,
         worst: priceWorst,
-        difference: `$${comparison.price.diff.toFixed(0)}`
+        difference: `$${comparison.price.diff.toFixed(0)}`,
       })
     }
 
@@ -291,25 +304,26 @@ export default defineEventHandler(async (event): Promise<ComparisonResponse> => 
         field: 'RAM',
         best: ramBest,
         worst: ramWorst,
-        difference: `${comparison.ram.diff.toFixed(1)} GB`
+        difference: `${comparison.ram.diff.toFixed(1)} GB`,
       })
     }
 
     const batteryBest = foundModels.find(m => m.battery === comparison.battery.max)?.modelName || ''
-    const batteryWorst = foundModels.find(m => m.battery === comparison.battery.min)?.modelName || ''
+    const batteryWorst =
+      foundModels.find(m => m.battery === comparison.battery.min)?.modelName || ''
     if (batteryBest && batteryWorst && batteryBest !== batteryWorst) {
       differences.push({
         field: 'Battery',
         best: batteryBest,
         worst: batteryWorst,
-        difference: `${comparison.battery.diff.toFixed(0)} mAh`
+        difference: `${comparison.battery.diff.toFixed(0)} mAh`,
       })
     }
 
     return {
       models: foundModels,
       comparison,
-      differences
+      differences,
     }
   } catch (error: unknown) {
     if (error.statusCode) {
@@ -317,7 +331,7 @@ export default defineEventHandler(async (event): Promise<ComparisonResponse> => 
     }
     throw createError({
       statusCode: 500,
-      statusMessage: `Failed to compare models: ${error instanceof Error ? error.message : 'Unknown error'}`
+      statusMessage: `Failed to compare models: ${error instanceof Error ? error.message : 'Unknown error'}`,
     })
   }
 })

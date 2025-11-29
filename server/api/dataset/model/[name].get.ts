@@ -27,7 +27,7 @@ export default defineEventHandler(async (event): Promise<PhoneModel | null> => {
     if (!modelName) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'Model name parameter is required'
+        statusMessage: 'Model name parameter is required',
       })
     }
 
@@ -54,7 +54,7 @@ export default defineEventHandler(async (event): Promise<PhoneModel | null> => {
     if (!datasetContent) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'Dataset file not found'
+        statusMessage: 'Dataset file not found',
       })
     }
 
@@ -83,12 +83,12 @@ export default defineEventHandler(async (event): Promise<PhoneModel | null> => {
     if (lines.length < 2) {
       throw createError({
         statusCode: 500,
-        statusMessage: 'Dataset file is empty or invalid'
+        statusMessage: 'Dataset file is empty or invalid',
       })
     }
 
     // Parse header
-    const firstLine = lines[0] || '';
+    const firstLine = lines[0] || ''
     const headers = parseCSVLine(firstLine).map(h => h.replace(/^"|"$/g, '').trim())
 
     // Find column indices
@@ -122,7 +122,8 @@ export default defineEventHandler(async (event): Promise<PhoneModel | null> => {
     // Helper to extract number
     const extractNumber = (str: string): number | null => {
       if (!str || str.trim() === '' || str.toLowerCase() === 'nan') return null
-      const cleaned = str.toString()
+      const cleaned = str
+        .toString()
         .replace(/(USD|PKR|INR|CNY|AED|\$)/gi, '')
         .replace(/[$,\s]/g, '')
         .replace(/(mAh|GB|MP|g|inches|"|'|Hz|TB|MB)/gi, '')
@@ -138,13 +139,13 @@ export default defineEventHandler(async (event): Promise<PhoneModel | null> => {
     const searchName = modelName.toLowerCase().trim()
 
     for (let i = 1; i < lines.length; i++) {
-      const row = lines[i] || '';
+      const row = lines[i] || ''
       const values = parseCSVLine(row).map(v => v.replace(/^"|"$/g, '').trim())
 
       if (values.length < headers.length) continue
 
-      const modelNameValue = modelNameIdx !== -1 ? values[modelNameIdx] : '';
-      const currentModelName = modelNameValue ? modelNameValue.toLowerCase() : '';
+      const modelNameValue = modelNameIdx !== -1 ? values[modelNameIdx] : ''
+      const currentModelName = modelNameValue ? modelNameValue.toLowerCase() : ''
 
       // Check if model name matches (exact or contains)
       if (!currentModelName.includes(searchName) && !searchName.includes(currentModelName)) {
@@ -152,19 +153,25 @@ export default defineEventHandler(async (event): Promise<PhoneModel | null> => {
       }
 
       // Extract all fields
-      const phonePrice = priceIdx !== -1 && values[priceIdx] ? extractNumber(values[priceIdx]) : null
+      const phonePrice =
+        priceIdx !== -1 && values[priceIdx] ? extractNumber(values[priceIdx]) : null
       const phoneRam = ramIdx !== -1 && values[ramIdx] ? extractNumber(values[ramIdx]) : null
-      const phoneBattery = batteryIdx !== -1 && values[batteryIdx] ? extractNumber(values[batteryIdx]) : null
-      const phoneScreen = screenIdx !== -1 && values[screenIdx] ? extractNumber(values[screenIdx]) : null
-      const phoneWeight = weightIdx !== -1 && values[weightIdx] ? extractNumber(values[weightIdx]) : null
+      const phoneBattery =
+        batteryIdx !== -1 && values[batteryIdx] ? extractNumber(values[batteryIdx]) : null
+      const phoneScreen =
+        screenIdx !== -1 && values[screenIdx] ? extractNumber(values[screenIdx]) : null
+      const phoneWeight =
+        weightIdx !== -1 && values[weightIdx] ? extractNumber(values[weightIdx]) : null
       const phoneYear = yearIdx !== -1 && values[yearIdx] ? extractNumber(values[yearIdx]) : null
 
       if (!phonePrice || !phoneRam || !phoneBattery || !phoneScreen || !phoneWeight || !phoneYear) {
         continue
       }
 
-      const company = (companyIdx !== -1 && values[companyIdx] ? values[companyIdx] : '') || 'Unknown Brand'
-      const modelNameFull = (modelNameIdx !== -1 && values[modelNameIdx] ? values[modelNameIdx] : '') || 'Unknown Model'
+      const company =
+        (companyIdx !== -1 && values[companyIdx] ? values[companyIdx] : '') || 'Unknown Brand'
+      const modelNameFull =
+        (modelNameIdx !== -1 && values[modelNameIdx] ? values[modelNameIdx] : '') || 'Unknown Model'
 
       // Check for image (try different extensions)
       const imageBaseName = modelNameFull.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '_')
@@ -181,33 +188,38 @@ export default defineEventHandler(async (event): Promise<PhoneModel | null> => {
       }
 
       // Extract optional fields with proper null checks
-      const frontCamera = frontCameraIdx !== -1 && values[frontCameraIdx]
-        ? extractNumber(values[frontCameraIdx]) || undefined
-        : undefined;
+      const frontCamera =
+        frontCameraIdx !== -1 && values[frontCameraIdx]
+          ? extractNumber(values[frontCameraIdx]) || undefined
+          : undefined
 
-      const backCamera = backCameraIdx !== -1 && values[backCameraIdx]
-        ? extractNumber(values[backCameraIdx]) || undefined
-        : undefined;
+      const backCamera =
+        backCameraIdx !== -1 && values[backCameraIdx]
+          ? extractNumber(values[backCameraIdx]) || undefined
+          : undefined
 
-      const storage = storageIdx !== -1 && values[storageIdx]
-        ? extractNumber(values[storageIdx]) || undefined
-        : undefined;
+      const storage =
+        storageIdx !== -1 && values[storageIdx]
+          ? extractNumber(values[storageIdx]) || undefined
+          : undefined
 
-      const processor = processorIdx !== -1 && values[processorIdx]
-        ? values[processorIdx] || undefined
-        : undefined;
+      const processor =
+        processorIdx !== -1 && values[processorIdx] ? values[processorIdx] || undefined : undefined
 
-      const displayType = displayTypeIdx !== -1 && values[displayTypeIdx]
-        ? values[displayTypeIdx] || undefined
-        : undefined;
+      const displayType =
+        displayTypeIdx !== -1 && values[displayTypeIdx]
+          ? values[displayTypeIdx] || undefined
+          : undefined
 
-      const refreshRate = refreshRateIdx !== -1 && values[refreshRateIdx]
-        ? extractNumber(values[refreshRateIdx]) || undefined
-        : undefined;
+      const refreshRate =
+        refreshRateIdx !== -1 && values[refreshRateIdx]
+          ? extractNumber(values[refreshRateIdx]) || undefined
+          : undefined
 
-      const resolution = resolutionIdx !== -1 && values[resolutionIdx]
-        ? values[resolutionIdx] || undefined
-        : undefined;
+      const resolution =
+        resolutionIdx !== -1 && values[resolutionIdx]
+          ? values[resolutionIdx] || undefined
+          : undefined
 
       return {
         modelName: modelNameFull,
@@ -225,14 +237,14 @@ export default defineEventHandler(async (event): Promise<PhoneModel | null> => {
         displayType,
         refreshRate,
         resolution,
-        imageUrl
+        imageUrl,
       }
     }
 
     // Model not found
     throw createError({
       statusCode: 404,
-      statusMessage: `Model "${modelName}" not found in dataset`
+      statusMessage: `Model "${modelName}" not found in dataset`,
     })
   } catch (error: any) {
     if (error.statusCode) {
@@ -240,7 +252,7 @@ export default defineEventHandler(async (event): Promise<PhoneModel | null> => {
     }
     throw createError({
       statusCode: 500,
-      statusMessage: `Failed to get model details: ${error instanceof Error ? error.message : 'Unknown error'}`
+      statusMessage: `Failed to get model details: ${error instanceof Error ? error.message : 'Unknown error'}`,
     })
   }
 })

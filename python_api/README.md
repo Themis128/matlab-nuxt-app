@@ -41,6 +41,7 @@ curl -X POST http://localhost:8000/api/predict/price \
 ## Integration with Nuxt
 
 Set environment variable:
+
 ```bash
 export PYTHON_API_URL=http://localhost:8000
 ```

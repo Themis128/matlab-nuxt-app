@@ -4,10 +4,10 @@
 
 We actively support the following versions with security updates:
 
-| Version | Supported          |
-| ------- | ------------------ |
-| Latest  | :white_check_mark: |
-| < Latest| :x:                |
+| Version  | Supported          |
+| -------- | ------------------ |
+| Latest   | :white_check_mark: |
+| < Latest | :x:                |
 
 ## 🚨 Reporting a Vulnerability
 
@@ -71,6 +71,7 @@ Instead, please report it by:
 ## 📝 Security Updates
 
 Security updates will be:
+
 - Released as patches for supported versions
 - Documented in release notes
 - Tagged with security labels

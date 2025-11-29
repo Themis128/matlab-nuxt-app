@@ -10,7 +10,9 @@ test.describe('Search Page', () => {
 
   test('should load search page with all filters', async ({ page }) => {
     // Check page title
-    await expect(page.getByRole('heading', { name: 'Advanced Search' })).toBeVisible({ timeout: 10000 })
+    await expect(page.getByRole('heading', { name: 'Advanced Search' })).toBeVisible({
+      timeout: 10000,
+    })
 
     // Check all filter inputs exist
     await expect(page.getByText('Brand(s)')).toBeVisible()
@@ -36,16 +38,17 @@ test.describe('Search Page', () => {
 
   test('should filter by price range', async ({ page }) => {
     // Find price inputs
-    const priceInputs = page.locator('input[type="number"]').filter({ hasText: /price/i }).or(
-      page.locator('input[placeholder*="Min"], input[placeholder*="Max"]')
-    )
+    const priceInputs = page
+      .locator('input[type="number"]')
+      .filter({ hasText: /price/i })
+      .or(page.locator('input[placeholder*="Min"], input[placeholder*="Max"]'))
 
     // Try to find price inputs near "Price Range" label
     const priceSection = page.locator('text=Price Range').locator('..').locator('..')
     const minPriceInput = priceSection.locator('input[type="number"]').first()
     const maxPriceInput = priceSection.locator('input[type="number"]').nth(1)
 
-    if (await minPriceInput.count() > 0) {
+    if ((await minPriceInput.count()) > 0) {
       await minPriceInput.fill('500')
       await maxPriceInput.fill('1000')
     }
@@ -59,7 +62,7 @@ test.describe('Search Page', () => {
     const ramSection = page.locator('text=RAM').locator('..').locator('..')
     const ramInputs = ramSection.locator('input[type="number"]')
 
-    if (await ramInputs.count() >= 2) {
+    if ((await ramInputs.count()) >= 2) {
       await ramInputs.nth(0).fill('8')
       await ramInputs.nth(1).fill('16')
     }
@@ -69,9 +72,10 @@ test.describe('Search Page', () => {
 
   test('should have sorting options', async ({ page }) => {
     // Look for sort dropdown or select
-    const sortControl = page.locator('select, [role="combobox"]').filter({ hasText: /sort/i }).or(
-      page.locator('text=/sort/i').locator('..').locator('select, [role="combobox"]')
-    )
+    const sortControl = page
+      .locator('select, [role="combobox"]')
+      .filter({ hasText: /sort/i })
+      .or(page.locator('text=/sort/i').locator('..').locator('select, [role="combobox"]'))
 
     // Sort control might not be visible until results are shown
     // Just verify page loaded correctly
@@ -90,8 +94,16 @@ test.describe('Search Page', () => {
       await page.waitForTimeout(2000)
 
       // Check if results are displayed (either results or "no results" message)
-      const hasResults = await page.locator('text=/model|result|phone/i').first().isVisible({ timeout: 5000 }).catch(() => false)
-      const hasNoResults = await page.locator('text=/no.*result|not.*found/i').first().isVisible({ timeout: 5000 }).catch(() => false)
+      const hasResults = await page
+        .locator('text=/model|result|phone/i')
+        .first()
+        .isVisible({ timeout: 5000 })
+        .catch(() => false)
+      const hasNoResults = await page
+        .locator('text=/no.*result|not.*found/i')
+        .first()
+        .isVisible({ timeout: 5000 })
+        .catch(() => false)
 
       expect(hasResults || hasNoResults).toBeTruthy()
     }
@@ -109,7 +121,7 @@ test.describe('Search Page', () => {
       // Look for pagination controls
       const pagination = page.locator('button, a').filter({ hasText: /next|previous|page|\d+/i })
 
-      if (await pagination.count() > 0) {
+      if ((await pagination.count()) > 0) {
         await expect(pagination.first()).toBeVisible({ timeout: 5000 })
       }
     }
@@ -139,12 +151,14 @@ test.describe('Search Page', () => {
     // Look for clear/reset button
     const clearButton = page.getByRole('button', { name: /clear|reset/i })
 
-    if (await clearButton.count() > 0) {
+    if ((await clearButton.count()) > 0) {
       await clearButton.first().click()
       await page.waitForTimeout(1000) // Give more time for Firefox
     }
 
     // Verify page is still functional
-    await expect(page.getByRole('heading', { name: 'Advanced Search' })).toBeVisible({ timeout: 15000 })
+    await expect(page.getByRole('heading', { name: 'Advanced Search' })).toBeVisible({
+      timeout: 15000,
+    })
   })
 })

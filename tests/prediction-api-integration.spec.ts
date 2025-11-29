@@ -13,25 +13,35 @@ test.describe.skip('Prediction API Integration', () => {
 
   test('should load demo page with prediction form', async ({ page }) => {
     // Verify page title is visible (using more specific selector)
-    await expect(page.getByRole('heading', { name: 'AI Predictions Lab' })).toBeVisible({ timeout: 10000 })
+    await expect(page.getByRole('heading', { name: 'AI Predictions Lab' })).toBeVisible({
+      timeout: 10000,
+    })
 
     // Check for form inputs (using more general approach)
-    const hasInputs = await page.locator('input').count() > 0
+    const hasInputs = (await page.locator('input').count()) > 0
     expect(hasInputs).toBeTruthy()
 
     // Check for predict button
-    const hasButton = await page.getByRole('button').filter({ hasText: /predict|calculate|submit/i }).count() > 0
+    const hasButton =
+      (await page
+        .getByRole('button')
+        .filter({ hasText: /predict|calculate|submit/i })
+        .count()) > 0
     expect(hasButton).toBeTruthy()
   })
 
   test('should make price prediction with valid inputs', async ({ page }) => {
     // Fill in prediction form with valid data
     const ramInput = page.locator('input[name="ram"], input[placeholder*="RAM"]').first()
-    const batteryInput = page.locator('input[name="battery"], input[placeholder*="Battery"]').first()
+    const batteryInput = page
+      .locator('input[name="battery"], input[placeholder*="Battery"]')
+      .first()
     const screenInput = page.locator('input[name="screen"], input[placeholder*="Screen"]').first()
     const weightInput = page.locator('input[name="weight"], input[placeholder*="Weight"]').first()
     const yearInput = page.locator('input[name="year"], input[placeholder*="Year"]').first()
-    const companyInput = page.locator('input[name="company"], input[placeholder*="Company"]').first()
+    const companyInput = page
+      .locator('input[name="company"], input[placeholder*="Company"]')
+      .first()
 
     // Clear inputs first
     await ramInput.click()
@@ -69,7 +79,8 @@ test.describe.skip('Prediction API Integration', () => {
       await companyInput.fill('Apple')
 
       // If it's a dropdown, select the first option
-      const dropdownOption = page.locator('li, option, div[role="option"]')
+      const dropdownOption = page
+        .locator('li, option, div[role="option"]')
         .filter({ hasText: /Apple/i })
         .first()
 
@@ -104,7 +115,9 @@ test.describe.skip('Prediction API Integration', () => {
   test('should handle errors for invalid inputs', async ({ page }) => {
     // Fill with invalid data
     const ramInput = page.locator('input[name="ram"], input[placeholder*="RAM"]').first()
-    const batteryInput = page.locator('input[name="battery"], input[placeholder*="Battery"]').first()
+    const batteryInput = page
+      .locator('input[name="battery"], input[placeholder*="Battery"]')
+      .first()
 
     // Wait for inputs to be visible and interactive
     await expect(ramInput).toBeVisible({ timeout: 10000 })
@@ -112,13 +125,13 @@ test.describe.skip('Prediction API Integration', () => {
     // Clear and fill with invalid values
     await ramInput.click({ timeout: 5000 })
     await ramInput.clear()
-    await ramInput.fill('-1')  // Negative RAM
+    await ramInput.fill('-1') // Negative RAM
     await page.waitForTimeout(500)
 
     if (await batteryInput.isVisible({ timeout: 5000 }).catch(() => false)) {
       await batteryInput.click()
       await batteryInput.clear()
-      await batteryInput.fill('0')  // Zero battery
+      await batteryInput.fill('0') // Zero battery
       await page.waitForTimeout(500)
     }
 
@@ -141,7 +154,10 @@ test.describe.skip('Prediction API Integration', () => {
       const hasErrorText = /error|invalid|required|positive|greater than zero/i.test(pageText)
 
       // Check for error styling
-      const hasErrorElements = document.querySelectorAll('.text-red-500, .text-red-600, .border-red-500, [class*="error"], [class*="invalid"]').length > 0
+      const hasErrorElements =
+        document.querySelectorAll(
+          '.text-red-500, .text-red-600, .border-red-500, [class*="error"], [class*="invalid"]'
+        ).length > 0
 
       // Check for form validation messages
       const hasValidationMessages = document.querySelectorAll(':invalid').length > 0
@@ -168,7 +184,7 @@ test.describe.skip('Prediction API Integration', () => {
 
   test('should test API health endpoint', async ({ page, request }) => {
     // Try multiple API health endpoints
-    let healthResponse;
+    let healthResponse
     try {
       healthResponse = await request.get('/api/health')
       // If this works, great
@@ -194,8 +210,10 @@ test.describe.skip('Prediction API Integration', () => {
     try {
       const healthData = await healthResponse.json()
       // Accept various health status formats
-      expect(['healthy', 'ok'].includes(healthData.status) ||
-        Object.values(healthData).includes('healthy')).toBeTruthy()
+      expect(
+        ['healthy', 'ok'].includes(healthData.status) ||
+          Object.values(healthData).includes('healthy')
+      ).toBeTruthy()
     } catch (e) {
       // JSON parsing may fail, but test still passes if status was 200
     }
@@ -203,13 +221,18 @@ test.describe.skip('Prediction API Integration', () => {
 
   test('should predict RAM using API', async ({ page }) => {
     // Navigate to RAM prediction page if it exists
-    await page.getByRole('link', { name: /ram/i }).click().catch(() => {
-      // If no dedicated RAM page, try to find RAM prediction in current page
-      console.log('No dedicated RAM prediction page found, testing in current page')
-    })
+    await page
+      .getByRole('link', { name: /ram/i })
+      .click()
+      .catch(() => {
+        // If no dedicated RAM page, try to find RAM prediction in current page
+        console.log('No dedicated RAM prediction page found, testing in current page')
+      })
 
     // Fill RAM prediction form
-    const batteryInput = page.locator('input[name="battery"], input[placeholder*="Battery"]').first()
+    const batteryInput = page
+      .locator('input[name="battery"], input[placeholder*="Battery"]')
+      .first()
     const screenInput = page.locator('input[name="screen"], input[placeholder*="Screen"]').first()
     const priceInput = page.locator('input[name="price"], input[placeholder*="Price"]').first()
 
@@ -233,7 +256,9 @@ test.describe.skip('Prediction API Integration', () => {
     }
 
     // Submit form if predict RAM button exists
-    const ramPredictButton = page.getByRole('button', { name: /predict.*ram|calculate.*ram/i }).first()
+    const ramPredictButton = page
+      .getByRole('button', { name: /predict.*ram|calculate.*ram/i })
+      .first()
     if (await ramPredictButton.isVisible({ timeout: 3000 }).catch(() => false)) {
       await ramPredictButton.click()
 
@@ -245,13 +270,17 @@ test.describe.skip('Prediction API Integration', () => {
 
   test('should check prediction history if available', async ({ page }) => {
     // Look for history section
-    const historySection = page.locator('text=/history|previous predictions|past predictions/i').first()
+    const historySection = page
+      .locator('text=/history|previous predictions|past predictions/i')
+      .first()
 
     // If history section exists, test it
     if (await historySection.isVisible({ timeout: 5000 }).catch(() => false)) {
       // Make a prediction first to have history
       const ramInput = page.locator('input[name="ram"], input[placeholder*="RAM"]').first()
-      const batteryInput = page.locator('input[name="battery"], input[placeholder*="Battery"]').first()
+      const batteryInput = page
+        .locator('input[name="battery"], input[placeholder*="Battery"]')
+        .first()
       const screenInput = page.locator('input[name="screen"], input[placeholder*="Screen"]').first()
 
       // Fill with test values
@@ -277,7 +306,7 @@ test.describe.skip('Prediction API Integration', () => {
   test('should verify API response time is reasonable', async ({ page, request }) => {
     // Measure response time for a simple API call - try multiple endpoints
     const startTime = Date.now()
-    let healthResponse;
+    let healthResponse
 
     try {
       healthResponse = await request.get('/api/health')

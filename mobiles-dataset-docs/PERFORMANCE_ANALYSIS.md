@@ -2,12 +2,12 @@
 
 ## Executive Summary
 
-| Model | Current Performance | Status | Priority |
-|-------|-------------------|--------|----------|
-| **Price Prediction** | R² = 0.7754, RMSE = $167.83 | ✅ Good | Medium |
+| Model                    | Current Performance          | Status               | Priority |
+| ------------------------ | ---------------------------- | -------------------- | -------- |
+| **Price Prediction**     | R² = 0.7754, RMSE = $167.83  | ✅ Good              | Medium   |
 | **Brand Classification** | 56.52% accuracy (19 classes) | ⚠️ Needs Improvement | **High** |
-| **RAM Prediction** | R² = 0.6381, RMSE = 1.64 GB | ⚠️ Moderate | **High** |
-| **Battery Prediction** | R² = 0.7489, MAPE = 5.08% | ✅ Good | Low |
+| **RAM Prediction**       | R² = 0.6381, RMSE = 1.64 GB  | ⚠️ Moderate          | **High** |
+| **Battery Prediction**   | R² = 0.7489, MAPE = 5.08%    | ✅ Good              | Low      |
 
 ---
 
@@ -16,6 +16,7 @@
 ### 1. Price Prediction Model
 
 **Current Performance:**
+
 - R² = 0.7754 (77.5% variance explained)
 - RMSE = $167.83
 - MAE = $119.73
@@ -24,10 +25,12 @@
 **Assessment:** ✅ **Good, but can be improved**
 
 **Strengths:**
+
 - R² of 0.7754 is decent for price prediction (complex task)
 - Model architecture is reasonable (128→64→32 with dropout)
 
 **Weaknesses:**
+
 - MAPE of 31.41% is quite high (average error of ~31%)
 - RMSE of $167.83 may be significant depending on price range
 
@@ -61,6 +64,7 @@
 ### 2. Brand Classification Model ⚠️
 
 **Current Performance:**
+
 - Accuracy: 56.52% (19 classes)
 - Weighted F1-Score: 0.5398
 - Random baseline: ~5.26% (1/19)
@@ -68,10 +72,12 @@
 **Assessment:** ⚠️ **Needs Significant Improvement**
 
 **Strengths:**
+
 - Much better than random (56.52% vs 5.26%)
 - Some brands perform well (Apple 100% recall, Sony 100% precision/recall)
 
 **Weaknesses:**
+
 - 56.52% accuracy is low for practical use
 - Class imbalance likely affecting performance
 - Only 6 features may not be sufficient to distinguish 19 brands
@@ -79,6 +85,7 @@
 **Recommendations for Improvement:**
 
 1. **Address Class Imbalance:**
+
    ```matlab
    % Add class weights to training options
    classWeights = calculateClassWeights(y_train);
@@ -114,6 +121,7 @@
 ### 3. RAM Prediction Model ⚠️
 
 **Current Performance:**
+
 - R² = 0.6381 (63.8% variance explained)
 - RMSE = 1.64 GB
 - MAE = 1.28 GB
@@ -122,10 +130,12 @@
 **Assessment:** ⚠️ **Moderate, Needs Improvement**
 
 **Strengths:**
+
 - Better than random baseline
 - MAPE of 20.86% is reasonable
 
 **Weaknesses:**
+
 - R² of 0.6381 is relatively low
 - RMSE of 1.64 GB is significant (RAM typically 2-16 GB range)
 - Only 63.8% of variance explained
@@ -159,6 +169,7 @@
 ### 4. Battery Prediction Model
 
 **Current Performance:**
+
 - R² = 0.7489 (74.9% variance explained)
 - RMSE = 310.97 mAh
 - MAE = 224.18 mAh
@@ -167,11 +178,13 @@
 **Assessment:** ✅ **Good Performance**
 
 **Strengths:**
+
 - MAPE of 5.08% is **excellent** (very low percentage error)
 - R² of 0.7489 is solid
 - Model is performing well
 
 **Recommendations (Optional Fine-tuning):**
+
 - This model is performing well, but could still improve:
   - Try deeper/wider architectures
   - Feature engineering (screen size × weight interactions)
@@ -182,7 +195,9 @@
 ## General Recommendations for All Models
 
 ### 1. Hyperparameter Tuning
+
 Create a hyperparameter search script:
+
 ```matlab
 % Grid search or random search for:
 % - Learning rates: [0.0001, 0.001, 0.01]
@@ -192,19 +207,23 @@ Create a hyperparameter search script:
 ```
 
 ### 2. Cross-Validation
+
 - Use k-fold cross-validation for more robust evaluation
 - Current single train/val/test split may not be representative
 
 ### 3. Feature Selection
+
 - Analyze feature importance
 - Remove redundant features
 - Add polynomial/interaction features
 
 ### 4. Ensemble Methods
+
 - Train multiple models with different architectures
 - Average predictions for better performance
 
 ### 5. Data Quality
+
 - Check for missing values
 - Handle outliers appropriately
 - Ensure proper normalization
@@ -214,13 +233,16 @@ Create a hyperparameter search script:
 ## Priority Action Items
 
 ### High Priority (Do First):
+
 1. **Brand Classification** - Address class imbalance, increase model capacity
 2. **RAM Prediction** - Feature engineering, consider classification approach
 
 ### Medium Priority:
+
 3. **Price Prediction** - Try deeper/wider architectures, feature engineering
 
 ### Low Priority:
+
 4. **Battery Prediction** - Already good, optional fine-tuning
 
 ---
@@ -237,18 +259,19 @@ Create a hyperparameter search script:
 
 ## Expected Overall Improvements
 
-| Model | Current | Target | Improvement |
-|-------|---------|--------|-------------|
-| Price Prediction | R² = 0.7754 | R² = 0.82-0.85 | +6-10% |
-| Brand Classification | 56.52% | 70-80% | +13-24% |
-| RAM Prediction | R² = 0.6381 | R² = 0.72-0.78 | +13-22% |
-| Battery Prediction | R² = 0.7489 | R² = 0.78-0.82 | +4-10% |
+| Model                | Current     | Target         | Improvement |
+| -------------------- | ----------- | -------------- | ----------- |
+| Price Prediction     | R² = 0.7754 | R² = 0.82-0.85 | +6-10%      |
+| Brand Classification | 56.52%      | 70-80%         | +13-24%     |
+| RAM Prediction       | R² = 0.6381 | R² = 0.72-0.78 | +13-22%     |
+| Battery Prediction   | R² = 0.7489 | R² = 0.78-0.82 | +4-10%      |
 
 ---
 
 ## Conclusion
 
 **Overall Assessment:**
+
 - ✅ **Battery Prediction**: Excellent, minimal tuning needed
 - ✅ **Price Prediction**: Good, can be improved with tuning
 - ⚠️ **RAM Prediction**: Moderate, needs improvement

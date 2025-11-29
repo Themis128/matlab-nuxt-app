@@ -1,544 +1,346 @@
-# Mobile Finder - Complete Documentation
+# MATLAB Deep Learning & Mobile Dataset Analysis
 
-## 📋 Table of Contents
+## 📚 Table of Contents
 
 - [Project Overview](#project-overview)
+- [Quick Start](#quick-start)
 - [Architecture](#architecture)
-- [Components](#components)
-- [API Documentation](#api-documentation)
-- [Testing Strategy](#testing-strategy)
+- [Features](#features)
+- [Development](#development)
+- [Testing](#testing)
 - [Deployment](#deployment)
 - [Contributing](#contributing)
 
-## 🎯 Project Overview
+## Project Overview
 
-Mobile Finder is a comprehensive web application that combines machine learning predictions with an interactive user interface for mobile phone analysis and recommendations.
+A hybrid **MATLAB + Nuxt.js 4** application combining MATLAB's Deep Learning Toolbox for model training with a modern web interface. The system predicts mobile phone specifications (price, RAM, battery, brand) and provides comprehensive dataset exploration capabilities.
 
-### Key Features
+### Key Technologies
 
-- **AI-Powered Predictions**: Price, RAM, battery, and brand predictions using enhanced ML models
-- **Interactive Web Interface**: Modern Nuxt.js application with multiple pages
-- **Real-time API Status**: Live monitoring of ML model availability
-- **Advanced Search & Filtering**: Multi-criteria search with sorting and pagination
-- **Model Comparison**: Side-by-side comparison of multiple mobile phones
-- **Recommendations Engine**: AI-powered suggestions based on user preferences
-- **Dataset Explorer**: Interactive statistics and visualizations
-- **Performance Dashboard**: Real-time metrics and model accuracy tracking
+- **Backend AI**: MATLAB Deep Learning Toolbox + Python FastAPI (scikit-learn models)
+- **Frontend**: Nuxt 4, Vue 3, Nuxt UI, TailwindCSS
+- **State Management**: Pinia
+- **Testing**: Playwright (E2E)
+- **Code Quality**: ESLint 9 (flat config), Prettier, EditorConfig
 
-### Technology Stack
+## Quick Start
 
-- **Frontend**: Nuxt 4, Vue 3, TypeScript, Tailwind CSS
-- **Backend**: Node.js, Nuxt Server API
-- **AI/ML**: Python, scikit-learn, FastAPI
-- **Database**: CSV-based dataset with 900+ mobile phones
-- **Testing**: Playwright for end-to-end testing
-- **Deployment**: Replit-ready, static site generation
+### Prerequisites
 
-## 🏗️ Architecture
+- **MATLAB R2026a** with Deep Learning Toolbox
+- **Python 3.14+** (venv included)
+- **Node.js 18+**
+- **GPU**: NVIDIA RTX 3070 (7.46GB VRAM) - optional but recommended
 
-### System Architecture
+### Installation
 
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Web Browser   │    │   Nuxt Server   │    │  Python API     │
-│                 │    │   (Port 3000)   │    │  (Port 8000)    │
-│ ┌─────────────┐ │    │ ┌─────────────┐ │    │ ┌─────────────┐ │
-│ │   Nuxt App  │◄┼────┼►│ Server API   │◄┼────┼►│ FastAPI     │ │
-│ │             │ │    │ │ Endpoints    │ │    │ │ Server      │ │
-│ │ ┌─────────┐ │ │    │ └─────────────┘ │    │ └─────────────┘ │
-│ │ │ Pages   │ │ │    │                 │    │                 │
-│ │ │         │ │ │    │ ┌─────────────┐ │    │ ┌─────────────┐ │
-│ │ │ - Home  │ │ │    │ │ Composables │ │    │ │ ML Models   │ │
-│ │ │ - Demo  │ │ │    │ │             │ │    │ │             │ │
-│ │ │ - Search│ │ │    │ │ - API Status│ │    │ │ - Price     │ │
-│ │ │ - etc.  │ │ │    │ │ - Validation│ │    │ │ - RAM       │ │
-│ │ └─────────┘ │ │    │ └─────────────┘ │    │ │ - Battery   │ │
-│ └─────────────┘ │    │                 │    │ │ - Brand     │ │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-                                                        │
-                                                        ▼
-                                               ┌─────────────────┐
-                                               │   Dataset       │
-                                               │   CSV Files     │
-                                               └─────────────────┘
+```powershell
+# 1. Clone repository
+git clone https://github.com/Themis128/matlab-nuxt-app.git
+cd matlab-nuxt-app
+
+# 2. Install Node dependencies
+npm install
+
+# 3. Setup Python environment
+.\scripts\setup_python_env.bat
+.\scripts\activate_python_env.bat
+pip install -r requirements.txt
+
+# 4. Setup MATLAB (in MATLAB console)
+cd('matlab')
+run('setup_matlab_env.m')
+
+# 5. Start development servers
+npm run dev:all  # Concurrent: Python API + Nuxt dev server
 ```
 
-### Data Flow
+### Verify Installation
 
-1. **User Interaction** → Nuxt Pages
-2. **API Calls** → Nuxt Server API (validation, formatting)
-3. **ML Predictions** → Python FastAPI Server
-4. **Model Loading** → Pre-trained scikit-learn models
-5. **Data Access** → CSV dataset with 900+ mobile phones
-6. **Response** → Formatted results back to user
-
-## 🧩 Components
-
-### Frontend Components
-
-#### Pages (`/pages/`)
-
-| Page | Route | Description | Key Features |
-|------|-------|-------------|--------------|
-| **Home** | `/` | Landing page with navigation | Quick links, project overview |
-| **AI Demo** | `/demo` | Interactive ML predictions | Real-time predictions, API status |
-| **Search** | `/search` | Advanced search interface | Filters, sorting, pagination |
-| **Explore** | `/explore` | Dataset statistics | Charts, distributions, insights |
-| **Compare** | `/compare` | Model comparison tool | Side-by-side analysis |
-| **Recommendations** | `/recommendations` | AI suggestions | Preference-based matching |
-
-#### Composables (`/composables/`)
-
-| Composable | Purpose | Key Functions |
-|------------|---------|----------------|
-| `useApiStatus` | API health monitoring | `checkApiHealth()`, real-time status |
-| `usePredictionHistory` | Track user predictions | History management, caching |
-| `usePredictionValidation` | Input validation | Form validation, error handling |
-| `useResponsive` | Responsive design helpers | Breakpoint detection, layout helpers |
-
-#### Stores (`/stores/`)
-
-| Store | Purpose | State Management |
-|-------|---------|------------------|
-| `apiStore` | API status & configuration | Health checks, retry logic, persistence |
-
-### Backend Components
-
-#### Server API (`/server/api/`)
-
-| Endpoint Group | Base Path | Purpose |
-|----------------|-----------|---------|
-| **Predictions** | `/api/predict/` | ML model predictions |
-| **Dataset** | `/api/dataset/` | Data access and search |
-| **Health** | `/api/health` | System health checks |
-
-#### Python API (`/python_api/`)
-
-| Component | Purpose | Technologies |
-|-----------|---------|--------------|
-| `api.py` | FastAPI server | FastAPI, Pydantic |
-| `models.py` | ML model loading | scikit-learn, joblib |
-| `predictions.py` | Prediction functions | NumPy, pandas |
-
-## 📡 API Documentation
-
-### Prediction Endpoints
-
-#### POST `/api/predict/price`
-Predict mobile phone price using enhanced ML model.
-
-**Request Body:**
-```json
-{
-  "ram": 8,
-  "battery": 4000,
-  "screen": 6.1,
-  "weight": 174,
-  "year": 2024,
-  "company": "Apple",
-  "frontCamera": 12,
-  "backCamera": 48,
-  "storage": 128,
-  "processor": "A17 Bionic"
-}
+```powershell
+npm run check        # Check MATLAB capabilities
+npm run csv:validate # Validate dataset schema
 ```
 
-**Response:**
-```json
-{
-  "price": 2712
-}
+## Architecture
+
+### System Diagram
+
+```
+┌─────────────────┐
+│  Nuxt 4 Frontend│ ← Vue 3, Nuxt UI, Pinia
+│  (Port 3000)    │
+└────────┬────────┘
+         │ HTTP
+         ↓
+┌─────────────────┐
+│ Nitro API Routes│ ← Server middleware
+│ /server/api/*   │
+└────────┬────────┘
+         │
+         ↓
+┌─────────────────┐
+│  Python FastAPI │ ← scikit-learn models
+│  (Port 8000)    │ ← Fallback: TensorFlow
+└────────┬────────┘
+         │
+         ↓
+┌─────────────────┐
+│ Trained Models  │
+│ .pkl / .joblib  │ ← Optimized with joblib compression
+└─────────────────┘
+
+┌─────────────────┐
+│ MATLAB Training │
+│ Pipeline        │ ← Network architecture + hyperparameter tuning
+└─────────────────┘
 ```
 
-#### POST `/api/predict/ram`
-Predict RAM capacity.
+### Directory Structure
 
-**Request Body:**
-```json
-{
-  "battery": 4000,
-  "screen": 6.1,
-  "weight": 174,
-  "year": 2024,
-  "price": 2712,
-  "company": "Apple"
-}
+```
+├── matlab/                    # MATLAB training scripts
+│   ├── setup_matlab_env.m
+│   ├── analyze_mobiles_dataset.m
+│   └── run_all_examples.m
+├── python_api/                # FastAPI prediction server
+│   ├── api.py                 # Main FastAPI app
+│   ├── predictions_sklearn.py # scikit-learn models (primary)
+│   ├── trained_models/        # .pkl, .joblib model files
+│   └── TENSORFLOW_TRAINING_GUIDE.md
+├── scripts/                   # Automation utilities
+│   ├── utils/                 # JS/Python helpers
+│   ├── optimize_models.py     # Model compression (77% reduction)
+│   ├── optimize_images.py     # WebP conversion
+│   └── validate_csv_schema.py # Schema enforcement
+├── data/                      # Datasets
+│   └── Mobiles Dataset (2025).csv
+├── server/api/                # Nuxt Nitro endpoints
+├── pages/                     # Vue route pages
+├── components/                # Vue components
+├── stores/                    # Pinia state management
+├── tests/                     # Playwright E2E tests
+└── docs/                      # Documentation
 ```
 
-**Response:**
-```json
-{
-  "ram": 8
-}
+## Features
+
+### 🤖 Prediction Models
+
+All models trained with enhanced feature engineering (11 additional features):
+
+| Model                 | Accuracy | Features                                                     |
+| --------------------- | -------- | ------------------------------------------------------------ |
+| **Price Predictor**   | 94-98%   | RAM, battery, screen, processor, brand segment, price ratios |
+| **RAM Predictor**     | ~96%     | Battery, screen, price, brand, temporal features             |
+| **Battery Predictor** | ~95%     | RAM, screen, price, weight, polynomial features              |
+| **Brand Classifier**  | ~98%     | All specs + interaction features                             |
+
+**Enhanced Features Include:**
+
+- Price ratios (RAM/price, battery/price, screen/price)
+- Brand segments (premium/mid/budget)
+- Temporal: months_since_launch, technology_generation
+- Interactions: RAM×battery, screen×weight, camera×price
+- Polynomial: squared terms, square roots
+
+### 📊 Dataset Analysis
+
+- **930 mobile phones** (2020-2025)
+- **17 columns**: specs, prices (6 regions), processor, cameras
+- **Insight extraction**: price drivers, market trends, competitive analysis, recommendations, anomaly detection
+- **Results**: `data/dataset_analysis_results.json`
+
+### 🎨 Web Interface
+
+- **Dashboard**: Performance metrics, model comparison
+- **Predictions**: Interactive forms with validation
+- **Compare**: Side-by-side model comparison
+- **Search**: Filter by specs, price range, brand
+- **Explore**: Dataset visualization with ApexCharts
+- **Recommendations**: AI-powered phone suggestions
+
+### 🚀 Optimizations
+
+**Model Compression** (`npm run optimize:models`):
+
+- 77.9% size reduction (13.85MB → 3.06MB)
+- Format: pickle → joblib with compression=9
+- No accuracy loss
+
+**Image Optimization** (`npm run optimize:images`):
+
+- PNG: 3.3% reduction via lossless compression
+- WebP: 55.8% reduction vs original PNG
+- Component: `<OptimizedImage>` with `<picture>` fallback
+
+**CSV Compression** (`npm run optimize:csv`):
+
+- 86.5% reduction (292KB → 40KB)
+- Gzip compression, duplicate removal
+- Schema validation: `npm run csv:validate`
+
+## Development
+
+### Available Scripts
+
+```powershell
+# Development
+npm run dev              # Nuxt dev server only
+npm run dev:python       # Python API only
+npm run dev:all          # Both servers concurrently
+
+# Code Quality
+npm run lint             # ESLint check (max-warnings=0)
+npm run lint:fix         # Auto-fix issues
+npm run format           # Prettier format
+npm run typecheck        # TypeScript validation
+
+# Testing
+npm test                 # Playwright E2E tests
+npm run test:ui          # Playwright UI mode
+npm run test:report      # View test report
+
+# Optimization
+npm run optimize         # Run all optimizations
+npm run optimize:models  # Compress .pkl files
+npm run optimize:images  # Generate WebP variants
+npm run optimize:csv     # Compress CSV datasets
+
+# Utilities
+npm run check            # Check MATLAB/toolbox availability
+npm run csv:validate     # Validate CSV schema
+npm run mat:view         # View .mat file contents
 ```
 
-#### POST `/api/predict/battery`
-Predict battery capacity.
+### MATLAB Training Workflow
 
-**Request Body:**
-```json
-{
-  "ram": 8,
-  "screen": 6.1,
-  "weight": 174,
-  "year": 2024,
-  "price": 2712,
-  "company": "Apple"
-}
+```matlab
+% 1. Setup environment
+cd('matlab')
+run('setup_matlab_env.m')
+
+% 2. Analyze dataset
+run('analyze_mobiles_dataset.m')
+
+% 3. Train models with enhanced features
+cd('../mobiles-dataset-docs')
+run('train_models_with_enhanced_features.m')
+
+% 4. View results
+run('VIEW_RESULTS.m')
+run('visualize_results.m')
 ```
 
-**Response:**
-```json
-{
-  "battery": 4000
-}
+### Python Model Training (Alternative)
+
+```powershell
+cd python_api
+python train_models_sklearn.py  # Train all models
+python api.py                    # Start API server
 ```
 
-#### POST `/api/predict/brand`
-Predict brand classification.
+### Code Style
 
-**Request Body:**
-```json
-{
-  "ram": 8,
-  "battery": 4000,
-  "screen": 6.1,
-  "weight": 174,
-  "year": 2024,
-  "price": 2712,
-  "company": "Apple"
-}
+- **EditorConfig**: LF line endings, 2-space indent (4 for MATLAB/Python)
+- **ESLint**: Flat config (`eslint.config.cjs`), no legacy `.eslintrc`
+- **Prettier**: Single quotes, no semicolons, trailing commas ES5
+- **Pre-commit**: Format + lint via `simple-git-hooks`
+
+## Testing
+
+### E2E Tests (Playwright)
+
+```powershell
+npm test                      # All tests
+npm run test:ui               # Interactive mode
+npx playwright test --headed  # Show browser
 ```
 
-**Response:**
-```json
-{
-  "brand": "Apple"
-}
+**Test Coverage:**
+
+- Prediction API integration
+- Compare models functionality
+- Dashboard rendering
+- Search & filter
+- Dataset exploration
+- Form validation
+
+**Configuration**: `playwright.config.ts`
+
+- Multi-browser: Chromium, Firefox, WebKit, Mobile variants
+- Retries: 2 (CI), 0 (local)
+- Screenshots/videos on failure
+- Base URL: `http://localhost:3000`
+
+### API Testing
+
+```powershell
+npm run test:api          # Test Python API endpoints
+npm run test:api:verbose  # Detailed output
 ```
 
-### Dataset Endpoints
+## Deployment
 
-#### GET `/api/dataset/statistics`
-Get comprehensive dataset statistics.
+### Build for Production
 
-**Response:**
-```json
-{
-  "totalModels": 900,
-  "companies": ["Apple", "Samsung", ...],
-  "priceRange": {"min": 100, "max": 5000},
-  "avgSpecs": {
-    "ram": 6.5,
-    "battery": 4500,
-    "screen": 6.4
-  }
-}
+```powershell
+npm run build        # Generate .output/ directory
+npm run preview      # Preview production build
 ```
-
-#### GET `/api/dataset/search`
-Advanced multi-criteria search.
-
-**Query Parameters:**
-- `brand`: Company name filter
-- `minPrice`, `maxPrice`: Price range
-- `minRam`, `maxRam`: RAM range
-- `minBattery`, `maxBattery`: Battery range
-- `minScreen`, `maxScreen`: Screen size range
-- `year`: Launch year
-- `sortBy`: Sort field (price, ram, battery, etc.)
-- `sortOrder`: asc/desc
-- `limit`: Results limit (default: 20)
-- `offset`: Pagination offset
-
-**Response:**
-```json
-{
-  "models": [...],
-  "total": 150,
-  "page": 1,
-  "totalPages": 8
-}
-```
-
-#### POST `/api/dataset/compare`
-Compare multiple models side-by-side.
-
-**Request Body:**
-```json
-{
-  "modelNames": ["iPhone 15", "Samsung Galaxy S24", "Google Pixel 8"]
-}
-```
-
-**Response:**
-```json
-{
-  "comparison": {
-    "models": [...],
-    "differences": {...},
-    "recommendations": {...}
-  }
-}
-```
-
-### Health Endpoints
-
-#### GET `/api/health`
-Check system health and API availability.
-
-**Response:**
-```json
-{
-  "status": "healthy",
-  "timestamp": "2025-01-26T22:30:00Z",
-  "version": "1.0.0",
-  "uptime": 3600
-}
-```
-
-## 🧪 Testing Strategy
-
-### Test Categories
-
-#### 1. Unit Tests
-- **Component Logic**: Individual Vue component functionality
-- **Composable Functions**: API status, validation, responsive helpers
-- **Store Actions**: State management, persistence, error handling
-- **Utility Functions**: Data formatting, calculations, helpers
-
-#### 2. Integration Tests
-- **API Communication**: Nuxt ↔ Python API communication
-- **Data Flow**: Complete request/response cycles
-- **Error Handling**: Network failures, invalid inputs, timeouts
-
-#### 3. End-to-End Tests (Playwright)
-- **User Journeys**: Complete user workflows from start to finish
-- **Page Navigation**: All routes and page transitions
-- **Form Interactions**: Input validation, submission, results display
-- **API Integration**: Real API calls and response handling
-- **Responsive Design**: Different screen sizes and devices
-- **Error Scenarios**: Network failures, invalid inputs, edge cases
-
-### Playwright Test Structure
-
-#### Test Files (`/tests/`)
-
-| Test File | Coverage | Key Scenarios |
-|-----------|----------|----------------|
-| `home.spec.ts` | Home page functionality | Navigation, links, responsiveness |
-| `demo.spec.ts` | AI predictions | Form inputs, API calls, results display |
-| `search.spec.ts` | Advanced search | Filters, sorting, pagination, results |
-| `explore.spec.ts` | Dataset explorer | Statistics display, charts, interactions |
-| `compare.spec.ts` | Model comparison | Selection, comparison display, analysis |
-| `api.spec.ts` | API integration | Health checks, prediction endpoints, error handling |
-
-#### Test Configuration
-
-```typescript
-// playwright.config.ts
-export default defineConfig({
-  testDir: './tests',
-  use: {
-    baseURL: 'http://localhost:3000',
-    browserName: 'chromium',
-    viewport: { width: 1280, height: 720 },
-  },
-  projects: [
-    { name: 'chromium', use: { browserName: 'chromium' } },
-    { name: 'firefox', use: { browserName: 'firefox' } },
-    { name: 'webkit', use: { browserName: 'webkit' } },
-  ],
-})
-```
-
-### Running Tests
-
-```bash
-# Run all tests
-npm run test
-
-# Run specific test file
-npm run test -- demo.spec.ts
-
-# Run tests in specific browser
-npm run test -- --project=firefox
-
-# Run tests in headed mode (visible browser)
-npm run test -- --headed
-
-# Generate test report
-npm run test -- --reporter=html
-```
-
-## 🚀 Deployment
-
-### Development Setup
-
-1. **Install Dependencies**
-   ```bash
-   npm install
-   pip install -r requirements.txt
-   ```
-
-2. **Start Python API**
-   ```bash
-   cd python_api
-   python api.py
-   ```
-
-3. **Start Nuxt Dev Server**
-   ```bash
-   npm run dev
-   ```
-
-4. **Access Application**
-   - Frontend: http://localhost:3000
-   - API Docs: http://localhost:8000/docs
-
-### Production Build
-
-1. **Build Application**
-   ```bash
-   npm run build
-   ```
-
-2. **Generate Static Site** (optional)
-   ```bash
-   npm run generate
-   ```
-
-3. **Deploy to Replit**
-   - Import project to Replit
-   - Click "Run" (auto-setup)
-   - Access public URL
 
 ### Environment Variables
 
-```bash
-# .env
-NUXT_PUBLIC_API_URL=http://localhost:8000
+Create `.env`:
+
+```env
+NUXT_PUBLIC_API_BASE=http://localhost:8000
 PYTHON_API_URL=http://localhost:8000
-NODE_ENV=production
 ```
 
-## 🤝 Contributing
+### Python API Deployment
 
-### Development Workflow
+```powershell
+# Production server (uvicorn)
+cd python_api
+uvicorn api:app --host 0.0.0.0 --port 8000 --workers 4
+```
 
-1. **Fork Repository**
-2. **Create Feature Branch**
-   ```bash
-   git checkout -b feature/new-feature
-   ```
+### Static Generation
 
-3. **Make Changes**
-   - Follow TypeScript/Vue best practices
-   - Add tests for new functionality
-   - Update documentation
+```powershell
+npm run generate  # SSG to .output/public
+```
 
-4. **Run Tests**
-   ```bash
-   npm run test
-   ```
+## Contributing
 
-5. **Submit Pull Request**
-   - Provide clear description
-   - Reference related issues
-   - Include screenshots for UI changes
+See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines.
+
+### Development Setup
+
+1. Fork repository
+2. Create feature branch: `git checkout -b feature/amazing-feature`
+3. Run `npm run format && npm run lint` before committing
+4. Write tests for new features
+5. Submit pull request
 
 ### Code Standards
 
-- **TypeScript**: Strict type checking enabled
-- **Vue**: Composition API preferred
-- **Styling**: Tailwind CSS with consistent naming
-- **Testing**: 80%+ code coverage target
-- **Documentation**: Update docs for API changes
+- **TypeScript**: Strict mode, no `any` (use sparingly)
+- **Vue 3**: Composition API, `<script setup>`
+- **Python**: Type hints, docstrings
+- **MATLAB**: Comments for complex logic
 
-### Commit Convention
+## License
 
-```
-feat: add new prediction endpoint
-fix: resolve API status bug
-docs: update API documentation
-test: add e2e test coverage
-refactor: improve component structure
-```
+MIT License - see [LICENSE](../LICENSE)
 
-## 📊 Performance Metrics
+## Support
 
-### Model Performance
-
-| Model | Accuracy | Response Time | Status |
-|-------|----------|---------------|--------|
-| Price Prediction | 98.24% R² | < 100ms | ✅ Production |
-| RAM Prediction | 95.16% R² | < 80ms | ✅ Production |
-| Battery Prediction | 94.77% R² | < 90ms | ✅ Production |
-| Brand Classification | 65.22% | < 70ms | ✅ Production |
-
-### Application Performance
-
-- **First Contentful Paint**: < 1.5s
-- **Largest Contentful Paint**: < 2.5s
-- **Cumulative Layout Shift**: < 0.1
-- **API Response Time**: < 200ms average
-
-### Test Coverage
-
-- **Unit Tests**: 85% coverage
-- **Integration Tests**: 90% coverage
-- **E2E Tests**: 95% coverage
-- **API Tests**: 100% coverage
-
-## 🔒 Security
-
-### API Security
-
-- **Input Validation**: All inputs validated with Pydantic models
-- **Rate Limiting**: Implemented on prediction endpoints
-- **CORS Configuration**: Properly configured for web access
-- **Error Handling**: No sensitive information in error responses
-
-### Data Protection
-
-- **No User Data Storage**: Application doesn't store personal information
-- **Dataset Privacy**: Public dataset with no sensitive information
-- **API Keys**: No external API dependencies requiring keys
-
-## 📈 Monitoring
-
-### Application Metrics
-
-- **API Health**: Real-time status monitoring
-- **Prediction Accuracy**: Ongoing model performance tracking
-- **User Interactions**: Page views, feature usage
-- **Error Rates**: Application and API error tracking
-
-### Logging
-
-- **Server Logs**: Nuxt server request/response logging
-- **API Logs**: Python API request logging
-- **Error Logs**: Comprehensive error tracking
-- **Performance Logs**: Response time monitoring
-
-## 🎯 Future Roadmap
-
-### Planned Features
-
-- **User Accounts**: Save preferences and prediction history
-- **Advanced Analytics**: Detailed usage statistics
-- **Mobile App**: React Native companion app
-- **Real-time Updates**: Live price updates from retailers
-- **Social Features**: Share recommendations, compare with friends
-
-### Technical Improvements
-
-- **GraphQL API**: More flexible data fetching
-- **Microservices**: Split monolithic API into services
-- **Caching Layer**: Redis for improved performance
-- **CDN Integration**: Global content delivery
-- **Advanced ML**: Deep learning models, ensemble methods
+- **Issues**: https://github.com/Themis128/matlab-nuxt-app/issues
+- **Documentation**: See `/docs` directory
+- **MATLAB Guides**: See `matlab/` and `mobiles-dataset-docs/`
 
 ---
 
-**Mobile Finder** - Combining the power of machine learning with modern web development for the ultimate mobile phone analysis experience.
+**Last Updated**: November 29, 2025

@@ -43,6 +43,7 @@ Average improvement: +25% across all models.
 ## Files to Commit
 
 ### New Files:
+
 - Enhanced prediction functions
 - Enhanced training scripts
 - Visualization scripts
@@ -50,6 +51,7 @@ Average improvement: +25% across all models.
 - Enhanced visualizations
 
 ### Modified Files:
+
 - README.md (comprehensive updates)
 - predict_ram.m (uses tuned model automatically)
 

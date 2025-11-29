@@ -232,29 +232,10 @@
     }
   },
   "missing_features": {
-    "Storage": [
-      "Storage",
-      "storage",
-      "Internal Storage",
-      "InternalStorage"
-    ],
-    "Display Type": [
-      "Display Type",
-      "DisplayType",
-      "Display_Type",
-      "Screen Type"
-    ],
-    "Refresh Rate": [
-      "Refresh Rate",
-      "RefreshRate",
-      "Refresh_Rate",
-      "Hz"
-    ],
-    "Resolution": [
-      "Resolution",
-      "resolution",
-      "Screen Resolution"
-    ]
+    "Storage": ["Storage", "storage", "Internal Storage", "InternalStorage"],
+    "Display Type": ["Display Type", "DisplayType", "Display_Type", "Screen Type"],
+    "Refresh Rate": ["Refresh Rate", "RefreshRate", "Refresh_Rate", "Hz"],
+    "Resolution": ["Resolution", "resolution", "Screen Resolution"]
   },
   "recommendations": {
     "camera_available": true,

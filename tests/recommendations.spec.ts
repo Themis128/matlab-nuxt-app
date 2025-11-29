@@ -7,7 +7,9 @@ test.describe('Recommendations Page', () => {
   })
 
   test('should load recommendations page', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: /Find Models by Price|Recommendations/i })).toBeVisible({ timeout: 10000 })
+    await expect(
+      page.getByRole('heading', { name: /Find Models by Price|Recommendations/i })
+    ).toBeVisible({ timeout: 10000 })
   })
 
   test('should have price search form', async ({ page }) => {
@@ -57,24 +59,44 @@ test.describe('Recommendations Page', () => {
     // Ensure button is clickable
     await expect(recommendButton).toBeEnabled({ timeout: 5000 })
     await recommendButton.click()
-    
+
     // Wait for loading state to finish - wait for "Searching for models..." to disappear
-    await page.waitForSelector('text=/Searching for models\\.\\.\\.$/i', { state: 'visible', timeout: 5000 }).catch(() => {})
-    await page.waitForSelector('text=/Searching for models\\.\\.\\.$/i', { state: 'hidden', timeout: 30000 }).catch(() => {})
-    
+    await page
+      .waitForSelector('text=/Searching for models\\.\\.\\.$/i', {
+        state: 'visible',
+        timeout: 5000,
+      })
+      .catch(() => {})
+    await page
+      .waitForSelector('text=/Searching for models\\.\\.\\.$/i', {
+        state: 'hidden',
+        timeout: 30000,
+      })
+      .catch(() => {})
+
     // Check if we have results or an error
-    const hasResults = await page.locator('[data-testid="model-card"], .model-card, text=/found|model/i').first().isVisible({ timeout: 2000 }).catch(() => false)
-    const hasError = await page.locator('text=/error|failed/i').first().isVisible({ timeout: 1000 }).catch(() => false)
-    
+    const hasResults = await page
+      .locator('[data-testid="model-card"], .model-card, text=/found|model/i')
+      .first()
+      .isVisible({ timeout: 2000 })
+      .catch(() => false)
+    const hasError = await page
+      .locator('text=/error|failed/i')
+      .first()
+      .isVisible({ timeout: 1000 })
+      .catch(() => false)
+
     if (hasError) {
       // Skip test if API failed
       console.log('API returned error, skipping price range check')
       return
     }
-    
+
     // If we have results, the price range should be visible
     if (hasResults) {
-      await expect(page.locator('text=/Searching for models between/i').first()).toBeVisible({ timeout: 5000 })
+      await expect(page.locator('text=/Searching for models between/i').first()).toBeVisible({
+        timeout: 5000,
+      })
     }
   })
 
@@ -107,26 +129,42 @@ test.describe('Recommendations Page', () => {
 
     // Wait for either results or "no results" message to appear
     await Promise.race([
-      page.waitForSelector('.card, [class*="card"], .model-card, [class*="UCard"]', { timeout: 10000 }).catch(() => {}),
-      page.waitForSelector('text=/no.*result|not.*found|total.*model/i', { timeout: 10000 }).catch(() => {}),
-      page.waitForSelector('text=/Total Models Found|Brands Available/i', { timeout: 10000 }).catch(() => {})
+      page
+        .waitForSelector('.card, [class*="card"], .model-card, [class*="UCard"]', {
+          timeout: 10000,
+        })
+        .catch(() => {}),
+      page
+        .waitForSelector('text=/no.*result|not.*found|total.*model/i', { timeout: 10000 })
+        .catch(() => {}),
+      page
+        .waitForSelector('text=/Total Models Found|Brands Available/i', { timeout: 10000 })
+        .catch(() => {}),
     ])
 
     await page.waitForTimeout(2000)
 
     // Look for model cards or results - check multiple possible selectors
-    const modelCards = page.locator('.card, [class*="card"], .model-card, [class*="UCard"]').or(
-      page.locator('div').filter({ hasText: /GB|mAh|inches|price/i })
-    )
+    const modelCards = page
+      .locator('.card, [class*="card"], .model-card, [class*="UCard"]')
+      .or(page.locator('div').filter({ hasText: /GB|mAh|inches|price/i }))
 
     const cardCount = await modelCards.count()
 
     // Check for summary statistics (Total Models Found, etc.)
-    const hasSummary = await page.locator('text=/Total Models Found|Brands Available|Models Displayed/i').first().isVisible({ timeout: 2000 }).catch(() => false)
+    const hasSummary = await page
+      .locator('text=/Total Models Found|Brands Available|Models Displayed/i')
+      .first()
+      .isVisible({ timeout: 2000 })
+      .catch(() => false)
 
     // Should have results (either cards, summary, or "no results" message)
     const hasResults = cardCount > 0 || hasSummary
-    const hasNoResults = await page.locator('text=/no.*result|not.*found/i').first().isVisible({ timeout: 2000 }).catch(() => false)
+    const hasNoResults = await page
+      .locator('text=/no.*result|not.*found/i')
+      .first()
+      .isVisible({ timeout: 2000 })
+      .catch(() => false)
 
     expect(hasResults || hasNoResults).toBeTruthy()
   })
@@ -150,9 +188,10 @@ test.describe('Recommendations Page', () => {
     await page.waitForTimeout(3000)
 
     // Find a model link - try multiple selectors
-    const modelLink = page.locator('a[href*="/model/"]').or(
-      page.locator('.cursor-pointer').filter({ has: page.locator('text=/model|phone/i') })
-    ).first()
+    const modelLink = page
+      .locator('a[href*="/model/"]')
+      .or(page.locator('.cursor-pointer').filter({ has: page.locator('text=/model|phone/i') }))
+      .first()
 
     if (await modelLink.isVisible({ timeout: 10000 }).catch(() => false)) {
       await modelLink.click()
@@ -160,7 +199,11 @@ test.describe('Recommendations Page', () => {
       await expect(page).toHaveURL(/.*\/model\/.*/, { timeout: 10000 })
     } else {
       // If no model link found, just verify search completed
-      const hasResults = await page.locator('text=/model|result|found/i').first().isVisible({ timeout: 5000 }).catch(() => false)
+      const hasResults = await page
+        .locator('text=/model|result|found/i')
+        .first()
+        .isVisible({ timeout: 5000 })
+        .catch(() => false)
       expect(hasResults).toBeTruthy()
     }
   })
@@ -203,9 +246,10 @@ test.describe('Recommendations Page', () => {
 
   test('should filter by brand if available', async ({ page }) => {
     // Look for brand filter
-    const brandFilter = page.locator('select, [role="combobox"]').filter({ hasText: /brand/i }).or(
-      page.locator('text=/brand/i').locator('..').locator('select, [role="combobox"]')
-    )
+    const brandFilter = page
+      .locator('select, [role="combobox"]')
+      .filter({ hasText: /brand/i })
+      .or(page.locator('text=/brand/i').locator('..').locator('select, [role="combobox"]'))
 
     // Brand filter might not be present on this page
     const hasBrandFilter = await brandFilter.isVisible({ timeout: 3000 }).catch(() => false)

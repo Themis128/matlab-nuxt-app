@@ -2,12 +2,12 @@ name: Documentation Check
 
 on:
   push:
-    branches: [ master, main ]
+    branches: [master, main]
     paths:
       - '**.md'
       - 'mobiles-dataset-docs/**'
   pull_request:
-    branches: [ master, main ]
+    branches: [master, main]
     paths:
       - '**.md'
       - 'mobiles-dataset-docs/**'
@@ -17,20 +17,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Check documentation files
-      run: |
-        echo "Checking documentation..."
-        test -f "README.md" || exit 1
-        test -f "CONTRIBUTING.md" || exit 1
-        test -f "mobiles-dataset-docs/README.md" || exit 1
-        echo "✓ Required documentation files exist"
+      - name: Check documentation files
+        run: |
+          echo "Checking documentation..."
+          test -f "README.md" || exit 1
+          test -f "CONTRIBUTING.md" || exit 1
+          test -f "mobiles-dataset-docs/README.md" || exit 1
+          echo "✓ Required documentation files exist"
 
-    - name: Validate markdown links
-      run: |
-        echo "Validating markdown structure..."
-        # Basic validation
-        find . -name "*.md" -type f | wc -l
-        echo "✓ Documentation check complete"
+      - name: Validate markdown links
+        run: |
+          echo "Validating markdown structure..."
+          # Basic validation
+          find . -name "*.md" -type f | wc -l
+          echo "✓ Documentation check complete"

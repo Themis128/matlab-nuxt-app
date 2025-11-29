@@ -22,10 +22,16 @@ test.describe('Home Page', () => {
 
   test('should have working navigation links', async ({ page }) => {
     // Test navigation to demo page
-    const demoLink = page.locator('a[href="/demo"]').filter({ hasText: /AI Predictions|Demo/i }).first()
+    const demoLink = page
+      .locator('a[href="/demo"]')
+      .filter({ hasText: /AI Predictions|Demo/i })
+      .first()
     await demoLink.click({ timeout: 10000 })
     await expect(page).toHaveURL(/.*\/demo/)
-    await expect(page.locator('h1').first()).toContainText(/Mobile Phones Model Demo|AI Predictions/i, { timeout: 10000 })
+    await expect(page.locator('h1').first()).toContainText(
+      /Mobile Phones Model Demo|AI Predictions/i,
+      { timeout: 10000 }
+    )
 
     // Go back to home
     await page.goto('/')
@@ -48,9 +54,11 @@ test.describe('Home Page', () => {
 
     // Check that content is readable
     await expect(page.locator('h1').first()).toBeVisible()
-    
+
     // Check that main content cards are visible
-    await expect(page.locator('text=/AI Predictions Demo|Dataset Explorer|Smart Search/i').first()).toBeVisible()
+    await expect(
+      page.locator('text=/AI Predictions Demo|Dataset Explorer|Smart Search/i').first()
+    ).toBeVisible()
   })
 
   test('should have proper meta tags', async ({ page }) => {

@@ -66,7 +66,7 @@ export const useApiStore = defineStore('api', {
     /**
      * Get formatted last checked time
      */
-    lastCheckedFormatted: (state) => {
+    lastCheckedFormatted: state => {
       if (!state.lastChecked) return 'Never'
       return new Date(state.lastChecked).toLocaleTimeString()
     },
@@ -74,7 +74,7 @@ export const useApiStore = defineStore('api', {
     /**
      * Get time since last successful check
      */
-    timeSinceLastSuccess: (state) => {
+    timeSinceLastSuccess: state => {
       if (!state.lastSuccessAt) return null
       return Date.now() - state.lastSuccessAt
     },
@@ -82,14 +82,14 @@ export const useApiStore = defineStore('api', {
     /**
      * Check if API is in a failure state
      */
-    isInFailureState: (state) => {
+    isInFailureState: state => {
       return state.consecutiveFailures >= 3
     },
 
     /**
      * Get connection quality based on response time
      */
-    connectionQuality: (state) => {
+    connectionQuality: state => {
       if (!state.responseTime) return 'unknown'
       if (state.responseTime < 500) return 'excellent'
       if (state.responseTime < 1000) return 'good'
@@ -100,13 +100,13 @@ export const useApiStore = defineStore('api', {
     /**
      * Get status summary for UI display
      */
-    statusSummary: (state) => {
+    statusSummary: state => {
       if (state.isOnline) {
         return {
           status: 'online',
           message: 'API is online and responding',
           color: 'green',
-          icon: 'i-heroicons-check-circle'
+          icon: 'i-heroicons-check-circle',
         }
       }
 
@@ -115,7 +115,7 @@ export const useApiStore = defineStore('api', {
           status: 'checking',
           message: 'Checking API status...',
           color: 'blue',
-          icon: 'i-heroicons-arrow-path'
+          icon: 'i-heroicons-arrow-path',
         }
       }
 
@@ -124,7 +124,7 @@ export const useApiStore = defineStore('api', {
           status: 'error',
           message: state.error,
           color: 'red',
-          icon: 'i-heroicons-exclamation-triangle'
+          icon: 'i-heroicons-exclamation-triangle',
         }
       }
 
@@ -132,9 +132,9 @@ export const useApiStore = defineStore('api', {
         status: 'offline',
         message: 'API is offline',
         color: 'gray',
-        icon: 'i-heroicons-x-circle'
+        icon: 'i-heroicons-x-circle',
       }
-    }
+    },
   },
 
   actions: {
@@ -152,7 +152,7 @@ export const useApiStore = defineStore('api', {
         const response = await $fetch<ApiHealthResponse>('/api/health', {
           method: 'GET',
           timeout: 5000, // 5 second timeout
-          retry: false
+          retry: false,
         })
 
         const responseTime = Date.now() - startTime
@@ -291,6 +291,6 @@ export const useApiStore = defineStore('api', {
       this.retryCount = 0
       this.isRetrying = false
       this.nextRetryAt = null
-    }
-  }
+    },
+  },
 })

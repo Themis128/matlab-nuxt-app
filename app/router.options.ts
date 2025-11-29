@@ -4,5 +4,5 @@ export default {
       return savedPosition
     }
     return { top: 0 }
-  }
+  },
 }

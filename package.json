@@ -16,37 +16,47 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "check": "node check-capabilities.js",
-    "check:matlab": "node check-capabilities.js",
-    "next-steps": "node run-next-steps.js",
+    "check": "node scripts/utils/check-capabilities.js",
+    "check:matlab": "node scripts/utils/check-capabilities.js",
+    "next-steps": "node scripts/utils/run-next-steps.js",
     "test": "set NUXT_TEST=1&& playwright test",
     "test:ui": "playwright test --ui",
     "test:report": "playwright show-report",
-    "mat:view": "node view_mat_file.js"
+    "test:api": "pwsh -NoProfile -File scripts/test-api.ps1",
+    "test:api:verbose": "pwsh -NoProfile -File scripts/test-api.ps1 -Verbose",
+    "mat:view": "node scripts/utils/view_mat_file.js",
+    "optimize": "set PYTHONIOENCODING=utf-8 && .\\venv\\Scripts\\python scripts/optimize_all.py",
+    "optimize:models": "set PYTHONIOENCODING=utf-8 && .\\venv\\Scripts\\python scripts/optimize_models.py",
+    "optimize:images": "set PYTHONIOENCODING=utf-8 && .\\venv\\Scripts\\python scripts/optimize_images.py",
+    "optimize:csv": "set PYTHONIOENCODING=utf-8 && .\\venv\\Scripts\\python scripts/optimize_csv.py",
+    "csv:validate": "set PYTHONIOENCODING=utf-8 && .\\venv\\Scripts\\python scripts/validate_csv_schema.py"
   },
   "dependencies": {
+    "@heroicons/vue": "^2.2.0",
     "@nuxt/ui": "^2.19.0",
     "@pinia/nuxt": "^0.11.3",
     "apexcharts": "^5.3.6",
+    "chart.js": "^4.5.1",
     "nuxt": "^4.2.1",
     "pinia": "^3.0.4",
+    "vue-chartjs": "^5.3.3",
     "vue3-apexcharts": "^1.10.0"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@playwright/test": "^1.56.1",
     "@types/node": "^24.10.0",
-    "concurrently": "^9.0.1",
-    "eslint": "^9.14.0",
-    "eslint-plugin-vue": "^9.28.0",
     "@typescript-eslint/eslint-plugin": "^8.12.1",
     "@typescript-eslint/parser": "^8.12.1",
-    "typescript": "^5.9.3",
-    "vue-tsc": "^3.1.3"
-    ,"prettier": "^3.3.3",
+    "concurrently": "^9.0.1",
+    "eslint": "^9.14.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
-    "simple-git-hooks": "^2.11.1"
+    "eslint-plugin-vue": "^9.28.0",
+    "prettier": "^3.3.3",
+    "simple-git-hooks": "^2.11.1",
+    "typescript": "^5.9.3",
+    "vue-tsc": "^3.1.3"
   },
   "overrides": {
     "glob": "10.1.0",
@@ -86,8 +96,8 @@
   "bugs": {
     "url": "https://github.com/Themis128/matlab-nuxt-app/issues"
   },
-  "homepage": "https://github.com/Themis128/matlab-nuxt-app#readme"
-  ,"simple-git-hooks": {
+  "homepage": "https://github.com/Themis128/matlab-nuxt-app#readme",
+  "simple-git-hooks": {
     "pre-commit": "npm run format && npm run lint"
   }
 }

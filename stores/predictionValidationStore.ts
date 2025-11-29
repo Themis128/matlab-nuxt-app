@@ -71,7 +71,7 @@ export const usePredictionValidationStore = defineStore('predictionValidation', 
         accuracy: 0.5652,
         typicalRange: { min: 0, max: 1 },
       },
-    }
+    },
   }),
 
   actions: {
@@ -83,8 +83,8 @@ export const usePredictionValidationStore = defineStore('predictionValidation', 
       }
 
       // Check if prediction is within typical range
-      const inRange = predictedPrice >= metrics.typicalRange.min &&
-                      predictedPrice <= metrics.typicalRange.max
+      const inRange =
+        predictedPrice >= metrics.typicalRange.min && predictedPrice <= metrics.typicalRange.max
 
       // Determine confidence based on R² and whether it's in range
       let confidence: 'high' | 'medium' | 'low' = 'medium'
@@ -130,8 +130,8 @@ export const usePredictionValidationStore = defineStore('predictionValidation', 
         max: Math.min(metrics.typicalRange.max, predictedRam + metrics.rmse * 2),
       }
 
-      const inRange = predictedRam >= metrics.typicalRange.min &&
-                      predictedRam <= metrics.typicalRange.max
+      const inRange =
+        predictedRam >= metrics.typicalRange.min && predictedRam <= metrics.typicalRange.max
 
       const confidence: 'high' | 'medium' | 'low' = metrics.r2 > 0.6 ? 'medium' : 'low'
       const message = inRange
@@ -153,8 +153,8 @@ export const usePredictionValidationStore = defineStore('predictionValidation', 
         max: Math.min(metrics.typicalRange.max, predictedBattery + metrics.rmse * 2),
       }
 
-      const inRange = predictedBattery >= metrics.typicalRange.min &&
-                      predictedBattery <= metrics.typicalRange.max
+      const inRange =
+        predictedBattery >= metrics.typicalRange.min && predictedBattery <= metrics.typicalRange.max
 
       const confidence: 'high' | 'medium' | 'low' = metrics.r2 > 0.7 ? 'high' : 'medium'
       const message = inRange
@@ -179,6 +179,6 @@ export const usePredictionValidationStore = defineStore('predictionValidation', 
         confidence,
         message,
       }
-    }
-  }
+    },
+  },
 })

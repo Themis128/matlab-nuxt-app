@@ -16,7 +16,7 @@ interface PhoneModel {
   processor?: string
 }
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async event => {
   try {
     const body = await readBody(event)
 
@@ -42,7 +42,7 @@ export default defineEventHandler(async (event) => {
     if (!datasetContent) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'Dataset file not found'
+        statusMessage: 'Dataset file not found',
       })
     }
 
@@ -71,7 +71,7 @@ export default defineEventHandler(async (event) => {
     if (lines.length < 2) {
       throw createError({
         statusCode: 500,
-        statusMessage: 'Dataset file is empty or invalid'
+        statusMessage: 'Dataset file is empty or invalid',
       })
     }
 
@@ -102,7 +102,8 @@ export default defineEventHandler(async (event) => {
     // Helper to extract number
     const extractNumber = (str: string): number | null => {
       if (!str || str.trim() === '' || str.toLowerCase() === 'nan') return null
-      const cleaned = str.toString()
+      const cleaned = str
+        .toString()
         .replace(/(USD|PKR|INR|CNY|AED|\$)/gi, '')
         .replace(/[$,\s]/g, '')
         .replace(/(mAh|GB|MP|g|inches|"|'|Hz|TB|MB)/gi, '')
@@ -129,7 +130,8 @@ export default defineEventHandler(async (event) => {
       const phoneWeight = weightIdx !== -1 ? extractNumber(values[weightIdx]) : null
       const phoneYear = yearIdx !== -1 ? extractNumber(values[yearIdx]) : null
 
-      if (!phonePrice || !phoneRam || !phoneBattery || !phoneScreen || !phoneWeight || !phoneYear) continue
+      if (!phonePrice || !phoneRam || !phoneBattery || !phoneScreen || !phoneWeight || !phoneYear)
+        continue
 
       const modelName = (modelNameIdx !== -1 ? values[modelNameIdx] : '') || 'Unknown Model'
       const companyName = (companyIdx !== -1 ? values[companyIdx] : '') || 'Unknown Brand'
@@ -204,7 +206,7 @@ export default defineEventHandler(async (event) => {
 
       return {
         ...model,
-        similarityScore
+        similarityScore,
       }
     })
 
@@ -215,7 +217,7 @@ export default defineEventHandler(async (event) => {
     if (!closest) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'No matching model found'
+        statusMessage: 'No matching model found',
       })
     }
 
@@ -231,12 +233,12 @@ export default defineEventHandler(async (event) => {
       year: closest.year,
     }
   } catch (error: unknown) {
-    if (error.statusCode) {
+    if ((error as any)?.statusCode) {
       throw error
     }
     throw createError({
       statusCode: 500,
-      statusMessage: `Failed to find closest model: ${error instanceof Error ? error.message : 'Unknown error'}`
+      statusMessage: `Failed to find closest model: ${error instanceof Error ? error.message : 'Unknown error'}`,
     })
   }
 })

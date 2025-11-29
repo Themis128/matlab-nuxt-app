@@ -40,6 +40,7 @@ Thank you for your interest in contributing! This document provides guidelines a
 ### Setup Steps
 
 1. **Fork the repository**
+
    ```bash
    # Fork on GitHub, then clone
    git clone https://github.com/YOUR_USERNAME/matlab-nuxt-app.git
@@ -47,11 +48,13 @@ Thank you for your interest in contributing! This document provides guidelines a
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Setup MATLAB environment**
+
    ```matlab
    cd mobiles-dataset-docs
    run('setup_matlab_env.m')
@@ -108,12 +111,14 @@ Thank you for your interest in contributing! This document provides guidelines a
 ## 📤 Submitting Changes
 
 1. **Commit your changes**
+
    ```bash
    git add .
    git commit -m "Description of changes"
    ```
 
 2. **Push to your fork**
+
    ```bash
    git push origin feature/your-feature-name
    ```

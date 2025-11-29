@@ -2,11 +2,7 @@ import { test, expect } from '@playwright/test'
 
 test.describe.skip('Model Detail Page', () => {
   // Common model names to test
-  const testModels = [
-    'iPhone 16 128GB',
-    'Samsung Galaxy S24',
-    'Google Pixel 8'
-  ]
+  const testModels = ['iPhone 16 128GB', 'Samsung Galaxy S24', 'Google Pixel 8']
 
   test('should load model detail page', async ({ page }) => {
     // Try to navigate to a model page
@@ -38,7 +34,9 @@ test.describe.skip('Model Detail Page', () => {
     // Navigate directly to a known model if possible
     for (const modelName of testModels) {
       const encodedName = encodeURIComponent(modelName)
-      const response = await page.goto(`/model/${encodedName}`, { waitUntil: 'networkidle' }).catch(() => null)
+      const response = await page
+        .goto(`/model/${encodedName}`, { waitUntil: 'networkidle' })
+        .catch(() => null)
 
       if (response && response.status() !== 404) {
         await page.waitForLoadState('networkidle')
@@ -142,7 +140,9 @@ test.describe.skip('Model Detail Page', () => {
         await page.waitForTimeout(2000)
 
         // Look for action buttons (Compare, Find Similar, etc.)
-        const actionButtons = page.getByRole('button').filter({ hasText: /compare|similar|price|add/i })
+        const actionButtons = page
+          .getByRole('button')
+          .filter({ hasText: /compare|similar|price|add/i })
         const buttonCount = await actionButtons.count()
 
         // Should have at least one action button

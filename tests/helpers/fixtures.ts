@@ -30,7 +30,7 @@ export const validPhoneSpecs: PhoneSpecsFixture = {
   frontCamera: 12,
   backCamera: 48,
   processor: 'Snapdragon 8 Gen 2',
-  storage: 128
+  storage: 128,
 }
 
 /**
@@ -47,7 +47,7 @@ export const validPhoneSpecs2: PhoneSpecsFixture = {
   frontCamera: 12,
   backCamera: 48,
   processor: 'A17 Pro',
-  storage: 256
+  storage: 256,
 }
 
 /**
@@ -63,7 +63,7 @@ export const budgetPhoneSpecs: PhoneSpecsFixture = {
   company: 'Xiaomi',
   frontCamera: 8,
   backCamera: 13,
-  storage: 64
+  storage: 64,
 }
 
 /**
@@ -80,7 +80,7 @@ export const flagshipPhoneSpecs: PhoneSpecsFixture = {
   frontCamera: 16,
   backCamera: 200,
   processor: 'Snapdragon 8 Gen 3',
-  storage: 512
+  storage: 512,
 }
 
 /**
@@ -101,22 +101,22 @@ export const invalidPhoneSpecs: Partial<PhoneSpecsFixture>[] = [
 export const searchFilters = {
   priceRange: {
     minPrice: 300,
-    maxPrice: 1000
+    maxPrice: 1000,
   },
   ramRange: {
     minRam: 6,
-    maxRam: 12
+    maxRam: 12,
   },
   batteryRange: {
     minBattery: 3500,
-    maxBattery: 5000
+    maxBattery: 5000,
   },
   screenRange: {
     minScreen: 6.0,
-    maxScreen: 6.5
+    maxScreen: 6.5,
   },
   brands: ['Samsung', 'Apple', 'Xiaomi'],
-  years: [2023, 2024, 2025]
+  years: [2023, 2024, 2025],
 }
 
 /**
@@ -156,7 +156,7 @@ export const timeouts = {
   medium: 10000,
   long: 30000,
   api: 15000,
-  matlab: 60000 // MATLAB predictions can be slow
+  matlab: 60000, // MATLAB predictions can be slow
 }
 
 /**
@@ -168,5 +168,5 @@ export const urls = {
   search: '/search',
   recommendations: '/recommendations',
   compare: '/compare',
-  apiDocs: '/api-docs'
+  apiDocs: '/api-docs',
 }

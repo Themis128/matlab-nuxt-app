@@ -17,11 +17,11 @@ test.describe('API Integration Tests', () => {
       screen: 6.1,
       weight: 174,
       year: 2024,
-      company: 'Apple'
+      company: 'Apple',
     }
 
     const response = await request.post('/api/predict/price', {
-      data: predictionData
+      data: predictionData,
     })
 
     expect(response.ok()).toBeTruthy()
@@ -40,11 +40,11 @@ test.describe('API Integration Tests', () => {
       weight: 174,
       year: 2024,
       price: 2712,
-      company: 'Apple'
+      company: 'Apple',
     }
 
     const response = await request.post('/api/predict/ram', {
-      data: predictionData
+      data: predictionData,
     })
 
     expect(response.ok()).toBeTruthy()
@@ -63,11 +63,11 @@ test.describe('API Integration Tests', () => {
       weight: 174,
       year: 2024,
       price: 2712,
-      company: 'Apple'
+      company: 'Apple',
     }
 
     const response = await request.post('/api/predict/battery', {
-      data: predictionData
+      data: predictionData,
     })
 
     expect(response.ok()).toBeTruthy()
@@ -87,11 +87,11 @@ test.describe('API Integration Tests', () => {
       weight: 174,
       year: 2024,
       price: 2712,
-      company: 'Apple'
+      company: 'Apple',
     }
 
     const response = await request.post('/api/predict/brand', {
-      data: predictionData
+      data: predictionData,
     })
 
     expect(response.ok()).toBeTruthy()
@@ -105,12 +105,12 @@ test.describe('API Integration Tests', () => {
   test('should handle invalid prediction data', async ({ request }) => {
     // Test with missing required fields
     const invalidData = {
-      ram: 8
+      ram: 8,
       // Missing other required fields
     }
 
     const response = await request.post('/api/predict/price', {
-      data: invalidData
+      data: invalidData,
     })
 
     // Should return validation error
@@ -128,11 +128,11 @@ test.describe('API Integration Tests', () => {
       screen: 6.1,
       weight: 174,
       year: 2024,
-      company: 'Apple'
+      company: 'Apple',
     }
 
     const response = await request.post('/api/predict/price', {
-      data: invalidData
+      data: invalidData,
     })
 
     // Should handle gracefully (either validation error or processed)
@@ -150,11 +150,11 @@ test.describe('API Integration Tests', () => {
       frontCamera: 12,
       backCamera: 48,
       storage: 128,
-      processor: 'A17 Bionic'
+      processor: 'A17 Bionic',
     }
 
     const response = await request.post('/api/predict/price', {
-      data: enhancedData
+      data: enhancedData,
     })
 
     expect(response.ok()).toBeTruthy()
@@ -166,18 +166,20 @@ test.describe('API Integration Tests', () => {
 
   test('should handle concurrent API requests', async ({ request }) => {
     // Make multiple concurrent requests
-    const requests = Array(5).fill(null).map(() =>
-      request.post('/api/predict/price', {
-        data: {
-          ram: 8,
-          battery: 4000,
-          screen: 6.1,
-          weight: 174,
-          year: 2024,
-          company: 'Apple'
-        }
-      })
-    )
+    const requests = Array(5)
+      .fill(null)
+      .map(() =>
+        request.post('/api/predict/price', {
+          data: {
+            ram: 8,
+            battery: 4000,
+            screen: 6.1,
+            weight: 174,
+            year: 2024,
+            company: 'Apple',
+          },
+        })
+      )
 
     const responses = await Promise.all(requests)
 
@@ -200,8 +202,8 @@ test.describe('API Integration Tests', () => {
   test('should have proper CORS headers', async ({ request }) => {
     const response = await request.get('/api/health', {
       headers: {
-        'Origin': 'http://localhost:3000'
-      }
+        Origin: 'http://localhost:3000',
+      },
     })
 
     expect(response.ok()).toBeTruthy()
@@ -215,18 +217,20 @@ test.describe('API Integration Tests', () => {
 
   test('should handle rate limiting gracefully', async ({ request }) => {
     // Make many rapid requests to test rate limiting
-    const requests = Array(20).fill(null).map(() =>
-      request.post('/api/predict/price', {
-        data: {
-          ram: 8,
-          battery: 4000,
-          screen: 6.1,
-          weight: 174,
-          year: 2024,
-          company: 'Apple'
-        }
-      })
-    )
+    const requests = Array(20)
+      .fill(null)
+      .map(() =>
+        request.post('/api/predict/price', {
+          data: {
+            ram: 8,
+            battery: 4000,
+            screen: 6.1,
+            weight: 174,
+            year: 2024,
+            company: 'Apple',
+          },
+        })
+      )
 
     const responses = await Promise.all(requests)
 
@@ -239,9 +243,11 @@ test.describe('API Integration Tests', () => {
 
     // If there are rate limited requests, they should have proper status
     if (rateLimitedCount > 0) {
-      responses.filter(r => r.status() === 429).forEach(response => {
-        expect(response.status()).toBe(429)
-      })
+      responses
+        .filter(r => r.status() === 429)
+        .forEach(response => {
+          expect(response.status()).toBe(429)
+        })
     }
   })
 })

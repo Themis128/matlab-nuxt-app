@@ -36,5 +36,5 @@ export default defineNuxtPlugin({
 
     // Return empty object (no exposed functionality)
     return {}
-  }
+  },
 })

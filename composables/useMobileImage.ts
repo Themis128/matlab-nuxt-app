@@ -51,7 +51,7 @@ export const useMobileImage = () => {
    * @returns Promise that resolves to true if image loads, false otherwise
    */
   const imageExists = (src: string): Promise<boolean> => {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       const img = new Image()
       img.onload = () => resolve(true)
       img.onerror = () => resolve(false)
@@ -78,6 +78,6 @@ export const useMobileImage = () => {
     getAllImagePaths,
     handleImageError,
     imageExists,
-    getFirstAvailableImage
+    getFirstAvailableImage,
   }
 }

@@ -42,13 +42,13 @@ export async function fillFormField(
   options?: { clear?: boolean; validate?: boolean }
 ) {
   const opts = { clear: true, validate: true, ...options }
-  
+
   if (opts.clear) {
     await locator.clear()
   }
-  
+
   await locator.fill(String(value))
-  
+
   if (opts.validate) {
     await expect(locator).toHaveValue(String(value))
   }
@@ -82,23 +82,23 @@ export async function waitAndVerify(locator: Locator, timeout = 10000) {
  */
 export async function checkForErrors(page: Page): Promise<string[]> {
   const errors: string[] = []
-  
+
   // Check for UAlert error components
   const alerts = page.locator('[role="alert"]').filter({ hasText: /error|failed/i })
   const count = await alerts.count()
-  
+
   for (let i = 0; i < count; i++) {
     const text = await alerts.nth(i).textContent()
     if (text) errors.push(text.trim())
   }
-  
+
   // Check console errors
   page.on('console', msg => {
     if (msg.type() === 'error') {
       errors.push(`Console error: ${msg.text()}`)
     }
   })
-  
+
   return errors
 }
 
@@ -164,10 +164,7 @@ export async function assertCount(locator: Locator, expected: number) {
 /**
  * Verify API response structure
  */
-export function verifyApiResponse<T>(
-  data: any,
-  requiredFields: (keyof T)[]
-): asserts data is T {
+export function verifyApiResponse<T>(data: any, requiredFields: (keyof T)[]): asserts data is T {
   for (const field of requiredFields) {
     expect(data, `Missing required field: ${String(field)}`).toHaveProperty(String(field))
   }

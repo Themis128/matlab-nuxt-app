@@ -1,18 +1,21 @@
 # Quick Start Guide - Mobile Phones Dataset
 
 ## Prerequisites
+
 - MATLAB installed with Deep Learning Toolbox
 - Dataset file: `Mobiles Dataset (2025).csv` in the `mobiles-dataset-docs` directory
 
 ## Fastest Way to Get Started
 
 ### Run Everything at Once
+
 ```matlab
 cd mobiles-dataset-docs
 run('run_all_steps.m')
 ```
 
 This single command will:
+
 1. ✅ Preprocess and clean the dataset
 2. ✅ Extract all insights (price drivers, trends, etc.)
 3. ✅ Train a neural network to predict prices
@@ -25,18 +28,21 @@ This single command will:
 ## Step-by-Step Guide
 
 ### Step 1: Preprocess Data (2-5 minutes)
+
 ```matlab
 cd mobiles-dataset-docs
 run('preprocess_dataset.m')
 ```
 
 **What it does:**
+
 - Parses all numerical features (RAM, Battery, Screen Size, etc.)
 - Cleans invalid data
 - Removes outliers
 - Creates a clean dataset ready for training
 
 **Output:**
+
 - `preprocessed/preprocessed_data.mat` - Clean dataset
 - `preprocessed/preprocessed_data.csv` - Clean dataset (CSV format)
 - Workspace variables with cleaned data
@@ -44,28 +50,33 @@ run('preprocess_dataset.m')
 ---
 
 ### Step 2: Extract Insights (2-5 minutes)
+
 ```matlab
 run('extract_all_insights.m')
 ```
 
 **What it does:**
+
 - Analyzes price drivers (which features affect price most)
 - Identifies market trends over years
 - Performs competitive analysis
 - Finds anomalies and data quality issues
 
 **Output:**
+
 - Comprehensive analysis report in command window
 - Workspace variables with all insights (prefixed with `insights_`)
 
 ---
 
 ### Step 3: Train Model (10-30 minutes)
+
 ```matlab
 run('train_price_prediction_model.m')
 ```
 
 **What it does:**
+
 - Builds a neural network (128→64→32 neurons)
 - Trains on 70% of data
 - Validates on 15% of data
@@ -73,6 +84,7 @@ run('train_price_prediction_model.m')
 - Saves trained model
 
 **Output:**
+
 - `trained_models/price_predictor.mat` - Trained model
 - `trained_models/price_prediction_results.mat` - Evaluation results
 - Training progress plot
@@ -81,6 +93,7 @@ run('train_price_prediction_model.m')
 ---
 
 ### Step 4: Make Predictions
+
 ```matlab
 % Predict price for a phone
 price = predict_price(6, 4000, 6.1, 174, 2024, 'Apple');
@@ -96,17 +109,20 @@ fprintf('Predicted price: $%.0f\n', price);
 After running all steps, you should have:
 
 ### Preprocessing Results
+
 - ✅ Clean dataset with ~800-900 valid phone entries
 - ✅ All features parsed and normalized
 - ✅ Outliers removed
 
 ### Insights Results
+
 - ✅ Feature correlations with price
 - ✅ Market trends by year
 - ✅ Brand value rankings
 - ✅ Anomaly detection results
 
 ### Training Results
+
 - ✅ Trained neural network model
 - ✅ Test set performance:
   - RMSE: ~$100-200 (typical)
@@ -119,18 +135,22 @@ After running all steps, you should have:
 ## Troubleshooting
 
 ### Error: "Dataset not found"
+
 - Ensure `Mobiles Dataset (2025).csv` is in the `mobiles-dataset-docs` directory
 - Check file name matches exactly (case-sensitive)
 
 ### Error: "GPU not available"
+
 - This is normal - training will use CPU (slower but works)
 - GPU is optional but recommended for faster training
 
 ### Error: "Out of memory"
+
 - Reduce batch size in `train_price_prediction_model.m`
 - Change `MiniBatchSize` from 64 to 32 or 16
 
 ### Poor Model Performance
+
 - Try increasing training epochs (MaxEpochs)
 - Adjust learning rate (InitialLearnRate)
 - Add more hidden layers or neurons
@@ -181,6 +201,7 @@ mobiles-dataset-docs/
 ---
 
 **Ready to start? Run:**
+
 ```matlab
 cd mobiles-dataset-docs
 run('run_all_steps.m')

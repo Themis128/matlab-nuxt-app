@@ -5,6 +5,7 @@ The following images are referenced in README.md but are currently missing from 
 ## Required Images (Must Capture)
 
 ### 1. Web Interface Screenshot
+
 - **File:** `web-interface-screenshot.png`
 - **Status:** ❌ Missing
 - **How to capture:**
@@ -15,6 +16,7 @@ The following images are referenced in README.md but are currently missing from 
   5. Recommended size: 1280x720 or 1920x1080
 
 ### 2. MATLAB Capabilities Results
+
 - **File:** `capabilities-results.png`
 - **Status:** ❌ Missing
 - **How to capture:**
@@ -29,6 +31,7 @@ The following images are referenced in README.md but are currently missing from 
 ## Optional Images
 
 ### 3. Quick Start Demo GIF
+
 - **File:** `quick-start-demo.gif`
 - **Status:** ❌ Missing (Optional)
 - **How to create:**

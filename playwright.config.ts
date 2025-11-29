@@ -78,8 +78,8 @@ export default defineConfig({
     timeout: 180 * 1000,
     env: {
       NUXT_TEST: '1',
-      PLAYWRIGHT: '1'
-    }
+      PLAYWRIGHT: '1',
+    },
   },
 
   globalSetup: './tests/global-setup.ts',

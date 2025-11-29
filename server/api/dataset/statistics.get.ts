@@ -28,7 +28,7 @@ export default defineEventHandler(async (event): Promise<DatasetStatistics> => {
     }
 
     // Parse header
-    const firstLine = lines[0] || '';
+    const firstLine = lines[0] || ''
     const headers = firstLine.split(',').map(h => h.trim().replace(/"/g, ''))
     const dataRows = lines.slice(1)
 
@@ -43,16 +43,24 @@ export default defineEventHandler(async (event): Promise<DatasetStatistics> => {
       batteryRange: { min: Infinity, max: -Infinity, avg: 0 },
       screenRange: { min: Infinity, max: -Infinity, avg: 0 },
       companyDistribution: {},
-      yearDistribution: {}
+      yearDistribution: {},
     }
 
     // Find column indices
-    const companyIdx = headers.findIndex(h => h && (h.toLowerCase().includes('company') || h.toLowerCase().includes('brand')))
-    const yearIdx = headers.findIndex(h => h && (h.toLowerCase().includes('year') || h.toLowerCase().includes('launched')))
-    const priceIdx = headers.findIndex(h => h && (h.toLowerCase().includes('price') || h.toLowerCase().includes('usd')))
+    const companyIdx = headers.findIndex(
+      h => h && (h.toLowerCase().includes('company') || h.toLowerCase().includes('brand'))
+    )
+    const yearIdx = headers.findIndex(
+      h => h && (h.toLowerCase().includes('year') || h.toLowerCase().includes('launched'))
+    )
+    const priceIdx = headers.findIndex(
+      h => h && (h.toLowerCase().includes('price') || h.toLowerCase().includes('usd'))
+    )
     const ramIdx = headers.findIndex(h => h && h.toLowerCase() === 'ram')
     const batteryIdx = headers.findIndex(h => h && h.toLowerCase().includes('battery'))
-    const screenIdx = headers.findIndex(h => h && (h.toLowerCase().includes('screen') || h.toLowerCase().includes('display')))
+    const screenIdx = headers.findIndex(
+      h => h && (h.toLowerCase().includes('screen') || h.toLowerCase().includes('display'))
+    )
 
     // Parse data
     let priceSum = 0
@@ -168,7 +176,7 @@ export default defineEventHandler(async (event): Promise<DatasetStatistics> => {
   } catch (error: unknown) {
     throw createError({
       statusCode: 500,
-      statusMessage: `Failed to read dataset statistics: ${error instanceof Error ? error.message : 'Unknown error'}`
+      statusMessage: `Failed to read dataset statistics: ${error instanceof Error ? error.message : 'Unknown error'}`,
     })
   }
 })

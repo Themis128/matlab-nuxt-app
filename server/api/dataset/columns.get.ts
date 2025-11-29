@@ -117,7 +117,7 @@ export default defineEventHandler(async (event): Promise<DatasetAnalysis> => {
     }
 
     // Parse header
-    const firstLine = lines[0] || '';
+    const firstLine = lines[0] || ''
     const headers = parseCSVLine(firstLine).map(h => h.replace(/^"|"$/g, '').trim())
     const dataRows = lines.slice(1).filter(row => row.trim())
 
@@ -134,10 +134,10 @@ export default defineEventHandler(async (event): Promise<DatasetAnalysis> => {
     const sampleSize = Math.min(500, dataRows.length)
     for (let i = 0; i < sampleSize; i++) {
       try {
-        const row = dataRows[i] || '';
+        const row = dataRows[i] || ''
         const values = parseCSVLine(row)
         headers.forEach((header, idx) => {
-          const headerData = columnData[header];
+          const headerData = columnData[header]
           if (headerData && values[idx] !== undefined) {
             headerData.push(values[idx]?.replace(/^"|"$/g, '')?.trim() || '')
           }
@@ -150,7 +150,7 @@ export default defineEventHandler(async (event): Promise<DatasetAnalysis> => {
 
     // Analyze columns
     headers.forEach(header => {
-      const values = columnData[header] || [];
+      const values = columnData[header] || []
       const nonNull = values.filter(v => v && v !== '' && v.toLowerCase() !== 'nan').length
       const nullCount = values.length - nonNull
       const nullPercentage = values.length > 0 ? (nullCount / values.length) * 100 : 0
@@ -160,17 +160,21 @@ export default defineEventHandler(async (event): Promise<DatasetAnalysis> => {
       const unique = uniqueSet.size
 
       // Get sample values
-      const sample = Array.from(uniqueSet).slice(0, 3).map(v => {
-        if (!v) return '';
-        const str = String(v)
-        return str.length > 50 ? str.substring(0, 50) + '...' : str
-      })
+      const sample = Array.from(uniqueSet)
+        .slice(0, 3)
+        .map(v => {
+          if (!v) return ''
+          const str = String(v)
+          return str.length > 50 ? str.substring(0, 50) + '...' : str
+        })
 
       // Determine data type
       let dtype = 'string'
       const numericValues = values.filter(v => v && v !== '').slice(0, 100)
       if (numericValues.length > 0) {
-        const numericCount = numericValues.filter(v => v && /^-?\d+\.?\d*$/.test(v.replace(/,/g, ''))).length
+        const numericCount = numericValues.filter(
+          v => v && /^-?\d+\.?\d*$/.test(v.replace(/,/g, ''))
+        ).length
         if (numericValues.length > 0 && numericCount / numericValues.length > 0.8) {
           dtype = 'numeric'
         }
@@ -189,17 +193,24 @@ export default defineEventHandler(async (event): Promise<DatasetAnalysis> => {
 
     // Check for specific features
     const featureChecks: Record<string, string[]> = {
-      'RAM': ['RAM', 'ram', 'Ram'],
-      'Battery': ['Battery Capacity', 'BatteryCapacity', 'Battery_Capacity', 'battery'],
+      RAM: ['RAM', 'ram', 'Ram'],
+      Battery: ['Battery Capacity', 'BatteryCapacity', 'Battery_Capacity', 'battery'],
       'Screen Size': ['Screen Size', 'ScreenSize', 'Screen_Size', 'screen'],
-      'Weight': ['Mobile Weight', 'MobileWeight', 'Mobile_Weight', 'Weight', 'weight'],
-      'Year': ['Launched Year', 'LaunchedYear', 'Launched_Year', 'Year', 'year'],
-      'Company': ['Company Name', 'CompanyName', 'Company_Name', 'Company', 'company'],
-      'Price': ['Launched Price (USA)', 'LaunchedPrice_USA', 'Price_USA', 'Price_USD', 'Price', 'price'],
+      Weight: ['Mobile Weight', 'MobileWeight', 'Mobile_Weight', 'Weight', 'weight'],
+      Year: ['Launched Year', 'LaunchedYear', 'Launched_Year', 'Year', 'year'],
+      Company: ['Company Name', 'CompanyName', 'Company_Name', 'Company', 'company'],
+      Price: [
+        'Launched Price (USA)',
+        'LaunchedPrice_USA',
+        'Price_USA',
+        'Price_USD',
+        'Price',
+        'price',
+      ],
       'Front Camera': ['Front Camera', 'FrontCamera', 'Front_Camera', 'FrontCamera_MP'],
       'Back Camera': ['Back Camera', 'BackCamera', 'Back_Camera', 'BackCamera_MP'],
-      'Processor': ['Processor', 'processor', 'Processor_Name', 'ProcessorName'],
-      'Storage': ['Storage', 'storage', 'Internal Storage', 'InternalStorage'],
+      Processor: ['Processor', 'processor', 'Processor_Name', 'ProcessorName'],
+      Storage: ['Storage', 'storage', 'Internal Storage', 'InternalStorage'],
       'Model Name': ['Model Name', 'ModelName', 'Model_Name', 'model'],
       'Price (Pakistan)': ['Price (Pakistan)', 'Price_Pakistan', 'Pakistan_Price'],
       'Price (India)': ['Price (India)', 'Price_India', 'India_Price'],
@@ -217,7 +228,10 @@ export default defineEventHandler(async (event): Promise<DatasetAnalysis> => {
       for (const col of headers) {
         const colLower = col.toLowerCase()
         for (const possible of possibleNames) {
-          if (colLower.includes(possible.toLowerCase()) || possible.toLowerCase().includes(colLower)) {
+          if (
+            colLower.includes(possible.toLowerCase()) ||
+            possible.toLowerCase().includes(colLower)
+          ) {
             found = true
             matchingCol = col
             break
@@ -245,10 +259,12 @@ export default defineEventHandler(async (event): Promise<DatasetAnalysis> => {
       cameraAvailable: 'Front Camera' in foundFeatures && 'Back Camera' in foundFeatures,
       storageAvailable: 'Storage' in foundFeatures || 'Model Name' in foundFeatures,
       processorAvailable: 'Processor' in foundFeatures,
-      regionalPricesAvailable:
-        ['Price (Pakistan)', 'Price (India)', 'Price (China)', 'Price (Dubai)'].some(
-          p => p in foundFeatures
-        ),
+      regionalPricesAvailable: [
+        'Price (Pakistan)',
+        'Price (India)',
+        'Price (China)',
+        'Price (Dubai)',
+      ].some(p => p in foundFeatures),
     }
 
     return {

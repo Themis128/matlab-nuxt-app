@@ -7,11 +7,13 @@ This guide helps you choose the right neural network architecture based on your 
 ## Step 1: Analyze Your Dataset
 
 First, run the analysis script to understand your data:
+
 ```matlab
 run('analyze_mobiles_dataset.m')
 ```
 
 Or download and check manually:
+
 ```bash
 kaggle datasets download abdulmalik1518/mobiles-dataset-2025
 unzip mobiles-dataset-2025.zip
@@ -85,12 +87,14 @@ unzip mobiles-dataset-2025.zip
 ## Common Tasks and Network Recommendations
 
 ### Task 1: Price Prediction
+
 - **Data**: Specifications (RAM, Storage, Screen Size, etc.)
 - **Network**: Fully Connected Neural Network (Regression)
 - **Output**: Continuous value (price)
 - **File**: `examples/mobiles_tabular_regression.m`
 
 ### Task 2: Brand Classification
+
 - **Data**: Images OR Specifications
 - **Network**:
   - Images → CNN or Transfer Learning
@@ -100,18 +104,21 @@ unzip mobiles-dataset-2025.zip
 - **Files**: `examples/mobiles_cnn_classification.m` or `examples/mobiles_tabular_regression.m`
 
 ### Task 3: Model Recognition
+
 - **Data**: Images
 - **Network**: CNN or Transfer Learning (ResNet, MobileNet)
 - **Output**: Phone model name
 - **File**: `examples/mobiles_cnn_classification.m`
 
 ### Task 4: Feature Prediction
+
 - **Data**: Some specifications
 - **Network**: FCN (Regression or Classification)
 - **Output**: Missing feature (e.g., predict RAM from other specs)
 - **File**: `examples/mobiles_tabular_regression.m`
 
 ### Task 5: Similar Phone Search
+
 - **Data**: Images
 - **Network**: Siamese Network
 - **Output**: Similarity score
@@ -132,12 +139,14 @@ Do you have images?
 ## Getting Started
 
 1. **Download the dataset**:
+
    ```bash
    kaggle datasets download abdulmalik1518/mobiles-dataset-2025
    unzip mobiles-dataset-2025.zip
    ```
 
 2. **Analyze the dataset**:
+
    ```matlab
    run('analyze_mobiles_dataset.m')
    ```
@@ -152,6 +161,7 @@ Do you have images?
 ## GPU Acceleration
 
 Your RTX 3070 Laptop GPU (7.46 GB) will accelerate:
+
 - ✅ CNN training (image processing)
 - ✅ Transfer learning fine-tuning
 - ✅ Hybrid network training

@@ -1,0 +1,74 @@
+{
+  "samsung galaxy s24 ultra": {
+    "antutu": 1720000,
+    "geekbench": {
+      "single_core": 2280,
+      "multi_core": 6800
+    },
+    "performance_tier": "flagship",
+    "model_name": "Samsung Galaxy S24 Ultra"
+  },
+  "iphone 15 pro max": {
+    "antutu": 1640000,
+    "geekbench": {
+      "single_core": 2890,
+      "multi_core": 7200
+    },
+    "performance_tier": "flagship",
+    "model_name": "iPhone 15 Pro Max"
+  },
+  "google pixel 8 pro": {
+    "antutu": 1050000,
+    "geekbench": {
+      "single_core": 1760,
+      "multi_core": 4442
+    },
+    "performance_tier": "high-end",
+    "model_name": "Google Pixel 8 Pro"
+  },
+  "onepl 12": {
+    "antutu": 1850000,
+    "geekbench": {
+      "single_core": 2200,
+      "multi_core": 6500
+    },
+    "performance_tier": "flagship",
+    "model_name": "OnePlus 12"
+  },
+  "xiaomi 14 pro": {
+    "antutu": 1780000,
+    "geekbench": {
+      "single_core": 2250,
+      "multi_core": 6700
+    },
+    "performance_tier": "flagship",
+    "model_name": "Xiaomi 14 Pro"
+  },
+  "samsung galaxy a54": {
+    "antutu": 530000,
+    "geekbench": {
+      "single_core": 1050,
+      "multi_core": 2850
+    },
+    "performance_tier": "mid-range",
+    "model_name": "Samsung Galaxy A54"
+  },
+  "iphone 14": {
+    "antutu": 1380000,
+    "geekbench": {
+      "single_core": 2530,
+      "multi_core": 6300
+    },
+    "performance_tier": "flagship",
+    "model_name": "iPhone 14"
+  },
+  "redmi note 13 pro": {
+    "antutu": 620000,
+    "geekbench": {
+      "single_core": 920,
+      "multi_core": 2400
+    },
+    "performance_tier": "mid-range",
+    "model_name": "Redmi Note 13 Pro"
+  }
+}

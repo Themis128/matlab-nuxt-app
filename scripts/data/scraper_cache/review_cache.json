@@ -1,0 +1,90 @@
+{
+  "samsung galaxy s24 ultra": {
+    "rating": 4.5,
+    "review_count": 8234,
+    "sentiment": {
+      "positive": 78.0,
+      "neutral": 15.0,
+      "negative": 7.0
+    },
+    "common_keywords": ["camera", "battery", "screen", "performance", "expensive"],
+    "model_name": "Samsung Galaxy S24 Ultra"
+  },
+  "iphone 15 pro max": {
+    "rating": 4.7,
+    "review_count": 12456,
+    "sentiment": {
+      "positive": 85.0,
+      "neutral": 10.0,
+      "negative": 5.0
+    },
+    "common_keywords": ["camera", "display", "titanium", "battery", "price"],
+    "model_name": "iPhone 15 Pro Max"
+  },
+  "google pixel 8 pro": {
+    "rating": 4.4,
+    "review_count": 3421,
+    "sentiment": {
+      "positive": 72.0,
+      "neutral": 20.0,
+      "negative": 8.0
+    },
+    "common_keywords": ["camera", "ai", "software", "screen", "tensor"],
+    "model_name": "Google Pixel 8 Pro"
+  },
+  "onepl 12": {
+    "rating": 4.6,
+    "review_count": 2134,
+    "sentiment": {
+      "positive": 80.0,
+      "neutral": 12.0,
+      "negative": 8.0
+    },
+    "common_keywords": ["fast", "charging", "display", "performance", "value"],
+    "model_name": "OnePlus 12"
+  },
+  "xiaomi 14 pro": {
+    "rating": 4.5,
+    "review_count": 1876,
+    "sentiment": {
+      "positive": 76.0,
+      "neutral": 16.0,
+      "negative": 8.0
+    },
+    "common_keywords": ["camera", "leica", "display", "battery", "miui"],
+    "model_name": "Xiaomi 14 Pro"
+  },
+  "samsung galaxy a54": {
+    "rating": 4.2,
+    "review_count": 5432,
+    "sentiment": {
+      "positive": 70.0,
+      "neutral": 20.0,
+      "negative": 10.0
+    },
+    "common_keywords": ["value", "battery", "screen", "camera", "performance"],
+    "model_name": "Samsung Galaxy A54"
+  },
+  "iphone 14": {
+    "rating": 4.6,
+    "review_count": 18234,
+    "sentiment": {
+      "positive": 82.0,
+      "neutral": 12.0,
+      "negative": 6.0
+    },
+    "common_keywords": ["camera", "battery", "reliable", "display", "notch"],
+    "model_name": "iPhone 14"
+  },
+  "redmi note 13 pro": {
+    "rating": 4.1,
+    "review_count": 3821,
+    "sentiment": {
+      "positive": 68.0,
+      "neutral": 22.0,
+      "negative": 10.0
+    },
+    "common_keywords": ["value", "battery", "camera", "display", "bloatware"],
+    "model_name": "Redmi Note 13 Pro"
+  }
+}

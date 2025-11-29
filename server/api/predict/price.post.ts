@@ -1,6 +1,6 @@
 import { callPythonAPI } from '~/server/utils/python-api'
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async event => {
   // Set CORS headers
   setHeader(event, 'Access-Control-Allow-Origin', '*')
   setHeader(event, 'Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
     if (missingFields.length > 0) {
       throw createError({
         statusCode: 400,
-        statusMessage: `Missing required fields: ${missingFields.join(', ')}`
+        statusMessage: `Missing required fields: ${missingFields.join(', ')}`,
       })
     }
 

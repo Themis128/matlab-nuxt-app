@@ -1,0 +1,8 @@
+playwright-report/
+test-results.json
+python_api/trained_models/
+.nuxt/
+.output/
+dist/
+venv/
+__pycache__/

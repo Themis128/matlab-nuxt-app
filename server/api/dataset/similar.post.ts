@@ -55,7 +55,7 @@ export default defineEventHandler(async (event): Promise<SimilarResponse> => {
     if (!body.ram || !body.battery || !body.screenSize || !body.weight || !body.year) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'Missing required fields: ram, battery, screenSize, weight, year'
+        statusMessage: 'Missing required fields: ram, battery, screenSize, weight, year',
       })
     }
 
@@ -83,7 +83,7 @@ export default defineEventHandler(async (event): Promise<SimilarResponse> => {
     if (!datasetContent) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'Dataset file not found'
+        statusMessage: 'Dataset file not found',
       })
     }
 
@@ -112,7 +112,7 @@ export default defineEventHandler(async (event): Promise<SimilarResponse> => {
     if (lines.length < 2) {
       throw createError({
         statusCode: 500,
-        statusMessage: 'Dataset file is empty or invalid'
+        statusMessage: 'Dataset file is empty or invalid',
       })
     }
 
@@ -150,7 +150,8 @@ export default defineEventHandler(async (event): Promise<SimilarResponse> => {
     // Helper to extract number
     const extractNumber = (str: string): number | null => {
       if (!str || str.trim() === '' || str.toLowerCase() === 'nan') return null
-      const cleaned = str.toString()
+      const cleaned = str
+        .toString()
         .replace(/(USD|PKR|INR|CNY|AED|\$)/gi, '')
         .replace(/[$,\s]/g, '')
         .replace(/(mAh|GB|MP|g|inches|"|'|Hz|TB|MB)/gi, '')
@@ -179,7 +180,8 @@ export default defineEventHandler(async (event): Promise<SimilarResponse> => {
       const phoneWeight = weightIdx !== -1 ? extractNumber(values[weightIdx]) : null
       const phoneYear = yearIdx !== -1 ? extractNumber(values[yearIdx]) : null
 
-      if (!phonePrice || !phoneRam || !phoneBattery || !phoneScreen || !phoneWeight || !phoneYear) continue
+      if (!phonePrice || !phoneRam || !phoneBattery || !phoneScreen || !phoneWeight || !phoneYear)
+        continue
 
       // Filter out unrealistic values
       if (phoneRam < 1 || phoneRam > 24) continue
@@ -190,8 +192,10 @@ export default defineEventHandler(async (event): Promise<SimilarResponse> => {
 
       // Calculate similarity score (0-100, higher = more similar)
       const ramDiff = Math.abs(phoneRam - body.ram) / Math.max(body.ram, phoneRam, 1)
-      const batteryDiff = Math.abs(phoneBattery - body.battery) / Math.max(body.battery, phoneBattery, 1)
-      const screenDiff = Math.abs(phoneScreen - body.screenSize) / Math.max(body.screenSize, phoneScreen, 0.1)
+      const batteryDiff =
+        Math.abs(phoneBattery - body.battery) / Math.max(body.battery, phoneBattery, 1)
+      const screenDiff =
+        Math.abs(phoneScreen - body.screenSize) / Math.max(body.screenSize, phoneScreen, 0.1)
       const weightDiff = Math.abs(phoneWeight - body.weight) / Math.max(body.weight, phoneWeight, 1)
       const yearDiff = Math.abs(phoneYear - body.year) / 5 // Normalize by 5 years
 
@@ -205,14 +209,15 @@ export default defineEventHandler(async (event): Promise<SimilarResponse> => {
         ? { ram: 0.15, battery: 0.15, screen: 0.15, weight: 0.1, year: 0.1, price: 0.35 }
         : { ram: 0.2, battery: 0.2, screen: 0.2, weight: 0.15, year: 0.15, price: 0 }
 
-      const similarityScore = 100 * (1 - (
-        ramDiff * weights.ram +
-        batteryDiff * weights.battery +
-        screenDiff * weights.screen +
-        weightDiff * weights.weight +
-        yearDiff * weights.year +
-        priceDiff * weights.price
-      ))
+      const similarityScore =
+        100 *
+        (1 -
+          (ramDiff * weights.ram +
+            batteryDiff * weights.battery +
+            screenDiff * weights.screen +
+            weightDiff * weights.weight +
+            yearDiff * weights.year +
+            priceDiff * weights.price))
 
       // Only include models with reasonable similarity (>= 50%)
       if (similarityScore >= 50) {
@@ -241,16 +246,26 @@ export default defineEventHandler(async (event): Promise<SimilarResponse> => {
             screenSize: phoneScreen,
             weight: phoneWeight,
             year: phoneYear,
-            frontCamera: frontCameraIdx !== -1 ? extractNumber(values[frontCameraIdx]) : undefined,
-            backCamera: backCameraIdx !== -1 ? extractNumber(values[backCameraIdx]) : undefined,
-            storage: storageIdx !== -1 ? extractNumber(values[storageIdx]) : undefined,
-            processor: processorIdx !== -1 ? (values[processorIdx] || undefined) : undefined,
-            displayType: displayTypeIdx !== -1 ? (values[displayTypeIdx] || undefined) : undefined,
-            refreshRate: refreshRateIdx !== -1 ? extractNumber(values[refreshRateIdx]) : undefined,
-            resolution: resolutionIdx !== -1 ? (values[resolutionIdx] || undefined) : undefined,
-            imageUrl
+            frontCamera:
+              frontCameraIdx !== -1
+                ? (extractNumber(values[frontCameraIdx]) ?? undefined)
+                : undefined,
+            backCamera:
+              backCameraIdx !== -1
+                ? (extractNumber(values[backCameraIdx]) ?? undefined)
+                : undefined,
+            storage:
+              storageIdx !== -1 ? (extractNumber(values[storageIdx]) ?? undefined) : undefined,
+            processor: processorIdx !== -1 ? values[processorIdx] || undefined : undefined,
+            displayType: displayTypeIdx !== -1 ? values[displayTypeIdx] || undefined : undefined,
+            refreshRate:
+              refreshRateIdx !== -1
+                ? (extractNumber(values[refreshRateIdx]) ?? undefined)
+                : undefined,
+            resolution: resolutionIdx !== -1 ? values[resolutionIdx] || undefined : undefined,
+            imageUrl,
           },
-          similarityScore: Math.max(0, Math.min(100, similarityScore))
+          similarityScore: Math.max(0, Math.min(100, similarityScore)),
         })
       }
     }
@@ -267,16 +282,16 @@ export default defineEventHandler(async (event): Promise<SimilarResponse> => {
         screenSize: body.screenSize,
         weight: body.weight,
         year: body.year,
-        price: body.price
-      }
+        price: body.price,
+      },
     }
   } catch (error: unknown) {
-    if (error.statusCode) {
+    if ((error as any)?.statusCode) {
       throw error
     }
     throw createError({
       statusCode: 500,
-      statusMessage: `Failed to find similar models: ${error instanceof Error ? error.message : 'Unknown error'}`
+      statusMessage: `Failed to find similar models: ${error instanceof Error ? error.message : 'Unknown error'}`,
     })
   }
 })

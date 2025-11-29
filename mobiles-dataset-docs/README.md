@@ -5,9 +5,11 @@ This directory contains all documentation, scripts, and resources related to the
 ## Contents
 
 ### 📊 Dataset
+
 - **`Mobiles Dataset (2025).csv`** - The main dataset file containing mobile phone specifications and pricing data
 
 ### 📚 Documentation
+
 - **`MOBILES_DATASET_GUIDE.md`** - Comprehensive guide on choosing neural network architectures for the dataset
 - **`INSIGHTS_EXTRACTION_GUIDE.md`** - Detailed guide on extracting insights from the dataset
 - **`QUICK_START.md`** - Quick start guide for getting started with the dataset
@@ -28,6 +30,7 @@ This directory contains all documentation, scripts, and resources related to the
 - **`IMPLEMENTATION_SUMMARY.md`** - Summary of newly implemented features
 
 ### 🔧 Analysis Scripts
+
 - **`preprocess_dataset.m`** - Comprehensive data preprocessing, cleaning, and preparation
 - **`extract_all_insights.m`** - Main script to extract all 5 categories of insights:
   - Price Drivers Analysis
@@ -40,15 +43,19 @@ This directory contains all documentation, scripts, and resources related to the
 - **`run_all_steps.m`** - Complete pipeline: preprocessing → insights → training
 
 ### 💻 Example Scripts
+
 Located in the `examples/` subdirectory:
+
 - **`mobiles_tabular_regression.m`** - Neural network for tabular data (price prediction, brand classification)
 - **`mobiles_hybrid_network.m`** - Hybrid network combining image and tabular data
 - **`mobiles_cnn_classification.m`** - CNN for mobile phone image classification
 
 ### 📥 Download Script
+
 - **`download_mobiles_dataset.sh`** - Shell script to download the dataset from Kaggle
 
 ### 🚀 Training Scripts
+
 - **Price Prediction Models:**
   - `train_price_prediction_model.m` - Standard model (128→64→32)
   - `train_price_prediction_deep.m` - Deep model (256→128→64→32→16)
@@ -96,13 +103,16 @@ Located in the `examples/` subdirectory:
 ## Quick Start
 
 ### Option 1: Run Complete Pipeline (Recommended)
+
 Run all steps in sequence:
+
 ```matlab
 cd mobiles-dataset-docs
 run('run_all_steps.m')
 ```
 
 This will:
+
 1. Preprocess the dataset
 2. Extract insights
 3. Train the price prediction model
@@ -110,17 +120,20 @@ This will:
 ### Option 2: Run Steps Individually
 
 1. **Preprocess Dataset:**
+
    ```matlab
    cd mobiles-dataset-docs
    run('preprocess_dataset.m')
    ```
 
 2. **Extract Insights:**
+
    ```matlab
    run('extract_all_insights.m')
    ```
 
 3. **Train Models:**
+
    ```matlab
    % Train all standard models
    run('train_all_models_comprehensive.m')
@@ -130,17 +143,20 @@ This will:
    ```
 
 4. **Evaluate and Visualize:**
+
    ```matlab
    run('evaluate_model.m')
    run('visualize_results.m')
    ```
 
 5. **Test All Models:**
+
    ```matlab
    run('test_all_models.m')
    ```
 
 6. **Make Predictions:**
+
    ```matlab
    % Price prediction (standard)
    price = predict_price(6, 4000, 6.1, 174, 2024, 'Apple');
@@ -181,14 +197,15 @@ This will:
 ### Other Scripts
 
 - **Analyze Dataset:**
-   ```matlab
-   run('analyze_mobiles_dataset.m')
-   ```
+
+  ```matlab
+  run('analyze_mobiles_dataset.m')
+  ```
 
 - **Test Column Names:**
-   ```matlab
-   run('test_column_names.m')
-   ```
+  ```matlab
+  run('test_column_names.m')
+  ```
 
 ## Dataset Information
 
@@ -214,26 +231,31 @@ This will:
 ## ⭐ New Features (Latest Update)
 
 ### Camera Prediction Models
+
 - Predict front and back camera MP from phone specifications
 - High accuracy neural network models
 - Usage: `predict_front_camera()`, `predict_back_camera()`
 
 ### Similar Phone Finder
+
 - Find phones with similar specifications
 - Uses cosine similarity and weighted distance
 - Usage: `find_similar_phones()`
 
 ### Market Segmentation
+
 - Automatic clustering into Budget/Mid-Range/Premium segments
 - K-means analysis with detailed statistics
 - Usage: `analyze_market_segments()`
 
 ### Regional Price Analysis
+
 - Compare prices across 5 regions (Pakistan, India, China, USA, Dubai)
 - Calculate conversion factors
 - Usage: `analyze_regional_prices()`
 
 ### Visualizations
+
 - Comprehensive visualization script for all features
 - Screenshot-ready PNG files
 - Usage: `visualize_new_features.m`
@@ -261,6 +283,7 @@ See `ALL_MODELS_IMPROVEMENTS.md` and `FINAL_IMPROVEMENTS_COMPLETE.md` for detail
 ## Related Files
 
 For general MATLAB deep learning examples and guides, see:
+
 - `../deep-learning-networks-guide.md` - Comprehensive deep learning guide
 - `../MOBILES_DATASET_GUIDE.md` - Network architecture selection guide
 - `../time_series_forecasting_guide.md` - Time series forecasting guide

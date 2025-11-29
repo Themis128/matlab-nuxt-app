@@ -84,6 +84,7 @@ The tests are configured in `playwright.config.ts` to:
 ## Test Structure
 
 Each test suite follows this structure:
+
 1. Navigate to the relevant page
 2. Verify UI elements are visible
 3. Interact with the page (fill forms, click buttons)
@@ -99,6 +100,7 @@ When tests fail, Playwright generates:
 - HTML report with details
 
 To view the HTML report:
+
 ```bash
 npx playwright show-report
 ```

@@ -19,6 +19,7 @@ Thank you for your interest in contributing! This document provides guidelines a
 ## Development Workflow
 
 1. **Create a branch:**
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
@@ -36,12 +37,14 @@ Thank you for your interest in contributing! This document provides guidelines a
    - Test the web app: `npm run dev`
 
 4. **Commit your changes:**
+
    ```bash
    git add .
    git commit -m "Description of your changes"
    ```
 
 5. **Push to your fork:**
+
    ```bash
    git push origin feature/your-feature-name
    ```
@@ -54,18 +57,21 @@ Thank you for your interest in contributing! This document provides guidelines a
 ## Code Style Guidelines
 
 ### MATLAB
+
 - Use descriptive variable names
 - Add comments for complex logic
 - Follow MATLAB naming conventions
 - Include function documentation
 
 ### JavaScript/TypeScript
+
 - Follow existing code style
 - Use TypeScript for type safety
 - Add JSDoc comments for functions
 - Use meaningful variable names
 
 ### Python
+
 - Follow PEP 8 style guide
 - Add docstrings to functions
 - Use type hints where appropriate
@@ -87,6 +93,7 @@ Thank you for your interest in contributing! This document provides guidelines a
 ## Reporting Issues
 
 When reporting issues, please include:
+
 - Clear description of the problem
 - Steps to reproduce
 - Expected vs actual behavior

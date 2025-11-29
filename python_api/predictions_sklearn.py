@@ -43,32 +43,49 @@ class SklearnPredictor:
             return
 
         model_files = {
-            'price': 'price_predictor_sklearn.pkl',
-            'ram': 'ram_predictor_sklearn.pkl',
-            'battery': 'battery_predictor_sklearn.pkl',
-            'brand': 'brand_classifier_sklearn.pkl'
+            'price': 'price_predictor_sklearn',
+            'ram': 'ram_predictor_sklearn',
+            'battery': 'battery_predictor_sklearn',
+            'brand': 'brand_classifier_sklearn'
         }
 
-        for model_name, model_file in model_files.items():
-            model_path = MODELS_DIR / model_file
-            scaler_path = MODELS_DIR / model_file.replace('_sklearn.pkl', '_scalers.pkl')
-            metadata_path = MODELS_DIR / model_file.replace('_sklearn.pkl', '_metadata.json')
+        for model_name, base in model_files.items():
+            # Candidate model filenames in priority order
+            candidates = [
+                f"{base}_optimized.joblib",    # optimized joblib (safe mode)
+                f"{base}.joblib",               # replaced original with joblib
+                f"{base}.pkl"                    # original pickle
+            ]
+            model_path = next((MODELS_DIR / c for c in candidates if (MODELS_DIR / c).exists()), None)
+            # Correct scaler/metadata file patterns
+            scaler_base = base.replace('_sklearn','')  # e.g. price_predictor
+            scaler_path = MODELS_DIR / f"{scaler_base}_scalers.pkl"
+            metadata_path = MODELS_DIR / f"{scaler_base}_metadata.json"
 
-            if model_path.exists() and scaler_path.exists() and metadata_path.exists():
+            # Fallback to legacy naming if above does not exist
+            # Legacy fallback (rare): look for full base names
+            if not scaler_path.exists():
+                legacy_scaler = MODELS_DIR / f"{base}_scalers.pkl"
+                if legacy_scaler.exists():
+                    scaler_path = legacy_scaler
+            if not metadata_path.exists():
+                legacy_meta = MODELS_DIR / f"{base}_metadata.json"
+                if legacy_meta.exists():
+                    metadata_path = legacy_meta
+
+            if model_path and scaler_path.exists() and metadata_path.exists():
                 try:
-                    # Validate file paths before loading
-                    expected_dir = MODELS_DIR
+                    expected_dir = MODELS_DIR.resolve()
                     for path_to_check in [model_path, scaler_path]:
                         resolved_path = path_to_check.resolve()
-                        expected_path = (Path.cwd() / expected_dir).resolve()
-                        if not str(resolved_path).startswith(str(expected_path)):
+                        if not str(resolved_path).startswith(str(expected_dir)):
                             raise ValueError(f"Unsafe path: {path_to_check}")
 
                     self.models[model_name] = joblib.load(model_path)
                     self.scalers[model_name] = joblib.load(scaler_path)
                     with open(metadata_path, 'r') as f:
                         self.metadata[model_name] = json.load(f)
-                    print(f"✓ Loaded {model_name} model (scikit-learn)")
+                    print(f"✓ Loaded {model_name} model ({model_path.name})")
                 except Exception as e:
                     print(f"[ERROR] Error loading {model_name} model: {e}")
 

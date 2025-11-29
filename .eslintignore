@@ -1,8 +1,0 @@
-node_modules/
-.nuxt/
-.output/
-dist/
-playwright-report/
-venv/
-__pycache__/
-python_api/trained_models/

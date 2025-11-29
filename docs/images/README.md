@@ -7,6 +7,7 @@ This directory contains screenshots and visualizations for the project README.
 Add the following screenshots to showcase your project:
 
 ### 1. Web Interface Screenshot
+
 - **File:** `web-interface-screenshot.png`
 - **What to capture:** The Nuxt.js web interface at `http://localhost:3000`
 - **Recommended size:** 1280x720 or 1920x1080
@@ -17,6 +18,7 @@ Add the following screenshots to showcase your project:
   4. Save as `web-interface-screenshot.png`
 
 ### 2. MATLAB Capabilities Results
+
 - **File:** `capabilities-results.png`
 - **What to capture:** The results page showing MATLAB capabilities, toolboxes, GPU info
 - **Recommended size:** 1280x720
@@ -27,6 +29,7 @@ Add the following screenshots to showcase your project:
   4. Save as `capabilities-results.png`
 
 ### 3. Network Visualization
+
 - **File:** `network-visualization.png`
 - **What to capture:** MATLAB network architecture visualization
 - **Recommended size:** 1024x768 or larger
@@ -36,6 +39,7 @@ Add the following screenshots to showcase your project:
   3. Save as `network-visualization.png`
 
 ### 4. Training Progress
+
 - **File:** `training-progress.png`
 - **What to capture:** Training progress plot from MATLAB
 - **Recommended size:** 1200x800
@@ -45,6 +49,7 @@ Add the following screenshots to showcase your project:
   3. Save as `training-progress.png`
 
 ### 5. Dataset Analysis
+
 - **File:** `dataset-analysis.png`
 - **What to capture:** Dataset analysis results or visualizations
 - **Recommended size:** 1280x720
@@ -54,6 +59,7 @@ Add the following screenshots to showcase your project:
   3. Save as `dataset-analysis.png`
 
 ### 6. Price Prediction Results
+
 - **File:** `price-prediction.png`
 - **What to capture:** Price prediction model results or predictions
 - **Recommended size:** 1200x800
@@ -63,6 +69,7 @@ Add the following screenshots to showcase your project:
   3. Save as `price-prediction.png`
 
 ### 7. Quick Start Demo (Optional)
+
 - **File:** `quick-start-demo.gif`
 - **What to capture:** Animated GIF showing the quick start process
 - **Recommended:** Use a screen recording tool to create GIF

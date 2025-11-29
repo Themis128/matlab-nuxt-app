@@ -33,6 +33,7 @@ price = predict_price(8, 4000, 6.1, 174, 2024, 'Apple')
 ## 🎯 Performance
 
 Matches MATLAB model accuracy:
+
 - Price: R² ≈ 0.98
 - RAM: R² ≈ 0.95
 - Battery: R² ≈ 0.94

@@ -15,17 +15,20 @@ run('extract_all_insights.m')
 ### 1. Price Drivers Analysis
 
 **What it extracts:**
+
 - **Feature Correlation with Price**: Identifies which specifications (RAM, Battery, Screen Size, Weight) most strongly correlate with price
 - **Regional Pricing Differences**: Compares average prices across different regions (Pakistan, India, China, USA, Dubai)
 - **Price Premium by Brand**: Ranks brands by their average pricing to identify premium vs. budget brands
 
 **Key Outputs:**
+
 - Correlation coefficients for each feature
 - Ranked list of features by price impact
 - Average prices by region
 - Top 10 brands by average price
 
 **Use Cases:**
+
 - Understanding what drives mobile phone pricing
 - Identifying regional market differences
 - Brand positioning analysis
@@ -35,16 +38,19 @@ run('extract_all_insights.m')
 ### 2. Market Trends Analysis
 
 **What it extracts:**
+
 - **Technology Evolution Over Years**: Tracks how specifications (RAM, Battery, Screen Size) have evolved year by year
 - **Technology Adoption Patterns**: Calculates percentage changes in key features over time
 - **Price Trends**: Analyzes how prices have changed over the years
 
 **Key Outputs:**
+
 - Year-by-year averages for RAM, Battery, Screen Size, and Price
 - Percentage changes in technology adoption
 - Technology trend indicators
 
 **Use Cases:**
+
 - Understanding market evolution
 - Technology forecasting
 - Historical trend analysis
@@ -54,16 +60,19 @@ run('extract_all_insights.m')
 ### 3. Competitive Analysis
 
 **What it extracts:**
+
 - **Brand Positioning by Specifications**: Compares average specifications across different brands
 - **Value-for-Money Analysis**: Calculates a value score (specifications per dollar) for each brand
 - **Market Gaps Identification**: Finds phones with unusual specification combinations that might represent market opportunities
 
 **Key Outputs:**
+
 - Brand statistics (avg RAM, Battery, Screen, Price)
 - Top 10 brands by value-for-money score
 - Identified market gaps (high specs + low price combinations)
 
 **Use Cases:**
+
 - Competitive intelligence
 - Product positioning
 - Market opportunity identification
@@ -73,14 +82,17 @@ run('extract_all_insights.m')
 ### 4. Recommendation Systems
 
 **What it extracts:**
+
 - **Similar Phone Finder**: Uses feature similarity (Euclidean distance) to find phones with similar specifications
 - **Budget-Based Recommendations**: Identifies best value phones within a specified budget
 
 **Key Outputs:**
+
 - Top 5 most similar phones to a given phone
 - Top 5 best value phones under a budget threshold
 
 **Use Cases:**
+
 - Product recommendation engines
 - Alternative product suggestions
 - Budget shopping assistance
@@ -90,17 +102,20 @@ run('extract_all_insights.m')
 ### 5. Anomaly Detection
 
 **What it extracts:**
+
 - **Overpriced/Underpriced Phone Detection**: Uses linear regression to predict expected prices and identifies phones that deviate significantly
 - **Unusual Specification Combinations**: Finds phones with extreme values in any specification dimension
 - **Data Quality Issues**: Identifies missing data, inconsistent entries, and potentially unrealistic values
 
 **Key Outputs:**
+
 - List of potentially overpriced phones
 - List of potentially underpriced phones (good deals)
 - Phones with unusual specification combinations
 - Data quality report (missing values, unrealistic values)
 
 **Use Cases:**
+
 - Data quality assurance
 - Deal identification
 - Outlier detection for further investigation

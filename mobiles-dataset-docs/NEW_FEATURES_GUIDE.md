@@ -61,6 +61,7 @@ fprintf('Predicted back camera: %d MP\n', back_cam);
 ### Performance Metrics
 
 After training, check the results files for:
+
 - **R² Score**: How well the model explains variance
 - **RMSE**: Root Mean Squared Error (in MP)
 - **MAE**: Mean Absolute Error (in MP)
@@ -93,6 +94,7 @@ similar_phones = find_similar_phones(8, 5000, 6.7, 200, 2024, 899, 'Samsung', 10
 ### Output
 
 Returns a table with:
+
 - RAM, Battery, Screen Size, Weight, Price, Year, Company
 - Similarity Score (0-1, higher is more similar)
 - Camera information (if available)
@@ -334,6 +336,7 @@ run('train_all_new_models.m')
 ```
 
 This will:
+
 - Train front camera prediction model
 - Train back camera prediction model
 - Run market segmentation analysis
@@ -493,12 +496,12 @@ mobiles-dataset-docs/
 
 ## 🎯 Key Features Summary
 
-| Feature | Purpose | Output |
-|---------|---------|--------|
-| **Camera Prediction** | Predict front/back camera MP | MP values |
-| **Similar Phone Finder** | Find phones with similar specs | Table of similar phones |
-| **Market Segmentation** | Cluster phones into segments | Segment assignments & stats |
-| **Regional Price Analysis** | Compare prices across regions | Regional statistics & factors |
+| Feature                     | Purpose                        | Output                        |
+| --------------------------- | ------------------------------ | ----------------------------- |
+| **Camera Prediction**       | Predict front/back camera MP   | MP values                     |
+| **Similar Phone Finder**    | Find phones with similar specs | Table of similar phones       |
+| **Market Segmentation**     | Cluster phones into segments   | Segment assignments & stats   |
+| **Regional Price Analysis** | Compare prices across regions  | Regional statistics & factors |
 
 ---
 
@@ -509,6 +512,7 @@ mobiles-dataset-docs/
 **Issue**: "Insufficient camera data"
 
 **Solution**:
+
 - Check that camera columns exist in the dataset
 - Ensure preprocessing parsed camera data correctly
 - Run `preprocess_dataset.m` again to update data
@@ -518,6 +522,7 @@ mobiles-dataset-docs/
 **Issue**: No similar phones found
 
 **Solution**:
+
 - Check that preprocessed data exists
 - Verify input parameters are within valid ranges
 - Try increasing `numResults` parameter
@@ -527,6 +532,7 @@ mobiles-dataset-docs/
 **Issue**: Clustering fails
 
 **Solution**:
+
 - Ensure at least 50 phones in dataset
 - Check that price data is valid
 - Verify preprocessing completed successfully
