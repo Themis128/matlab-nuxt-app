@@ -19,6 +19,8 @@
         </div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Model Performance Heading for tests -->
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Model Performance Summary</h2>
             <!-- Model Performance Overview -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">

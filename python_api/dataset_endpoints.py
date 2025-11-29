@@ -510,28 +510,31 @@ async def search_models(
 
             filtered_df = filtered_df[brand_filter]
 
+        # Helper: Price parsing function available for filters and sorting
+        def extract_price(value):
+            if pd.isna(value):
+                return None
+            str_val = str(value).strip()
+            if str_val.startswith('EUR'):
+                str_val = str_val[3:].strip()
+            elif str_val.startswith('$'):
+                str_val = str_val[1:].strip()
+            elif str_val.startswith('USD'):
+                str_val = str_val[3:].strip()
+            try:
+                return float(str_val.replace(',', ''))
+            except (ValueError, AttributeError):
+                return None
+
         # Price filter (handle currency strings)
         if minPrice is not None or maxPrice is not None:
-            def extract_price(value):
-                if pd.isna(value):
-                    return None
-                str_val = str(value).strip()
-                if str_val.startswith('EUR'):
-                    str_val = str_val[3:].strip()
-                elif str_val.startswith('$'):
-                    str_val = str_val[1:].strip()
-                elif str_val.startswith('USD'):
-                    str_val = str_val[3:].strip()
-                try:
-                    return float(str_val.replace(',', ''))
-                except (ValueError, AttributeError):
-                    return None
-
             price_series = filtered_df[price_col].apply(extract_price)
             if minPrice is not None:
-                filtered_df = filtered_df[price_series >= minPrice]
+                min_mask = price_series.ge(minPrice).fillna(False)
+                filtered_df = filtered_df[min_mask]
             if maxPrice is not None:
-                filtered_df = filtered_df[price_series <= maxPrice]
+                max_mask = price_series.le(maxPrice).fillna(False)
+                filtered_df = filtered_df[max_mask]
 
         # RAM filter - handle GB suffix
         if minRam is not None:
@@ -670,7 +673,7 @@ async def search_models(
             model_name = None
             model_columns = ['Model Name', 'ModelName', 'Model_Name', 'model', 'Model']
             for col in model_columns:
-                if col in df.columns and pd.notna(row.get(col)):
+                if col in filtered_df.columns and pd.notna(row.get(col)):
                     model_name = str(row[col])
                     break
 
@@ -678,7 +681,7 @@ async def search_models(
             company = None
             company_columns = ['Company Name', 'Company', 'Brand', 'company', 'brand']
             for col in company_columns:
-                if col in df.columns and pd.notna(row.get(col)):
+                if col in filtered_df.columns and pd.notna(row.get(col)):
                     company = str(row[col])
                     break
 
@@ -711,7 +714,7 @@ async def search_models(
                     parsed_ram = None
 
             # Extract battery with proper parsing
-            battery_col = 'Battery Capacity' if 'Battery Capacity' in df.columns else 'Battery'
+            battery_col = 'Battery Capacity' if 'Battery Capacity' in filtered_df.columns else 'Battery'
             raw_battery = row.get(battery_col)
             parsed_battery = None
             if pd.notna(raw_battery):
