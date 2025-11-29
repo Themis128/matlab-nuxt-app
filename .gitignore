@@ -1,0 +1,83 @@
+# Python
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# MATLAB
+*.asv
+*.autosave
+*.m~
+*.fig
+*.slx~
+*.prj
+*.mlappinstall
+*.mlpkginstall
+
+# Data files
+*.mat
+!examples/*.mat  # Keep example .mat files
+preprocessed/
+trained_models/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node
+node_modules/
+.nuxt/
+.output/
+.nitro/
+.cache/
+
+# Environment
+.env
+.env.local
+*.log
+
+# Kaggle credentials (keep structure, ignore content)
+kaggle.json
+data/kaggle.json
+
+# Test results (Playwright, etc.)
+test-results/
+
+# IDE and tool directories
+.cline/
+.goosy/
+.deno_lsp/
+.continue/
+.cursor/
+.wakatime/
+
+# Documentation
+wiki/
+
+# Large binary assets (use Git LFS if needed)
+*.zip
+*.tar.gz
+*.7z
+public/mobile_images/
+
+# Logs and temporary files
+*.log
+.npm/
+npm-cache/
+.tsbuildinfo
+

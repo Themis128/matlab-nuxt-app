@@ -1,0 +1,29 @@
+services:
+  # Main Nuxt.js Web Service
+  - type: web
+    name: matlab-nuxt-app
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm run preview
+    envVars:
+      - key: NODE_ENV
+        value: production
+    # Health check
+    healthCheckPath: /
+
+  # Optional: Python API Service (if we replace MATLAB)
+  # - type: web
+  #   name: prediction-api
+  #   env: python
+  #   buildCommand: pip install -r requirements.txt
+  #   startCommand: python api.py
+  #   envVars:
+  #     - key: PYTHON_VERSION
+  #       value: 3.11
+
+databases:
+  # PostgreSQL Database (Free tier)
+  - name: matlab-db
+    databaseName: matlab_app
+    user: matlab_user
+    plan: free

@@ -1,0 +1,71 @@
+# Replit Configuration for Mobile Finder App
+
+# Language and runtime
+language = "nodejs"
+
+# Run script that starts both Python API and Nuxt
+run = "bash start.sh"
+
+# Entry point
+entrypoint = "package.json"
+
+# Environment variables
+[env]
+NODE_ENV = "production"
+PORT = "3000"
+HOST = "0.0.0.0"
+PYTHON_API_URL = "http://localhost:8000"
+PYTHONUNBUFFERED = "1"
+
+# Nix packages
+[nix]
+channel = "stable-22_11"
+
+# Deploy configuration
+[deploy]
+publicDir = ".output/public"
+run = ["sh", "-c", "npm run build && npm run preview"]
+
+# Unit test
+[unitTest]
+language = "nodejs"
+
+# LSP (Language Server Protocol)
+[languages]
+
+[languages.javascript]
+pattern = "**/*.{js,jsx,ts,tsx,vue}"
+
+[languages.javascript.languageServer]
+start = "typescript-language-server --stdio"
+
+[languages.python]
+pattern = "**/*.py"
+
+[languages.python.languageServer]
+start = "pylsp"
+
+# Git configuration
+[gitHubImport]
+requiredFiles = [".replit", "package.json", "nuxt.config.ts", "start.sh"]
+
+# Always-on configuration
+[alwaysOn]
+enabled = true
+
+# Packager configuration
+[packager]
+language = "nodejs"
+ignoredPackages = ["@types/node"]
+
+[packager.features]
+packageSearch = true
+guessImports = true
+enabledForHosting = true
+
+# Debugger configuration
+[debugger]
+support = true
+transport = "localhost:0"
+initializeMessage = { command = "initialize", arguments = { adapterID = "node" } }
+launchMessage = { command = "launch", arguments = { type = "node", request = "launch", name = "Debug Nuxt App", program = "${workspaceFolder}/node_modules/.bin/nuxt", args = ["dev"], console = "integratedTerminal" } }

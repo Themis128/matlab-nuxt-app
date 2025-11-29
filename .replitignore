@@ -1,0 +1,63 @@
+# Replit ignore file - files to exclude from Replit
+
+# Dependencies
+node_modules/
+.nuxt/
+.output/
+dist/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# MATLAB files (large, not needed on Replit)
+*.mat
+mobiles-dataset-docs/trained_models/
+examples/
+
+# Python virtual environments
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Build artifacts
+.nuxt/
+.output/
+dist/
+build/
+
+# Git
+.git/
+.gitignore
+
+# Documentation (optional - can include if needed)
+# docs/
+# wiki/
+
+# Screenshots
+screenshots/
+
+# Kaggle credentials
+kaggle.json
+
+# MATLAB config (will need to be set up differently on Replit)
+# matlab.config.json
