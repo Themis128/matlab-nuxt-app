@@ -3,19 +3,28 @@ Cross-Validation Script
 Performs k-fold cross-validation to check model stability
 """
 
-import numpy as np
-import pandas as pd
-from sklearn.model_selection import KFold, cross_val_score
-from sklearn.preprocessing import StandardScaler
-from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor, GradientBoostingClassifier, RandomForestClassifier
-from sklearn.metrics import make_scorer, r2_score, mean_squared_error, accuracy_score
-import warnings
-warnings.filterwarnings('ignore')
-
 import sys
 from pathlib import Path
+import warnings
+import numpy as np
+from sklearn.model_selection import KFold, cross_val_score
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import (
+    GradientBoostingRegressor,
+    RandomForestRegressor,
+    GradientBoostingClassifier,
+    RandomForestClassifier,
+)
+
 sys.path.insert(0, str(Path(__file__).parent))
-from train_models_sklearn import load_and_preprocess_data, encode_companies, encode_processors, create_engineered_features
+from train_models_sklearn import (
+    load_and_preprocess_data,
+    encode_companies,
+    encode_processors,
+    create_engineered_features,
+)
+
+warnings.filterwarnings('ignore')
 
 # Try XGBoost
 try:
@@ -68,7 +77,7 @@ def cross_validate_price_model(k_folds=5):
 
     kf = KFold(n_splits=k_folds, shuffle=True, random_state=42)
 
-    print(f"\n📊 Cross-Validation Results (R² Score):")
+    print("\n📊 Cross-Validation Results (R² Score):")
     print(f"{'Model':<20} {'Mean R²':<12} {'Std Dev':<12} {'Min':<12} {'Max':<12}")
     print("-" * 70)
 
@@ -136,7 +145,7 @@ def cross_validate_ram_model(k_folds=5):
 
     kf = KFold(n_splits=k_folds, shuffle=True, random_state=42)
 
-    print(f"\n📊 Cross-Validation Results (R² Score):")
+    print("\n📊 Cross-Validation Results (R² Score):")
     print(f"{'Model':<20} {'Mean R²':<12} {'Std Dev':<12} {'Min':<12} {'Max':<12}")
     print("-" * 70)
 
@@ -193,7 +202,7 @@ def cross_validate_brand_model(k_folds=5):
 
     kf = KFold(n_splits=k_folds, shuffle=True, random_state=42)
 
-    print(f"\n📊 Cross-Validation Results (Accuracy):")
+    print("\n📊 Cross-Validation Results (Accuracy):")
     print(f"{'Model':<20} {'Mean Acc':<12} {'Std Dev':<12} {'Min':<12} {'Max':<12}")
     print("-" * 70)
 

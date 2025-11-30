@@ -1,0 +1,464 @@
+{
+  "samples": [
+    {
+      "index": 0,
+      "actual": 799.0,
+      "prediction_estimate": 799.0097861287621,
+      "shap_contributions": {
+        "price_percentile_global": 167.2610189454476,
+        "spec_density": 0.14234765386770282,
+        "Screen Size": -0.17216436744593977,
+        "battery_weight_ratio": 0.08137425058074375,
+        "ram_weight_ratio": -5.972276006971883e-06,
+        "ram_battery_interaction_v2": 0.000991621910691269,
+        "Mobile Weight": -0.0021285062418352754,
+        "screen_weight_ratio": -9.876076054230075e-05
+      }
+    },
+    {
+      "index": 1,
+      "actual": 849.0,
+      "prediction_estimate": 848.9353534903761,
+      "shap_contributions": {
+        "price_percentile_global": 217.18360764967517,
+        "spec_density": 0.14268994348428404,
+        "Screen Size": -0.1711843763207931,
+        "battery_weight_ratio": 0.07965600779996071,
+        "ram_weight_ratio": -2.5199698200138483e-05,
+        "ram_battery_interaction_v2": 0.001017555960293738,
+        "Mobile Weight": 0.0008336643975116557,
+        "screen_weight_ratio": 0.00011241824034008939
+      }
+    },
+    {
+      "index": 2,
+      "actual": 899.0,
+      "prediction_estimate": 899.0124063690489,
+      "shap_contributions": {
+        "price_percentile_global": 267.2658092959107,
+        "spec_density": 0.14268994348428404,
+        "Screen Size": -0.17269523247224722,
+        "battery_weight_ratio": 0.07988958016507909,
+        "ram_weight_ratio": -2.5199698200138483e-05,
+        "ram_battery_interaction_v2": 0.0010102479621591008,
+        "Mobile Weight": -0.002582620482565358,
+        "screen_weight_ratio": -0.00011108208236728382
+      }
+    },
+    {
+      "index": 3,
+      "actual": 899.0,
+      "prediction_estimate": 899.0227845799884,
+      "shap_contributions": {
+        "price_percentile_global": 267.2622705400873,
+        "spec_density": 0.1449970992472622,
+        "Screen Size": -0.16860640305390565,
+        "battery_weight_ratio": 0.07633693514313128,
+        "ram_weight_ratio": 0.00036574687037759044,
+        "ram_battery_interaction_v2": 0.000593675694042709,
+        "Mobile Weight": 0.00748350883481215,
+        "screen_weight_ratio": -0.0010264931873085305
+      }
+    },
+    {
+      "index": 4,
+      "actual": 949.0,
+      "prediction_estimate": 949.0106401622229,
+      "shap_contributions": {
+        "price_percentile_global": 317.25123743481515,
+        "spec_density": 0.14492492294957704,
+        "Screen Size": -0.1696405869247587,
+        "battery_weight_ratio": 0.07633438823319502,
+        "ram_weight_ratio": 0.0003658883653740487,
+        "ram_battery_interaction_v2": 0.000593675694042709,
+        "Mobile Weight": 0.00748350883481215,
+        "screen_weight_ratio": -0.0010264931873085305
+      }
+    },
+    {
+      "index": 5,
+      "actual": 999.0,
+      "prediction_estimate": 999.01375566348,
+      "shap_contributions": {
+        "price_percentile_global": 367.25451126559744,
+        "spec_density": 0.14490941405885172,
+        "Screen Size": -0.16980704636995328,
+        "battery_weight_ratio": 0.07633438823319502,
+        "ram_weight_ratio": 0.0003658883653740487,
+        "ram_battery_interaction_v2": 0.000593675694042709,
+        "Mobile Weight": 0.00747779250589672,
+        "screen_weight_ratio": -0.0010262178189066901
+      }
+    },
+    {
+      "index": 6,
+      "actual": 999.0,
+      "prediction_estimate": 999.0068616009421,
+      "shap_contributions": {
+        "price_percentile_global": 367.2569823026589,
+        "spec_density": 0.14301238651325965,
+        "Screen Size": -0.17339333360420817,
+        "battery_weight_ratio": 0.07707452489428396,
+        "ram_weight_ratio": 0.0001881660553905865,
+        "ram_battery_interaction_v2": 0.0006278494149169298,
+        "Mobile Weight": 0.006071153843743825,
+        "screen_weight_ratio": -0.0020959745468401773
+      }
+    },
+    {
+      "index": 7,
+      "actual": 1049.0,
+      "prediction_estimate": 1049.0027650009497,
+      "shap_contributions": {
+        "price_percentile_global": 417.25369767075364,
+        "spec_density": 0.14197262782062484,
+        "Screen Size": -0.17346388761149747,
+        "battery_weight_ratio": 0.07742846440581509,
+        "ram_weight_ratio": -0.0009137930704683406,
+        "ram_battery_interaction_v2": 0.0014423051057328772,
+        "Mobile Weight": 0.006071481521455563,
+        "screen_weight_ratio": -0.002040740353558499
+      }
+    },
+    {
+      "index": 8,
+      "actual": 1099.0,
+      "prediction_estimate": 1099.0025260501645,
+      "shap_contributions": {
+        "price_percentile_global": 467.2554567294941,
+        "spec_density": 0.14118606984509438,
+        "Screen Size": -0.1745851044327075,
+        "battery_weight_ratio": 0.0773828022223693,
+        "ram_weight_ratio": -0.0009119974034764771,
+        "ram_battery_interaction_v2": 0.0014423051057328772,
+        "Mobile Weight": 0.006071587552139323,
+        "screen_weight_ratio": -0.002033948540121101
+      }
+    },
+    {
+      "index": 9,
+      "actual": 1099.0,
+      "prediction_estimate": 1099.0115444426992,
+      "shap_contributions": {
+        "price_percentile_global": 467.2496003570787,
+        "spec_density": 0.143677426178708,
+        "Screen Size": -0.16324498400779586,
+        "battery_weight_ratio": 0.07776117354092373,
+        "ram_weight_ratio": -0.0007276682464905821,
+        "ram_battery_interaction_v2": 0.000593674755239121,
+        "Mobile Weight": 0.004480546833163971,
+        "screen_weight_ratio": -0.0010465865380583392
+      }
+    },
+    {
+      "index": 10,
+      "actual": 1199.0,
+      "prediction_estimate": 1199.0108457479423,
+      "shap_contributions": {
+        "price_percentile_global": 567.2473976382413,
+        "spec_density": 0.14295775301278701,
+        "Screen Size": -0.16383044361828403,
+        "battery_weight_ratio": 0.07808942515142653,
+        "ram_weight_ratio": -0.0003587016098813723,
+        "ram_battery_interaction_v2": 0.001410231378851165,
+        "Mobile Weight": 0.004101536569648171,
+        "screen_weight_ratio": 9.519284592701896e-05
+      }
+    },
+    {
+      "index": 11,
+      "actual": 1299.0,
+      "prediction_estimate": 1299.0104939738685,
+      "shap_contributions": {
+        "price_percentile_global": 667.2472397190528,
+        "spec_density": 0.1423432461241078,
+        "Screen Size": -0.16346099195211747,
+        "battery_weight_ratio": 0.07808942515142653,
+        "ram_weight_ratio": -4.645914939036396e-05,
+        "ram_battery_interaction_v2": 0.0011638519605754259,
+        "Mobile Weight": 0.004054701321920915,
+        "screen_weight_ratio": 9.519284592701896e-05
+      }
+    },
+    {
+      "index": 12,
+      "actual": 799.0,
+      "prediction_estimate": 799.0133724703612,
+      "shap_contributions": {
+        "price_percentile_global": 167.25655760846985,
+        "spec_density": 0.14195474297175117,
+        "Screen Size": -0.17099734483645815,
+        "battery_weight_ratio": 0.0821871197226414,
+        "ram_weight_ratio": -0.0001843228282064146,
+        "ram_battery_interaction_v2": 0.0011195588927864666,
+        "Mobile Weight": -0.0032027497708758657,
+        "screen_weight_ratio": 0.004318773811887103
+      }
+    },
+    {
+      "index": 13,
+      "actual": 849.0,
+      "prediction_estimate": 848.9431122728377,
+      "shap_contributions": {
+        "price_percentile_global": 217.18067468766543,
+        "spec_density": 0.1422970325883324,
+        "Screen Size": -0.1700173537113115,
+        "battery_weight_ratio": 0.0819972519098842,
+        "ram_weight_ratio": -0.00020355025039958135,
+        "ram_battery_interaction_v2": 0.0022611838688245144,
+        "Mobile Weight": -0.00024057913152893468,
+        "screen_weight_ratio": 0.004529952812769494
+      }
+    },
+    {
+      "index": 14,
+      "actual": 949.0,
+      "prediction_estimate": 949.0080207337448,
+      "shap_contributions": {
+        "price_percentile_global": 317.25184322862873,
+        "spec_density": 0.14222485629064724,
+        "Screen Size": -0.17256239373361865,
+        "battery_weight_ratio": 0.08222827736506633,
+        "ram_weight_ratio": -0.0002034087554031233,
+        "ram_battery_interaction_v2": 0.0022538758706898768,
+        "Mobile Weight": -0.0036568640116059485,
+        "screen_weight_ratio": 0.00430645249006212
+      }
+    },
+    {
+      "index": 15,
+      "actual": 899.0,
+      "prediction_estimate": 899.0141038812685,
+      "shap_contributions": {
+        "price_percentile_global": 267.25678438983675,
+        "spec_density": 0.14319590258644355,
+        "Screen Size": -0.17172876287781846,
+        "battery_weight_ratio": 0.07750506303655497,
+        "ram_weight_ratio": 0.0005416918728337463,
+        "ram_battery_interaction_v2": 0.000600830084908317,
+        "Mobile Weight": 0.007437605634702443,
+        "screen_weight_ratio": -0.0005003031205305101
+      }
+    },
+    {
+      "index": 16,
+      "actual": 999.0,
+      "prediction_estimate": 999.00507496476,
+      "shap_contributions": {
+        "price_percentile_global": 367.2490251153469,
+        "spec_density": 0.14310821739803306,
+        "Screen Size": -0.1729294061938661,
+        "battery_weight_ratio": 0.07750251612661871,
+        "ram_weight_ratio": 0.0005418333678302046,
+        "ram_battery_interaction_v2": 0.000600830084908317,
+        "Mobile Weight": 0.0074318893057870134,
+        "screen_weight_ratio": -0.0005000277521286697
+      }
+    },
+    {
+      "index": 17,
+      "actual": 1049.0,
+      "prediction_estimate": 1049.000190304054,
+      "shap_contributions": {
+        "price_percentile_global": 417.24473592128754,
+        "spec_density": 0.14276186796454327,
+        "Screen Size": -0.1731791039556834,
+        "battery_weight_ratio": 0.07750251612661871,
+        "ram_weight_ratio": 0.0005108499667473762,
+        "ram_battery_interaction_v2": 0.000600830084908317,
+        "Mobile Weight": 0.0074318893057870134,
+        "screen_weight_ratio": -0.0005000277521286697
+      }
+    },
+    {
+      "index": 18,
+      "actual": 1099.0,
+      "prediction_estimate": 1099.0017379894514,
+      "shap_contributions": {
+        "price_percentile_global": 467.2505828289867,
+        "spec_density": 0.1416678240950499,
+        "Screen Size": -0.17379452734117934,
+        "battery_weight_ratio": 0.07759634568783588,
+        "ram_weight_ratio": -0.00015640699134291788,
+        "ram_battery_interaction_v2": 0.0006350038057825378,
+        "Mobile Weight": 0.005697430923598423,
+        "screen_weight_ratio": -0.0022081768731369417
+      }
+    },
+    {
+      "index": 19,
+      "actual": 1199.0,
+      "prediction_estimate": 1199.0000597683802,
+      "shap_contributions": {
+        "price_percentile_global": 567.2486576758799,
+        "spec_density": 0.14060589265402026,
+        "Screen Size": -0.1743220769179984,
+        "battery_weight_ratio": 0.07792459729833869,
+        "ram_weight_ratio": -0.0007149619690554565,
+        "ram_battery_interaction_v2": 0.001449417886466941,
+        "Mobile Weight": 0.005318420660082623,
+        "screen_weight_ratio": -0.0012644561295884333
+      }
+    },
+    {
+      "index": 20,
+      "actual": 1299.0,
+      "prediction_estimate": 1298.9997079943064,
+      "shap_contributions": {
+        "price_percentile_global": 667.2484997566914,
+        "spec_density": 0.13999138576534104,
+        "Screen Size": -0.17395262525183183,
+        "battery_weight_ratio": 0.07792459729833869,
+        "ram_weight_ratio": -0.00040271950856444745,
+        "ram_battery_interaction_v2": 0.001203038468191202,
+        "Mobile Weight": 0.005271585412355367,
+        "screen_weight_ratio": -0.0012644561295884333
+      }
+    },
+    {
+      "index": 21,
+      "actual": 1199.0,
+      "prediction_estimate": 1198.9995222735588,
+      "shap_contributions": {
+        "price_percentile_global": 567.2439351214653,
+        "spec_density": 0.14151591127449917,
+        "Screen Size": -0.16707403716305572,
+        "battery_weight_ratio": 0.0783029686168931,
+        "ram_weight_ratio": -0.0011475207452968225,
+        "ram_battery_interaction_v2": 0.000600829146104729,
+        "Mobile Weight": 0.004055305691826728,
+        "screen_weight_ratio": -0.00031298327019714837
+      }
+    },
+    {
+      "index": 22,
+      "actual": 1299.0,
+      "prediction_estimate": 1299.000938086513,
+      "shap_contributions": {
+        "price_percentile_global": 667.2434129752825,
+        "spec_density": 0.14054204946328913,
+        "Screen Size": -0.1665833517760303,
+        "battery_weight_ratio": 0.07865690812842424,
+        "ram_weight_ratio": -0.00043794939262571024,
+        "ram_battery_interaction_v2": 0.00117096474130949,
+        "Mobile Weight": 0.00400879812181121,
+        "screen_weight_ratio": -2.38012938071442e-05
+      }
+    },
+    {
+      "index": 23,
+      "actual": 1399.0,
+      "prediction_estimate": 1399.0012249170422,
+      "shap_contributions": {
+        "price_percentile_global": 767.243742723549,
+        "spec_density": 0.1403936403879022,
+        "Screen Size": -0.16677781233422503,
+        "battery_weight_ratio": 0.0786572796528486,
+        "ram_weight_ratio": -0.0002849760102491244,
+        "ram_battery_interaction_v2": 0.0010995573996915985,
+        "Mobile Weight": 0.003961882000350748,
+        "screen_weight_ratio": -0.00022209353236692054
+      }
+    },
+    {
+      "index": 24,
+      "actual": 799.0,
+      "prediction_estimate": 799.0075902895467,
+      "shap_contributions": {
+        "price_percentile_global": 167.2563507220553,
+        "spec_density": 0.14235877294852692,
+        "Screen Size": -0.1709865727371193,
+        "battery_weight_ratio": 0.08220336538885854,
+        "ram_weight_ratio": -0.00020396207063577804,
+        "ram_battery_interaction_v2": 0.0011149199298621333,
+        "Mobile Weight": -0.0021016482261402175,
+        "screen_weight_ratio": -0.00018134113654198368
+      }
+    },
+    {
+      "index": 25,
+      "actual": 849.0,
+      "prediction_estimate": 848.9373300920231,
+      "shap_contributions": {
+        "price_percentile_global": 217.18046780125087,
+        "spec_density": 0.14270106256510814,
+        "Screen Size": -0.17000658161197266,
+        "battery_weight_ratio": 0.08201349757610135,
+        "ram_weight_ratio": -0.00022318949282894486,
+        "ram_battery_interaction_v2": 0.0022565449059001813,
+        "Mobile Weight": 0.0008605224132067136,
+        "screen_weight_ratio": 2.9837864340406383e-05
+      }
+    },
+    {
+      "index": 26,
+      "actual": 949.0,
+      "prediction_estimate": 949.0022385529304,
+      "shap_contributions": {
+        "price_percentile_global": 317.2516363422143,
+        "spec_density": 0.14262888626742298,
+        "Screen Size": -0.1725516216342798,
+        "battery_weight_ratio": 0.08224452303128348,
+        "ram_weight_ratio": -0.0002230479978324866,
+        "ram_battery_interaction_v2": 0.002249236907765544,
+        "Mobile Weight": -0.0025557624668703003,
+        "screen_weight_ratio": -0.00019366245836696677
+      }
+    },
+    {
+      "index": 27,
+      "actual": 899.0,
+      "prediction_estimate": 899.0113810904795,
+      "shap_contributions": {
+        "price_percentile_global": 267.2564991407838,
+        "spec_density": 0.14323158571869674,
+        "Screen Size": -0.17172925480052212,
+        "battery_weight_ratio": 0.07754719089762274,
+        "ram_weight_ratio": 0.0005419317225954483,
+        "ram_battery_interaction_v2": 0.0005977275863892302,
+        "Mobile Weight": 0.007437605634702443,
+        "screen_weight_ratio": -0.0004997784994675108
+      }
+    },
+    {
+      "index": 28,
+      "actual": 999.0,
+      "prediction_estimate": 999.002352173971,
+      "shap_contributions": {
+        "price_percentile_global": 367.24873986629393,
+        "spec_density": 0.14314390053028625,
+        "Screen Size": -0.17292989811656975,
+        "battery_weight_ratio": 0.07754464398768648,
+        "ram_weight_ratio": 0.0005420732175919065,
+        "ram_battery_interaction_v2": 0.0005977275863892302,
+        "Mobile Weight": 0.0074318893057870134,
+        "screen_weight_ratio": -0.0004995031310656706
+      }
+    },
+    {
+      "index": 29,
+      "actual": 1049.0,
+      "prediction_estimate": 1048.997467513265,
+      "shap_contributions": {
+        "price_percentile_global": 417.24445067223456,
+        "spec_density": 0.14279755109679645,
+        "Screen Size": -0.17317959587838705,
+        "battery_weight_ratio": 0.07754464398768648,
+        "ram_weight_ratio": 0.0005110898165090781,
+        "ram_battery_interaction_v2": 0.0005977275863892302,
+        "Mobile Weight": 0.0074318893057870134,
+        "screen_weight_ratio": -0.0004995031310656706
+      }
+    }
+  ],
+  "top_features": [
+    "price_percentile_global",
+    "spec_density",
+    "Screen Size",
+    "battery_weight_ratio",
+    "ram_weight_ratio",
+    "ram_battery_interaction_v2",
+    "Mobile Weight",
+    "screen_weight_ratio"
+  ]
+}

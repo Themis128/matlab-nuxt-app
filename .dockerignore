@@ -1,0 +1,100 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+.npm/
+.yarn/
+
+# Nuxt
+.nuxt/
+.output/
+dist/
+
+# Environment
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Testing
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+screenshots/
+
+# Documentation
+docs/
+wiki/
+*.md
+!README.md
+
+# MATLAB
+*.asv
+*.m~
+matlab-capabilities-report.txt
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Backups
+*.backup
+*.bak
+*.old
+
+# Logs
+logs/
+*.log
+
+# Data (exclude large datasets from container)
+data/*.csv
+data/*.json
+mobiles-dataset-docs/preprocessed/*.mat
+
+# Images (exclude from container, serve via CDN)
+public/images/mobiles/**/*.jpg
+public/images/mobiles/**/*.png
+public/images/mobiles/**/*.webp
+
+# Scripts not needed in production
+scripts/
+deployment/
+tests/
+
+# Config files not needed in container
+playwright.config.ts
+eslint.config.cjs
+cspell.json
+tsconfig.json
+
+# Temporary files
+temp/
+tmp/
+*.tmp

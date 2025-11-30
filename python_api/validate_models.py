@@ -3,16 +3,30 @@ Model Validation Script
 Tests trained models on unseen data to check for overfitting
 """
 
-import numpy as np
-import pandas as pd
-import pickle
-import json
 import sys
 import io
 from pathlib import Path
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error, accuracy_score
 import warnings
+import numpy as np
+import pickle
+import json
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import (
+    r2_score,
+    mean_squared_error,
+    mean_absolute_error,
+    accuracy_score,
+)
+
+# Import training functions to reuse data loading (imports must be at top)
+sys.path.insert(0, str(Path(__file__).parent))
+from train_models_sklearn import (
+    load_and_preprocess_data,
+    encode_companies,
+    encode_processors,
+    create_engineered_features,
+)
+
 warnings.filterwarnings('ignore')
 
 # Fix Windows console encoding
@@ -20,13 +34,8 @@ if sys.platform == 'win32':
     try:
         sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
         sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
-    except:
+    except (AttributeError, OSError):
         pass
-
-# Import training functions to reuse data loading
-import sys
-sys.path.insert(0, str(Path(__file__).parent))
-from train_models_sklearn import load_and_preprocess_data, encode_companies, encode_processors, create_engineered_features
 
 MODELS_DIR = Path(__file__).parent / "trained_models"
 
@@ -107,7 +116,7 @@ def validate_price_model():
     mean_pct_error = np.mean(pct_errors)
     median_pct_error = np.median(pct_errors)
 
-    print(f"\n[STATS] Test Set Performance:")
+    print("\n[STATS] Test Set Performance:")
     print(f"   R² Score: {r2:.4f}")
     print(f"   RMSE: ${rmse:.2f}")
     print(f"   MAE: ${mae:.2f}")
@@ -129,7 +138,7 @@ def validate_price_model():
     r2_train = r2_score(y_train_orig, y_train_pred)
     r2_diff = r2_train - r2
 
-    print(f"\n[CHECK] Overfitting Check:")
+    print("\n[CHECK] Overfitting Check:")
     print(f"   Train R²: {r2_train:.4f}")
     print(f"   Test R²: {r2:.4f}")
     print(f"   Difference: {r2_diff:.4f}")
@@ -142,7 +151,7 @@ def validate_price_model():
         print("   [OK] Acceptable generalization")
 
     # Sample predictions
-    print(f"\n[SAMPLES] Sample Predictions (first 10 test samples):")
+    print("\n[SAMPLES] Sample Predictions (first 10 test samples):")
     print(f"{'Actual':>12} {'Predicted':>12} {'Error %':>10} {'Status':>10}")
     print("-" * 50)
     for i in range(min(10, len(y_test_orig))):
@@ -188,7 +197,7 @@ def validate_ram_model():
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
     mae = mean_absolute_error(y_test, y_pred)
 
-    print(f"\n[STATS] Test Set Performance:")
+    print("\n[STATS] Test Set Performance:")
     print(f"   R² Score: {r2:.4f}")
     print(f"   RMSE: {rmse:.2f} GB")
     print(f"   MAE: {mae:.2f} GB")
@@ -200,7 +209,7 @@ def validate_ram_model():
     r2_train = r2_score(y_train, y_train_pred)
     r2_diff = r2_train - r2
 
-    print(f"\n[CHECK] Overfitting Check:")
+    print("\n[CHECK] Overfitting Check:")
     print(f"   Train R²: {r2_train:.4f}")
     print(f"   Test R²: {r2:.4f}")
     print(f"   Difference: {r2_diff:.4f}")
@@ -254,10 +263,12 @@ def validate_battery_model():
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
     mae = mean_absolute_error(y_test, y_pred)
 
-    print(f"\n[STATS] Test Set Performance:")
-    print(f"   R² Score: {r2:.4f}")
-    print(f"   RMSE: {rmse:.2f} mAh")
-    print(f"   MAE: {mae:.2f} mAh")
+    import logging
+    log = logging.getLogger("python_api")
+    log.info("\n[STATS] Test Set Performance:")
+    log.info("   R² Score: %.4f", r2)
+    log.info("   RMSE: %.2f mAh", rmse)
+    log.info("   MAE: %.2f mAh", mae)
 
     # Overfitting check
     X_train_norm = X_scaler.transform(X_train)
@@ -266,15 +277,15 @@ def validate_battery_model():
     r2_train = r2_score(y_train, y_train_pred)
     r2_diff = r2_train - r2
 
-    print(f"\n[CHECK] Overfitting Check:")
-    print(f"   Train R²: {r2_train:.4f}")
-    print(f"   Test R²: {r2:.4f}")
-    print(f"   Difference: {r2_diff:.4f}")
+    log.info("\n[CHECK] Overfitting Check:")
+    log.info("   Train R²: %.4f", r2_train)
+    log.info("   Test R²: %.4f", r2)
+    log.info("   Difference: %.4f", r2_diff)
 
     if r2_diff > 0.01:
-        print("   [WARN] Possible overfitting detected!")
+        log.warning("   [WARN] Possible overfitting detected!")
     else:
-        print("   [OK] Good generalization")
+        log.info("   [OK] Good generalization")
 
 
 def validate_brand_model():
@@ -318,7 +329,7 @@ def validate_brand_model():
 
     accuracy = accuracy_score(y_test, y_pred)
 
-    print(f"\n[STATS] Test Set Performance:")
+    print("\n[STATS] Test Set Performance:")
     print(f"   Accuracy: {accuracy:.4f} ({accuracy*100:.2f}%)")
 
     # Overfitting check
@@ -328,7 +339,7 @@ def validate_brand_model():
     train_accuracy = accuracy_score(y_train, y_train_pred)
     acc_diff = train_accuracy - accuracy
 
-    print(f"\n[CHECK] Overfitting Check:")
+    print("\n[CHECK] Overfitting Check:")
     print(f"   Train Accuracy: {train_accuracy:.4f} ({train_accuracy*100:.2f}%)")
     print(f"   Test Accuracy: {accuracy:.4f} ({accuracy*100:.2f}%)")
     print(f"   Difference: {acc_diff:.4f}")

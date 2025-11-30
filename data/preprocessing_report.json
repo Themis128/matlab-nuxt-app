@@ -1,0 +1,131 @@
+{
+  "overview": {
+    "total_rows": 930,
+    "total_columns": 15,
+    "columns": [
+      "Company Name",
+      "Model Name",
+      "Mobile Weight",
+      "RAM",
+      "Front Camera",
+      "Back Camera",
+      "Processor",
+      "Battery Capacity",
+      "Screen Size",
+      "Launched Price (Pakistan)",
+      "Launched Price (India)",
+      "Launched Price (China)",
+      "Launched Price (USA)",
+      "Launched Price (Dubai)",
+      "Launched Year"
+    ]
+  },
+  "column_analysis": {
+    "Company Name": {
+      "dtype": "object",
+      "unique_count": 19,
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Model Name": {
+      "dtype": "object",
+      "unique_count": 908,
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Mobile Weight": {
+      "dtype": "object",
+      "unique_count": 148,
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "RAM": {
+      "dtype": "object",
+      "unique_count": 11,
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Front Camera": {
+      "dtype": "object",
+      "unique_count": 29,
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Back Camera": {
+      "dtype": "object",
+      "unique_count": 91,
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Processor": {
+      "dtype": "object",
+      "unique_count": 217,
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Battery Capacity": {
+      "dtype": "object",
+      "unique_count": 147,
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Screen Size": {
+      "dtype": "object",
+      "unique_count": 97,
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Launched Price (Pakistan)": {
+      "dtype": "object",
+      "unique_count": 157,
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Launched Price (India)": {
+      "dtype": "object",
+      "unique_count": 147,
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Launched Price (China)": {
+      "dtype": "object",
+      "unique_count": 137,
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Launched Price (USA)": {
+      "dtype": "object",
+      "unique_count": 107,
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Launched Price (Dubai)": {
+      "dtype": "object",
+      "unique_count": 141,
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Launched Year": {
+      "dtype": "int64",
+      "unique_count": 11,
+      "missing_count": 0,
+      "missing_percent": 0.0
+    }
+  },
+  "recommendations": [
+    "\u2022 Convert 'Mobile Weight' to numeric (remove units)",
+    "\u2022 Convert 'RAM' to numeric (remove units)",
+    "\u2022 Convert 'Front Camera' to numeric (remove units)",
+    "\u2022 Convert 'Back Camera' to numeric (remove units)",
+    "\u2022 Convert 'Battery Capacity' to numeric (remove units)",
+    "\u2022 Convert 'Screen Size' to numeric (remove units)",
+    "\u2022 Convert 'Launched Price (Pakistan)' to numeric (remove currency symbols)",
+    "\u2022 Convert 'Launched Price (India)' to numeric (remove currency symbols)",
+    "\u2022 Convert 'Launched Price (China)' to numeric (remove currency symbols)",
+    "\u2022 Convert 'Launched Price (USA)' to numeric (remove currency symbols)",
+    "\u2022 Convert 'Launched Price (Dubai)' to numeric (remove currency symbols)",
+    "\u2022 Encode 'Company Name' (categorical) - 19 unique values",
+    "\u2022 Encode 'Processor' (categorical) - 217 unique values",
+    "\u2022 Verify 'Launched Year' range: 2014 - 2025"
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "total_rows": 915,
+  "engineered_features": {
+    "spec_density": {
+      "dtype": "float64",
+      "example": 0.06955747126436782,
+      "description": "Composite (RAM + battery/1000 + screen) per gram weight"
+    },
+    "temporal_decay": {
+      "dtype": "float64",
+      "example": 0.6065306597126334,
+      "description": "Exponential relevance decay since launch (months)"
+    },
+    "price_elasticity_proxy": {
+      "dtype": "float64",
+      "example": 66.01669007684045,
+      "description": "Price divided by composite spec (higher = less value)"
+    },
+    "battery_weight_ratio": {
+      "dtype": "float64",
+      "example": 0.017241379310344827,
+      "description": "Battery capacity per gram"
+    },
+    "screen_weight_ratio": {
+      "dtype": "float64",
+      "example": 0.03505747126436781,
+      "description": "Screen size per gram weight"
+    },
+    "ram_weight_ratio": {
+      "dtype": "float64",
+      "example": 0.034482758620689655,
+      "description": "RAM per gram weight"
+    },
+    "price_percentile_global": {
+      "dtype": "float64",
+      "example": 0.7229508196721312,
+      "description": "Global price percentile rank"
+    },
+    "ram_percentile_global": {
+      "dtype": "float64",
+      "example": 0.3158469945355191,
+      "description": "Global RAM percentile rank"
+    },
+    "battery_percentile_global": {
+      "dtype": "float64",
+      "example": 0.046994535519125684,
+      "description": "Global battery percentile rank"
+    },
+    "price_percentile_brand": {
+      "dtype": "float64",
+      "example": 0.15979381443298968,
+      "description": "Price percentile within brand"
+    },
+    "cross_brand_price_delta": {
+      "dtype": "float64",
+      "example": -212.5,
+      "description": "Difference from brand-year average price"
+    },
+    "spec_value_ratio": {
+      "dtype": "float64",
+      "example": 0.015147684605757196,
+      "description": "Composite spec divided by price"
+    },
+    "market_segment": {
+      "dtype": "object",
+      "example": "premium",
+      "description": "Segment classification from price percentile"
+    },
+    "ram_battery_interaction_v2": {
+      "dtype": "float64",
+      "example": 0.018,
+      "description": "Interaction product RAM \u00d7 Battery (scaled)"
+    },
+    "technology_generation_v2": {
+      "dtype": "category",
+      "example": "recent",
+      "description": "Launch era bucket"
+    }
+  },
+  "source": "data\\Mobiles_Dataset_Cleaned.csv",
+  "price_column_used": "Launched Price (USA)",
+  "new_feature_columns": [
+    "spec_density",
+    "temporal_decay",
+    "price_elasticity_proxy",
+    "battery_weight_ratio",
+    "screen_weight_ratio",
+    "ram_weight_ratio",
+    "price_percentile_global",
+    "ram_percentile_global",
+    "battery_percentile_global",
+    "price_percentile_brand",
+    "cross_brand_price_delta",
+    "spec_value_ratio",
+    "market_segment",
+    "ram_battery_interaction_v2",
+    "technology_generation_v2"
+  ]
+}

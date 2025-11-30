@@ -1,0 +1,71 @@
+{
+  "base_value": 631.6990819672133,
+  "feature_importance": [
+    [
+      "price_percentile_global",
+      388.8817056555051
+    ],
+    [
+      "spec_density",
+      0.277002367440616
+    ],
+    [
+      "Screen Size",
+      0.2033168090938298
+    ],
+    [
+      "battery_weight_ratio",
+      0.1846545580525419
+    ],
+    [
+      "ram_weight_ratio",
+      0.007349357510664879
+    ],
+    [
+      "ram_battery_interaction_v2",
+      0.005478153161664858
+    ],
+    [
+      "Mobile Weight",
+      0.0036002269397547066
+    ],
+    [
+      "screen_weight_ratio",
+      0.003068937182975371
+    ],
+    [
+      "temporal_decay",
+      0.002204820435208285
+    ],
+    [
+      "Launched Year",
+      0.002123812236811578
+    ],
+    [
+      "ram_percentile_global",
+      0.0008171640137384587
+    ],
+    [
+      "RAM",
+      0.0005945378457411263
+    ],
+    [
+      "battery_percentile_global",
+      0.00024649694713728675
+    ],
+    [
+      "Battery Capacity",
+      0.00010908996866727218
+    ]
+  ],
+  "top_features": [
+    "price_percentile_global",
+    "spec_density",
+    "Screen Size",
+    "battery_weight_ratio",
+    "ram_weight_ratio",
+    "ram_battery_interaction_v2",
+    "Mobile Weight",
+    "screen_weight_ratio"
+  ]
+}

@@ -86,26 +86,15 @@
                 </div>
               </UFormGroup>
 
-              <!-- Screen Size Range -->
-              <UFormGroup label="Screen Size (inches)">
-                <div class="flex gap-2">
-                  <UInput
-                    v-model.number="filters.minScreen"
-                    type="number"
-                    placeholder="Min"
-                    min="3"
-                    max="10"
-                    step="0.1"
-                  />
-                  <UInput
-                    v-model.number="filters.maxScreen"
-                    type="number"
-                    placeholder="Max"
-                    min="3"
-                    max="10"
-                    step="0.1"
-                  />
-                </div>
+              <!-- Model Name Filter -->
+              <UFormGroup label="Model Name">
+                <USelectMenu
+                  v-model="filters.modelName"
+                  :options="availableModels"
+                  searchable
+                  :disabled="filters.brands.length === 0"
+                  placeholder="Select a model (choose brand first)"
+                />
               </UFormGroup>
 
               <!-- Year Filter -->
@@ -121,40 +110,6 @@
                 />
               </UFormGroup>
 
-              <!-- Storage Range -->
-              <UFormGroup label="Storage (GB)">
-                <div class="flex gap-2">
-                  <UInput
-                    v-model.number="filters.minStorage"
-                    type="number"
-                    placeholder="Min"
-                    min="32"
-                  />
-                  <UInput
-                    v-model.number="filters.maxStorage"
-                    type="number"
-                    placeholder="Max"
-                    max="2048"
-                  />
-                </div>
-              </UFormGroup>
-
-              <!-- Processor Filter -->
-              <UFormGroup label="Processor">
-                <UInput v-model="filters.processor" placeholder="e.g., A17, Snapdragon" />
-              </UFormGroup>
-
-              <!-- Model Name Filter -->
-              <UFormGroup label="Model Name">
-                <USelectMenu
-                  v-model="filters.modelName"
-                  :options="availableModels"
-                  searchable
-                  :disabled="filters.brands.length === 0"
-                  placeholder="Select a model (choose brand first)"
-                />
-              </UFormGroup>
-
               <!-- Sort Options -->
               <UFormGroup label="Sort By">
                 <USelect
@@ -164,23 +119,11 @@
                   value-attribute="value"
                 />
               </UFormGroup>
-
-              <UFormGroup label="Sort Order">
-                <USelect
-                  v-model="sortOrder"
-                  :options="[
-                    { label: 'Ascending', value: 'asc' },
-                    { label: 'Descending', value: 'desc' },
-                  ]"
-                  option-attribute="label"
-                  value-attribute="value"
-                />
-              </UFormGroup>
             </div>
 
             <div class="flex gap-4">
               <UButton
-                @click="searchModels"
+                @click="() => searchModels(0)"
                 :loading="loading"
                 color="primary"
                 size="lg"
@@ -442,13 +385,8 @@ const filters = ref({
   maxRam: undefined as number | undefined,
   minBattery: undefined as number | undefined,
   maxBattery: undefined as number | undefined,
-  minScreen: undefined as number | undefined,
-  maxScreen: undefined as number | undefined,
-  years: [] as number[],
-  minStorage: undefined as number | undefined,
-  maxStorage: undefined as number | undefined,
-  processor: undefined as string | undefined,
   modelName: undefined as string | undefined,
+  years: [] as number[],
 })
 
 const sortBy = ref('price')
@@ -511,6 +449,8 @@ const sortOptions = [
   { label: 'Year', value: 'year' },
 ]
 
+const { pythonApiUrl } = useApiConfig()
+
 // Fetch available models for selected brands
 const fetchAvailableModels = async (brands: string[]) => {
   if (brands.length === 0) {
@@ -521,9 +461,7 @@ const fetchAvailableModels = async (brands: string[]) => {
 
   try {
     const params = brands.map(brand => `brands=${encodeURIComponent(brand)}`).join('&')
-    const models = await $fetch<string[]>(
-      `http://localhost:8000/api/dataset/models-by-company?${params}`
-    )
+    const models = await $fetch<string[]>(`${pythonApiUrl}/api/dataset/models-by-company?${params}`)
     availableModels.value = models
   } catch (err) {
     console.error('Error fetching models:', err)
@@ -567,22 +505,13 @@ const searchModels = async (offset = 0) => {
       searchParams.append('minBattery', filters.value.minBattery.toString())
     if (filters.value.maxBattery != undefined)
       searchParams.append('maxBattery', filters.value.maxBattery.toString())
-    if (filters.value.minScreen != undefined)
-      searchParams.append('minScreen', filters.value.minScreen.toString())
-    if (filters.value.maxScreen != undefined)
-      searchParams.append('maxScreen', filters.value.maxScreen.toString())
     if (filters.value.years.length > 0) {
       filters.value.years.forEach((y: number) => searchParams.append('year', y.toString()))
     }
-    if (filters.value.minStorage != undefined)
-      searchParams.append('minStorage', filters.value.minStorage.toString())
-    if (filters.value.maxStorage != undefined)
-      searchParams.append('maxStorage', filters.value.maxStorage.toString())
-    if (filters.value.processor) searchParams.append('processor', filters.value.processor)
     if (filters.value.modelName) searchParams.append('modelName', filters.value.modelName)
 
     const data = await $fetch<SearchResponse>(
-      `http://localhost:8000/api/dataset/search?${searchParams.toString()}`
+      `${pythonApiUrl}/api/dataset/search?${searchParams.toString()}`
     )
     results.value = data
   } catch (err: any) {
@@ -602,13 +531,8 @@ const resetFilters = () => {
     maxRam: undefined,
     minBattery: undefined,
     maxBattery: undefined,
-    minScreen: undefined,
-    maxScreen: undefined,
-    years: [],
-    minStorage: undefined,
-    maxStorage: undefined,
-    processor: undefined,
     modelName: undefined,
+    years: [],
   }
   sortBy.value = 'price'
   sortOrder.value = 'asc'

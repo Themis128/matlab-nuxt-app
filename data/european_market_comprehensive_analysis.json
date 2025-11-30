@@ -1,0 +1,423 @@
+{
+  "market_trends": {
+    "european_avg_yoy_growth": 2709.3701110025963,
+    "global_avg_yoy_growth": 15.796983327874145,
+    "recent_european_avg_price": 157.0,
+    "recent_global_avg_price": 610.1430416666667,
+    "recent_price_gap_percent": -74.26832901820222
+  },
+  "market_leadership": {
+    "european_market_share_percent": 1.2021857923497268,
+    "top_european_brands": [
+      {
+        "brand": "Nokia",
+        "models": 11
+      }
+    ],
+    "top_global_brands": [
+      {
+        "brand": "Oppo",
+        "models": 115
+      },
+      {
+        "brand": "Apple",
+        "models": 97
+      },
+      {
+        "brand": "Honor",
+        "models": 91
+      },
+      {
+        "brand": "Samsung",
+        "models": 88
+      },
+      {
+        "brand": "Vivo",
+        "models": 86
+      }
+    ],
+    "premium_eu_leaders": [
+      {
+        "brand": "    Nokia\nName: 0, dtype: object",
+        "avg_price": 39622.0,
+        "count": 1
+      }
+    ],
+    "premium_global_leaders": [
+      {
+        "brand": "    Apple\nName: 0, dtype: object",
+        "avg_price": 1115.8831168831168,
+        "count": 77
+      },
+      {
+        "brand": "    Google\nName: 1, dtype: object",
+        "avg_price": 1127.5714285714287,
+        "count": 7
+      },
+      {
+        "brand": "    Honor\nName: 2, dtype: object",
+        "avg_price": 1294.2380952380952,
+        "count": 21
+      },
+      {
+        "brand": "    Huawei\nName: 3, dtype: object",
+        "avg_price": 1470.12,
+        "count": 25
+      },
+      {
+        "brand": "    Motorola\nName: 4, dtype: object",
+        "avg_price": 1215.6666666666667,
+        "count": 6
+      },
+      {
+        "brand": "    OnePlus\nName: 5, dtype: object",
+        "avg_price": 904.5555555555555,
+        "count": 9
+      },
+      {
+        "brand": "    Oppo\nName: 6, dtype: object",
+        "avg_price": 1072.6842105263158,
+        "count": 19
+      },
+      {
+        "brand": "    Samsung\nName: 7, dtype: object",
+        "avg_price": 1244.5263157894738,
+        "count": 38
+      },
+      {
+        "brand": "    Sony\nName: 8, dtype: object",
+        "avg_price": 1399.0,
+        "count": 6
+      },
+      {
+        "brand": "    Tecno\nName: 9, dtype: object",
+        "avg_price": 1126.7777777777778,
+        "count": 9
+      },
+      {
+        "brand": "    Vivo\nName: 10, dtype: object",
+        "avg_price": 1037.4615384615386,
+        "count": 13
+      },
+      {
+        "brand": "    Xiaomi\nName: 11, dtype: object",
+        "avg_price": 924.0,
+        "count": 4
+      }
+    ]
+  },
+  "feature_preferences": {
+    "ram": {
+      "european_avg": 4.0,
+      "global_avg": 7.835176991150442,
+      "difference_percent": -48.948185796978684,
+      "preference": "Global Higher"
+    },
+    "battery_capacity": {
+      "european_avg": 750.0,
+      "global_avg": 1748.0907079646017,
+      "difference_percent": -57.096047900553955,
+      "preference": "Global Higher"
+    },
+    "screen_size": {
+      "european_avg": 6.874545454545455,
+      "global_avg": 7.09533185840708,
+      "difference_percent": -3.111713564179823,
+      "preference": "Similar"
+    },
+    "mobile_weight": {
+      "european_avg": 219.0,
+      "global_avg": 229.03473451327437,
+      "difference_percent": -4.381315582808589,
+      "preference": "Similar"
+    },
+    "camera_focus": {
+      "european_front_avg": 8.727272727272727,
+      "global_front_avg": 18.281637168141593,
+      "european_back_avg": 38.90909090909091,
+      "global_back_avg": 46.58384955752213
+    }
+  },
+  "price_positioning": {
+    "european_distribution": {
+      "Budget": 90.9090909090909,
+      "Ultra-Premium": 9.090909090909092,
+      "Mid-Range": 0.0,
+      "Premium": 0.0
+    },
+    "global_distribution": {
+      "Budget": 32.52212389380531,
+      "Mid-Range": 30.86283185840708,
+      "Premium": 21.349557522123895,
+      "Ultra-Premium": 15.265486725663715
+    },
+    "tier_avg_prices": {
+      "European": {
+        "Budget": 174.0,
+        "Mid-Range": NaN,
+        "Premium": NaN,
+        "Ultra-Premium": 39622.0
+      },
+      "Global": {
+        "Budget": 219.3265306122449,
+        "Mid-Range": 444.89569892473116,
+        "Premium": 838.0453886010363,
+        "Ultra-Premium": 1349.9420289855072
+      }
+    }
+  },
+  "innovation_leaders": {
+    "top_eu_innovators": [
+      {
+        "brand": "Nokia",
+        "spec_density": 0.0658157894736842,
+        "price": 189.0,
+        "year": 2022
+      },
+      {
+        "brand": "Nokia",
+        "spec_density": 0.063560606060606,
+        "price": 239.0,
+        "year": 2022
+      },
+      {
+        "brand": "Nokia",
+        "spec_density": 0.0552894736842105,
+        "price": 169.0,
+        "year": 2022
+      },
+      {
+        "brand": "Nokia",
+        "spec_density": 0.054740932642487,
+        "price": 229.0,
+        "year": 2023
+      },
+      {
+        "brand": "Nokia",
+        "spec_density": 0.0534263959390862,
+        "price": 169.0,
+        "year": 2021
+      },
+      {
+        "brand": "Nokia",
+        "spec_density": 0.0534263959390862,
+        "price": 189.0,
+        "year": 2021
+      },
+      {
+        "brand": "Nokia",
+        "spec_density": 0.0528894472361809,
+        "price": 159.0,
+        "year": 2023
+      },
+      {
+        "brand": "Nokia",
+        "spec_density": 0.0500263157894736,
+        "price": 139.0,
+        "year": 2023
+      },
+      {
+        "brand": "Nokia",
+        "spec_density": 0.0484978540772532,
+        "price": 39622.0,
+        "year": 2022
+      },
+      {
+        "brand": "Nokia",
+        "spec_density": 0.0478643216080401,
+        "price": 139.0,
+        "year": 2023
+      }
+    ],
+    "top_global_innovators": [
+      {
+        "brand": "Vivo",
+        "spec_density": 0.1497860962566845,
+        "price": 949.0,
+        "year": 2024
+      },
+      {
+        "brand": "OnePlus",
+        "spec_density": 0.1357843137254901,
+        "price": 899.0,
+        "year": 2023
+      },
+      {
+        "brand": "Oppo",
+        "spec_density": 0.1348543689320388,
+        "price": 1199.0,
+        "year": 2024
+      },
+      {
+        "brand": "Oppo",
+        "spec_density": 0.1338983050847457,
+        "price": 699.0,
+        "year": 2024
+      },
+      {
+        "brand": "Oppo",
+        "spec_density": 0.1330434782608695,
+        "price": 999.0,
+        "year": 2023
+      },
+      {
+        "brand": "Oppo",
+        "spec_density": 0.1327956989247311,
+        "price": 699.0,
+        "year": 2024
+      },
+      {
+        "brand": "Vivo",
+        "spec_density": 0.1322857142857142,
+        "price": 699.0,
+        "year": 2024
+      },
+      {
+        "brand": "Oppo",
+        "spec_density": 0.1307291666666666,
+        "price": 799.0,
+        "year": 2024
+      },
+      {
+        "brand": "Vivo",
+        "spec_density": 0.1290582959641255,
+        "price": 1199.0,
+        "year": 2024
+      },
+      {
+        "brand": "Vivo",
+        "spec_density": 0.1290582959641255,
+        "price": 1299.0,
+        "year": 2024
+      }
+    ],
+    "avg_spec_density_eu": 0.05366369912225861,
+    "avg_spec_density_global": 0.07881977102397578,
+    "recent_eu_avg_ram": 3.2,
+    "recent_global_avg_ram": 8.775
+  },
+  "value_propositions": {
+    "top_eu_value": [
+      {
+        "brand": "Nokia",
+        "price": 119.0,
+        "value_score": 5.479033613445378
+      },
+      {
+        "brand": "Nokia",
+        "price": 139.0,
+        "value_score": 4.71226618705036
+      },
+      {
+        "brand": "Nokia",
+        "price": 139.0,
+        "value_score": 4.697877697841727
+      },
+      {
+        "brand": "Nokia",
+        "price": 159.0,
+        "value_score": 4.125817610062893
+      },
+      {
+        "brand": "Nokia",
+        "price": 169.0,
+        "value_score": 3.8816863905325443
+      },
+      {
+        "brand": "Nokia",
+        "price": 169.0,
+        "value_score": 3.869852071005917
+      },
+      {
+        "brand": "Nokia",
+        "price": 189.0,
+        "value_score": 3.470925925925926
+      },
+      {
+        "brand": "Nokia",
+        "price": 189.0,
+        "value_score": 3.470925925925926
+      },
+      {
+        "brand": "Nokia",
+        "price": 229.0,
+        "value_score": 2.882117903930131
+      },
+      {
+        "brand": "Nokia",
+        "price": 239.0,
+        "value_score": 2.77826359832636
+      }
+    ],
+    "top_global_value": [
+      {
+        "brand": "Samsung",
+        "price": 99.0,
+        "value_score": 8.146464646464647
+      },
+      {
+        "brand": "Samsung",
+        "price": 129.0,
+        "value_score": 7.87984496124031
+      },
+      {
+        "brand": "Infinix",
+        "price": 79.0,
+        "value_score": 7.746898734177215
+      },
+      {
+        "brand": "Honor",
+        "price": 129.0,
+        "value_score": 7.54267441860465
+      },
+      {
+        "brand": "Tecno",
+        "price": 89.0,
+        "value_score": 7.3596067415730335
+      },
+      {
+        "brand": "Tecno",
+        "price": 89.0,
+        "value_score": 7.3596067415730335
+      },
+      {
+        "brand": "Infinix",
+        "price": 99.0,
+        "value_score": 6.697020202020202
+      },
+      {
+        "brand": "Tecno",
+        "price": 99.0,
+        "value_score": 6.616212121212121
+      },
+      {
+        "brand": "Tecno",
+        "price": 99.0,
+        "value_score": 6.616212121212121
+      },
+      {
+        "brand": "Tecno",
+        "price": 99.0,
+        "value_score": 6.616212121212121
+      }
+    ],
+    "avg_value_score_eu": 3.5813929888918383,
+    "avg_value_score_global": 1.9154481470324554,
+    "value_advantage": "European"
+  },
+  "summary": {
+    "timestamp": "2025-11-30T09:02:09.281531",
+    "dataset_overview": {
+      "total_phones": 915,
+      "european_phones": 11,
+      "global_phones": 904,
+      "year_range": "2014-2025",
+      "european_brands_tracked": 10
+    },
+    "key_findings": [
+      "European brands hold 1.2% of the dataset market share",
+      "European phones are 74.3% lower priced than global average in recent years",
+      "European brands offer better price/performance ratios on average"
+    ]
+  }
+}

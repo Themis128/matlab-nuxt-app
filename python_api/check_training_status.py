@@ -3,7 +3,6 @@ Check if model training has completed
 """
 
 from pathlib import Path
-import os
 
 MODELS_DIR = Path(__file__).parent / "trained_models"
 

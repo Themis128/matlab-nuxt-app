@@ -1,0 +1,1831 @@
+{
+  "target_price": 449.0,
+  "examples": [
+    {
+      "row_index": 63,
+      "initial_prediction": 999.0004557271512,
+      "target_price": 449.0,
+      "final_prediction": 449.9654264391662,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7979078864723086,
+          "pred_after": 948.9973402258945
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7690398166604642,
+          "pred_after": 899.0094846436596
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7401717468486197,
+          "pred_after": 848.9240164938268
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7113036770367753,
+          "pred_after": 790.7702062829842
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6824356072249309,
+          "pred_after": 728.4745179028589
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6535675374130865,
+          "pred_after": 648.9967436785148
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6246994676012421,
+          "pred_after": 598.9927356090391
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5958313977893976,
+          "pred_after": 548.9944348724849
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5669633279775532,
+          "pred_after": 499.9804630073208
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5380952581657088,
+          "pred_after": 498.9923639129993
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5092271883538644,
+          "pred_after": 449.9663925156021
+        },
+        {
+          "feature": "ram_weight_ratio",
+          "shift": -0.0016980639593096676,
+          "new_value": 0.019578531785371132,
+          "pred_after": 449.9654264391662
+        }
+      ]
+    },
+    {
+      "row_index": 677,
+      "initial_prediction": 899.0101860299517,
+      "target_price": 449.0,
+      "final_prediction": 449.96709390189426,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7459953181662976,
+          "pred_after": 848.9247178801189
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7171272483544532,
+          "pred_after": 799.0065515430476
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6882591785426088,
+          "pred_after": 728.475219289151
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6593911087307643,
+          "pred_after": 699.0000979091128
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6305230389189199,
+          "pred_after": 634.9836911645762
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6016549691070755,
+          "pred_after": 548.995136258777
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5727868992952311,
+          "pred_after": 529.0440641355265
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5439188294833867,
+          "pred_after": 498.99306529929146
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5150507596715422,
+          "pred_after": 449.96709390189426
+        }
+      ]
+    },
+    {
+      "row_index": 140,
+      "initial_prediction": 249.0014912311924,
+      "target_price": 449.0,
+      "final_prediction": 449.99505624213066,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.2567369222708608,
+          "pred_after": 270.02142067047964
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.28560499208270523,
+          "pred_after": 290.2957027763831
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.31447306189454965,
+          "pred_after": 299.0001501334752
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.3433411317063941,
+          "pred_after": 320.04634189728245
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.3722092015182385,
+          "pred_after": 349.00411716612285
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.4010772713300829,
+          "pred_after": 349.9985378996792
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.42994534114192734,
+          "pred_after": 380.11590464378185
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.45881341095377176,
+          "pred_after": 398.99952410927534
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.4876814807656162,
+          "pred_after": 439.9824541637108
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.5165495505774605,
+          "pred_after": 449.99602231856653
+        },
+        {
+          "feature": "ram_weight_ratio",
+          "shift": -0.0016980639593096676,
+          "new_value": 0.019578531785371132,
+          "pred_after": 449.99505624213066
+        }
+      ]
+    },
+    {
+      "row_index": 53,
+      "initial_prediction": 998.9981434218494,
+      "target_price": 449.0,
+      "final_prediction": 449.97528385894435,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7979078864723086,
+          "pred_after": 948.9943133585726
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7690398166604642,
+          "pred_after": 899.0064577763377
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7401717468486197,
+          "pred_after": 848.9294048976649
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7113036770367753,
+          "pred_after": 790.7681936622796
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6824356072249309,
+          "pred_after": 728.4725052821543
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6535675374130865,
+          "pred_after": 648.9950853022308
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6246994676012421,
+          "pred_after": 598.9910772327551
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5958313977893976,
+          "pred_after": 548.9927764962009
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5669633279775532,
+          "pred_after": 499.97880463103655
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5380952581657088,
+          "pred_after": 498.99070553671504
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5092271883538644,
+          "pred_after": 449.97528385894435
+        }
+      ]
+    },
+    {
+      "row_index": 825,
+      "initial_prediction": 298.998757393135,
+      "target_price": 449.0,
+      "final_prediction": 448.9962419024631,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.33214675833643453,
+          "pred_after": 308.42236557793484
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.36101482814827895,
+          "pred_after": 340.3503389294697
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.3898828979601234,
+          "pred_after": 349.0034926228104
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.4187509677719678,
+          "pred_after": 379.0220512133628
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.4476190375838122,
+          "pred_after": 398.9988995659629
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.47648710739565664,
+          "pred_after": 399.9768232394588
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.505355177207501,
+          "pred_after": 448.9962419024631
+        }
+      ]
+    },
+    {
+      "row_index": 870,
+      "initial_prediction": 898.8665062878448,
+      "target_price": 449.0,
+      "final_prediction": 449.81492937674136,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7459953181662976,
+          "pred_after": 848.457708495305
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7171272483544532,
+          "pred_after": 798.6311136000843
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6882591785426088,
+          "pred_after": 728.123946378719
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6593911087307643,
+          "pred_after": 698.7628494053778
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6305230389189199,
+          "pred_after": 634.7571269264541
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6016549691070755,
+          "pred_after": 548.9320032869645
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5727868992952311,
+          "pred_after": 529.0019847212587
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5439188294833867,
+          "pred_after": 498.98451413811244
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5150507596715422,
+          "pred_after": 449.99726482816436
+        },
+        {
+          "feature": "ram_battery_interaction_v2",
+          "shift": -2.3554917586070245,
+          "new_value": -2.1954917586070244,
+          "pred_after": 449.86706910853
+        },
+        {
+          "feature": "ram_weight_ratio",
+          "shift": -0.0016980639593096676,
+          "new_value": 0.025888142937242033,
+          "pred_after": 449.83436696191654
+        },
+        {
+          "feature": "battery_weight_ratio",
+          "shift": -1.128985291223488,
+          "new_value": -1.1117439119131431,
+          "pred_after": 449.81492937674136
+        }
+      ]
+    },
+    {
+      "row_index": 693,
+      "initial_prediction": 1299.0011987369207,
+      "target_price": 449.0,
+      "final_prediction": 449.98465426271247,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.9137548810078278,
+          "pred_after": 1199.000684590404
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.8848868111959833,
+          "pred_after": 1099.0024976598934
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.8560187413841389,
+          "pred_after": 1049.002736610678
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.8271506715722945,
+          "pred_after": 999.0065077749622
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7982826017604501,
+          "pred_after": 949.0033922737055
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7694145319486057,
+          "pred_after": 899.0155366914705
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7405464621367612,
+          "pred_after": 848.9282557211975
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7116783923249168,
+          "pred_after": 790.7700482722988
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6828103225130724,
+          "pred_after": 728.4807246521632
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.653942252701228,
+          "pred_after": 649.0045661153845
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6250741828893835,
+          "pred_after": 599.0033219686176
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5962061130775391,
+          "pred_after": 549.0009893727192
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5673380432656947,
+          "pred_after": 499.98659488911727
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5384699734538503,
+          "pred_after": 498.99849579479576
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5096019036420059,
+          "pred_after": 449.9909019766027
+        },
+        {
+          "feature": "spec_density",
+          "shift": -0.002333606268160759,
+          "new_value": 0.10039161895706444,
+          "pred_after": 449.98572601395625
+        },
+        {
+          "feature": "ram_battery_interaction_v2",
+          "shift": -2.3554917586070245,
+          "new_value": -2.2754917586070245,
+          "pred_after": 449.98465426271247
+        }
+      ]
+    },
+    {
+      "row_index": 829,
+      "initial_prediction": 999.0070027187907,
+      "target_price": 449.0,
+      "final_prediction": 449.9788106091733,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7979078864723086,
+          "pred_after": 949.0038872175339
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7690398166604642,
+          "pred_after": 899.016031635299
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7401717468486197,
+          "pred_after": 848.9295357958546
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7113036770367753,
+          "pred_after": 790.7705432161273
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6824356072249309,
+          "pred_after": 728.4812195959915
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6535675374130865,
+          "pred_after": 649.0052842891726
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6246994676012421,
+          "pred_after": 599.0040401424056
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5958313977893976,
+          "pred_after": 549.0017075465073
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5669633279775532,
+          "pred_after": 499.9904198592889
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5380952581657088,
+          "pred_after": 499.0023207649674
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5092271883538644,
+          "pred_after": 450.00254445917415
+        },
+        {
+          "feature": "battery_weight_ratio",
+          "shift": -1.128985291223488,
+          "new_value": -1.1044754873019194,
+          "pred_after": 449.9838476936412
+        },
+        {
+          "feature": "ram_weight_ratio",
+          "shift": -0.0016980639593096676,
+          "new_value": 0.03751762231520014,
+          "pred_after": 449.9821163067349
+        },
+        {
+          "feature": "spec_density",
+          "shift": -0.002333606268160759,
+          "new_value": 0.07028894275144704,
+          "pred_after": 449.9788106091733
+        }
+      ]
+    },
+    {
+      "row_index": 98,
+      "initial_prediction": 1298.997486742196,
+      "target_price": 449.0,
+      "final_prediction": 449.99442604956073,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.9137548810078278,
+          "pred_after": 1198.9969725956794
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.8848868111959833,
+          "pred_after": 1098.9990637881997
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.8560187413841389,
+          "pred_after": 1048.9989971543655
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.8271506715722945,
+          "pred_after": 999.0027683186499
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7982826017604501,
+          "pred_after": 948.9996528173932
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7694145319486057,
+          "pred_after": 899.0117972351583
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7405464621367612,
+          "pred_after": 848.9257305757607
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7116783923249168,
+          "pred_after": 790.767523126862
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6828103225130724,
+          "pred_after": 728.4767638835093
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.653942252701228,
+          "pred_after": 649.0002726759428
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6250741828893835,
+          "pred_after": 598.9990285291759
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5962061130775391,
+          "pred_after": 548.9966959332776
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5673380432656947,
+          "pred_after": 499.9823014496755
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5384699734538503,
+          "pred_after": 498.994202355354
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5096019036420059,
+          "pred_after": 449.99442604956073
+        }
+      ]
+    },
+    {
+      "row_index": 399,
+      "initial_prediction": 399.00203348649325,
+      "target_price": 449.0,
+      "final_prediction": 449.97429110122835,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.4796877419429919,
+          "pred_after": 429.1553949197678
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.5085558117548363,
+          "pred_after": 449.99853169578444
+        },
+        {
+          "feature": "battery_weight_ratio",
+          "shift": -1.128985291223488,
+          "new_value": -1.105863903940251,
+          "pred_after": 449.97811697009337
+        },
+        {
+          "feature": "ram_battery_interaction_v2",
+          "shift": -2.3554917586070245,
+          "new_value": -2.3234917586070245,
+          "pred_after": 449.97429110122835
+        }
+      ]
+    },
+    {
+      "row_index": 621,
+      "initial_prediction": 999.0063499300959,
+      "target_price": 449.0,
+      "final_prediction": 449.98178689869343,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7979078864723086,
+          "pred_after": 949.0032344288392
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7690398166604642,
+          "pred_after": 899.0153788466042
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7401717468486197,
+          "pred_after": 848.9306958276001
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7113036770367753,
+          "pred_after": 790.7761004859289
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6824356072249309,
+          "pred_after": 728.4867768657931
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6535675374130865,
+          "pred_after": 649.0083887753884
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6246994676012421,
+          "pred_after": 599.0071446286215
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5958313977893976,
+          "pred_after": 549.0088438920674
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5669633279775532,
+          "pred_after": 499.99487202690324
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5380952581657088,
+          "pred_after": 499.0067729325817
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5092271883538644,
+          "pred_after": 450.0052835666781
+        },
+        {
+          "feature": "battery_weight_ratio",
+          "shift": -1.128985291223488,
+          "new_value": -1.109183311025468,
+          "pred_after": 449.987204980977
+        },
+        {
+          "feature": "ram_weight_ratio",
+          "shift": -0.0016980639593096676,
+          "new_value": 0.03790589643672993,
+          "pred_after": 449.9854735940707
+        },
+        {
+          "feature": "spec_density",
+          "shift": -0.002333606268160759,
+          "new_value": 0.07045847293976004,
+          "pred_after": 449.98188975648674
+        },
+        {
+          "feature": "ram_battery_interaction_v2",
+          "shift": -2.3554917586070245,
+          "new_value": -2.3234917586070245,
+          "pred_after": 449.98178689869343
+        }
+      ]
+    },
+    {
+      "row_index": 666,
+      "initial_prediction": 1098.9947315716329,
+      "target_price": 449.0,
+      "final_prediction": 449.002633829071,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.8476346624285928,
+          "pred_after": 1048.9946649377987
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.8187665926167483,
+          "pred_after": 998.9995495985049
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7898985228049039,
+          "pred_after": 948.9964340972482
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7610304529930595,
+          "pred_after": 878.1136342037892
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7321623831812151,
+          "pred_after": 799.0017611009285
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7032943133693706,
+          "pred_after": 790.7601245389275
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6744262435575262,
+          "pred_after": 699.0015153067727
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6455581737456818,
+          "pred_after": 648.9988667762381
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6166901039338374,
+          "pred_after": 598.9976226294712
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.587822034121993,
+          "pred_after": 548.999321892917
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5589539643101485,
+          "pred_after": 499.9880342056983
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5300858944983041,
+          "pred_after": 479.04571994813716
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5012178246864597,
+          "pred_after": 449.0027566647343
+        },
+        {
+          "feature": "ram_battery_interaction_v2",
+          "shift": -2.3554917586070245,
+          "new_value": -2.3154917586070245,
+          "pred_after": 449.002633829071
+        }
+      ]
+    },
+    {
+      "row_index": 499,
+      "initial_prediction": 210.02607594364648,
+      "target_price": 449.0,
+      "final_prediction": 449.00354762663284,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.19007025560419413,
+          "pred_after": 228.90035225302597
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.21893832541603855,
+          "pred_after": 240.06070481435302
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.24780639522788298,
+          "pred_after": 259.30702435877834
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.27667446503972737,
+          "pred_after": 279.4828672136743
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.3055425348515718,
+          "pred_after": 298.9720819574878
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.3344106046634162,
+          "pred_after": 310.94510407944637
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.36327867447526063,
+          "pred_after": 340.3615398987629
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.39214674428710505,
+          "pred_after": 348.9779191038047
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.4210148140989495,
+          "pred_after": 378.99647769435705
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.4498828839107939,
+          "pred_after": 398.9712961975281
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.4787509537226383,
+          "pred_after": 418.9761005246025
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.5076190235344827,
+          "pred_after": 448.96943363633034
+        },
+        {
+          "feature": "battery_weight_ratio",
+          "shift": 1.128985291223488,
+          "new_value": 1.1440067504509557,
+          "pred_after": 449.00354762663284
+        }
+      ]
+    },
+    {
+      "row_index": 168,
+      "initial_prediction": 799.0030608261327,
+      "target_price": 449.0,
+      "final_prediction": 448.99772458591264,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6940827498602867,
+          "pred_after": 749.040427579237
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6652146800484423,
+          "pred_after": 699.0028150319769
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6363466102365979,
+          "pred_after": 634.9891765239203
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6074785404247535,
+          "pred_after": 598.9989223546753
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.578610470612909,
+          "pred_after": 529.0482018134721
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5497424008010646,
+          "pred_after": 498.9972029772369
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5208743309892202,
+          "pred_after": 479.0402687287649
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.4920062611773758,
+          "pred_after": 448.99772458591264
+        }
+      ]
+    },
+    {
+      "row_index": 264,
+      "initial_prediction": 269.0808402267725,
+      "target_price": 449.0,
+      "final_prediction": 449.9610621893546,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.2802341900304236,
+          "pred_after": 290.253662977233
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.309102259842268,
+          "pred_after": 298.95811033432506
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.33797032965411244,
+          "pred_after": 318.9917010255355
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.36683839946595687,
+          "pred_after": 340.316810435702
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.3957064692778013,
+          "pred_after": 349.95544410340153
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.4245745390896457,
+          "pred_after": 380.0728108475042
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.45344260890149013,
+          "pred_after": 398.95643031299767
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.48231067871333455,
+          "pred_after": 429.06866317636826
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.511178748525179,
+          "pred_after": 449.9610621893546
+        }
+      ]
+    },
+    {
+      "row_index": 544,
+      "initial_prediction": 149.0011026073521,
+      "target_price": 449.0,
+      "final_prediction": 448.9975275541381,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.06329429932004112,
+          "pred_after": 169.00755593980662
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.09216236913188554,
+          "pred_after": 179.0005531575043
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.12103043894372996,
+          "pred_after": 190.0609290096474
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.14989850875557437,
+          "pred_after": 199.9537486105244
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.1787665785674188,
+          "pred_after": 220.0048733771029
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.2076346483792632,
+          "pred_after": 238.863244431954
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.23650271819110763,
+          "pred_after": 250.18757308307943
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.26537078800295205,
+          "pred_after": 278.9762134193271
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.2942388578147965,
+          "pred_after": 298.99983590711304
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.3231069276266409,
+          "pred_after": 299.96884930232306
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.3519749974384853,
+          "pred_after": 329.009513909213
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.38084306725032974,
+          "pred_after": 349.00134764186356
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.40971113706217416,
+          "pred_after": 359.9419597590436
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.4385792068740186,
+          "pred_after": 398.99675458501605
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.467447276685863,
+          "pred_after": 399.91750188932673
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.4963153464977074,
+          "pred_after": 448.9861827893008
+        },
+        {
+          "feature": "screen_weight_ratio",
+          "shift": 0.00045371774094236234,
+          "new_value": 0.03586069448512836,
+          "pred_after": 448.9975275541381
+        }
+      ]
+    },
+    {
+      "row_index": 242,
+      "initial_prediction": 349.0033877141569,
+      "target_price": 449.0,
+      "final_prediction": 448.99789072575135,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.41083528292659854,
+          "pred_after": 359.9439998313369
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.43970335273844297,
+          "pred_after": 398.99879465730936
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.4685714225502874,
+          "pred_after": 399.9767183308052
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.4974394923621318,
+          "pred_after": 448.99789072575135
+        }
+      ]
+    },
+    {
+      "row_index": 60,
+      "initial_prediction": 698.9984304463849,
+      "target_price": 449.0,
+      "final_prediction": 449.0031477839519,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6427166296417075,
+          "pred_after": 648.995777602079
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6138485598298631,
+          "pred_after": 598.9917695326033
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5849804900180187,
+          "pred_after": 548.9934687960491
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5561124202061742,
+          "pred_after": 498.9913978365634
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5272443503943298,
+          "pred_after": 479.0222008083545
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.4983762805824854,
+          "pred_after": 448.968024298317
+        },
+        {
+          "feature": "ram_battery_interaction_v2",
+          "shift": 2.3554917586070245,
+          "new_value": 2.3674917586070245,
+          "pred_after": 449.0031477839519
+        }
+      ]
+    },
+    {
+      "row_index": 707,
+      "initial_prediction": 349.0061538980099,
+      "target_price": 449.0,
+      "final_prediction": 448.9968733282335,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.41083528292659854,
+          "pred_after": 359.94676601518995
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.43970335273844297,
+          "pred_after": 398.9995309917333
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.4685714225502874,
+          "pred_after": 399.9774546652292
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.4974394923621318,
+          "pred_after": 448.9968733282335
+        }
+      ]
+    },
+    {
+      "row_index": 484,
+      "initial_prediction": 210.05523827828827,
+      "target_price": 449.0,
+      "final_prediction": 449.00284406519876,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.19007025560419413,
+          "pred_after": 228.936150044065
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.21893832541603855,
+          "pred_after": 240.09364471065953
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.24780639522788298,
+          "pred_after": 259.51069838510534
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.27667446503972737,
+          "pred_after": 279.4620563180072
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.3055425348515718,
+          "pred_after": 299.00655336619326
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.3344106046634162,
+          "pred_after": 310.983451093571
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.36327867447526063,
+          "pred_after": 340.3960195936866
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.39214674428710505,
+          "pred_after": 349.01239879872844
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.4210148140989495,
+          "pred_after": 379.0309573892808
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.4498828839107939,
+          "pred_after": 399.0057758924518
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.4787509537226383,
+          "pred_after": 419.0105802195262
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.5076190235344827,
+          "pred_after": 449.003118228952
+        },
+        {
+          "feature": "ram_battery_interaction_v2",
+          "shift": -2.3554917586070245,
+          "new_value": -2.3254917586070247,
+          "pred_after": 449.00284406519876
+        }
+      ]
+    },
+    {
+      "row_index": 209,
+      "initial_prediction": 348.99990453039516,
+      "target_price": 449.0,
+      "final_prediction": 448.99440754198963,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.41083528292659854,
+          "pred_after": 359.9405166475752
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.43970335273844297,
+          "pred_after": 398.99531147354764
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.4685714225502874,
+          "pred_after": 399.9732351470435
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": 0.028868069811844418,
+          "new_value": 0.4974394923621318,
+          "pred_after": 448.99440754198963
+        }
+      ]
+    },
+    {
+      "row_index": 620,
+      "initial_prediction": 2498.9941849605952,
+      "target_price": 449.0,
+      "final_prediction": 448.9964674429106,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.9656674493138386,
+          "pred_after": 1498.999907868127
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.9367993795019942,
+          "pred_after": 1298.9981413768153
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.9079313096901498,
+          "pred_after": 1198.9984931508898
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.8790632398783054,
+          "pred_after": 1099.000322348962
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.850195170066461,
+          "pred_after": 1049.0005612997468
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.8213271002546165,
+          "pred_after": 999.005445960453
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7924590304427721,
+          "pred_after": 949.0023304591963
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7635909606309277,
+          "pred_after": 899.0144748769613
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7347228908190833,
+          "pred_after": 799.009027569617
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7058548210072388,
+          "pred_after": 790.7733836958457
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6769867511953944,
+          "pred_after": 699.0034782598401
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.64811868138355,
+          "pred_after": 649.0002115494736
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6192506115717056,
+          "pred_after": 598.9962034799979
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5903825417598612,
+          "pred_after": 548.9938708840996
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5615144719480167,
+          "pred_after": 499.97989901893555
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5326464021361723,
+          "pred_after": 498.99179992461404
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5037783323243279,
+          "pred_after": 448.97939524654475
+        },
+        {
+          "feature": "battery_weight_ratio",
+          "shift": 1.128985291223488,
+          "new_value": 1.1446715657332918,
+          "pred_after": 448.9964674429106
+        }
+      ]
+    },
+    {
+      "row_index": 326,
+      "initial_prediction": 1298.997764865227,
+      "target_price": 449.0,
+      "final_prediction": 449.99413209103506,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.9137548810078278,
+          "pred_after": 1198.9972507187103
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.8848868111959833,
+          "pred_after": 1098.998085852169
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.8560187413841389,
+          "pred_after": 1048.9980192183348
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.8271506715722945,
+          "pred_after": 999.0017903826192
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7982826017604501,
+          "pred_after": 948.9986748813625
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7694145319486057,
+          "pred_after": 899.0108192991275
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7405464621367612,
+          "pred_after": 848.92475263973
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7116783923249168,
+          "pred_after": 790.7665451908313
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6828103225130724,
+          "pred_after": 728.4764699249837
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.653942252701228,
+          "pred_after": 648.9999787174172
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6250741828893835,
+          "pred_after": 598.9987345706503
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5962061130775391,
+          "pred_after": 548.996401974752
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5673380432656947,
+          "pred_after": 499.98200749114983
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5384699734538503,
+          "pred_after": 498.9939083968283
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5096019036420059,
+          "pred_after": 449.99413209103506
+        }
+      ]
+    },
+    {
+      "row_index": 204,
+      "initial_prediction": 598.9930936950618,
+      "target_price": 449.0,
+      "final_prediction": 448.9978928889228,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5897111651608332,
+          "pred_after": 548.9947929585077
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5608430953489888,
+          "pred_after": 499.98039847490566
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5319750255371444,
+          "pred_after": 479.03808421734453
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5031069557253,
+          "pred_after": 448.9951209339417
+        },
+        {
+          "feature": "Screen Size",
+          "shift": 0.15445777042105466,
+          "new_value": 6.704457770421055,
+          "pred_after": 448.9978928889228
+        }
+      ]
+    },
+    {
+      "row_index": 642,
+      "initial_prediction": 1099.0011907422306,
+      "target_price": 449.0,
+      "final_prediction": 448.9986165981856,
+      "steps": [
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.8476346624285928,
+          "pred_after": 1049.0014296930153
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.8187665926167483,
+          "pred_after": 999.0063143537216
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7898985228049039,
+          "pred_after": 949.0031988524648
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7610304529930595,
+          "pred_after": 878.1185861385655
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7321623831812151,
+          "pred_after": 799.0054987248295
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.7032943133693706,
+          "pred_after": 790.7698548510582
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6744262435575262,
+          "pred_after": 699.0072444546381
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6455581737456818,
+          "pred_after": 649.0045959241035
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.6166901039338374,
+          "pred_after": 599.0033517773365
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.587822034121993,
+          "pred_after": 549.0010191814382
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5589539643101485,
+          "pred_after": 499.98973149421965
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5300858944983041,
+          "pred_after": 479.04741723665853
+        },
+        {
+          "feature": "price_percentile_global",
+          "shift": -0.028868069811844418,
+          "new_value": 0.5012178246864597,
+          "pred_after": 448.9986165981856
+        }
+      ]
+    }
+  ]
+}

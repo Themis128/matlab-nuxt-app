@@ -10,11 +10,7 @@ Supported APIs:
 
 import os
 import requests
-import time
-from typing import Optional, Dict, List
-from datetime import datetime
-import json
-from pathlib import Path
+from typing import Optional, Dict
 
 
 class GoogleShoppingAPI:
@@ -150,32 +146,20 @@ class AmazonPAAPI:
             return None
 
         try:
-            import hmac
-            import hashlib
-            import json as json_lib
-            from datetime import datetime as dt
 
             # PA-API 5.0 requires signed requests
             # This is a simplified version - full implementation requires proper AWS signing
-            payload = {
-                "PartnerTag": self.partner_tag,
-                "PartnerType": "Associates",
-                "Keywords": query,
-                "SearchIndex": "Electronics",
-                "ItemCount": 5,
-                "Resources": [
-                    "ItemInfo.Title",
-                    "Offers.Listings.Price",
-                    "Offers.Listings.Availability",
-                    "Images.Primary.Large"
-                ]
-            }
+            # Request signing omitted here; use official SDK or AWS Signature V4
 
             # Note: Full implementation requires AWS Signature Version 4
             # This is a placeholder - you'll need to use a library like paapi5-python-sdk
             # or implement proper AWS signing
 
-            print("    [!] Amazon PA-API requires AWS Signature V4 - use paapi5-python-sdk")
+            import logging
+            logging.getLogger("python_api").warning(
+                "Amazon PA-API requires AWS Signature V4 - use paapi5-python-sdk (request keywords: %s)",
+                query,
+            )
             return None
 
         except Exception as e:
@@ -185,25 +169,10 @@ class AmazonPAAPI:
 
 class PriceComparisonAPI:
     """Price comparison APIs (Idealo, Geizhals, etc.)"""
-
-    def __init__(self):
-        """
-        Initialize Price Comparison API
-
-        API credentials are loaded from environment variables only.
-        """
-        self.api_key = os.getenv('PRICE_COMPARISON_API_KEY')
-
     def search_idealo(self, query: str) -> Optional[Dict]:
-        """
-        Search Idealo.de (if API available)
-        Note: Idealo may not have a public API - this is a placeholder
-        """
-        # Idealo doesn't have a public API, but you could use their RSS feeds
-        # or contact them for API access
+        """Search Idealo (placeholder; public API may not be available)"""
         try:
-            # Placeholder for Idealo API integration
-            # You would need to check if Idealo offers an API
+            # No public API; consider RSS feeds or partnerships
             return None
         except Exception as e:
             print(f"    [!] Idealo API error: {e}")

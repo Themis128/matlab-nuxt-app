@@ -20341,5 +20341,4513 @@
     },
     "user_rating": {},
     "model_name": "Infinix Note 40 5G"
+  },
+  "infinix note 40 pro": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Note 40 Pro 5G"
+  },
+  "infinix note 40 racing edition": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Note 40 Racing Edition"
+  },
+  "infinix hot 40": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 40"
+  },
+  "infinix hot 40i": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 40i"
+  },
+  "infinix hot 40 pro": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 40 Pro"
+  },
+  "infinix zero 40": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Zero 40"
+  },
+  "infinix zero flip": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Zero Flip"
+  },
+  "infinix hot 30 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 30 128GB"
+  },
+  "infinix hot 30i 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 30i 128GB"
+  },
+  "infinix hot 30i nfc 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 30i NFC 128GB"
+  },
+  "infinix hot 30 play 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 30 Play 128GB"
+  },
+  "infinix zero 30 256gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Zero 30 256GB"
+  },
+  "infinix gt 10 pro 256gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix GT 10 Pro 256GB"
+  },
+  "infinix hot 12 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 12 128GB"
+  },
+  "infinix hot 12 play 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 12 Play 128GB"
+  },
+  "infinix hot 12 pro 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 12 Pro 128GB"
+  },
+  "infinix hot 12i 6b": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 12i 64GB"
+  },
+  "infinix hot 20 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 20 128GB"
+  },
+  "infinix hot 20 play 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 20 Play 128GB"
+  },
+  "infinix hot 20s 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 20s 128GB"
+  },
+  "infinix hot 20i 6b": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 20i 64GB"
+  },
+  "infinix hot 10t 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 10T 128GB"
+  },
+  "infinix hot 10s 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 10S 128GB"
+  },
+  "infinix hot 10s nfc 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 10S NFC 128GB"
+  },
+  "infinix hot 10 lite 6b": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 10 Lite 64GB"
+  },
+  "infinix hot 10 play 6b": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 10 Play 64GB"
+  },
+  "infinix hot 11 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 11 128GB"
+  },
+  "infinix hot 11 play 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 11 Play 128GB"
+  },
+  "infinix hot 11s 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 11s 128GB"
+  },
+  "infinix smart hd 32gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Smart HD 32GB"
+  },
+  "infinix note 8i 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Note 8i 128GB"
+  },
+  "infinix note 8 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Note 8 128GB"
+  },
+  "infinix zero 8i 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Zero 8i 128GB"
+  },
+  "infinix hot 10 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Hot 10 128GB"
+  },
+  "infinix zero 8 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Zero 8 128GB"
+  },
+  "infinix smart 5 6b": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Infinix Smart 5 64GB"
+  },
+  "honor 9x lite": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor 9X Lite"
+  },
+  "honor 30": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor 30"
+  },
+  "honor 30 pro": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor 30 Pro"
+  },
+  "honor 30 pro+": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor 30 Pro+"
+  },
+  "honor 30s": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor 30S"
+  },
+  "honor x10": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor X10"
+  },
+  "honor x10 max": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor X10 Max"
+  },
+  "honor play 4": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Play 4"
+  },
+  "honor play 4 pro": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Play 4 Pro"
+  },
+  "honor 10x lite": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor 10X Lite"
+  },
+  "honor v40": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor V40"
+  },
+  "honor 50": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor 50"
+  },
+  "honor 50 pro": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor 50 Pro"
+  },
+  "honor 50 se": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor 50 SE"
+  },
+  "honor x20": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor X20"
+  },
+  "honor x20 se": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor X20 SE"
+  },
+  "honor play 5": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Play 5"
+  },
+  "honor play 5t": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Play 5T"
+  },
+  "honor magic3": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Magic3"
+  },
+  "honor magic3 pro": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Magic3 Pro"
+  },
+  "honor magic3 pro+": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Magic3 Pro+"
+  },
+  "honor 60": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor 60"
+  },
+  "honor 60 pro": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor 60 Pro"
+  },
+  "honor 60 se": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor 60 SE"
+  },
+  "honor x30": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor X30"
+  },
+  "honor x30i": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor X30i"
+  },
+  "honor x30 max": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor X30 Max"
+  },
+  "honor play 6": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Play 6"
+  },
+  "honor play 6t": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Play 6T"
+  },
+  "honor magic4": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Magic4"
+  },
+  "honor magic4 pro": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Magic4 Pro"
+  },
+  "honor magic4 ultimate": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Magic4 Ultimate"
+  },
+  "honor magic v": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Magic V"
+  },
+  "honor 70": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor 70"
+  },
+  "honor 70 pro": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor 70 Pro"
+  },
+  "honor 70 pro+": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor 70 Pro+"
+  },
+  "honor x40": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor X40"
+  },
+  "honor x40i": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor X40i"
+  },
+  "honor play 7": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Play 7"
+  },
+  "honor play 7t": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Play 7T"
+  },
+  "honor magic5": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Magic5"
+  },
+  "honor magic5 pro": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Magic5 Pro"
+  },
+  "honor magic5 ultimate": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Magic5 Ultimate"
+  },
+  "honor magic vs": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Magic Vs"
+  },
+  "honor 80": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor 80"
+  },
+  "honor 80 pro": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor 80 Pro"
+  },
+  "honor 80 se": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor 80 SE"
+  },
+  "honor x50": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor X50"
+  },
+  "honor x50i": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor X50i"
+  },
+  "honor play 8": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Play 8"
+  },
+  "honor play 8t": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Play 8T"
+  },
+  "honor magic6": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Magic6"
+  },
+  "honor magic6 pro": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Magic6 Pro"
+  },
+  "honor magic6 ultimate": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Magic6 Ultimate"
+  },
+  "honor magic v2": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Magic V2"
+  },
+  "honor 90": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor 90"
+  },
+  "honor 90 pro": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor 90 Pro"
+  },
+  "honor 90 se": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor 90 SE"
+  },
+  "honor x60": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor X60"
+  },
+  "honor x60i": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor X60i"
+  },
+  "honor play 9": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Play 9"
+  },
+  "honor play 9t": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Play 9T"
+  },
+  "honor magic7": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Magic7"
+  },
+  "honor magic7 pro": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Magic7 Pro"
+  },
+  "honor magic7 ultimate": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Magic7 Ultimate"
+  },
+  "honor magic v3": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Magic V3"
+  },
+  "honor pad 6": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Pad 6"
+  },
+  "honor pad x6": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Pad X6"
+  },
+  "honor pad 7": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Pad 7"
+  },
+  "honor tablet v7": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Tablet V7"
+  },
+  "honor tablet v7 pro": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Tablet V7 Pro"
+  },
+  "honor pad 8": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Pad 8"
+  },
+  "honor pad x8": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Pad X8"
+  },
+  "honor pad x8 lite": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Pad X8 Lite"
+  },
+  "honor pad v8": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Pad V8"
+  },
+  "honor pad v8 pro": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Pad V8 Pro"
+  },
+  "honor pad 9": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Pad 9"
+  },
+  "honor pad 9 pro": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Pad 9 Pro"
+  },
+  "honor pad x9": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Pad X9"
+  },
+  "honor pad x8 pro": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Pad X8 Pro"
+  },
+  "honor magicpad 13": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor MagicPad 13"
+  },
+  "honor magicpad 2": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor MagicPad 2"
+  },
+  "honor pad x8a": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Pad X8a"
+  },
+  "honor pad x8a kids edition": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Pad X8a Kids Edition"
+  },
+  "honor pad x9 pro": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Pad X9 Pro"
+  },
+  "honor pad v9": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Pad V9"
+  },
+  "honor pad gt pro": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Pad GT Pro"
+  },
+  "honor pad x10": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Pad X10"
+  },
+  "honor pad x10 pro": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Pad X10 Pro"
+  },
+  "honor magicpad 3": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor MagicPad 3"
+  },
+  "honor pad v10": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Honor Pad V10"
+  },
+  "poco f2 pro 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO F2 Pro 128GB"
+  },
+  "poco m2 pro 6b": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO M2 Pro 64GB"
+  },
+  "poco x3 nfc 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO X3 NFC 128GB"
+  },
+  "poco m3 6b": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO M3 64GB"
+  },
+  "poco f3 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO F3 128GB"
+  },
+  "poco x3 pro 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO X3 Pro 128GB"
+  },
+  "poco m3 pro 6b": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO M3 Pro 5G 64GB"
+  },
+  "poco f3 gt 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO F3 GT 128GB"
+  },
+  "poco x3 gt 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO X3 GT 128GB"
+  },
+  "poco m4 pro 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO M4 Pro 5G 128GB"
+  },
+  "poco f4 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO F4 128GB"
+  },
+  "poco f4 gt 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO F4 GT 128GB"
+  },
+  "poco x4 pro 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO X4 Pro 5G 128GB"
+  },
+  "poco m5 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO M5 128GB"
+  },
+  "poco m5s 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO M5s 128GB"
+  },
+  "poco f5 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO F5 128GB"
+  },
+  "poco f5 pro 256gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO F5 Pro 256GB"
+  },
+  "poco x5 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO X5 128GB"
+  },
+  "poco x5 pro 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO X5 Pro 128GB"
+  },
+  "poco m6 6b": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO M6 64GB"
+  },
+  "poco m6 pro 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO M6 Pro 128GB"
+  },
+  "poco x6 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO X6 128GB"
+  },
+  "poco x6 pro 256gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO X6 Pro 256GB"
+  },
+  "poco f6 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO F6 128GB"
+  },
+  "poco f6 pro 256gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO F6 Pro 256GB"
+  },
+  "poco c65 6b": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO C65 64GB"
+  },
+  "poco x7 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO X7 128GB"
+  },
+  "poco x7 pro 256gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO X7 Pro 256GB"
+  },
+  "poco m7 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "POCO M7 5G 128GB"
+  },
+  "poco pad 128gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Poco Pad 5G 128GB"
+  },
+  "poco pad 256gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Poco Pad 5G 256GB"
+  },
+  "samsung galaxy z fold6 256gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Samsung Galaxy Z Fold6 256GB"
+  },
+  "samsung galaxy z fold6 512gb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Samsung Galaxy Z Fold6 512GB"
+  },
+  "samsung galaxy z fold6 1tb": {
+    "url": "https://www.gsmarena.com/xiaomi_poco_f8_ultra_5g-14301.php",
+    "display": {
+      "refresh_rate": 68.0,
+      "type": "AMOLED, 68B colors, 2560Hz PWM, 120Hz, Dolby Vision, HDR10+, 2000 nits (HBM), 3500 nits (peak)",
+      "peak_brightness_nits": 68.0,
+      "resolution": "1200 x 2608 pixels, 19.5:9 ratio (~416 ppi density)"
+    },
+    "camera": {
+      "main_mp": 50,
+      "main_aperture": 1.7,
+      "sensor_size": "1/1.31\"",
+      "has_ois": true,
+      "max_video": "8K",
+      "max_video_fps": 30
+    },
+    "battery": {},
+    "build": {
+      "ip_rating": "IP68",
+      "materials": "Glass front (Poco Shield Glass), aluminum alloy frame, fiber-reinforced plastic back or silicone polymer back"
+    },
+    "performance": {
+      "chipset": "Qualcomm SM8850-AC Snapdragon 8 Elite Gen 5 (3 nm)",
+      "gpu": "Adreno 840"
+    },
+    "user_rating": {},
+    "model_name": "Samsung Galaxy Z Fold6 1TB"
   }
 }

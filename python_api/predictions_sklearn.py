@@ -5,11 +5,10 @@ Works with Python 3.14 (no TensorFlow needed)
 """
 
 import numpy as np
-import os
 import json
 import pandas as pd
 from pathlib import Path
-from typing import Union, Optional
+from typing import Optional
 
 try:
     import joblib
@@ -18,11 +17,10 @@ except ImportError:
     JOBLIB_AVAILABLE = False
 
 try:
-    from sklearn.neural_network import MLPRegressor, MLPClassifier
-    SKLEARN_AVAILABLE = True
-except ImportError:
+    import importlib.util
+    SKLEARN_AVAILABLE = importlib.util.find_spec("sklearn") is not None
+except Exception:
     SKLEARN_AVAILABLE = False
-    print("Warning: scikit-learn not available.")
 
 # Models directory
 MODELS_DIR = Path(__file__).parent / "trained_models"

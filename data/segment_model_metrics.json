@@ -1,0 +1,50 @@
+{
+  "price_column": "Launched Price (USA)",
+  "n_clusters": 3,
+  "feature_columns_used": [
+    "spec_density",
+    "temporal_decay",
+    "price_elasticity_proxy",
+    "battery_weight_ratio",
+    "screen_weight_ratio",
+    "ram_weight_ratio",
+    "spec_value_ratio",
+    "ram_battery_interaction_v2",
+    "RAM",
+    "Battery Capacity",
+    "Screen Size",
+    "Mobile Weight"
+  ],
+  "baseline": {
+    "rmse_cv_mean": 651.1576543855796,
+    "rmse_train": 490.95305916143616,
+    "mae_train": 25.307268852459007,
+    "r2_train": 0.8690926007116979,
+    "n_samples": 915
+  },
+  "segments": {
+    "0": {
+      "rmse_cv_mean": 3126.0710495729127,
+      "rmse_train": 1310.1715027082778,
+      "mae_train": 174.8687542087542,
+      "r2_train": 0.8885274655840752,
+      "n_samples": 99
+    },
+    "1": {
+      "rmse_cv_mean": 179.31371754559413,
+      "rmse_train": 23.345768706688755,
+      "mae_train": 9.307885987654313,
+      "r2_train": 0.9972926351800115,
+      "n_samples": 540
+    },
+    "2": {
+      "rmse_cv_mean": 72.05293820503515,
+      "rmse_train": 17.915419684726093,
+      "mae_train": 9.565217391304351,
+      "r2_train": 0.9978463637546666,
+      "n_samples": 276
+    }
+  },
+  "avg_segment_rmse_cv_mean": 1125.8125684411805,
+  "segment_improvement_vs_baseline": -474.6549140556009
+}

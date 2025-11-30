@@ -10,7 +10,6 @@ from tensorflow import keras
 from tensorflow.keras import layers, models
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-import pickle
 import os
 from pathlib import Path
 import json
@@ -204,7 +203,7 @@ def train_price_model(data, epochs=100, batch_size=64):
 
     # Train
     print("\nTraining model...")
-    history = model.fit(
+    model.fit(
         X_train, y_train,
         validation_data=(X_val, y_val),
         epochs=epochs,
@@ -229,7 +228,7 @@ def train_price_model(data, epochs=100, batch_size=64):
     ss_tot = np.sum((y_test_orig - np.mean(y_test_orig)) ** 2)
     r2 = 1 - (ss_res / ss_tot)
 
-    print(f"\n✓ Test Performance:")
+    print("\n✓ Test Performance:")
     print(f"  R²: {r2:.4f}")
     print(f"  RMSE: ${rmse:.2f}")
     print(f"  MAE: ${mae:.2f}")
@@ -308,7 +307,7 @@ def train_ram_model(data, epochs=100, batch_size=64):
     )
 
     # Train
-    history = model.fit(
+    model.fit(
         X_train, y_train,
         validation_data=(X_val, y_val),
         epochs=epochs,
@@ -395,7 +394,7 @@ def train_battery_model(data, epochs=100, batch_size=64):
     )
 
     # Train
-    history = model.fit(
+    model.fit(
         X_train, y_train,
         validation_data=(X_val, y_val),
         epochs=epochs,
@@ -483,7 +482,7 @@ def train_brand_model(data, epochs=100, batch_size=64):
     )
 
     # Train
-    history = model.fit(
+    model.fit(
         X_train, y_train,
         validation_data=(X_val, y_val),
         epochs=epochs,

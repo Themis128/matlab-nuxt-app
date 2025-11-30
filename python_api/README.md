@@ -16,12 +16,28 @@ python api.py
 
 ## API Endpoints
 
+**Core Endpoints:**
+
 - `GET /` - API info
 - `GET /health` - Health check
-- `POST /api/predict/price` - Predict price
+- `POST /api/predict/price` - Predict price (sklearn models)
 - `POST /api/predict/ram` - Predict RAM
 - `POST /api/predict/battery` - Predict battery
 - `POST /api/predict/brand` - Predict brand
+
+**Production Distilled Model (NEW - 12× Faster!):**
+
+- `POST /api/distilled/predict/price` - Fast price prediction (distilled tree, <1ms)
+- `GET /api/distilled/info` - Model metadata (features, performance benchmarks)
+- `GET /api/distilled/health` - Distilled model health check
+
+**Performance Comparison:**
+| Endpoint | Model | Latency | Accuracy |
+|----------|-------|---------|----------|
+| `/api/predict/price` | GradientBoosting | 0.69ms | RMSE $25,108 |
+| **`/api/distilled/predict/price`** | **Distilled Tree** | **0.058ms** ⚡ | **RMSE $32,366** |
+
+_Distilled model: 12× faster, 97.6% smaller (14.5 KB), 71% accuracy retention_
 
 ## Example Request
 

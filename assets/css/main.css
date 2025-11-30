@@ -1,0 +1,206 @@
+/* Global Styles with Accessibility & UX Improvements */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Improved focus visibility for accessibility */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-primary-500 ring-offset-2 dark:ring-offset-gray-900;
+  }
+
+  /* Smooth scrolling for better UX */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Reduced motion for users who prefer it (accessibility) */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Better text rendering */
+  body {
+    @apply antialiased text-gray-900 dark:text-gray-100;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Skip to main content link for screen readers */
+  .skip-to-main {
+    @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary-600 focus:text-white focus:rounded-md;
+  }
+}
+
+@layer components {
+  /* Enhanced Card Hover Effects */
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+  }
+
+  /* Accessible Button Styles */
+  .btn-primary {
+    @apply px-4 py-2 bg-primary-600 text-white rounded-lg font-medium;
+    @apply hover:bg-primary-700 active:bg-primary-800;
+    @apply focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply transition-all duration-200;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg font-medium;
+    @apply hover:bg-gray-300 dark:hover:bg-gray-600 active:bg-gray-400 dark:active:bg-gray-500;
+    @apply focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply transition-all duration-200;
+  }
+
+  /* Enhanced Form Inputs */
+  .input-field {
+    @apply w-full px-4 py-2.5 rounded-lg border-2 border-gray-300 dark:border-gray-600;
+    @apply bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100;
+    @apply focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20;
+    @apply placeholder:text-gray-400 dark:placeholder:text-gray-500;
+    @apply transition-all duration-200;
+    @apply disabled:bg-gray-100 dark:disabled:bg-gray-900 disabled:cursor-not-allowed;
+  }
+
+  .input-field[aria-invalid='true'] {
+    @apply border-red-500 focus:border-red-500 focus:ring-red-500/20;
+  }
+
+  /* Loading Spinner */
+  .spinner {
+    @apply animate-spin rounded-full border-4 border-gray-200 border-t-primary-600;
+  }
+
+  /* Gradient Text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-600 via-purple-600 to-pink-600 bg-clip-text text-transparent;
+  }
+
+  /* Card with better mobile padding */
+  .card-responsive {
+    @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 sm:p-6 lg:p-8;
+    @apply border border-gray-200 dark:border-gray-700;
+  }
+
+  /* Improved stat card */
+  .stat-card {
+    @apply card-responsive flex flex-col items-center text-center;
+    @apply hover:shadow-2xl transition-shadow duration-300;
+  }
+
+  .stat-value {
+    @apply text-3xl sm:text-4xl lg:text-5xl font-bold;
+  }
+
+  .stat-label {
+    @apply text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-2;
+  }
+
+  .stat-change {
+    @apply text-xs sm:text-sm font-semibold mt-1;
+  }
+}
+
+@layer utilities {
+  /* Touch-friendly sizing for mobile */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Screen reader only text */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .not-sr-only {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  /* Container with responsive padding */
+  .container-responsive {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Responsive text sizes */
+  .text-responsive-xl {
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl;
+  }
+
+  .text-responsive-lg {
+    @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl;
+  }
+
+  .text-responsive-md {
+    @apply text-lg sm:text-xl md:text-2xl;
+  }
+
+  /* Better spacing for mobile */
+  .section-spacing {
+    @apply py-8 sm:py-12 lg:py-16;
+  }
+
+  /* Grid with better responsive behavior */
+  .grid-auto-fit {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  }
+
+  .grid-auto-fill {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  }
+}
+
+/* Dark mode improvements */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  * {
+    border-width: 2px;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    @apply border-2 border-current;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    @apply bg-white text-black;
+  }
+}

@@ -106,18 +106,18 @@ def print_stats():
     print(f"\nTotal Predictions Logged: {stats['total_predictions']}")
     print(f"Last Updated: {stats['last_updated']}")
 
-    print(f"\n📊 Error Statistics:")
+    print("\n📊 Error Statistics:")
     print(f"   Mean Error: {stats['mean_error']:.2f}")
     print(f"   Median Error: {stats['median_error']:.2f}")
     print(f"   Std Dev: {stats['std_error']:.2f}")
 
-    print(f"\n📊 Percentage Error Statistics:")
+    print("\n📊 Percentage Error Statistics:")
     print(f"   Mean % Error: {stats['mean_error_pct']:.2f}%")
     print(f"   Median % Error: {stats['median_error_pct']:.2f}%")
     print(f"   Std Dev: {stats['std_error_pct']:.2f}%")
 
     # Performance assessment
-    print(f"\n💡 Performance Assessment:")
+    print("\n💡 Performance Assessment:")
     if stats['mean_error_pct'] < 5:
         print("   ✅ Excellent: Mean error < 5%")
     elif stats['mean_error_pct'] < 10:
@@ -150,7 +150,7 @@ def test_prediction_with_actual(
         error = abs(predicted - actual_value)
         log_prediction(prediction_type, inputs, predicted, actual_value, error)
 
-        print(f"\n✅ Prediction logged:")
+        print("\n✅ Prediction logged:")
         print(f"   Type: {prediction_type}")
         print(f"   Predicted: {predicted}")
         print(f"   Actual: {actual_value}")

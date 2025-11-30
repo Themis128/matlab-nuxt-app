@@ -1,0 +1,215 @@
+{
+  "baseline_size": 640,
+  "current_size": 275,
+  "thresholds": {
+    "psi": 0.2,
+    "ks_p_value": 0.05,
+    "residual_anomaly_multiplier": 3.0
+  },
+  "feature_drift": {
+    "RAM": {
+      "psi": 0.2445147911634208,
+      "ks_statistic": 0.03130681818181818,
+      "ks_p_value": 0.9879806651753228,
+      "drift_detected": true,
+      "drift_severity": "medium"
+    },
+    "Battery Capacity": {
+      "psi": 0.21690582713170142,
+      "ks_statistic": 0.018522727272727274,
+      "ks_p_value": 0.9999995526263109,
+      "drift_detected": true,
+      "drift_severity": "medium"
+    },
+    "Screen Size": {
+      "psi": 0.07429389108821585,
+      "ks_statistic": 0.04130681818181818,
+      "ks_p_value": 0.8809516537031465,
+      "drift_detected": false,
+      "drift_severity": "low"
+    },
+    "Mobile Weight": {
+      "psi": 0.025468686763643632,
+      "ks_statistic": 0.04201704545454545,
+      "ks_p_value": 0.8681437594861199,
+      "drift_detected": false,
+      "drift_severity": "low"
+    },
+    "Launched Year": {
+      "psi": 0.07742994221082002,
+      "ks_statistic": 0.026278409090909092,
+      "ks_p_value": 0.9987980236692884,
+      "drift_detected": false,
+      "drift_severity": "low"
+    },
+    "spec_density": {
+      "psi": 0.07361293831515034,
+      "ks_statistic": 0.06213068181818182,
+      "ks_p_value": 0.4265347300953439,
+      "drift_detected": false,
+      "drift_severity": "low"
+    },
+    "temporal_decay": {
+      "psi": 0.017137731542928716,
+      "ks_statistic": 0.026278409090909092,
+      "ks_p_value": 0.9987980236692884,
+      "drift_detected": false,
+      "drift_severity": "low"
+    },
+    "battery_weight_ratio": {
+      "psi": 0.13336025506846522,
+      "ks_statistic": 0.038181818181818185,
+      "ks_p_value": 0.9290382493815806,
+      "drift_detected": false,
+      "drift_severity": "low"
+    },
+    "screen_weight_ratio": {
+      "psi": 0.06563058925531294,
+      "ks_statistic": 0.058522727272727275,
+      "ks_p_value": 0.5024130554552454,
+      "drift_detected": false,
+      "drift_severity": "low"
+    },
+    "ram_weight_ratio": {
+      "psi": 0.03766841970449975,
+      "ks_statistic": 0.06088068181818182,
+      "ks_p_value": 0.45208985973581445,
+      "drift_detected": false,
+      "drift_severity": "low"
+    },
+    "ram_battery_interaction_v2": {
+      "psi": 0.14561580496667406,
+      "ks_statistic": 0.033068181818181816,
+      "ks_p_value": 0.9787521559886216,
+      "drift_detected": false,
+      "drift_severity": "low"
+    },
+    "price_percentile_global": {
+      "psi": 0.02792946686052383,
+      "ks_statistic": 0.030880681818181818,
+      "ks_p_value": 0.9896642680245663,
+      "drift_detected": false,
+      "drift_severity": "low"
+    },
+    "ram_percentile_global": {
+      "psi": 0.02836047114207337,
+      "ks_statistic": 0.03130681818181818,
+      "ks_p_value": 0.9879806651753228,
+      "drift_detected": false,
+      "drift_severity": "low"
+    },
+    "battery_percentile_global": {
+      "psi": 0.01978682053077053,
+      "ks_statistic": 0.018522727272727274,
+      "ks_p_value": 0.9999995526263109,
+      "drift_detected": false,
+      "drift_severity": "low"
+    }
+  },
+  "prediction_drift": {
+    "psi": 0.02026932806052902,
+    "ks_statistic": 0.03548295454545455,
+    "ks_p_value": 0.9598837032060074,
+    "rmse_baseline": 0.039467272954178935,
+    "rmse_current": 0.04086058752423689,
+    "rmse_degradation_percent": 3.5303036307463516,
+    "performance_degraded": false
+  },
+  "residual_anomalies": {
+    "baseline": {
+      "q1": 0.0022044624951575997,
+      "q3": 0.01156968994518337,
+      "iqr": 0.00936522745002577,
+      "upper_bound": 0.03966537229526068,
+      "n_anomalies": 47,
+      "anomaly_rate": 0.0734375,
+      "anomaly_indices": [
+        3,
+        4,
+        14,
+        42,
+        64,
+        67,
+        73,
+        101,
+        117,
+        123,
+        145,
+        151,
+        153,
+        165,
+        166,
+        177,
+        180,
+        185,
+        209,
+        210,
+        241,
+        258,
+        269,
+        285,
+        316,
+        340,
+        377,
+        381,
+        387,
+        388,
+        417,
+        418,
+        432,
+        437,
+        448,
+        459,
+        464,
+        508,
+        536,
+        543,
+        559,
+        576,
+        586,
+        615,
+        619,
+        626,
+        633
+      ],
+      "max_residual": 0.5170961197396196,
+      "mean_residual": 0.014600026538598798
+    },
+    "current": {
+      "q1": 0.0022734981693304235,
+      "q3": 0.012805743545357018,
+      "iqr": 0.010532245376026594,
+      "upper_bound": 0.0444024796734368,
+      "n_anomalies": 23,
+      "anomaly_rate": 0.08363636363636363,
+      "anomaly_indices": [
+        5,
+        20,
+        42,
+        43,
+        48,
+        53,
+        56,
+        58,
+        102,
+        119,
+        127,
+        131,
+        133,
+        163,
+        166,
+        168,
+        181,
+        184,
+        188,
+        191,
+        252,
+        254,
+        269
+      ],
+      "max_residual": 0.4165144572821191,
+      "mean_residual": 0.016298700178560714
+    }
+  },
+  "alerts": []
+}

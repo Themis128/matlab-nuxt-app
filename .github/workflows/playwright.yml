@@ -1,0 +1,102 @@
+name: Playwright Tests
+on:
+    push:
+        branches: [master, main]
+    pull_request:
+        branches: [master, main]
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        timeout-minutes: 60
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20"
+                  cache: "npm"
+
+            - name: Setup Python
+              uses: actions/setup-python@v5
+              with:
+                  python-version: "3.11"
+                  cache: "pip"
+
+            - name: Install Node dependencies
+              run: npm ci
+
+            - name: Install Python dependencies
+              run: |
+                  python -m pip install --upgrade pip
+                  pip install -r requirements.txt
+                  pip install -r python_api/requirements.txt
+
+            - name: Run Python API tests
+              run: |
+                  cd python_api
+                  pytest test_fastapi.py -v --tb=short
+                  cd ..
+
+            - name: Install Playwright browsers
+              run: npx playwright install --with-deps chromium
+
+            - name: Start Python API
+              run: |
+                  cd python_api
+                  nohup python api.py > ../python-api.log 2>&1 &
+                  echo $! > ../python-api.pid
+                  cd ..
+                  # Wait for API to be ready
+                  timeout 30 bash -c 'until curl -f http://localhost:8000/health > /dev/null 2>&1; do sleep 1; done' || (echo "Python API failed to start" && cat python-api.log && exit 1)
+
+            - name: Build Nuxt app
+              run: npm run build
+
+            - name: Start Nuxt server
+              run: |
+                  nohup npm run preview > nuxt-server.log 2>&1 &
+                  echo $! > nuxt-server.pid
+                  # Wait for Nuxt to be ready
+                  timeout 30 bash -c 'until curl -f http://localhost:3001 > /dev/null 2>&1; do sleep 1; done' || (echo "Nuxt server failed to start" && cat nuxt-server.log && exit 1)
+
+            - name: Run Playwright tests
+              run: npm test
+
+            - name: Upload test results
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: playwright-report
+                  path: playwright-report/
+                  retention-days: 30
+
+            - name: Upload test videos
+              if: failure()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: playwright-videos
+                  path: test-results/
+                  retention-days: 7
+
+            - name: Stop servers
+              if: always()
+              run: |
+                  if [ -f nuxt-server.pid ]; then
+                    kill $(cat nuxt-server.pid) || true
+                  fi
+                  if [ -f python-api.pid ]; then
+                    kill $(cat python-api.pid) || true
+                  fi
+
+            - name: Show logs on failure
+              if: failure()
+              run: |
+                  echo "=== Python API Logs ==="
+                  cat python-api.log || echo "No Python API logs"
+                  echo ""
+                  echo "=== Nuxt Server Logs ==="
+                  cat nuxt-server.log || echo "No Nuxt server logs"

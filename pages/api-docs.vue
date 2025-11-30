@@ -334,7 +334,8 @@
 
 <script setup lang="ts">
 const nuxtBaseUrl = 'http://localhost:3001'
-const pythonBaseUrl = 'http://localhost:8000'
+const { pythonApiUrl } = useApiConfig()
+const pythonBaseUrl = pythonApiUrl
 const pythonApiStatus = ref('checking...')
 
 // Check Python API health

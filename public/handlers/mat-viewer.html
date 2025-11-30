@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MAT File Viewer</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 1rem;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      pre {
+        background: #111;
+        color: #eee;
+        padding: 1rem;
+        overflow: auto;
+      }
+      .hint {
+        font-size: 0.85rem;
+        color: #666;
+      }
+    </style>
+    <script type="module">
+      import { experimental } from 'https://unpkg.com/@replit/extensions@1.10.0/dist/index.esm.js'
+      const { init, fs, auth } = experimental
+      async function start() {
+        await init()
+        const params = new URLSearchParams(location.search)
+        const filePath = params.get('filePath')
+        const outEl = document.getElementById('output')
+        if (!filePath) {
+          outEl.textContent = 'No filePath provided.'
+          return
+        }
+        // For performance, we just show raw bytes length. Parsing .mat fully would need a parser.
+        try {
+          const data = await fs.readFile(filePath, { encoding: 'base64' })
+          outEl.textContent = `MAT file: ${filePath}\nSize (base64 chars): ${data.length}\nPreview (first 120 chars):\n${data.slice(0, 120)}`
+        } catch (err) {
+          outEl.textContent = 'Error reading file: ' + err.message
+        }
+      }
+      start()
+    </script>
+  </head>
+  <body>
+    <header>
+      <h1>MAT File Viewer</h1>
+    </header>
+    <p class="hint">
+      This handler provides a lightweight preview of MATLAB .mat files. Extend to parse structure
+      variables if needed.
+    </p>
+    <pre id="output">Loading...</pre>
+  </body>
+</html>

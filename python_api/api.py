@@ -10,12 +10,15 @@ if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
     sys.stderr.reconfigure(encoding='utf-8')
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import Optional
 import uvicorn
 import logging
+from collections import defaultdict
+from datetime import datetime, timedelta
+import asyncio
 
 # Import API endpoints
 try:
@@ -23,48 +26,110 @@ try:
     PRICE_APIS_AVAILABLE = True
 except ImportError:
     PRICE_APIS_AVAILABLE = False
-    print("[WARN] Price API endpoints not available (api_price_endpoints.py not found)")
+    logging.getLogger("python_api").warning("Price API endpoints not available (api_price_endpoints.py not found)")
 
 try:
     from dataset_endpoints import router as dataset_router
     DATASET_APIS_AVAILABLE = True
 except ImportError:
     DATASET_APIS_AVAILABLE = False
-    print("[WARN] Dataset API endpoints not available (dataset_endpoints.py not found)")
+    logging.getLogger("python_api").warning("Dataset API endpoints not available (dataset_endpoints.py not found)")
+
+try:
+    from api_analytics_endpoints import router as analytics_router
+    ANALYTICS_APIS_AVAILABLE = True
+except ImportError:
+    ANALYTICS_APIS_AVAILABLE = False
+    logging.getLogger("python_api").warning("Analytics API endpoints not available (api_analytics_endpoints.py not found)")
+
+# Try distilled model first (production-ready, 10x faster), then sklearn, then TensorFlow, then basic
+DISTILLED_AVAILABLE = False
+try:
+    from predictions_distilled import get_distilled_predictor
+    predictor_info = get_distilled_predictor().get_info()
+    if predictor_info.get('available'):
+        DISTILLED_AVAILABLE = True
+        logging.getLogger("python_api").info("⭐ Distilled model loaded (10x faster, production-ready)")
+except (ImportError, Exception) as e:
+    logging.getLogger("python_api").info("Distilled model unavailable: %s", type(e).__name__)
 
 # Try scikit-learn predictions first (works with Python 3.14), then TensorFlow, then basic
 try:
     from predictions_sklearn import predict_price, predict_ram, predict_battery, predict_brand
-    print("[OK] Using scikit-learn models for predictions")
+    logging.getLogger("python_api").info("Using scikit-learn models for predictions")
 except (ImportError, Exception) as e:
-    print(f"[INFO] sklearn predictions unavailable: {type(e).__name__}")
+    logging.getLogger("python_api").info("sklearn predictions unavailable: %s", type(e).__name__)
     try:
         from predictions_tensorflow import predict_price, predict_ram, predict_battery, predict_brand
-        print("[OK] Using TensorFlow models for predictions")
+        logging.getLogger("python_api").info("Using TensorFlow models for predictions")
     except (ImportError, Exception) as tf_error:
-        print(f"[INFO] TensorFlow predictions unavailable: {type(tf_error).__name__}")
+        logging.getLogger("python_api").info("TensorFlow predictions unavailable: %s", type(tf_error).__name__)
         # Fallback to basic predictions
         from predictions import predict_price, predict_ram, predict_battery, predict_brand
-        print("[WARN] Using basic predictions (trained models not available)")
+        logging.getLogger("python_api").warning("Using basic predictions (trained models not available)")
 
 # Configure logging for verbose output
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 # Set uvicorn loggers to DEBUG level for verbose output
-uvicorn_logger = logging.getLogger("uvicorn")
-uvicorn_logger.setLevel(logging.DEBUG)
-uvicorn_access_logger = logging.getLogger("uvicorn.access")
-uvicorn_access_logger.setLevel(logging.DEBUG)
+logging.getLogger("uvicorn").setLevel(logging.INFO)
+logging.getLogger("uvicorn.access").setLevel(logging.INFO)
 
 app = FastAPI(title="Mobile Phone Prediction API", version="1.0.0")
+
+# Get environment variables
+CORS_ORIGINS = os.getenv("CORS_ORIGINS", "*").split(",")
+ENABLE_ANALYTICS_CACHE = os.getenv("ENABLE_ANALYTICS_CACHE", "true").lower() == "true"
+LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
+RATE_LIMIT_REQUESTS = int(os.getenv("RATE_LIMIT_REQUESTS", "100"))  # requests per window
+RATE_LIMIT_WINDOW = int(os.getenv("RATE_LIMIT_WINDOW", "60"))  # window in seconds
+
+# Simple in-memory rate limiting (for production, use Redis)
+rate_limit_store = defaultdict(list)
+rate_limit_lock = asyncio.Lock()
+
+async def rate_limit_middleware(request: Request, call_next):
+    """Rate limiting middleware to prevent API abuse"""
+    # Skip rate limiting for health check
+    if request.url.path == "/health":
+        return await call_next(request)
+
+    client_ip = request.client.host
+    current_time = datetime.now()
+
+    async with rate_limit_lock:
+        # Clean old requests outside the window
+        rate_limit_store[client_ip] = [
+            req_time for req_time in rate_limit_store[client_ip]
+            if current_time - req_time < timedelta(seconds=RATE_LIMIT_WINDOW)
+        ]
+
+        # Check if rate limit exceeded
+        if len(rate_limit_store[client_ip]) >= RATE_LIMIT_REQUESTS:
+            raise HTTPException(
+                status_code=429,
+                detail=f"Rate limit exceeded. Maximum {RATE_LIMIT_REQUESTS} requests per {RATE_LIMIT_WINDOW} seconds."
+            )
+
+        # Add current request
+        rate_limit_store[client_ip].append(current_time)
+
+    response = await call_next(request)
+
+    # Add rate limit headers
+    response.headers["X-RateLimit-Limit"] = str(RATE_LIMIT_REQUESTS)
+    response.headers["X-RateLimit-Remaining"] = str(RATE_LIMIT_REQUESTS - len(rate_limit_store[client_ip]))
+    response.headers["X-RateLimit-Reset"] = str(int((current_time + timedelta(seconds=RATE_LIMIT_WINDOW)).timestamp()))
+
+    return response
+
+# Add rate limiting middleware
+app.middleware("http")(rate_limit_middleware)
 
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify your frontend URL
+    allow_origins=CORS_ORIGINS,  # Configurable via environment variable
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -73,11 +138,24 @@ app.add_middleware(
 # Include API endpoints if available
 if PRICE_APIS_AVAILABLE:
     app.include_router(price_router)
-    print("[OK] Price API endpoints loaded")
+    logging.getLogger("python_api").info("Price API endpoints loaded")
 
 if DATASET_APIS_AVAILABLE:
     app.include_router(dataset_router)
-    print("[OK] Dataset API endpoints loaded")
+    logging.getLogger("python_api").info("Dataset API endpoints loaded")
+
+if ANALYTICS_APIS_AVAILABLE:
+    app.include_router(analytics_router)
+    logging.getLogger("python_api").info("Analytics API endpoints loaded")
+
+# Include distilled model endpoints if available
+if DISTILLED_AVAILABLE:
+    try:
+        from api_distilled_endpoints import router as distilled_router
+        app.include_router(distilled_router)
+        logging.getLogger("python_api").info("⭐ Distilled model endpoints loaded (production-ready)")
+    except Exception as e:
+        logging.getLogger("python_api").warning(f"Could not load distilled endpoints: {e}")
 
 
 # Request/Response models
@@ -157,7 +235,12 @@ async def root():
 
 @app.get("/health")
 async def health():
-    return {"status": "healthy"}
+    from datetime import datetime, UTC
+    return {
+        "status": "healthy",
+        "timestamp": datetime.now(UTC).isoformat(),
+        "version": "1.0.0"
+    }
 
 
 # Prediction endpoints

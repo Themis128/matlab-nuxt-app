@@ -4,75 +4,145 @@
   >
     <!-- Hidden status indicator to ensure first rounded-full element is green for demo tests -->
     <span class="rounded-full bg-green-500" style="display: none"></span>
+
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-to-main">Skip to main content</a>
+
     <!-- Navigation Bar -->
     <nav
       v-if="route.path !== '/demo'"
-      class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50"
+      class="bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 shadow-sm"
+      role="navigation"
+      aria-label="Main navigation"
     >
-      <div class="container mx-auto px-4">
-        <div class="flex items-center justify-between h-16">
+      <div class="container-responsive">
+        <div class="flex items-center justify-between h-16 sm:h-20">
           <!-- Logo -->
-          <NuxtLink to="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <NuxtLink
+            to="/"
+            class="flex items-center gap-2 hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg"
+            aria-label="Mobile Finder Home"
+          >
             <UIcon
               name="i-heroicons-device-phone-mobile"
-              class="w-8 h-8 text-primary-600 dark:text-primary-400"
+              class="w-7 h-7 sm:w-8 sm:h-8 text-primary-600 dark:text-primary-400"
+              aria-hidden="true"
             />
-            <span
-              class="text-xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent"
-            >
-              Mobile Finder
-            </span>
+            <span class="text-lg sm:text-xl font-bold gradient-text"> Mobile Finder </span>
           </NuxtLink>
 
-          <!-- Navigation Links -->
-          <div class="hidden md:flex items-center gap-4">
-            <UButton to="/" variant="ghost" color="gray" icon="i-heroicons-home"> Home </UButton>
-            <UButton to="/search" variant="ghost" color="gray" icon="i-heroicons-funnel">
-              Advanced Search
+          <!-- Desktop Navigation Links -->
+          <div class="hidden lg:flex items-center gap-2 xl:gap-4">
+            <UButton
+              to="/"
+              variant="ghost"
+              color="gray"
+              icon="i-heroicons-home"
+              class="touch-target"
+              aria-label="Go to home page"
+            >
+              <span class="hidden xl:inline">Home</span>
+            </UButton>
+            <UButton
+              to="/search"
+              variant="ghost"
+              color="gray"
+              icon="i-heroicons-funnel"
+              class="touch-target"
+              aria-label="Advanced search for mobile phones"
+            >
+              <span class="hidden xl:inline">Search</span>
             </UButton>
             <UButton
               to="/recommendations"
               variant="ghost"
               color="gray"
               icon="i-heroicons-currency-dollar"
+              class="touch-target"
+              aria-label="Find phones by price"
             >
-              Find by Price
+              <span class="hidden xl:inline">Price Finder</span>
             </UButton>
-            <UButton to="/compare" variant="ghost" color="gray" icon="i-heroicons-scale">
-              Compare
+            <UButton
+              to="/compare"
+              variant="ghost"
+              color="gray"
+              icon="i-heroicons-scale"
+              class="touch-target"
+              aria-label="Compare mobile phones"
+            >
+              <span class="hidden xl:inline">Compare</span>
             </UButton>
-            <UButton to="/demo" variant="ghost" color="gray" icon="i-heroicons-sparkles">
-              AI Predictions
+            <UButton
+              to="/demo"
+              variant="ghost"
+              color="gray"
+              icon="i-heroicons-sparkles"
+              class="touch-target"
+              aria-label="AI predictions demo"
+            >
+              <span class="hidden xl:inline">AI Demo</span>
             </UButton>
-            <UButton to="/api-docs" variant="ghost" color="gray" icon="i-heroicons-document-text">
-              API Docs
+            <UButton
+              to="/api-docs"
+              variant="ghost"
+              color="gray"
+              icon="i-heroicons-document-text"
+              class="touch-target"
+              aria-label="API documentation"
+            >
+              <span class="hidden xl:inline">API Docs</span>
             </UButton>
 
-            <!-- Theme Toggle -->
-            <div class="ml-4 border-l border-gray-200 dark:border-gray-700 pl-4">
+            <!-- Settings & Theme Toggle -->
+            <div
+              class="ml-2 xl:ml-4 border-l border-gray-200 dark:border-gray-700 pl-2 xl:pl-4 flex items-center gap-2"
+            >
+              <UButton
+                variant="ghost"
+                color="gray"
+                icon="i-heroicons-cog-6-tooth"
+                class="touch-target"
+                aria-label="Open user preferences"
+                @click="preferencesOpen = true"
+              />
               <ThemeToggle />
             </div>
           </div>
 
           <!-- Mobile Menu Button -->
-          <UButton
-            @click="mobileMenuOpen = !mobileMenuOpen"
-            variant="ghost"
-            color="gray"
-            icon="i-heroicons-bars-3"
-            class="md:hidden"
-          />
+          <div class="flex items-center gap-2 lg:hidden">
+            <ThemeToggle />
+            <UButton
+              @click="mobileMenuOpen = !mobileMenuOpen"
+              variant="ghost"
+              color="gray"
+              icon="i-heroicons-bars-3"
+              class="touch-target"
+              :aria-label="mobileMenuOpen ? 'Close mobile menu' : 'Open mobile menu'"
+              :aria-expanded="mobileMenuOpen"
+              aria-controls="mobile-menu"
+            />
+          </div>
         </div>
 
         <!-- Mobile Menu -->
-        <div v-if="mobileMenuOpen" class="md:hidden pb-4 space-y-2">
+        <div
+          v-if="mobileMenuOpen"
+          id="mobile-menu"
+          class="lg:hidden pb-4 space-y-1 animate-in slide-in-from-top duration-200"
+          role="menu"
+          aria-label="Mobile navigation menu"
+        >
           <UButton
             to="/"
             variant="ghost"
             color="gray"
             block
             icon="i-heroicons-home"
-            @click="mobileMenuOpen = false"
+            class="touch-target justify-start"
+            @click="closeMobileMenu"
+            role="menuitem"
           >
             Home
           </UButton>
@@ -82,7 +152,9 @@
             color="gray"
             block
             icon="i-heroicons-funnel"
-            @click="mobileMenuOpen = false"
+            class="touch-target justify-start"
+            @click="closeMobileMenu"
+            role="menuitem"
           >
             Advanced Search
           </UButton>
@@ -92,7 +164,9 @@
             color="gray"
             block
             icon="i-heroicons-currency-dollar"
-            @click="mobileMenuOpen = false"
+            class="touch-target justify-start"
+            @click="closeMobileMenu"
+            role="menuitem"
           >
             Find by Price
           </UButton>
@@ -102,7 +176,9 @@
             color="gray"
             block
             icon="i-heroicons-scale"
-            @click="mobileMenuOpen = false"
+            class="touch-target justify-start"
+            @click="closeMobileMenu"
+            role="menuitem"
           >
             Compare
           </UButton>
@@ -112,7 +188,9 @@
             color="gray"
             block
             icon="i-heroicons-sparkles"
-            @click="mobileMenuOpen = false"
+            class="touch-target justify-start"
+            @click="closeMobileMenu"
+            role="menuitem"
           >
             AI Predictions
           </UButton>
@@ -122,41 +200,79 @@
             color="gray"
             block
             icon="i-heroicons-document-text"
-            @click="mobileMenuOpen = false"
+            class="touch-target justify-start"
+            @click="closeMobileMenu"
+            role="menuitem"
           >
-            API Docs
+            API Documentation
           </UButton>
         </div>
       </div>
     </nav>
 
     <!-- Main Content -->
-    <main>
+    <main
+      id="main-content"
+      class="min-h-[calc(100vh-theme(spacing.16))] sm:min-h-[calc(100vh-theme(spacing.20))]"
+      role="main"
+    >
       <slot />
     </main>
 
     <!-- Footer -->
     <footer
-      class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-t border-gray-200 dark:border-gray-700 mt-12"
+      class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-t border-gray-200 dark:border-gray-700 mt-auto no-print"
+      role="contentinfo"
+      aria-label="Site footer"
     >
-      <div class="container mx-auto px-4 py-8">
+      <div class="container-responsive py-6 sm:py-8">
         <div class="text-center text-gray-600 dark:text-gray-400">
           <p class="mb-2">
-            <span
-              class="font-semibold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent"
-            >
-              Mobile Finder
-            </span>
+            <span class="font-semibold gradient-text"> Mobile Finder </span>
             - Find Your Perfect Phone
           </p>
-          <p class="text-sm">Powered by AI • 900+ Models • 20+ Brands</p>
+          <p class="text-xs sm:text-sm">Powered by AI • 900+ Models • 20+ Brands</p>
+          <p class="text-xs mt-2">© {{ currentYear }} All rights reserved.</p>
         </div>
       </div>
     </footer>
+
+    <!-- User Preferences Dialog -->
+    <UserPreferencesDialog v-model="preferencesOpen" />
   </div>
 </template>
 
 <script setup lang="ts">
 const mobileMenuOpen = ref(false)
+const preferencesOpen = ref(false)
 const route = useRoute()
+const _colorMode = useColorMode()
+const currentYear = new Date().getFullYear()
+
+// Initialize keyboard shortcuts
+const { _openPreferences } = useKeyboardShortcuts()
+
+// Listen for preferences open event
+if (process.client) {
+  const handleOpenPreferences = () => {
+    preferencesOpen.value = true
+  }
+  window.addEventListener('open-preferences', handleOpenPreferences)
+
+  onUnmounted(() => {
+    window.removeEventListener('open-preferences', handleOpenPreferences)
+  })
+}
+
+const closeMobileMenu = () => {
+  mobileMenuOpen.value = false
+}
+
+// Close mobile menu when route changes
+watch(
+  () => route.path,
+  () => {
+    mobileMenuOpen.value = false
+  }
+)
 </script>

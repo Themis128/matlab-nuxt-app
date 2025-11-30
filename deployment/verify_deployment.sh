@@ -1,0 +1,122 @@
+#!/bin/bash
+
+# Deployment Verification Script
+# Checks if all deployment files are present and valid
+
+echo "====================================="
+echo "Deployment Files Verification"
+echo "====================================="
+echo ""
+
+# Colors
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+# Counters
+TOTAL_CHECKS=0
+PASSED_CHECKS=0
+FAILED_CHECKS=0
+
+check_file() {
+    local file="$1"
+    local description="$2"
+    
+    TOTAL_CHECKS=$((TOTAL_CHECKS + 1))
+    
+    if [ -f "$file" ]; then
+        echo -e "${GREEN}✓${NC} $description"
+        PASSED_CHECKS=$((PASSED_CHECKS + 1))
+        return 0
+    else
+        echo -e "${RED}✗${NC} $description (Missing: $file)"
+        FAILED_CHECKS=$((FAILED_CHECKS + 1))
+        return 1
+    fi
+}
+
+check_executable() {
+    local file="$1"
+    local description="$2"
+    
+    TOTAL_CHECKS=$((TOTAL_CHECKS + 1))
+    
+    if [ -f "$file" ] && [ -x "$file" ]; then
+        echo -e "${GREEN}✓${NC} $description"
+        PASSED_CHECKS=$((PASSED_CHECKS + 1))
+        return 0
+    elif [ -f "$file" ]; then
+        echo -e "${YELLOW}⚠${NC} $description (Not executable: $file)"
+        chmod +x "$file" 2>/dev/null && echo -e "  ${GREEN}→${NC} Made executable"
+        PASSED_CHECKS=$((PASSED_CHECKS + 1))
+        return 0
+    else
+        echo -e "${RED}✗${NC} $description (Missing: $file)"
+        FAILED_CHECKS=$((FAILED_CHECKS + 1))
+        return 1
+    fi
+}
+
+echo "Docker Configuration:"
+check_file "deployment/Dockerfile" "Python API Dockerfile"
+check_file "deployment/Dockerfile.nuxt" "Nuxt App Dockerfile"
+check_file "deployment/docker-compose.yml" "Docker Compose configuration"
+check_file ".dockerignore" ".dockerignore file"
+
+echo ""
+echo "Server Configuration:"
+check_file "deployment/nginx.conf" "Nginx configuration"
+check_file "deployment/python-api.service" "Python API systemd service"
+check_file "deployment/nuxt-app.service" "Nuxt App systemd service"
+
+echo ""
+echo "Automation Scripts:"
+check_executable "deployment/deploy_production.sh" "Production deployment script"
+check_executable "deployment/health_check.sh" "Health check script"
+check_executable "deployment/backup.sh" "Backup script"
+
+echo ""
+echo "Environment Configuration:"
+check_file ".env.production.template" "Environment variables template"
+
+echo ""
+echo "Documentation:"
+check_file "deployment/README.md" "Deployment guide"
+check_file "deployment/QUICK_REFERENCE.md" "Quick reference"
+check_file "deployment/DEPLOYMENT_SUMMARY.md" "Deployment summary"
+
+echo ""
+echo "Application Files:"
+check_file "nuxt.config.ts" "Nuxt configuration"
+check_file "python_api/api.py" "Python API main file"
+check_file "python_api/requirements.txt" "Python dependencies"
+check_file "package.json" "Node.js dependencies"
+
+echo ""
+echo "====================================="
+echo "Verification Summary:"
+echo "Total Checks: $TOTAL_CHECKS"
+echo -e "Passed: ${GREEN}$PASSED_CHECKS${NC}"
+echo -e "Failed: ${RED}$FAILED_CHECKS${NC}"
+echo "====================================="
+
+if [ "$FAILED_CHECKS" -eq 0 ]; then
+    echo -e "${GREEN}✅ All deployment files are present!${NC}"
+    echo ""
+    echo "Next steps:"
+    echo "1. Configure environment: cp .env.production.template .env.production"
+    echo "2. Edit .env.production with your actual values"
+    echo "3. Choose deployment method:"
+    echo "   - Docker: cd deployment && docker-compose up -d"
+    echo "   - Traditional: sudo ./deployment/deploy_production.sh"
+    echo "4. Run health checks: ./deployment/health_check.sh"
+    echo ""
+    echo "See deployment/README.md for detailed instructions."
+    exit 0
+else
+    echo -e "${RED}❌ Some deployment files are missing!${NC}"
+    echo ""
+    echo "Please ensure all files are present before deploying."
+    exit 1
+fi

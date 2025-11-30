@@ -20,7 +20,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'http://localhost:3001',
+    baseURL: process.env.PW_BASE_URL || 'http://localhost:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -70,17 +70,30 @@ export default defineConfig({
     // },
   ],
 
-  /* Run your local dev server before starting the tests */
-  webServer: {
-    command: 'npm run dev',
-    url: 'http://localhost:3001',
-    reuseExistingServer: !isCI,
-    timeout: 180 * 1000,
-    env: {
-      NUXT_TEST: '1',
-      PLAYWRIGHT: '1',
+  /* Auto-start both Python API and Nuxt dev server before tests */
+  webServer: [
+    {
+      command: isCI
+        ? 'cd python_api && python api.py'
+        : 'pwsh -NoProfile -Command "& .\\venv\\Scripts\\Activate.ps1; cd python_api; python api.py"',
+      url: 'http://localhost:8000/health',
+      timeout: 180 * 1000, // 3 minutes for Python API startup
+      reuseExistingServer: !isCI,
+      stdout: 'pipe',
+      stderr: 'pipe',
     },
-  },
+    {
+      // Delay Nuxt startup to allow Python API to initialize first
+      command: isCI
+        ? 'npm run dev'
+        : 'pwsh -NoProfile -Command "Start-Sleep -Seconds 3; npm run dev"',
+      url: 'http://localhost:3000/api/health',
+      timeout: 180 * 1000, // 3 minutes for Nuxt dev server
+      reuseExistingServer: !isCI,
+      stdout: 'pipe',
+      stderr: 'pipe',
+    },
+  ],
 
   globalSetup: './tests/global-setup.ts',
 

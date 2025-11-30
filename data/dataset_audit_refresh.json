@@ -1,0 +1,327 @@
+{
+  "row_count": 915,
+  "column_count": 30,
+  "numeric_columns_detected": [
+    "Back Camera",
+    "Battery Capacity",
+    "Front Camera",
+    "Launched Price (China)",
+    "Launched Price (Dubai)",
+    "Launched Price (India)",
+    "Launched Price (Pakistan)",
+    "Launched Price (USA)",
+    "Launched Year",
+    "Mobile Weight",
+    "RAM",
+    "Screen Size",
+    "battery_percentile_global",
+    "battery_weight_ratio",
+    "cross_brand_price_delta",
+    "price_elasticity_proxy",
+    "price_percentile_brand",
+    "price_percentile_global",
+    "ram_battery_interaction_v2",
+    "ram_percentile_global",
+    "ram_weight_ratio",
+    "screen_weight_ratio",
+    "spec_density",
+    "spec_value_ratio",
+    "temporal_decay"
+  ],
+  "completeness": {
+    "Company Name": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Model Name": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Mobile Weight": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "RAM": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Front Camera": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Back Camera": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Processor": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Battery Capacity": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Screen Size": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Launched Price (Pakistan)": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Launched Price (India)": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Launched Price (China)": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Launched Price (USA)": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Launched Price (Dubai)": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "Launched Year": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "spec_density": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "temporal_decay": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "price_elasticity_proxy": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "battery_weight_ratio": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "screen_weight_ratio": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "ram_weight_ratio": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "price_percentile_global": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "ram_percentile_global": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "battery_percentile_global": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "price_percentile_brand": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "cross_brand_price_delta": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "spec_value_ratio": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "market_segment": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "ram_battery_interaction_v2": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    },
+    "technology_generation_v2": {
+      "missing_count": 0,
+      "missing_percent": 0.0
+    }
+  },
+  "outliers": {
+    "Back Camera": {
+      "lower_bound": -42.5,
+      "upper_bound": 105.5,
+      "outlier_count": 68,
+      "outlier_percent": 7.43
+    },
+    "Battery Capacity": {
+      "lower_bound": -6740.0,
+      "upper_bound": 11244.0,
+      "outlier_count": 0,
+      "outlier_percent": 0.0
+    },
+    "Front Camera": {
+      "lower_bound": -28.0,
+      "upper_bound": 68.0,
+      "outlier_count": 0,
+      "outlier_percent": 0.0
+    },
+    "Launched Price (China)": {
+      "lower_bound": -3751.0,
+      "upper_bound": 11049.0,
+      "outlier_count": 16,
+      "outlier_percent": 1.75
+    },
+    "Launched Price (Dubai)": {
+      "lower_bound": -2298.5,
+      "upper_bound": 6497.5,
+      "outlier_count": 18,
+      "outlier_percent": 1.97
+    },
+    "Launched Price (India)": {
+      "lower_bound": -62501.0,
+      "upper_bound": 157499.0,
+      "outlier_count": 18,
+      "outlier_percent": 1.97
+    },
+    "Launched Price (Pakistan)": {
+      "lower_bound": -132501.0,
+      "upper_bound": 367499.0,
+      "outlier_count": 30,
+      "outlier_percent": 3.28
+    },
+    "Launched Price (USA)": {
+      "lower_bound": -622.0,
+      "upper_bound": 1754.0,
+      "outlier_count": 20,
+      "outlier_percent": 2.19
+    },
+    "Launched Year": {
+      "lower_bound": 2016.5,
+      "upper_bound": 2028.5,
+      "outlier_count": 7,
+      "outlier_percent": 0.77
+    },
+    "Mobile Weight": {
+      "lower_bound": 149.0,
+      "upper_bound": 245.0,
+      "outlier_count": 122,
+      "outlier_percent": 13.33
+    },
+    "RAM": {
+      "lower_bound": 3.0,
+      "upper_bound": 11.0,
+      "outlier_count": 231,
+      "outlier_percent": 25.25
+    },
+    "Screen Size": {
+      "lower_bound": 6.08,
+      "upper_bound": 7.200000000000001,
+      "outlier_count": 160,
+      "outlier_percent": 17.49
+    },
+    "battery_percentile_global": {
+      "lower_bound": -0.7330601092896177,
+      "upper_bound": 1.664754098360656,
+      "outlier_count": 0,
+      "outlier_percent": 0.0
+    },
+    "battery_weight_ratio": {
+      "lower_bound": -31.565172043229914,
+      "upper_bound": 52.665630599648615,
+      "outlier_count": 0,
+      "outlier_percent": 0.0
+    },
+    "cross_brand_price_delta": {
+      "lower_bound": -599.3658424908424,
+      "upper_bound": 540.2861721611721,
+      "outlier_count": 62,
+      "outlier_percent": 6.78
+    },
+    "price_elasticity_proxy": {
+      "lower_bound": -22.986833292753666,
+      "upper_bound": 85.01270829346723,
+      "outlier_count": 64,
+      "outlier_percent": 6.99
+    },
+    "price_percentile_brand": {
+      "lower_bound": -0.4971590909090912,
+      "upper_bound": 1.525568181818182,
+      "outlier_count": 0,
+      "outlier_percent": 0.0
+    },
+    "price_percentile_global": {
+      "lower_bound": -0.49494535519125693,
+      "upper_bound": 1.4952185792349728,
+      "outlier_count": 0,
+      "outlier_percent": 0.0
+    },
+    "ram_battery_interaction_v2": {
+      "lower_bound": -44.625,
+      "upper_bound": 74.455,
+      "outlier_count": 23,
+      "outlier_percent": 2.51
+    },
+    "ram_percentile_global": {
+      "lower_bound": -0.09808743169398904,
+      "upper_bound": 1.0057377049180327,
+      "outlier_count": 0,
+      "outlier_percent": 0.0
+    },
+    "ram_weight_ratio": {
+      "lower_bound": -0.012296177492649055,
+      "upper_bound": 0.08179631114675215,
+      "outlier_count": 8,
+      "outlier_percent": 0.87
+    },
+    "screen_weight_ratio": {
+      "lower_bound": 0.026538615696786057,
+      "upper_bound": 0.04087264210025285,
+      "outlier_count": 105,
+      "outlier_percent": 11.48
+    },
+    "spec_density": {
+      "lower_bound": 0.010553971552887696,
+      "upper_bound": 0.14929346284699332,
+      "outlier_count": 1,
+      "outlier_percent": 0.11
+    },
+    "spec_value_ratio": {
+      "lower_bound": -0.029486729987827243,
+      "upper_bound": 0.10905276858630354,
+      "outlier_count": 5,
+      "outlier_percent": 0.55
+    },
+    "temporal_decay": {
+      "lower_bound": -0.5714577814774183,
+      "upper_bound": 1.3133237244266645,
+      "outlier_count": 0,
+      "outlier_percent": 0.0
+    }
+  },
+  "potential_leakage": {
+    "target_column": "Launched Price (China)",
+    "high_correlation_features": {},
+    "leakage_risk": false
+  },
+  "segment_balance": {
+    "segment_column": "market_segment",
+    "distribution": {
+      "premium": {
+        "count": 317,
+        "percent": 34.64
+      },
+      "budget": {
+        "count": 304,
+        "percent": 33.22
+      },
+      "mid": {
+        "count": 294,
+        "percent": 32.13
+      }
+    }
+  }
+}

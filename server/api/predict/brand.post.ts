@@ -4,7 +4,7 @@ export default defineEventHandler(async event => {
   try {
     const body = await readBody(event)
 
-    const result = await callPythonAPI<{ brand: string }>('/api/predict/brand', body)
+    const result = await callPythonAPI<{ brand: string }>('/api/predict/brand', body, event)
 
     if (!result) {
       throw createError({

@@ -1,0 +1,58 @@
+{
+  "optimal_k": 3,
+  "k_scores": {
+    "2": {
+      "silhouette": 0.5463532610958399,
+      "davies_bouldin": 0.7514930015044643
+    },
+    "3": {
+      "silhouette": 0.5478172484072589,
+      "davies_bouldin": 0.4828375128850846
+    },
+    "4": {
+      "silhouette": 0.458639474586689,
+      "davies_bouldin": 0.6190518672494464
+    },
+    "5": {
+      "silhouette": 0.44709847565411465,
+      "davies_bouldin": 0.6636043720817053
+    },
+    "6": {
+      "silhouette": 0.44333402030618896,
+      "davies_bouldin": 0.6786852218611424
+    }
+  },
+  "segment_sizes_train": {
+    "0": 247,
+    "1": 484,
+    "2": 1
+  },
+  "baseline_rmse": 6.662366755981854,
+  "ensemble_rmse": 146.3056341971819,
+  "avg_segment_rmse": 124.97412916862831,
+  "improvement_percent": -2096.0009041204517,
+  "segment_metrics": {
+    "0": {
+      "train_size": 247,
+      "test_size": 68,
+      "rmse": 74.5059742627423
+    },
+    "1": {
+      "train_size": 484,
+      "test_size": 115,
+      "rmse": 175.44228407451433
+    }
+  },
+  "clustering_features": [
+    "residual",
+    "abs_residual",
+    "residual_percentile",
+    "brand_tier_premium",
+    "brand_tier_budget",
+    "market_segment_premium",
+    "price_percentile",
+    "spec_density"
+  ],
+  "approach": "residual_based_clustering",
+  "note": "Clusters on prediction errors + brand tier + market features"
+}

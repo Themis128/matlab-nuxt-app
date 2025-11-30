@@ -1,0 +1,56 @@
+{
+  "total_samples": 915,
+  "segments": {
+    "value": {
+      "count": 1,
+      "avg_price": 1799.0,
+      "avg_residual": -4412.553463982245,
+      "avg_specs": {
+        "RAM": 6.0,
+        "Battery": 10.0,
+        "Screen": 13.0
+      }
+    },
+    "fair": {
+      "count": 913,
+      "avg_price": 587.714852135816,
+      "avg_residual": -32.05867530665016,
+      "avg_specs": {
+        "RAM": 7.795180722891566,
+        "Battery": 1730.9025191675794,
+        "Screen": 7.082584884994523
+      }
+    },
+    "premium": {
+      "count": 1,
+      "avg_price": 39622.0,
+      "avg_residual": 23647.050294307657,
+      "avg_specs": {
+        "RAM": 4.0,
+        "Battery": 8200.0,
+        "Screen": 10.4
+      }
+    }
+  },
+  "cluster_centers": [
+    -32.05867530665016,
+    23647.050294307657,
+    -4412.553463982245
+  ],
+  "feature_importance": {
+    "RAM": 0.0,
+    "Battery Capacity": 0.16510467360626455,
+    "Screen Size": 0.003460328166933748,
+    "Mobile Weight": 0.0011227649242171562,
+    "Launched Year": 0.00011448146009413508,
+    "spec_density": 0.0012541128682207973,
+    "temporal_decay": 0.00023972879226490828,
+    "battery_weight_ratio": 0.001708811150522944,
+    "screen_weight_ratio": 0.004286804691326776,
+    "ram_weight_ratio": 0.19279627196807667,
+    "ram_battery_interaction_v2": 0.000555020087224815,
+    "price_percentile_global": 0.46483268513387377,
+    "ram_percentile_global": 0.0,
+    "battery_percentile_global": 0.1645243171509797
+  }
+}

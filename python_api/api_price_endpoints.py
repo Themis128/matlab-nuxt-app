@@ -5,7 +5,7 @@ Adds price lookup endpoints to the main API
 
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field
-from typing import Optional, List
+from typing import Optional
 from price_apis import PriceAPIManager
 
 router = APIRouter(prefix="/api/price", tags=["Price APIs"])

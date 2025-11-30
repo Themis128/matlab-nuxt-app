@@ -1,0 +1,68 @@
+{
+  "timestamp": "2025-11-30T08:40:40.387803",
+  "dataset_size": 774,
+  "features_used": [
+    "ram",
+    "battery",
+    "screen",
+    "weight",
+    "year",
+    "front_camera",
+    "back_camera",
+    "storage"
+  ],
+  "models": {
+    "Linear Regression": {
+      "r2_score": 0.5245,
+      "mae": 206.74,
+      "rmse": 267.48,
+      "accuracy_percent": 52.45
+    },
+    "Random Forest": {
+      "r2_score": 0.8556,
+      "mae": 93.46,
+      "rmse": 147.43,
+      "accuracy_percent": 85.56
+    },
+    "Gradient Boosting": {
+      "r2_score": 0.8981,
+      "mae": 78.92,
+      "rmse": 123.79,
+      "accuracy_percent": 89.81
+    }
+  },
+  "feature_importance": [
+    {
+      "feature": "weight",
+      "importance": 0.27051791712835394
+    },
+    {
+      "feature": "storage",
+      "importance": 0.2127625186709181
+    },
+    {
+      "feature": "battery",
+      "importance": 0.14547762916879886
+    },
+    {
+      "feature": "front_camera",
+      "importance": 0.1139385898537879
+    },
+    {
+      "feature": "screen",
+      "importance": 0.10639038561034017
+    },
+    {
+      "feature": "ram",
+      "importance": 0.07551078681845416
+    },
+    {
+      "feature": "back_camera",
+      "importance": 0.05483826238628834
+    },
+    {
+      "feature": "year",
+      "importance": 0.020563910363058522
+    }
+  ]
+}

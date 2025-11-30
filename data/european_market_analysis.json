@@ -1,0 +1,400 @@
+{
+  "timestamp": "2025-11-30T08:44:13.389904",
+  "total_phones": 930,
+  "price_summary": {
+    "min": 72.68,
+    "max": 3645.22,
+    "mean": 540.1981397849462,
+    "median": 413.08
+  },
+  "analysis_results": {
+    "price_segments": {
+      "counts": {
+        "Budget (\u20ac0-200)": 154,
+        "Mid-Range (\u20ac200-500)": 386,
+        "Premium (\u20ac500-1000)": 255,
+        "Ultra-Premium (\u20ac1000+)": 135
+      },
+      "percentages": {
+        "Budget (\u20ac0-200)": 16.6,
+        "Mid-Range (\u20ac200-500)": 41.5,
+        "Premium (\u20ac500-1000)": 27.4,
+        "Ultra-Premium (\u20ac1000+)": 14.5
+      },
+      "avg_specs": {
+        "ram": {
+          "Budget (\u20ac0-200)": 4.41,
+          "Mid-Range (\u20ac200-500)": 7.56,
+          "Premium (\u20ac500-1000)": 9.09,
+          "Ultra-Premium (\u20ac1000+)": 10.05
+        },
+        "battery": {
+          "Budget (\u20ac0-200)": 4988.05,
+          "Mid-Range (\u20ac200-500)": 5129.49,
+          "Premium (\u20ac500-1000)": 4900.72,
+          "Ultra-Premium (\u20ac1000+)": 5011.16
+        },
+        "screen": {
+          "Budget (\u20ac0-200)": 6.91,
+          "Mid-Range (\u20ac200-500)": 7.06,
+          "Premium (\u20ac500-1000)": 7.1,
+          "Ultra-Premium (\u20ac1000+)": 7.33
+        },
+        "back_camera": {
+          "Budget (\u20ac0-200)": 53.76,
+          "Mid-Range (\u20ac200-500)": 73.3,
+          "Premium (\u20ac500-1000)": 65.46,
+          "Ultra-Premium (\u20ac1000+)": 43.97
+        },
+        "price_eur": {
+          "Budget (\u20ac0-200)": 157.07,
+          "Mid-Range (\u20ac200-500)": 319.83,
+          "Premium (\u20ac500-1000)": 719.88,
+          "Ultra-Premium (\u20ac1000+)": 1267.95
+        }
+      }
+    },
+    "brand_positioning": {
+      "avg_price": {
+        "Sony": 1041.75,
+        "Huawei": 1027.25,
+        "Apple": 946.21,
+        "Samsung": 688.56,
+        "Google": 694.78,
+        "OnePlus": 559.93,
+        "Xiaomi": 515.09,
+        "Honor": 558.97,
+        "Oppo": 464.86,
+        "Vivo": 431.91,
+        "iQOO": 367.08,
+        "Motorola": 398.6,
+        "Tecno": 433.84,
+        "Poco": 266.8,
+        "POCO": 284.89,
+        "Realme": 251.47,
+        "Lenovo": 286.73,
+        "Infinix": 225.47,
+        "Nokia": 476.91
+      },
+      "median_price": {
+        "Sony": 1011.08,
+        "Huawei": 919.08,
+        "Apple": 919.08,
+        "Samsung": 643.08,
+        "Google": 643.08,
+        "OnePlus": 597.08,
+        "Xiaomi": 551.08,
+        "Honor": 413.08,
+        "Oppo": 413.08,
+        "Vivo": 367.08,
+        "iQOO": 367.08,
+        "Motorola": 321.08,
+        "Tecno": 302.68,
+        "Poco": 266.8,
+        "POCO": 265.88,
+        "Realme": 230.0,
+        "Lenovo": 229.08,
+        "Infinix": 201.48,
+        "Nokia": 155.48
+      },
+      "min_price": {
+        "Sony": 459.08,
+        "Huawei": 367.08,
+        "Apple": 302.68,
+        "Samsung": 91.08,
+        "Google": 321.08,
+        "OnePlus": 164.68,
+        "Xiaomi": 183.08,
+        "Honor": 118.68,
+        "Oppo": 118.68,
+        "Vivo": 127.88,
+        "iQOO": 321.08,
+        "Motorola": 137.08,
+        "Tecno": 81.88,
+        "Poco": 257.6,
+        "POCO": 137.08,
+        "Realme": 119.6,
+        "Lenovo": 137.08,
+        "Infinix": 72.68,
+        "Nokia": 109.48
+      },
+      "max_price": {
+        "Sony": 1655.08,
+        "Huawei": 2575.08,
+        "Apple": 1655.08,
+        "Samsung": 2078.28,
+        "Google": 1655.08,
+        "OnePlus": 1011.08,
+        "Xiaomi": 919.08,
+        "Honor": 1747.08,
+        "Oppo": 1287.08,
+        "Vivo": 1195.08,
+        "iQOO": 413.08,
+        "Motorola": 1379.08,
+        "Tecno": 1655.08,
+        "Poco": 276.0,
+        "POCO": 505.08,
+        "Realme": 460.0,
+        "Lenovo": 551.08,
+        "Infinix": 505.08,
+        "Nokia": 3645.22
+      },
+      "phone_count": {
+        "Sony": 9,
+        "Huawei": 42,
+        "Apple": 97,
+        "Samsung": 88,
+        "Google": 21,
+        "OnePlus": 53,
+        "Xiaomi": 27,
+        "Honor": 91,
+        "Oppo": 129,
+        "Vivo": 86,
+        "iQOO": 3,
+        "Motorola": 62,
+        "Tecno": 39,
+        "Poco": 2,
+        "POCO": 30,
+        "Realme": 69,
+        "Lenovo": 15,
+        "Infinix": 56,
+        "Nokia": 11
+      },
+      "avg_ram": {
+        "Sony": 8.67,
+        "Huawei": 10.48,
+        "Apple": 5.33,
+        "Samsung": 7.51,
+        "Google": 8.57,
+        "OnePlus": 9.43,
+        "Xiaomi": 10.52,
+        "Honor": 8.01,
+        "Oppo": 9.26,
+        "Vivo": 7.5,
+        "iQOO": 7.33,
+        "Motorola": 7.55,
+        "Tecno": 7.21,
+        "Poco": 8.0,
+        "POCO": 5.8,
+        "Realme": 8.13,
+        "Lenovo": 6.33,
+        "Infinix": 6.84,
+        "Nokia": 4.0
+      },
+      "avg_battery": {
+        "Sony": 5000.0,
+        "Huawei": 4900.0,
+        "Apple": 4442.58,
+        "Samsung": 5119.43,
+        "Google": 4341.05,
+        "OnePlus": 4840.38,
+        "Xiaomi": 5172.22,
+        "Honor": 5488.46,
+        "Oppo": 4978.1,
+        "Vivo": 4678.6,
+        "iQOO": 8040.0,
+        "Motorola": 4688.71,
+        "Tecno": 5315.38,
+        "Poco": 10000.0,
+        "POCO": 5041.17,
+        "Realme": 5691.3,
+        "Lenovo": 4520.0,
+        "Infinix": 5330.36,
+        "Nokia": 5309.09
+      },
+      "brand_tier": {
+        "Sony": "Premium",
+        "Huawei": "Premium",
+        "Apple": "Premium",
+        "Samsung": "Premium",
+        "Google": "Premium",
+        "OnePlus": "Mid-Range",
+        "Xiaomi": "Mid-Range",
+        "Honor": "Mid-Range",
+        "Oppo": "Mid-Range",
+        "Vivo": "Mid-Range",
+        "iQOO": "Mid-Range",
+        "Motorola": "Mid-Range",
+        "Tecno": "Mid-Range",
+        "Poco": "Budget",
+        "POCO": "Budget",
+        "Realme": "Budget",
+        "Lenovo": "Budget",
+        "Infinix": "Budget",
+        "Nokia": "Budget"
+      }
+    },
+    "best_value_phones": [
+      {
+        "company": "Realme",
+        "model": "C61 128GB",
+        "price_eur": 119.6,
+        "ram": 4.0,
+        "battery": 5000,
+        "back_camera": 200.0,
+        "value_score": 163.3564466355562
+      },
+      {
+        "company": "Realme",
+        "model": "C63 128GB",
+        "price_eur": 138.0,
+        "ram": 6.0,
+        "battery": 5000,
+        "back_camera": 200.0,
+        "value_score": 149.46896607958251
+      },
+      {
+        "company": "Infinix",
+        "model": "Smart HD 32GB",
+        "price_eur": 72.68,
+        "ram": 2.0,
+        "battery": 5000,
+        "back_camera": 8.0,
+        "value_score": 142.36722361217767
+      },
+      {
+        "company": "Realme",
+        "model": "C75 128GB",
+        "price_eur": 147.2,
+        "ram": 6.0,
+        "battery": 5000,
+        "back_camera": 200.0,
+        "value_score": 140.1271556996086
+      },
+      {
+        "company": "Realme",
+        "model": "C65 128GB",
+        "price_eur": 147.2,
+        "ram": 6.0,
+        "battery": 5000,
+        "back_camera": 200.0,
+        "value_score": 140.1271556996086
+      },
+      {
+        "company": "Realme",
+        "model": "Narzo N63 128GB",
+        "price_eur": 147.2,
+        "ram": 6.0,
+        "battery": 5000,
+        "back_camera": 200.0,
+        "value_score": 139.74273789138942
+      },
+      {
+        "company": "Tecno",
+        "model": "Pop 9 64GB",
+        "price_eur": 81.88,
+        "ram": 3.0,
+        "battery": 5000,
+        "back_camera": 8.0,
+        "value_score": 135.5796565447789
+      },
+      {
+        "company": "Tecno",
+        "model": "Pop 8 64GB",
+        "price_eur": 81.88,
+        "ram": 3.0,
+        "battery": 5000,
+        "back_camera": 8.0,
+        "value_score": 135.5796565447789
+      },
+      {
+        "company": "Realme",
+        "model": "C55 128GB",
+        "price_eur": 156.4,
+        "ram": 6.0,
+        "battery": 5000,
+        "back_camera": 200.0,
+        "value_score": 132.31854783009095
+      },
+      {
+        "company": "Realme",
+        "model": "C67 128GB",
+        "price_eur": 156.4,
+        "ram": 6.0,
+        "battery": 5000,
+        "back_camera": 200.0,
+        "value_score": 131.88438183492573
+      }
+    ],
+    "market_trends": {
+      "('price_eur', 'mean')": {
+        "2014": 155.48,
+        "2016": 194.12,
+        "2017": 465.21,
+        "2018": 580.43,
+        "2019": 560.68,
+        "2020": 527.85,
+        "2021": 468.21,
+        "2022": 561.51,
+        "2023": 549.43,
+        "2024": 565.39,
+        "2025": 394.37
+      },
+      "('price_eur', 'median')": {
+        "2014": 155.48,
+        "2016": 164.68,
+        "2017": 275.08,
+        "2018": 551.08,
+        "2019": 449.88,
+        "2020": 413.08,
+        "2021": 348.68,
+        "2022": 459.08,
+        "2023": 399.74,
+        "2024": 413.08,
+        "2025": 322.0
+      },
+      "('price_eur', 'count')": {
+        "2014": 2,
+        "2016": 5,
+        "2017": 9,
+        "2018": 21,
+        "2019": 46,
+        "2020": 101,
+        "2021": 109,
+        "2022": 149,
+        "2023": 184,
+        "2024": 292,
+        "2025": 12
+      },
+      "('ram', 'mean')": {
+        "2014": 1.5,
+        "2016": 3.4,
+        "2017": 4.44,
+        "2018": 4.38,
+        "2019": 6.28,
+        "2020": 6.42,
+        "2021": 7.06,
+        "2022": 7.58,
+        "2023": 8.29,
+        "2024": 9.08,
+        "2025": 9.0
+      },
+      "('battery', 'mean')": {
+        "2014": 2150.0,
+        "2016": 3920.0,
+        "2017": 3220.78,
+        "2018": 3177.95,
+        "2019": 3950.72,
+        "2020": 4958.59,
+        "2021": 4616.3,
+        "2022": 4992.62,
+        "2023": 5297.85,
+        "2024": 5416.7,
+        "2025": 5716.67
+      },
+      "('back_camera', 'mean')": {
+        "2014": 13.0,
+        "2016": 41.4,
+        "2017": 14.89,
+        "2018": 32.29,
+        "2019": 35.15,
+        "2020": 43.76,
+        "2021": 53.39,
+        "2022": 58.26,
+        "2023": 75.08,
+        "2024": 77.69,
+        "2025": 93.17
+      }
+    }
+  }
+}

@@ -1,4 +1,6 @@
-export default defineEventHandler(async () => {
+import { getPythonApiUrl } from '../utils/get-python-api-url'
+
+export default defineEventHandler(async event => {
   // Set CORS headers
   setHeader(event, 'Access-Control-Allow-Origin', '*')
   setHeader(event, 'Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
@@ -9,12 +11,13 @@ export default defineEventHandler(async () => {
     return { ok: true }
   }
   try {
-    const pythonApiUrl = process.env.PYTHON_API_URL || 'http://localhost:8000'
+    const pythonApiUrl = getPythonApiUrl(event)
+    const isTestEnv = process.env.NODE_ENV === 'test' || process.env.PLAYWRIGHT_TEST === '1'
 
     try {
       const response = await fetch(`${pythonApiUrl}/health`, {
         method: 'GET',
-        signal: AbortSignal.timeout(3000),
+        signal: AbortSignal.timeout(5000), // Increased from 3s to 5s
       })
 
       if (response.ok) {
@@ -25,7 +28,10 @@ export default defineEventHandler(async () => {
         throw new Error(`Python API returned status ${response.status}`)
       }
     } catch (e) {
-      console.error('Error fetching Python API health:', e)
+      // Suppress error logs during test runs to reduce spam
+      if (!isTestEnv) {
+        console.error('Error fetching Python API health:', e)
+      }
 
       // Return actual error status instead of mock response
       throw createError({
@@ -40,7 +46,12 @@ export default defineEventHandler(async () => {
       })
     }
   } catch (error: unknown) {
-    console.error('Unexpected error in health check:', error)
+    const isTestEnv = process.env.NODE_ENV === 'test' || process.env.PLAYWRIGHT_TEST === '1'
+
+    // Suppress error logs during test runs to reduce spam
+    if (!isTestEnv) {
+      console.error('Unexpected error in health check:', error)
+    }
 
     throw createError({
       statusCode: 503,

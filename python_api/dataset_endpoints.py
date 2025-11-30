@@ -4,17 +4,43 @@ Provides endpoints to query and filter the mobile phones dataset
 """
 
 from fastapi import APIRouter, HTTPException, Query
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from typing import Optional, List, Dict, Any
 import pandas as pd
 from pathlib import Path
-import json
+import re
+import logging
 
 router = APIRouter(prefix="/api/dataset", tags=["Dataset"])
 
 # Dataset cache
 _dataset_cache = None
 _dataset_path = None
+
+def extract_numeric_value(value: Any) -> Optional[float]:
+    """
+    Extract numeric value from strings with units (e.g., '6.1 inches', '5000 mAh', '128 GB')
+    Returns None if extraction fails or value is invalid
+    """
+    if pd.isna(value):
+        return None
+
+    # If already a number, return it
+    if isinstance(value, (int, float)):
+        return float(value)
+
+    # Convert to string and extract first numeric value
+    value_str = str(value).strip()
+
+    # Use regex to find first numeric value (including decimals)
+    match = re.search(r'(\d+\.?\d*)', value_str)
+    if match:
+        try:
+            return float(match.group(1))
+        except (ValueError, AttributeError):
+            return None
+
+    return None
 
 def clear_dataset_cache():
     """Clear the dataset cache - useful for debugging"""
@@ -25,11 +51,13 @@ def clear_dataset_cache():
 def find_dataset_file() -> Optional[Path]:
     """Find the dataset CSV file"""
     project_root = Path(__file__).parent.parent
-    print(f"[DEBUG] Looking for dataset file, project root: {project_root}")
+    logging.getLogger("python_api").debug("Looking for dataset file, project root: %s", project_root)
 
-    # Try different possible locations
+    # Try different possible locations (prefer cleaned/final datasets)
     possible_paths = [
-        project_root / 'data' / 'Mobiles Dataset (2025).csv',
+        project_root / 'data' / 'Mobiles_Dataset_Final.csv',  # Production-ready dataset
+        project_root / 'data' / 'Mobiles_Dataset_Cleaned.csv',  # Cleaned dataset
+        project_root / 'data' / 'Mobiles Dataset (2025).csv',  # Original dataset
         project_root / 'Mobiles Dataset (2025).csv',
         project_root / 'mobiles-dataset-docs' / 'Mobiles Dataset (2025).csv',
         project_root / 'public' / 'dataset_with_images.csv',
@@ -37,12 +65,12 @@ def find_dataset_file() -> Optional[Path]:
     ]
 
     for path in possible_paths:
-        print(f"[DEBUG] Checking path: {path} - exists: {path.exists()}")
+        logging.getLogger("python_api").debug("Checking path: %s - exists: %s", path, path.exists())
         if path.exists():
-            print(f"[DEBUG] Found dataset file: {path}")
+            logging.getLogger("python_api").info("Found dataset file: %s", path)
             return path
 
-    print("[DEBUG] No dataset file found in any location")
+    logging.getLogger("python_api").warning("No dataset file found in any location")
     return None
 
 def load_dataset() -> Optional[pd.DataFrame]:
@@ -103,8 +131,7 @@ class ModelResponse(BaseModel):
     weight: Optional[float] = Field(None, description="Weight in grams")
     year: Optional[int] = Field(None, description="Launch year")
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class DatasetStatsResponse(BaseModel):
     """Response model for dataset statistics"""
@@ -134,162 +161,49 @@ async def get_models_by_price(
         min_price = price * (1 - tolerance)
         max_price = price * (1 + tolerance)
 
-        # Find price column - check various possible price column names
-        price_columns = [
-            'Current Price (Greece)', 'Current Price (USA)', 'Current Price (Europe)',
-            'Launched Price (USA)', 'Launched Price (Europe)', 'Launched Price (India)',
-            'Launched Price (China)', 'Launched Price (Pakistan)', 'Launched Price (Dubai)',
-            'Price', 'Current Price', 'Launched Price', 'price', 'Price_USD'
-        ]
+        # Use the cleaned dataset columns - prefer price_usd
         price_col = None
+        price_columns = ['price_usd', 'price_eur', 'price_inr', 'price_cny', 'price_aed', 'price_pkr',
+                        'Current Price (Greece)', 'Current Price (USA)', 'Current Price (Europe)',
+                        'Price', 'Current Price', 'price']
+
         for col in price_columns:
-            if col in df.columns:
+            if col in df.columns and df[col].notna().any():
                 price_col = col
                 break
 
-        # Fallback: ensure we have a usable price column to prevent 500 errors when filtering
         if price_col is None:
-            # Prefer creating a synthetic numeric column rather than failing
-            if 'Price' in df.columns:
-                price_col = 'Price'
-            else:
-                df['Price'] = 0  # Synthetic placeholder to allow filtering logic to proceed
-                price_col = 'Price'
-
-        # Fallback: ensure we have a price column
-        if price_col is None:
-            # Prefer 'Price' if exists or create it from any numeric-looking column
-            if 'Price' in df.columns:
-                price_col = 'Price'
-            else:
-                # Create a synthetic price column to avoid failures
-                df['Price'] = 0
-                price_col = 'Price'
-
-        if not price_col:
             raise HTTPException(status_code=500, detail="No price column found in dataset")
 
-        # Filter by price range - handle currency strings
-        def extract_price(value):
-            if pd.isna(value):
-                return None
-            # Convert to string and extract numeric part
-            str_val = str(value).strip()
-            # Remove currency prefixes
-            if str_val.startswith('EUR'):
-                str_val = str_val[3:].strip()
-            elif str_val.startswith('$'):
-                str_val = str_val[1:].strip()
-            elif str_val.startswith('USD'):
-                str_val = str_val[3:].strip()
-            # Extract numeric value
-            try:
-                return float(str_val.replace(',', ''))
-            except (ValueError, AttributeError):
-                return None
-
-        df_prices = df[price_col].apply(extract_price)
-        price_mask = df_prices.between(min_price, max_price)
+        # Filter by price range
+        price_mask = df[price_col].between(min_price, max_price)
         filtered_df = df[price_mask].head(maxResults)
 
         # Convert to response format
         results = []
         for _, row in filtered_df.iterrows():
-            # Extract model name
-            model_name = None
-            model_columns = ['Model Name', 'ModelName', 'Model_Name', 'model', 'Model']
-            for col in model_columns:
-                if col in df.columns and pd.notna(row.get(col)):
-                    model_name = str(row[col])
-                    break
+            # Use cleaned dataset columns (lowercase names)
+            model_name = str(row.get('model', '')) if pd.notna(row.get('model')) else None
+            company = str(row.get('company', '')) if pd.notna(row.get('company')) else None
 
-            # Extract other fields
-            company = None
-            company_columns = ['Company Name', 'Company', 'Brand', 'company', 'brand']
-            for col in company_columns:
-                if col in df.columns and pd.notna(row.get(col)):
-                    company = str(row[col])
-                    break
+            # Get price directly (already numeric in cleaned dataset)
+            parsed_price = float(row.get(price_col)) if pd.notna(row.get(price_col)) else None
 
-            # Extract price using the same currency parsing logic
-            raw_price = row.get(price_col)
-            parsed_price = None
-            if pd.notna(raw_price):
-                str_val = str(raw_price).strip()
-                if str_val.startswith('EUR'):
-                    str_val = str_val[3:].strip()
-                elif str_val.startswith('$'):
-                    str_val = str_val[1:].strip()
-                elif str_val.startswith('USD'):
-                    str_val = str_val[3:].strip()
-                try:
-                    parsed_price = float(str_val.replace(',', ''))
-                except (ValueError, AttributeError):
-                    parsed_price = None
+            # Get specs directly (already numeric in cleaned dataset)
+            parsed_ram = float(row.get('ram')) if pd.notna(row.get('ram')) else None
+            parsed_battery = float(row.get('battery')) if pd.notna(row.get('battery')) else None
+            parsed_screen = float(row.get('screen')) if pd.notna(row.get('screen')) else None
+            parsed_storage = float(row.get('storage')) if pd.notna(row.get('storage')) else None
 
-            # Extract RAM with proper parsing
-            raw_ram = row.get('RAM')
-            parsed_ram = None
-            if pd.notna(raw_ram):
-                str_val = str(raw_ram).strip()
-                if str_val.endswith('GB'):
-                    str_val = str_val[:-2].strip()
-                try:
-                    parsed_ram = float(str_val)
-                except (ValueError, AttributeError):
-                    parsed_ram = None
+            # Get camera data
+            front_cam = row.get('front_camera')
+            back_cam = row.get('back_camera')
+            camera_str = None
+            if pd.notna(front_cam) and pd.notna(back_cam):
+                camera_str = f"{int(front_cam)}MP + {int(back_cam)}MP"
 
-            # Extract battery with proper parsing
-            battery_col = 'Battery Capacity' if 'Battery Capacity' in df.columns else 'Battery'
-            raw_battery = row.get(battery_col)
-            parsed_battery = None
-            if pd.notna(raw_battery):
-                str_val = str(raw_battery).strip()
-                if str_val.endswith('mAh'):
-                    str_val = str_val[:-3].strip()
-                str_val = str_val.replace(',', '')
-                try:
-                    parsed_battery = float(str_val)
-                except (ValueError, AttributeError):
-                    parsed_battery = None
-
-            # Extract screen size with proper parsing
-            raw_screen = row.get('Screen Size')
-            parsed_screen = None
-            if pd.notna(raw_screen):
-                str_val = str(raw_screen).strip()
-                if str_val.endswith('inches') or str_val.endswith('inch'):
-                    str_val = str_val.replace('inches', '').replace('inch', '').strip()
-                try:
-                    parsed_screen = float(str_val)
-                except (ValueError, AttributeError):
-                    parsed_screen = None
-
-            # Extract storage - look for storage column
-            storage_col = None
-            storage_columns = ['Storage', 'Internal Storage', 'Memory']
-            for col in storage_columns:
-                if col in df.columns:
-                    storage_col = col
-                    break
-
-            parsed_storage = None
-            if storage_col and pd.notna(row.get(storage_col)):
-                str_val = str(row[storage_col]).strip()
-                if str_val.endswith('GB'):
-                    str_val = str_val[:-2].strip()
-                elif str_val.endswith('TB'):
-                    str_val = str_val[:-2].strip()
-                    # Convert TB to GB
-                    try:
-                        val = float(str_val)
-                        str_val = str(val * 1024)
-                    except:
-                        pass
-                try:
-                    parsed_storage = float(str_val)
-                except (ValueError, AttributeError):
-                    parsed_storage = None
+            # Get processor
+            processor = str(row.get('processor', '')) if pd.notna(row.get('processor')) else None
 
             model = ModelResponse(
                 model_name=model_name,
@@ -299,16 +213,19 @@ async def get_models_by_price(
                 battery=parsed_battery,
                 screen_size=parsed_screen,
                 storage=parsed_storage,
-                camera=str(row.get('Front Camera') + ' + ' + row.get('Back Camera')) if pd.notna(row.get('Front Camera')) and pd.notna(row.get('Back Camera')) else None,
-                processor=str(row.get('Processor')) if pd.notna(row.get('Processor')) else None,
-                image_path=str(row.get('Image Path')) if pd.notna(row.get('Image Path')) else None
+                camera=camera_str,
+                processor=processor,
+                image_path=None
             )
             results.append(model)
 
         return results
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error processing dataset: {str(e)}")
+        import traceback
+        print(f"[ERROR] Models by price failed: {str(e)}")
+        print(traceback.format_exc())
+        raise HTTPException(status_code=500, detail=f"Error filtering models by price: {str(e)}")
 
 @router.get("/stats")
 async def get_dataset_stats() -> DatasetStatsResponse:
@@ -509,7 +426,7 @@ async def search_models(
             if col in df.columns:
                 price_col = col
                 break
-        
+
         # If no price column found, add a synthetic one
         if price_col is None:
             print("[WARNING] No price column found in dataset, creating synthetic prices")
@@ -693,11 +610,11 @@ async def search_models(
         # Apply pagination
         total_count = len(filtered_df)
         filtered_count = total_count
-        
+
         # Ensure we don't go past the end
         if offset >= total_count and total_count > 0:
             offset = max(0, total_count - limit)
-        
+
         paginated_df = filtered_df.iloc[offset:offset + limit] if total_count > 0 else pd.DataFrame()
 
         # Convert to response format
@@ -767,8 +684,8 @@ async def search_models(
                 price=parsed_price,
                 ram=parsed_ram,
                 battery=parsed_battery,
-                screen_size=float(row.get('Screen Size')) if pd.notna(row.get('Screen Size')) else None,
-                storage=float(row.get('Storage')) if pd.notna(row.get('Storage')) else None,
+                screen_size=extract_numeric_value(row.get('Screen Size')),
+                storage=extract_numeric_value(row.get('Storage')),
                 camera=str(row.get('Front Camera') + ' + ' + row.get('Back Camera')) if pd.notna(row.get('Front Camera')) and pd.notna(row.get('Back Camera')) else None,
                 processor=str(row.get('Processor')) if pd.notna(row.get('Processor')) else None,
                 image_path=str(row.get('Image Path')) if pd.notna(row.get('Image Path')) else None
@@ -921,7 +838,7 @@ async def compare_models(request: dict) -> Dict[str, Any]:
                     try:
                         val = float(str_val)
                         str_val = str(val * 1024)
-                    except:
+                    except (ValueError, TypeError):
                         pass
                 try:
                     parsed_storage = float(str_val)

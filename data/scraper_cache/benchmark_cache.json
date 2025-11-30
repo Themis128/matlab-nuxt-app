@@ -6604,5 +6604,1454 @@
       "multi_core": null
     },
     "performance_tier": "unknown"
+  },
+  "infinix note 40 pro": {
+    "model_name": "Infinix Note 40 Pro 5G",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix note 40 racing edition": {
+    "model_name": "Infinix Note 40 Racing Edition",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 40": {
+    "model_name": "Infinix Hot 40",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 40i": {
+    "model_name": "Infinix Hot 40i",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 40 pro": {
+    "model_name": "Infinix Hot 40 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix zero 40": {
+    "model_name": "Infinix Zero 40",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix zero flip": {
+    "model_name": "Infinix Zero Flip",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 30 128gb": {
+    "model_name": "Infinix Hot 30 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 30i 128gb": {
+    "model_name": "Infinix Hot 30i 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 30i nfc 128gb": {
+    "model_name": "Infinix Hot 30i NFC 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 30 play 128gb": {
+    "model_name": "Infinix Hot 30 Play 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix zero 30 256gb": {
+    "model_name": "Infinix Zero 30 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix gt 10 pro 256gb": {
+    "model_name": "Infinix GT 10 Pro 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 12 128gb": {
+    "model_name": "Infinix Hot 12 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 12 play 128gb": {
+    "model_name": "Infinix Hot 12 Play 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 12 pro 128gb": {
+    "model_name": "Infinix Hot 12 Pro 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 12i 6b": {
+    "model_name": "Infinix Hot 12i 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 20 128gb": {
+    "model_name": "Infinix Hot 20 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 20 play 128gb": {
+    "model_name": "Infinix Hot 20 Play 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 20s 128gb": {
+    "model_name": "Infinix Hot 20s 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 20i 6b": {
+    "model_name": "Infinix Hot 20i 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 10t 128gb": {
+    "model_name": "Infinix Hot 10T 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 10s 128gb": {
+    "model_name": "Infinix Hot 10S 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 10s nfc 128gb": {
+    "model_name": "Infinix Hot 10S NFC 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 10 lite 6b": {
+    "model_name": "Infinix Hot 10 Lite 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 10 play 6b": {
+    "model_name": "Infinix Hot 10 Play 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 11 128gb": {
+    "model_name": "Infinix Hot 11 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 11 play 128gb": {
+    "model_name": "Infinix Hot 11 Play 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 11s 128gb": {
+    "model_name": "Infinix Hot 11s 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix smart hd 32gb": {
+    "model_name": "Infinix Smart HD 32GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix note 8i 128gb": {
+    "model_name": "Infinix Note 8i 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix note 8 128gb": {
+    "model_name": "Infinix Note 8 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix zero 8i 128gb": {
+    "model_name": "Infinix Zero 8i 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix hot 10 128gb": {
+    "model_name": "Infinix Hot 10 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix zero 8 128gb": {
+    "model_name": "Infinix Zero 8 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "infinix smart 5 6b": {
+    "model_name": "Infinix Smart 5 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor 9x lite": {
+    "model_name": "Honor 9X Lite",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor 30": {
+    "model_name": "Honor 30",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor 30 pro": {
+    "model_name": "Honor 30 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor 30 pro+": {
+    "model_name": "Honor 30 Pro+",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor 30s": {
+    "model_name": "Honor 30S",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor x10": {
+    "model_name": "Honor X10",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor x10 max": {
+    "model_name": "Honor X10 Max",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor play 4": {
+    "model_name": "Honor Play 4",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor play 4 pro": {
+    "model_name": "Honor Play 4 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor 10x lite": {
+    "model_name": "Honor 10X Lite",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor v40": {
+    "model_name": "Honor V40",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor 50": {
+    "model_name": "Honor 50",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor 50 pro": {
+    "model_name": "Honor 50 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor 50 se": {
+    "model_name": "Honor 50 SE",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor x20": {
+    "model_name": "Honor X20",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor x20 se": {
+    "model_name": "Honor X20 SE",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor play 5": {
+    "model_name": "Honor Play 5",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor play 5t": {
+    "model_name": "Honor Play 5T",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magic3": {
+    "model_name": "Honor Magic3",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magic3 pro": {
+    "model_name": "Honor Magic3 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magic3 pro+": {
+    "model_name": "Honor Magic3 Pro+",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor 60": {
+    "model_name": "Honor 60",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor 60 pro": {
+    "model_name": "Honor 60 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor 60 se": {
+    "model_name": "Honor 60 SE",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor x30": {
+    "model_name": "Honor X30",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor x30i": {
+    "model_name": "Honor X30i",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor x30 max": {
+    "model_name": "Honor X30 Max",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor play 6": {
+    "model_name": "Honor Play 6",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor play 6t": {
+    "model_name": "Honor Play 6T",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magic4": {
+    "model_name": "Honor Magic4",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magic4 pro": {
+    "model_name": "Honor Magic4 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magic4 ultimate": {
+    "model_name": "Honor Magic4 Ultimate",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magic v": {
+    "model_name": "Honor Magic V",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor 70": {
+    "model_name": "Honor 70",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor 70 pro": {
+    "model_name": "Honor 70 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor 70 pro+": {
+    "model_name": "Honor 70 Pro+",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor x40": {
+    "model_name": "Honor X40",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor x40i": {
+    "model_name": "Honor X40i",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor play 7": {
+    "model_name": "Honor Play 7",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor play 7t": {
+    "model_name": "Honor Play 7T",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magic5": {
+    "model_name": "Honor Magic5",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magic5 pro": {
+    "model_name": "Honor Magic5 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magic5 ultimate": {
+    "model_name": "Honor Magic5 Ultimate",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magic vs": {
+    "model_name": "Honor Magic Vs",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor 80": {
+    "model_name": "Honor 80",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor 80 pro": {
+    "model_name": "Honor 80 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor 80 se": {
+    "model_name": "Honor 80 SE",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor x50": {
+    "model_name": "Honor X50",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor x50i": {
+    "model_name": "Honor X50i",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor play 8": {
+    "model_name": "Honor Play 8",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor play 8t": {
+    "model_name": "Honor Play 8T",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magic6": {
+    "model_name": "Honor Magic6",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magic6 pro": {
+    "model_name": "Honor Magic6 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magic6 ultimate": {
+    "model_name": "Honor Magic6 Ultimate",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magic v2": {
+    "model_name": "Honor Magic V2",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor 90": {
+    "model_name": "Honor 90",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor 90 pro": {
+    "model_name": "Honor 90 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor 90 se": {
+    "model_name": "Honor 90 SE",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor x60": {
+    "model_name": "Honor X60",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor x60i": {
+    "model_name": "Honor X60i",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor play 9": {
+    "model_name": "Honor Play 9",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor play 9t": {
+    "model_name": "Honor Play 9T",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magic7": {
+    "model_name": "Honor Magic7",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magic7 pro": {
+    "model_name": "Honor Magic7 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magic7 ultimate": {
+    "model_name": "Honor Magic7 Ultimate",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magic v3": {
+    "model_name": "Honor Magic V3",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor pad 6": {
+    "model_name": "Honor Pad 6",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor pad x6": {
+    "model_name": "Honor Pad X6",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor pad 7": {
+    "model_name": "Honor Pad 7",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor tablet v7": {
+    "model_name": "Honor Tablet V7",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor tablet v7 pro": {
+    "model_name": "Honor Tablet V7 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor pad 8": {
+    "model_name": "Honor Pad 8",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor pad x8": {
+    "model_name": "Honor Pad X8",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor pad x8 lite": {
+    "model_name": "Honor Pad X8 Lite",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor pad v8": {
+    "model_name": "Honor Pad V8",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor pad v8 pro": {
+    "model_name": "Honor Pad V8 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor pad 9": {
+    "model_name": "Honor Pad 9",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor pad 9 pro": {
+    "model_name": "Honor Pad 9 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor pad x9": {
+    "model_name": "Honor Pad X9",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor pad x8 pro": {
+    "model_name": "Honor Pad X8 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magicpad 13": {
+    "model_name": "Honor MagicPad 13",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magicpad 2": {
+    "model_name": "Honor MagicPad 2",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor pad x8a": {
+    "model_name": "Honor Pad X8a",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor pad x8a kids edition": {
+    "model_name": "Honor Pad X8a Kids Edition",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor pad x9 pro": {
+    "model_name": "Honor Pad X9 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor pad v9": {
+    "model_name": "Honor Pad V9",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor pad gt pro": {
+    "model_name": "Honor Pad GT Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor pad x10": {
+    "model_name": "Honor Pad X10",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor pad x10 pro": {
+    "model_name": "Honor Pad X10 Pro",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor magicpad 3": {
+    "model_name": "Honor MagicPad 3",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "honor pad v10": {
+    "model_name": "Honor Pad V10",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco f2 pro 128gb": {
+    "model_name": "POCO F2 Pro 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco m2 pro 6b": {
+    "model_name": "POCO M2 Pro 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco x3 nfc 128gb": {
+    "model_name": "POCO X3 NFC 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco m3 6b": {
+    "model_name": "POCO M3 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco f3 128gb": {
+    "model_name": "POCO F3 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco x3 pro 128gb": {
+    "model_name": "POCO X3 Pro 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco m3 pro 6b": {
+    "model_name": "POCO M3 Pro 5G 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco f3 gt 128gb": {
+    "model_name": "POCO F3 GT 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco x3 gt 128gb": {
+    "model_name": "POCO X3 GT 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco m4 pro 128gb": {
+    "model_name": "POCO M4 Pro 5G 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco f4 128gb": {
+    "model_name": "POCO F4 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco f4 gt 128gb": {
+    "model_name": "POCO F4 GT 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco x4 pro 128gb": {
+    "model_name": "POCO X4 Pro 5G 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco m5 128gb": {
+    "model_name": "POCO M5 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco m5s 128gb": {
+    "model_name": "POCO M5s 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco f5 128gb": {
+    "model_name": "POCO F5 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco f5 pro 256gb": {
+    "model_name": "POCO F5 Pro 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco x5 128gb": {
+    "model_name": "POCO X5 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco x5 pro 128gb": {
+    "model_name": "POCO X5 Pro 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco m6 6b": {
+    "model_name": "POCO M6 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco m6 pro 128gb": {
+    "model_name": "POCO M6 Pro 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco x6 128gb": {
+    "model_name": "POCO X6 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco x6 pro 256gb": {
+    "model_name": "POCO X6 Pro 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco f6 128gb": {
+    "model_name": "POCO F6 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco f6 pro 256gb": {
+    "model_name": "POCO F6 Pro 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco c65 6b": {
+    "model_name": "POCO C65 64GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco x7 128gb": {
+    "model_name": "POCO X7 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco x7 pro 256gb": {
+    "model_name": "POCO X7 Pro 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco m7 128gb": {
+    "model_name": "POCO M7 5G 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco pad 128gb": {
+    "model_name": "Poco Pad 5G 128GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "poco pad 256gb": {
+    "model_name": "Poco Pad 5G 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "samsung galaxy z fold6 256gb": {
+    "model_name": "Samsung Galaxy Z Fold6 256GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "samsung galaxy z fold6 512gb": {
+    "model_name": "Samsung Galaxy Z Fold6 512GB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
+  },
+  "samsung galaxy z fold6 1tb": {
+    "model_name": "Samsung Galaxy Z Fold6 1TB",
+    "antutu": null,
+    "geekbench": {
+      "single_core": null,
+      "multi_core": null
+    },
+    "performance_tier": "unknown"
   }
 }

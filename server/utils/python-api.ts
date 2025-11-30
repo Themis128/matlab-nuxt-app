@@ -1,12 +1,14 @@
 /**
  * Utility to call Python API endpoints
  */
+import { getPythonApiUrl } from './get-python-api-url'
 
 export async function callPythonAPI<T>(
   endpoint: string,
-  body: Record<string, unknown>
+  body: Record<string, unknown>,
+  event?: any
 ): Promise<T | null> {
-  const pythonApiUrl = process.env.PYTHON_API_URL || 'http://localhost:8000'
+  const pythonApiUrl = getPythonApiUrl(event)
 
   try {
     const response = await fetch(`${pythonApiUrl}${endpoint}`, {

@@ -1,0 +1,40 @@
+{
+  "individual_models": {
+    "conservative": {
+      "test_rmse": 239.26678888017943,
+      "test_r2": 0.7030561118633816
+    },
+    "aggressive": {
+      "test_rmse": 179.54810743543058,
+      "test_r2": 0.8327865482445261
+    },
+    "deep": {
+      "test_rmse": 180.84186190321836,
+      "test_r2": 0.8303681149896273
+    }
+  },
+  "ensemble": {
+    "test_rmse": 189.60149021359527,
+    "test_r2": 0.813536839340703,
+    "improvement_vs_best": -5.5992697008962375
+  },
+  "features": [
+    "RAM",
+    "Battery Capacity",
+    "Screen Size",
+    "Mobile Weight",
+    "Launched Year",
+    "spec_density",
+    "temporal_decay",
+    "battery_weight_ratio",
+    "screen_weight_ratio",
+    "ram_weight_ratio",
+    "ram_battery_interaction_v2",
+    "ram_percentile_global",
+    "battery_percentile_global"
+  ],
+  "safe_features_only": true,
+  "excluded_features": [
+    "price_percentile_global"
+  ]
+}

@@ -3,7 +3,6 @@ Quick test script for the prediction API
 """
 
 import requests
-import json
 
 API_URL = "http://localhost:8000"
 

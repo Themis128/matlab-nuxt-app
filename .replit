@@ -7,7 +7,7 @@ language = "nodejs"
 run = "bash start.sh"
 
 # Entry point
-entrypoint = "package.json"
+entrypoint = "start.sh"
 
 # Environment variables
 [env]
@@ -16,10 +16,12 @@ PORT = "3000"
 HOST = "0.0.0.0"
 PYTHON_API_URL = "http://localhost:8000"
 PYTHONUNBUFFERED = "1"
+NUXT_TELEMETRY_DISABLED = "1"
 
 # Nix packages
 [nix]
 channel = "stable-22_11"
+file = "config/replit.nix"
 
 # Deploy configuration
 [deploy]
@@ -48,6 +50,7 @@ start = "pylsp"
 # Git configuration
 [gitHubImport]
 requiredFiles = [".replit", "package.json", "nuxt.config.ts", "start.sh"]
+optionalFiles = ["config/replit.nix"]
 
 # Always-on configuration
 [alwaysOn]

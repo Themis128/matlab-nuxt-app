@@ -1,0 +1,40 @@
+{
+  "teacher": {
+    "model_path": "python_api\\trained_models\\ensemble_base_gradient_boosting.pkl",
+    "model_type": "GradientBoostingRegressor",
+    "size_kb": 446.0234375,
+    "latency_ms_mean": 0.6940789999885055,
+    "latency_ms_std": 0.12814325132164658,
+    "metrics": {
+      "rmse": 18378.7633406546,
+      "mae": 8966.134186227251,
+      "r2": -1751.0323448729032
+    }
+  },
+  "student": {
+    "model_path": "python_api\\trained_models\\distilled_price_model.pkl",
+    "model_type": "DecisionTreeRegressor",
+    "max_depth": 8,
+    "size_kb": 7.7880859375,
+    "latency_ms_mean": 0.06938100000525083,
+    "latency_ms_std": 0.02043732221039589,
+    "metrics": {
+      "rmse": 18378.735290639397,
+      "mae": 8963.557944361282,
+      "r2": -1751.026996907373
+    }
+  },
+  "comparison": {
+    "speedup": 10.0038771412343,
+    "size_reduction_percent": 98.253884149866,
+    "accuracy_retention_percent": 99.99984737811415,
+    "recommendation": "Student model ready for production serving"
+  },
+  "benchmark_config": {
+    "n_inference_samples": 500,
+    "n_trials": 100,
+    "dataset_size": 915,
+    "train_size": 732,
+    "test_size": 183
+  }
+}

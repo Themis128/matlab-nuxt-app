@@ -4,18 +4,12 @@ Uses trained TensorFlow/Keras models for accurate predictions
 """
 
 import numpy as np
-import os
 import json
 from pathlib import Path
-from typing import Union
+import importlib.util
 
-try:
-    import tensorflow as tf
-    from tensorflow import keras
-    TENSORFLOW_AVAILABLE = True
-except ImportError:
-    TENSORFLOW_AVAILABLE = False
-    print("Warning: TensorFlow not available. Install with: pip install tensorflow")
+# Detect TensorFlow availability without importing heavy modules unless needed
+TENSORFLOW_AVAILABLE = importlib.util.find_spec("tensorflow") is not None
 
 # Models directory
 MODELS_DIR = Path(__file__).parent / "trained_models"
@@ -47,7 +41,8 @@ class TensorFlowPredictor:
 
             if model_path.exists() and metadata_path.exists():
                 try:
-                    self.models[model_name] = keras.models.load_model(str(model_path))
+                    import tensorflow as tf  # Imported lazily to avoid undefined names
+                    self.models[model_name] = tf.keras.models.load_model(str(model_path))
                     with open(metadata_path, 'r') as f:
                         self.metadata[model_name] = json.load(f)
                     print(f"✓ Loaded {model_name} model")

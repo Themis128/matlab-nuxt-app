@@ -1,0 +1,14 @@
+{
+  "dataset_info": {
+    "total_samples": 915,
+    "total_features": 30,
+    "date_range": "2014-2025",
+    "price_range_usd": "-"
+  },
+  "market_coverage": {
+    "unique_brands": 19
+  },
+  "feature_engineering": {
+    "total_engineered": 11
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "ppp_factors": {
+    "USA": 1.0,
+    "Pakistan": 0.25,
+    "India": 0.28,
+    "China": 0.55,
+    "Dubai": 0.85,
+    "UAE": 0.85
+  },
+  "cpi_multipliers": {
+    "2025": 1.0,
+    "2024": 1.032,
+    "2023": 1.067,
+    "2022": 1.15,
+    "2021": 1.198,
+    "2020": 1.213,
+    "2019": 1.231,
+    "2018": 1.25,
+    "2017": 1.27,
+    "2016": 1.284
+  },
+  "base_price_column": "Launched Price (USA)",
+  "statistics": {
+    "original_price": {
+      "mean": 631.6990819672131,
+      "median": 449.0,
+      "std": 1357.6734405316238
+    },
+    "ppp_adjusted": {
+      "mean": 743.1753905496624,
+      "median": 528.2352941176471,
+      "std": 1597.2628712136755,
+      "min": 92.94117647058823,
+      "max": 46614.117647058825
+    },
+    "inflation_adjusted": {
+      "mean": 703.9903892021857,
+      "median": 491.16900000000004,
+      "std": 1556.939883398951,
+      "min": 91.848,
+      "max": 45565.299999999996
+    },
+    "residual": {
+      "mean": 182.69908196721312,
+      "median": 0.0,
+      "std": 1357.6734405316238,
+      "min": -370.0,
+      "max": 39173.0
+    }
+  },
+  "new_target_columns": [
+    "price_ppp_adjusted",
+    "price_inflation_adjusted",
+    "price_residual"
+  ],
+  "note": "PPP and CPI factors are rough approximations. Use official World Bank PPP and national CPI indices for production."
+}

@@ -1,0 +1,86 @@
+{
+  "dataset_size": 915,
+  "train_size": 732,
+  "test_size": 183,
+  "feature_count": 9,
+  "features": [
+    "Screen Size",
+    "Mobile Weight",
+    "Launched Year",
+    "spec_density",
+    "temporal_decay",
+    "battery_weight_ratio",
+    "screen_weight_ratio",
+    "ram_weight_ratio",
+    "ram_battery_interaction_v2"
+  ],
+  "targets": [
+    "price",
+    "ram",
+    "battery"
+  ],
+  "multitask_metrics": {
+    "price": {
+      "rmse": 445.7398148470805,
+      "mae": 338.12215102390036,
+      "r2": -0.030557920003134953
+    },
+    "ram": {
+      "rmse": 0.1425116040060437,
+      "mae": 0.09316991318531019,
+      "r2": 0.9979378994044589
+    },
+    "battery": {
+      "rmse": 100.78268637054948,
+      "mae": 51.525497356806525,
+      "r2": 0.9984918055164823
+    }
+  },
+  "singletask_metrics": {
+    "price": {
+      "rmse": 445.7398148470805,
+      "mae": 338.12215102390036,
+      "r2": -0.030557920003134953
+    },
+    "ram": {
+      "rmse": 0.1425116040060437,
+      "mae": 0.09316991318531019,
+      "r2": 0.9979378994044589
+    },
+    "battery": {
+      "rmse": 100.78268637054948,
+      "mae": 51.525497356806525,
+      "r2": 0.9984918055164823
+    }
+  },
+  "comparison": {
+    "price": {
+      "multitask_rmse": 445.7398148470805,
+      "singletask_rmse": 445.7398148470805,
+      "improvement_percent": 0.0,
+      "winner": "singletask"
+    },
+    "ram": {
+      "multitask_rmse": 0.1425116040060437,
+      "singletask_rmse": 0.1425116040060437,
+      "improvement_percent": 0.0,
+      "winner": "singletask"
+    },
+    "battery": {
+      "multitask_rmse": 100.78268637054948,
+      "singletask_rmse": 100.78268637054948,
+      "improvement_percent": 0.0,
+      "winner": "singletask"
+    }
+  },
+  "architecture": {
+    "hidden_layers": [
+      128,
+      64,
+      32
+    ],
+    "activation": "relu",
+    "solver": "adam",
+    "max_iter": 500
+  }
+}

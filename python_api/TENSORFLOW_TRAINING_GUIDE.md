@@ -173,7 +173,7 @@ train_price_model(data, epochs=150, batch_size=32)  # Custom parameters
 
 1. ✅ Train models: `python train_models.py`
 2. ✅ Test predictions: Use API or direct functions
-3. ✅ Deploy: Models work on Replit, Render, etc.
+3. ✅ Deploy: Models ready for cloud deployment
 4. 🔮 Optimize: Tune hyperparameters for better accuracy
 
 ## 💡 Tips

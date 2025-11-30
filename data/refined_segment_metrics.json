@@ -1,0 +1,79 @@
+{
+  "price_column": "Launched Price (USA)",
+  "best_k": 3,
+  "clustering_features": [
+    "spec_density",
+    "temporal_decay",
+    "battery_weight_ratio",
+    "screen_weight_ratio",
+    "ram_weight_ratio",
+    "ram_battery_interaction_v2"
+  ],
+  "prediction_features": [
+    "RAM",
+    "Battery Capacity",
+    "Screen Size",
+    "Mobile Weight",
+    "spec_density",
+    "temporal_decay",
+    "battery_weight_ratio",
+    "screen_weight_ratio",
+    "ram_weight_ratio",
+    "ram_battery_interaction_v2"
+  ],
+  "k_search_results": {
+    "3": {
+      "silhouette_score": 0.3998851446965808,
+      "davies_bouldin_score": 1.0186838731550962
+    },
+    "4": {
+      "silhouette_score": 0.35183754733469624,
+      "davies_bouldin_score": 1.0317616962485088
+    },
+    "5": {
+      "silhouette_score": 0.3407236050195111,
+      "davies_bouldin_score": 1.0991621579222968
+    },
+    "6": {
+      "silhouette_score": 0.3493082309899915,
+      "davies_bouldin_score": 1.0247963398870044
+    }
+  },
+  "baseline": {
+    "rmse_cv_mean": 1088.8891291577534,
+    "rmse_train": 914.3824066268877,
+    "mae_train": 128.9581156798291,
+    "r2_train": 0.5459120507572994,
+    "n_samples": 915,
+    "model_type": "LightGBM"
+  },
+  "segments": {
+    "0": {
+      "rmse_cv_mean": 3372.6928154827306,
+      "rmse_train": 2839.733696862615,
+      "mae_train": 623.0914184956862,
+      "r2_train": 0.4049879339083008,
+      "n_samples": 113,
+      "model_type": "LightGBM"
+    },
+    "1": {
+      "rmse_cv_mean": 213.45016112059952,
+      "rmse_train": 73.91549764476011,
+      "mae_train": 51.558608936239686,
+      "r2_train": 0.9634350434206517,
+      "n_samples": 273,
+      "model_type": "LightGBM"
+    },
+    "2": {
+      "rmse_cv_mean": 354.63149718453695,
+      "rmse_train": 113.5275029738939,
+      "mae_train": 75.0413572790239,
+      "r2_train": 0.9324894259479081,
+      "n_samples": 529,
+      "model_type": "LightGBM"
+    }
+  },
+  "avg_segment_rmse_cv": 1313.5914912626224,
+  "improvement_vs_baseline": -224.70236210486905,
+  "improvement_percent": -20.635926660290423
+}

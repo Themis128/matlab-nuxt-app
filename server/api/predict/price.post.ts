@@ -25,7 +25,7 @@ export default defineEventHandler(async event => {
       })
     }
 
-    const result = await callPythonAPI<{ price: number }>('/api/predict/price', body)
+    const result = await callPythonAPI<{ price: number }>('/api/predict/price', body, event)
 
     if (!result) {
       throw new Error('Python API is not available')

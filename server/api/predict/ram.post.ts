@@ -4,7 +4,7 @@ export default defineEventHandler(async event => {
   try {
     const body = await readBody(event)
 
-    const result = await callPythonAPI<{ ram: number }>('/api/predict/ram', body)
+    const result = await callPythonAPI<{ ram: number }>('/api/predict/ram', body, event)
 
     if (!result) {
       throw createError({

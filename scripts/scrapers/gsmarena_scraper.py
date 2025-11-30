@@ -207,35 +207,72 @@ class GSMArenaScraper:
             if 'reverse' in text.lower():
                 battery['has_reverse_charging'] = True
 
-        # Endurance rating
-        endurance_elem = soup.find(text=re.compile(r'Endurance rating', re.I))
-        if endurance_elem:
-            parent = endurance_elem.find_parent('td')
-            if parent:
-                rating = extract_number(parent.text)
-                battery['endurance_rating_hours'] = rating
+            def search_phone(self, phone_name: str) -> Optional[str]:
+                """Search GSMArena and return the URL of the best match using quick search.
 
-        return battery
+                Strategy:
+                - Use `results.php?sQuickSearch=1&sName=<query>` which yields consistent results.
+                - Iterate candidate links; prefer exact title match after opening detail page.
+                - Use normalized name comparison as guard against mis-mapping (e.g., POCO page).
+                """
+                try:
+                    normalized_query = normalize_phone_name(phone_name)
+                except Exception:
+                    normalized_query = phone_name.strip().lower()
 
-    def _extract_build_specs(self, soup) -> Dict[str, Any]:
-        """Extract build quality specifications."""
-        build = {}
+                qs_url = f"{self.BASE_URL}/results.php?" + urlencode({
+                    'sQuickSearch': 1,
+                    'sName': phone_name,
+                })
 
-        # Glass type
-        glass_elem = soup.find(text=re.compile(r'Gorilla Glass|Ceramic Shield|Victus', re.I))
-        if glass_elem:
-            build['glass_type'] = clean_text(str(glass_elem))
+                resp = fetch_url(qs_url)
+                if not resp:
+                    return None
+                soup = parse_html(resp.text)
+                if not soup:
+                    return None
 
-        # Water resistance
-        ip_elem = soup.find(text=re.compile(r'IP\d+', re.I))
-        if ip_elem:
-            ip_match = re.search(r'IP(\d+)', str(ip_elem), re.I)
-            if ip_match:
-                build['ip_rating'] = f"IP{ip_match.group(1)}"
+                candidates = soup.select('div.makers ul li a')
+                if not candidates:
+                    # Fallback to any anchor if structure changes
+                    candidates = soup.find_all('a', href=True)
 
-        # Build materials
-        body_elem = soup.find('td', {'data-spec': 'build'})
-        if body_elem:
+                best_url = None
+                best_score = -1
+
+                for a in candidates:
+                    href = a.get('href')
+                    text = clean_text(a.get_text(" ")) if a else ""
+                    if not href:
+                        continue
+                    if not href.startswith('/'):
+                        href = '/' + href
+                    candidate_url = f"{self.BASE_URL}{href}"
+
+                    # Quick text-based scoring before fetching detail
+                    name_tokens = normalized_query.split()
+                    candidate_text_norm = normalize_phone_name(text)
+                    token_hits = sum(1 for t in name_tokens if t in candidate_text_norm)
+                    score = token_hits
+
+                    # Fetch detail page to verify <h1> title if score is promising
+                    if score >= 1:
+                        detail_resp = fetch_url(candidate_url)
+                        detail_soup = parse_html(detail_resp.text) if detail_resp else None
+                        h1 = detail_soup.select_one('div#specs-cp h1') if detail_soup else None
+                        title_text = clean_text(h1.get_text(" ")) if h1 else ""
+                        title_norm = normalize_phone_name(title_text) if title_text else ""
+                        if title_norm:
+                            # Exact or near-exact match gets high score
+                            if title_norm == normalized_query:
+                                return candidate_url
+                            score += 1 if normalized_query in title_norm or title_norm in normalized_query else 0
+
+                    if score > best_score:
+                        best_score = score
+                        best_url = candidate_url
+
+                return best_url
             build['materials'] = clean_text(body_elem.text)
 
         return build

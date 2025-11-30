@@ -31,6 +31,25 @@ Instead, please report it by:
 - We will provide a detailed response within 7 days
 - We will keep you informed of our progress
 
+## 🛡️ Security Features
+
+### Implemented Security Measures
+
+- ✅ **Rate Limiting** - Prevents API abuse (100 requests/60 seconds)
+- ✅ **CORS Protection** - Configurable origin restrictions
+- ✅ **Security Headers** - HSTS, CSP, X-Frame-Options, etc.
+- ✅ **Input Validation** - Pydantic models for all API inputs
+- ✅ **Environment Isolation** - Separate dev/production configurations
+- ✅ **Docker Security** - Non-root users, minimal attack surface
+- ✅ **Health Checks** - Monitoring endpoints
+
+### Security Documentation
+
+For detailed security configuration:
+- 📖 [Security Configuration Guide](docs/SECURITY_CONFIGURATION.md)
+- 📖 [Error Tracking Setup](docs/ERROR_TRACKING_SETUP.md)
+- 📖 [Implementation Summary](docs/MISSING_FEATURES_IMPLEMENTATION.md)
+
 ## 🛡️ Security Best Practices
 
 ### For Users

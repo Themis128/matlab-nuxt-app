@@ -1,0 +1,916 @@
+{
+  "market_definition": {
+    "total_phones": 915,
+    "phones_with_dual_pricing": 915,
+    "avg_european_premium_pct": -87.21153855442647,
+    "european_avg_price": 2199.7377049180327,
+    "global_avg_price": 18518.732845173043
+  },
+  "brand_positioning": {
+    "brand_stats": {
+      "price_european_mean": {
+        "Huawei": 4170.43,
+        "Sony": 4032.33,
+        "Apple": 3683.54,
+        "Google": 3022.81,
+        "Samsung": 2876.27,
+        "OnePlus": 2455.6,
+        "Xiaomi": 2261.96,
+        "Honor": 2243.51,
+        "Oppo": 2070.14,
+        "Tecno": 1810.54,
+        "Motorola": 1605.44,
+        "Vivo": 1594.93,
+        "iQOO": 1499.0,
+        "POCO": 1197.33,
+        "Lenovo": 1172.33,
+        "Realme": 995.29,
+        "Infinix": 919.91,
+        "Nokia": 660.0
+      },
+      "price_european_std": {
+        "Huawei": 2674.84,
+        "Sony": 1744.99,
+        "Apple": 867.03,
+        "Google": 1309.93,
+        "Samsung": 1995.44,
+        "OnePlus": 937.37,
+        "Xiaomi": 1054.71,
+        "Honor": 1611.39,
+        "Oppo": 1013.3,
+        "Tecno": 1565.81,
+        "Motorola": 1086.38,
+        "Vivo": 981.87,
+        "iQOO": 200.0,
+        "POCO": 418.84,
+        "Lenovo": 595.48,
+        "Realme": 329.32,
+        "Infinix": 387.74,
+        "Nokia": 158.53
+      },
+      "price_european_count": {
+        "Huawei": 42,
+        "Sony": 9,
+        "Apple": 97,
+        "Google": 21,
+        "Samsung": 88,
+        "OnePlus": 53,
+        "Xiaomi": 27,
+        "Honor": 91,
+        "Oppo": 115,
+        "Tecno": 39,
+        "Motorola": 62,
+        "Vivo": 86,
+        "iQOO": 3,
+        "POCO": 30,
+        "Lenovo": 15,
+        "Realme": 69,
+        "Infinix": 55,
+        "Nokia": 11
+      },
+      "price_global_avg_mean": {
+        "Huawei": 36925.98,
+        "Sony": 32921.22,
+        "Apple": 37069.56,
+        "Google": 25716.14,
+        "Samsung": 23177.49,
+        "OnePlus": 16764.47,
+        "Xiaomi": 20424.23,
+        "Honor": 17609.18,
+        "Oppo": 16871.36,
+        "Tecno": 13444.56,
+        "Motorola": 12276.01,
+        "Vivo": 13062.14,
+        "iQOO": 15921.22,
+        "POCO": 8334.78,
+        "Lenovo": 9269.89,
+        "Realme": 9461.34,
+        "Infinix": 6438.21,
+        "Nokia": 6230.03
+      },
+      "price_global_avg_std": {
+        "Huawei": 23887.54,
+        "Sony": 11031.72,
+        "Apple": 10438.7,
+        "Google": 12955.18,
+        "Samsung": 16849.12,
+        "OnePlus": 7110.27,
+        "Xiaomi": 11377.67,
+        "Honor": 13345.75,
+        "Oppo": 10792.74,
+        "Tecno": 12087.61,
+        "Motorola": 8391.38,
+        "Vivo": 9990.28,
+        "iQOO": 2217.0,
+        "POCO": 3458.86,
+        "Lenovo": 6657.17,
+        "Realme": 3935.84,
+        "Infinix": 2940.98,
+        "Nokia": 4700.43
+      },
+      "european_price_premium_pct_mean": {
+        "Huawei": -88.55,
+        "Sony": -88.17,
+        "Apple": -89.92,
+        "Google": -87.92,
+        "Samsung": -86.9,
+        "OnePlus": -85.02,
+        "Xiaomi": -88.07,
+        "Honor": -87.0,
+        "Oppo": -86.49,
+        "Tecno": -86.43,
+        "Motorola": -86.45,
+        "Vivo": -87.0,
+        "iQOO": -90.58,
+        "POCO": -85.26,
+        "Lenovo": -85.49,
+        "Realme": -89.2,
+        "Infinix": -85.56,
+        "Nokia": -87.45
+      },
+      "RAM_mean": {
+        "Huawei": 9.71,
+        "Sony": 8.67,
+        "Apple": 5.33,
+        "Google": 8.57,
+        "Samsung": 7.51,
+        "OnePlus": 9.43,
+        "Xiaomi": 10.52,
+        "Honor": 8.01,
+        "Oppo": 9.43,
+        "Tecno": 7.21,
+        "Motorola": 7.55,
+        "Vivo": 7.5,
+        "iQOO": 7.33,
+        "POCO": 5.8,
+        "Lenovo": 6.33,
+        "Realme": 8.13,
+        "Infinix": 6.91,
+        "Nokia": 4.0
+      },
+      "Battery Capacity_mean": {
+        "Huawei": 4.52,
+        "Sony": 5.0,
+        "Apple": 4.0,
+        "Google": 3.95,
+        "Samsung": 5119.43,
+        "OnePlus": 4840.38,
+        "Xiaomi": 5.04,
+        "Honor": 5.19,
+        "Oppo": 2547.43,
+        "Tecno": 5.23,
+        "Motorola": 4.53,
+        "Vivo": 4678.6,
+        "iQOO": 8040.0,
+        "POCO": 5041.17,
+        "Lenovo": 4.47,
+        "Realme": 5.49,
+        "Infinix": 5.25,
+        "Nokia": 750.0
+      },
+      "Screen Size_mean": {
+        "Huawei": 7.17,
+        "Sony": 6.22,
+        "Apple": 7.14,
+        "Google": 6.32,
+        "Samsung": 7.33,
+        "OnePlus": 6.89,
+        "Xiaomi": 6.62,
+        "Honor": 8.06,
+        "Oppo": 6.89,
+        "Tecno": 6.96,
+        "Motorola": 6.6,
+        "Vivo": 6.79,
+        "iQOO": 11.87,
+        "POCO": 6.63,
+        "Lenovo": 6.46,
+        "Realme": 7.43,
+        "Infinix": 7.01,
+        "Nokia": 6.87
+      }
+    },
+    "top_premium_brands": [
+      "Huawei",
+      "Sony",
+      "Apple",
+      "Google",
+      "Samsung",
+      "OnePlus",
+      "Xiaomi",
+      "Honor",
+      "Oppo",
+      "Tecno"
+    ],
+    "segment_share": {
+      "Apple": {
+        "Budget": NaN,
+        "Mid-Range": 0.0,
+        "Premium": 0.0,
+        "Flagship": 0.45454545454545453,
+        "Ultra-Premium": 16.161616161616163
+      },
+      "Google": {
+        "Budget": NaN,
+        "Mid-Range": 0.0,
+        "Premium": 0.0,
+        "Flagship": 0.0,
+        "Ultra-Premium": 3.535353535353535
+      },
+      "Honor": {
+        "Budget": NaN,
+        "Mid-Range": 0.0,
+        "Premium": 13.043478260869565,
+        "Flagship": 8.636363636363637,
+        "Ultra-Premium": 10.1010101010101
+      },
+      "Huawei": {
+        "Budget": NaN,
+        "Mid-Range": 0.0,
+        "Premium": 0.0,
+        "Flagship": 0.0,
+        "Ultra-Premium": 7.07070707070707
+      },
+      "Infinix": {
+        "Budget": NaN,
+        "Mid-Range": 33.33333333333333,
+        "Premium": 19.565217391304348,
+        "Flagship": 9.545454545454547,
+        "Ultra-Premium": 2.1885521885521886
+      },
+      "Lenovo": {
+        "Budget": NaN,
+        "Mid-Range": 0.0,
+        "Premium": 3.260869565217391,
+        "Flagship": 3.1818181818181817,
+        "Ultra-Premium": 0.8417508417508417
+      },
+      "Motorola": {
+        "Budget": NaN,
+        "Mid-Range": 0.0,
+        "Premium": 5.434782608695652,
+        "Flagship": 10.909090909090908,
+        "Ultra-Premium": 5.555555555555555
+      },
+      "Nokia": {
+        "Budget": NaN,
+        "Mid-Range": 0.0,
+        "Premium": 8.695652173913043,
+        "Flagship": 1.3636363636363635,
+        "Ultra-Premium": 0.0
+      },
+      "OnePlus": {
+        "Budget": NaN,
+        "Mid-Range": 0.0,
+        "Premium": 2.1739130434782608,
+        "Flagship": 2.272727272727273,
+        "Ultra-Premium": 7.744107744107744
+      },
+      "Oppo": {
+        "Budget": NaN,
+        "Mid-Range": 0.0,
+        "Premium": 1.0869565217391304,
+        "Flagship": 10.909090909090908,
+        "Ultra-Premium": 15.151515151515152
+      },
+      "POCO": {
+        "Budget": NaN,
+        "Mid-Range": 0.0,
+        "Premium": 2.1739130434782608,
+        "Flagship": 7.2727272727272725,
+        "Ultra-Premium": 2.0202020202020203
+      },
+      "Poco": {
+        "Budget": NaN,
+        "Mid-Range": 0.0,
+        "Premium": 0.0,
+        "Flagship": 0.9090909090909091,
+        "Ultra-Premium": 0.0
+      },
+      "Realme": {
+        "Budget": NaN,
+        "Mid-Range": 0.0,
+        "Premium": 17.391304347826086,
+        "Flagship": 15.0,
+        "Ultra-Premium": 3.3670033670033668
+      },
+      "Samsung": {
+        "Budget": NaN,
+        "Mid-Range": 11.11111111111111,
+        "Premium": 6.521739130434782,
+        "Flagship": 9.545454545454547,
+        "Ultra-Premium": 10.1010101010101
+      },
+      "Sony": {
+        "Budget": NaN,
+        "Mid-Range": 0.0,
+        "Premium": 0.0,
+        "Flagship": 0.0,
+        "Ultra-Premium": 1.5151515151515151
+      },
+      "Tecno": {
+        "Budget": NaN,
+        "Mid-Range": 55.55555555555556,
+        "Premium": 6.521739130434782,
+        "Flagship": 4.090909090909091,
+        "Ultra-Premium": 3.1986531986531985
+      },
+      "Vivo": {
+        "Budget": NaN,
+        "Mid-Range": 0.0,
+        "Premium": 14.130434782608695,
+        "Flagship": 12.727272727272727,
+        "Ultra-Premium": 7.575757575757576
+      },
+      "Xiaomi": {
+        "Budget": NaN,
+        "Mid-Range": 0.0,
+        "Premium": 0.0,
+        "Flagship": 3.1818181818181817,
+        "Ultra-Premium": 3.3670033670033668
+      },
+      "iQOO": {
+        "Budget": NaN,
+        "Mid-Range": 0.0,
+        "Premium": 0.0,
+        "Flagship": 0.0,
+        "Ultra-Premium": 0.5050505050505051
+      }
+    }
+  },
+  "temporal_trends": {
+    "price_european_mean": {
+      "2014": 599.0,
+      "2016": 729.0,
+      "2017": 1915.67,
+      "2018": 2406.14,
+      "2019": 2255.52,
+      "2020": 2195.0,
+      "2021": 1952.7,
+      "2022": 2209.91,
+      "2023": 2239.37,
+      "2024": 2305.56,
+      "2025": 1585.33
+    },
+    "price_european_median": {
+      "2014": 599.0,
+      "2016": 649.0,
+      "2017": 1099.0,
+      "2018": 2499.0,
+      "2019": 1799.0,
+      "2020": 1649.0,
+      "2021": 1499.0,
+      "2022": 1749.0,
+      "2023": 1559.5,
+      "2024": 1699.0,
+      "2025": 1285.0
+    },
+    "price_european_std": {
+      "2014": 141.42,
+      "2016": 352.85,
+      "2017": 1367.48,
+      "2018": 1678.41,
+      "2019": 1317.22,
+      "2020": 1468.13,
+      "2021": 1413.1,
+      "2022": 1523.69,
+      "2023": 1571.08,
+      "2024": 1740.87,
+      "2025": 645.24
+    },
+    "price_global_avg_mean": {
+      "2014": 5089.0,
+      "2016": 6295.13,
+      "2017": 14981.3,
+      "2018": 20771.65,
+      "2019": 18310.54,
+      "2020": 18603.87,
+      "2021": 15753.44,
+      "2022": 18027.79,
+      "2023": 18885.24,
+      "2024": 19965.3,
+      "2025": 13734.06
+    },
+    "price_global_avg_median": {
+      "2014": 5089.0,
+      "2016": 5125.67,
+      "2017": 9165.67,
+      "2018": 14032.33,
+      "2019": 14689.33,
+      "2020": 11969.17,
+      "2021": 10915.67,
+      "2022": 12657.33,
+      "2023": 13340.67,
+      "2024": 14549.0,
+      "2025": 12129.67
+    },
+    "price_global_avg_std": {
+      "2014": 1522.64,
+      "2016": 3668.65,
+      "2017": 11594.74,
+      "2018": 15791.03,
+      "2019": 11692.0,
+      "2020": 15883.97,
+      "2021": 14004.78,
+      "2022": 13756.89,
+      "2023": 14724.52,
+      "2024": 15702.19,
+      "2025": 5099.28
+    },
+    "european_price_premium_pct_mean": {
+      "2014": -88.11,
+      "2016": -87.9,
+      "2017": -87.1,
+      "2018": -87.88,
+      "2019": -87.18,
+      "2020": -86.49,
+      "2021": -86.31,
+      "2022": -86.64,
+      "2023": -87.18,
+      "2024": -87.97,
+      "2025": -88.48
+    },
+    "RAM_mean": {
+      "2014": 1.5,
+      "2016": 3.4,
+      "2017": 4.44,
+      "2018": 4.38,
+      "2019": 6.28,
+      "2020": 6.44,
+      "2021": 6.98,
+      "2022": 7.59,
+      "2023": 8.09,
+      "2024": 9.1,
+      "2025": 9.0
+    },
+    "Battery Capacity_mean": {
+      "2014": 2150.0,
+      "2016": 3920.0,
+      "2017": 2617.67,
+      "2018": 1766.14,
+      "2019": 1994.98,
+      "2020": 1485.35,
+      "2021": 1374.38,
+      "2022": 1751.32,
+      "2023": 2468.78,
+      "2024": 1326.6,
+      "2025": 2836.0
+    },
+    "Screen Size_mean": {
+      "2014": 5.25,
+      "2016": 6.96,
+      "2017": 5.69,
+      "2018": 6.16,
+      "2019": 6.39,
+      "2020": 7.4,
+      "2021": 6.76,
+      "2022": 7.06,
+      "2023": 7.28,
+      "2024": 7.26,
+      "2025": 6.7
+    },
+    "Company Name_count": {
+      "2014": 2,
+      "2016": 5,
+      "2017": 9,
+      "2018": 21,
+      "2019": 46,
+      "2020": 98,
+      "2021": 103,
+      "2022": 146,
+      "2023": 182,
+      "2024": 291,
+      "2025": 12
+    }
+  },
+  "segment_distribution": {
+    "european": {
+      "Ultra-Premium": 594,
+      "Flagship": 220,
+      "Premium": 92,
+      "Mid-Range": 9,
+      "Budget": 0
+    },
+    "global": {
+      "Ultra-Premium": 915,
+      "Budget": 0,
+      "Mid-Range": 0,
+      "Premium": 0,
+      "Flagship": 0
+    },
+    "european_pct": {
+      "Ultra-Premium": 64.91803278688525,
+      "Flagship": 24.043715846994534,
+      "Premium": 10.05464480874317,
+      "Mid-Range": 0.9836065573770493,
+      "Budget": 0.0
+    },
+    "global_pct": {
+      "Ultra-Premium": 100.0,
+      "Budget": 0.0,
+      "Mid-Range": 0.0,
+      "Premium": 0.0,
+      "Flagship": 0.0
+    }
+  },
+  "feature_preferences": {
+    "RAM": {
+      "european": 0.4796136327631937,
+      "global": 0.42526564989195426,
+      "difference": 0.05434798287123943
+    },
+    "Battery Capacity": {
+      "european": 0.034566444733186936,
+      "global": -0.00016141306740245984,
+      "difference": 0.034727857800589394
+    },
+    "Screen Size": {
+      "european": 0.07706880806278256,
+      "global": 0.10704238525211879,
+      "difference": -0.02997357718933623
+    },
+    "Mobile Weight": {
+      "european": 0.09667686399501203,
+      "global": 0.14025417889429495,
+      "difference": -0.04357731489928292
+    }
+  },
+  "competitive_landscape": {
+    "hhi_europe": 791.7704320821763,
+    "market_structure": "Competitive",
+    "top_10_brands_share": {
+      "Oppo": 12.568306010928962,
+      "Apple": 10.601092896174864,
+      "Honor": 9.94535519125683,
+      "Samsung": 9.617486338797814,
+      "Vivo": 9.398907103825136,
+      "Realme": 7.540983606557377,
+      "Motorola": 6.775956284153005,
+      "Infinix": 6.0109289617486334,
+      "OnePlus": 5.7923497267759565,
+      "Huawei": 4.590163934426229
+    },
+    "top_10_combined_share": 82.8415300546448,
+    "brands_by_segment": {
+      "Budget": 0,
+      "Mid-Range": 3,
+      "Premium": 12,
+      "Flagship": 15,
+      "Ultra-Premium": 17
+    }
+  },
+  "value_proposition": {
+    "best_value_europe": [
+      {
+        "Company Name": "Samsung",
+        "Model Name": "Galaxy Tab E 8.0 16GB",
+        "price_european": 399.0,
+        "value_score_europe": 1.1654135338345866,
+        "RAM": 1.5,
+        "Battery Capacity": 5000.0
+      },
+      {
+        "Company Name": "Samsung",
+        "Model Name": "Galaxy Tab E 10.1 16GB",
+        "price_european": 499.0,
+        "value_score_europe": 1.1422845691382766,
+        "RAM": 1.5,
+        "Battery Capacity": 5000.0
+      },
+      {
+        "Company Name": "Infinix",
+        "Model Name": "Smart HD 32GB",
+        "price_european": 299.0,
+        "value_score_europe": 1.087123745819398,
+        "RAM": 2.0,
+        "Battery Capacity": 5.0
+      },
+      {
+        "Company Name": "Honor",
+        "Model Name": "Pad X8a Kids Edition",
+        "price_european": 499.0,
+        "value_score_europe": 1.0321643286573146,
+        "RAM": 3.0,
+        "Battery Capacity": 5.0
+      },
+      {
+        "Company Name": "Infinix",
+        "Model Name": "Smart 5 64GB",
+        "price_european": 349.0,
+        "value_score_europe": 1.0316618911174786,
+        "RAM": 3.0,
+        "Battery Capacity": 5.0
+      },
+      {
+        "Company Name": "Tecno",
+        "Model Name": "Pop 9 64GB",
+        "price_european": 349.0,
+        "value_score_europe": 1.0202005730659025,
+        "RAM": 3.0,
+        "Battery Capacity": 5.0
+      },
+      {
+        "Company Name": "Tecno",
+        "Model Name": "Pop 8 64GB",
+        "price_european": 349.0,
+        "value_score_europe": 1.0202005730659025,
+        "RAM": 3.0,
+        "Battery Capacity": 5.0
+      },
+      {
+        "Company Name": "Honor",
+        "Model Name": "Pad X8a",
+        "price_european": 549.0,
+        "value_score_europe": 0.956375227686703,
+        "RAM": 4.0,
+        "Battery Capacity": 5.0
+      },
+      {
+        "Company Name": "Honor",
+        "Model Name": "Pad X8 Lite",
+        "price_european": 549.0,
+        "value_score_europe": 0.9381602914389798,
+        "RAM": 3.0,
+        "Battery Capacity": 5.0
+      },
+      {
+        "Company Name": "Infinix",
+        "Model Name": "Hot 10 Lite 64GB",
+        "price_european": 399.0,
+        "value_score_europe": 0.9023809523809524,
+        "RAM": 3.0,
+        "Battery Capacity": 5.0
+      }
+    ],
+    "segment_value": {
+      "value_score_europe": {
+        "Budget": NaN,
+        "Mid-Range": 0.989,
+        "Premium": 0.649,
+        "Flagship": 0.451,
+        "Ultra-Premium": 0.197
+      },
+      "value_score_global": {
+        "Budget": NaN,
+        "Mid-Range": 0.136,
+        "Premium": 0.087,
+        "Flagship": 0.061,
+        "Ultra-Premium": 0.025
+      },
+      "price_european": {
+        "Budget": NaN,
+        "Mid-Range": 371.222,
+        "Premium": 617.576,
+        "Flagship": 975.359,
+        "Ultra-Premium": 2925.965
+      },
+      "RAM": {
+        "Budget": NaN,
+        "Mid-Range": 2.722,
+        "Premium": 4.179,
+        "Flagship": 6.218,
+        "Ultra-Premium": 9.007
+      },
+      "Battery Capacity": {
+        "Budget": NaN,
+        "Mid-Range": 560.0,
+        "Premium": 1076.543,
+        "Flagship": 1611.009,
+        "Ultra-Premium": 1902.391
+      }
+    }
+  },
+  "price_gaps": {
+    "summary_stats": {
+      "gap_europe_usa": {
+        "count": 915.0,
+        "mean": 277.5208403491193,
+        "std": 38.23155567921619,
+        "min": -97.80425016405027,
+        "25%": 264.11657559198545,
+        "50%": 272.2063037249284,
+        "75%": 288.53768094824346,
+        "max": 442.63565891472865
+      },
+      "gap_europe_china": {
+        "count": 915.0,
+        "mean": -41.91668525903494,
+        "std": 8.161911990193577,
+        "min": -63.64793598836152,
+        "25%": -47.63417077856154,
+        "50%": -43.49717268377555,
+        "75%": -37.15347242069163,
+        "max": -18.198362147406733
+      },
+      "gap_europe_india": {
+        "count": 915.0,
+        "mean": -95.32804722268595,
+        "std": 0.8941274177734956,
+        "min": -97.2120789708935,
+        "25%": -96.00192003840077,
+        "50%": -95.4807600104111,
+        "75%": -94.71145361491853,
+        "max": -92.22135792865875
+      }
+    },
+    "brand_gaps": {
+      "gap_europe_usa": {
+        "Oppo": 309.0895780835212,
+        "OnePlus": 304.53226237505237,
+        "Google": 303.7434454991835,
+        "Xiaomi": 302.3374799621603,
+        "POCO": 288.90577099784167,
+        "Tecno": 284.5665695867562,
+        "Samsung": 284.30633053543016,
+        "iQOO": 275.4306544360616,
+        "Lenovo": 274.69929809174386,
+        "Infinix": 271.41715625525944,
+        "Motorola": 271.01857732943034,
+        "Honor": 270.3493972524352,
+        "Huawei": 269.868233130487,
+        "Realme": 264.78393156091227,
+        "Apple": 259.23730340719726,
+        "Sony": 254.36839060127397,
+        "Vivo": 249.98718719296804,
+        "Nokia": 233.43748803837795
+      },
+      "gap_europe_china": {
+        "Oppo": -39.9796055534779,
+        "OnePlus": -37.31055173356751,
+        "Google": -49.54723799154513,
+        "Xiaomi": -35.82142459264978,
+        "POCO": -41.29510970421686,
+        "Tecno": -40.32371699630644,
+        "Samsung": -41.82062143351187,
+        "iQOO": -55.151658661534476,
+        "Lenovo": -44.267298638098346,
+        "Infinix": -41.54068424036452,
+        "Motorola": -39.64111553366777,
+        "Honor": -34.951614493438775,
+        "Huawei": -39.73896312596497,
+        "Realme": -48.72451303646282,
+        "Apple": -48.362588290058426,
+        "Sony": -34.88790876626993,
+        "Vivo": -45.548217462662905,
+        "Nokia": -42.74831821523849
+      },
+      "gap_europe_india": {
+        "Oppo": -95.06451335180371,
+        "OnePlus": -94.49331567663805,
+        "Google": -95.57201890791309,
+        "Xiaomi": -95.70141940459828,
+        "POCO": -94.55847037473816,
+        "Tecno": -95.04178676758039,
+        "Samsung": -95.21324510674681,
+        "iQOO": -96.59217513797638,
+        "Lenovo": -94.60128152420201,
+        "Infinix": -94.67603898146112,
+        "Motorola": -95.04532821513801,
+        "Honor": -95.28466148406169,
+        "Huawei": -95.87322074835375,
+        "Realme": -96.08588265563101,
+        "Apple": -96.36405468320793,
+        "Sony": -95.75188825192801,
+        "Vivo": -95.21565057426884,
+        "Nokia": -95.09938744967857
+      }
+    },
+    "largest_gaps": [
+      {
+        "Company Name": "Oppo",
+        "Model Name": "A49 5G 128GB",
+        "price_european": 700.0,
+        "price_usa": 129.0,
+        "gap_europe_usa": 442.63565891472865
+      },
+      {
+        "Company Name": "Oppo",
+        "Model Name": "A50 5G 128GB",
+        "price_european": 750.0,
+        "price_usa": 139.0,
+        "gap_europe_usa": 439.568345323741
+      },
+      {
+        "Company Name": "Oppo",
+        "Model Name": "K10 5G 256GB",
+        "price_european": 1500.0,
+        "price_usa": 279.0,
+        "gap_europe_usa": 437.63440860215053
+      },
+      {
+        "Company Name": "Oppo",
+        "Model Name": "A51 5G 128GB",
+        "price_european": 800.0,
+        "price_usa": 149.0,
+        "gap_europe_usa": 436.9127516778524
+      },
+      {
+        "Company Name": "Oppo",
+        "Model Name": "A59 5G 256GB",
+        "price_european": 1200.0,
+        "price_usa": 229.0,
+        "gap_europe_usa": 424.01746724890825
+      },
+      {
+        "Company Name": "Oppo",
+        "Model Name": "A40 256GB",
+        "price_european": 1200.0,
+        "price_usa": 229.0,
+        "gap_europe_usa": 424.01746724890825
+      },
+      {
+        "Company Name": "Oppo",
+        "Model Name": "K11x 256GB",
+        "price_european": 1200.0,
+        "price_usa": 229.0,
+        "gap_europe_usa": 424.01746724890825
+      },
+      {
+        "Company Name": "Oppo",
+        "Model Name": "K10x 256GB",
+        "price_european": 1200.0,
+        "price_usa": 229.0,
+        "gap_europe_usa": 424.01746724890825
+      },
+      {
+        "Company Name": "Oppo",
+        "Model Name": "K9x 256GB",
+        "price_european": 1200.0,
+        "price_usa": 229.0,
+        "gap_europe_usa": 424.01746724890825
+      },
+      {
+        "Company Name": "Oppo",
+        "Model Name": "A58 5G 256GB",
+        "price_european": 1300.0,
+        "price_usa": 249.0,
+        "gap_europe_usa": 422.0883534136546
+      }
+    ]
+  },
+  "pca_analysis": {
+    "explained_variance": [
+      0.35127954296990316,
+      0.2741319007549905,
+      0.16473523347222147
+    ],
+    "cumulative_variance": [
+      0.35127954296990316,
+      0.6254114437248937,
+      0.7901466771971151
+    ],
+    "feature_loadings": {
+      "PC1": {
+        "RAM": 0.3980461017621185,
+        "Battery Capacity": 0.11126987209322736,
+        "Screen Size": 0.3305683958146942,
+        "Mobile Weight": 0.32822378852893214,
+        "price_european": 0.536645900681934,
+        "price_global_avg": 0.5372345525478363,
+        "Launched Year": 0.18857945168695978
+      },
+      "PC2": {
+        "RAM": -0.2519580005831414,
+        "Battery Capacity": 0.19244650191290363,
+        "Screen Size": 0.6021210480216174,
+        "Mobile Weight": 0.6031862789819794,
+        "price_european": -0.3072250288089249,
+        "price_global_avg": -0.2801739995328246,
+        "Launched Year": -0.014607459737783123
+      },
+      "PC3": {
+        "RAM": 0.4114854872061997,
+        "Battery Capacity": -0.0519173816590743,
+        "Screen Size": 0.0143145810755201,
+        "Mobile Weight": -0.07213505732129394,
+        "price_european": -0.2684498671745146,
+        "price_global_avg": -0.2786408746294755,
+        "Launched Year": 0.8202864361757635
+      }
+    }
+  },
+  "insights": {
+    "executive_summary": {
+      "european_premium_avg": "-87.2%",
+      "european_avg_price": "$2199.74",
+      "global_avg_price": "$18518.73",
+      "market_concentration": "Competitive",
+      "top_3_brands": [
+        "Oppo",
+        "Apple",
+        "Honor"
+      ]
+    },
+    "key_findings": [
+      "European market shows -87.2% average price premium over global markets",
+      "Market concentration (HHI: 792) indicates competitive market structure",
+      "Top 10 brands control 82.8% of European market",
+      "Premium and Flagship segments represent 34.1% of European market"
+    ],
+    "strategic_recommendations": [
+      "European market commands premium pricing - brands should invest in features that justify higher prices",
+      "Focus on premium/flagship segments where European buyers show strong preference",
+      "Consider differentiated pricing strategies across markets to capture regional willingness-to-pay",
+      "Technology adoption (RAM, battery) shows strong correlation with pricing - emphasize spec leadership"
+    ]
+  }
+}

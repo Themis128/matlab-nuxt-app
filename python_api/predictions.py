@@ -4,10 +4,7 @@ This module provides Python equivalents of MATLAB prediction functions.
 """
 
 import numpy as np
-import os
-import json
 from pathlib import Path
-from typing import Union, List
 
 try:
     from scipy.io import loadmat
@@ -16,13 +13,7 @@ except ImportError:
     SCIPY_AVAILABLE = False
     print("Warning: scipy not available. Will use mock predictions.")
 
-try:
-    import tensorflow as tf
-    from tensorflow import keras
-    TENSORFLOW_AVAILABLE = True
-except ImportError:
-    TENSORFLOW_AVAILABLE = False
-    print("Warning: TensorFlow not available. Will use mock predictions.")
+# TensorFlow not required for this simplified fallback; remove unused imports
 
 
 class ModelLoader:
@@ -141,23 +132,8 @@ def predict_price(ram: float, battery: float, screen_size: float,
         features = np.array([ram, battery, screen_size, weight, year] + company_encoded.tolist())
         features = features.reshape(1, -1)
 
-        # Normalize
-        norm_params = model_loader.normalization_params[model_name]
-        X_mean = norm_params['X_mean']
-        X_std = norm_params['X_std']
-        y_mean = norm_params['y_mean']
-        y_std = norm_params['y_std']
-
-        features_norm = (features - X_mean) / (X_std + 1e-8)
-
-        # Predict (this is simplified - would need actual model inference)
-        # For now, use a simple approximation
-        if TENSORFLOW_AVAILABLE and model_name in model_loader.models:
-            # Would need to convert MATLAB network to TensorFlow
-            # For now, use mock
-            return _mock_price_prediction(ram, battery, screen_size, weight, year, company)
-        else:
-            return _mock_price_prediction(ram, battery, screen_size, weight, year, company)
+        # Simplified path: we currently use mock predictions as placeholder
+        return _mock_price_prediction(ram, battery, screen_size, weight, year, company)
 
     except Exception as e:
         print(f"Error in predict_price: {e}")
@@ -177,9 +153,6 @@ def predict_ram(battery: float, screen_size: float, weight: float,
         company_encoded = model_loader.encode_company(company, model_name)
         features = np.array([battery, screen_size, weight, year, price] + company_encoded.tolist())
         features = features.reshape(1, -1)
-
-        norm_params = model_loader.normalization_params[model_name]
-        features_norm = (features - norm_params['X_mean']) / (norm_params['X_std'] + 1e-8)
 
         # Simplified prediction
         return _mock_ram_prediction(battery, screen_size, weight, year, price, company)
@@ -203,9 +176,6 @@ def predict_battery(ram: float, screen_size: float, weight: float,
         features = np.array([ram, screen_size, weight, year, price] + company_encoded.tolist())
         features = features.reshape(1, -1)
 
-        norm_params = model_loader.normalization_params[model_name]
-        features_norm = (features - norm_params['X_mean']) / (norm_params['X_std'] + 1e-8)
-
         return _mock_battery_prediction(ram, screen_size, weight, year, price, company)
 
     except Exception as e:
@@ -225,9 +195,6 @@ def predict_brand(ram: float, battery: float, screen_size: float,
     try:
         features = np.array([ram, battery, screen_size, weight, year, price])
         features = features.reshape(1, -1)
-
-        norm_params = model_loader.normalization_params[model_name]
-        features_norm = (features - norm_params['X_mean']) / (norm_params['X_std'] + 1e-8)
 
         return _mock_brand_prediction(ram, battery, screen_size, weight, year, price)
 

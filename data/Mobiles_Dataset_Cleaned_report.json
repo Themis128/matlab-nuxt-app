@@ -1,0 +1,18 @@
+{
+  "original_rows": 930,
+  "final_rows": 930,
+  "rows_removed": 0,
+  "columns": 15,
+  "missing_values": 0,
+  "fixes_applied": {
+    "ram_fixes": 0,
+    "front_camera_fixes": 0,
+    "back_camera_fixes": 0,
+    "price_fixes": 0,
+    "outliers_removed": []
+  },
+  "duplicates_removed": 15,
+  "range_issues": 92,
+  "timestamp": "2025-11-30T08:38:31.851456",
+  "conversion_rate_usd_to_eur": 0.92
+}

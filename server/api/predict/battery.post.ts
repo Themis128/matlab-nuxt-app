@@ -4,7 +4,7 @@ export default defineEventHandler(async event => {
   try {
     const body = await readBody(event)
 
-    const result = await callPythonAPI<{ battery: number }>('/api/predict/battery', body)
+    const result = await callPythonAPI<{ battery: number }>('/api/predict/battery', body, event)
 
     if (!result) {
       throw createError({

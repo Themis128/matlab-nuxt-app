@@ -7,13 +7,7 @@
       "neutral": 15.0,
       "negative": 7.0
     },
-    "common_keywords": [
-      "camera",
-      "battery",
-      "screen",
-      "performance",
-      "expensive"
-    ],
+    "common_keywords": ["camera", "battery", "screen", "performance", "expensive"],
     "model_name": "Samsung Galaxy S24 Ultra"
   },
   "iphone 15 pro max": {
@@ -24,13 +18,7 @@
       "neutral": 10.0,
       "negative": 5.0
     },
-    "common_keywords": [
-      "camera",
-      "display",
-      "titanium",
-      "battery",
-      "price"
-    ],
+    "common_keywords": ["camera", "display", "titanium", "battery", "price"],
     "model_name": "iPhone 15 Pro Max"
   },
   "google pixel 8 pro": {
@@ -41,13 +29,7 @@
       "neutral": 20.0,
       "negative": 8.0
     },
-    "common_keywords": [
-      "camera",
-      "ai",
-      "software",
-      "screen",
-      "tensor"
-    ],
+    "common_keywords": ["camera", "ai", "software", "screen", "tensor"],
     "model_name": "Google Pixel 8 Pro"
   },
   "onepl 12": {
@@ -58,13 +40,7 @@
       "neutral": 12.0,
       "negative": 8.0
     },
-    "common_keywords": [
-      "fast",
-      "charging",
-      "display",
-      "performance",
-      "value"
-    ],
+    "common_keywords": ["fast", "charging", "display", "performance", "value"],
     "model_name": "OnePlus 12"
   },
   "xiaomi 14 pro": {
@@ -75,13 +51,7 @@
       "neutral": 16.0,
       "negative": 8.0
     },
-    "common_keywords": [
-      "camera",
-      "leica",
-      "display",
-      "battery",
-      "miui"
-    ],
+    "common_keywords": ["camera", "leica", "display", "battery", "miui"],
     "model_name": "Xiaomi 14 Pro"
   },
   "samsung galaxy a54": {
@@ -92,13 +62,7 @@
       "neutral": 20.0,
       "negative": 10.0
     },
-    "common_keywords": [
-      "value",
-      "battery",
-      "screen",
-      "camera",
-      "performance"
-    ],
+    "common_keywords": ["value", "battery", "screen", "camera", "performance"],
     "model_name": "Samsung Galaxy A54"
   },
   "iphone 14": {
@@ -109,13 +73,7 @@
       "neutral": 12.0,
       "negative": 6.0
     },
-    "common_keywords": [
-      "camera",
-      "battery",
-      "reliable",
-      "display",
-      "notch"
-    ],
+    "common_keywords": ["camera", "battery", "reliable", "display", "notch"],
     "model_name": "iPhone 14"
   },
   "redmi note 13 pro": {
@@ -126,13 +84,7 @@
       "neutral": 22.0,
       "negative": 10.0
     },
-    "common_keywords": [
-      "value",
-      "battery",
-      "camera",
-      "display",
-      "bloatware"
-    ],
+    "common_keywords": ["value", "battery", "camera", "display", "bloatware"],
     "model_name": "Redmi Note 13 Pro"
   },
   "apple iphone 16 128gb": {
@@ -8112,6 +8064,1777 @@
   },
   "infinix note 40": {
     "model_name": "Infinix Note 40 5G",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix note 40 pro": {
+    "model_name": "Infinix Note 40 Pro 5G",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix note 40 racing edition": {
+    "model_name": "Infinix Note 40 Racing Edition",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 40": {
+    "model_name": "Infinix Hot 40",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 40i": {
+    "model_name": "Infinix Hot 40i",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 40 pro": {
+    "model_name": "Infinix Hot 40 Pro",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix zero 40": {
+    "model_name": "Infinix Zero 40",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix zero flip": {
+    "model_name": "Infinix Zero Flip",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 30 128gb": {
+    "model_name": "Infinix Hot 30 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 30i 128gb": {
+    "model_name": "Infinix Hot 30i 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 30i nfc 128gb": {
+    "model_name": "Infinix Hot 30i NFC 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 30 play 128gb": {
+    "model_name": "Infinix Hot 30 Play 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix zero 30 256gb": {
+    "model_name": "Infinix Zero 30 256GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix gt 10 pro 256gb": {
+    "model_name": "Infinix GT 10 Pro 256GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 12 128gb": {
+    "model_name": "Infinix Hot 12 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 12 play 128gb": {
+    "model_name": "Infinix Hot 12 Play 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 12 pro 128gb": {
+    "model_name": "Infinix Hot 12 Pro 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 12i 6b": {
+    "model_name": "Infinix Hot 12i 64GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 20 128gb": {
+    "model_name": "Infinix Hot 20 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 20 play 128gb": {
+    "model_name": "Infinix Hot 20 Play 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 20s 128gb": {
+    "model_name": "Infinix Hot 20s 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 20i 6b": {
+    "model_name": "Infinix Hot 20i 64GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 10t 128gb": {
+    "model_name": "Infinix Hot 10T 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 10s 128gb": {
+    "model_name": "Infinix Hot 10S 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 10s nfc 128gb": {
+    "model_name": "Infinix Hot 10S NFC 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 10 lite 6b": {
+    "model_name": "Infinix Hot 10 Lite 64GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 10 play 6b": {
+    "model_name": "Infinix Hot 10 Play 64GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 11 128gb": {
+    "model_name": "Infinix Hot 11 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 11 play 128gb": {
+    "model_name": "Infinix Hot 11 Play 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 11s 128gb": {
+    "model_name": "Infinix Hot 11s 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix smart hd 32gb": {
+    "model_name": "Infinix Smart HD 32GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix note 8i 128gb": {
+    "model_name": "Infinix Note 8i 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix note 8 128gb": {
+    "model_name": "Infinix Note 8 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix zero 8i 128gb": {
+    "model_name": "Infinix Zero 8i 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix hot 10 128gb": {
+    "model_name": "Infinix Hot 10 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix zero 8 128gb": {
+    "model_name": "Infinix Zero 8 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "infinix smart 5 6b": {
+    "model_name": "Infinix Smart 5 64GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor 9x lite": {
+    "model_name": "Honor 9X Lite",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor 30": {
+    "model_name": "Honor 30",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor 30 pro": {
+    "model_name": "Honor 30 Pro",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor 30 pro+": {
+    "model_name": "Honor 30 Pro+",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor 30s": {
+    "model_name": "Honor 30S",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor x10": {
+    "model_name": "Honor X10",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor x10 max": {
+    "model_name": "Honor X10 Max",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor play 4": {
+    "model_name": "Honor Play 4",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor play 4 pro": {
+    "model_name": "Honor Play 4 Pro",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor 10x lite": {
+    "model_name": "Honor 10X Lite",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor v40": {
+    "model_name": "Honor V40",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor 50": {
+    "model_name": "Honor 50",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor 50 pro": {
+    "model_name": "Honor 50 Pro",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor 50 se": {
+    "model_name": "Honor 50 SE",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor x20": {
+    "model_name": "Honor X20",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor x20 se": {
+    "model_name": "Honor X20 SE",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor play 5": {
+    "model_name": "Honor Play 5",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor play 5t": {
+    "model_name": "Honor Play 5T",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magic3": {
+    "model_name": "Honor Magic3",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magic3 pro": {
+    "model_name": "Honor Magic3 Pro",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magic3 pro+": {
+    "model_name": "Honor Magic3 Pro+",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor 60": {
+    "model_name": "Honor 60",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor 60 pro": {
+    "model_name": "Honor 60 Pro",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor 60 se": {
+    "model_name": "Honor 60 SE",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor x30": {
+    "model_name": "Honor X30",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor x30i": {
+    "model_name": "Honor X30i",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor x30 max": {
+    "model_name": "Honor X30 Max",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor play 6": {
+    "model_name": "Honor Play 6",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor play 6t": {
+    "model_name": "Honor Play 6T",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magic4": {
+    "model_name": "Honor Magic4",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magic4 pro": {
+    "model_name": "Honor Magic4 Pro",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magic4 ultimate": {
+    "model_name": "Honor Magic4 Ultimate",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magic v": {
+    "model_name": "Honor Magic V",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor 70": {
+    "model_name": "Honor 70",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor 70 pro": {
+    "model_name": "Honor 70 Pro",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor 70 pro+": {
+    "model_name": "Honor 70 Pro+",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor x40": {
+    "model_name": "Honor X40",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor x40i": {
+    "model_name": "Honor X40i",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor play 7": {
+    "model_name": "Honor Play 7",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor play 7t": {
+    "model_name": "Honor Play 7T",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magic5": {
+    "model_name": "Honor Magic5",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magic5 pro": {
+    "model_name": "Honor Magic5 Pro",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magic5 ultimate": {
+    "model_name": "Honor Magic5 Ultimate",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magic vs": {
+    "model_name": "Honor Magic Vs",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor 80": {
+    "model_name": "Honor 80",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor 80 pro": {
+    "model_name": "Honor 80 Pro",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor 80 se": {
+    "model_name": "Honor 80 SE",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor x50": {
+    "model_name": "Honor X50",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor x50i": {
+    "model_name": "Honor X50i",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor play 8": {
+    "model_name": "Honor Play 8",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor play 8t": {
+    "model_name": "Honor Play 8T",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magic6": {
+    "model_name": "Honor Magic6",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magic6 pro": {
+    "model_name": "Honor Magic6 Pro",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magic6 ultimate": {
+    "model_name": "Honor Magic6 Ultimate",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magic v2": {
+    "model_name": "Honor Magic V2",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor 90": {
+    "model_name": "Honor 90",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor 90 pro": {
+    "model_name": "Honor 90 Pro",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor 90 se": {
+    "model_name": "Honor 90 SE",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor x60": {
+    "model_name": "Honor X60",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor x60i": {
+    "model_name": "Honor X60i",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor play 9": {
+    "model_name": "Honor Play 9",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor play 9t": {
+    "model_name": "Honor Play 9T",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magic7": {
+    "model_name": "Honor Magic7",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magic7 pro": {
+    "model_name": "Honor Magic7 Pro",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magic7 ultimate": {
+    "model_name": "Honor Magic7 Ultimate",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magic v3": {
+    "model_name": "Honor Magic V3",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor pad 6": {
+    "model_name": "Honor Pad 6",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor pad x6": {
+    "model_name": "Honor Pad X6",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor pad 7": {
+    "model_name": "Honor Pad 7",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor tablet v7": {
+    "model_name": "Honor Tablet V7",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor tablet v7 pro": {
+    "model_name": "Honor Tablet V7 Pro",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor pad 8": {
+    "model_name": "Honor Pad 8",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor pad x8": {
+    "model_name": "Honor Pad X8",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor pad x8 lite": {
+    "model_name": "Honor Pad X8 Lite",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor pad v8": {
+    "model_name": "Honor Pad V8",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor pad v8 pro": {
+    "model_name": "Honor Pad V8 Pro",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor pad 9": {
+    "model_name": "Honor Pad 9",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor pad 9 pro": {
+    "model_name": "Honor Pad 9 Pro",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor pad x9": {
+    "model_name": "Honor Pad X9",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor pad x8 pro": {
+    "model_name": "Honor Pad X8 Pro",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magicpad 13": {
+    "model_name": "Honor MagicPad 13",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magicpad 2": {
+    "model_name": "Honor MagicPad 2",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor pad x8a": {
+    "model_name": "Honor Pad X8a",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor pad x8a kids edition": {
+    "model_name": "Honor Pad X8a Kids Edition",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor pad x9 pro": {
+    "model_name": "Honor Pad X9 Pro",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor pad v9": {
+    "model_name": "Honor Pad V9",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor pad gt pro": {
+    "model_name": "Honor Pad GT Pro",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor pad x10": {
+    "model_name": "Honor Pad X10",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor pad x10 pro": {
+    "model_name": "Honor Pad X10 Pro",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor magicpad 3": {
+    "model_name": "Honor MagicPad 3",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "honor pad v10": {
+    "model_name": "Honor Pad V10",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco f2 pro 128gb": {
+    "model_name": "POCO F2 Pro 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco m2 pro 6b": {
+    "model_name": "POCO M2 Pro 64GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco x3 nfc 128gb": {
+    "model_name": "POCO X3 NFC 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco m3 6b": {
+    "model_name": "POCO M3 64GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco f3 128gb": {
+    "model_name": "POCO F3 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco x3 pro 128gb": {
+    "model_name": "POCO X3 Pro 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco m3 pro 6b": {
+    "model_name": "POCO M3 Pro 5G 64GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco f3 gt 128gb": {
+    "model_name": "POCO F3 GT 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco x3 gt 128gb": {
+    "model_name": "POCO X3 GT 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco m4 pro 128gb": {
+    "model_name": "POCO M4 Pro 5G 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco f4 128gb": {
+    "model_name": "POCO F4 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco f4 gt 128gb": {
+    "model_name": "POCO F4 GT 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco x4 pro 128gb": {
+    "model_name": "POCO X4 Pro 5G 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco m5 128gb": {
+    "model_name": "POCO M5 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco m5s 128gb": {
+    "model_name": "POCO M5s 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco f5 128gb": {
+    "model_name": "POCO F5 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco f5 pro 256gb": {
+    "model_name": "POCO F5 Pro 256GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco x5 128gb": {
+    "model_name": "POCO X5 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco x5 pro 128gb": {
+    "model_name": "POCO X5 Pro 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco m6 6b": {
+    "model_name": "POCO M6 64GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco m6 pro 128gb": {
+    "model_name": "POCO M6 Pro 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco x6 128gb": {
+    "model_name": "POCO X6 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco x6 pro 256gb": {
+    "model_name": "POCO X6 Pro 256GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco f6 128gb": {
+    "model_name": "POCO F6 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco f6 pro 256gb": {
+    "model_name": "POCO F6 Pro 256GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco c65 6b": {
+    "model_name": "POCO C65 64GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco x7 128gb": {
+    "model_name": "POCO X7 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco x7 pro 256gb": {
+    "model_name": "POCO X7 Pro 256GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco m7 128gb": {
+    "model_name": "POCO M7 5G 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco pad 128gb": {
+    "model_name": "Poco Pad 5G 128GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "poco pad 256gb": {
+    "model_name": "Poco Pad 5G 256GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "samsung galaxy z fold6 256gb": {
+    "model_name": "Samsung Galaxy Z Fold6 256GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "samsung galaxy z fold6 512gb": {
+    "model_name": "Samsung Galaxy Z Fold6 512GB",
+    "rating": null,
+    "review_count": 0,
+    "sentiment": {
+      "positive": 0.0,
+      "neutral": 0.0,
+      "negative": 0.0
+    },
+    "common_keywords": []
+  },
+  "samsung galaxy z fold6 1tb": {
+    "model_name": "Samsung Galaxy Z Fold6 1TB",
     "rating": null,
     "review_count": 0,
     "sentiment": {

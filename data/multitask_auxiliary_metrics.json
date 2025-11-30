@@ -1,0 +1,35 @@
+{
+  "dataset_size": 915,
+  "train_size": 732,
+  "test_size": 183,
+  "feature_count": 14,
+  "multitask_metrics": {
+    "price_rmse": 289.83544844793937,
+    "price_r2": 0.5642749278267551,
+    "price_residual_rmse": 231.44731079394444,
+    "price_residual_r2": 0.7221478084062791,
+    "brand_tier_accuracy": 1.0,
+    "market_segment_accuracy": 0.9726775956284153
+  },
+  "singletask_metrics": {
+    "price_rmse": 289.83544844793937,
+    "price_r2": 0.5642749278267551
+  },
+  "improvement_percent": 0.0,
+  "architecture": {
+    "shared_layers": [
+      256,
+      128,
+      64
+    ],
+    "activation": "relu",
+    "solver": "adam",
+    "max_iter": 500
+  },
+  "auxiliary_tasks": [
+    "price_residual",
+    "brand_tier",
+    "market_segment"
+  ],
+  "note": "Multi-task learning with auxiliary classification tasks (brand tier, market segment) + residual regression"
+}

@@ -1,246 +1,111 @@
 {
-  "dataset_path": "Mobiles Dataset (2025).csv",
-  "total_rows": 930,
-  "total_columns": 15,
-  "columns": [
-    {
-      "index": 1,
-      "name": "Company Name",
-      "dtype": "object",
-      "non_null": 930,
-      "null": 0,
-      "null_pct": 0.0,
-      "unique": 19,
-      "sample": "Apple, Apple, Apple"
+  "timestamp": "2025-11-30T08:34:49.120012",
+  "dataset": {
+    "total_phones": 915,
+    "total_brands": 19,
+    "year_range": "2014 - 2025",
+    "columns": [
+      "Company Name",
+      "Model Name",
+      "Mobile Weight",
+      "RAM",
+      "Front Camera",
+      "Back Camera",
+      "Processor",
+      "Battery Capacity",
+      "Screen Size",
+      "Launched Price (Pakistan)",
+      "Launched Price (India)",
+      "Launched Price (China)",
+      "Launched Price (USA)",
+      "Launched Price (Dubai)",
+      "Launched Year"
+    ]
+  },
+  "top_brands": {
+    "Oppo": 115,
+    "Apple": 97,
+    "Honor": 91,
+    "Samsung": 88,
+    "Vivo": 86,
+    "Realme": 69,
+    "Motorola": 62,
+    "Infinix": 55,
+    "OnePlus": 53,
+    "Huawei": 42
+  },
+  "numeric_summaries": {
+    "Mobile Weight": {
+      "min": 135.0,
+      "max": 732.0,
+      "mean": 228.91409836065577,
+      "median": 195.0
     },
-    {
-      "index": 2,
-      "name": "Model Name",
-      "dtype": "object",
-      "non_null": 930,
-      "null": 0,
-      "null_pct": 0.0,
-      "unique": 908,
-      "sample": "iPhone 16 128GB, iPhone 16 256GB, iPhone 16 512GB"
-    },
-    {
-      "index": 3,
-      "name": "Mobile Weight",
-      "dtype": "object",
-      "non_null": 930,
-      "null": 0,
-      "null_pct": 0.0,
-      "unique": 148,
-      "sample": "174g, 174g, 174g"
-    },
-    {
-      "index": 4,
-      "name": "RAM",
-      "dtype": "object",
-      "non_null": 930,
-      "null": 0,
-      "null_pct": 0.0,
-      "unique": 11,
-      "sample": "6GB, 6GB, 6GB"
-    },
-    {
-      "index": 5,
-      "name": "Front Camera",
-      "dtype": "object",
-      "non_null": 930,
-      "null": 0,
-      "null_pct": 0.0,
-      "unique": 29,
-      "sample": "12MP, 12MP, 12MP"
-    },
-    {
-      "index": 6,
-      "name": "Back Camera",
-      "dtype": "object",
-      "non_null": 930,
-      "null": 0,
-      "null_pct": 0.0,
-      "unique": 91,
-      "sample": "48MP, 48MP, 48MP"
-    },
-    {
-      "index": 7,
-      "name": "Processor",
-      "dtype": "object",
-      "non_null": 930,
-      "null": 0,
-      "null_pct": 0.0,
-      "unique": 217,
-      "sample": "A17 Bionic, A17 Bionic, A17 Bionic"
-    },
-    {
-      "index": 8,
-      "name": "Battery Capacity",
-      "dtype": "object",
-      "non_null": 930,
-      "null": 0,
-      "null_pct": 0.0,
-      "unique": 147,
-      "sample": "3,600mAh, 3,600mAh, 3,600mAh"
-    },
-    {
-      "index": 9,
-      "name": "Screen Size",
-      "dtype": "object",
-      "non_null": 930,
-      "null": 0,
-      "null_pct": 0.0,
-      "unique": 97,
-      "sample": "6.1 inches, 6.1 inches, 6.1 inches"
-    },
-    {
-      "index": 10,
-      "name": "Launched Price (Pakistan)",
-      "dtype": "object",
-      "non_null": 930,
-      "null": 0,
-      "null_pct": 0.0,
-      "unique": 157,
-      "sample": "PKR 224,999, PKR 234,999, PKR 244,999"
-    },
-    {
-      "index": 11,
-      "name": "Launched Price (India)",
-      "dtype": "object",
-      "non_null": 930,
-      "null": 0,
-      "null_pct": 0.0,
-      "unique": 147,
-      "sample": "INR 79,999, INR 84,999, INR 89,999"
-    },
-    {
-      "index": 12,
-      "name": "Launched Price (China)",
-      "dtype": "object",
-      "non_null": 930,
-      "null": 0,
-      "null_pct": 0.0,
-      "unique": 137,
-      "sample": "CNY 5,799, CNY 6,099, CNY 6,499"
-    },
-    {
-      "index": 13,
-      "name": "Launched Price (USA)",
-      "dtype": "object",
-      "non_null": 930,
-      "null": 0,
-      "null_pct": 0.0,
-      "unique": 107,
-      "sample": "USD 799, USD 849, USD 899"
-    },
-    {
-      "index": 14,
-      "name": "Launched Price (Dubai)",
-      "dtype": "object",
-      "non_null": 930,
-      "null": 0,
-      "null_pct": 0.0,
-      "unique": 141,
-      "sample": "AED 2,799, AED 2,999, AED 3,199"
-    },
-    {
-      "index": 15,
-      "name": "Launched Year",
-      "dtype": "int64",
-      "non_null": 930,
-      "null": 0,
-      "null_pct": 0.0,
-      "unique": 11,
-      "sample": "2024, 2024, 2024"
-    }
-  ],
-  "found_features": {
     "RAM": {
-      "column": "RAM",
-      "count": 930,
-      "percentage": 100.0
-    },
-    "Battery": {
-      "column": "Battery Capacity",
-      "count": 930,
-      "percentage": 100.0
-    },
-    "Screen Size": {
-      "column": "Screen Size",
-      "count": 930,
-      "percentage": 100.0
-    },
-    "Weight": {
-      "column": "Mobile Weight",
-      "count": 930,
-      "percentage": 100.0
-    },
-    "Year": {
-      "column": "Launched Year",
-      "count": 930,
-      "percentage": 100.0
-    },
-    "Company": {
-      "column": "Company Name",
-      "count": 930,
-      "percentage": 100.0
-    },
-    "Price": {
-      "column": "Launched Price (Pakistan)",
-      "count": 930,
-      "percentage": 100.0
+      "min": 1.0,
+      "max": 16.0,
+      "mean": 7.789071038251366,
+      "median": 8.0
     },
     "Front Camera": {
-      "column": "Front Camera",
-      "count": 930,
-      "percentage": 100.0
+      "min": 2.0,
+      "max": 60.0,
+      "mean": 18.16677595628415,
+      "median": 16.0
     },
     "Back Camera": {
-      "column": "Back Camera",
-      "count": 930,
-      "percentage": 100.0
+      "min": 5.0,
+      "max": 200.0,
+      "mean": 46.491584699453554,
+      "median": 50.0
     },
-    "Processor": {
-      "column": "Processor",
-      "count": 930,
-      "percentage": 100.0
+    "Battery Capacity": {
+      "min": 2.0,
+      "max": 11200.0,
+      "mean": 1736.0918032786885,
+      "median": 5.0
     },
-    "Model Name": {
-      "column": "Model Name",
-      "count": 930,
-      "percentage": 100.0
+    "Screen Size": {
+      "min": 5.0,
+      "max": 14.6,
+      "mean": 7.092677595628415,
+      "median": 6.67
     },
-    "Price (Pakistan)": {
-      "column": "Launched Price (Pakistan)",
-      "count": 930,
-      "percentage": 100.0
+    "Launched Price (Pakistan)": {
+      "min": 15999.0,
+      "max": 604999.0,
+      "mean": 126513.79016393442,
+      "median": 89999.0
     },
-    "Price (India)": {
-      "column": "Launched Price (India)",
-      "count": 930,
-      "percentage": 100.0
+    "Launched Price (India)": {
+      "min": 5999.0,
+      "max": 274999.0,
+      "mean": 51070.46120218579,
+      "median": 35990.0
     },
-    "Price (China)": {
-      "column": "Launched Price (China)",
-      "count": 930,
-      "percentage": 100.0
+    "Launched Price (China)": {
+      "min": 499.0,
+      "max": 17999.0,
+      "mean": 3854.03825136612,
+      "median": 2900.0
     },
-    "Price (Dubai)": {
-      "column": "Launched Price (Dubai)",
-      "count": 930,
-      "percentage": 100.0
+    "Launched Price (USA)": {
+      "min": 79.0,
+      "max": 39622.0,
+      "mean": 631.6990819672131,
+      "median": 449.0
+    },
+    "Launched Price (Dubai)": {
+      "min": 299.0,
+      "max": 11099.0,
+      "mean": 2199.7377049180327,
+      "median": 1699.0
+    },
+    "Launched Year": {
+      "min": 2014.0,
+      "max": 2025.0,
+      "mean": 2022.2054644808743,
+      "median": 2023.0
     }
-  },
-  "missing_features": {
-    "Storage": ["Storage", "storage", "Internal Storage", "InternalStorage"],
-    "Display Type": ["Display Type", "DisplayType", "Display_Type", "Screen Type"],
-    "Refresh Rate": ["Refresh Rate", "RefreshRate", "Refresh_Rate", "Hz"],
-    "Resolution": ["Resolution", "resolution", "Screen Resolution"]
-  },
-  "recommendations": {
-    "camera_available": true,
-    "storage_available": true,
-    "processor_available": true,
-    "regional_prices_available": true
   }
 }

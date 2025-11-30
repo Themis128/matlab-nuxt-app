@@ -1,0 +1,43 @@
+{
+  "timestamp": "2025-11-30T02:50:15.758854",
+  "input_file": "data/Mobiles_Dataset_Cleaned.csv",
+  "output_file": "data/Mobiles_Dataset_Final.csv",
+  "total_rows": 930,
+  "columns": [
+    "company",
+    "model",
+    "processor",
+    "storage",
+    "ram",
+    "battery",
+    "screen",
+    "weight",
+    "year",
+    "front_camera",
+    "back_camera",
+    "price_eur",
+    "price_usd",
+    "price_pkr",
+    "price_inr",
+    "price_cny",
+    "price_aed"
+  ],
+  "eur_prices_added": 930,
+  "outliers_fixed": {
+    "ram": true,
+    "back_camera": true,
+    "front_camera": true
+  },
+  "price_ranges": {
+    "eur": {
+      "min": 72.68,
+      "max": 3645.22,
+      "median": 413.08
+    },
+    "usd": {
+      "min": 79.0,
+      "max": 3962.2,
+      "median": 449.0
+    }
+  }
+}

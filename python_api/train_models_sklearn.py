@@ -7,12 +7,11 @@ Uses scikit-learn for model training (lighter, faster, works everywhere)
 import numpy as np
 import pandas as pd
 import re
-from sklearn.model_selection import train_test_split, RandomizedSearchCV
-from sklearn.preprocessing import StandardScaler, PolynomialFeatures
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPRegressor, MLPClassifier
-from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier, GradientBoostingRegressor, GradientBoostingClassifier, VotingRegressor, VotingClassifier
+from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier, GradientBoostingRegressor, GradientBoostingClassifier
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error, accuracy_score
-import scipy.stats as stats
 import pickle
 import os
 from pathlib import Path
@@ -271,7 +270,7 @@ def create_engineered_features(data, company_encoded, processor_encoded=None):
     price_pakistan = data.get('price_pakistan', np.zeros(len(ram)))
     price_india = data.get('price_india', np.zeros(len(ram)))
     price_china = data.get('price_china', np.zeros(len(ram)))
-    price_dubai = data.get('price_dubai', np.zeros(len(ram)))
+    # price_dubai currently unused
 
     if processor_encoded is None:
         processor_encoded = np.zeros((len(ram), 3))
@@ -474,7 +473,7 @@ def train_price_model(data, max_iter=1000):
     rmse = np.sqrt(mean_squared_error(y_test_orig, y_pred))
     mae = mean_absolute_error(y_test_orig, y_pred)
 
-    print(f"\nTest Performance:")
+    print("\nTest Performance:")
     print(f"  R²: {r2:.4f}")
     print(f"  RMSE: ${rmse:.2f}")
     print(f"  MAE: ${mae:.2f}")
