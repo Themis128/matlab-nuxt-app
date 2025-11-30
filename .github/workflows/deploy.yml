@@ -28,7 +28,7 @@ jobs:
               run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
 
             - name: Build and Push Python API
-              uses: docker/build-push-action@v5
+              uses: docker/build-push-action@v6
               with:
                   context: .
                   file: ./deployment/Dockerfile
@@ -41,7 +41,7 @@ jobs:
                   platforms: linux/amd64,linux/arm64
 
             - name: Build and Push Nuxt App
-              uses: docker/build-push-action@v5
+              uses: docker/build-push-action@v6
               with:
                   context: .
                   file: ./deployment/Dockerfile.nuxt
