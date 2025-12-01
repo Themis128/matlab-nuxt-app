@@ -67,6 +67,7 @@ if (!rawClientDsn || clientIsPlaceholder) {
     replaysOnErrorSampleRate: process.env.SENTRY_REPLAYS_ON_ERROR_SAMPLE_RATE
       ? parseFloat(process.env.SENTRY_REPLAYS_ON_ERROR_SAMPLE_RATE)
       : 1.0,
+    sendDefaultPii: true, // Enable MCP monitoring
     integrations: [
       Sentry.replayIntegration({
         maskAllText: true,

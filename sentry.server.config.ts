@@ -16,6 +16,7 @@ if (!rawDsn || isPlaceholder) {
   Sentry.init({
     dsn: process.env.SENTRY_DSN,
     tracesSampleRate: 1.0, // Enable tracing in all environments
+    sendDefaultPii: true, // Enable MCP monitoring
     // Note: Nitro does not support full server-side tracing in dev; warning may still appear
     environment: process.env.NODE_ENV,
     // Sentry tracing does not work on Nitro server-side in dev
