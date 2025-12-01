@@ -92,7 +92,7 @@ export default defineConfig({
         ? `${process.env.PW_BASE_URL.replace(/\/$/, '')}/api/health`
         : 'http://localhost:3000/api/health',
       timeout: 180 * 1000, // 3 minutes for Nuxt dev server
-      reuseExistingServer: !isCI,
+      reuseExistingServer: true, // Always reuse existing server to avoid port conflicts
       stdout: 'pipe',
       stderr: 'pipe',
     },

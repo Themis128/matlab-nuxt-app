@@ -28,7 +28,7 @@
     "check:matlab": "node scripts/utils/check-capabilities.js",
     "next-steps": "node scripts/utils/run-next-steps.js",
     "pretest": "pwsh -NoProfile -File scripts/kill-devtools-port.ps1 -Verbose",
-    "test": "set PLAYWRIGHT_TEST=1&& set NUXT_TEST=1&& pwsh -NoProfile -File scripts/kill-devtools-port.ps1 && playwright test",
+    "test": "set PLAYWRIGHT_TEST=1&& set NUXT_TEST=1&& pwsh -NoProfile -File scripts/kill-devtools-port.ps1 && pwsh -NoProfile -File scripts/kill-devtools-port.ps1 -Port 3000 && playwright test",
     "test:manual": "set PLAYWRIGHT_TEST=1&& set NUXT_TEST=1&& playwright test",
     "dev:detached": "pwsh -NoProfile -File scripts/start-dev-detached.ps1",
     "dev:detached:stop": "pwsh -NoProfile -File scripts/stop-dev.ps1",
