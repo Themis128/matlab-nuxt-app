@@ -17,16 +17,22 @@ HOST = "0.0.0.0"
 PYTHON_API_URL = "http://localhost:8000"
 PYTHONUNBUFFERED = "1"
 NUXT_TELEMETRY_DISABLED = "1"
+# Disable Unity Package Manager
+UPM_DISABLE = "1"
+UPM_CACHE_DIR = "/tmp/upm-cache"
+# Optimize for limited disk space
+NODE_OPTIONS = "--max-old-space-size=512"
+PYTHONPATH = "/home/runner/workspace"
 
 # Nix packages
 [nix]
 channel = "stable-22_11"
 file = "config/replit.nix"
 
-# Deploy configuration
+# Deploy configuration - optimized for disk space
 [deploy]
 publicDir = ".output/public"
-run = ["sh", "-c", "npm run build && npm run preview"]
+run = ["sh", "-c", "bash scripts/enhanced-cleanup.sh && npm run build && npm run preview"]
 
 # Unit test
 [unitTest]
@@ -56,15 +62,15 @@ optionalFiles = ["config/replit.nix"]
 [alwaysOn]
 enabled = true
 
-# Packager configuration
+# Packager configuration - optimized for disk space
 [packager]
 language = "nodejs"
-ignoredPackages = ["@types/node"]
+ignoredPackages = ["@types/node", "@types/unity", "unity-*", "*.unitypackage", "upm", "@upm/*"]
 
 [packager.features]
-packageSearch = true
-guessImports = true
-enabledForHosting = true
+packageSearch = false
+guessImports = false
+enabledForHosting = false
 
 # Debugger configuration
 [debugger]

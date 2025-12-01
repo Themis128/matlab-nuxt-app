@@ -121,8 +121,7 @@ def predict_price(ram: float, battery: float, screen_size: float,
     # Try to load model if not already loaded
     if model_name not in model_loader.models:
         if not model_loader.load_model(model_name):
-            # Fallback to mock prediction
-            return _mock_price_prediction(ram, battery, screen_size, weight, year, company)
+            raise Exception("Price prediction model not available. Please train the model first.")
 
     try:
         # Encode company
@@ -133,11 +132,11 @@ def predict_price(ram: float, battery: float, screen_size: float,
         features = features.reshape(1, -1)
 
         # Simplified path: we currently use mock predictions as placeholder
-        return _mock_price_prediction(ram, battery, screen_size, weight, year, company)
+        raise Exception("Price prediction model not implemented. Please train the model first.")
 
     except Exception as e:
         print(f"Error in predict_price: {e}")
-        return _mock_price_prediction(ram, battery, screen_size, weight, year, company)
+        raise Exception(f"Price prediction failed: {str(e)}")
 
 
 def predict_ram(battery: float, screen_size: float, weight: float,
@@ -147,7 +146,7 @@ def predict_ram(battery: float, screen_size: float, weight: float,
 
     if model_name not in model_loader.models:
         if not model_loader.load_model(model_name):
-            return _mock_ram_prediction(battery, screen_size, weight, year, price, company)
+            raise Exception("RAM prediction model not available. Please train the model first.")
 
     try:
         company_encoded = model_loader.encode_company(company, model_name)
@@ -155,11 +154,11 @@ def predict_ram(battery: float, screen_size: float, weight: float,
         features = features.reshape(1, -1)
 
         # Simplified prediction
-        return _mock_ram_prediction(battery, screen_size, weight, year, price, company)
+        raise Exception("RAM prediction model not implemented. Please train the model first.")
 
     except Exception as e:
         print(f"Error in predict_ram: {e}")
-        return _mock_ram_prediction(battery, screen_size, weight, year, price, company)
+        raise Exception(f"RAM prediction failed: {str(e)}")
 
 
 def predict_battery(ram: float, screen_size: float, weight: float,
@@ -169,18 +168,18 @@ def predict_battery(ram: float, screen_size: float, weight: float,
 
     if model_name not in model_loader.models:
         if not model_loader.load_model(model_name):
-            return _mock_battery_prediction(ram, screen_size, weight, year, price, company)
+            raise Exception("Battery prediction model not available. Please train the model first.")
 
     try:
         company_encoded = model_loader.encode_company(company, model_name)
         features = np.array([ram, screen_size, weight, year, price] + company_encoded.tolist())
         features = features.reshape(1, -1)
 
-        return _mock_battery_prediction(ram, screen_size, weight, year, price, company)
+        raise Exception("Battery prediction model not implemented. Please train the model first.")
 
     except Exception as e:
         print(f"Error in predict_battery: {e}")
-        return _mock_battery_prediction(ram, screen_size, weight, year, price, company)
+        raise Exception(f"Battery prediction failed: {str(e)}")
 
 
 def predict_brand(ram: float, battery: float, screen_size: float,
@@ -190,69 +189,14 @@ def predict_brand(ram: float, battery: float, screen_size: float,
 
     if model_name not in model_loader.models:
         if not model_loader.load_model(model_name):
-            return _mock_brand_prediction(ram, battery, screen_size, weight, year, price)
+            raise Exception("Brand prediction model not available. Please train the model first.")
 
     try:
         features = np.array([ram, battery, screen_size, weight, year, price])
         features = features.reshape(1, -1)
 
-        return _mock_brand_prediction(ram, battery, screen_size, weight, year, price)
+        raise Exception("Brand prediction model not implemented. Please train the model first.")
 
     except Exception as e:
         print(f"Error in predict_brand: {e}")
-        return _mock_brand_prediction(ram, battery, screen_size, weight, year, price)
-
-
-# Mock prediction functions (fallback when models aren't available)
-def _mock_price_prediction(ram: float, battery: float, screen_size: float,
-                          weight: float, year: int, company: str) -> float:
-    """Mock price prediction based on features"""
-    base_price = 200
-    ram_mult = ram * 50
-    battery_mult = battery * 0.1
-    screen_mult = screen_size * 100
-    year_mult = (year - 2020) * 20
-
-    company_mult = 1.0
-    if company.lower() == 'apple':
-        company_mult = 1.5
-    elif company.lower() == 'samsung':
-        company_mult = 1.2
-    elif company.lower() in ['xiaomi', 'oneplus']:
-        company_mult = 0.9
-
-    price = (base_price + ram_mult + battery_mult + screen_mult + year_mult) * company_mult
-    return max(100, round(price))
-
-
-def _mock_ram_prediction(battery: float, screen_size: float, weight: float,
-                        year: int, price: float, company: str) -> float:
-    """Mock RAM prediction"""
-    base_ram = 4
-    price_mult = price / 200
-    year_mult = (year - 2020) * 0.5
-    ram = base_ram + price_mult + year_mult
-    return max(2, round(ram * 10) / 10)
-
-
-def _mock_battery_prediction(ram: float, screen_size: float, weight: float,
-                            year: int, price: float, company: str) -> float:
-    """Mock battery prediction"""
-    base_battery = 3000
-    screen_mult = screen_size * 500
-    price_mult = price / 10
-    battery = base_battery + screen_mult + price_mult
-    return max(2000, round(battery))
-
-
-def _mock_brand_prediction(ram: float, battery: float, screen_size: float,
-                          weight: float, year: int, price: float) -> str:
-    """Mock brand prediction"""
-    if price > 800:
-        return 'Apple'
-    elif price > 500:
-        return 'Samsung'
-    elif price > 300:
-        return 'Xiaomi'
-    else:
-        return 'Other'
+        raise Exception(f"Brand prediction failed: {str(e)}")

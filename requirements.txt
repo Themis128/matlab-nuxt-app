@@ -17,7 +17,6 @@ h5py>=3.8.0  # For HDF5-based .mat files (MATLAB v7.3+)
 
 # Development tools
 ipython>=8.0.0  # Enhanced Python shell
-jupyter>=1.0.0  # Jupyter notebooks (optional)
 
 # Visualization (optional)
 matplotlib>=3.7.0  # For plotting and visualization

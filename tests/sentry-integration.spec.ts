@@ -123,17 +123,17 @@ test.describe('Sentry Error Reporting', () => {
     expect(sentryCaptured).toBe(true)
   })
 
-  test.skip('should report unhandled promise rejections', async ({ _page }) => {
+  test.skip('should report unhandled promise rejections', async ({ page }) => {
     // Skipped: Complex to test reliably in browser environment
     // Sentry integration confirmed by meta tags and error handling
   })
 
-  test.skip('should track page navigation performance', async ({ _page }) => {
+  test.skip('should track page navigation performance', async ({ page }) => {
     // Skipped: Performance tracking may not work in development mode
     // As noted in Sentry logs, tracing does not work in Nitro dev mode
   })
 
-  test.skip('should handle network failures gracefully', async ({ _page }) => {
+  test.skip('should handle network failures gracefully', async ({ page }) => {
     // Skipped: Network failure testing is complex and not essential
   })
 
@@ -157,7 +157,7 @@ test.describe('Sentry Error Reporting', () => {
     expect(dsnExposed).toBe(false)
   })
 
-  test.skip('should handle React/Vue error boundaries', async ({ _page }) => {
+  test.skip('should handle React/Vue error boundaries', async ({ page }) => {
     // Skipped: Component error boundary testing is complex
     // Error handling is confirmed by sentry-example-page functionality
   })

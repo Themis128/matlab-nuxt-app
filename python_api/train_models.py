@@ -26,8 +26,9 @@ MODELS_DIR.mkdir(parents=True, exist_ok=True)
 def load_and_preprocess_data(csv_path: str = None):
     """Load and preprocess the mobile phones dataset"""
     if csv_path is None:
-        # Try multiple possible paths
+        # Try consolidated dataset first, then fall back to original
         possible_paths = [
+            "../data/consolidated/consolidated_phone_dataset.csv",  # New consolidated dataset
             "../Mobiles Dataset (2025).csv",
             "Mobiles Dataset (2025).csv",
             "../mobiles-dataset-docs/Mobiles Dataset (2025).csv"
@@ -35,6 +36,7 @@ def load_and_preprocess_data(csv_path: str = None):
         for path in possible_paths:
             if os.path.exists(path):
                 csv_path = path
+                print(f"Using dataset: {path}")
                 break
         if csv_path is None:
             raise FileNotFoundError("Could not find CSV file. Please specify the path.")
@@ -45,82 +47,125 @@ def load_and_preprocess_data(csv_path: str = None):
     df = pd.read_csv(csv_path)
     print(f"✓ Dataset loaded: {len(df)} rows, {len(df.columns)} columns")
 
-    # Parse numerical features
-    def extract_number(value, pattern=r'(\d+\.?\d*)'):
-        import re
-        if pd.isna(value):
-            return np.nan
-        value_str = str(value)
-        match = re.search(pattern, value_str.replace(',', ''))
-        return float(match.group(1)) if match else np.nan
+    # Check if this is the consolidated dataset (it has standardized column names)
+    is_consolidated = 'ram_gb' in df.columns and 'battery_mah' in df.columns and 'price_usd' in df.columns
 
-    # Parse RAM
-    df['ram_parsed'] = df['RAM'].apply(lambda x: extract_number(str(x), r'(\d+)'))
+    if is_consolidated:
+        print("✓ Detected consolidated dataset with standardized column names")
+        # Use standardized column names directly
+        ram_clean = df['ram_gb'].values
+        battery_clean = df['battery_mah'].values
+        screen_clean = df['screen_inches'].values
+        weight_clean = df['weight_grams'].values
+        price_clean = df['price_usd'].values
+        year_clean = df['launch_year'].fillna(2023).values.astype(int)  # Default to 2023 if missing
+        companies_clean = df['company'].fillna('Unknown').values
 
-    # Parse Battery - Fix column name to match actual CSV
-    battery_col = None
-    for col in ['Battery Capacity', 'BatteryCapacity', 'Battery_Capacity', 'Battery']:
-        if col in df.columns:
-            battery_col = col
-            break
-    if battery_col:
-        df['battery_parsed'] = df[battery_col].apply(lambda x: extract_number(str(x), r'([\d,]+)'))
+        # Filter out invalid data
+        valid_mask = (
+            (ram_clean >= 1) & (ram_clean <= 24) &
+            (battery_clean >= 1000) & (battery_clean <= 7000) &
+            (screen_clean >= 4) & (screen_clean <= 8) &
+            (price_clean > 50) & (price_clean < 5000)
+        )
 
-    # Parse Screen Size - Fix column name to match actual CSV
-    screen_col = None
-    for col in ['Screen Size', 'ScreenSize', 'Screen_Size', 'Screen', 'Display_Size']:
-        if col in df.columns:
-            screen_col = col
-            break
-    if screen_col:
-        df['screen_parsed'] = df[screen_col].apply(lambda x: extract_number(str(x), r'(\d+\.?\d*)'))
+        ram_clean = ram_clean[valid_mask]
+        battery_clean = battery_clean[valid_mask]
+        screen_clean = screen_clean[valid_mask]
+        weight_clean = weight_clean[valid_mask]
+        price_clean = price_clean[valid_mask]
+        year_clean = year_clean[valid_mask]
+        companies_clean = companies_clean[valid_mask]
 
-    # Parse Weight - Fix column name to match actual CSV
-    weight_col = None
-    for col in ['Mobile Weight', 'Mobile_Weight', 'MobileWeight', 'Weight', 'Phone_Weight']:
-        if col in df.columns:
-            weight_col = col
-            break
-    if weight_col:
-        df['weight_parsed'] = df[weight_col].apply(lambda x: extract_number(str(x), r'(\d+)'))
+        # Set df_clean for consistency with original format
+        df_clean = pd.DataFrame({
+            'ram_parsed': ram_clean,
+            'battery_parsed': battery_clean,
+            'screen_parsed': screen_clean,
+            'weight_parsed': weight_clean,
+            'price_parsed': price_clean,
+            'year_parsed': year_clean,
+            'company': companies_clean
+        })
 
-    # Parse Price (USD) - Fix column name to match actual CSV
-    price_col = None
-    for col in ['Launched Price (USA)', 'Price_USD', 'Price', 'USD_Price', 'Price (USD)']:
-        if col in df.columns:
-            price_col = col
-            break
-    if price_col:
-        df['price_parsed'] = df[price_col].apply(lambda x: extract_number(str(x), r'([\d,]+)'))
+    else:
+        print("✓ Detected original dataset format - parsing required")
+        # Parse numerical features from original format
+        def extract_number(value, pattern=r'(\d+\.?\d*)'):
+            import re
+            if pd.isna(value):
+                return np.nan
+            value_str = str(value)
+            match = re.search(pattern, value_str.replace(',', ''))
+            return float(match.group(1)) if match else np.nan
 
-    # Parse Year - Fix column name to match actual CSV
-    year_col = None
-    for col in ['Launched Year', 'Launched_Year', 'Year', 'Launch_Year', 'Launched Year']:
-        if col in df.columns:
-            year_col = col
-            break
-    if year_col:
-        df['year_parsed'] = df[year_col].apply(lambda x: extract_number(str(x), r'(\d{4})'))
+        # Parse RAM
+        df['ram_parsed'] = df['RAM'].apply(lambda x: extract_number(str(x), r'(\d+)'))
 
-    # Get company name - Fix column name to match actual CSV
-    company_col = None
-    for col in ['Company Name', 'Company', 'Brand', 'Company_Name']:
-        if col in df.columns:
-            company_col = col
-            break
+        # Parse Battery - Fix column name to match actual CSV
+        battery_col = None
+        for col in ['Battery Capacity', 'BatteryCapacity', 'Battery_Capacity', 'Battery']:
+            if col in df.columns:
+                battery_col = col
+                break
+        if battery_col:
+            df['battery_parsed'] = df[battery_col].apply(lambda x: extract_number(str(x), r'([\d,]+)'))
 
-    # Clean data - remove rows with missing critical values
-    required_cols = ['ram_parsed', 'battery_parsed', 'screen_parsed', 'weight_parsed', 'price_parsed', 'year_parsed']
-    df_clean = df[required_cols + [company_col]].dropna()
+        # Parse Screen Size - Fix column name to match actual CSV
+        screen_col = None
+        for col in ['Screen Size', 'ScreenSize', 'Screen_Size', 'Screen', 'Display_Size']:
+            if col in df.columns:
+                screen_col = col
+                break
+        if screen_col:
+            df['screen_parsed'] = df[screen_col].apply(lambda x: extract_number(str(x), r'(\d+\.?\d*)'))
 
-    # Convert to numpy arrays
-    ram_clean = df_clean['ram_parsed'].values
-    battery_clean = df_clean['battery_parsed'].values
-    screen_clean = df_clean['screen_parsed'].values
-    weight_clean = df_clean['weight_parsed'].values
-    price_clean = df_clean['price_parsed'].values
-    year_clean = df_clean['year_parsed'].values.astype(int)
-    companies_clean = df_clean[company_col].values if company_col else ['Unknown'] * len(df_clean)
+        # Parse Weight - Fix column name to match actual CSV
+        weight_col = None
+        for col in ['Mobile Weight', 'Mobile_Weight', 'MobileWeight', 'Weight', 'Phone_Weight']:
+            if col in df.columns:
+                weight_col = col
+                break
+        if weight_col:
+            df['weight_parsed'] = df[weight_col].apply(lambda x: extract_number(str(x), r'(\d+)'))
+
+        # Parse Price (USD) - Fix column name to match actual CSV
+        price_col = None
+        for col in ['Launched Price (USA)', 'Price_USD', 'Price', 'USD_Price', 'Price (USD)']:
+            if col in df.columns:
+                price_col = col
+                break
+        if price_col:
+            df['price_parsed'] = df[price_col].apply(lambda x: extract_number(str(x), r'([\d,]+)'))
+
+        # Parse Year - Fix column name to match actual CSV
+        year_col = None
+        for col in ['Launched Year', 'Launched_Year', 'Year', 'Launch_Year', 'Launched Year']:
+            if col in df.columns:
+                year_col = col
+                break
+        if year_col:
+            df['year_parsed'] = df[year_col].apply(lambda x: extract_number(str(x), r'(\d{4})'))
+
+        # Get company name - Fix column name to match actual CSV
+        company_col = None
+        for col in ['Company Name', 'Company', 'Brand', 'Company_Name']:
+            if col in df.columns:
+                company_col = col
+                break
+
+        # Clean data - remove rows with missing critical values
+        required_cols = ['ram_parsed', 'battery_parsed', 'screen_parsed', 'weight_parsed', 'price_parsed', 'year_parsed']
+        df_clean = df[required_cols + [company_col]].dropna()
+
+        # Convert to numpy arrays
+        ram_clean = df_clean['ram_parsed'].values
+        battery_clean = df_clean['battery_parsed'].values
+        screen_clean = df_clean['screen_parsed'].values
+        weight_clean = df_clean['weight_parsed'].values
+        price_clean = df_clean['price_parsed'].values
+        year_clean = df_clean['year_parsed'].values.astype(int)
+        companies_clean = df_clean[company_col].values if company_col else ['Unknown'] * len(df_clean)
 
     print(f"✓ Cleaned data: {len(df_clean)} samples")
     print(f"  RAM range: {ram_clean.min():.0f} - {ram_clean.max():.0f} GB")

@@ -6,7 +6,7 @@
     <span class="rounded-full bg-green-500" style="display: none"></span>
 
     <!-- Skip to main content link for accessibility -->
-    <a href="#main-content" class="skip-to-main not-sr-only">Skip to main content</a>
+    <a href="#main-content" class="skip-to-main sr-only">Skip to main content</a>
 
     <!-- Navigation Bar -->
     <nav
@@ -84,6 +84,46 @@
               <span class="hidden xl:inline">AI Demo</span>
             </UButton>
             <UButton
+              to="/advanced"
+              variant="ghost"
+              color="gray"
+              icon="i-heroicons-cpu-chip"
+              class="touch-target"
+              aria-label="Advanced ML models"
+            >
+              <span class="hidden xl:inline">Advanced</span>
+            </UButton>
+            <UButton
+              to="/ml-comparison"
+              variant="ghost"
+              color="gray"
+              icon="i-heroicons-beaker"
+              class="touch-target"
+              aria-label="Compare ML models"
+            >
+              <span class="hidden xl:inline">ML Compare</span>
+            </UButton>
+            <UButton
+              to="/ab-testing"
+              variant="ghost"
+              color="gray"
+              icon="i-heroicons-chart-bar"
+              class="touch-target"
+              aria-label="A/B testing framework"
+            >
+              <span class="hidden xl:inline">A/B Tests</span>
+            </UButton>
+            <UButton
+              to="/model-showcase"
+              variant="ghost"
+              color="gray"
+              icon="i-heroicons-trophy"
+              class="touch-target"
+              aria-label="Model performance showcase"
+            >
+              <span class="hidden xl:inline">Showcase</span>
+            </UButton>
+            <UButton
               to="/api-docs"
               variant="ghost"
               color="gray"
@@ -92,6 +132,16 @@
               aria-label="API documentation"
             >
               <span class="hidden xl:inline">API Docs</span>
+            </UButton>
+            <UButton
+              to="/datamine"
+              variant="ghost"
+              color="gray"
+              icon="i-heroicons-magnifying-glass"
+              class="touch-target"
+              aria-label="Data mining studio"
+            >
+              <span class="hidden xl:inline">Data Mining</span>
             </UButton>
 
             <!-- Settings & Theme Toggle -->
@@ -195,6 +245,54 @@
             AI Predictions
           </UButton>
           <UButton
+            to="/advanced"
+            variant="ghost"
+            color="gray"
+            block
+            icon="i-heroicons-cpu-chip"
+            class="touch-target justify-start"
+            @click="closeMobileMenu"
+            role="menuitem"
+          >
+            Advanced Models
+          </UButton>
+          <UButton
+            to="/ml-comparison"
+            variant="ghost"
+            color="gray"
+            block
+            icon="i-heroicons-beaker"
+            class="touch-target justify-start"
+            @click="closeMobileMenu"
+            role="menuitem"
+          >
+            ML Model Comparison
+          </UButton>
+          <UButton
+            to="/ab-testing"
+            variant="ghost"
+            color="gray"
+            block
+            icon="i-heroicons-chart-bar"
+            class="touch-target justify-start"
+            @click="closeMobileMenu"
+            role="menuitem"
+          >
+            A/B Testing
+          </UButton>
+          <UButton
+            to="/model-showcase"
+            variant="ghost"
+            color="gray"
+            block
+            icon="i-heroicons-trophy"
+            class="touch-target justify-start"
+            @click="closeMobileMenu"
+            role="menuitem"
+          >
+            Model Showcase
+          </UButton>
+          <UButton
             to="/api-docs"
             variant="ghost"
             color="gray"
@@ -205,6 +303,18 @@
             role="menuitem"
           >
             API Documentation
+          </UButton>
+          <UButton
+            to="/datamine"
+            variant="ghost"
+            color="gray"
+            block
+            icon="i-heroicons-magnifying-glass"
+            class="touch-target justify-start"
+            @click="closeMobileMenu"
+            role="menuitem"
+          >
+            Data Mining Studio
           </UButton>
         </div>
       </div>

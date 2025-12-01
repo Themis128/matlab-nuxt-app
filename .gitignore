@@ -88,3 +88,5 @@ public/mobile_images/
 npm-cache/
 .tsbuildinfo
 
+# TypeScript output files
+tsconf-out.json

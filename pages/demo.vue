@@ -250,35 +250,32 @@
             v-if="resultsVisible"
             class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4 prediction-result"
           >
-            <div v-if="showType('price')" class="p-4 rounded-lg bg-green-50 dark:bg-green-900/20">
+            <div v-if="showType('price')" class="p-4 rounded-lg bg-red-50 dark:bg-red-900/20">
               <h3 class="text-lg font-semibold mb-1">Price Prediction</h3>
-              <p class="text-xs text-gray-500 mb-2">98.24% Accuracy</p>
-              <div class="text-3xl font-bold text-green-600 dark:text-green-400">
-                ${{ priceResult.toLocaleString() }}
+              <p class="text-xs text-red-600 mb-2">Model not available</p>
+              <div class="text-lg font-semibold text-red-600 dark:text-red-400">
+                Please train the model first
               </div>
             </div>
-            <div v-if="showType('ram')" class="p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20">
+            <div v-if="showType('ram')" class="p-4 rounded-lg bg-red-50 dark:bg-red-900/20">
               <h3 class="text-lg font-semibold mb-1">RAM Prediction</h3>
-              <p class="text-xs text-gray-500 mb-2">95.16% Accuracy</p>
-              <div class="text-3xl font-bold text-blue-600 dark:text-blue-400">
-                {{ ramResult.toFixed(1) }} GB
+              <p class="text-xs text-red-600 mb-2">Model not available</p>
+              <div class="text-lg font-semibold text-red-600 dark:text-red-400">
+                Please train the model first
               </div>
             </div>
-            <div
-              v-if="showType('battery')"
-              class="p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20"
-            >
+            <div v-if="showType('battery')" class="p-4 rounded-lg bg-red-50 dark:bg-red-900/20">
               <h3 class="text-lg font-semibold mb-1">Battery Prediction</h3>
-              <p class="text-xs text-gray-500 mb-2">94.77% Accuracy</p>
-              <div class="text-3xl font-bold text-purple-600 dark:text-purple-400">
-                {{ batteryResult.toFixed(0) }} mAh
+              <p class="text-xs text-red-600 mb-2">Model not available</p>
+              <div class="text-lg font-semibold text-red-600 dark:text-red-400">
+                Please train the model first
               </div>
             </div>
-            <div v-if="showType('brand')" class="p-4 rounded-lg bg-orange-50 dark:bg-orange-900/20">
+            <div v-if="showType('brand')" class="p-4 rounded-lg bg-red-50 dark:bg-red-900/20">
               <h3 class="text-lg font-semibold mb-1">Brand Prediction</h3>
-              <p class="text-xs text-gray-500 mb-2">65.22% Accuracy</p>
-              <div class="text-2xl font-bold text-orange-600 dark:text-orange-400">
-                {{ brandResult }}
+              <p class="text-xs text-red-600 mb-2">Model not available</p>
+              <div class="text-lg font-semibold text-red-600 dark:text-red-400">
+                Please train the model first
               </div>
             </div>
           </div>

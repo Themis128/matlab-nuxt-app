@@ -2,6 +2,8 @@
  * Composable for checking API health status
  */
 
+import { ref, readonly, onMounted, onUnmounted } from 'vue'
+
 export const useApiStatus = () => {
   const status = ref({
     isOnline: false,

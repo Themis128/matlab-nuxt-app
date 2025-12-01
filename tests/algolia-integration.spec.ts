@@ -170,12 +170,14 @@ test.describe('Algolia Search Integration', () => {
     expect(hasNoResultsMsg).toBe(true)
   })
 
-  test.skip('should handle Algolia API errors gracefully', async ({ _page }) => {
-    // Skipped: Current implementation doesn't use Algolia for search
-    // This test was designed for Algolia InstantSearch error handling
+  test.skip('should handle Algolia API errors gracefully', async ({ page }) => {
+    test.skip(
+      true,
+      "Current implementation doesn't use Algolia for search - this test was designed for Algolia InstantSearch error handling"
+    )
   })
 
-  test.skip('should handle network connectivity issues', async ({ _page }) => {
+  test.skip('should handle network connectivity issues', async ({ page }) => {
     // Skipped: Network connectivity tests are complex and not essential for current implementation
   })
 
@@ -226,28 +228,28 @@ test.describe('Algolia Search Integration', () => {
     }
   })
 
-  test.skip('should handle special characters in search queries', async ({ _page }) => {
+  test.skip('should handle special characters in search queries', async ({ page }) => {
     // Skipped: Current search implementation uses form-based filtering, not text search
     // This test was designed for Algolia InstantSearch text queries
   })
 
-  test.skip('should maintain search state across page refreshes', async ({ _page }) => {
+  test.skip('should maintain search state across page refreshes', async ({ page }) => {
     // Skipped: Current implementation uses form-based search, not text input
   })
 
-  test.skip('should handle very long search queries', async ({ _page }) => {
+  test.skip('should handle very long search queries', async ({ page }) => {
     // Skipped: Current implementation uses form-based search, not text input
   })
 
-  test.skip('should provide search suggestions or autocomplete', async ({ _page }) => {
+  test.skip('should provide search suggestions or autocomplete', async ({ page }) => {
     // Skipped: Current implementation doesn't have autocomplete features
   })
 
-  test.skip('should handle search result click-through', async ({ _page }) => {
+  test.skip('should handle search result click-through', async ({ page }) => {
     // Skipped: Current implementation uses different result display format
   })
 
-  test.skip('should track search analytics', async ({ _page }) => {
+  test.skip('should track search analytics', async ({ page }) => {
     // Skipped: Current implementation doesn't track Algolia-specific analytics
   })
 })
