@@ -1,0 +1,98 @@
+.header {
+  display: flex;
+  align-items: center;
+  min-height: 50px;
+  padding: 0.5rem 1rem;
+  background-image: linear-gradient(284deg, #fedd4e, #fcb43a);
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.header a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.header-title {
+  font-size: 1.2rem;
+  font-weight: normal;
+}
+
+.header-title::after {
+  content: ' ▸ ';
+  padding: 0 0.5rem;
+}
+
+.header-subtitle {
+  font-size: 1.2rem;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.search-panel {
+  display: flex;
+}
+
+.search-panel__filters {
+  flex: 1;
+}
+
+.search-panel__results {
+  flex: 3;
+}
+
+.ais-Highlight-highlighted {
+  color: inherit;
+  font-size: inherit;
+}
+
+#searchbox {
+  margin-bottom: 2rem;
+}
+
+#pagination {
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.ais-Hits-item article {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background: white;
+  transition: box-shadow 0.2s ease;
+}
+
+.ais-Hits-item article:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.ais-Hits-item div:first-child {
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+}
+
+.ais-Hits-item div:last-child {
+  flex: 1;
+}
+
+.ais-Hits-item h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  color: #1f2937;
+}
+
+.ais-Hits-item p {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+  color: #6b7280;
+}

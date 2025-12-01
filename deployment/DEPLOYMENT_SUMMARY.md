@@ -6,12 +6,12 @@ This document summarizes all deployment infrastructure files integrated into the
 
 ### Docker Configuration
 
-| File                            | Purpose               | Description                                                |
-| ------------------------------- | --------------------- | ---------------------------------------------------------- |
-| `deployment/Dockerfile`         | Python API container  | Multi-stage build with health checks, GPU support optional |
-| `deployment/Dockerfile.nuxt`    | Nuxt app container    | Multi-stage build with SSR server                          |
-| `deployment/docker-compose.yml` | Service orchestration | 4 services: python-api, nuxt-app, redis, nginx             |
-| `.dockerignore`                 | Build optimization    | Excludes dev files, tests, docs from containers            |
+| File                                       | Purpose               | Description                                                |
+| ------------------------------------------ | --------------------- | ---------------------------------------------------------- |
+| `infrastructure/legacy/Dockerfile`         | Python API container  | Multi-stage build with health checks, GPU support optional |
+| `infrastructure/legacy/Dockerfile.nuxt`    | Nuxt app container    | Multi-stage build with SSR server                          |
+| `infrastructure/legacy/docker-compose.yml` | Service orchestration | 4 services: python-api, nuxt-app, redis, nginx             |
+| `.dockerignore`                            | Build optimization    | Excludes dev files, tests, docs from containers            |
 
 **Key Features:**
 
@@ -23,11 +23,11 @@ This document summarizes all deployment infrastructure files integrated into the
 
 ### Server Configuration
 
-| File                            | Purpose         | Description                                       |
-| ------------------------------- | --------------- | ------------------------------------------------- |
-| `deployment/nginx.conf`         | Reverse proxy   | SSL/TLS, compression, rate limiting, caching      |
-| `deployment/python-api.service` | Systemd service | Python API auto-start with security hardening     |
-| `deployment/nuxt-app.service`   | Systemd service | Nuxt app auto-start with dependency on Python API |
+| File                                        | Purpose         | Description                                       |
+| ------------------------------------------- | --------------- | ------------------------------------------------- |
+| `infrastructure/nginx/nginx.conf`           | Reverse proxy   | SSL/TLS, compression, rate limiting, caching      |
+| `infrastructure/systemd/python-api.service` | Systemd service | Python API auto-start with security hardening     |
+| `infrastructure/systemd/nuxt-app.service`   | Systemd service | Nuxt app auto-start with dependency on Python API |
 
 **Key Features:**
 
@@ -40,11 +40,11 @@ This document summarizes all deployment infrastructure files integrated into the
 
 ### Automation Scripts
 
-| File                              | Purpose              | Description                                                  |
-| --------------------------------- | -------------------- | ------------------------------------------------------------ |
-| `deployment/deploy_production.sh` | Automated deployment | Full deployment: deps, build, config, services               |
-| `deployment/health_check.sh`      | Health monitoring    | Tests all endpoints (predictions, analytics, dataset, pages) |
-| `deployment/backup.sh`            | Automated backups    | Backups models, dataset, configs with 30-day retention       |
+| File                                          | Purpose              | Description                                                  |
+| --------------------------------------------- | -------------------- | ------------------------------------------------------------ |
+| `infrastructure/scripts/deploy_production.sh` | Automated deployment | Full deployment: deps, build, config, services               |
+| `infrastructure/scripts/health_check.sh`      | Health monitoring    | Tests all endpoints (predictions, analytics, dataset, pages) |
+| `infrastructure/scripts/backup.sh`            | Automated backups    | Backups models, dataset, configs with 30-day retention       |
 
 **Key Features:**
 
@@ -124,8 +124,7 @@ This document summarizes all deployment infrastructure files integrated into the
 **Start:**
 
 ```bash
-cd deployment
-docker-compose up -d
+cd infrastructure/legacy && docker-compose up -d
 ```
 
 **Services:**
@@ -147,7 +146,7 @@ docker-compose up -d
 **Start:**
 
 ```bash
-sudo ./deployment/deploy_production.sh
+sudo ./infrastructure/scripts/deploy_production.sh
 ```
 
 **Services:**
@@ -232,7 +231,7 @@ sudo ./deployment/deploy_production.sh
 **Health Checks:**
 
 ```bash
-./deployment/health_check.sh
+./infrastructure/scripts/health_check.sh
 ```
 
 Tests:
@@ -246,7 +245,7 @@ Tests:
 **Backups:**
 
 ```bash
-./deployment/backup.sh --full
+./infrastructure/scripts/backup.sh --full
 ```
 
 Backs up:
@@ -277,7 +276,7 @@ Before deploying:
 
 After deploying:
 
-- [ ] Run health checks: `./deployment/health_check.sh`
+- [ ] Run health checks: `./infrastructure/scripts/health_check.sh`
 - [ ] Test all endpoints manually
 - [ ] Schedule automated backups (cron)
 - [ ] Set up monitoring alerts
@@ -295,8 +294,8 @@ After deploying:
 
 ## 📞 Resources
 
-- **Deployment Guide:** [deployment/README.md](README.md)
-- **Quick Reference:** [deployment/QUICK_REFERENCE.md](QUICK_REFERENCE.md)
+- **Deployment Guide:** [docs/deployment/README.md](README.md)
+- **Quick Reference:** [docs/deployment/QUICK_REFERENCE.md](QUICK_REFERENCE.md)
 - **Main README:** [../README.md](../README.md)
 - **API Documentation:** [../python_api/README.md](../python_api/README.md)
 

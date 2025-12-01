@@ -100,25 +100,35 @@ interface Emits {
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
-const { preferences, updatePreference, resetPreferences } = useUserPreferences()
+const { useUserPreferencesStore } = await import('~/stores/userPreferencesStore')
+const preferencesStore = useUserPreferencesStore()
 
 // Local state for immediate UI updates
-const localPreferences = ref({ ...preferences.value })
+const localPreferences = ref({ ...preferencesStore })
 
 // Sync local preferences when props change
 watch(
   () => props.modelValue,
-  isOpen => {
+  (isOpen: boolean) => {
     if (isOpen) {
-      localPreferences.value = { ...preferences.value }
+      localPreferences.value = { ...preferencesStore }
     }
   }
+)
+
+// Watch for store changes and update local state
+watch(
+  () => preferencesStore,
+  newPreferences => {
+    localPreferences.value = { ...newPreferences }
+  },
+  { deep: true }
 )
 
 // Computed properties
 const isOpen = computed({
   get: () => props.modelValue,
-  set: value => emit('update:modelValue', value),
+  set: (value: boolean) => emit('update:modelValue', value),
 })
 
 const themeOptions = [
@@ -128,13 +138,43 @@ const themeOptions = [
 ]
 
 // Methods
-const handlePreferenceChange = (key: string, value: any) => {
-  updatePreference(key as keyof typeof preferences.value, value)
+const handlePreferenceChange = (key: string, value: unknown) => {
+  // Update the store directly
+  ;(preferencesStore as any)[key] = value
+
+  // Apply theme change immediately
+  if (key === 'theme') {
+    applyTheme(value as string)
+  }
+
+  // Apply animation preference
+  if (key === 'animations') {
+    applyAnimationPreference(value as boolean)
+  }
+}
+
+const applyTheme = (_theme: string) => {
+  if (process.client) {
+    // For now, just store the preference - the ThemeToggle component handles the actual theme switching
+    // This can be enhanced later to work with @nuxtjs/color-mode if needed
+  }
+}
+
+const applyAnimationPreference = (enabled: boolean) => {
+  if (process.client) {
+    document.documentElement.style.setProperty('--animation-duration', enabled ? '300ms' : '0ms')
+
+    if (enabled) {
+      document.documentElement.classList.remove('no-animations')
+    } else {
+      document.documentElement.classList.add('no-animations')
+    }
+  }
 }
 
 const resetToDefaults = () => {
-  resetPreferences()
-  localPreferences.value = { ...preferences.value }
+  preferencesStore.resetToDefaults()
+  localPreferences.value = { ...preferencesStore }
 }
 
 const closeDialog = () => {

@@ -46,6 +46,7 @@ Instead, please report it by:
 ### Security Documentation
 
 For detailed security configuration:
+
 - 📖 [Security Configuration Guide](docs/SECURITY_CONFIGURATION.md)
 - 📖 [Error Tracking Setup](docs/ERROR_TRACKING_SETUP.md)
 - 📖 [Implementation Summary](docs/MISSING_FEATURES_IMPLEMENTATION.md)

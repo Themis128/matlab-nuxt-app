@@ -1,16 +1,24 @@
 import { defineNuxtPlugin } from 'nuxt/app'
+import { createPinia } from 'pinia'
+import { createPersistedState } from 'pinia-plugin-persistedstate'
 import { useApiStore } from '../stores/apiStore'
 import { usePredictionHistoryStore } from '../stores/predictionHistoryStore'
 
 /**
- * Plugin to initialize Pinia stores
+ * Plugin to initialize Pinia stores and configure persisted state
  * This plugin runs after Pinia is fully initialized
  */
 export default defineNuxtPlugin({
   name: 'pinia-init',
-  enforce: 'post', // Run after core plugins (including Pinia)
+  enforce: 'pre', // Run before other plugins
 
   setup(nuxtApp) {
+    // Configure Pinia with persisted state plugin
+    const pinia = createPinia()
+    pinia.use(createPersistedState())
+
+    // Set the configured pinia instance
+    nuxtApp.vueApp.use(pinia)
     // Only run certain initializations on client-side
     if (process.client) {
       // Initialize stores when app is mounted

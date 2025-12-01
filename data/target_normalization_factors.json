@@ -48,10 +48,6 @@
       "max": 39173.0
     }
   },
-  "new_target_columns": [
-    "price_ppp_adjusted",
-    "price_inflation_adjusted",
-    "price_residual"
-  ],
+  "new_target_columns": ["price_ppp_adjusted", "price_inflation_adjusted", "price_residual"],
   "note": "PPP and CPI factors are rough approximations. Use official World Bank PPP and national CPI indices for production."
 }

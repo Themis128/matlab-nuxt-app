@@ -2,6 +2,7 @@
   "version": "0.2",
   "language": "en",
   "words": [
+    "algoliasearch",
     "cellstr",
     "conv",
     "exportgraphics",
@@ -32,7 +33,8 @@
     "xlabel",
     "xtickangle",
     "ylabel",
-    "ylim"
+    "ylim",
+    "baltzakisthemiscom"
   ],
   "ignorePaths": ["node_modules/**", "**/node_modules/**", "package-lock.json"],
   "flagWords": []

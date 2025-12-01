@@ -4,9 +4,7 @@
   "longDescription": "## Mobile Spec Analyzer\n\nThis extension lets you: \n- Browse and inspect the mobile devices dataset.\n- View enhanced feature engineering outputs.\n- Run price, RAM, and battery prediction workflows (Nuxt + Python API + MATLAB trained models).\n- Visualize model comparison charts.\n\n### Architecture\nHybrid MATLAB training + Python inference + Nuxt UI.\n\n### Features\n1. Dataset insights (feature importance, trends).\n2. Prediction tool (enter specs, get multi-model outputs).\n3. MAT file viewer (quickly inspect .mat metadata).\n\n### Notes\nRequires read access & experimental APIs for future auth integration.\n",
   "icon": "images/placeholder.svg",
   "tags": ["mobile", "dataset", "prediction", "matlab", "nuxt", "deep-learning"],
-  "coverImages": [
-    {"path": "images/enhanced-models-comparison.png", "label": "Enhanced Models"}
-  ],
+  "coverImages": [{ "path": "images/enhanced-models-comparison.png", "label": "Enhanced Models" }],
   "website": "https://github.com/Themis128/matlab-nuxt-app",
   "fileHandlers": [
     {
@@ -24,8 +22,8 @@
     }
   ],
   "scopes": [
-    {"name": "read", "reason": "Read dataset and model artifacts"},
-    {"name": "experimental-api", "reason": "Use experimental auth API for user verification"}
+    { "name": "read", "reason": "Read dataset and model artifacts" },
+    { "name": "experimental-api", "reason": "Use experimental auth API for user verification" }
   ],
-  "background": {"page": "background.html"}
+  "background": { "page": "background.html" }
 }

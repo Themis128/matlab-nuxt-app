@@ -1,5 +1,7 @@
 import { readFileSync } from 'fs'
 import { join } from 'path'
+import { getQuery, createError, defineEventHandler } from 'h3'
+import type { H3Event } from 'h3'
 
 interface PhoneModel {
   modelName: string
@@ -31,7 +33,7 @@ interface ModelsByPriceResponse {
   brands: string[]
 }
 
-export default defineEventHandler(async (event): Promise<ModelsByPriceResponse> => {
+export default defineEventHandler(async (event: H3Event): Promise<ModelsByPriceResponse> => {
   try {
     const query = getQuery(event)
     const price = parseFloat(query.price as string)
@@ -105,7 +107,10 @@ export default defineEventHandler(async (event): Promise<ModelsByPriceResponse> 
     }
 
     // Parse header
-    const headers = parseCSVLine(lines[0]).map(h => h.replace(/^"|"$/g, '').trim())
+    const headerLineValue = lines[0] ?? ''
+    const headers = headerLineValue
+      ? parseCSVLine(headerLineValue).map(h => h.replace(/^"|"$/g, '').trim())
+      : []
 
     // Helper function to find column index
     const getColumnIndex = (exactName: string, fallbackNames: string[] = []): number => {
@@ -161,8 +166,8 @@ export default defineEventHandler(async (event): Promise<ModelsByPriceResponse> 
 
       // Try to extract first number (handles formats like "$1,199", "USD 799", "1199", "3,600mAh", etc.)
       const match = cleaned.match(/(\d+\.?\d*)/)
-      if (match) {
-        const num = parseFloat(match[1])
+      if (match && match[1]) {
+        const num = parseFloat(String(match[1]))
         return isNaN(num) || num <= 0 ? null : num
       }
       return null

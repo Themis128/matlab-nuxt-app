@@ -12,6 +12,8 @@ module.exports = [
       '.nuxt',
       '.output',
       'dist',
+      '**/dist/**',
+      'instantsearch-app/dist',
       'playwright-report',
       'venv',
       '__pycache__',

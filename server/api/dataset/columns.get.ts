@@ -26,7 +26,7 @@ interface DatasetAnalysis {
   }
 }
 
-export default defineEventHandler(async (): Promise<DatasetAnalysis> => {
+export default defineEventHandler(async (): Promise<string[]> => {
   try {
     const projectRoot = process.cwd()
     const datasetPaths = [
@@ -39,7 +39,6 @@ export default defineEventHandler(async (): Promise<DatasetAnalysis> => {
     let datasetPath: string | null = null
     let datasetContent: string | null = null
 
-    // Find dataset file
     for (const path of datasetPaths) {
       try {
         datasetContent = readFileSync(path, 'utf-8')
@@ -51,20 +50,7 @@ export default defineEventHandler(async (): Promise<DatasetAnalysis> => {
     }
 
     if (!datasetContent || !datasetPath) {
-      return {
-        datasetPath: null,
-        totalRows: 0,
-        totalColumns: 0,
-        columns: [],
-        foundFeatures: {},
-        missingFeatures: [],
-        recommendations: {
-          cameraAvailable: false,
-          storageAvailable: false,
-          processorAvailable: false,
-          regionalPricesAvailable: false,
-        },
-      }
+      return []
     }
 
     // Simple CSV parsing - split by comma and handle basic quotes
@@ -260,15 +246,7 @@ export default defineEventHandler(async (): Promise<DatasetAnalysis> => {
       ].some(p => p in foundFeatures),
     }
 
-    return {
-      datasetPath,
-      totalRows: dataRows.length,
-      totalColumns: headers.length,
-      columns,
-      foundFeatures,
-      missingFeatures,
-      recommendations,
-    }
+    return columns.map(c => c.name)
   } catch (error: unknown) {
     throw createError({
       statusCode: 500,

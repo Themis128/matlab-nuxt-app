@@ -19,31 +19,32 @@ Predict mobile phone specifications • Analyze datasets with AI • Train custo
 
 </div>
 
----
-
 ## 🌟 Highlights
 
 ### 🚀 Performance & Accuracy
+
 - ⚡ **12× Faster Predictions** - Production distilled model (14.5 KB) with <1ms latency
 - 🎯 **98.24% Prediction Accuracy** - Enhanced price prediction model with state-of-the-art performance
 - 🔬 **Data Leakage Fixed** - Discovered & removed 3 price-derived features, realistic RMSE $25k-32k
 - 🧹 **Clean Features** - 18 engineered features, zero data leakage, production-ready
 
 ### 🛡️ Security & Production-Ready (NEW!)
+
 - 🔒 **Enterprise Security** - Rate limiting, CORS protection, CSP headers, HSTS
 - 🚦 **API Rate Limiting** - Prevents abuse (100 req/60s default, configurable)
 - 🔐 **Security Headers** - OWASP-compliant headers (X-Frame-Options, CSP, etc.)
 - 📊 **Error Tracking Ready** - Sentry integration guide included
-- 🔄 **Auto Dependency Updates** - Dependabot configured for npm, pip, Docker, GitHub Actions
+- 🔄 **Auto Dependency Updates** - Dependabot configured for npm, pip, GitHub Actions
 
 ### 🌐 Application Features
+
 - 🚀 **Dynamic Backend Detection** - Seamlessly works on localhost, Replit, and production
 - 🧠 **Multiple AI Models** - Price, RAM, Battery predictions + Brand classification
 - 📊 **Interactive Dashboard** - Real-time predictions with beautiful visualizations
 - 🔍 **Advanced Search** - Filter 930+ mobile phones by specs with model comparison
 - 📱 **Fully Responsive** - Works perfectly on desktop, tablet, and mobile devices
 - 🎨 **Dark Mode** - Beautiful UI with light/dark theme support
-- 🐳 **Docker Ready** - Complete Docker setup for easy deployment
+- 🐳 **Optional Containerization (legacy)** - Containerized deployment is available but deprecated; prefer SSH-based artifact deployment and systemd for production
 
 ## 🎯 Demo
 
@@ -112,7 +113,7 @@ Visit the interactive web application to:
 - ✅ **Type Safety** - Full TypeScript coverage
 - ✅ **Code Quality** - ESLint + Prettier + Type checking
 - ✅ **CI/CD** - GitHub Actions for testing and deployment
-- ✅ **Docker Support** - Complete containerization setup
+- Optional: **Docker Support** - Containerization is available but not required for deployment
 - ✅ **Security Best Practices** - Rate limiting, CORS, CSP, HSTS (NEW!)
 - ✅ **Automated Updates** - Dependabot for dependencies (NEW!)
 - ✅ **Error Tracking** - Sentry integration guide (NEW!)
@@ -128,21 +129,21 @@ graph TB
     subgraph "Client Layer"
         A[👤 User Browser]
     end
-    
+
     subgraph "Frontend Layer"
         B[🌐 Nuxt.js 4.2.1<br/>Vue 3 + TypeScript]
         B1[🎨 Nuxt UI Components]
         B2[📦 Pinia State Management]
         B3[🔄 API Health Monitoring]
     end
-    
+
     subgraph "Backend Layer"
         C[🐍 Python FastAPI 0.104+]
         C1[🚦 Rate Limiting Middleware]
         C2[🔒 CORS Protection]
         C3[📊 API Endpoints]
     end
-    
+
     subgraph "ML Layer"
         D[🧠 Trained Models]
         D1[💰 Price Prediction<br/>98.24% R²]
@@ -150,14 +151,14 @@ graph TB
         D3[🔋 Battery Prediction<br/>94.77% R²]
         D4[🏷️ Brand Classification<br/>65.22% Acc]
     end
-    
+
     subgraph "Data Layer"
         E[📊 CSV Dataset<br/>930+ Phones]
         F[🔬 MATLAB Training<br/>Deep Learning Toolbox]
     end
-    
+
     subgraph "Infrastructure"
-        G[🐳 Docker Containers]
+      G[Containerization (optional)]
         H[🔄 CI/CD Pipeline<br/>GitHub Actions]
         I[📈 Monitoring<br/>Health Checks]
     end
@@ -201,17 +202,17 @@ graph LR
         F --> G[🧠 ML Model]
         G --> H[📤 Response + Headers]
     end
-    
+
     subgraph "Monitoring"
         I[📊 Health Checks]
         J[📈 Rate Limit Metrics]
         K[🔍 Error Tracking<br/>Sentry Optional]
     end
-    
+
     F -.->|Status| I
     C -.->|Metrics| J
     F -.->|Errors| K
-    
+
     style B fill:#ffebee
     style C fill:#fff3e0
     style D fill:#e8f5e9
@@ -231,14 +232,14 @@ sequenceDiagram
     participant P as 🐍 Python API
     participant R as 🚦 Rate Limiter
     participant M as 🧠 ML Model
-    
+
     U->>N: Enter phone specs
     N->>N: Validate inputs (composable)
     N->>S: POST /api/predict/price
     S->>S: Dynamic URL detection
     S->>P: Forward to Python API
     P->>R: Check rate limit
-    
+
     alt Rate limit OK
         R->>P: Allow request
         P->>P: Validate with Pydantic
@@ -254,7 +255,7 @@ sequenceDiagram
         S->>N: Error response
         N->>U: Show rate limit message
     end
-    
+
     Note over P,M: Rate Limit Headers:<br/>X-RateLimit-Limit: 100<br/>X-RateLimit-Remaining: 95<br/>X-RateLimit-Reset: timestamp
 ```
 
@@ -264,15 +265,15 @@ sequenceDiagram
 
 ### Implemented Security Measures
 
-| Feature | Implementation | Configuration |
-|---------|---------------|---------------|
-| 🚦 **Rate Limiting** | 100 requests/60 seconds per IP | `RATE_LIMIT_REQUESTS`, `RATE_LIMIT_WINDOW` |
-| 🔐 **CORS Protection** | Configurable allowed origins | `CORS_ORIGINS` (no wildcards in prod!) |
-| 🛡️ **Security Headers** | HSTS, CSP, X-Frame-Options, etc. | Auto-applied in production |
-| ✅ **Input Validation** | Pydantic models for all endpoints | Built-in FastAPI validation |
-| 🔒 **HTTPS Enforcement** | Strict-Transport-Security header | Production only |
-| 📊 **Health Monitoring** | `/health` endpoint with status | Health checks in Docker |
-| 🔑 **Environment Isolation** | Separate dev/staging/production configs | `.env` files |
+| Feature                      | Implementation                          | Configuration                              |
+| ---------------------------- | --------------------------------------- | ------------------------------------------ |
+| 🚦 **Rate Limiting**         | 100 requests/60 seconds per IP          | `RATE_LIMIT_REQUESTS`, `RATE_LIMIT_WINDOW` |
+| 🔐 **CORS Protection**       | Configurable allowed origins            | `CORS_ORIGINS` (no wildcards in prod!)     |
+| 🛡️ **Security Headers**      | HSTS, CSP, X-Frame-Options, etc.        | Auto-applied in production                 |
+| ✅ **Input Validation**      | Pydantic models for all endpoints       | Built-in FastAPI validation                |
+| 🔒 **HTTPS Enforcement**     | Strict-Transport-Security header        | Production only                            |
+| 📊 **Health Monitoring**     | `/health` endpoint with status          | Health checks in Docker                    |
+| 🔑 **Environment Isolation** | Separate dev/staging/production configs | `.env` files                               |
 
 ### Security Headers Applied
 
@@ -305,6 +306,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'..
 ```
 
 **Response Headers:**
+
 ```http
 X-RateLimit-Limit: 100
 X-RateLimit-Remaining: 95
@@ -314,6 +316,7 @@ X-RateLimit-Reset: 1701234567
 ### Configuration Files
 
 **Development (`.env.local`):**
+
 ```env
 CORS_ORIGINS=http://localhost:3000,http://localhost:8000
 RATE_LIMIT_REQUESTS=1000
@@ -321,6 +324,7 @@ RATE_LIMIT_WINDOW=60
 ```
 
 **Production (`.env.production`):**
+
 ```env
 CORS_ORIGINS=https://your-domain.com,https://www.your-domain.com
 NUXT_API_SECRET=your-secure-random-secret
@@ -359,11 +363,11 @@ RATE_LIMIT_WINDOW=60
 
 **DevOps**
 
-- 🐳 **Docker** - Containerization for deployment with health checks
+- 🐳 **Containerization (optional)** - Containerization support (legacy, optional)
 - 🧪 **Playwright** - E2E testing framework with comprehensive coverage
 - 🔄 **GitHub Actions** - Automated CI/CD pipeline with multi-stage builds
 - 📝 **ESLint + Prettier** - Code quality and formatting tools
-- 🔐 **Dependabot** - Automated dependency updates (npm, pip, Docker, GitHub Actions)
+- 🔐 **Dependabot** - Automated dependency updates (npm, pip, GitHub Actions)
 - 📊 **Health Monitoring** - Endpoint monitoring and status checks
 - 🚦 **Rate Limiting** - In-memory (Redis-ready) rate limiting middleware
 
@@ -458,15 +462,9 @@ Terminal 2 - Nuxt Frontend:
 npm run dev
 ```
 
-**Option 3: Docker 🐳**
+**Optional: Containerization**
 
-```bash
-# Build and start all services
-docker-compose -f deployment/docker-compose.yml up --build
-
-# Or use production configuration
-docker-compose -f deployment/docker-compose.prod.yml up -d
-```
+This project supports containerized deployment via Docker Compose, but this is optional. The recommended path is SSH-based artifact deployment and systemd/pm2 process management.
 
 **Access the application:**
 
@@ -495,18 +493,24 @@ npm run test:report
 
 ## 📦 Deployment
 
-### Quick Deploy with Docker
+### Quick Deploy (SSH)
+
+Use SSH to deploy the built artifacts to a production server (no Docker required):
 
 ```bash
-# 1. Build images
-docker-compose -f deployment/docker-compose.prod.yml build
+# Build (local or CI)
+npm ci
+npm run build
+cd python_api
+python -m pip install -r requirements.txt
 
-# 2. Start services
-docker-compose -f deployment/docker-compose.prod.yml up -d
+# Upload to server (example using scp)
+scp -r .output/ user@server:/var/www/matlab/nuxt
+scp -r python_api/ user@server:/var/www/matlab/python_api
 
-# 3. Check health
-curl http://localhost:8000/health
-curl http://localhost:3000/
+# On server: install dependencies, then start/restart services
+ssh user@server 'cd /var/www/matlab/python_api && python -m pip install -r requirements.txt && systemctl restart matlab-python-api'
+ssh user@server 'cd /var/www/matlab/nuxt && npm ci && pm2 restart nuxt-app || pm2 start --name nuxt-app npm -- start'
 ```
 
 ### Production Deployment Checklist
@@ -517,7 +521,7 @@ curl http://localhost:3000/
 - [ ] **Configure rate limiting** (adjust `RATE_LIMIT_REQUESTS` for your traffic)
 - [ ] **Enable HTTPS/SSL** (required for production)
 - [ ] **Set up error tracking** (optional, Sentry recommended)
-- [ ] **Configure GitHub secrets** (`DOCKER_USERNAME`, `DOCKER_PASSWORD`)
+- [ ] **Configure GitHub secrets** (`SERVER_HOST`, `SERVER_USER`, `SERVER_SSH_KEY`, `DEPLOY_PATH`)
 - [ ] **Test security headers** (https://securityheaders.com)
 - [ ] **Monitor health endpoints** (`/health`)
 - [ ] **Set up automated backups** (models and data)
@@ -525,16 +529,18 @@ curl http://localhost:3000/
 ### GitHub Actions CI/CD
 
 **Automated on every push:**
+
 - ✅ Build and test frontend
-- ✅ Build and test backend  
-- ✅ Docker image builds
+- ✅ Build and test backend
+- ✅ Artifact builds (frontend + backend)
 - ✅ Type checking
 - ✅ Lint and format checks
 
 **Automated on tag push (`v*`):**
-- ✅ Build multi-arch Docker images (amd64, arm64)
-- ✅ Push to Docker Hub
-- ✅ Tag with version number
+
+- ✅ Build Nuxt and Python artifacts
+- ✅ Transfer artifacts to the configured server via SSH
+- ✅ Restart the services on the server
 
 ```bash
 # Create a release
@@ -542,15 +548,18 @@ git tag v1.0.1
 git push origin v1.0.1
 
 # GitHub Actions will automatically:
-# 1. Build Docker images
-# 2. Push to Docker Hub
-# 3. Tag as :latest and :v1.0.1
+# 1. Build the Nuxt and Python artifacts
+# 2. Transfer artifacts to the configured server
+# 3. Run your server-side deploy script to restart services
 ```
 
 **Required GitHub Secrets:**
+
 ```
-DOCKER_USERNAME=your-dockerhub-username
-DOCKER_PASSWORD=your-dockerhub-token
+SERVER_HOST=your-server-host
+SERVER_USER=your-deploy-user
+SERVER_SSH_KEY=your-ssh-private-key
+DEPLOY_PATH=/var/www/matlab
 ```
 
 ### Monitoring in Production
@@ -568,7 +577,7 @@ curl -I https://api.your-domain.com/api/predict/price
 # X-RateLimit-Reset: 1701234567
 ```
 
-📖 **Detailed Deployment Guide:** [deployment/README.md](deployment/README.md)
+📖 **Detailed Deployment Guide:** [docs/deployment/README.md](docs/deployment/README.md)
 📖 **Security Configuration:** [docs/SECURITY_CONFIGURATION.md](docs/SECURITY_CONFIGURATION.md)
 
 ---
@@ -1178,31 +1187,43 @@ To add these screenshots:
 
 ## 📋 Prerequisites
 
-### Required
+### Community
 
-- **MATLAB R2026a** (or compatible version)
-  - Deep Learning Toolbox (required)
-  - Statistics and Machine Learning Toolbox (recommended)
-- **Node.js** (v18+ recommended) - For Nuxt web app
-- **Python 3.8+** - For Python scripts and .mat file viewing
+- ⭐ **Star this repo** if you find it helpful!
+- 🍴 **Fork** to create your own version
+- 🐛 **Report bugs** via GitHub Issues
+- 💡 **Suggest features** in GitHub Discussions
+- 🤝 **Contribute** - see [CONTRIBUTING.md](CONTRIBUTING.md)
 
-### Optional
+---
 
-- **NVIDIA GPU** - For accelerated deep learning training (CUDA-compatible)
-- **Kaggle CLI** - For downloading datasets (if using Kaggle datasets)
+## Type Checking
 
-## 🛠️ Installation
+Run the TypeScript checks locally. The repository provides a CI-scoped check (recommended locally) and a full project check when you have sufficient RAM.
 
-### 1. Clone the Repository
+```pwsh
+# Fast, scoped check (recommended)
+npm run typecheck
 
-```bash
-git clone <repository-url>
-cd MatLab
+# Full project check with increased Node heap (may require lots of RAM)
+npm run typecheck:mem
 ```
 
-### 2. Install Node.js Dependencies
+<div align="center">
 
-```bash
+**Made with ❤️ using MATLAB, Nuxt.js, FastAPI, and Python**
+
+🚀 **Production-Ready** • 🔒 **Secure** • 📊 **Well-Documented** • 🧪 **Tested**
+
+[⬆ Back to Top](#matlab-deep-learning--mobile-dataset-analysis)
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Themis128/matlab-nuxt-app&type=Date)](https://star-history.com/#Themis128/matlab-nuxt-app&Date)
+
+---
+
+© 2025 MATLAB Deep Learning & Mobile Dataset Analysis Project
+
+</div>
 npm install
 ```
 
@@ -1585,16 +1606,19 @@ python scripts/python/check_euro_scraper_status.py
 Before deploying to production, ensure you've configured:
 
 ✅ **CORS Origins** - Set specific domains (no wildcards!)
+
 ```env
 CORS_ORIGINS=https://your-domain.com,https://www.your-domain.com
 ```
 
 ✅ **API Secret** - Generate a strong random secret
+
 ```bash
 openssl rand -hex 32
 ```
 
 ✅ **Rate Limiting** - Configure appropriate limits
+
 ```env
 RATE_LIMIT_REQUESTS=100
 RATE_LIMIT_WINDOW=60
@@ -1603,6 +1627,7 @@ RATE_LIMIT_WINDOW=60
 ✅ **HTTPS** - Enable SSL/TLS certificates
 
 ✅ **Security Headers** - Verify headers are applied
+
 ```bash
 curl -I https://your-domain.com | grep -i "x-frame-options\|strict-transport"
 ```
@@ -1617,7 +1642,7 @@ curl -I https://your-domain.com | grep -i "x-frame-options\|strict-transport"
 
 ```bash
 # Test rate limiting (should fail after 100 requests)
-for i in {1..110}; do 
+for i in {1..110}; do
   curl http://localhost:8000/health -w " %{http_code}\n"
 done
 
@@ -1867,22 +1892,22 @@ See [SECURITY.md](SECURITY.md) for security notes, including information about d
 
 Ready to deploy to production? See our comprehensive deployment guide:
 
-- **[📘 Deployment Guide](deployment/README.md)** - Complete production deployment documentation
+- **[📘 Deployment Guide](docs/deployment/README.md)** - Complete production deployment documentation
 
 **Quick Deployment Options:**
 
-1. **Docker Compose (Recommended)** - Fastest setup with containerized services
+1. **Docker Compose (Legacy / Optional)** - Dockerized orchestration is now archived under `infrastructure/legacy/`.
 
-   ```bash
-   cd deployment
-   docker-compose up -d
-   ./health_check.sh
-   ```
+```bash
+cd infrastructure/legacy
+docker-compose up -d
+sudo ../../infrastructure/scripts/health_check.sh
+```
 
 2. **Traditional Server** - Full control with systemd services
 
    ```bash
-   sudo ./deployment/deploy_production.sh
+   sudo ./infrastructure/scripts/deploy_production.sh
    ```
 
 3. **Cloud Platforms** - Deploy to Vercel, Railway, or DigitalOcean App Platform
@@ -1896,7 +1921,7 @@ Ready to deploy to production? See our comprehensive deployment guide:
 - 🔧 Nginx reverse proxy with compression
 - 📈 Production optimizations (minification, caching, CDN-ready)
 
-See [deployment/README.md](deployment/README.md) for detailed instructions, troubleshooting, and security best practices.
+See [docs/deployment/README.md](docs/deployment/README.md) for detailed instructions, troubleshooting, and security best practices.
 
 ## 🤝 Contributing
 
@@ -2363,7 +2388,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 🌐 **Live Demo**: Coming Soon
 - 📊 **API Documentation**: http://localhost:8000/docs (Swagger UI when running locally)
 - 📖 **API Reference**: http://localhost:8000/redoc (ReDoc when running locally)
-- 🐳 **Docker Hub**: Coming Soon
+  -- **Container Registry (optional)**: Coming Soon
 - 📈 **Project Board**: [GitHub Projects](https://github.com/Themis128/matlab-nuxt-app/projects)
 
 ### Community

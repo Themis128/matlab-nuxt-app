@@ -90,6 +90,12 @@ if ($WaitForHealthy) {
                 if ($response.StatusCode -eq 200) {
                     $nuxtHealthy = $true
                     Write-Host "✓ Nuxt dev server is healthy" -ForegroundColor Green
+                    # Patch generated .nuxt/tsconfig.json to avoid invalid "module": "preserve" entries
+                    $patchScript = Join-Path $PSScriptRoot "patch-nuxt-tsconfig.js"
+                    if (Test-Path $patchScript) {
+                        Write-Host "🔧 Running Nuxt tsconfig patch script..." -ForegroundColor Cyan
+                        node $patchScript
+                    }
                 }
             } catch {
                 # Still waiting...

@@ -30,7 +30,7 @@ Error: Cannot find module '@oxc-parser/binding-...'
 
 ### 📖 Documentation Updated (2 files)
 
-1. **`deployment/README.md`**
+1. **`docs/deployment/README.md`**
    - Added **CI/CD Workflows** section
    - Documented required secrets
    - Included NPM optional dependencies fix
@@ -196,7 +196,7 @@ Complete guides available:
    - Deployment guides
    - Secret setup instructions
 
-2. **[deployment/README.md](../deployment/README.md)**
+2. **[docs/deployment/README.md](../docs/deployment/README.md)**
    - CI/CD workflows section
    - Required secrets
    - Workflow triggering

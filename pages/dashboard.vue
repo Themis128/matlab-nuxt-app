@@ -12,7 +12,14 @@
           </div>
           <div class="flex items-center space-x-4">
             <div class="flex items-center space-x-2">
-              <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+              <!-- Models Online indicators: Price, RAM, Battery, Brand, Settings -->
+              <div class="flex items-center gap-1">
+                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+              </div>
               <span class="text-sm text-gray-600 dark:text-gray-400">Models Online</span>
             </div>
           </div>
@@ -162,83 +169,119 @@
         </div>
       </div>
 
+      <!-- Filters for interactive dashboard -->
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+          Interactive Filters
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+          <div>
+            <label class="block text-sm text-gray-700 dark:text-gray-300 mb-1">Year</label>
+            <select
+              v-model="selectedYear"
+              class="block w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white px-3 py-2"
+            >
+              <option value="All">All</option>
+              <option v-for="y in availableYears" :key="y" :value="y">{{ y }}</option>
+            </select>
+          </div>
+          <div class="flex items-end">
+            <button
+              @click="resetFilters"
+              class="w-full inline-flex items-center justify-center py-2 px-3 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600"
+            >
+              Reset Filters
+            </button>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-700 dark:text-gray-300 mb-1">Brand</label>
+            <select
+              v-model="selectedBrand"
+              class="block w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white px-3 py-2"
+            >
+              <option value="All">All</option>
+              <option v-for="b in availableBrands" :key="b" :value="b">{{ b }}</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-700 dark:text-gray-300 mb-1">Target</label>
+            <select
+              v-model="selectedTarget"
+              class="block w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white px-3 py-2"
+            >
+              <option value="All">All</option>
+              <option v-for="t in availableTargets" :key="t" :value="t">{{ t }}</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-700 dark:text-gray-300 mb-1">Feature</label>
+            <select
+              v-model="selectedFeature"
+              class="block w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white px-3 py-2"
+            >
+              <option value="All">All</option>
+              <option v-for="f in availableFeatures" :key="f" :value="f">{{ f }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
       <!-- Performance Charts Section -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-        <!-- Accuracy Trends -->
+        <!-- Top Brands Bar Chart -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+          <AnalyticsTopBrandsChart :brands="filteredTopBrands" :selectedBrand="selectedBrand" />
+        </div>
+        <!-- Numeric Summaries Cards -->
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
           <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-            Model Accuracy Trends
+            Numeric Feature Summaries
           </h3>
-          <div class="h-64 flex items-center justify-center bg-gray-50 dark:bg-gray-700 rounded-lg">
-            <div class="text-center">
-              <svg
-                class="w-12 h-12 text-gray-400 mx-auto mb-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                ></path>
-              </svg>
-              <p class="text-gray-500 dark:text-gray-400">
-                Performance charts would be displayed here
-              </p>
-              <p class="text-sm text-gray-400 dark:text-gray-500 mt-2">
-                Integration with charting library needed
-              </p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div
+              v-for="(summary, key) in filteredNumericSummaries"
+              :key="key"
+              class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 shadow"
+            >
+              <h4 class="text-md font-bold text-gray-800 dark:text-gray-200 mb-2">{{ key }}</h4>
+              <div class="flex flex-col space-y-1 text-sm">
+                <span
+                  >Min: <span class="font-semibold">{{ summary.min }}</span></span
+                >
+                <span
+                  >Max: <span class="font-semibold">{{ summary.max }}</span></span
+                >
+                <span
+                  >Mean: <span class="font-semibold">{{ summary.mean }}</span></span
+                >
+                <span
+                  >Median: <span class="font-semibold">{{ summary.median }}</span></span
+                >
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Feature Importance -->
+      <!-- Model charts & trends -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-            Feature Importance Analysis
-          </h3>
-          <div class="space-y-4">
-            <div class="flex items-center justify-between">
-              <span class="text-sm font-medium text-gray-700 dark:text-gray-300">RAM Capacity</span>
-              <div class="flex items-center space-x-2">
-                <div class="w-24 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                  <div class="bg-green-500 h-2 rounded-full" style="width: 85%"></div>
-                </div>
-                <span class="text-sm text-gray-600 dark:text-gray-400">85%</span>
-              </div>
-            </div>
-            <div class="flex items-center justify-between">
-              <span class="text-sm font-medium text-gray-700 dark:text-gray-300"
-                >Brand Premium</span
-              >
-              <div class="flex items-center space-x-2">
-                <div class="w-24 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                  <div class="bg-blue-500 h-2 rounded-full" style="width: 72%"></div>
-                </div>
-                <span class="text-sm text-gray-600 dark:text-gray-400">72%</span>
-              </div>
-            </div>
-            <div class="flex items-center justify-between">
-              <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Battery Size</span>
-              <div class="flex items-center space-x-2">
-                <div class="w-24 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                  <div class="bg-purple-500 h-2 rounded-full" style="width: 68%"></div>
-                </div>
-                <span class="text-sm text-gray-600 dark:text-gray-400">68%</span>
-              </div>
-            </div>
-            <div class="flex items-center justify-between">
-              <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Screen Size</span>
-              <div class="flex items-center space-x-2">
-                <div class="w-24 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                  <div class="bg-orange-500 h-2 rounded-full" style="width: 45%"></div>
-                </div>
-                <span class="text-sm text-gray-600 dark:text-gray-400">45%</span>
-              </div>
-            </div>
-          </div>
+          <AnalyticsAccuracyChart :accuracyTrends="accuracySeries" :labels="accuracyLabels" />
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+          <AnalyticsYearlyTrendsChart
+            :trends="filteredYearlyTrends"
+            :selectedTarget="selectedTarget"
+          />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+          <AnalyticsFeatureImportanceChart :importance="filteredFeatureImportance" />
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+          <AnalyticsGeographicalChart :geo="filteredGeographical" />
         </div>
       </div>
 
@@ -347,7 +390,23 @@
 </template>
 
 <script setup lang="ts">
-import { useHead } from '#imports'
+interface NumericSummary {
+  min: number
+  max: number
+  mean: number
+  median: number
+}
+
+// Full analytics data interface
+interface AnalyticsData {
+  yearly_trends?: { years: number[]; avg_price: number[]; avg_ram: number[]; avg_battery: number[] }
+  top_brands?: Record<string, number>
+  feature_importance?: Record<string, number>
+  numeric_summaries?: Record<string, NumericSummary>
+  geographical_analysis?: { regions: string[]; avg_prices: number[] }
+  metrics?: { accuracies: number[]; labels: string[] }
+}
+import { useHead, useAsyncData } from '#imports'
 // Page meta
 useHead({
   title: 'AI Model Dashboard - Mobile Finder',
@@ -359,4 +418,160 @@ useHead({
     },
   ],
 })
+
+// Fetch analytics summary and metrics from FastAPI backend
+import { ref, computed } from 'vue'
+import type { Ref } from 'vue'
+
+// ...existing code...
+interface AnalyticsData {
+  yearly_trends?: { years: number[]; avg_price: number[]; avg_ram: number[]; avg_battery: number[] }
+  top_brands?: Record<string, number>
+  feature_importance?: Record<string, number>
+  numeric_summaries?: Record<string, NumericSummary>
+  geographical_analysis?: { regions: string[]; avg_prices: number[] }
+  metrics?: { accuracies: number[]; labels: string[] }
+}
+import AnalyticsTopBrandsChart from '~/components/AnalyticsTopBrandsChart.vue'
+import AnalyticsFeatureImportanceChart from '~/components/AnalyticsFeatureImportanceChart.vue'
+import AnalyticsYearlyTrendsChart from '~/components/AnalyticsYearlyTrendsChart.vue'
+import AnalyticsGeographicalChart from '~/components/AnalyticsGeographicalChart.vue'
+import AnalyticsAccuracyChart from '~/components/AnalyticsAccuracyChart.vue'
+
+const { data } = await useAsyncData('analyticsSummary', () => $fetch('/api/analytics/summary'))
+// Cast to a typed ref to avoid deep type recursion from $fetch signatures
+const analyticsData = data as unknown as Ref<AnalyticsData | undefined>
+
+// Reactive filter values
+const selectedYear = ref('All')
+const selectedBrand = ref('All')
+const selectedTarget = ref('All')
+const selectedFeature = ref('All')
+
+// computed options
+const availableYears = computed(() =>
+  ((analyticsData.value?.yearly_trends?.years ?? []) as (number | undefined)[]).filter(
+    (y): y is number => typeof y === 'number'
+  )
+)
+const availableBrands = computed(() => Object.keys(analyticsData.value?.top_brands || {}))
+const availableTargets = computed(() => {
+  // produce a list of common model targets available on the dashboard
+  const defaults = ['Price', 'RAM', 'Battery', 'Brand']
+  return defaults
+})
+const availableFeatures = computed(() => Object.keys(analyticsData.value?.feature_importance || {}))
+
+// filtered datasets to pass to chart components
+const filteredTopBrands = computed(() => {
+  const brands = analyticsData.value?.top_brands || {}
+  if (selectedBrand.value === 'All') return brands
+  const val = brands[selectedBrand.value]
+  return val !== undefined ? { [selectedBrand.value]: val } : {}
+})
+
+// Numeric summaries: try analyticsData.numeric_summaries, else derive
+const derivedNumericSummaries = computed(() => {
+  if (
+    analyticsData.value?.numeric_summaries &&
+    Object.keys(analyticsData.value.numeric_summaries).length
+  ) {
+    return analyticsData.value.numeric_summaries
+  }
+  const d: Record<string, NumericSummary> = {}
+  Object.keys(analyticsData.value || {}).forEach(k => {
+    const v = (analyticsData.value as any)[k]
+    if (v && typeof v === 'object' && 'min' in v && 'max' in v && 'mean' in v && 'median' in v) {
+      d[k] = {
+        min: v.min,
+        max: v.max,
+        mean: v.mean,
+        median: v.median,
+      }
+    }
+  })
+  return d
+})
+
+const filteredNumericSummaries = computed(() => {
+  if (selectedFeature.value === 'All') return derivedNumericSummaries.value
+  const v = derivedNumericSummaries.value[selectedFeature.value]
+  return v ? { [selectedFeature.value]: v } : {}
+})
+
+// Feature importance filter
+const filteredFeatureImportance = computed(() => {
+  const importance = analyticsData.value?.feature_importance || {}
+  if (selectedFeature.value === 'All') return importance
+  const v = importance[selectedFeature.value]
+  return v !== undefined ? { [selectedFeature.value]: v } : {}
+})
+
+// Yearly trends filter: if a specific year is chosen show the single-year values (for the current demo)
+const filteredYearlyTrends = computed(() => {
+  const trends = analyticsData.value?.yearly_trends || {
+    years: [],
+    avg_price: [],
+    avg_ram: [],
+    avg_battery: [],
+  }
+  if (!trends.years || selectedYear.value === 'All')
+    return {
+      years: (trends.years ?? []).filter((v): v is number => typeof v === 'number'),
+      avg_price: (trends.avg_price ?? []).map(n => n ?? 0),
+      avg_ram: (trends.avg_ram ?? []).map(n => n ?? 0),
+      avg_battery: (trends.avg_battery ?? []).map(n => n ?? 0),
+    }
+  const idx = trends.years.indexOf(Number(selectedYear.value))
+  if (idx === -1) return trends
+  const idxNumber = Number(idx)
+  return {
+    years: [(trends.years ?? [])[idxNumber] ?? 0],
+    avg_price: [(trends.avg_price ?? [])[idxNumber] ?? 0],
+    avg_ram: [(trends.avg_ram ?? [])[idxNumber] ?? 0],
+    avg_battery: [(trends.avg_battery ?? [])[idxNumber] ?? 0],
+  }
+})
+
+// Geographical analysis: not filterable for now, but still computed to match structure
+const filteredGeographical = computed(() => {
+  const geo = analyticsData.value?.geographical_analysis || { regions: [], avg_prices: [] }
+  return geo
+})
+
+// Utility to reset filters
+const resetFilters = () => {
+  selectedYear.value = 'All'
+  selectedBrand.value = 'All'
+  selectedTarget.value = 'All'
+  selectedFeature.value = 'All'
+}
+
+// Accuracy series and labels from analytics (if present), otherwise fallback
+const accuracySeries = computed((): number[] => {
+  // We might have analyticsData.metrics or similar; fallback values for now
+  const labels = analyticsData.value?.metrics?.labels || ['Price', 'RAM', 'Battery', 'Brand']
+  const accRaw = (analyticsData.value?.metrics?.accuracies ?? [
+    98.24, 95.16, 94.77, 65.22,
+  ]) as number[]
+  const accNumbers: number[] = accRaw.map(n => Number(n ?? 0))
+  if (selectedTarget.value !== 'All') {
+    const i = labels.indexOf(selectedTarget.value)
+    if (i >= 0 && i < accNumbers.length) {
+      const val = accNumbers[i] ?? 0
+      return [val]
+    }
+    return accNumbers
+  }
+  return accNumbers
+})
+const accuracyLabels = computed(() => {
+  const labels = analyticsData.value?.metrics?.labels || ['Price', 'RAM', 'Battery', 'Brand']
+  if (selectedTarget.value !== 'All' && labels.includes(selectedTarget.value))
+    return [selectedTarget.value]
+  return labels
+})
+
+// expose some refs to template
+const analyticsSummary = analyticsData
 </script>

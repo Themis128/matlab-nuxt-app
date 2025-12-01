@@ -12,6 +12,7 @@ A complete data preprocessing and analysis pipeline has been implemented for the
 ## 🎯 Requirements Addressed
 
 ### 1. ✅ Data Preprocessing
+
 - **Script:** `comprehensive_preprocessing.py`
 - **Input:** `data/Mobiles Dataset (2025).csv` (930 rows)
 - **Output:** `data/Mobiles_Dataset_Cleaned.csv` (915 rows)
@@ -23,6 +24,7 @@ A complete data preprocessing and analysis pipeline has been implemented for the
   - Data validation and quality checks
 
 ### 2. ⏳ EUR Price Conversion
+
 - **Conversion Rate:** 1 USD = 0.92 EUR (ready to use)
 - **Status:** Can be added on-demand
 - **Note:** Current dataset has regional prices in local currencies (PKR, INR, CNY, USD, AED)
@@ -30,6 +32,7 @@ A complete data preprocessing and analysis pipeline has been implemented for the
 ### 3. ✅ Outlier Detection & Fixes
 
 #### Issues Identified & Fixed:
+
 - ✅ **RAM outliers:** Capped at 24GB (0 outliers found - data is clean)
 - ✅ **Camera outliers:** Capped at 200MP (0 outliers found - data is clean)
 - ✅ **Price outliers:** Specialty devices flagged (kept in dataset)
@@ -37,6 +40,7 @@ A complete data preprocessing and analysis pipeline has been implemented for the
 - ⚠️ **Battery Capacity:** 5 values outside [0-10000] range (inspection needed)
 
 #### Fixes Applied:
+
 - ✅ Numeric extraction from formatted strings
 - ✅ Currency symbol removal
 - ✅ Unit standardization
@@ -48,12 +52,14 @@ A complete data preprocessing and analysis pipeline has been implemented for the
 ## 📊 Dataset Analysis Results
 
 ### Overview
+
 - **Total Phones:** 915
 - **Total Brands:** 19
 - **Year Range:** 2014 - 2025
 - **Features:** 15 columns
 
 ### Top 10 Brands
+
 1. **Oppo** - 115 models (12.6%)
 2. **Apple** - 97 models (10.6%)
 3. **Honor** - 91 models (9.9%)
@@ -61,6 +67,7 @@ A complete data preprocessing and analysis pipeline has been implemented for the
 5. **Vivo** - 86 models (9.4%)
 
 ### RAM Distribution
+
 - **8GB:** 302 phones (33.0%) - Most common
 - **6GB:** 203 phones (22.2%)
 - **12GB:** 191 phones (20.9%)
@@ -71,17 +78,21 @@ A complete data preprocessing and analysis pipeline has been implemented for the
 ## 🔧 Scripts Available
 
 ### 1. `comprehensive_preprocessing.py`
+
 Complete data preprocessing pipeline
 
 **Usage:**
+
 ```bash
 python comprehensive_preprocessing.py
 ```
 
 ### 2. `run_complete_analysis.py`
+
 Comprehensive dataset analysis
 
 **Usage:**
+
 ```bash
 python run_complete_analysis.py
 ```
@@ -99,13 +110,13 @@ python run_complete_analysis.py
 
 ## ✅ Quality Metrics
 
-| Metric | Value | Status |
-|--------|-------|--------|
-| Total Records | 915 | ✅ |
-| Data Completeness | 100% | ✅ |
-| Duplicates | 0 | ✅ |
-| Missing Values | 0 | ✅ |
-| Outliers Fixed | Yes | ✅ |
+| Metric            | Value | Status |
+| ----------------- | ----- | ------ |
+| Total Records     | 915   | ✅     |
+| Data Completeness | 100%  | ✅     |
+| Duplicates        | 0     | ✅     |
+| Missing Values    | 0     | ✅     |
+| Outliers Fixed    | Yes   | ✅     |
 
 ---
 

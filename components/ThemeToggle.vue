@@ -2,6 +2,7 @@
   <div class="flex items-center gap-3">
     <UIcon name="i-heroicons-sun" class="w-5 h-5 text-yellow-500" />
     <UToggle
+      aria-label="theme toggle"
       :model-value="isDarkMode"
       @update:model-value="toggleTheme"
       class="bg-green-500 data-[state=on]:bg-purple-600"

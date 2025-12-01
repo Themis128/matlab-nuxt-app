@@ -1,5 +1,7 @@
 import { readFileSync } from 'fs'
 import { join } from 'path'
+import { readBody, createError, defineEventHandler } from 'h3'
+import type { H3Event } from 'h3'
 
 interface PhoneModel {
   modelName: string
@@ -16,7 +18,7 @@ interface PhoneModel {
   processor?: string
 }
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event: H3Event) => {
   try {
     const body = await readBody(event)
 
@@ -76,7 +78,10 @@ export default defineEventHandler(async event => {
     }
 
     // Parse header
-    const headers = parseCSVLine(lines[0]).map(h => h.replace(/^"|"$/g, '').trim())
+    const headerLineValue = lines[0] ?? ''
+    const headers = headerLineValue
+      ? parseCSVLine(headerLineValue).map(h => h.replace(/^"|"$/g, '').trim())
+      : []
 
     // Find column indices
     const getColumnIndex = (exactName: string, fallbackNames: string[] = []): number => {
@@ -100,7 +105,7 @@ export default defineEventHandler(async event => {
     const yearIdx = getColumnIndex('Launched Year', ['year', 'launched'])
 
     // Helper to extract number
-    const extractNumber = (str: string): number | null => {
+    const extractNumber = (str: string | undefined): number | null => {
       if (!str || str.trim() === '' || str.toLowerCase() === 'nan') return null
       const cleaned = str
         .toString()
@@ -108,8 +113,8 @@ export default defineEventHandler(async event => {
         .replace(/[$,\s]/g, '')
         .replace(/(mAh|GB|MP|g|inches|"|'|Hz|TB|MB)/gi, '')
       const match = cleaned.match(/(\d+\.?\d*)/)
-      if (match) {
-        const num = parseFloat(match[1])
+      if (match && match[1]) {
+        const num = parseFloat(String(match[1]))
         return isNaN(num) || num <= 0 ? null : num
       }
       return null
@@ -119,16 +124,16 @@ export default defineEventHandler(async event => {
     const models: PhoneModel[] = []
 
     for (let i = 1; i < lines.length; i++) {
-      const values = parseCSVLine(lines[i]).map(v => v.replace(/^"|"$/g, '').trim())
+      const values = parseCSVLine(lines[i] ?? '').map(v => v.replace(/^"|"$/g, '').trim())
 
       if (values.length < headers.length) continue
 
-      const phonePrice = priceIdx !== -1 ? extractNumber(values[priceIdx]) : null
-      const phoneRam = ramIdx !== -1 ? extractNumber(values[ramIdx]) : null
-      const phoneBattery = batteryIdx !== -1 ? extractNumber(values[batteryIdx]) : null
-      const phoneScreen = screenIdx !== -1 ? extractNumber(values[screenIdx]) : null
-      const phoneWeight = weightIdx !== -1 ? extractNumber(values[weightIdx]) : null
-      const phoneYear = yearIdx !== -1 ? extractNumber(values[yearIdx]) : null
+      const phonePrice = priceIdx !== -1 ? extractNumber(values[priceIdx] ?? '') : null
+      const phoneRam = ramIdx !== -1 ? extractNumber(values[ramIdx] ?? '') : null
+      const phoneBattery = batteryIdx !== -1 ? extractNumber(values[batteryIdx] ?? '') : null
+      const phoneScreen = screenIdx !== -1 ? extractNumber(values[screenIdx] ?? '') : null
+      const phoneWeight = weightIdx !== -1 ? extractNumber(values[weightIdx] ?? '') : null
+      const phoneYear = yearIdx !== -1 ? extractNumber(values[yearIdx] ?? '') : null
 
       if (!phonePrice || !phoneRam || !phoneBattery || !phoneScreen || !phoneWeight || !phoneYear)
         continue

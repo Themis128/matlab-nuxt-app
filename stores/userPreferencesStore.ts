@@ -5,6 +5,9 @@ import { defineStore } from 'pinia'
  */
 export interface UserPreferences {
   theme: 'light' | 'dark' | 'system'
+  animations: boolean
+  compactMode: boolean
+  autoRefresh: boolean
   language: 'en' | 'el' | 'es' | 'fr'
   preferredCurrency: 'USD' | 'EUR' | 'GBP' | 'JPY'
   searchFilters: {
@@ -24,6 +27,9 @@ export interface UserPreferences {
 
 const defaultPreferences: UserPreferences = {
   theme: 'system',
+  animations: true,
+  compactMode: false,
+  autoRefresh: true,
   language: 'en',
   preferredCurrency: 'USD',
   searchFilters: {
@@ -42,16 +48,42 @@ const defaultPreferences: UserPreferences = {
 }
 
 export const useUserPreferencesStore = defineStore('userPreferences', {
-  state: (): UserPreferences => ({
-    ...defaultPreferences,
-  }),
+  state: (): UserPreferences => {
+    // Load persisted preferences from localStorage
+    if (typeof window !== 'undefined') {
+      try {
+        const persisted = localStorage.getItem('mobile-finder-preferences')
+        if (persisted) {
+          const parsed = JSON.parse(persisted)
+          return { ...defaultPreferences, ...parsed }
+        }
+      } catch (error) {
+        console.warn('Failed to load persisted preferences:', error)
+      }
+    }
+    return { ...defaultPreferences }
+  },
 
   actions: {
+    /**
+     * Save current state to localStorage
+     */
+    saveToStorage() {
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.setItem('mobile-finder-preferences', JSON.stringify(this.$state))
+        } catch (error) {
+          console.warn('Failed to save preferences to localStorage:', error)
+        }
+      }
+    },
+
     /**
      * Reset all preferences to default values
      */
     resetToDefaults() {
       Object.assign(this, defaultPreferences)
+      this.saveToStorage()
     },
 
     /**
@@ -59,6 +91,7 @@ export const useUserPreferencesStore = defineStore('userPreferences', {
      */
     setTheme(theme: UserPreferences['theme']) {
       this.theme = theme
+      this.saveToStorage()
     },
 
     /**
@@ -66,6 +99,7 @@ export const useUserPreferencesStore = defineStore('userPreferences', {
      */
     setLanguage(language: UserPreferences['language']) {
       this.language = language
+      this.saveToStorage()
     },
 
     /**
@@ -73,6 +107,7 @@ export const useUserPreferencesStore = defineStore('userPreferences', {
      */
     setCurrency(currency: UserPreferences['preferredCurrency']) {
       this.preferredCurrency = currency
+      this.saveToStorage()
     },
 
     /**
@@ -80,6 +115,7 @@ export const useUserPreferencesStore = defineStore('userPreferences', {
      */
     setPriceRange(range: [number, number]) {
       this.searchFilters.priceRange = range
+      this.saveToStorage()
     },
 
     /**
@@ -87,6 +123,7 @@ export const useUserPreferencesStore = defineStore('userPreferences', {
      */
     setScreenSizeFilter(range: [number, number]) {
       this.searchFilters.screenSize = range
+      this.saveToStorage()
     },
 
     /**
@@ -94,6 +131,7 @@ export const useUserPreferencesStore = defineStore('userPreferences', {
      */
     setBatteryFilter(range: [number, number]) {
       this.searchFilters.batteryCapacity = range
+      this.saveToStorage()
     },
 
     /**
@@ -101,6 +139,7 @@ export const useUserPreferencesStore = defineStore('userPreferences', {
      */
     setRamFilters(ramOptions: number[]) {
       this.searchFilters.ram = [...ramOptions]
+      this.saveToStorage()
     },
 
     /**
@@ -108,6 +147,7 @@ export const useUserPreferencesStore = defineStore('userPreferences', {
      */
     setStorageFilters(storageOptions: number[]) {
       this.searchFilters.storage = [...storageOptions]
+      this.saveToStorage()
     },
 
     /**
@@ -120,6 +160,7 @@ export const useUserPreferencesStore = defineStore('userPreferences', {
       } else {
         this.searchFilters.brands.push(brand)
       }
+      this.saveToStorage()
     },
 
     /**
@@ -127,6 +168,7 @@ export const useUserPreferencesStore = defineStore('userPreferences', {
      */
     setNotificationSettings(settings: Partial<UserPreferences['notifications']>) {
       Object.assign(this.notifications, settings)
+      this.saveToStorage()
     },
   },
 

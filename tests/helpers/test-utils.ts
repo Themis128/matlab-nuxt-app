@@ -8,10 +8,12 @@ import { expect, type Page, type Locator } from '@playwright/test'
 
 /**
  * Wait for page to be fully loaded and hydrated
+ * Uses domcontentloaded for modern SPAs that never reach networkidle
  */
 export async function waitForPageLoad(page: Page, timeout = 15000) {
-  await page.waitForLoadState('networkidle', { timeout })
   await page.waitForLoadState('domcontentloaded', { timeout })
+  // For SPAs, wait a bit more for hydration and initial renders
+  await page.waitForTimeout(1000)
 }
 
 /**

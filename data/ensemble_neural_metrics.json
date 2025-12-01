@@ -3,13 +3,7 @@
   "train_size": 732,
   "test_size": 183,
   "feature_count": 14,
-  "base_learners": [
-    "random_forest",
-    "lightgbm",
-    "gradient_boosting",
-    "mlp",
-    "mlp_deep"
-  ],
+  "base_learners": ["random_forest", "lightgbm", "gradient_boosting", "mlp", "mlp_deep"],
   "base_learner_count": 5,
   "base_metrics": {
     "random_forest": {

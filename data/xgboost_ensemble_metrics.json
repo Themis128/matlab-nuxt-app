@@ -34,7 +34,5 @@
     "battery_percentile_global"
   ],
   "safe_features_only": true,
-  "excluded_features": [
-    "price_percentile_global"
-  ]
+  "excluded_features": ["price_percentile_global"]
 }

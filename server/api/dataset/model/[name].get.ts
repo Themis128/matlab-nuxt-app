@@ -1,5 +1,7 @@
 import { readFileSync, existsSync } from 'fs'
 import { join } from 'path'
+import { getRouterParam, createError, defineEventHandler } from 'h3'
+import type { H3Event } from 'h3'
 
 interface PhoneModel {
   modelName: string
@@ -20,7 +22,7 @@ interface PhoneModel {
   imageUrl?: string
 }
 
-export default defineEventHandler(async (event): Promise<PhoneModel | null> => {
+export default defineEventHandler(async (event: H3Event): Promise<PhoneModel | null> => {
   try {
     const modelName = getRouterParam(event, 'name')
 
@@ -129,7 +131,7 @@ export default defineEventHandler(async (event): Promise<PhoneModel | null> => {
         .replace(/(mAh|GB|MP|g|inches|"|'|Hz|TB|MB)/gi, '')
       const match = cleaned.match(/(\d+\.?\d*)/)
       if (match && match[1]) {
-        const num = parseFloat(match[1])
+        const num = parseFloat(String(match[1]))
         return isNaN(num) || num <= 0 ? null : num
       }
       return null

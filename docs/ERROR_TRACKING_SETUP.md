@@ -16,6 +16,7 @@ This guide will help you integrate error tracking and monitoring into the MATLAB
 ## Overview
 
 Error tracking helps you:
+
 - 🐛 Catch and fix production bugs quickly
 - 📊 Monitor application performance
 - 🔍 Track user issues with context
@@ -26,19 +27,83 @@ Error tracking helps you:
 
 ## Recommended Services
 
-| Service | Best For | Free Tier | Pricing |
-|---------|----------|-----------|---------|
-| **[Sentry](https://sentry.io)** | Full-stack error tracking | 5K events/month | $26/month |
-| **[LogRocket](https://logrocket.com)** | Session replay + errors | 1K sessions/month | $99/month |
-| **[Rollbar](https://rollbar.com)** | Real-time error tracking | 5K events/month | $15/month |
-| **[Bugsnag](https://bugsnag.com)** | Mobile-first tracking | 7.5K events/month | $59/month |
-| **[Datadog](https://datadog.com)** | Enterprise monitoring | 14-day trial | Custom |
+| Service                                | Best For                  | Free Tier         | Pricing   |
+| -------------------------------------- | ------------------------- | ----------------- | --------- |
+| **[Sentry](https://sentry.io)**        | Full-stack error tracking | 5K events/month   | $26/month |
+| **[LogRocket](https://logrocket.com)** | Session replay + errors   | 1K sessions/month | $99/month |
+| **[Rollbar](https://rollbar.com)**     | Real-time error tracking  | 5K events/month   | $15/month |
+| **[Bugsnag](https://bugsnag.com)**     | Mobile-first tracking     | 7.5K events/month | $59/month |
+| **[Datadog](https://datadog.com)**     | Enterprise monitoring     | 14-day trial      | Custom    |
 
 **Recommendation**: Start with **Sentry** (free tier is generous and easy to integrate)
 
 ---
 
 ## Sentry Integration (Recommended)
+
+### ✅ Status: CONFIGURED
+
+Sentry has been successfully configured for this project!
+
+- **Organization**: baltzakisthemiscom
+- **Project**: matlab
+- **SDK Version**: @sentry/nuxt v8.x
+- **Test Page**: `/sentry-example-page`
+
+### Configuration Files
+
+The following files have been created and configured:
+
+- `sentry.client.config.ts` - Client-side error tracking
+- `sentry.server.config.ts` - Server-side error tracking
+- `pages/sentry-example-page.vue` - Test page for verifying Sentry
+
+### Step 1: Environment Variables (Optional)
+
+You can override the default Sentry configuration using environment variables in `.env`:
+
+```env
+# Sentry Configuration (Optional - defaults are already set)
+SENTRY_DSN=https://bb27ea86bd4dd84e04b3cd93c8cef2f5@o4508632044281856.ingest.us.sentry.io/4508632045920256
+SENTRY_ENVIRONMENT=production
+SENTRY_TRACES_SAMPLE_RATE=1.0
+SENTRY_REPLAYS_SESSION_SAMPLE_RATE=0.1
+SENTRY_REPLAYS_ON_ERROR_SAMPLE_RATE=1.0
+```
+
+### Step 2: Verify Installation
+
+1. **Start your development server**:
+
+```bash
+npm run dev
+```
+
+2. **Visit the test page**: Navigate to `http://localhost:3000/sentry-example-page`
+
+3. **Trigger a test error**: Click one of the error buttons:
+   - 🚨 Trigger Test Error - Throws an unhandled error
+   - ⏱️ Trigger Async Error - Throws an async error
+   - 🔍 Trigger Handled Error - Manually captures an error
+
+4. **Check Sentry Dashboard**: Visit [your Sentry issues](https://sentry.io/organizations/baltzakisthemiscom/issues/) to see the captured errors
+
+### Step 3: Production Deployment
+
+For production, set the environment variable:
+
+```bash
+# .env.production
+SENTRY_ENVIRONMENT=production
+SENTRY_TRACES_SAMPLE_RATE=0.1  # Sample 10% of transactions in production
+```
+
+---
+
+### Original Setup Instructions (For Reference)
+
+<details>
+<summary>Click to expand original manual setup steps</summary>
 
 ### Step 1: Create Sentry Account
 
@@ -70,9 +135,9 @@ Create `plugins/sentry.client.ts`:
 ```typescript
 import * as Sentry from '@sentry/vue'
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin(nuxtApp => {
   const config = useRuntimeConfig()
-  
+
   if (process.env.NODE_ENV === 'production') {
     Sentry.init({
       app: nuxtApp.vueApp,
@@ -85,14 +150,14 @@ export default defineNuxtPlugin((nuxtApp) => {
           blockAllMedia: false,
         }),
       ],
-      
+
       // Performance Monitoring
       tracesSampleRate: 0.1, // Capture 10% of transactions for performance
-      
+
       // Session Replay
       replaysSessionSampleRate: 0.1, // 10% of sessions
       replaysOnErrorSampleRate: 1.0, // 100% when error occurs
-      
+
       // Additional configuration
       beforeSend(event, hint) {
         // Filter out development errors
@@ -169,9 +234,7 @@ Add a test button in your app (remove in production):
 
 ```vue
 <template>
-  <UButton @click="testSentry" color="red" variant="soft">
-    Test Sentry Error
-  </UButton>
+  <UButton @click="testSentry" color="red" variant="soft"> Test Sentry Error </UButton>
 </template>
 
 <script setup lang="ts">
@@ -233,9 +296,9 @@ export default defineNuxtPlugin(() => {
 Create `server/api/log-error.post.ts`:
 
 ```typescript
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async event => {
   const body = await readBody(event)
-  
+
   // Log to console/file/database
   console.error('[Frontend Error]', {
     message: body.message,
@@ -243,13 +306,13 @@ export default defineEventHandler(async (event) => {
     url: body.url,
     timestamp: new Date().toISOString(),
   })
-  
+
   // Optional: Send to email, Slack, Discord webhook
   // await $fetch('https://hooks.slack.com/services/YOUR/WEBHOOK/URL', {
   //   method: 'POST',
   //   body: { text: `Error: ${body.message}` }
   // })
-  
+
   return { success: true }
 })
 ```
@@ -258,7 +321,7 @@ Frontend error handler:
 
 ```typescript
 // plugins/error-handler.client.ts
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin(nuxtApp => {
   nuxtApp.vueApp.config.errorHandler = (error, instance, info) => {
     $fetch('/api/log-error', {
       method: 'POST',
@@ -286,10 +349,12 @@ Create `composables/usePerformance.ts`:
 export const usePerformance = () => {
   const trackPageLoad = () => {
     if (typeof window === 'undefined') return
-    
+
     window.addEventListener('load', () => {
-      const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming
-      
+      const navigation = performance.getEntriesByType(
+        'navigation'
+      )[0] as PerformanceNavigationTiming
+
       const metrics = {
         dns: navigation.domainLookupEnd - navigation.domainLookupStart,
         tcp: navigation.connectEnd - navigation.connectStart,
@@ -299,15 +364,15 @@ export const usePerformance = () => {
         domComplete: navigation.domComplete - navigation.fetchStart,
         loadComplete: navigation.loadEventEnd - navigation.fetchStart,
       }
-      
+
       // Send to your monitoring service or API
       console.log('Performance Metrics:', metrics)
-      
+
       // Optional: Send to Sentry
       // Sentry.setMeasurement('page.load', loadComplete, 'millisecond')
     })
   }
-  
+
   return { trackPageLoad }
 }
 ```
@@ -331,7 +396,9 @@ const isProduction = process.env.NODE_ENV === 'production'
 
 // Only initialize in production
 if (isProduction) {
-  Sentry.init({ /* config */ })
+  Sentry.init({
+    /* config */
+  })
 }
 ```
 
@@ -341,13 +408,13 @@ if (isProduction) {
 beforeSend(event) {
   // Don't send development errors
   if (isDev) return null
-  
+
   // Filter out known issues
   if (event.message?.includes('ResizeObserver')) return null
-  
+
   // Filter by status code
   if (event.request?.url?.includes('404')) return null
-  
+
   return event
 }
 ```
@@ -417,5 +484,6 @@ Sentry.init({
 ## Support
 
 For issues with error tracking integration:
+
 - Open an issue: [GitHub Issues](https://github.com/Themis128/matlab-nuxt-app/issues)
 - Check documentation: [Project Docs](../docs/README.md)

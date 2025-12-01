@@ -1,4 +1,8 @@
-# 🚀 Deployment Guide
+# 🚀 Deployment Guide (Archived)
+
+> ⚠️ This documentation has been moved to `docs/deployment/README.md` and deployment artifacts have been relocated to the `infrastructure/` folder. The files under this `deployment/` directory are retained for archival purposes. Please refer to the new documentation for the authoritative setup.
+
+See: [docs/deployment/README.md](../docs/deployment/README.md)
 
 This guide covers deploying the MATLAB Mobile Dataset application to production using Docker, traditional servers, or cloud platforms.
 
@@ -10,72 +14,24 @@ This guide covers deploying the MATLAB Mobile Dataset application to production 
   - 20GB+ disk space
   - Root/sudo access
 
-- **Software Dependencies:**
-  - Python 3.14+
-  - Node.js 22+
-  - Docker & Docker Compose (for containerized deployment)
-  - Nginx (for reverse proxy)
-  - Redis (for caching)
+-- **Software Dependencies:**
 
-## 🐳 Option 1: Docker Compose Deployment (Recommended)
+- Python 3.14+
+- Node.js 22+
+- (Optional) Docker & Docker Compose (for containerized deployment — not required)
+- Nginx (for reverse proxy)
+- Redis (for caching)
 
-### Quick Start
+## 🖥️ Traditional Server Deployment
 
-```bash
-# 1. Clone repository
-git clone <your-repo-url>
-cd MatLab
-
-# 2. Configure environment
-cp .env.production.template .env.production
-# Edit .env.production with your actual values
-
-# 3. Build and start services
-cd deployment
-docker-compose up -d
-
-# 4. Check health
-./health_check.sh
-```
-
-### Services
-
-Docker Compose starts 4 services:
-
-1. **python-api** (port 8000) - FastAPI prediction/analytics backend
-2. **nuxt-app** (port 3000) - Nuxt.js SSR frontend
-3. **redis** (port 6379) - Cache for analytics results
-4. **nginx** (ports 80/443) - Reverse proxy with SSL
-
-### Management Commands
-
-```bash
-# View logs
-docker-compose logs -f python-api
-docker-compose logs -f nuxt-app
-
-# Restart services
-docker-compose restart python-api
-docker-compose restart nuxt-app
-
-# Stop all services
-docker-compose down
-
-# Rebuild after code changes
-docker-compose up -d --build
-
-# Scale API workers
-docker-compose up -d --scale python-api=3
-```
-
-## 🖥️ Option 2: Traditional Server Deployment
+## ☑️ Recommended: Traditional Server Deployment (SSH & systemd)
 
 ### Step-by-Step Setup
 
 ```bash
 # 1. Run automated deployment script
-sudo chmod +x deployment/deploy_production.sh
-sudo ./deployment/deploy_production.sh
+sudo chmod +x infrastructure/scripts/deploy_production.sh
+sudo ./infrastructure/scripts/deploy_production.sh
 ```
 
 The script automatically:
@@ -113,14 +69,13 @@ cp .env.production.template .env.production
 # Edit .env.production
 
 # 5. Setup systemd services
-sudo cp deployment/python-api.service /etc/systemd/system/
-sudo cp deployment/nuxt-app.service /etc/systemd/system/
+sudo cp infrastructure/systemd/python-api.service /etc/systemd/system/
+sudo cp infrastructure/systemd/nuxt-app.service /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable python-api nuxt-app
 sudo systemctl start python-api nuxt-app
 
-# 6. Configure Nginx
-sudo cp deployment/nginx.conf /etc/nginx/sites-available/matlab-mobile-dataset
+sudo cp infrastructure/nginx/nginx.conf /etc/nginx/sites-available/matlab-mobile-dataset
 sudo ln -s /etc/nginx/sites-available/matlab-mobile-dataset /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl restart nginx
@@ -189,9 +144,9 @@ The project includes automated GitHub Actions workflows for building, testing, a
    - **Note:** Includes npm cleanup to fix oxc-parser optional dependencies issue
 
 2. **Deploy to Production** (`.github/workflows/deploy.yml`)
-   - Deploys Docker images to Docker Hub (on version tags)
-   - Deploys to server via SSH (manual trigger)
-   - Runs health checks after deployment
+
+- Builds Nuxt and Python artifacts and deploys to server via SSH on tag pushes
+- Runs health checks after deployment
 
 ### Required Secrets
 
@@ -257,7 +212,7 @@ sudo certbot renew --dry-run
 
 ### Manual SSL Certificate
 
-1. Place certificate files in `deployment/ssl/`:
+1. Place certificate files in `infrastructure/ssl/`:
    - `cert.pem` - SSL certificate
    - `key.pem` - Private key
 2. Update `nginx.conf` SSL paths
@@ -289,10 +244,10 @@ Schedule daily backups with cron:
 sudo crontab -e
 
 # Add daily backup at 2 AM
-0 2 * * * /var/www/matlab-mobile-dataset/deployment/backup.sh --full
+0 2 * * * /var/www/matlab-mobile-dataset/infrastructure/scripts/backup.sh --full
 
 # Add incremental backup every 6 hours
-0 */6 * * * /var/www/matlab-mobile-dataset/deployment/backup.sh
+0 */6 * * * /var/www/matlab-mobile-dataset/infrastructure/scripts/backup.sh
 ```
 
 Manual backup:
@@ -335,8 +290,8 @@ sudo tail -f /var/log/nginx/error.log
 # CPU/Memory
 htop
 
-# Docker stats
-docker stats
+# Resource usage monitoring for local processes
+ps aux --sort=-%mem | head -n 20
 
 # Disk usage
 df -h
@@ -480,16 +435,13 @@ Redis caching is enabled for analytics endpoints. Configure TTL in `.env.product
 REDIS_CACHE_TTL=3600  # 1 hour
 ```
 
-### Load Balancing
+### Load Balancing / Scaling
 
-Scale Python API workers:
+Scale Python API workers using systemd templates (recommended):
 
 ```bash
-# Docker Compose
-docker-compose up -d --scale python-api=4
-
-# Systemd (create multiple service files)
-sudo cp deployment/python-api.service /etc/systemd/system/python-api@.service
+sudo cp infrastructure/systemd/python-api.service /etc/systemd/system/python-api@.service
+sudo systemctl daemon-reload
 sudo systemctl start python-api@{1..4}
 ```
 
@@ -535,4 +487,4 @@ Before going live:
 
 ---
 
-**Ready to deploy?** Start with Docker Compose for the fastest setup, or use traditional deployment for more control.
+**Ready to deploy?** Use the Traditional Server Deployment (SSH & systemd) for robust production deployments. Containerized options are legacy/optional and not required.

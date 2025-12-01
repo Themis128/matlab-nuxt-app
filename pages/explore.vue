@@ -2,10 +2,12 @@
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
     <!-- Header -->
     <div class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto container-responsive">
         <div class="flex justify-between items-center py-6">
           <div>
-            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Explore Dataset</h1>
+            <h1 class="text-responsive-lg font-bold text-gray-900 dark:text-white gradient-text">
+              Explore Dataset
+            </h1>
             <p class="mt-2 text-gray-600 dark:text-gray-400">
               Discover insights from 900+ mobile phone models
             </p>
@@ -19,7 +21,7 @@
       </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="max-w-7xl mx-auto container-responsive section-spacing">
       <!-- Statistics Cards -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">

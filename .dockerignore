@@ -85,7 +85,7 @@ public/images/mobiles/**/*.webp
 
 # Scripts not needed in production
 scripts/
-deployment/
+infrastructure/legacy/
 tests/
 
 # Config files not needed in container

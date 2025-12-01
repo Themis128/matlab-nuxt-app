@@ -20,6 +20,7 @@ interface PreprocessingStatus {
   }
   recommendations: string[]
   nextSteps: string[]
+  status?: string
 }
 
 export default defineEventHandler(async (): Promise<PreprocessingStatus> => {
@@ -128,6 +129,9 @@ export default defineEventHandler(async (): Promise<PreprocessingStatus> => {
     }
   }
 
+  // Determine status summary for UI/tests
+  status.status =
+    status.preprocessingReportExists && status.cleanedDatasetExists ? 'ready' : 'pending'
   return status
 })
 

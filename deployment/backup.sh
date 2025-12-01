@@ -76,7 +76,7 @@ if [ "$FULL_BACKUP" = true ]; then
         .env.production \
         nuxt.config.ts \
         python_api/api.py \
-        deployment/ \
+        infrastructure/ \
         2>/dev/null || log_warn "Some config files may not exist"
     log_info "✓ Config backup: config_$TIMESTAMP.tar.gz"
 fi

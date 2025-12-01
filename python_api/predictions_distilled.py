@@ -56,8 +56,33 @@ class DistilledPredictor:
             return
 
         try:
-            # Load model package (contains model + feature names + metadata)
-            model_package = joblib.load(DISTILLED_MODEL_PATH)
+            # Security: Validate file before loading
+            if DISTILLED_MODEL_PATH.stat().st_size > 50 * 1024 * 1024:  # 50MB limit
+                print("[ERROR] Model file too large (>50MB)")
+                return
+
+            # Only load from trusted paths
+            trusted_dirs = ['python_api/trained_models', 'data']
+            model_path_abs = str(DISTILLED_MODEL_PATH.resolve()).replace('\\', '/').lower()
+            is_trusted = any(trusted_dir.replace('\\', '/').lower() in model_path_abs for trusted_dir in trusted_dirs)
+
+            if not is_trusted:
+                print(f"[ERROR] Model file not in trusted directory: {DISTILLED_MODEL_PATH}")
+                print(f"[DEBUG] Resolved path: {model_path_abs}")
+                print(f"[DEBUG] Trusted dirs: {trusted_dirs}")
+                return
+
+            # Load model package with basic validation
+            with open(DISTILLED_MODEL_PATH, 'rb') as f:
+                # Check if it's a valid pickle file (support protocol 3 and 5)
+                header = f.read(2)
+                if header not in [b'\x80\x03', b'\x80\x05']:  # Python 3 pickle protocol 3 or 5 header
+                    print(f"[ERROR] Invalid pickle file format: {header!r}")
+                    return
+
+                # Reset and load
+                f.seek(0)
+                model_package = joblib.load(f)
 
             if isinstance(model_package, dict):
                 self.model = model_package['model']

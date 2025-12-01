@@ -57,52 +57,52 @@ def load_and_preprocess_data(csv_path: str = None):
     # Parse RAM
     df['ram_parsed'] = df['RAM'].apply(lambda x: extract_number(str(x), r'(\d+)'))
 
-    # Parse Battery
+    # Parse Battery - Fix column name to match actual CSV
     battery_col = None
-    for col in ['BatteryCapacity', 'Battery_Capacity', 'Battery']:
+    for col in ['Battery Capacity', 'BatteryCapacity', 'Battery_Capacity', 'Battery']:
         if col in df.columns:
             battery_col = col
             break
     if battery_col:
         df['battery_parsed'] = df[battery_col].apply(lambda x: extract_number(str(x), r'([\d,]+)'))
 
-    # Parse Screen Size
+    # Parse Screen Size - Fix column name to match actual CSV
     screen_col = None
-    for col in ['ScreenSize', 'Screen_Size', 'Screen', 'Display_Size']:
+    for col in ['Screen Size', 'ScreenSize', 'Screen_Size', 'Screen', 'Display_Size']:
         if col in df.columns:
             screen_col = col
             break
     if screen_col:
         df['screen_parsed'] = df[screen_col].apply(lambda x: extract_number(str(x), r'(\d+\.?\d*)'))
 
-    # Parse Weight
+    # Parse Weight - Fix column name to match actual CSV
     weight_col = None
-    for col in ['Mobile_Weight', 'MobileWeight', 'Weight', 'Phone_Weight']:
+    for col in ['Mobile Weight', 'Mobile_Weight', 'MobileWeight', 'Weight', 'Phone_Weight']:
         if col in df.columns:
             weight_col = col
             break
     if weight_col:
         df['weight_parsed'] = df[weight_col].apply(lambda x: extract_number(str(x), r'(\d+)'))
 
-    # Parse Price (USD)
+    # Parse Price (USD) - Fix column name to match actual CSV
     price_col = None
-    for col in ['Price_USD', 'Price', 'USD_Price', 'Price (USD)']:
+    for col in ['Launched Price (USA)', 'Price_USD', 'Price', 'USD_Price', 'Price (USD)']:
         if col in df.columns:
             price_col = col
             break
     if price_col:
         df['price_parsed'] = df[price_col].apply(lambda x: extract_number(str(x), r'([\d,]+)'))
 
-    # Parse Year
+    # Parse Year - Fix column name to match actual CSV
     year_col = None
-    for col in ['Launched_Year', 'Year', 'Launch_Year', 'Launched Year']:
+    for col in ['Launched Year', 'Launched_Year', 'Year', 'Launch_Year', 'Launched Year']:
         if col in df.columns:
             year_col = col
             break
     if year_col:
         df['year_parsed'] = df[year_col].apply(lambda x: extract_number(str(x), r'(\d{4})'))
 
-    # Get company name
+    # Get company name - Fix column name to match actual CSV
     company_col = None
     for col in ['Company Name', 'Company', 'Brand', 'Company_Name']:
         if col in df.columns:

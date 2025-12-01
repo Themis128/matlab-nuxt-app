@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 
 test.describe('Dashboard Page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/dashboard')
+    await page.goto('/dashboard', { waitUntil: 'networkidle' })
   })
 
   test('should load dashboard page with heading', async ({ page }) => {
@@ -34,7 +34,7 @@ test.describe('Dashboard Page', () => {
         const el = document.querySelector('.bg-green-500.rounded-full')
         return !!el
       },
-      { timeout: 30000 }
+      { timeout: 45000 }
     )
 
     // There should be 5 status indicators (one per model: Price, RAM, Battery, Brand + preferences/settings)

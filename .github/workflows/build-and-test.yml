@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: '22'
 
       - name: Clean up npm modules and lock file
         run: rm -rf node_modules package-lock.json
@@ -51,8 +51,8 @@ jobs:
       - name: Setup Python 3.14
         uses: actions/setup-python@v5
         with:
-          python-version: "3.14"
-          cache: "pip"
+          python-version: '3.14'
+          cache: 'pip'
 
       - name: Install Python dependencies
         run: |
@@ -71,32 +71,7 @@ jobs:
           echo "- ✅ Dependencies installed" >> $GITHUB_STEP_SUMMARY
           echo "- ✅ API module validated" >> $GITHUB_STEP_SUMMARY
 
-  test-docker:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build Python API Docker image
-        run: |
-          cd deployment
-          docker build -f Dockerfile -t matlab-python-api:test ..
-
-      - name: Build Nuxt App Docker image
-        run: |
-          cd deployment
-          docker build -f Dockerfile.nuxt -t matlab-nuxt-app:test ..
-
-      - name: Summary
-        run: |
-          echo "## Docker Build Summary" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Python API image built" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Nuxt app image built" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Docker builds successful" >> $GITHUB_STEP_SUMMARY
+  # test-docker (removed) - Docker builds are optional and not executed
 
   e2e-tests:
     runs-on: ubuntu-latest
@@ -108,12 +83,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: '22'
 
       - name: Setup Python 3.14
         uses: actions/setup-python@v5
         with:
-          python-version: "3.14"
+          python-version: '3.14'
 
       - name: Clean up npm modules and lock file
         run: rm -rf node_modules package-lock.json

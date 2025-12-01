@@ -2,12 +2,14 @@
   <div
     class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
   >
-    <div class="container mx-auto px-4 py-8">
+    <div class="container-responsive section-spacing">
       <div class="max-w-7xl mx-auto">
         <!-- Header -->
         <div class="mb-8 text-center">
-          <h1 class="text-5xl font-bold text-gray-900 dark:text-white mb-3">Advanced Search</h1>
-          <p class="text-xl text-gray-600 dark:text-gray-400">
+          <h1 class="text-responsive-xl font-bold text-gray-900 dark:text-white mb-3 gradient-text">
+            Advanced Search
+          </h1>
+          <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-400">
             Search mobile phones by multiple criteria
           </p>
         </div>
@@ -22,6 +24,7 @@
               <!-- Brand Filter -->
               <UFormGroup label="Brand(s)">
                 <USelectMenu
+                  data-testid="brand-select"
                   v-model="filters.brands"
                   :options="availableBrands"
                   multiple
@@ -52,6 +55,7 @@
               <UFormGroup label="RAM (GB)">
                 <div class="flex gap-2">
                   <UInput
+                    data-testid="ram-min-input"
                     v-model.number="filters.minRam"
                     type="number"
                     placeholder="Min"
@@ -59,6 +63,7 @@
                     max="24"
                   />
                   <UInput
+                    data-testid="ram-max-input"
                     v-model.number="filters.maxRam"
                     type="number"
                     placeholder="Max"
@@ -123,6 +128,7 @@
 
             <div class="flex gap-4">
               <UButton
+                data-testid="search-button"
                 @click="() => searchModels(0)"
                 :loading="loading"
                 color="primary"
@@ -229,7 +235,7 @@
                 <div class="flex justify-between items-start pl-8">
                   <div
                     class="flex-1 cursor-pointer"
-                    @click="navigateTo(`/model/${encodeURIComponent(model.modelName)}`)"
+                    @click="router.push(`/model/${encodeURIComponent(model.modelName)}`)"
                   >
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white">
                       {{ model.modelName }}
@@ -307,6 +313,7 @@
               Previous
             </UButton>
             <UButton
+              data-testid="pagination-next"
               @click="loadNextPage"
               :disabled="!results.pagination.hasMore"
               color="primary"
@@ -346,6 +353,15 @@
 </template>
 
 <script setup lang="ts">
+import { ref, watch } from 'vue'
+import { useHead } from '#imports'
+import { useApiConfig } from '../composables/useApiConfig'
+import { useMobileImage } from '../composables/useMobileImage'
+import { useRouter } from 'vue-router'
+
+// Use mobile image composable for image handling
+const { handleImageError } = useMobileImage()
+
 interface PhoneModel {
   modelName: string
   company: string
@@ -450,6 +466,7 @@ const sortOptions = [
 ]
 
 const { pythonApiUrl } = useApiConfig()
+const router = useRouter()
 
 // Fetch available models for selected brands
 const fetchAvailableModels = async (brands: string[]) => {
@@ -582,13 +599,8 @@ const compareSelectedModels = () => {
     // Store in localStorage for the compare page
     localStorage.setItem('comparison', JSON.stringify(selectedModelsForComparison.value))
     // Navigate to compare page
-    navigateTo('/compare')
+    router.push('/compare')
   }
-}
-
-const handleImageError = (event: Event) => {
-  const img = event.target as HTMLImageElement
-  img.style.display = 'none'
 }
 
 // Set page metadata

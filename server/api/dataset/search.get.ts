@@ -1,5 +1,7 @@
 import { readFileSync, existsSync } from 'fs'
 import { join } from 'path'
+import { getQuery, createError, defineEventHandler } from 'h3'
+import type { H3Event } from 'h3'
 
 interface PhoneModel {
   modelName: string
@@ -41,7 +43,7 @@ interface SearchResponse {
   }
 }
 
-export default defineEventHandler(async (event): Promise<SearchResponse> => {
+export default defineEventHandler(async (event: H3Event): Promise<SearchResponse> => {
   try {
     const query = getQuery(event)
 
@@ -164,8 +166,8 @@ export default defineEventHandler(async (event): Promise<SearchResponse> => {
         .replace(/[$,\s]/g, '')
         .replace(/(mAh|GB|MP|g|inches|"|'|Hz|TB|MB)/gi, '')
       const match = cleaned.match(/(\d+\.?\d*)/)
-      if (match) {
-        const num = parseFloat(match[1])
+      if (match && match[1]) {
+        const num = parseFloat(String(match[1]))
         return isNaN(num) || num <= 0 ? null : num
       }
       return null

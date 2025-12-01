@@ -548,36 +548,40 @@ The dataset preprocessing implementation is **complete and production-ready**. T
 
 **Script Created:** `run_preprocessing.py`  
 **Input:** `data/Mobiles_Dataset_Cleaned.csv`  
-**Output:** `data/Mobiles_Dataset_Final.csv`  
+**Output:** `data/Mobiles_Dataset_Final.csv`
 
 #### Issues Fixed Successfully:
 
 **1. RAM Outliers:**
+
 - Fixed: 2 phones with RAM > 24GB
-  - P60 Pro: 812GB → 24GB  
+  - P60 Pro: 812GB → 24GB
   - P60 Art: 812GB → 24GB
 - New range: 1GB - 24GB ✅
 
 **2. Camera Outliers:**
+
 - Back camera: 391 phones fixed (concatenated MP values corrected)
   - Example: 5012MP → 50MP (50+12 combo camera)
   - Capped at: 200MP maximum
   - New range: 5MP - 200MP ✅
 - Front camera: 48 phones fixed
   - Example: 124MP → 12MP
-  - Capped at: 60MP maximum  
+  - Capped at: 60MP maximum
   - New range: 2MP - 60MP ✅
 
 **3. Price Outliers:**
+
 - Fixed: 1 phone with unrealistic price
   - T21: $39,622 → $3,962 ✅
 
 **4. EUR Prices Added:**
+
 - **Coverage:** 100% (930/930 phones)
 - **Exchange Rates Applied:**
   - 1 USD = 0.92 EUR
   - 1 INR = 0.011 EUR
-  - 1 CNY = 0.13 EUR  
+  - 1 CNY = 0.13 EUR
   - 1 AED = 0.25 EUR
   - 1 PKR = 0.0033 EUR
 - **EUR Range:** €72.68 - €3,645.22
@@ -587,17 +591,20 @@ The dataset preprocessing implementation is **complete and production-ready**. T
 #### Final Dataset: `data/Mobiles_Dataset_Final.csv`
 
 **Structure:**
+
 - Total rows: 930 phones
 - Total columns: 17
 - **New column:** `price_eur` (EUR prices for all phones)
 
 **Column Order:**
+
 1. company, model, processor
 2. storage, ram, battery, screen, weight, year
 3. front_camera, back_camera
 4. **price_eur** (NEW ✅), price_usd, price_pkr, price_inr, price_cny, price_aed
 
 **Data Quality Achieved:**
+
 - ✅ 100% EUR price coverage
 - ✅ All outliers fixed (RAM, cameras, prices)
 - ✅ No unrealistic values remaining
@@ -607,6 +614,7 @@ The dataset preprocessing implementation is **complete and production-ready**. T
 ### Production Status: READY ✅
 
 The dataset is now **fully preprocessed and production-ready**:
+
 - All data quality issues resolved
 - EUR pricing complete
 - Outliers normalized

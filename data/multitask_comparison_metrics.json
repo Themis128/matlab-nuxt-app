@@ -14,11 +14,7 @@
     "ram_weight_ratio",
     "ram_battery_interaction_v2"
   ],
-  "targets": [
-    "price",
-    "ram",
-    "battery"
-  ],
+  "targets": ["price", "ram", "battery"],
   "multitask_metrics": {
     "price": {
       "rmse": 445.7398148470805,
@@ -74,11 +70,7 @@
     }
   },
   "architecture": {
-    "hidden_layers": [
-      128,
-      64,
-      32
-    ],
+    "hidden_layers": [128, 64, 32],
     "activation": "relu",
     "solver": "adam",
     "max_iter": 500

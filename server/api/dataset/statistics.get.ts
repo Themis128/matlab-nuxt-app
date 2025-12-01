@@ -2,9 +2,13 @@ import { readFileSync } from 'fs'
 import { join } from 'path'
 
 interface DatasetStatistics {
+  // Keep legacy 'totalRecords' but add 'totalModels' for compatibility with tests
   totalRecords: number
+  totalModels?: number
   columns: string[]
   companies: string[]
+  // Add 'brands' key alias for compatibility
+  brands?: string[]
   yearRange: { min: number; max: number }
   priceRange: { min: number; max: number; avg: number }
   ramRange: { min: number; max: number; avg: number }
@@ -172,7 +176,12 @@ export default defineEventHandler(async (): Promise<DatasetStatistics> => {
     if (stats.yearRange.min === Infinity) stats.yearRange.min = 2020
     if (stats.yearRange.max === -Infinity) stats.yearRange.max = 2025
 
-    return stats
+    // Add compatibility keys
+    return {
+      ...stats,
+      totalModels: stats.totalRecords,
+      brands: stats.companies,
+    }
   } catch (error: unknown) {
     throw createError({
       statusCode: 500,

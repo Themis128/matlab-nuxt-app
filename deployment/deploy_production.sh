@@ -104,13 +104,13 @@ fi
 
 # 9. Setup systemd services
 log_info "Installing systemd services..."
-cp deployment/python-api.service /etc/systemd/system/
-cp deployment/nuxt-app.service /etc/systemd/system/
+cp infrastructure/systemd/python-api.service /etc/systemd/system/
+cp infrastructure/systemd/nuxt-app.service /etc/systemd/system/
 systemctl daemon-reload
 
 # 10. Setup Nginx
 log_info "Configuring Nginx..."
-cp deployment/nginx.conf /etc/nginx/sites-available/matlab-mobile-dataset
+cp infrastructure/nginx/nginx.conf /etc/nginx/sites-available/matlab-mobile-dataset
 ln -sf /etc/nginx/sites-available/matlab-mobile-dataset /etc/nginx/sites-enabled/
 rm -f /etc/nginx/sites-enabled/default
 nginx -t

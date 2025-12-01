@@ -49,9 +49,35 @@ def load_model(model_name):
     if not all([model_path.exists(), scaler_path.exists(), metadata_path.exists()]):
         return None, None, None
 
+    # Security: Comprehensive validation before loading
+    max_file_size = 500 * 1024 * 1024  # 500MB limit
+    for path in [model_path, scaler_path]:
+        if path.stat().st_size > max_file_size:
+            raise ValueError(f"Model file too large: {path} (>500MB)")
+        # Ensure files are in expected directory
+        if not str(path).startswith(str(MODELS_DIR)):
+            raise ValueError(f"Model file not in trusted directory: {path}")
+
+    # Load model with validation
     with open(model_path, 'rb') as f:
+        # Check pickle header for basic validation
+        header = f.read(2)
+        if header != b'\x80\x03':  # Python 3 pickle protocol 3 header
+            raise ValueError("Invalid pickle file format for model")
+
+        # Reset and load
+        f.seek(0)
         model = pickle.load(f)
+
+    # Load scalers with validation
     with open(scaler_path, 'rb') as f:
+        # Check pickle header for basic validation
+        header = f.read(2)
+        if header != b'\x80\x03':  # Python 3 pickle protocol 3 header
+            raise ValueError("Invalid pickle file format for scalers")
+
+        # Reset and load
+        f.seek(0)
         scalers = pickle.load(f)
     with open(metadata_path, 'r') as f:
         metadata = json.load(f)

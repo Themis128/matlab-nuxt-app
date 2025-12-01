@@ -1,0 +1,30 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"],
+      "@/*": ["./*"],
+      "#imports": ["./types/auto-imports.d.ts", "./imports"],
+      "#components": ["./components/*"]
+    },
+    "types": ["node", "nuxt", "vue", "@nuxt/schema"]
+  },
+  "include": [
+    "server/**/*",
+    "pages/**/*",
+    "components/**/*",
+    "composables/**/*",
+    "stores/**/*",
+    "plugins/**/*",
+    "layouts/**/*",
+    "nuxt.config.*",
+    "app.vue",
+    "scripts/**/*",
+    "types/**/*"
+  ],
+  "exclude": ["node_modules", ".nuxt", ".output", "public", "python_api", "**/venv/**"]
+}

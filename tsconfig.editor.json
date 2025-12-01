@@ -1,0 +1,45 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "compilerOptions": {
+    "baseUrl": ".",
+    "types": ["node", "nuxt", "@nuxt/schema", "vue"],
+    "paths": {
+      "~/*": ["./*"],
+      "@/*": ["./*"],
+      "#imports": ["./types/auto-imports.d.ts", "./types/auto-imports", "./imports"],
+      "#components": ["./components/*"],
+      "#app": ["./.nuxt/dist/app/*"]
+    },
+    "noImplicitAny": false
+  },
+  "include": [
+    "./**/*",
+    "./server/**/*.ts",
+    "./server/**/*.js",
+    "./pages/**/*",
+    "./components/**/*",
+    "./composables/**/*",
+    "./stores/**/*",
+    "./types/**/*"
+  ],
+  "exclude": [
+    "./node_modules",
+    "./.nuxt",
+    "./dist",
+    "./.output",
+    "./venv",
+    "./python_api/**",
+    "./public/**",
+    "./screenshots/**",
+    "./playwright-report/**"
+  ],
+  "files": [
+    "types/nuxt-shims.d.ts",
+    "types/auto-imports.d.ts",
+    "types/modules-shims.d.ts",
+    "types/algolia.d.ts"
+  ]
+}

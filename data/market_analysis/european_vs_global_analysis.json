@@ -848,16 +848,8 @@
     ]
   },
   "pca_analysis": {
-    "explained_variance": [
-      0.35127954296990316,
-      0.2741319007549905,
-      0.16473523347222147
-    ],
-    "cumulative_variance": [
-      0.35127954296990316,
-      0.6254114437248937,
-      0.7901466771971151
-    ],
+    "explained_variance": [0.35127954296990316, 0.2741319007549905, 0.16473523347222147],
+    "cumulative_variance": [0.35127954296990316, 0.6254114437248937, 0.7901466771971151],
     "feature_loadings": {
       "PC1": {
         "RAM": 0.3980461017621185,
@@ -894,11 +886,7 @@
       "european_avg_price": "$2199.74",
       "global_avg_price": "$18518.73",
       "market_concentration": "Competitive",
-      "top_3_brands": [
-        "Oppo",
-        "Apple",
-        "Honor"
-      ]
+      "top_3_brands": ["Oppo", "Apple", "Honor"]
     },
     "key_findings": [
       "European market shows -87.2% average price premium over global markets",

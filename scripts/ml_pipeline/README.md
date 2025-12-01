@@ -50,6 +50,7 @@ ml_pipeline/
 ## Module Descriptions
 
 ### 📊 Preprocessing
+
 Scripts for data cleaning, feature engineering, and dataset preparation:
 
 - **clean_dataset.py**: Basic dataset cleaning and validation
@@ -61,6 +62,7 @@ Scripts for data cleaning, feature engineering, and dataset preparation:
 - **target_normalization.py**: Target variable normalization and transformation
 
 ### 🎯 Model Training
+
 Scripts for training various prediction models:
 
 - **clean_and_retrain.py**: Remove data leakage and retrain production models
@@ -72,6 +74,7 @@ Scripts for training various prediction models:
 - **segmentation_specialist_models.py**: Specialist models for each market segment
 
 ### 🔗 Ensemble Methods
+
 Scripts for combining multiple models:
 
 - **catboost_ensemble.py**: CatBoost-based ensemble models
@@ -80,6 +83,7 @@ Scripts for combining multiple models:
 - **xgboost_ensemble.py**: XGBoost-based ensemble models
 
 ### 📈 Analysis
+
 Scripts for dataset exploration and insights:
 
 - **dataset_audit_refresh.py**: Dataset quality audit and validation
@@ -88,6 +92,7 @@ Scripts for dataset exploration and insights:
 - **explainability_pipeline.py**: Model explainability (SHAP, PDP, ICE, counterfactuals)
 
 ### 🔍 Monitoring
+
 Scripts for model monitoring and diagnostics:
 
 - **diagnose_models.py**: Model diagnostics and health checks
@@ -95,6 +100,7 @@ Scripts for model monitoring and diagnostics:
 - **model_compression_distillation.py**: Model compression via knowledge distillation
 
 ### ⚙️ Orchestration
+
 Scripts to run complete pipelines:
 
 - **run_all_analysis.py**: Run full dataset analysis pipeline
@@ -138,6 +144,7 @@ python scripts/ml_pipeline/orchestration/run_complete_analysis.py
 ## Code Quality Standards
 
 All scripts have been:
+
 - ✅ Organized by functionality
 - ✅ Checked with `ruff` linter (F, E, W, I, N rules)
 - ✅ Fixed for code quality issues
@@ -161,18 +168,21 @@ data/Mobiles Dataset (2025).csv
 ## Output Files
 
 Scripts generate outputs in the `data/` directory:
+
 - `data/*_metrics.json` - Model performance metrics
 - `data/*_insights.json` - Analysis insights
 - `data/*_report.json` - Monitoring reports
 - `data/*_dashboard.png` - Visualizations
 
 Models are saved to:
+
 - `python_api/trained_models/*.pkl` - Scikit-learn models
 - `python_api/trained_models/*.h5` - TensorFlow models (if applicable)
 
 ## Dependencies
 
 See `requirements.txt` in project root. Key dependencies:
+
 - pandas, numpy - Data manipulation
 - scikit-learn - Machine learning
 - lightgbm, xgboost, catboost - Gradient boosting

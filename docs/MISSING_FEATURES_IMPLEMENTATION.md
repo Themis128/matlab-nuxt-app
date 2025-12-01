@@ -19,6 +19,7 @@ Successfully implemented **8 critical missing features** to enhance security, mo
 **File Modified**: `nuxt.config.ts`
 
 **Added Features**:
+
 - Comprehensive security headers configuration
 - Content Security Policy (CSP) for production
 - HTTP Strict Transport Security (HSTS)
@@ -26,12 +27,14 @@ Successfully implemented **8 critical missing features** to enhance security, mo
 - Referrer Policy and Permissions Policy
 - Cross-Origin policies (COEP, COOP, CORP)
 
-**Impact**: 
+**Impact**:
+
 - 🛡️ Protects against XSS, clickjacking, MIME-type sniffing
 - 🔒 Enforces HTTPS in production
 - ⚡ Production-ready security configuration
 
 **Configuration**:
+
 ```typescript
 security: {
   headers: {
@@ -50,6 +53,7 @@ security: {
 **File Modified**: `python_api/api.py`
 
 **Added Features**:
+
 - In-memory rate limiting (100 requests/60 seconds default)
 - Configurable via environment variables
 - Rate limit response headers (X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset)
@@ -57,11 +61,13 @@ security: {
 - Health check endpoint bypass
 
 **Impact**:
+
 - 🚫 Prevents API abuse and DDoS attacks
 - 📊 Provides rate limit information to clients
 - ⚙️ Easily configurable for different environments
 
 **Configuration**:
+
 ```env
 RATE_LIMIT_REQUESTS=100  # requests per window
 RATE_LIMIT_WINDOW=60     # window in seconds
@@ -78,11 +84,13 @@ RATE_LIMIT_WINDOW=60     # window in seconds
 **Content**: `22`
 
 **Impact**:
+
 - 🔧 Ensures consistent Node.js version across all environments
 - 👥 Team members use the same version automatically
 - 🤖 CI/CD pipelines use correct Node version
 
 **Usage**:
+
 ```bash
 nvm use        # Automatically switches to Node 22
 nvm install    # Installs Node 22 if not present
@@ -95,18 +103,21 @@ nvm install    # Installs Node 22 if not present
 **File Created**: `.github/dependabot.yml`
 
 **Configured Ecosystems**:
+
 - ✅ npm (Node.js dependencies) - Weekly Monday 9 AM
 - ✅ pip (Python dependencies) - Weekly Monday 9 AM
 - ✅ GitHub Actions - Weekly Monday 9 AM
 - ✅ Docker - Weekly Monday 9 AM
 
 **Features**:
+
 - Automated pull requests for dependency updates
 - Grouped updates for related packages (Nuxt, testing, ML libs, etc.)
 - Automatic labeling and assignment
 - Conventional commit messages
 
 **Impact**:
+
 - 🔄 Automatic security patches
 - 📦 Stay up-to-date with latest features
 - ⏰ Scheduled updates reduce manual work
@@ -118,6 +129,7 @@ nvm install    # Installs Node 22 if not present
 **File Created**: `CHANGELOG.md`
 
 **Structure**:
+
 - Follows [Keep a Changelog](https://keepachangelog.com/) format
 - Semantic Versioning
 - Comprehensive version history
@@ -125,39 +137,43 @@ nvm install    # Installs Node 22 if not present
 - Categories: Added, Changed, Fixed, Security, Performance
 
 **Sections**:
+
 - [Unreleased] - New security features
 - [1.0.0] - Initial production release
 - [0.9.0] - Beta release
 
 **Impact**:
+
 - 📖 Clear version history for users and developers
 - 🔄 Easy upgrade path documentation
 - 📝 Professional project documentation
 
 ---
 
-### 6. ✅ Fixed CI/CD Deployment Workflow
+### 6. ✅ Fixed CI/CD Deployment Workflow (Non-Docker)
 
 **File Modified**: `.github/workflows/deploy.yml`
 
 **Changes**:
-- ✅ Changed `push: false` → `push: true`
-- ✅ Added Docker Hub login step
-- ✅ Multi-architecture builds (amd64, arm64)
-- ✅ Proper secret management (DOCKER_USERNAME, DOCKER_PASSWORD)
+
+- ✅ Build and package Nuxt static artifacts and Python API artifacts
+- ✅ Transfer artifacts to a production server via SSH
+- ✅ Added SSH-based deploy and remote service restart
 - ✅ Version tagging from git tags
-- ✅ Enhanced deployment summary with pull commands
 
 **Impact**:
-- 🚀 Actual deployment on tag push
-- 📦 Images available on Docker Hub
-- 🌍 Multi-platform support
-- 🔐 Secure credential management
+
+- 🚀 Automated server deployment on tag push
+- 🧩 Simplified deployment model for non-containerized servers
+- 🔐 Secure credential management via `SERVER_SSH_KEY` and SSH
 
 **Required GitHub Secrets**:
+
 ```
-DOCKER_USERNAME
-DOCKER_PASSWORD
+SERVER_HOST
+SERVER_USER
+SERVER_SSH_KEY
+DEPLOY_PATH
 ```
 
 ---
@@ -167,6 +183,7 @@ DOCKER_PASSWORD
 **File Created**: `docs/ERROR_TRACKING_SETUP.md`
 
 **Content**:
+
 - Comprehensive Sentry integration guide
 - Alternative solutions (LogRocket, Rollbar, Bugsnag, custom)
 - Frontend and backend configuration
@@ -175,12 +192,14 @@ DOCKER_PASSWORD
 - Testing procedures
 
 **Impact**:
+
 - 📊 Easy error tracking integration
 - 🐛 Catch production bugs proactively
 - 📈 Monitor application health
 - 🔍 User issue tracking with context
 
 **Supported Services**:
+
 - ✅ Sentry (recommended)
 - ✅ LogRocket
 - ✅ Rollbar
@@ -191,11 +210,13 @@ DOCKER_PASSWORD
 ### 8. ✅ CORS Configuration & Documentation
 
 **Files Modified/Created**:
+
 - `.env.example` - Updated with CORS_ORIGINS
 - `.env.production.template` - Secure CORS configuration
 - `docs/SECURITY_CONFIGURATION.md` - Comprehensive security guide
 
 **Features**:
+
 - Environment-based CORS configuration
 - Development vs Production separation
 - Detailed security configuration guide
@@ -203,12 +224,14 @@ DOCKER_PASSWORD
 - Production checklist
 
 **Impact**:
+
 - 🔒 Secure API access control
 - 📝 Clear documentation
 - ✅ Production-ready configuration
 - 🛡️ Prevents unauthorized access
 
 **Configuration**:
+
 ```env
 # Development (permissive)
 CORS_ORIGINS=http://localhost:3000,http://localhost:8000
@@ -222,6 +245,7 @@ CORS_ORIGINS=https://your-domain.com,https://www.your-domain.com
 ## 📚 New Documentation Files
 
 ### Created Files:
+
 1. `CHANGELOG.md` - Version history and upgrade guides
 2. `docs/ERROR_TRACKING_SETUP.md` - Error tracking integration guide
 3. `docs/SECURITY_CONFIGURATION.md` - Comprehensive security guide
@@ -229,6 +253,7 @@ CORS_ORIGINS=https://your-domain.com,https://www.your-domain.com
 5. `.github/dependabot.yml` - Automated dependency updates
 
 ### Updated Files:
+
 1. `nuxt.config.ts` - Security headers and CSP
 2. `python_api/api.py` - Rate limiting middleware
 3. `.env.example` - CORS and rate limit configuration
@@ -242,6 +267,7 @@ CORS_ORIGINS=https://your-domain.com,https://www.your-domain.com
 ### Environment Variables to Set:
 
 #### Development (`.env.local`):
+
 ```env
 CORS_ORIGINS=http://localhost:3000,http://localhost:8000
 RATE_LIMIT_REQUESTS=1000
@@ -249,6 +275,7 @@ RATE_LIMIT_WINDOW=60
 ```
 
 #### Production (`.env.production`):
+
 ```env
 CORS_ORIGINS=https://your-domain.com,https://www.your-domain.com
 NUXT_API_SECRET=$(openssl rand -hex 32)
@@ -258,9 +285,11 @@ SENTRY_DSN=https://your-dsn@sentry.io/project-id  # Optional
 ```
 
 #### GitHub Secrets:
+
 ```
-DOCKER_USERNAME=your-dockerhub-username
-DOCKER_PASSWORD=your-dockerhub-password
+SERVER_HOST=your-server-host
+SERVER_USER=your-deploy-user
+SERVER_SSH_KEY=your-ssh-private-key
 SENTRY_DSN_FRONTEND=https://...  # Optional
 SENTRY_DSN_BACKEND=https://...   # Optional
 ```
@@ -274,7 +303,7 @@ SENTRY_DSN_BACKEND=https://...   # Optional
 - [ ] Copy `.env.production.template` to `.env.production`
 - [ ] Set `CORS_ORIGINS` to your production domain(s)
 - [ ] Generate and set `NUXT_API_SECRET`
-- [ ] Add GitHub secrets (DOCKER_USERNAME, DOCKER_PASSWORD)
+- [ ] Add GitHub secrets (SERVER_HOST, SERVER_USER, SERVER_SSH_KEY, DEPLOY_PATH)
 - [ ] Test locally with production environment
 - [ ] Review security configuration in `docs/SECURITY_CONFIGURATION.md`
 - [ ] (Optional) Set up Sentry account and configure DSN
@@ -297,6 +326,7 @@ SENTRY_DSN_BACKEND=https://...   # Optional
 ## 📊 Testing the New Features
 
 ### 1. Test Security Headers:
+
 ```bash
 # Check headers locally
 curl -I http://localhost:3000
@@ -310,9 +340,10 @@ https://observatory.mozilla.org
 ```
 
 ### 2. Test Rate Limiting:
+
 ```bash
 # Send multiple requests quickly
-for i in {1..110}; do 
+for i in {1..110}; do
   curl http://localhost:8000/api/predict/price \
     -H "Content-Type: application/json" \
     -d '{"ram":8,"battery":5000,...}' \
@@ -321,6 +352,7 @@ done
 ```
 
 ### 3. Test CORS:
+
 ```javascript
 // From browser console on your domain
 fetch('https://api.your-domain.com/health')
@@ -330,6 +362,7 @@ fetch('https://api.your-domain.com/health')
 ```
 
 ### 4. Test Deployment:
+
 ```bash
 # Tag a release
 git tag v1.0.1
@@ -348,6 +381,7 @@ docker pull yourusername/matlab-nuxt-app:v1.0.1
 ## 🎯 Future Enhancements
 
 ### High Priority:
+
 - [ ] Add API authentication (JWT or API keys)
 - [ ] Implement Redis-based rate limiting for distributed systems
 - [ ] Add request logging and audit trail
@@ -355,6 +389,7 @@ docker pull yourusername/matlab-nuxt-app:v1.0.1
 - [ ] Configure Web Application Firewall (WAF)
 
 ### Medium Priority:
+
 - [ ] Add PWA support (manifest.json, service worker)
 - [ ] Implement unit tests for security middleware
 - [ ] Add performance monitoring (APM)
@@ -362,6 +397,7 @@ docker pull yourusername/matlab-nuxt-app:v1.0.1
 - [ ] Create staging environment
 
 ### Low Priority:
+
 - [ ] Add user authentication and accounts
 - [ ] Implement API versioning
 - [ ] Add GraphQL endpoint
@@ -383,11 +419,13 @@ docker pull yourusername/matlab-nuxt-app:v1.0.1
 ## 🆘 Support & Resources
 
 ### Getting Help:
+
 - 📧 GitHub Issues: [Report bugs](https://github.com/Themis128/matlab-nuxt-app/issues)
 - 💬 Discussions: [Ask questions](https://github.com/Themis128/matlab-nuxt-app/discussions)
 - 🔒 Security: [Report vulnerabilities](SECURITY.md)
 
 ### External Resources:
+
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 - [Mozilla Security Guidelines](https://infosec.mozilla.org/guidelines/web_security)
 - [Nuxt Security Best Practices](https://nuxt.com/docs/guide/going-further/security)

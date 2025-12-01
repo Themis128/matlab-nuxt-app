@@ -6,7 +6,7 @@
     <span class="rounded-full bg-green-500" style="display: none"></span>
 
     <!-- Skip to main content link for accessibility -->
-    <a href="#main-content" class="skip-to-main">Skip to main content</a>
+    <a href="#main-content" class="skip-to-main not-sr-only">Skip to main content</a>
 
     <!-- Navigation Bar -->
     <nav
@@ -250,7 +250,7 @@ const _colorMode = useColorMode()
 const currentYear = new Date().getFullYear()
 
 // Initialize keyboard shortcuts
-const { _openPreferences } = useKeyboardShortcuts()
+useKeyboardShortcuts()
 
 // Listen for preferences open event
 if (process.client) {

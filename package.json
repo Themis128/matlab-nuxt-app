@@ -1,107 +1,121 @@
 {
-    "name": "matlab-nuxt-app",
-    "version": "1.0.0",
-    "description": "A comprehensive MATLAB and Nuxt.js project for deep learning experiments, mobile phone dataset analysis, and MATLAB capabilities checking",
-    "private": true,
-    "type": "module",
-    "scripts": {
-        "build": "nuxt build",
-        "dev": "nuxt dev",
-        "dev:python": "cd python_api && python api.py",
-        "dev:all": "concurrently -t -n PY,NUXT -c blue,green \"cd python_api && ..\\venv\\Scripts\\python api.py\" \"nuxt dev\"",
-        "typecheck": "nuxi typecheck || vue-tsc --noEmit --skipLibCheck && tsc -p tsconfig.json --noEmit",
-        "lint": "eslint . --ext .js,.ts,.vue --max-warnings=0",
-        "format": "prettier --write .",
-        "lint:fix": "eslint . --ext .js,.ts,.vue --fix",
-        "generate": "nuxt generate",
-        "preview": "nuxt preview",
-        "postinstall": "nuxt prepare",
-        "check": "node scripts/utils/check-capabilities.js",
-        "check:matlab": "node scripts/utils/check-capabilities.js",
-        "next-steps": "node scripts/utils/run-next-steps.js",
-        "pretest": "pwsh -NoProfile -File scripts/kill-devtools-port.ps1 -Verbose",
-        "test": "set PLAYWRIGHT_TEST=1&& set NUXT_TEST=1&& pwsh -NoProfile -File scripts/kill-devtools-port.ps1 && playwright test",
-        "test:manual": "set PLAYWRIGHT_TEST=1&& set NUXT_TEST=1&& playwright test",
-        "test:servers:start": "pwsh -NoProfile -File scripts/start-test-servers.ps1 -WaitForHealthy",
-        "test:servers:stop": "pwsh -NoProfile -File scripts/stop-test-servers.ps1",
-        "test:ui": "set PLAYWRIGHT_TEST=1&& playwright test --ui",
-        "test:report": "playwright show-report",
-        "test:api": "pwsh -NoProfile -File scripts/test-api.ps1",
-        "test:api:verbose": "pwsh -NoProfile -File scripts/test-api.ps1 -Verbose",
-        "mat:view": "node scripts/utils/view_mat_file.js",
-        "optimize": "set PYTHONIOENCODING=utf-8 && .\\venv\\Scripts\\python scripts/optimize_all.py",
-        "optimize:models": "set PYTHONIOENCODING=utf-8 && .\\venv\\Scripts\\python scripts/optimize_models.py",
-        "optimize:images": "set PYTHONIOENCODING=utf-8 && .\\venv\\Scripts\\python scripts/optimize_images.py",
-        "optimize:csv": "set PYTHONIOENCODING=utf-8 && .\\venv\\Scripts\\python scripts/optimize_csv.py",
-        "csv:validate": "set PYTHONIOENCODING=utf-8 && .\\venv\\Scripts\\python scripts/validate_csv_schema.py"
+  "name": "matlab-nuxt-app",
+  "version": "1.0.0",
+  "description": "A comprehensive MATLAB and Nuxt.js project for deep learning experiments, mobile phone dataset analysis, and MATLAB capabilities checking",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "dev:python": "cd python_api && python api.py",
+    "dev:all": "concurrently -t -n PY,NUXT -c blue,green \"cd python_api && ..\\venv\\Scripts\\python api.py\" \"npm run dev -- --port 3000 --hostname localhost\"",
+    "dev:all:ensure": "pwsh -NoProfile -File scripts/clear-ports.ps1 -Force && npm run dev:all",
+    "typecheck": "npm run typecheck:ci",
+    "typecheck:mem": "cross-env NODE_OPTIONS=--max_old_space_size=16384 npx vue-tsc --project tsconfig.json --noEmit --skipLibCheck && cross-env NODE_OPTIONS=--max_old_space_size=16384 npx tsc -p tsconfig.json --noEmit",
+    "typecheck:ci": "cross-env NODE_OPTIONS=--max_old_space_size=8192 npx vue-tsc --project tsconfig.ci.json --noEmit && cross-env NODE_OPTIONS=--max_old_space_size=8192 npx tsc -p tsconfig.ci.json --noEmit",
+    "typecheck:local": "npm run typecheck:ci",
+    "lint": "eslint . --ext .js,.ts,.vue --max-warnings=0",
+    "format": "prettier --write .",
+    "lint:fix": "eslint . --ext .js,.ts,.vue --fix",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "check": "node scripts/utils/check-capabilities.js",
+    "check:matlab": "node scripts/utils/check-capabilities.js",
+    "next-steps": "node scripts/utils/run-next-steps.js",
+    "pretest": "pwsh -NoProfile -File scripts/kill-devtools-port.ps1 -Verbose",
+    "test": "set PLAYWRIGHT_TEST=1&& set NUXT_TEST=1&& pwsh -NoProfile -File scripts/kill-devtools-port.ps1 && playwright test",
+    "test:manual": "set PLAYWRIGHT_TEST=1&& set NUXT_TEST=1&& playwright test",
+    "dev:detached": "pwsh -NoProfile -File scripts/start-dev-detached.ps1",
+    "dev:detached:stop": "pwsh -NoProfile -File scripts/stop-dev.ps1",
+    "test:with-dev": "pwsh -NoProfile -File scripts/run-tests-with-dev.ps1 --",
+    "test:servers:start": "pwsh -NoProfile -File scripts/start-test-servers.ps1 -WaitForHealthy",
+    "test:servers:stop": "pwsh -NoProfile -File scripts/stop-test-servers.ps1",
+    "test:ui": "set PLAYWRIGHT_TEST=1&& playwright test --ui",
+    "test:report": "playwright show-report",
+    "test:api": "pwsh -NoProfile -File scripts/test-api.ps1",
+    "test:api:verbose": "pwsh -NoProfile -File scripts/test-api.ps1 -Verbose",
+    "mat:view": "node scripts/utils/view_mat_file.js",
+    "optimize": "set PYTHONIOENCODING=utf-8 && .\\venv\\Scripts\\python scripts/optimize_all.py",
+    "optimize:models": "set PYTHONIOENCODING=utf-8 && .\\venv\\Scripts\\python scripts/optimize_models.py",
+    "optimize:images": "set PYTHONIOENCODING=utf-8 && .\\venv\\Scripts\\python scripts/optimize_images.py",
+    "optimize:csv": "set PYTHONIOENCODING=utf-8 && .\\venv\\Scripts\\python scripts/optimize_csv.py",
+    "csv:validate": "set PYTHONIOENCODING=utf-8 && .\\venv\\Scripts\\python scripts/validate_csv_schema.py",
+    "algolia:index": "node scripts/algolia/index_records.js"
+  },
+  "dependencies": {
+    "@heroicons/vue": "^2.2.0",
+    "@nuxt/ui": "^2.19.0",
+    "@pinia/nuxt": "^0.11.3",
+    "@sentry/nuxt": "^8.55.0",
+    "@sentry/tracing": "^7.120.4",
+    "@sentry/vue": "^10.27.0",
+    "algoliasearch": "^5.45.0",
+    "apexcharts": "^5.3.6",
+    "chart.js": "^4.5.1",
+    "nuxt": "^4.2.1",
+    "pinia": "^3.0.4",
+    "pinia-plugin-persistedstate": "^4.7.1",
+    "vue-chartjs": "^5.3.3",
+    "vue3-apexcharts": "^1.10.0"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^24.10.0",
+    "@typescript-eslint/eslint-plugin": "^8.12.1",
+    "@typescript-eslint/parser": "^8.12.1",
+    "concurrently": "^9.0.1",
+    "eslint": "^9.14.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-vue": "^9.28.0",
+    "prettier": "^3.3.3",
+    "simple-git-hooks": "^2.11.1",
+    "typescript": "^5.9.3",
+    "vue-tsc": "^3.1.3",
+    "cross-env": "^7.0.3"
+  },
+  "overrides": {
+    "glob": "10.1.0",
+    "@vercel/nft": {
+      "glob": "10.1.0"
     },
-    "dependencies": {
-        "@heroicons/vue": "^2.2.0",
-        "@nuxt/ui": "^2.19.0",
-        "@pinia/nuxt": "^0.11.3",
-        "apexcharts": "^5.3.6",
-        "chart.js": "^4.5.1",
-        "nuxt": "^4.2.1",
-        "pinia": "^3.0.4",
-        "vue-chartjs": "^5.3.3",
-        "vue3-apexcharts": "^1.10.0"
+    "archiver-utils": {
+      "glob": "10.1.0"
     },
-    "devDependencies": {
-        "@nuxt/devtools": "latest",
-        "@playwright/test": "^1.56.1",
-        "@types/node": "^24.10.0",
-        "@typescript-eslint/eslint-plugin": "^8.12.1",
-        "@typescript-eslint/parser": "^8.12.1",
-        "concurrently": "^9.0.1",
-        "eslint": "^9.14.0",
-        "eslint-config-prettier": "^9.1.0",
-        "eslint-plugin-prettier": "^5.2.1",
-        "eslint-plugin-vue": "^9.28.0",
-        "prettier": "^3.3.3",
-        "simple-git-hooks": "^2.11.1",
-        "typescript": "^5.9.3",
-        "vue-tsc": "^3.1.3"
+    "replace-in-file": {
+      "glob": "10.1.0"
     },
-    "overrides": {
-        "glob": "10.1.0",
-        "@vercel/nft": {
-            "glob": "10.1.0"
-        },
-        "archiver-utils": {
-            "glob": "10.1.0"
-        },
-        "replace-in-file": {
-            "glob": "10.1.0"
-        },
-        "sucrase": {
-            "glob": "10.1.0"
-        }
-    },
-    "keywords": [
-        "matlab",
-        "nuxt",
-        "deep-learning",
-        "neural-networks",
-        "machine-learning",
-        "capabilities",
-        "toolboxes",
-        "mobile-phones",
-        "dataset-analysis",
-        "cnn",
-        "lstm",
-        "autoencoder"
-    ],
-    "author": "",
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/Themis128/matlab-nuxt-app.git"
-    },
-    "bugs": {
-        "url": "https://github.com/Themis128/matlab-nuxt-app/issues"
-    },
-    "homepage": "https://github.com/Themis128/matlab-nuxt-app#readme",
-    "simple-git-hooks": {
-        "pre-commit": "npm run format && npm run lint"
+    "sucrase": {
+      "glob": "10.1.0"
     }
+  },
+  "keywords": [
+    "matlab",
+    "nuxt",
+    "deep-learning",
+    "neural-networks",
+    "machine-learning",
+    "capabilities",
+    "toolboxes",
+    "mobile-phones",
+    "dataset-analysis",
+    "cnn",
+    "lstm",
+    "autoencoder"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Themis128/matlab-nuxt-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Themis128/matlab-nuxt-app/issues"
+  },
+  "homepage": "https://github.com/Themis128/matlab-nuxt-app#readme",
+  "simple-git-hooks": {
+    "pre-commit": "npm run format && npm run lint"
+  }
 }

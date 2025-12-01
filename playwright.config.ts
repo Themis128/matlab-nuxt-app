@@ -87,7 +87,10 @@ export default defineConfig({
       command: isCI
         ? 'npm run dev'
         : 'pwsh -NoProfile -Command "Start-Sleep -Seconds 3; npm run dev"',
-      url: 'http://localhost:3000/api/health',
+      // Use PW_BASE_URL if provided so tests can reuse an already-running dev server on a different port
+      url: process.env.PW_BASE_URL
+        ? `${process.env.PW_BASE_URL.replace(/\/$/, '')}/api/health`
+        : 'http://localhost:3000/api/health',
       timeout: 180 * 1000, // 3 minutes for Nuxt dev server
       reuseExistingServer: !isCI,
       stdout: 'pipe',

@@ -145,7 +145,6 @@
                 <!-- Phone Image -->
                 <div class="relative mb-4">
                   <div
-                    v-if="getImagePath(model)"
                     class="w-full h-48 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center"
                   >
                     <img
@@ -153,15 +152,6 @@
                       :alt="`${model.company} ${model.modelName}`"
                       class="w-full h-full object-contain p-4"
                       @error="handleImageError"
-                    />
-                  </div>
-                  <div
-                    v-else
-                    class="w-full h-48 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-lg flex items-center justify-center"
-                  >
-                    <UIcon
-                      name="i-heroicons-device-phone-mobile"
-                      class="w-16 h-16 text-gray-400 dark:text-gray-500"
                     />
                   </div>
                 </div>
@@ -316,6 +306,10 @@
 </template>
 
 <script setup lang="ts">
+import { ref, computed } from 'vue'
+import { useHead } from '#imports'
+import { useMobileImage } from '../composables/useMobileImage'
+
 interface PhoneModel {
   modelName: string
   company: string
@@ -425,10 +419,11 @@ const filteredModels = computed(() => {
 })
 
 // Use mobile image composable for image handling
-const { getImagePath: generateImagePath, handleImageError } = useMobileImage()
+const { getImagePath: generateImagePath, handleImageError, placeholder } = useMobileImage()
 
 // Get image path for a model
 const getImagePath = (model: PhoneModel): string => {
+  if (!model.company || !model.modelName) return placeholder
   return generateImagePath(model.company, model.modelName, 1)
 }
 

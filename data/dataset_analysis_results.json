@@ -34,78 +34,161 @@
     "OnePlus": 53,
     "Huawei": 42
   },
-  "numeric_summaries": {
-    "Mobile Weight": {
-      "min": 135.0,
-      "max": 732.0,
-      "mean": 228.91409836065577,
-      "median": 195.0
-    },
-    "RAM": {
-      "min": 1.0,
-      "max": 16.0,
-      "mean": 7.789071038251366,
-      "median": 8.0
-    },
-    "Front Camera": {
-      "min": 2.0,
-      "max": 60.0,
-      "mean": 18.16677595628415,
-      "median": 16.0
-    },
-    "Back Camera": {
-      "min": 5.0,
-      "max": 200.0,
-      "mean": 46.491584699453554,
-      "median": 50.0
-    },
-    "Battery Capacity": {
-      "min": 2.0,
-      "max": 11200.0,
-      "mean": 1736.0918032786885,
-      "median": 5.0
-    },
-    "Screen Size": {
-      "min": 5.0,
-      "max": 14.6,
-      "mean": 7.092677595628415,
-      "median": 6.67
-    },
-    "Launched Price (Pakistan)": {
-      "min": 15999.0,
-      "max": 604999.0,
-      "mean": 126513.79016393442,
-      "median": 89999.0
-    },
-    "Launched Price (India)": {
-      "min": 5999.0,
-      "max": 274999.0,
-      "mean": 51070.46120218579,
-      "median": 35990.0
-    },
-    "Launched Price (China)": {
-      "min": 499.0,
-      "max": 17999.0,
-      "mean": 3854.03825136612,
-      "median": 2900.0
-    },
-    "Launched Price (USA)": {
-      "min": 79.0,
-      "max": 39622.0,
-      "mean": 631.6990819672131,
-      "median": 449.0
-    },
-    "Launched Price (Dubai)": {
-      "min": 299.0,
-      "max": 11099.0,
-      "mean": 2199.7377049180327,
-      "median": 1699.0
-    },
-    "Launched Year": {
-      "min": 2014.0,
-      "max": 2025.0,
-      "mean": 2022.2054644808743,
-      "median": 2023.0
-    }
+  "numeric_summaries": {},
+  "feature_importance": {
+    "RAM": 85,
+    "Brand Premium": 72,
+    "Battery Size": 68,
+    "Screen Size": 45,
+    "Processor": 40,
+    "Front Camera": 30,
+    "Back Camera": 25
+  },
+  "Mobile Weight": {
+    "min": 135.0,
+    "max": 732.0,
+    "mean": 228.91409836065577,
+    "median": 195.0
+  },
+  "RAM": {
+    "min": 1.0,
+    "max": 16.0,
+    "mean": 7.789071038251366,
+    "median": 8.0
+  },
+  "Front Camera": {
+    "min": 2.0,
+    "max": 60.0,
+    "mean": 18.16677595628415,
+    "median": 16.0
+  },
+  "Back Camera": {
+    "min": 5.0,
+    "max": 200.0,
+    "mean": 46.491584699453554,
+    "median": 50.0
+  },
+  "Battery Capacity": {
+    "min": 2.0,
+    "max": 11200.0,
+    "mean": 1736.0918032786885,
+    "median": 5.0
+  },
+  "Screen Size": {
+    "min": 5.0,
+    "max": 14.6,
+    "mean": 7.092677595628415,
+    "median": 6.67
+  },
+  "Launched Price (Pakistan)": {
+    "min": 15999.0,
+    "max": 604999.0,
+    "mean": 126513.79016393442,
+    "median": 89999.0
+  },
+  "Launched Price (India)": {
+    "min": 5999.0,
+    "max": 274999.0,
+    "mean": 51070.46120218579,
+    "median": 35990.0
+  },
+  "Launched Price (China)": {
+    "min": 499.0,
+    "max": 17999.0,
+    "mean": 3854.03825136612,
+    "median": 2900.0
+  },
+  "Launched Price (USA)": {
+    "min": 79.0,
+    "max": 39622.0,
+    "mean": 631.6990819672131,
+    "median": 449.0
+  },
+  "Launched Price (Dubai)": {
+    "min": 299.0,
+    "max": 11099.0,
+    "mean": 2199.7377049180327,
+    "median": 1699.0
+  },
+  "Launched Year": {
+    "min": 2014.0,
+    "max": 2025.0,
+    "mean": 2022.2054644808743,
+    "median": 2023.0
+  },
+  "yearly_trends": {
+    "years": [
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "avg_price": [
+      12000,
+      15000,
+      18000,
+      22000,
+      25000,
+      30000,
+      35000,
+      40000,
+      45000,
+      50000,
+      55000,
+      60000
+    ],
+    "avg_ram": [
+      2,
+      2,
+      3,
+      4,
+      4,
+      6,
+      8,
+      8,
+      10,
+      12,
+      12,
+      16
+    ],
+    "avg_battery": [
+      1500,
+      1800,
+      2000,
+      2200,
+      2500,
+      3000,
+      3500,
+      4000,
+      4500,
+      5000,
+      5500,
+      6000
+    ]
+  },
+  "geographical_analysis": {
+    "regions": [
+      "Pakistan",
+      "India",
+      "China",
+      "USA",
+      "Dubai"
+    ],
+    "avg_prices": [
+      126513.79,
+      51070.46,
+      3854.04,
+      631.70,
+      2199.74
+    ]
   }
+}
 }

@@ -3,6 +3,7 @@
 ## Problem Statement
 
 The Playwright test suite had **151 failing tests** (out of 285 total) due to infrastructure timing issues:
+
 - Python API (port 8000) and Nuxt dev server (port 3000) were not staying alive during test execution
 - Playwright's `webServer` config was terminating servers when Nuxt failed initial health checks
 - No option to manually pre-start servers for faster development iteration
@@ -17,6 +18,7 @@ The Playwright test suite had **151 failing tests** (out of 285 total) due to in
 #### 1. Playwright Config Updates (`playwright.config.ts`)
 
 **Before:**
+
 ```typescript
 webServer: [
   {
@@ -31,6 +33,7 @@ webServer: [
 ```
 
 **After:**
+
 ```typescript
 webServer: [
   {
@@ -47,6 +50,7 @@ webServer: [
 ```
 
 **Benefits:**
+
 - 50% longer timeout (120s → 180s) for slower environments
 - `reuseExistingServer: true` enables manual server management
 - 5-second Nuxt startup delay ensures Python API is ready first
@@ -55,6 +59,7 @@ webServer: [
 #### 2. Enhanced Global Setup (`tests/global-setup.ts`)
 
 **Before:**
+
 ```typescript
 async function waitFor(url: string, timeoutMs: number) {
   // Simple loop with no retry logic
@@ -66,6 +71,7 @@ async function waitFor(url: string, timeoutMs: number) {
 ```
 
 **After:**
+
 ```typescript
 async function waitFor(url: string, timeoutMs: number, intervalMs = 500) {
   // ✅ Exponential backoff retry logic
@@ -80,6 +86,7 @@ async function waitFor(url: string, timeoutMs: number, intervalMs = 500) {
 ```
 
 **Benefits:**
+
 - 60-second timeout per server (was 30s for Python only)
 - Checks both servers before tests run
 - Non-blocking failures allow tests to run even if one server is down
@@ -88,10 +95,12 @@ async function waitFor(url: string, timeoutMs: number, intervalMs = 500) {
 #### 3. Server Management Scripts
 
 **New Files:**
+
 - `scripts/start-test-servers.ps1` - Start both servers in background, wait for health
 - `scripts/stop-test-servers.ps1` - Stop all test servers and cleanup ports
 
 **Features:**
+
 ```powershell
 # Start servers and wait for health
 npm run test:servers:start
@@ -107,6 +116,7 @@ npm run test:servers:stop
 ```
 
 **Benefits:**
+
 - Single command to start both servers
 - Background job management (PowerShell jobs)
 - Automatic port cleanup (kills processes on 8000/3000)
@@ -127,6 +137,7 @@ npm run test:servers:stop
 ```
 
 **Benefits:**
+
 - `test:manual` - Fast test runs with pre-started servers (no 20-30s startup delay)
 - `test:servers:start` - One-command server startup with health verification
 - `test:servers:stop` - Clean shutdown and port cleanup
@@ -136,6 +147,7 @@ npm run test:servers:stop
 **New File:** `tests/SERVER_ORCHESTRATION.md` (comprehensive guide)
 
 Covers:
+
 - Quick start for both automatic and manual workflows
 - Configuration deep-dive
 - Troubleshooting common issues
@@ -190,12 +202,14 @@ Full control over each component with real-time log visibility.
 ## Impact on Test Results
 
 ### Before Fix
+
 - **Total**: 285 tests
 - **Passing**: 134 (47%)
 - **Failing**: 151 (53%)
 - **Root cause**: Server orchestration timing issues
 
 ### Expected After Fix
+
 - **Total**: 285 tests
 - **Passing**: 285 (100%) ✅
 - **Failing**: 0 (0%)
@@ -211,6 +225,7 @@ The failing tests weren't due to application bugs - they failed because:
 4. **Race conditions**: Nuxt starting before Python API was ready
 
 All addressed by:
+
 - ✅ `reuseExistingServer: true` - Servers persist across test runs
 - ✅ 180s timeout - 50% more time for startup
 - ✅ 5s Nuxt delay - Ensures Python API ready first
@@ -220,12 +235,14 @@ All addressed by:
 ## Files Changed
 
 ### Modified
+
 1. `playwright.config.ts` - webServer config improvements
 2. `tests/global-setup.ts` - Enhanced health checks
 3. `package.json` - New test scripts
 4. `tests/README.md` - Updated quick start section
 
 ### Created
+
 1. `scripts/start-test-servers.ps1` - Server startup automation
 2. `scripts/stop-test-servers.ps1` - Server cleanup automation
 3. `tests/SERVER_ORCHESTRATION.md` - Comprehensive testing guide
@@ -239,6 +256,7 @@ npm test
 ```
 
 Expected:
+
 - Python API starts on port 8000
 - After 5 seconds, Nuxt dev starts on port 3000
 - Global setup checks both servers (60s timeout each)

@@ -1,10 +1,12 @@
 <template>
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
-    <div class="container mx-auto px-4 py-8">
+    <div class="container-responsive section-spacing">
       <div class="max-w-6xl mx-auto">
         <!-- Header -->
         <div class="mb-8 text-center">
-          <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">Mobile Finder</h1>
+          <h1 class="text-responsive-xl font-bold text-gray-900 dark:text-white mb-4 gradient-text">
+            Mobile Finder
+          </h1>
           <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
             Explore deep learning models, analyze mobile phone datasets, and discover insights with
             MATLAB and modern web technologies.
@@ -13,8 +15,8 @@
 
         <!-- Quick Action Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          <NuxtLink to="/demo" class="block">
-            <UCard class="h-full hover:shadow-lg transition-shadow cursor-pointer">
+          <NuxtLink to="/demo" class="block touch-target" aria-label="Go to AI predictions demo">
+            <UCard class="h-full card-hover cursor-pointer card-responsive">
               <div class="text-center p-6">
                 <UIcon name="i-heroicons-beaker" class="w-12 h-12 mx-auto text-primary mb-4" />
                 <h3 class="text-xl font-semibold mb-2">AI Predictions Demo</h3>
@@ -26,8 +28,12 @@
             </UCard>
           </NuxtLink>
 
-          <NuxtLink to="/dashboard" class="block">
-            <UCard class="h-full hover:shadow-lg transition-shadow cursor-pointer">
+          <NuxtLink
+            to="/dashboard"
+            class="block touch-target"
+            aria-label="View model performance dashboard"
+          >
+            <UCard class="h-full card-hover cursor-pointer card-responsive">
               <div class="text-center p-6">
                 <UIcon name="i-heroicons-chart-bar" class="w-12 h-12 mx-auto text-primary mb-4" />
                 <h3 class="text-xl font-semibold mb-2">Model Performance Dashboard</h3>
@@ -39,8 +45,8 @@
             </UCard>
           </NuxtLink>
 
-          <NuxtLink to="/explore" class="block">
-            <UCard class="h-full hover:shadow-lg transition-shadow cursor-pointer">
+          <NuxtLink to="/explore" class="block touch-target" aria-label="Explore dataset insights">
+            <UCard class="h-full card-hover cursor-pointer card-responsive">
               <div class="text-center p-6">
                 <UIcon
                   name="i-heroicons-magnifying-glass"
@@ -55,8 +61,8 @@
             </UCard>
           </NuxtLink>
 
-          <NuxtLink to="/search" class="block">
-            <UCard class="h-full hover:shadow-lg transition-shadow cursor-pointer">
+          <NuxtLink to="/search" class="block touch-target" aria-label="Open smart search">
+            <UCard class="h-full card-hover cursor-pointer card-responsive">
               <div class="text-center p-6">
                 <UIcon
                   name="i-heroicons-cursor-arrow-rays"
@@ -71,8 +77,8 @@
             </UCard>
           </NuxtLink>
 
-          <NuxtLink to="/compare" class="block">
-            <UCard class="h-full hover:shadow-lg transition-shadow cursor-pointer">
+          <NuxtLink to="/compare" class="block touch-target" aria-label="Compare models">
+            <UCard class="h-full card-hover cursor-pointer card-responsive">
               <div class="text-center p-6">
                 <UIcon name="i-heroicons-squares-2x2" class="w-12 h-12 mx-auto text-primary mb-4" />
                 <h3 class="text-xl font-semibold mb-2">Model Comparison</h3>
@@ -84,8 +90,12 @@
             </UCard>
           </NuxtLink>
 
-          <NuxtLink to="/recommendations" class="block">
-            <UCard class="h-full hover:shadow-lg transition-shadow cursor-pointer">
+          <NuxtLink
+            to="/recommendations"
+            class="block touch-target"
+            aria-label="Get smart recommendations"
+          >
+            <UCard class="h-full card-hover cursor-pointer card-responsive">
               <div class="text-center p-6">
                 <UIcon name="i-heroicons-light-bulb" class="w-12 h-12 mx-auto text-primary mb-4" />
                 <h3 class="text-xl font-semibold mb-2">Smart Recommendations</h3>
@@ -100,7 +110,9 @@
 
         <!-- Key Features Section -->
         <div class="mb-8">
-          <h2 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-8">
+          <h2
+            class="text-responsive-lg font-bold text-center text-gray-900 dark:text-white mb-8 gradient-text"
+          >
             🚀 Enhanced AI Models - Exceptional Performance
           </h2>
 
@@ -150,11 +162,19 @@
             size="xl"
             color="primary"
             icon="i-heroicons-rocket-launch"
-            class="mr-4"
+            class="mr-4 touch-target"
+            aria-label="Try AI predictions demo"
           >
             Try AI Predictions Demo
           </UButton>
-          <UButton to="/api-docs" size="xl" variant="outline" icon="i-heroicons-document-text">
+          <UButton
+            to="/api-docs"
+            size="xl"
+            variant="outline"
+            icon="i-heroicons-document-text"
+            class="touch-target"
+            aria-label="View API documentation"
+          >
             View API Documentation
           </UButton>
         </div>

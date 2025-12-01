@@ -13,7 +13,7 @@ export default defineNuxtConfig({
   // Disable devtools during automated tests to avoid WebSocket port (24678) conflicts
   devtools: { enabled: !isTestEnv && !isProd },
 
-  modules: ['@nuxt/ui', '@pinia/nuxt'],
+  modules: ['@nuxt/ui', '@pinia/nuxt', '@sentry/nuxt/module'],
 
   css: ['~/assets/css/main.css'],
 
@@ -46,51 +46,10 @@ export default defineNuxtConfig({
       : {},
   },
 
-  // Security headers and CSP
-  security: {
-    headers: {
-      crossOriginEmbedderPolicy: isProd ? 'require-corp' : false,
-      crossOriginOpenerPolicy: isProd ? 'same-origin' : false,
-      crossOriginResourcePolicy: isProd ? 'same-origin' : false,
-      originAgentCluster: '?1',
-      referrerPolicy: 'strict-origin-when-cross-origin',
-      strictTransportSecurity: {
-        maxAge: 31536000,
-        includeSubdomains: true,
-        preload: true,
-      },
-      xContentTypeOptions: 'nosniff',
-      xDNSPrefetchControl: 'off',
-      xDownloadOptions: 'noopen',
-      xFrameOptions: 'SAMEORIGIN',
-      xPermittedCrossDomainPolicies: 'none',
-      xXSSProtection: '1; mode=block',
-      contentSecurityPolicy: isProd
-        ? {
-            'base-uri': ["'self'"],
-            'font-src': ["'self'", 'https:', 'data:'],
-            'form-action': ["'self'"],
-            'frame-ancestors': ["'self'"],
-            'img-src': ["'self'", 'data:', 'https:'],
-            'object-src': ["'none'"],
-            'script-src-attr': ["'none'"],
-            'style-src': ["'self'", 'https:', "'unsafe-inline'"],
-            'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'"], // Nuxt requires unsafe-inline/eval
-            'connect-src': [
-              "'self'",
-              process.env.NUXT_PUBLIC_API_BASE || 'http://localhost:8000',
-              'ws:', // WebSocket for HMR
-            ],
-            'upgrade-insecure-requests': true,
-          }
-        : false,
-    },
-  },
-
   // Runtime configuration
   runtimeConfig: {
     // Private keys (server-only)
-    apiSecret: process.env.NUXT_API_SECRET || 'dev-secret-key',
+    apiSecret: process.env.NUXT_API_SECRET,
     // Public keys (exposed to client)
     public: {
       apiBase:
@@ -119,6 +78,12 @@ export default defineNuxtConfig({
   typescript: {
     strict: true,
     typeCheck: false, // Disable in dev for faster startup, enable in CI/build
+  },
+
+  // Enable source maps for Sentry integration
+  sourcemap: {
+    client: 'hidden', // or true for full source maps
+    server: false,
   },
 
   // Production build optimizations

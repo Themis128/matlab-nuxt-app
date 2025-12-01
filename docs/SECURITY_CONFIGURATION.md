@@ -183,7 +183,7 @@ async def rate_limit_middleware(request: Request, call_next):
     api_key = request.headers.get("X-API-Key")
     if api_key and api_key == os.getenv("INTERNAL_API_KEY"):
         return await call_next(request)  # Skip rate limiting
-    
+
     # ... rest of rate limiting logic
 ```
 
@@ -204,14 +204,14 @@ redis_client = redis.Redis(
 async def rate_limit_middleware(request: Request, call_next):
     client_ip = request.client.host
     key = f"rate_limit:{client_ip}"
-    
+
     current = redis_client.get(key)
     if current and int(current) >= RATE_LIMIT_REQUESTS:
         raise HTTPException(status_code=429, detail="Rate limit exceeded")
-    
+
     redis_client.incr(key)
     redis_client.expire(key, RATE_LIMIT_WINDOW)
-    
+
     return await call_next(request)
 ```
 
@@ -345,10 +345,11 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 - [ ] Verify rate limiting works
 - [ ] Test with security scanner (OWASP ZAP)
 
-### Docker Deployment Checklist
+### Optional Docker Hardening Guidance
 
-- [ ] Use secrets management (Docker Swarm or Kubernetes)
-- [ ] Run containers as non-root user
+- The project supports containerized deployment, but it is optional. If you choose to use Docker, follow these hardening guidelines:
+- [ ] Use secrets management (Docker Swarm, Kubernetes, or GitHub Actions secrets)
+- [ ] Run containers as a non-root user
 - [ ] Scan images for vulnerabilities (`docker scan`)
 - [ ] Use minimal base images (alpine, distroless)
 - [ ] Keep images updated
@@ -359,8 +360,9 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ### GitHub Secrets Required
 
 ```
-DOCKER_USERNAME=your-username
-DOCKER_PASSWORD=your-password
+SERVER_HOST=your-server-host
+SERVER_USER=your-deploy-user
+SERVER_SSH_KEY=your-ssh-private-key
 SENTRY_DSN_FRONTEND=https://...
 SENTRY_DSN_BACKEND=https://...
 NUXT_API_SECRET=your-secret
@@ -375,6 +377,7 @@ NUXT_API_SECRET=your-secret
 **Symptom**: API works locally but fails in production with CORS error
 
 **Solution**:
+
 ```env
 # Make sure production domain is in CORS_ORIGINS
 CORS_ORIGINS=https://your-domain.com,https://www.your-domain.com
@@ -389,6 +392,7 @@ CORS_ORIGINS=https://your-domain.com,https://www.your-domain.com
 **Symptom**: Legitimate users getting 429 errors
 
 **Solution**:
+
 ```env
 # Increase limits
 RATE_LIMIT_REQUESTS=500
@@ -402,6 +406,7 @@ RATE_LIMIT_WINDOW=60
 **Symptom**: Images, scripts, or styles not loading
 
 **Solution**: Check `nuxt.config.ts` CSP configuration and add domains:
+
 ```typescript
 'img-src': ["'self'", 'data:', 'https:', 'https://cdn.your-domain.com'],
 ```
@@ -411,6 +416,7 @@ RATE_LIMIT_WINDOW=60
 **Symptom**: HTTPS page blocked from loading HTTP resources
 
 **Solution**:
+
 ```env
 # Ensure all URLs use HTTPS in production
 NUXT_PUBLIC_API_BASE=https://api.your-domain.com  # Not http://
@@ -431,6 +437,7 @@ NUXT_PUBLIC_API_BASE=https://api.your-domain.com  # Not http://
 ## Support
 
 For security concerns or questions:
+
 - 🔒 Security issues: See [SECURITY.md](../SECURITY.md)
 - 💬 General questions: [GitHub Discussions](https://github.com/Themis128/matlab-nuxt-app/discussions)
 - 🐛 Bug reports: [GitHub Issues](https://github.com/Themis128/matlab-nuxt-app/issues)

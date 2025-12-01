@@ -5,8 +5,8 @@ Quick commands for common deployment tasks.
 ## 🐳 Docker Compose
 
 ```bash
-# Start all services
-docker-compose up -d
+# Start all services (legacy)
+cd infrastructure/legacy && docker-compose up -d
 
 # Stop all services
 docker-compose down
@@ -18,11 +18,11 @@ docker-compose logs -f
 docker-compose restart python-api
 docker-compose restart nuxt-app
 
-# Rebuild after code changes
-docker-compose up -d --build
+# Rebuild after code changes (legacy)
+cd infrastructure/legacy && docker-compose up -d --build
 
-# Scale services
-docker-compose up -d --scale python-api=3
+# Scale services (legacy)
+cd infrastructure/legacy && docker-compose up -d --scale python-api=3
 
 # Remove all data (DANGEROUS)
 docker-compose down -v
@@ -87,9 +87,8 @@ docker-compose restart
 ## 📊 Health & Monitoring
 
 ```bash
-# Run health checks
-cd deployment
-./health_check.sh
+# Run health checks (from repo root)
+sudo ./infrastructure/scripts/health_check.sh
 
 # Check service status
 sudo systemctl status python-api nuxt-app nginx redis-server
@@ -285,7 +284,7 @@ redis-cli SLOWLOG GET 10
 
 ```bash
 # Full deployment from scratch
-git pull && source venv/bin/activate && pip install -r python_api/requirements.txt && npm ci && npm run build && sudo systemctl restart python-api nuxt-app && ./deployment/health_check.sh
+git pull && source venv/bin/activate && pip install -r python_api/requirements.txt && npm ci && npm run build && sudo systemctl restart python-api nuxt-app && sudo ./infrastructure/scripts/health_check.sh
 ```
 
 ## 📞 Common URLs
@@ -298,7 +297,7 @@ git pull && source venv/bin/activate && pip install -r python_api/requirements.t
 
 ## 🆘 Support Resources
 
-- **Deployment Guide:** [deployment/README.md](README.md)
+- **Deployment Guide:** [docs/deployment/README.md](README.md)
 - **Main README:** [../README.md](../README.md)
 - **API Documentation:** [../python_api/README.md](../python_api/README.md)
 - **Logs Location:** `/var/log/nginx/`, `journalctl -u <service>`

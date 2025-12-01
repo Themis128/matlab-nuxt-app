@@ -28,16 +28,19 @@ All requested features have been successfully implemented:
 ### Issues Fixed
 
 #### 1. RAM Outliers (2 phones)
+
 - **Before:** Max 812GB (unrealistic)
 - **After:** Max 24GB (realistic)
 - **Action:** Capped at industry maximum
 
 #### 2. Camera Outliers (391 phones)
+
 - **Before:** Back camera max 5,016,132 MP (concatenated values)
 - **After:** Back camera max 200 MP (main sensor extracted)
 - **Example:** "5012" was actually "50+12" → took 50 MP
 
 #### 3. Price Outliers (1 phone)
+
 - **Before:** Nokia T21 at $39,622
 - **After:** Nokia T21 at $3,962
 - **Action:** Removed extra zero (data entry error)
@@ -60,12 +63,12 @@ All requested features have been successfully implemented:
 
 ### Price Segments
 
-| Segment | Range | Count | % | Avg Price | Avg RAM | Avg Battery |
-|---------|-------|-------|---|-----------|---------|-------------|
-| **Budget** | €0-300 | 330 | 35.5% | €204.50 | 5.7GB | 5017mAh |
-| **Mid-range** | €300-700 | 326 | 35.1% | €454.43 | 8.6GB | 5105mAh |
-| **Premium** | €700-1200 | 232 | 25.0% | €932.24 | 9.3GB | 4895mAh |
-| **Flagship** | €1200+ | 42 | 4.5% | €1677.93 | 10.7GB | 5205mAh |
+| Segment       | Range     | Count | %     | Avg Price | Avg RAM | Avg Battery |
+| ------------- | --------- | ----- | ----- | --------- | ------- | ----------- |
+| **Budget**    | €0-300    | 330   | 35.5% | €204.50   | 5.7GB   | 5017mAh     |
+| **Mid-range** | €300-700  | 326   | 35.1% | €454.43   | 8.6GB   | 5105mAh     |
+| **Premium**   | €700-1200 | 232   | 25.0% | €932.24   | 9.3GB   | 4895mAh     |
+| **Flagship**  | €1200+    | 42    | 4.5%  | €1677.93  | 10.7GB  | 5205mAh     |
 
 ### Top 10 Brands
 
@@ -81,6 +84,7 @@ All requested features have been successfully implemented:
 10. **Huawei** - 42 models @ €1027.25 avg
 
 **Key Insights:**
+
 - Budget segment dominates (35.5% of market)
 - Oppo leads in model count, Apple in premium positioning
 - Chinese brands strong in budget/mid-range
@@ -95,11 +99,11 @@ All requested features have been successfully implemented:
 
 Trained on 774 phones using 8 features: RAM, battery, screen, weight, year, front camera, back camera, storage
 
-| Model | R² Score | Accuracy | MAE | RMSE | Best For |
-|-------|----------|----------|-----|------|----------|
-| Linear Regression | 0.525 | 52.5% | $206.74 | $267.48 | Baseline |
-| Random Forest | 0.856 | 85.6% | $93.46 | $147.43 | Feature Importance |
-| **Gradient Boosting** | **0.898** | **89.8%** | **$78.92** | **$123.79** | **Production** ⭐ |
+| Model                 | R² Score  | Accuracy  | MAE        | RMSE        | Best For           |
+| --------------------- | --------- | --------- | ---------- | ----------- | ------------------ |
+| Linear Regression     | 0.525     | 52.5%     | $206.74    | $267.48     | Baseline           |
+| Random Forest         | 0.856     | 85.6%     | $93.46     | $147.43     | Feature Importance |
+| **Gradient Boosting** | **0.898** | **89.8%** | **$78.92** | **$123.79** | **Production** ⭐  |
 
 ### Feature Importance (Random Forest)
 
@@ -137,23 +141,25 @@ Year           ██ 2.1%
 
 ### Specifications Ranges
 
-| Spec | Min | Max | Avg | Median |
-|------|-----|-----|-----|--------|
-| RAM | 1GB | 24GB | 7.4GB | 8GB |
-| Battery | 2000mAh | 7200mAh | 5047mAh | 5000mAh |
-| Screen | 4.7" | 14.6" | 7.0" | 6.8" |
-| Storage | 8GB | 2048GB | 195GB | 128GB |
-| Front Cam | 2MP | 60MP | 14.8MP | 13MP |
-| Back Cam | 5MP | 200MP | 52.9MP | 50MP |
+| Spec      | Min     | Max     | Avg     | Median  |
+| --------- | ------- | ------- | ------- | ------- |
+| RAM       | 1GB     | 24GB    | 7.4GB   | 8GB     |
+| Battery   | 2000mAh | 7200mAh | 5047mAh | 5000mAh |
+| Screen    | 4.7"    | 14.6"   | 7.0"    | 6.8"    |
+| Storage   | 8GB     | 2048GB  | 195GB   | 128GB   |
+| Front Cam | 2MP     | 60MP    | 14.8MP  | 13MP    |
+| Back Cam  | 5MP     | 200MP   | 52.9MP  | 50MP    |
 
 ### Yearly Trends (2024-2025)
 
 **2024:**
+
 - Avg Price: $614
 - Avg RAM: 9.1GB
 - Avg Battery: 5417mAh
 
 **2025:**
+
 - Avg Price: $429 (📉 30% decrease)
 - Avg RAM: 9.0GB
 - Avg Battery: 5717mAh (📈 +300mAh)
@@ -169,6 +175,7 @@ Top 5 highest specs-to-price ratio:
 5. **Tecno Pop 9 4G 64GB** - $99 (score: 9.90)
 
 **Outputs:**
+
 - `data/dataset_exploration_insights.json`
 - `data/dataset_exploration_dashboard.png`
 
@@ -185,6 +192,7 @@ Top 5 highest specs-to-price ratio:
 **After:** ✅ Working correctly with cleaned dataset
 
 **Changes Made:**
+
 1. Updated to use `price_usd` column (numeric, no parsing needed)
 2. Removed complex string/currency parsing logic
 3. Direct numeric filtering with `.between()`
@@ -192,6 +200,7 @@ Top 5 highest specs-to-price ratio:
 5. Uses production dataset (`Mobiles_Dataset_Final.csv`)
 
 **Example Request:**
+
 ```
 GET /api/dataset/models-by-price?price=500&tolerance=0.3&maxResults=5
 ```
@@ -199,6 +208,7 @@ GET /api/dataset/models-by-price?price=500&tolerance=0.3&maxResults=5
 Returns phones priced between $350-$650 (500 ± 30%)
 
 **Test Results:** ✅ 5/5 browsers passing
+
 - Chromium ✓
 - Firefox ✓
 - WebKit ✓
@@ -252,6 +262,7 @@ npm test
 ```
 
 **Result:** 280/285 tests passing
+
 - 280 passed ✓
 - 5 skipped (expected - deprecated endpoints)
 
@@ -262,6 +273,7 @@ npm test -- tests/api-endpoints.spec.ts --grep "models by price"
 ```
 
 **Result:** 5/5 passing ✅
+
 - All browsers tested
 - Response format validated
 - Price filtering verified
@@ -297,6 +309,7 @@ python fix_dataset_issues.py
 ```
 
 **Output:**
+
 - Fixes all outliers
 - Adds EUR prices
 - Creates `Mobiles_Dataset_Final.csv`
@@ -308,6 +321,7 @@ python run_all_analysis.py
 ```
 
 **Output:**
+
 - European market analysis
 - Price prediction models
 - Dataset insights
@@ -358,7 +372,7 @@ All requested features successfully implemented:
 ✅ **Price Predictions** - 89.8% accuracy model  
 ✅ **Exploration** - Trends, correlations, value phones  
 ✅ **API Fixed** - models-by-price working  
-✅ **Tests Passing** - All browsers validated  
+✅ **Tests Passing** - All browsers validated
 
 **Production Status:** Dataset is production-ready with comprehensive analysis and reliable ML models. Ready for deployment.
 

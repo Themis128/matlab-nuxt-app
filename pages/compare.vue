@@ -2,12 +2,14 @@
   <div
     class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
   >
-    <div class="container mx-auto px-4 py-8">
+    <div class="container-responsive section-spacing">
       <div class="max-w-7xl mx-auto">
         <!-- Header -->
         <div class="mb-8">
-          <h1 class="text-5xl font-bold text-gray-900 dark:text-white mb-3">Compare Models</h1>
-          <p class="text-xl text-gray-600 dark:text-gray-400">
+          <h1 class="text-responsive-xl font-bold text-gray-900 dark:text-white mb-3 gradient-text">
+            Compare Models
+          </h1>
+          <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-400">
             Side-by-side comparison of mobile phone models
           </p>
         </div>
@@ -43,7 +45,7 @@
                 class="flex-1"
                 @keyup.enter="addModelFromSearch"
                 @update:model-value="
-                  val => {
+                  (val: string) => {
                     searchQuery = val
                     handleSearchInput(val)
                   }

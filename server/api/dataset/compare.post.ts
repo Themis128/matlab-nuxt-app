@@ -1,5 +1,7 @@
 import { readFileSync, existsSync } from 'fs'
 import { join } from 'path'
+import { readBody, createError, defineEventHandler } from 'h3'
+import type { H3Event } from 'h3'
 
 interface PhoneModel {
   modelName: string
@@ -42,7 +44,7 @@ interface CompareRequest {
   modelNames: string[]
 }
 
-export default defineEventHandler(async (event): Promise<ComparisonResponse> => {
+export default defineEventHandler(async (event: H3Event): Promise<ComparisonResponse> => {
   try {
     const body = await readBody<CompareRequest>(event)
 
@@ -117,8 +119,9 @@ export default defineEventHandler(async (event): Promise<ComparisonResponse> => 
 
     // Parse header
     const headerLine = lines[0]
-    const headers = headerLine
-      ? parseCSVLine(headerLine).map(h => h.replace(/^"|"$/g, '').trim())
+    const headerLineValue = lines[0] ?? ''
+    const headers = headerLineValue
+      ? parseCSVLine(headerLineValue).map(h => h.replace(/^"|"$/g, '').trim())
       : []
 
     // Find column indices
@@ -158,8 +161,8 @@ export default defineEventHandler(async (event): Promise<ComparisonResponse> => 
         .replace(/[$,\s]/g, '')
         .replace(/(mAh|GB|MP|g|inches|"|'|Hz|TB|MB)/gi, '')
       const match = cleaned.match(/(\d+\.?\d*)/)
-      if (match) {
-        const num = parseFloat(match[1])
+      if (match && match[1]) {
+        const num = parseFloat(String(match[1]))
         return isNaN(num) || num <= 0 ? null : num
       }
       return null
@@ -284,7 +287,8 @@ export default defineEventHandler(async (event): Promise<ComparisonResponse> => 
     }
 
     // Find differences
-    const differences = []
+    type Difference = { field: string; best: string; worst: string; difference: string }
+    const differences: Difference[] = []
 
     const priceBest = foundModels.find(m => m.price === comparison.price.min)?.modelName || ''
     const priceWorst = foundModels.find(m => m.price === comparison.price.max)?.modelName || ''
@@ -326,8 +330,9 @@ export default defineEventHandler(async (event): Promise<ComparisonResponse> => 
       differences,
     }
   } catch (error: unknown) {
-    if (error.statusCode) {
-      throw error
+    const err = error as any
+    if (err && err.statusCode) {
+      throw err
     }
     throw createError({
       statusCode: 500,

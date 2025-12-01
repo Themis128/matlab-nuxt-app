@@ -74,16 +74,19 @@ const apiUrl = config.public.apiBase
 ## Deployment Scenarios
 
 ### Local Development
+
 - Frontend: `http://localhost:3000`
 - Backend: `http://localhost:8000`
 - Config: `NUXT_PUBLIC_API_BASE=http://localhost:8000`
 
-### Docker Development
+### Optional Docker Development
+
 - Frontend: `http://localhost:3000`
 - Backend: `http://localhost:8000`
 - Config: `NUXT_PUBLIC_API_BASE=http://python-api:8000` (container network)
 
 ### Production
+
 - Frontend: `https://yourdomain.com`
 - Backend: `https://api.yourdomain.com`
 - Config: `NUXT_PUBLIC_API_BASE=https://api.yourdomain.com`
