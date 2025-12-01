@@ -21,5 +21,8 @@ if (!rawDsn || isPlaceholder) {
     environment: process.env.NODE_ENV,
     // Sentry tracing does not work on Nitro server-side in dev
     // Suppressed warning: tracing disabled in development
+
+    // Server-side metrics are supported but may have different behavior
+    // Metrics will be sent from the server environment
   })
 }

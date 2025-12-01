@@ -1,4 +1,4 @@
-import { vi } from 'vitest'
+import { vi, expect } from 'vitest'
 
 // Mock $fetch globally for tests
 const mockFetch = vi.fn()
@@ -10,3 +10,6 @@ vi.mock('#app', () => ({
     $fetch: mockFetch,
   }),
 }))
+
+// Extend expect with custom matchers if needed
+// expect.extend({ ... })

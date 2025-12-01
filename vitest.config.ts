@@ -6,6 +6,8 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     setupFiles: ['./tests/vitest-setup.ts'],
+    // Disable global setup to prevent conflicts with Playwright
+    globals: false,
   },
   resolve: {
     alias: {

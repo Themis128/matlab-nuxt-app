@@ -83,22 +83,20 @@ export default defineConfig({
       stderr: 'pipe',
     },
     {
-      // Delay Nuxt startup to allow Python API to initialize first
+      // Use production build for testing to avoid Vitest conflicts
       command: isCI
-        ? 'npm run dev'
-        : 'pwsh -NoProfile -Command "Start-Sleep -Seconds 3; npm run dev"',
+        ? 'npm run build && npm run preview'
+        : 'pwsh -NoProfile -Command "Start-Sleep -Seconds 3; npm run build; npm run preview"',
       // Use PW_BASE_URL if provided so tests can reuse an already-running dev server on a different port
       url: process.env.PW_BASE_URL
         ? `${process.env.PW_BASE_URL.replace(/\/$/, '')}/api/health`
         : 'http://localhost:3000/api/health',
-      timeout: 180 * 1000, // 3 minutes for Nuxt dev server
+      timeout: 300 * 1000, // 5 minutes for Nuxt production build
       reuseExistingServer: true, // Always reuse existing server to avoid port conflicts
       stdout: 'pipe',
       stderr: 'pipe',
     },
   ],
-
-  globalSetup: './tests/global-setup.ts',
 
   /* Global test timeout */
   timeout: 90 * 1000,

@@ -87,14 +87,15 @@ export default defineNuxtConfig({
 
   // Enable source maps for Sentry integration
   sourcemap: {
-    client: 'hidden', // or true for full source maps
-    server: false,
+    client: 'hidden', // Generate source maps but don't expose them publicly
+    server: true, // Enable server-side source maps for proper error tracing
   },
 
-  // Production build optimizations
+  // Vite configuration for source maps
   vite: {
     build: {
       cssCodeSplit: true,
+      sourcemap: 'hidden', // Generate source maps for production builds
       rollupOptions: isProd
         ? {
             output: {

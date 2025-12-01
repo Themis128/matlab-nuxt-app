@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "prepare": "nuxt prepare",
-    "build": "nuxt build",
+    "build": "nuxt build && npm run sentry:sourcemaps",
     "dev": "nuxt dev --port 3000",
     "dev:python": "cd python_api && python api.py",
     "dev:all": "pwsh -NoProfile -Command \"Write-Host '[DEV-ALL] 🚀 Starting MATLAB Nuxt App with all services...' -ForegroundColor Cyan; Write-Host '[DEV-ALL] � Loading environment variables...' -ForegroundColor Yellow; try { Get-Content .env | ForEach-Object { if ($_ -match '^([^#][^=]+)=(.*)$') { $key = $matches[1].Trim(); $value = $matches[2].Trim(); [Environment]::SetEnvironmentVariable($key, $value, 'Process') } } } catch { Write-Host '[DEV-ALL] ⚠️  No .env file found, using system environment variables' -ForegroundColor Yellow }; Write-Host '[DEV-ALL] �📊 Checking service configurations...' -ForegroundColor Yellow; if ($env:SENTRY_DSN -and $env:SENTRY_DSN -ne 'https://your-dsn@sentry.io/your-project-id' -and $env:SENTRY_DSN -notmatch '^https://your-dsn@') { Write-Host '[DEV-ALL] ✅ Sentry: Configured (Error tracking active)' -ForegroundColor Green } else { Write-Host '[DEV-ALL] ⚠️  Sentry: Not configured or using placeholder DSN' -ForegroundColor Yellow }; if ($env:ALGOLIA_APP_ID -and $env:ALGOLIA_APP_ID -ne 'YourAlgoliaAppIdHere' -and $env:ALGOLIA_APP_ID -notmatch '^Your') { Write-Host '[DEV-ALL] ✅ Algolia: Configured (Search indexing active)' -ForegroundColor Green } else { Write-Host '[DEV-ALL] ⚠️  Algolia: Not configured or using placeholder values' -ForegroundColor Yellow }; Write-Host '[DEV-ALL] 🔄 Starting services...' -ForegroundColor Cyan\" && concurrently -t -n PY,NUXT -c blue,green \"cd python_api && ..\\venv\\Scripts\\python api.py\" \"pwsh -NoProfile -File scripts/start-nuxt-dev.ps1 -Port 3000 -HostName localhost\"",
@@ -47,12 +47,15 @@
     "csv:validate": "set PYTHONIOENCODING=utf-8 && .\\venv\\Scripts\\python scripts/validate_csv_schema.py",
     "algolia:index": "node scripts/algolia/index_records.js",
     "vscode:show": "pwsh -NoProfile -File .\\.vscode\\settings-controls\\toggle-settings.ps1 -mode show -backup",
-    "vscode:hide": "pwsh -NoProfile -File .\\.vscode\\settings-controls\\toggle-settings.ps1 -mode hide -backup"
+    "vscode:hide": "pwsh -NoProfile -File .\\.vscode\\settings-controls\\toggle-settings.ps1 -mode hide -backup",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org baltzakisthemiscom --project matlab dist && sentry-cli sourcemaps upload --org baltzakisthemiscom --project matlab dist"
   },
   "dependencies": {
     "@heroicons/vue": "^2.2.0",
+    "@modelcontextprotocol/sdk": "^1.23.0",
     "@nuxt/ui": "^2.19.0",
     "@pinia/nuxt": "^0.11.3",
+    "@sentry/cli": "^2.58.2",
     "@sentry/nuxt": "^8.55.0",
     "@sentry/tracing": "^7.120.4",
     "@sentry/vue": "^10.27.0",
@@ -62,6 +65,7 @@
     "nuxt": "^4.2.1",
     "pinia": "^3.0.4",
     "pinia-plugin-persistedstate": "^4.7.1",
+    "puppeteer": "^24.31.0",
     "vue-chartjs": "^5.3.3",
     "vue-eslint-parser": "^10.2.0",
     "vue3-apexcharts": "^1.10.0"
