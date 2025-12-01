@@ -495,6 +495,35 @@ npm run test:report
 
 ## 📦 Deployment
 
+### 🌐 Deploy on Replit
+
+[![Run on Replit](https://replit.com/badge/github/Themis128/matlab-nuxt-app)](https://replit.com/github/Themis128/matlab-nuxt-app)
+
+**One-Click Deployment:**
+1. Click the "Run on Replit" badge above
+2. Wait for dependencies to install (2-3 minutes)
+3. App automatically starts on port 3000
+
+**Disk Quota Management:**
+This project is optimized to prevent Replit's "disk quota exceeded" errors:
+- ✅ `.replitignore` excludes large files (node_modules, build artifacts, caches)
+- ✅ `.npmrc` configures npm to use temporary cache (`/tmp`)
+- ✅ `start.sh` auto-cleans caches on startup
+- ✅ `cleanup-replit.sh` manual cleanup script available
+
+**If you encounter disk issues:**
+```bash
+# Run the cleanup script
+bash cleanup-replit.sh
+
+# Or manual cleanup
+rm -rf node_modules .nuxt .output
+npm cache clean --force
+npm install
+```
+
+📖 **Full Replit Guide:** [REPLIT_GUIDE.md](REPLIT_GUIDE.md)
+
 ### Quick Deploy with Docker
 
 ```bash
