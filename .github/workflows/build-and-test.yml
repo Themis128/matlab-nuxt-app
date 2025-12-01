@@ -24,9 +24,6 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Clean up npm modules and lock file
-        run: rm -rf node_modules package-lock.json
-
       - name: Install dependencies
         run: npm ci
 
@@ -170,9 +167,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.14'
-
-      - name: Clean up npm modules and lock file
-        run: rm -rf node_modules package-lock.json
 
       - name: Install Node.js dependencies
         run: npm ci
