@@ -1,63 +1,141 @@
 # Replit ignore file - files to exclude from Replit
+# This prevents disk quota exceeded errors by excluding large dependencies and build artifacts
 
-# Dependencies
+# ===== Node.js Dependencies & Cache =====
 node_modules/
+.npm/
+.yarn/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# ===== Nuxt/Vue Build Artifacts & Cache =====
 .nuxt/
 .output/
+.nitro/
+.cache/
 dist/
+build/
+.turbo/
 
-# Environment files
+# ===== Python Virtual Environments & Cache =====
+venv/
+env/
+ENV/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# ===== MATLAB files (large, not needed on Replit) =====
+*.mat
+*.asv
+*.m~
+*.fig
+*.slx~
+mobiles-dataset-docs/trained_models/
+mobiles-dataset-docs/preprocessed/
+examples/
+
+# ===== Test Artifacts =====
+test-results/
+playwright-report/
+playwright/.cache/
+coverage/
+.nyc_output/
+screenshots/
+
+# ===== Environment files =====
 .env
 .env.local
 .env.*.local
+.env.development
+.env.production
 
-# IDE files
+# ===== IDE & Editor files =====
 .vscode/
 .idea/
 *.swp
 *.swo
+*.swn
 *~
+.project
+.classpath
+.settings/
+.cline/
+.goosy/
+.deno_lsp/
+.continue/
+.cursor/
+.wakatime/
 
-# OS files
+# ===== OS files =====
 .DS_Store
 Thumbs.db
+desktop.ini
+ehthumbs.db
 
-# Logs
+# ===== Logs =====
 *.log
+logs/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+lerna-debug.log*
+pids/
+*.pid
+*.seed
+*.pid.lock
 
-# MATLAB files (large, not needed on Replit)
-*.mat
-mobiles-dataset-docs/trained_models/
-examples/
-
-# Python virtual environments
-venv/
-env/
-__pycache__/
-*.pyc
-
-# Build artifacts
-.nuxt/
-.output/
-dist/
-build/
-
-# Git
+# ===== Git metadata (not needed in Replit workspace) =====
 .git/
 .gitignore
+.gitattributes
 
-# Documentation (optional - can include if needed)
-# docs/
-# wiki/
+# ===== Large data files =====
+data/*.csv
+data/*.json
+public/mobile_images/
+public/images/mobiles/
 
-# Screenshots
-screenshots/
+# ===== Documentation (optional - can be viewed via GitHub) =====
+docs/
+wiki/
 
-# Kaggle credentials
+# ===== Credentials & Secrets =====
 kaggle.json
+*.pem
+*.key
+*.cert
 
-# MATLAB config (will need to be set up differently on Replit)
+# ===== Temporary & backup files =====
+tmp/
+temp/
+*.tmp
+*.bak
+*.backup
+*.old
+*.orig
+
+# ===== TypeScript build info =====
+*.tsbuildinfo
+
+# ===== Playwright browsers (auto-downloaded) =====
+.ms-playwright/
+
+# ===== MATLAB config (will need to be set up differently on Replit) =====
 # matlab.config.json
