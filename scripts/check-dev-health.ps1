@@ -12,22 +12,22 @@ Write-Log "Checking listening ports: $($Ports -join ', ')"
 foreach ($port in $Ports) {
     try {
         $conns = Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction SilentlyContinue
-        if (!$conns) { Write-Log "Port $port: free"; continue }
+        if (!$conns) { Write-Log "Port $($port): free"; continue }
         $procIds = $conns | Select-Object -ExpandProperty OwningProcess | Sort-Object -Unique
         foreach ($pid in $procIds) {
             try {
                 $proc = Get-Process -Id $pid -ErrorAction SilentlyContinue
                 if ($proc) {
-                    Write-Log "Port $port -> PID $($proc.Id) $($proc.ProcessName) Path: $($proc.Path)"
+                    Write-Log "Port $($port) -> PID $($proc.Id) $($proc.ProcessName) Path: $($proc.Path)"
                 } else {
-                    Write-Log "Port $port -> PID $pid (process gone)";
+                    Write-Log "Port $($port) -> PID $pid (process gone)";
                 }
             } catch {
-                Write-Log "Port $port -> PID $pid (couldn't inspect process)"
+                Write-Log "Port $($port) -> PID $pid (couldn't inspect process)"
             }
         }
     } catch {
-        Write-Log "Error checking port $port: $($_.Exception.Message)"
+        Write-Log "Error checking port $($port): $($_.Exception.Message)"
     }
 }
 

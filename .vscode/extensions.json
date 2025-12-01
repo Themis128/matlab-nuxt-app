@@ -1,0 +1,20 @@
+{
+  "recommendations": [
+    // MATLAB
+    "jeffersonqin.better-matlab-syntax",
+    "mathworks.matlab",
+    // Nuxt & Vue
+    "vue.volar",
+    "antfu.iconify",
+    // Testing
+    "ms-playwright.playwright",
+    // Python
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    // General
+    "editorconfig.editorconfig",
+    "esbenp.prettier-vscode",
+    // Data & CSV
+    "mechatroner.rainbow-csv"
+  ]
+}

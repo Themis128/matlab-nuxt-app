@@ -1,0 +1,14 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vscode/master/extensions/json-language-features/server/schema/tasks.json",
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Dev: Nuxt + Python",
+      "type": "shell",
+      "command": "pwsh",
+      "args": ["-NoLogo", "-NoProfile", "-Command", "nuxt dev"],
+      "isBackground": false,
+      "problemMatcher": []
+    }
+  ]
+}

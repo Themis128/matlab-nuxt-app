@@ -11,7 +11,12 @@ const isProd = process.env.NODE_ENV === 'production'
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   // Disable devtools during automated tests to avoid WebSocket port (24678) conflicts
-  devtools: { enabled: !isTestEnv && !isProd },
+  // Allow override of the devtools websocket port using NUXT_DEVTOOLS_PORT env var to avoid conflicts
+  devtools: {
+    enabled: !isTestEnv && !isProd,
+    // port expects a number; default to 24678 if not specified
+    port: process.env.NUXT_DEVTOOLS_PORT ? Number(process.env.NUXT_DEVTOOLS_PORT) : 24678,
+  },
 
   modules: ['@nuxt/ui', '@pinia/nuxt', '@sentry/nuxt/module'],
 

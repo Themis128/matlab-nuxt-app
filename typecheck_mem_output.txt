@@ -1,0 +1,4 @@
+
+> matlab-nuxt-app@1.0.0 typecheck:mem
+> cross-env NODE_OPTIONS=--max_old_space_size=16384 npx vue-tsc --project tsconfig.ci.json --noEmit --skipLibCheck && cross-env NODE_OPTIONS=--max_old_space_size=16384 npx tsc -p tsconfig.ci.json --noEmit
+

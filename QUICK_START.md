@@ -58,11 +58,20 @@ npm run typecheck:mem
 
 ## 🧰 IDE Setup & Performance
 
-If you're using Visual Studio Code, we exclude some large non-JS/TS folders from being indexed by the editor to improve responsiveness and the TypeScript/JavaScript language service (this is done in `.vscode/settings.json` and `tsconfig.json`).
+If you're using Visual Studio Code, we exclude some large non-JS/TS folders from being indexed by the editor to improve responsiveness and the TypeScript/JavaScript language service (this is done in `.vscode/settings.json` and `tsconfig.json`). See `docs/WORKSPACE_SETUP.md` for details and the toggle script.
 
 - The following folders are excluded by default for performance: `matlab`, `python_api`, `data`, `mobiles-dataset-docs`, `screenshots`, `test-results`, `tests`, `docs`, `deployment`, `examples`, `instantsearch-app`.
 - If you need to work inside those folders locally, you can temporarily disable these excludes from `File -> Preferences -> Settings` by searching for `files.exclude` or by editing `.vscode/settings.json`.
 - To reduce file-watcher load on large directories, we also add `files.watcherExclude` entries. Remove these if you need live reload for those folders.
+
+Tip: A toggle script is provided at `.vscode/settings-controls/toggle-settings.ps1` to switch between the `hide` and `show` variants without manually editing the JSON file.
+
+Shortcuts:
+
+```pwsh
+npm run vscode:hide    # Restore the default hide configuration (recommended)
+npm run vscode:show    # Reveal previously hidden folders for debugging or edits
+```
 
 Command to open the `.vscode` folder in the project root:
 
@@ -168,6 +177,23 @@ python -c "import pandas as pd; df = pd.read_csv('data/Mobiles_Dataset_Final.csv
 ```
 
 ## 📖 Documentation
+
+### Dev Server (Recommended)
+
+When starting both the Python API and Nuxt dev server, use the helper which clears conflicting ports first to avoid `DevTools` WebSocket errors (port 24678):
+
+```pwsh
+# Starts Python API and Nuxt while ensuring common dev ports are cleared.
+npm run dev:all:ensure
+```
+
+If you encounter the `WebSocket server error: Port 24678 is already in use` error, run:
+
+```pwsh
+pwsh -NoProfile -File scripts/kill-devtools-port.ps1 -Verbose
+# or
+npm run dev:all:ensure
+```
 
 - **Full details:** `IMPLEMENTATION_SUMMARY.md`
 - **API docs:** `python_api/README.md`

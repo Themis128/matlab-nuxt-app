@@ -27,8 +27,15 @@ build/
 preprocessed/
 trained_models/
 
-# IDE
-.vscode/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/settings-controls/
+!.vscode/settings-controls/**
+# Ignore per-developer workspace settings, local reconfigurations, and backups
+.vscode/settings.json
+.vscode/settings.json.bak
 .idea/
 *.swp
 *.swo

@@ -1,0 +1,52 @@
+{
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/venv": true,
+    "**/.venv": true,
+    "**/__pycache__": true,
+    "data": false,
+    "matlab": false,
+    "python_api": false,
+    "mobiles-dataset-docs": false,
+    "screenshots": false,
+    "test-results": false,
+    "tests": false,
+    "docs": false,
+    "deployment": false,
+    "examples": false,
+    "instantsearch-app": false,
+    "public": false
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/venv": true,
+    "**/.venv": true,
+    "**/__pycache__": true,
+    "data": false,
+    "matlab": false,
+    "python_api": false,
+    "mobiles-dataset-docs": false,
+    "screenshots": false,
+    "test-results": false,
+    "tests": false,
+    "docs": false,
+    "deployment": false,
+    "examples": false,
+    "instantsearch-app": false,
+    "public": false
+  },
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/venv/**": true,
+    "**/.venv/**": true,
+    "**/matlab/**": false,
+    "**/python_api/**": false,
+    "**/data/**": false,
+    "**/mobiles-dataset-docs/**": false
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.tsconfig": "tsconfig.editor.json",
+  "javascript.suggest.enabled": true,
+  "typescript.suggest.enabled": true,
+  "typescript.disableAutomaticTypeAcquisition": false
+}

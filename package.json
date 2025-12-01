@@ -12,7 +12,7 @@
     "dev:health": "pwsh -NoProfile -File scripts/check-dev-health.ps1",
     "dev:all:ensure": "pwsh -NoProfile -File scripts/clear-ports.ps1 -Force && npm run dev:all",
     "typecheck": "npm run typecheck:ci",
-    "typecheck:mem": "cross-env NODE_OPTIONS=--max_old_space_size=16384 npx vue-tsc --project tsconfig.json --noEmit --skipLibCheck && cross-env NODE_OPTIONS=--max_old_space_size=16384 npx tsc -p tsconfig.json --noEmit",
+    "typecheck:mem": "cross-env NODE_OPTIONS=--max_old_space_size=16384 npx vue-tsc --project tsconfig.ci.json --noEmit --skipLibCheck && cross-env NODE_OPTIONS=--max_old_space_size=16384 npx tsc -p tsconfig.ci.json --noEmit",
     "typecheck:ci": "cross-env NODE_OPTIONS=--max_old_space_size=8192 npx vue-tsc --project tsconfig.ci.json --noEmit && cross-env NODE_OPTIONS=--max_old_space_size=8192 npx tsc -p tsconfig.ci.json --noEmit",
     "typecheck:local": "npm run typecheck:ci",
     "lint": "eslint . --ext .js,.ts,.vue --max-warnings=0",
@@ -42,8 +42,11 @@
     "optimize:images": "set PYTHONIOENCODING=utf-8 && .\\venv\\Scripts\\python scripts/optimize_images.py",
     "optimize:csv": "set PYTHONIOENCODING=utf-8 && .\\venv\\Scripts\\python scripts/optimize_csv.py",
     "csv:validate": "set PYTHONIOENCODING=utf-8 && .\\venv\\Scripts\\python scripts/validate_csv_schema.py",
-    "algolia:index": "node scripts/algolia/index_records.js"
+    "algolia:index": "node scripts/algolia/index_records.js",
+    "vscode:show": "pwsh -NoProfile -File .\\.vscode\\settings-controls\\toggle-settings.ps1 -mode show -backup",
+    "vscode:hide": "pwsh -NoProfile -File .\\.vscode\\settings-controls\\toggle-settings.ps1 -mode hide -backup"
   },
+
   "dependencies": {
     "@heroicons/vue": "^2.2.0",
     "@nuxt/ui": "^2.19.0",
