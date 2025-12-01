@@ -48,7 +48,7 @@
     "algolia:index": "node scripts/algolia/index_records.js",
     "vscode:show": "pwsh -NoProfile -File .\\.vscode\\settings-controls\\toggle-settings.ps1 -mode show -backup",
     "vscode:hide": "pwsh -NoProfile -File .\\.vscode\\settings-controls\\toggle-settings.ps1 -mode hide -backup",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org baltzakisthemiscom --project matlab dist && sentry-cli sourcemaps upload --org baltzakisthemiscom --project matlab dist"
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org baltzakisthemiscom --project matlab .output/public && sentry-cli sourcemaps upload --org baltzakisthemiscom --project matlab .output/public"
   },
   "dependencies": {
     "@heroicons/vue": "^2.2.0",
