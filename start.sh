@@ -29,20 +29,25 @@ if [ -f "requirements.txt" ]; then
     python3 -m pip install --user --no-cache-dir -r requirements.txt 2>/dev/null || echo "⚠️  Python dependencies installation failed (continuing anyway)"
 fi
 
-# Start Python API in background
-echo "🐍 Starting Python API..."
-cd python_api
-python3 api.py &
-PYTHON_PID=$!
-cd ..
-
-# Wait for Python API to start
-echo "⏳ Waiting for Python API to be ready..."
-sleep 5
+# Start Python API in background (if directory exists)
+if [ -d "python_api" ]; then
+    echo "🐍 Starting Python API..."
+    cd python_api
+    python3 api.py &
+    PYTHON_PID=$!
+    cd ..
+    
+    # Wait for Python API to start
+    echo "⏳ Waiting for Python API to be ready..."
+    sleep 5
+else
+    echo "⚠️  python_api directory not found, skipping Python API startup"
+    PYTHON_PID=""
+fi
 
 # Start Nuxt dev server
 echo "🌐 Starting Nuxt development server..."
 npm run dev
 
 # Cleanup on exit
-trap "echo '🛑 Stopping servers...'; kill $PYTHON_PID 2>/dev/null; exit" INT TERM EXIT
+trap "echo '🛑 Stopping servers...'; [ -n \"\$PYTHON_PID\" ] && kill \$PYTHON_PID 2>/dev/null; exit" INT TERM EXIT
