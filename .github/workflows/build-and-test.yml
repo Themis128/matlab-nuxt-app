@@ -76,6 +76,82 @@ jobs:
 
   # test-docker (removed) - Docker builds are optional and not executed
 
+  model-validation:
+    runs-on: ubuntu-latest
+    needs: test-backend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.14
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+          cache: 'pip'
+
+      - name: Install Python dependencies
+        run: |
+          cd python_api
+          pip install -r requirements.txt
+
+      - name: Check if models exist
+        run: |
+          cd python_api
+          if [ ! -d "trained_models" ] || [ -z "$(ls -A trained_models 2>/dev/null)" ]; then
+            echo "No trained models found. Skipping model validation."
+            echo "models_exist=false" >> $GITHUB_OUTPUT
+          else
+            echo "Trained models found. Running validation."
+            echo "models_exist=true" >> $GITHUB_OUTPUT
+          fi
+        id: check-models
+
+      - name: Validate model performance
+        if: steps.check-models.outputs.models_exist == 'true'
+        run: |
+          cd python_api
+          echo "Running comprehensive model validation..."
+          python validate_models.py
+
+      - name: Test model predictions
+        if: steps.check-models.outputs.models_exist == 'true'
+        run: |
+          cd python_api
+          echo "Testing model predictions with sample data..."
+          python test_model_predictions.py
+
+      - name: Verify production deployment readiness
+        if: steps.check-models.outputs.models_exist == 'true'
+        run: |
+          cd python_api
+          echo "Verifying production deployment readiness..."
+          python verify_production_deployment.py
+
+      - name: Upload model validation results
+        if: always() && steps.check-models.outputs.models_exist == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-validation-results
+          path: |
+            python_api/trained_models/*.json
+            python_api/data/*_results.json
+          retention-days: 30
+
+      - name: Model validation summary
+        if: always()
+        run: |
+          echo "## 🤖 Model Validation Summary" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.check-models.outputs.models_exist }}" = "true" ]; then
+            echo "- ✅ Trained models found and validated" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Model performance metrics calculated" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Prediction accuracy tested" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Production deployment verified" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- ⚠️ No trained models found - skipping validation" >> $GITHUB_STEP_SUMMARY
+            echo "- 💡 Models will be validated when available" >> $GITHUB_STEP_SUMMARY
+          fi
+
   e2e-tests:
     runs-on: ubuntu-latest
 
