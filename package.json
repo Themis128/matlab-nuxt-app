@@ -5,6 +5,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "prepare": "nuxt prepare",
     "build": "nuxt build",
     "dev": "nuxt dev --port 3000",
     "dev:python": "cd python_api && python api.py",
