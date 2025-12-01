@@ -9,6 +9,7 @@
     "dev": "nuxt dev",
     "dev:python": "cd python_api && python api.py",
     "dev:all": "concurrently -t -n PY,NUXT -c blue,green \"cd python_api && ..\\venv\\Scripts\\python api.py\" \"npm run dev -- --port 3000 --hostname localhost\"",
+    "dev:health": "pwsh -NoProfile -File scripts/check-dev-health.ps1",
     "dev:all:ensure": "pwsh -NoProfile -File scripts/clear-ports.ps1 -Force && npm run dev:all",
     "typecheck": "npm run typecheck:ci",
     "typecheck:mem": "cross-env NODE_OPTIONS=--max_old_space_size=16384 npx vue-tsc --project tsconfig.json --noEmit --skipLibCheck && cross-env NODE_OPTIONS=--max_old_space_size=16384 npx tsc -p tsconfig.json --noEmit",
