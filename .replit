@@ -17,6 +17,13 @@ HOST = "0.0.0.0"
 PYTHON_API_URL = "http://localhost:8000"
 PYTHONUNBUFFERED = "1"
 NUXT_TELEMETRY_DISABLED = "1"
+# Optimize Node.js memory usage to prevent disk cache issues
+NODE_OPTIONS = "--max-old-space-size=512"
+# Optimize npm to reduce disk usage
+NPM_CONFIG_CACHE = "/tmp/npm-cache"
+NPM_CONFIG_PREFER_OFFLINE = "true"
+# Optimize Nuxt build to reduce disk usage
+NITRO_PRESET = "node-server"
 
 # Nix packages
 [nix]
@@ -65,6 +72,10 @@ ignoredPackages = ["@types/node"]
 packageSearch = true
 guessImports = true
 enabledForHosting = true
+
+# Optimize package installation to reduce disk usage
+[packager.afterInstall]
+postInstall = ["npm cache clean --force"]
 
 # Debugger configuration
 [debugger]
