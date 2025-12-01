@@ -28,7 +28,7 @@ jobs:
         run: rm -rf node_modules package-lock.json
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Prepare Nuxt
         run: npm run prepare
@@ -175,7 +175,7 @@ jobs:
         run: rm -rf node_modules package-lock.json
 
       - name: Install Node.js dependencies
-        run: npm install
+        run: npm ci
 
       - name: Install Python dependencies
         run: |
