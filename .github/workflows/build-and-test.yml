@@ -100,12 +100,12 @@ jobs:
       - name: Check if models exist
         run: |
           cd python_api
-          if [ ! -d "trained_models" ] || [ -z "$(ls -A trained_models 2>/dev/null)" ]; then
-            echo "No trained models found. Skipping model validation."
-            echo "models_exist=false" >> $GITHUB_OUTPUT
-          else
+          if [ -d "trained_models" ] && [ -n "$(find trained_models -maxdepth 1 -type f | head -1)" ]; then
             echo "Trained models found. Running validation."
             echo "models_exist=true" >> $GITHUB_OUTPUT
+          else
+            echo "No trained models found. Skipping model validation."
+            echo "models_exist=false" >> $GITHUB_OUTPUT
           fi
         id: check-models
 
