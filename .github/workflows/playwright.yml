@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
+    env:
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -35,6 +38,15 @@ jobs:
           pip install -r requirements.txt
           pip install -r python_api/requirements.txt
 
+      - name: Install sentry-cli
+        if: ${{ secrets.SENTRY_AUTH_TOKEN != '' }}
+        run: |
+          curl -sL https://sentry.io/get-cli/ | bash
+
+      - name: Login to Sentry
+        if: ${{ secrets.SENTRY_AUTH_TOKEN != '' }}
+        run: sentry-cli login --auth-token $SENTRY_AUTH_TOKEN
+
       - name: Run Python API tests
         run: |
           cd python_api
@@ -55,6 +67,8 @@ jobs:
 
       - name: Build Nuxt app
         run: npm run build
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - name: Start Nuxt server
         run: |
