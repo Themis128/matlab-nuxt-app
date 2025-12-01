@@ -32,3 +32,6 @@ xgboost>=3.1.2  # Extreme Gradient Boosting (ensemble diversity)
 fastapi>=0.104.0
 uvicorn[standard]>=0.24.0
 pydantic>=2.0.0
+
+# Error tracking and monitoring
+sentry-sdk>=1.38.0
