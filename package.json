@@ -18,6 +18,7 @@
     "precommit:check": "node scripts/hooks/check-no-vscode-settings.cjs",
     "typecheck:local": "npm run typecheck:ci",
     "lint": "eslint . --ext .js,.ts,.vue",
+    "lint:yaml": "yamllint .github/workflows/*.yml .github/**/*.yml",
     "format": "prettier --write .",
     "lint:fix": "eslint . --ext .js,.ts,.vue --fix",
     "generate": "nuxt generate",
@@ -125,6 +126,6 @@
   },
   "homepage": "https://github.com/Themis128/matlab-nuxt-app#readme",
   "simple-git-hooks": {
-    "pre-commit": "npm run precommit:check && npm run format && npm run lint && npm run typecheck"
+    "pre-commit": "npm run precommit:check && npm run lint:yaml && npm run format && npm run lint && npm run typecheck"
   }
 }
