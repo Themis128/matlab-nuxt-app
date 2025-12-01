@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // Auto-imported helpers and `#imports` module shims for editor
 
 declare module '#imports' {

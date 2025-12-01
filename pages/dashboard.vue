@@ -572,6 +572,5 @@ const accuracyLabels = computed(() => {
   return labels
 })
 
-// expose some refs to template
-const analyticsSummary = analyticsData
+// Some code exposes analyticsData directly; no alias required
 </script>

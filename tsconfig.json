@@ -128,6 +128,24 @@
     "../examples",
     "../instantsearch-app",
     "../playwright-report",
-    "../wiki"
+    "../wiki",
+    // Also include workspace-relative global suppression patterns
+    "**/matlab/**",
+    "**/python_api/**",
+    "**/data/**",
+    "**/mobiles-dataset-docs/**",
+    "**/screenshots/**",
+    "**/test-results/**",
+    "**/tests/**",
+    "**/docs/**",
+    "**/deployment/**",
+    "**/examples/**",
+    "**/wiki/**",
+    "**/public/**",
+    "**/venv/**",
+    "**/.venv/**",
+    "**/__pycache__/**",
+    "**/python_api/**",
+    "**/instantsearch-app/**"
   ]
 }

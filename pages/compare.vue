@@ -22,13 +22,13 @@
           <div class="p-6">
             <div class="flex flex-wrap gap-4 mb-4">
               <div
-                v-for="(modelName, index) in selectedModels"
-                :key="index"
+                v-for="modelName in selectedModels"
+                :key="modelName"
                 class="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-lg"
               >
                 <span class="font-semibold">{{ modelName }}</span>
                 <UButton
-                  @click="removeModel(index)"
+                  @click="removeModelByName(modelName)"
                   color="red"
                   variant="ghost"
                   size="xs"
@@ -206,7 +206,7 @@
                     </td>
                   </tr>
                   <tr
-                    v-if="comparison.models.some(m => m.storage)"
+                    v-if="comparison.models.some((m: PhoneModel) => m.storage)"
                     class="border-b border-gray-100 dark:border-gray-800"
                   >
                     <td class="py-3 px-4 font-semibold">Storage</td>
@@ -219,7 +219,7 @@
                     </td>
                   </tr>
                   <tr
-                    v-if="comparison.models.some(m => m.processor)"
+                    v-if="comparison.models.some((m: PhoneModel) => m.processor)"
                     class="border-b border-gray-100 dark:border-gray-800"
                   >
                     <td class="py-3 px-4 font-semibold">Processor</td>
@@ -232,7 +232,7 @@
                     </td>
                   </tr>
                   <tr
-                    v-if="comparison.models.some(m => m.frontCamera)"
+                    v-if="comparison.models.some((m: PhoneModel) => m.frontCamera)"
                     class="border-b border-gray-100 dark:border-gray-800"
                   >
                     <td class="py-3 px-4 font-semibold">Front Camera</td>
@@ -244,7 +244,7 @@
                       {{ model.frontCamera || 'N/A' }} {{ model.frontCamera ? 'MP' : '' }}
                     </td>
                   </tr>
-                  <tr v-if="comparison.models.some(m => m.backCamera)">
+                  <tr v-if="comparison.models.some((m: PhoneModel) => m.backCamera)">
                     <td class="py-3 px-4 font-semibold">Back Camera</td>
                     <td
                       v-for="model in comparison.models"
@@ -410,9 +410,14 @@ const addModelFromSearch = () => {
   nextTick()
 }
 
-const removeModel = (index: number) => {
-  selectedModels.value.splice(index, 1)
-  saveToLocalStorage()
+// removeModel removed - we use removeModelByName in templates
+
+const removeModelByName = (name: string) => {
+  const idx = selectedModels.value.indexOf(name)
+  if (idx !== -1) {
+    selectedModels.value.splice(idx, 1)
+    saveToLocalStorage()
+  }
 }
 
 const clearAll = () => {

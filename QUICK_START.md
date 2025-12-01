@@ -56,6 +56,21 @@ npm run typecheck
 npm run typecheck:mem
 ```
 
+## 🧰 IDE Setup & Performance
+
+If you're using Visual Studio Code, we exclude some large non-JS/TS folders from being indexed by the editor to improve responsiveness and the TypeScript/JavaScript language service (this is done in `.vscode/settings.json` and `tsconfig.json`).
+
+- The following folders are excluded by default for performance: `matlab`, `python_api`, `data`, `mobiles-dataset-docs`, `screenshots`, `test-results`, `tests`, `docs`, `deployment`, `examples`, `instantsearch-app`.
+- If you need to work inside those folders locally, you can temporarily disable these excludes from `File -> Preferences -> Settings` by searching for `files.exclude` or by editing `.vscode/settings.json`.
+- To reduce file-watcher load on large directories, we also add `files.watcherExclude` entries. Remove these if you need live reload for those folders.
+
+Command to open the `.vscode` folder in the project root:
+
+```pwsh
+ls .vscode
+code .vscode/settings.json
+```
+
 ### Dataset
 
 - **930 phones** from 19 brands

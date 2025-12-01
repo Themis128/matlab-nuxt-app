@@ -60,7 +60,8 @@ export default defineEventHandler(
 
       // Parse data rows
       const dataLines = lines.slice(1)
-      const totalRows = dataLines.length
+      // Total rows available in the dataset (not used in current response)
+      const _totalRows = dataLines.length
 
       // Get requested sample
       const sampleLines = dataLines.slice(offset, offset + limit)

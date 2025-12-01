@@ -4,7 +4,7 @@ const rawClientDsn = process.env.SENTRY_DSN?.trim()
 const clientIsPlaceholder =
   rawClientDsn && (rawClientDsn.includes('your-dsn') || rawClientDsn.includes('your-project-id'))
 if (!rawClientDsn || clientIsPlaceholder) {
-  console.info(
+  console.warn(
     '[sentry] Client SENTRY_DSN not provided or placeholder; skipping Sentry initialization (dev/test)'
   )
 } else {

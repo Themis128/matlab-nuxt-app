@@ -100,11 +100,12 @@ interface Emits {
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
+import type { UserPreferences } from '~/stores/userPreferencesStore'
 const { useUserPreferencesStore } = await import('~/stores/userPreferencesStore')
 const preferencesStore = useUserPreferencesStore()
 
 // Local state for immediate UI updates
-const localPreferences = ref({ ...preferencesStore })
+const localPreferences = ref<UserPreferences>({ ...preferencesStore.$state })
 
 // Sync local preferences when props change
 watch(
@@ -118,8 +119,8 @@ watch(
 
 // Watch for store changes and update local state
 watch(
-  () => preferencesStore,
-  newPreferences => {
+  () => preferencesStore.$state,
+  (newPreferences: UserPreferences) => {
     localPreferences.value = { ...newPreferences }
   },
   { deep: true }

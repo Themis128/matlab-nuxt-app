@@ -5,7 +5,7 @@ const nuxtTsPath = path.resolve(process.cwd(), '.nuxt', 'tsconfig.json')
 
 try {
   if (!fs.existsSync(nuxtTsPath)) {
-    console.log(`[patch-nuxt-tsconfig] ${nuxtTsPath} not found`)
+    console.warn(`[patch-nuxt-tsconfig] ${nuxtTsPath} not found`)
     process.exit(0)
   }
 
@@ -14,9 +14,9 @@ try {
 
   if (content !== fixed) {
     fs.writeFileSync(nuxtTsPath, fixed, 'utf8')
-    console.log(`[patch-nuxt-tsconfig] Patched module option in ${nuxtTsPath}`)
+    console.warn(`[patch-nuxt-tsconfig] Patched module option in ${nuxtTsPath}`)
   } else {
-    console.log(`[patch-nuxt-tsconfig] No change required; module is not set to "preserve"`)
+    console.warn(`[patch-nuxt-tsconfig] No change required; module is not set to "preserve"`)
   }
 } catch (err) {
   console.error('[patch-nuxt-tsconfig] Error patching tsconfig:', err)

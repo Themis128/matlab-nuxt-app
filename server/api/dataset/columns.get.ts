@@ -11,20 +11,7 @@ interface ColumnInfo {
   sample: string[]
 }
 
-interface DatasetAnalysis {
-  datasetPath: string | null
-  totalRows: number
-  totalColumns: number
-  columns: ColumnInfo[]
-  foundFeatures: Record<string, { column: string; count: number; percentage: number }>
-  missingFeatures: string[]
-  recommendations: {
-    cameraAvailable: boolean
-    storageAvailable: boolean
-    processorAvailable: boolean
-    regionalPricesAvailable: boolean
-  }
-}
+// DatasetAnalysis interface removed: it was unused in this module
 
 export default defineEventHandler(async (): Promise<string[]> => {
   try {
@@ -234,7 +221,7 @@ export default defineEventHandler(async (): Promise<string[]> => {
     })
 
     // Generate recommendations
-    const recommendations = {
+    const _recommendations = {
       cameraAvailable: 'Front Camera' in foundFeatures && 'Back Camera' in foundFeatures,
       storageAvailable: 'Storage' in foundFeatures || 'Model Name' in foundFeatures,
       processorAvailable: 'Processor' in foundFeatures,

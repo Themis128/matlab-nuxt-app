@@ -79,7 +79,7 @@ onMounted(() => {
     };
   }
 });
-import { ref } from 'vue';
+// 'ref' import removed; not used in this component
 import algoliasearch from 'algoliasearch/lite';
 import PhoneHit from './components/PhoneHit.vue';
 

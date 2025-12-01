@@ -118,7 +118,6 @@ export default defineEventHandler(async (event: H3Event): Promise<ComparisonResp
     }
 
     // Parse header
-    const headerLine = lines[0]
     const headerLineValue = lines[0] ?? ''
     const headers = headerLineValue
       ? parseCSVLine(headerLineValue).map(h => h.replace(/^"|"$/g, '').trim())

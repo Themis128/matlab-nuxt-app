@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* Nuxt/Vue helper shims - provides basic ambient declarations to reduce editor noise.
  * These intentionally use `any` types to limit friction in large monorepos.
  * Later you can replace `any` with strict types from `@nuxt/schema` and `vue`.

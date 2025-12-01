@@ -8,7 +8,7 @@ if (!rawDsn || isPlaceholder) {
   if (process.env.NODE_ENV === 'production') {
     console.warn('[sentry] No valid SENTRY_DSN provided; Sentry disabled in production')
   } else {
-    console.info(
+    console.warn(
       '[sentry] SENTRY_DSN not provided or placeholder; skipping Sentry initialization (dev/test)'
     )
   }
