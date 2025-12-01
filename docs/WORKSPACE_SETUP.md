@@ -31,6 +31,17 @@ If you need to work inside any of the excluded directories (for debugging or edi
 - `-backup` preserves your previous `.vscode/settings.json` as `.vscode/settings.json.bak`.
 - If you prefer, open `.vscode\settings.json` and edit the `files.exclude` and `search.exclude` keys manually.
 
+### Pre-commit guard
+
+To help avoid accidental commits of per-developer VS Code settings, we added a pre-commit hook that blocks committing `.vscode/settings.json` or `.vscode/settings.json.bak`.
+If you see the error in your pre-commit hook, unstage the file with:
+
+```pwsh
+git restore --staged .vscode/settings.json
+```
+
+If you intentionally want to track a workspace config, commit a template like `.vscode/extensions.json` or `.vscode/settings-controls/*` instead and update `.gitignore` appropriately.
+
 ## Tracked vs ignored (what you can commit)
 
 - We intentionally do NOT commit per-developer `settings.json` changes. The repository's `.gitignore` lists `.vscode/settings.json` and `.vscode/settings.json.bak` as ignored to prevent accidental commits of local preferences.

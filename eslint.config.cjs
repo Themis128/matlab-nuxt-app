@@ -10,7 +10,9 @@ module.exports = [
     ignores: [
       'node_modules',
       '.nuxt',
+      '**/.nuxt/**',
       '.output',
+      '**/.output/**',
       'dist',
       '**/dist/**',
       'instantsearch-app/dist',

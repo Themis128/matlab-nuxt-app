@@ -14,6 +14,7 @@
     "typecheck": "npm run typecheck:ci",
     "typecheck:mem": "cross-env NODE_OPTIONS=--max_old_space_size=16384 npx vue-tsc --project tsconfig.ci.json --noEmit --skipLibCheck && cross-env NODE_OPTIONS=--max_old_space_size=16384 npx tsc -p tsconfig.ci.json --noEmit",
     "typecheck:ci": "cross-env NODE_OPTIONS=--max_old_space_size=8192 npx vue-tsc --project tsconfig.ci.json --noEmit && cross-env NODE_OPTIONS=--max_old_space_size=8192 npx tsc -p tsconfig.ci.json --noEmit",
+    "precommit:check": "node scripts/hooks/check-no-vscode-settings.cjs",
     "typecheck:local": "npm run typecheck:ci",
     "lint": "eslint . --ext .js,.ts,.vue --max-warnings=0",
     "format": "prettier --write .",
@@ -46,7 +47,6 @@
     "vscode:show": "pwsh -NoProfile -File .\\.vscode\\settings-controls\\toggle-settings.ps1 -mode show -backup",
     "vscode:hide": "pwsh -NoProfile -File .\\.vscode\\settings-controls\\toggle-settings.ps1 -mode hide -backup"
   },
-
   "dependencies": {
     "@heroicons/vue": "^2.2.0",
     "@nuxt/ui": "^2.19.0",
@@ -120,6 +120,6 @@
   },
   "homepage": "https://github.com/Themis128/matlab-nuxt-app#readme",
   "simple-git-hooks": {
-    "pre-commit": "npm run format && npm run lint"
+    "pre-commit": "npm run precommit:check && npm run format && npm run lint"
   }
 }
