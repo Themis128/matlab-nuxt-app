@@ -68,12 +68,48 @@ if (!rawClientDsn || clientIsPlaceholder) {
       ? parseFloat(process.env.SENTRY_REPLAYS_ON_ERROR_SAMPLE_RATE)
       : 1.0,
     sendDefaultPii: true, // Enable MCP monitoring
+
     integrations: [
       Sentry.replayIntegration({
+        // Privacy Configuration
         maskAllText: true,
         blockAllMedia: true,
+        maskAllInputs: true,
+
+        // Network Details - Capture API requests for debugging
+        networkDetailAllowUrls: [
+          window.location.origin, // Allow capturing network details for same-origin requests
+          /^https:\/\/api\./, // Allow API endpoints
+        ],
+        networkCaptureBodies: true,
+        networkRequestHeaders: ['Content-Type', 'Authorization'],
+        networkResponseHeaders: ['Content-Type', 'X-RateLimit-Remaining'],
+
+        // Performance Configuration
+        mutationLimit: 10000,
+        mutationBreadcrumbLimit: 750,
+        minReplayDuration: 5000,
+        maxReplayDuration: 3600000, // 1 hour
+
+        // Filtering - simplified to avoid type issues
+        beforeAddRecordingEvent: _event => {
+          // Return null to filter out specific events, or return _event to keep
+          // For now, keeping all events but this can be customized based on needs
+          return _event
+        },
+
+        // Error sampling filter
+        beforeErrorSampling: _event => {
+          // Always sample errors for important user flows
+          return true
+        },
+
+        // Ignore slow clicks on certain elements
+        slowClickIgnoreSelectors: ['.loading', '[disabled]', '.sentry-ignore-click'],
       }),
       Sentry.browserTracingIntegration(),
+      // Enable console integration for capturing console logs as breadcrumbs
+      Sentry.consoleIntegration(),
     ],
     debug: process.env.NODE_ENV === 'development',
     environment: process.env.SENTRY_ENVIRONMENT || process.env.NODE_ENV || 'development',
