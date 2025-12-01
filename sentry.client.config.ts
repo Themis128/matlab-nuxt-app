@@ -21,7 +21,7 @@ if (typeof window !== 'undefined') {
       ) {
         return // Suppress this error
       }
-    } catch (e) {
+    } catch {
       // If filtering fails, just continue
     }
 
@@ -39,7 +39,7 @@ if (typeof window !== 'undefined') {
       if (message.includes('[sentry] Client SENTRY_DSN not provided')) {
         return // Suppress this warning
       }
-    } catch (e) {
+    } catch {
       // If filtering fails, just continue
     }
 
