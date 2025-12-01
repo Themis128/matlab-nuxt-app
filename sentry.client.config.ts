@@ -73,6 +73,7 @@ if (!rawClientDsn || clientIsPlaceholder) {
         maskAllText: true,
         blockAllMedia: true,
       }),
+      Sentry.browserTracingIntegration(),
     ],
     debug: process.env.NODE_ENV === 'development',
     environment: process.env.SENTRY_ENVIRONMENT || process.env.NODE_ENV || 'development',
