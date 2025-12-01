@@ -6,6 +6,9 @@ on:
     branches: [master, main]
   workflow_dispatch: {}
 
+env:
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
 jobs:
   test-frontend:
     runs-on: ubuntu-latest

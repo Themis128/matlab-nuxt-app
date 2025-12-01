@@ -78,7 +78,7 @@ export default defineConfig({
         : 'pwsh -NoProfile -Command "& .\\venv\\Scripts\\Activate.ps1; cd python_api; python api.py"',
       url: 'http://localhost:8000/health',
       timeout: 180 * 1000, // 3 minutes for Python API startup
-      reuseExistingServer: !isCI,
+      reuseExistingServer: true,
       stdout: 'pipe',
       stderr: 'pipe',
     },
