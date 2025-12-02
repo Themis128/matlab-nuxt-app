@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# Replit Deployment Script for Mobile Finder App
+# Replit/Local Deployment Script for Mobile Finder App
+# This script is for local development or Replit - NOT for Render
+# For Render deployment, use render.yaml instead
 # Starts both Python API and Nuxt.js frontend
 
 echo "🚀 Starting Mobile Finder App on Replit..."
@@ -25,7 +27,8 @@ trap cleanup SIGINT SIGTERM
 # Start Python API in background
 echo "🐍 Starting Python API server..."
 cd python_api
-PORT=8000 python api.py &
+export API_PORT=8000
+PORT=$API_PORT python api.py &
 PYTHON_PID=$!
 cd ..
 
@@ -43,12 +46,12 @@ while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
     
     # Try to connect to health endpoint
     if command -v curl &> /dev/null; then
-        if curl -f -s http://localhost:8000/health > /dev/null 2>&1; then
+        if curl -f -s http://localhost:${API_PORT}/health > /dev/null 2>&1; then
             API_READY=true
             break
         fi
     elif command -v wget &> /dev/null; then
-        if wget -q --spider http://localhost:8000/health 2>/dev/null; then
+        if wget -q --spider http://localhost:${API_PORT}/health 2>/dev/null; then
             API_READY=true
             break
         fi
@@ -69,7 +72,7 @@ if [ "$API_READY" = false ]; then
     exit 1
 fi
 
-echo "✅ Python API is healthy and running on port 8000 (PID: $PYTHON_PID)"
+echo "✅ Python API is healthy and running on port ${API_PORT} (PID: $PYTHON_PID)"
 
 # Test API endpoints (non-fatal - just warnings)
 echo "🔍 Testing API endpoints..."
@@ -84,7 +87,8 @@ cd ..
 
 # Start Nuxt.js development server
 echo "⚡ Starting Nuxt.js frontend..."
-PORT=$NUXT_PORT npm run dev &
+export PORT=$NUXT_PORT
+npm run dev &
 NUXT_PID=$!
 
 # Wait a moment for Nuxt to start
@@ -97,7 +101,7 @@ if ! kill -0 $NUXT_PID 2>/dev/null; then
     exit 1
 fi
 
-echo "✅ Nuxt.js running on port 3000 (PID: $NUXT_PID)"
+echo "✅ Nuxt.js running on port ${NUXT_PORT} (PID: $NUXT_PID)"
 echo ""
 # Calculate and display app size
 echo ""
@@ -137,8 +141,8 @@ echo "=========================="
 echo ""
 
 echo "🎉 Both services are running!"
-echo "🌐 Frontend: http://localhost:3000"
-echo "🔧 API: http://localhost:8000"
+echo "🌐 Frontend: http://localhost:${NUXT_PORT}"
+echo "🔧 API: http://localhost:${API_PORT}"
 echo ""
 echo "Press Ctrl+C to stop both services"
 
