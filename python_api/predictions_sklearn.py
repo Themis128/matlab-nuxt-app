@@ -4,12 +4,14 @@ Scikit-learn model predictions
 Uses the newly trained sklearn models for accurate predictions
 """
 
-import numpy as np
-import pandas as pd
+import json
+import logging
 import pickle
 from pathlib import Path
 from typing import Optional
-import logging
+
+import numpy as np
+import pandas as pd
 
 logger = logging.getLogger(__name__)
 
@@ -219,7 +221,7 @@ def predict_price(ram: float, battery: float, screen: float, weight: float,
         # Get unique companies from metadata
         metadata_path = MODELS_DIR / "price_predictor_metadata.json"
         with open(metadata_path, 'r') as f:
-            metadata = pd.read_json(f)
+            metadata = json.load(f)
             unique_companies = metadata.get('unique_companies', [])
 
         # Create features
@@ -267,7 +269,7 @@ def predict_ram(battery: float, screen: float, weight: float, year: int,
         # Get unique companies
         metadata_path = MODELS_DIR / "ram_predictor_metadata.json"
         with open(metadata_path, 'r') as f:
-            metadata = pd.read_json(f)
+            metadata = json.load(f)
             unique_companies = metadata.get('unique_companies', [])
 
         # Create features (without RAM)
@@ -319,7 +321,7 @@ def predict_battery(ram: float, screen: float, weight: float, year: int,
         # Get unique companies
         metadata_path = MODELS_DIR / "battery_predictor_metadata.json"
         with open(metadata_path, 'r') as f:
-            metadata = pd.read_json(f)
+            metadata = json.load(f)
             unique_companies = metadata.get('unique_companies', [])
 
         # Create features (without battery)
@@ -371,7 +373,7 @@ def predict_brand(ram: float, battery: float, screen: float, weight: float,
         # Get unique brands from metadata
         metadata_path = MODELS_DIR / "brand_classifier_metadata.json"
         with open(metadata_path, 'r') as f:
-            metadata = pd.read_json(f)
+            metadata = json.load(f)
             unique_brands = metadata.get('unique_brands', ['Apple', 'Samsung', 'Xiaomi'])
 
         # Create features (without company)
