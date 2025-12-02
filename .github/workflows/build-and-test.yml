@@ -98,6 +98,17 @@ jobs:
           cd python_api
           pip install -r requirements.txt
 
+      - name: Retrain ML models
+        run: |
+          echo "Retraining ML models for CI/CD..."
+          # Retrain the distilled model which is required for API
+          python retrain_advanced_models.py
+          # Retrain the core sklearn models used by the API
+          cd python_api
+          python train_models_sklearn.py
+          # Verify models were created
+          ls -la trained_models/
+
       - name: Check if models exist
         run: |
           cd python_api
