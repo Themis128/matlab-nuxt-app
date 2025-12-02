@@ -1,0 +1,29 @@
+{
+  "unique_brands": [
+    "Apple",
+    "Google",
+    "Honor",
+    "Huawei",
+    "Infinix",
+    "Lenovo",
+    "Motorola",
+    "Nokia",
+    "OnePlus",
+    "Oppo",
+    "POCO",
+    "Realme",
+    "Samsung",
+    "Sony",
+    "Tecno",
+    "Vivo",
+    "Xiaomi"
+  ],
+  "excluded_brands": [
+    "iQOO",
+    "Poco"
+  ],
+  "accuracy": 1.0,
+  "model_type": "sklearn_randomforest",
+  "total_samples": 925,
+  "num_classes": 17
+}

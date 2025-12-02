@@ -1,0 +1,28 @@
+{
+  "unique_companies": [
+    "Apple",
+    "Google",
+    "Honor",
+    "Huawei",
+    "Infinix",
+    "Lenovo",
+    "Motorola",
+    "Nokia",
+    "OnePlus",
+    "Oppo",
+    "POCO",
+    "Poco",
+    "Realme",
+    "Samsung",
+    "Sony",
+    "Tecno",
+    "Vivo",
+    "Xiaomi",
+    "iQOO"
+  ],
+  "r2": 0.9955114103791126,
+  "rmse": 28.57976897231961,
+  "mae": 12.373436774741812,
+  "model_type": "sklearn_gradientboosting",
+  "use_log_transform": true
+}
