@@ -26,9 +26,10 @@ trap cleanup SIGINT SIGTERM
 echo "🐍 Starting Python API server..."
 cd python_api
 
-# Use lightweight requirements for Replit to save disk space
+# Use ultra-lightweight requirements for Replit to save maximum disk space
 if [ -n "$REPLIT_ENVIRONMENT" ] || [ -d "/home/runner" ]; then
-    echo "📦 Detected Replit environment, using lightweight requirements..."
+    echo "📦 Detected Replit environment, using ultra-lightweight requirements..."
+    echo "⚠️  WARNING: Avoid installing additional packages manually as they may exceed disk quota!"
     pip install -r requirements-replit.txt --quiet
 else
     echo "📦 Installing full requirements..."

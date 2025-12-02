@@ -65,7 +65,7 @@ enabled = true
 # Packager configuration - optimized for disk space
 [packager]
 language = "nodejs"
-ignoredPackages = ["@types/node", "@types/unity", "unity-*", "*.unitypackage", "upm", "@upm/*", "@playwright/test", "playwright", "sentry-sdk", "pytest", "pytest-asyncio"]
+ignoredPackages = ["@types/node", "@types/unity", "unity-*", "*.unitypackage", "upm", "@upm/*", "@playwright/test", "playwright", "sentry-sdk", "pytest", "pytest-asyncio", "ipython", "jupyter", "matplotlib", "seaborn", "plotly", "bokeh", "xgboost", "lightgbm", "catboost", "shap", "numba", "llvmlite", "tensorflow", "torch", "transformers", "datasets", "accelerate"]
 
 [packager.features]
 packageSearch = false

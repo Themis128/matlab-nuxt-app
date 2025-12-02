@@ -1,5 +1,5 @@
-# Lightweight requirements for Replit deployment
-# Excludes development/testing dependencies to save disk space
+# Ultra-lightweight requirements for Replit deployment
+# Only the absolute essentials to save maximum disk space
 
 fastapi>=0.104.0
 uvicorn[standard]>=0.24.0
