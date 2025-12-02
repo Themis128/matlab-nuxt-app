@@ -1,246 +1,246 @@
-company,ram_gb,battery_mah,screen_inches,weight_grams,launch_year,price_usd,front_camera_mp,back_camera_mp,processor,_source_file,battery_efficiency
-Samsung,12.0,5000.0,6.8,234.0,2024.0,1199,12.0,200.0,Exynos 2400,Mobiles Dataset (2025) - Enhanced.csv,108.13148788927337
-Samsung,12.0,5000.0,6.8,234.0,2024.0,1299,12.0,200.0,Exynos 2400,Mobiles Dataset (2025) - Enhanced.csv,108.13148788927337
-Samsung,8.0,4800.0,6.6,196.0,2024.0,899,12.0,50.0,Exynos 2400,Mobiles Dataset (2025) - Enhanced.csv,110.19283746556475
-Samsung,8.0,4800.0,6.6,196.0,2024.0,999,12.0,50.0,Exynos 2400,Mobiles Dataset (2025) - Enhanced.csv,110.19283746556475
-Samsung,8.0,4000.0,6.1,168.0,2024.0,799,12.0,50.0,Exynos 2400,Mobiles Dataset (2025) - Enhanced.csv,107.49798441279228
-Samsung,8.0,4000.0,6.1,168.0,2024.0,899,12.0,50.0,Exynos 2400,Mobiles Dataset (2025) - Enhanced.csv,107.49798441279228
-Samsung,8.0,4700.0,6.6,196.0,2023.0,899,12.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,107.89715335169882
-Samsung,8.0,4700.0,6.6,196.0,2023.0,999,12.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,107.89715335169882
-Samsung,8.0,3900.0,6.1,168.0,2023.0,799,12.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,104.81053480247247
-Samsung,8.0,3900.0,6.1,168.0,2023.0,899,12.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,104.81053480247247
-Samsung,12.0,5000.0,6.8,228.0,2022.0,1099,10.0,108.0,Exynos 2200,Mobiles Dataset (2025) - Enhanced.csv,108.13148788927337
-Samsung,8.0,4500.0,6.6,195.0,2022.0,799,10.0,50.0,Exynos 2200,Mobiles Dataset (2025) - Enhanced.csv,103.30578512396696
-Samsung,8.0,4500.0,6.6,195.0,2022.0,899,10.0,50.0,Exynos 2200,Mobiles Dataset (2025) - Enhanced.csv,103.30578512396696
-Samsung,8.0,3800.0,6.1,167.0,2022.0,699,10.0,50.0,Exynos 2200,Mobiles Dataset (2025) - Enhanced.csv,102.12308519215266
-Samsung,8.0,3800.0,6.1,167.0,2022.0,799,10.0,50.0,Exynos 2200,Mobiles Dataset (2025) - Enhanced.csv,102.12308519215266
-Samsung,12.0,4400.0,7.6,254.0,2023.0,1799,10.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,76.17728531855956
-Samsung,12.0,4400.0,7.6,254.0,2023.0,1899,10.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,76.17728531855956
-Samsung,8.0,3700.0,6.7,187.0,2023.0,999,12.0,12.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,82.42370238360436
-Samsung,8.0,3700.0,6.7,187.0,2023.0,1099,12.0,12.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,82.42370238360436
-Samsung,6.0,5000.0,6.4,189.0,2023.0,399,32.0,50.0,Exynos 1380,Mobiles Dataset (2025) - Enhanced.csv,122.07031249999997
-Samsung,6.0,5000.0,6.4,189.0,2023.0,449,32.0,50.0,Exynos 1380,Mobiles Dataset (2025) - Enhanced.csv,122.07031249999997
-Samsung,6.0,5000.0,6.6,199.0,2023.0,349,13.0,48.0,MediaTek Dimensity 1080,Mobiles Dataset (2025) - Enhanced.csv,114.78420569329661
-Samsung,6.0,5000.0,6.6,199.0,2023.0,399,13.0,48.0,MediaTek Dimensity 1080,Mobiles Dataset (2025) - Enhanced.csv,114.78420569329661
-Samsung,6.0,5000.0,6.5,195.0,2023.0,299,13.0,50.0,MediaTek Helio G99,Mobiles Dataset (2025) - Enhanced.csv,118.34319526627219
-Samsung,6.0,5000.0,6.5,195.0,2023.0,349,13.0,50.0,MediaTek Helio G99,Mobiles Dataset (2025) - Enhanced.csv,118.34319526627219
-Samsung,4.0,5000.0,6.6,190.0,2023.0,249,13.0,50.0,Exynos 850,Mobiles Dataset (2025) - Enhanced.csv,114.78420569329661
-Samsung,4.0,5000.0,6.6,190.0,2023.0,299,13.0,50.0,Exynos 850,Mobiles Dataset (2025) - Enhanced.csv,114.78420569329661
-Samsung,4.0,5000.0,6.5,188.0,2022.0,199,5.0,50.0,Exynos 850,Mobiles Dataset (2025) - Enhanced.csv,118.34319526627219
-Samsung,4.0,5000.0,6.5,188.0,2022.0,249,5.0,50.0,Exynos 850,Mobiles Dataset (2025) - Enhanced.csv,118.34319526627219
-Samsung,8.0,6000.0,6.7,202.0,2023.0,349,32.0,108.0,Exynos 1380,Mobiles Dataset (2025) - Enhanced.csv,133.66005791935842
-Samsung,8.0,6000.0,6.7,202.0,2023.0,399,32.0,108.0,Exynos 1380,Mobiles Dataset (2025) - Enhanced.csv,133.66005791935842
-Samsung,6.0,6000.0,6.5,199.0,2023.0,299,13.0,50.0,Exynos 1280,Mobiles Dataset (2025) - Enhanced.csv,142.01183431952663
-Samsung,6.0,6000.0,6.5,199.0,2023.0,349,13.0,50.0,Exynos 1280,Mobiles Dataset (2025) - Enhanced.csv,142.01183431952663
-Samsung,4.0,6000.0,6.6,202.0,2023.0,249,13.0,50.0,Exynos 850,Mobiles Dataset (2025) - Enhanced.csv,137.74104683195594
-Samsung,4.0,6000.0,6.6,202.0,2023.0,299,13.0,50.0,Exynos 850,Mobiles Dataset (2025) - Enhanced.csv,137.74104683195594
-Samsung,12.0,4500.0,6.9,208.0,2020.0,1299,10.0,108.0,Exynos 990,Mobiles Dataset (2025) - Enhanced.csv,94.51795841209828
-Samsung,12.0,4500.0,6.9,208.0,2020.0,1399,10.0,108.0,Exynos 990,Mobiles Dataset (2025) - Enhanced.csv,94.51795841209828
-Samsung,8.0,4300.0,6.7,192.0,2020.0,999,10.0,108.0,Exynos 990,Mobiles Dataset (2025) - Enhanced.csv,95.78970817554021
-Samsung,8.0,4300.0,6.7,192.0,2020.0,1099,10.0,108.0,Exynos 990,Mobiles Dataset (2025) - Enhanced.csv,95.78970817554021
-Samsung,12.0,4300.0,6.8,196.0,2019.0,1099,10.0,12.0,Exynos 9825,Mobiles Dataset (2025) - Enhanced.csv,92.9930795847751
-Samsung,12.0,4300.0,6.8,196.0,2019.0,1199,10.0,12.0,Exynos 9825,Mobiles Dataset (2025) - Enhanced.csv,92.9930795847751
-Samsung,8.0,3500.0,6.3,168.0,2019.0,949,10.0,12.0,Exynos 9825,Mobiles Dataset (2025) - Enhanced.csv,88.18342151675486
-Samsung,8.0,3500.0,6.3,168.0,2019.0,899,10.0,12.0,Exynos 9825,Mobiles Dataset (2025) - Enhanced.csv,88.18342151675486
-Samsung,6.0,4050.0,6.6,235.0,2022.0,499,13.0,50.0,Exynos 1380,Mobiles Dataset (2025) - Enhanced.csv,92.97520661157026
-Samsung,4.0,3000.0,5.3,172.0,2020.0,249,5.0,16.0,Exynos 850,Mobiles Dataset (2025) - Enhanced.csv,106.79957280170879
-Samsung,4.0,3500.0,6.0,191.0,2018.0,199,16.0,16.0,Snapdragon 450,Mobiles Dataset (2025) - Enhanced.csv,97.22222222222223
-Samsung,3.0,3600.0,5.5,181.0,2017.0,179,13.0,13.0,Exynos 7870,Mobiles Dataset (2025) - Enhanced.csv,119.00826446280992
-Samsung,4.0,3300.0,6.0,178.0,2018.0,169,8.0,13.0,Snapdragon 425,Mobiles Dataset (2025) - Enhanced.csv,91.66666666666667
-Samsung,2.0,3000.0,5.5,175.0,2018.0,129,5.0,13.0,Exynos 7570,Mobiles Dataset (2025) - Enhanced.csv,99.17355371900827
-Samsung,6.0,4000.0,6.0,189.0,2016.0,399,16.0,16.0,Snapdragon 653,Mobiles Dataset (2025) - Enhanced.csv,111.11111111111111
-Samsung,4.0,3300.0,5.7,165.0,2017.0,299,16.0,16.0,Snapdragon 625,Mobiles Dataset (2025) - Enhanced.csv,101.5697137580794
-Samsung,4.0,2600.0,5.2,143.0,2016.0,249,8.0,16.0,Snapdragon 617,Mobiles Dataset (2025) - Enhanced.csv,96.15384615384615
-Samsung,12.0,4500.0,7.6,228.0,2021.0,1499,10.0,108.0,Snapdragon 888,Mobiles Dataset (2025) - Enhanced.csv,77.90858725761773
-Samsung,12.0,4500.0,7.6,229.0,2020.0,1399,10.0,108.0,Snapdragon 888,Mobiles Dataset (2025) - Enhanced.csv,77.90858725761773
-Samsung,6.0,5050.0,8.0,433.0,2024.0,549,5.0,13.0,Exynos 1380,Mobiles Dataset (2025) - Enhanced.csv,78.90625
-Samsung,4.0,5050.0,8.0,426.0,2020.0,499,5.0,13.0,Exynos 9810,Mobiles Dataset (2025) - Enhanced.csv,78.90625
-Samsung,1.0,5000.0,8.0,360.0,2016.0,99,2.0,5.0,Qualcomm MSM8916,Mobiles Dataset (2025) - Enhanced.csv,78.125
-OnePlus,12.0,5000.0,6.7,205.0,2024.0,799,32.0,50.0,Snapdragon 8 Gen 3,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946535
-OnePlus,12.0,4500.0,6.7,203.0,2024.0,699,16.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,100.24504343951882
-OnePlus,12.0,5000.0,6.7,205.0,2023.0,699,16.0,50.0,Snapdragon 8 Gen 1,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946535
-OnePlus,12.0,5000.0,6.7,202.0,2023.0,599,16.0,50.0,Snapdragon 8 Gen 1,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946535
-OnePlus,12.0,5000.0,6.74,190.0,2023.0,499,16.0,50.0,MediaTek Dimensity 9000,Mobiles Dataset (2025) - Enhanced.csv,110.06524667823085
-OnePlus,8.0,5000.0,6.72,179.0,2023.0,399,16.0,50.0,Snapdragon 782G,Mobiles Dataset (2025) - Enhanced.csv,110.72137188208619
-OnePlus,8.0,5000.0,6.72,195.0,2023.0,299,16.0,108.0,Snapdragon 695,Mobiles Dataset (2025) - Enhanced.csv,110.72137188208619
-OnePlus,8.0,5000.0,6.72,192.0,2023.0,249,16.0,64.0,MediaTek Dimensity 6020,Mobiles Dataset (2025) - Enhanced.csv,110.72137188208619
-OnePlus,16.0,4800.0,7.8,238.0,2024.0,1099,32.0,48.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,78.89546351084813
-OnePlus,12.0,5000.0,6.7,200.0,2022.0,899,32.0,50.0,Snapdragon 8 Gen 1,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946535
-OnePlus,12.0,4500.0,6.7,203.0,2022.0,749,16.0,50.0,Snapdragon 8+ Gen 1,Mobiles Dataset (2025) - Enhanced.csv,100.24504343951882
-OnePlus,8.0,4500.0,6.55,183.0,2021.0,599,16.0,48.0,Snapdragon 888,Mobiles Dataset (2025) - Enhanced.csv,104.88899248295554
-OnePlus,16.0,5000.0,6.7,204.0,2023.0,899,32.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946535
-OnePlus,8.0,4500.0,6.43,190.0,2022.0,399,32.0,50.0,MediaTek Dimensity 1300,Mobiles Dataset (2025) - Enhanced.csv,108.84050995406932
-OnePlus,8.0,4500.0,6.43,190.0,2021.0,349,32.0,50.0,MediaTek Dimensity 1200-AI,Mobiles Dataset (2025) - Enhanced.csv,108.84050995406932
-OnePlus,4.0,5000.0,6.49,189.0,2021.0,199,16.0,13.0,Snapdragon 480,Mobiles Dataset (2025) - Enhanced.csv,118.70817020852277
-OnePlus,4.0,5000.0,6.52,185.0,2020.0,179,8.0,13.0,Qualcomm Snapdragon 460,Mobiles Dataset (2025) - Enhanced.csv,117.61827693929015
-OnePlus,12.0,4500.0,6.55,188.0,2020.0,749,16.0,48.0,Snapdragon 865,Mobiles Dataset (2025) - Enhanced.csv,104.88899248295554
-OnePlus,8.0,4500.0,6.55,192.0,2021.0,649,16.0,48.0,Snapdragon 888,Mobiles Dataset (2025) - Enhanced.csv,104.88899248295554
-OnePlus,12.0,4500.0,6.55,188.0,2020.0,599,16.0,48.0,Snapdragon 865,Mobiles Dataset (2025) - Enhanced.csv,104.88899248295554
-OnePlus,12.0,4510.0,6.78,199.0,2020.0,749,16.0,48.0,Snapdragon 865,Mobiles Dataset (2025) - Enhanced.csv,98.1108761671061
-OnePlus,8.0,4300.0,6.55,180.0,2020.0,699,16.0,48.0,Snapdragon 865,Mobiles Dataset (2025) - Enhanced.csv,100.22725948371308
-OnePlus,6.0,5000.0,6.59,195.0,2022.0,249,16.0,64.0,MediaTek Dimensity 900,Mobiles Dataset (2025) - Enhanced.csv,115.13282874452256
-OnePlus,8.0,4500.0,6.43,173.0,2022.0,299,16.0,64.0,MediaTek Dimensity 1200,Mobiles Dataset (2025) - Enhanced.csv,108.84050995406932
-OnePlus,6.0,4115.0,6.44,184.0,2020.0,349,16.0,48.0,Snapdragon 765G,Mobiles Dataset (2025) - Enhanced.csv,99.21974460861848
-OnePlus,6.0,4500.0,6.43,170.0,2021.0,299,16.0,64.0,Snapdragon 750G,Mobiles Dataset (2025) - Enhanced.csv,108.84050995406932
-OnePlus,6.0,4300.0,6.49,190.0,2020.0,299,16.0,64.0,Qualcomm Snapdragon 690,Mobiles Dataset (2025) - Enhanced.csv,102.08902637932958
-OnePlus,8.0,4300.0,6.55,192.0,2020.0,649,16.0,48.0,Snapdragon 865,Mobiles Dataset (2025) - Enhanced.csv,100.22725948371308
-OnePlus,6.0,3700.0,6.41,190.0,2020.0,599,16.0,48.0,Snapdragon 855,Mobiles Dataset (2025) - Enhanced.csv,90.0504038882304
-OnePlus,10.0,3700.0,6.41,185.0,2018.0,799,16.0,20.0,Snapdragon 845,Mobiles Dataset (2025) - Enhanced.csv,90.0504038882304
-OnePlus,6.0,3300.0,6.01,162.0,2017.0,649,16.0,16.0,Snapdragon 835,Mobiles Dataset (2025) - Enhanced.csv,91.3618733059986
-OnePlus,8.0,4500.0,6.7,210.0,2023.0,849,16.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,100.24504343951882
-OnePlus,8.0,4500.0,6.7,205.0,2022.0,599,16.0,50.0,MediaTek Dimensity 8100,Mobiles Dataset (2025) - Enhanced.csv,100.24504343951882
-OnePlus,12.0,4000.0,6.67,206.0,2019.0,799,16.0,48.0,Snapdragon 855,Mobiles Dataset (2025) - Enhanced.csv,89.91006745502811
-OnePlus,6.0,3300.0,6.28,177.0,2018.0,599,16.0,20.0,Snapdragon 845,Mobiles Dataset (2025) - Enhanced.csv,83.6747941092945
-OnePlus,8.0,3300.0,5.5,155.0,2017.0,599,16.0,20.0,Snapdragon 835,Mobiles Dataset (2025) - Enhanced.csv,109.0909090909091
-OnePlus,8.0,4000.0,6.44,190.0,2020.0,299,32.0,64.0,Snapdragon 765G,Mobiles Dataset (2025) - Enhanced.csv,96.4468963388758
-OnePlus,12.0,4510.0,6.78,199.0,2020.0,899,16.0,48.0,Snapdragon 865,Mobiles Dataset (2025) - Enhanced.csv,98.1108761671061
-OnePlus,12.0,4500.0,6.55,188.0,2020.0,799,16.0,48.0,Snapdragon 865,Mobiles Dataset (2025) - Enhanced.csv,104.88899248295554
-OnePlus,12.0,4085.0,6.67,206.0,2019.0,899,16.0,48.0,Snapdragon 855,Mobiles Dataset (2025) - Enhanced.csv,91.82065638844746
-OnePlus,12.0,5000.0,6.7,210.0,2023.0,849,32.0,50.0,Snapdragon 8 Gen 3,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946535
-OnePlus,8.0,4800.0,6.55,202.0,2023.0,799,16.0,64.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,111.88159198181926
-Vivo,12.0,6000.0,6.78,223.0,2024.0,999,32.0,50.0,Dimensity 9400,Mobiles Dataset (2025) - Enhanced.csv,130.52444722896598
-Vivo,12.0,6000.0,6.78,223.0,2024.0,1099,32.0,50.0,Dimensity 9400,Mobiles Dataset (2025) - Enhanced.csv,130.52444722896598
-Vivo,16.0,6000.0,6.78,223.0,2024.0,1199,32.0,200.0,Dimensity 9400,Mobiles Dataset (2025) - Enhanced.csv,130.52444722896598
-Vivo,16.0,6000.0,6.78,223.0,2024.0,1299,32.0,200.0,Dimensity 9400,Mobiles Dataset (2025) - Enhanced.csv,130.52444722896598
-Vivo,16.0,5700.0,6.31,187.0,2024.0,949,32.0,50.0,Dimensity 9400,Mobiles Dataset (2025) - Enhanced.csv,143.1581696851274
-Vivo,8.0,4100.0,6.44,179.0,2024.0,449,44.0,64.0,Snapdragon 778G,Mobiles Dataset (2025) - Enhanced.csv,98.8580687473477
-Vivo,12.0,5000.0,6.58,190.0,2024.0,399,16.0,64.0,Dimensity 1200,Mobiles Dataset (2025) - Enhanced.csv,115.4830424700437
-Vivo,8.0,5000.0,6.67,180.0,2024.0,349,16.0,50.0,Snapdragon 870,Mobiles Dataset (2025) - Enhanced.csv,112.38758431878513
-Vivo,8.0,4500.0,6.38,181.0,2024.0,299,16.0,64.0,Dimensity 900,Mobiles Dataset (2025) - Enhanced.csv,110.55315887225952
-Vivo,12.0,4700.0,6.56,189.0,2024.0,599,32.0,108.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,109.21698393813209
-Vivo,12.0,4500.0,6.44,192.0,2024.0,549,32.0,64.0,Dimensity 1100,Mobiles Dataset (2025) - Enhanced.csv,108.50275838123528
-Vivo,16.0,5000.0,6.78,210.0,2024.0,699,16.0,50.0,Snapdragon 8 Gen 3,Mobiles Dataset (2025) - Enhanced.csv,108.77037269080498
-Vivo,6.0,3315.0,6.3,162.0,2018.0,249,12.0,16.0,Snapdragon 710,Mobiles Dataset (2025) - Enhanced.csv,83.5222978080121
-Vivo,4.0,3260.0,6.3,150.0,2018.0,219,24.0,16.0,Snapdragon 626,Mobiles Dataset (2025) - Enhanced.csv,82.13655832703452
-Vivo,6.0,4000.0,5.88,199.0,2017.0,299,20.0,16.0,Snapdragon 653,Mobiles Dataset (2025) - Enhanced.csv,115.69253551760842
-Vivo,3.0,3260.0,6.22,146.0,2018.0,149,5.0,13.0,MediaTek Helio P22,Mobiles Dataset (2025) - Enhanced.csv,84.26298321977649
-Vivo,2.0,2300.0,5.5,146.0,2014.0,199,5.0,13.0,Snapdragon 615,Mobiles Dataset (2025) - Enhanced.csv,76.03305785123968
-Vivo,4.0,3055.0,5.5,158.0,2017.0,249,20.0,16.0,Snapdragon 625,Mobiles Dataset (2025) - Enhanced.csv,100.99173553719008
-Vivo,4.0,4030.0,6.22,163.0,2018.0,199,20.0,13.0,Snapdragon 439,Mobiles Dataset (2025) - Enhanced.csv,104.16558968579731
-Vivo,4.0,3000.0,5.5,168.0,2016.0,179,8.0,13.0,Snapdragon 652,Mobiles Dataset (2025) - Enhanced.csv,99.17355371900827
-Vivo,1.0,2000.0,5.0,153.0,2014.0,139,5.0,13.0,MediaTek MT6592,Mobiles Dataset (2025) - Enhanced.csv,80.0
-Vivo,3.0,3000.0,5.5,155.0,2017.0,179,16.0,13.0,Snapdragon 430,Mobiles Dataset (2025) - Enhanced.csv,99.17355371900827
-Vivo,8.0,4500.0,6.44,176.0,2020.0,399,32.0,48.0,Qualcomm Snapdragon 712,Mobiles Dataset (2025) - Enhanced.csv,108.50275838123528
-Vivo,8.0,4500.0,6.44,176.0,2020.0,429,32.0,48.0,Qualcomm Snapdragon 712,Mobiles Dataset (2025) - Enhanced.csv,108.50275838123528
-Vivo,8.0,4100.0,6.44,201.0,2019.0,399,32.0,48.0,Qualcomm Snapdragon 675,Mobiles Dataset (2025) - Enhanced.csv,98.8580687473477
-Vivo,8.0,4100.0,6.44,201.0,2019.0,429,32.0,48.0,Qualcomm Snapdragon 675,Mobiles Dataset (2025) - Enhanced.csv,98.8580687473477
-Vivo,3.0,5000.0,6.51,191.0,2020.0,159,8.0,13.0,MediaTek Helio P35,Mobiles Dataset (2025) - Enhanced.csv,117.97990094407517
-Vivo,4.0,5000.0,6.51,191.0,2020.0,179,8.0,13.0,MediaTek Helio P35,Mobiles Dataset (2025) - Enhanced.csv,117.97990094407517
-Vivo,6.0,4500.0,6.38,185.0,2019.0,249,32.0,48.0,MediaTek Helio P65,Mobiles Dataset (2025) - Enhanced.csv,110.55315887225952
-Vivo,6.0,4500.0,6.38,185.0,2019.0,269,32.0,48.0,MediaTek Helio P65,Mobiles Dataset (2025) - Enhanced.csv,110.55315887225952
-Vivo,3.0,5000.0,6.35,190.0,2019.0,149,8.0,13.0,Qualcomm Snapdragon 439,Mobiles Dataset (2025) - Enhanced.csv,124.000248000496
-Vivo,3.0,5000.0,6.35,190.0,2019.0,169,8.0,13.0,Qualcomm Snapdragon 439,Mobiles Dataset (2025) - Enhanced.csv,124.000248000496
-Vivo,6.0,4000.0,6.53,190.0,2019.0,299,32.0,48.0,MediaTek Helio P70,Mobiles Dataset (2025) - Enhanced.csv,93.8066504224817
-Vivo,6.0,4000.0,6.53,190.0,2019.0,319,32.0,48.0,MediaTek Helio P70,Mobiles Dataset (2025) - Enhanced.csv,93.8066504224817
-Vivo,8.0,4000.0,6.39,190.0,2019.0,499,32.0,48.0,Qualcomm Snapdragon 710,Mobiles Dataset (2025) - Enhanced.csv,97.96214253001928
-Vivo,8.0,4000.0,6.39,190.0,2019.0,549,32.0,48.0,Qualcomm Snapdragon 710,Mobiles Dataset (2025) - Enhanced.csv,97.96214253001928
-Vivo,4.0,5000.0,6.47,193.0,2020.0,199,8.0,13.0,MediaTek Helio P35,Mobiles Dataset (2025) - Enhanced.csv,119.44320356227412
-Vivo,3.0,5000.0,6.47,193.0,2020.0,169,8.0,13.0,MediaTek Helio P35,Mobiles Dataset (2025) - Enhanced.csv,119.44320356227412
-Vivo,4.0,4500.0,6.53,159.0,2019.0,249,16.0,16.0,Qualcomm Snapdragon 712,Mobiles Dataset (2025) - Enhanced.csv,105.53248172529192
-Vivo,6.0,4500.0,6.53,159.0,2019.0,299,16.0,16.0,Qualcomm Snapdragon 712,Mobiles Dataset (2025) - Enhanced.csv,105.53248172529192
-Vivo,6.0,3200.0,6.28,156.0,2018.0,349,12.0,12.0,Qualcomm Snapdragon 660,Mobiles Dataset (2025) - Enhanced.csv,81.13919428780072
-Vivo,4.0,3200.0,6.28,156.0,2018.0,299,12.0,12.0,Qualcomm Snapdragon 660,Mobiles Dataset (2025) - Enhanced.csv,81.13919428780072
-Vivo,8.0,4050.0,6.44,172.0,2021.0,299,50.0,64.0,MediaTek Helio G96,Mobiles Dataset (2025) - Enhanced.csv,97.65248254311174
-Vivo,8.0,4050.0,6.44,172.0,2021.0,349,50.0,64.0,MediaTek Helio G96,Mobiles Dataset (2025) - Enhanced.csv,97.65248254311174
-Vivo,8.0,5000.0,6.58,182.0,2021.0,239,16.0,50.0,MediaTek Helio G80,Mobiles Dataset (2025) - Enhanced.csv,115.4830424700437
-Vivo,4.0,5000.0,6.58,182.0,2021.0,179,16.0,50.0,MediaTek Helio G80,Mobiles Dataset (2025) - Enhanced.csv,115.4830424700437
-Vivo,12.0,4200.0,6.56,190.0,2021.0,899,32.0,48.0,Qualcomm Snapdragon 870,Mobiles Dataset (2025) - Enhanced.csv,97.59815585960739
-Vivo,12.0,4200.0,6.56,190.0,2021.0,999,32.0,48.0,Qualcomm Snapdragon 870,Mobiles Dataset (2025) - Enhanced.csv,97.59815585960739
-Vivo,8.0,4000.0,6.44,173.0,2020.0,499,44.0,64.0,Qualcomm Snapdragon 765G,Mobiles Dataset (2025) - Enhanced.csv,96.4468963388758
-Vivo,8.0,4000.0,6.44,173.0,2020.0,549,44.0,64.0,Qualcomm Snapdragon 765G,Mobiles Dataset (2025) - Enhanced.csv,96.4468963388758
-Vivo,8.0,5000.0,6.58,179.0,2021.0,349,16.0,50.0,MediaTek Dimensity 700,Mobiles Dataset (2025) - Enhanced.csv,115.4830424700437
-Vivo,8.0,5000.0,6.58,179.0,2021.0,399,16.0,50.0,MediaTek Dimensity 700,Mobiles Dataset (2025) - Enhanced.csv,115.4830424700437
-Vivo,6.0,5000.0,6.58,190.0,2021.0,229,16.0,64.0,MediaTek Helio G80,Mobiles Dataset (2025) - Enhanced.csv,115.4830424700437
-Vivo,6.0,5000.0,6.58,190.0,2021.0,179,16.0,64.0,MediaTek Helio G80,Mobiles Dataset (2025) - Enhanced.csv,115.4830424700437
-Vivo,6.0,3700.0,6.39,185.0,2019.0,399,32.0,48.0,Qualcomm Snapdragon 675,Mobiles Dataset (2025) - Enhanced.csv,90.61498184026783
-Vivo,6.0,3700.0,6.39,185.0,2019.0,449,32.0,48.0,Qualcomm Snapdragon 675,Mobiles Dataset (2025) - Enhanced.csv,90.61498184026783
-Vivo,8.0,4450.0,6.56,185.0,2021.0,749,32.0,50.0,MediaTek Dimensity 1200,Mobiles Dataset (2025) - Enhanced.csv,103.40756989886974
-Vivo,8.0,4450.0,6.56,185.0,2021.0,799,32.0,50.0,MediaTek Dimensity 1200,Mobiles Dataset (2025) - Enhanced.csv,103.40756989886974
-Vivo,6.0,5000.0,6.58,181.0,2022.0,269,16.0,50.0,Qualcomm Snapdragon 695,Mobiles Dataset (2025) - Enhanced.csv,115.4830424700437
-Vivo,8.0,5000.0,6.58,181.0,2022.0,319,16.0,50.0,Qualcomm Snapdragon 695,Mobiles Dataset (2025) - Enhanced.csv,115.4830424700437
-Vivo,8.0,4200.0,6.44,199.0,2019.0,899,32.0,64.0,Qualcomm Snapdragon 855,Mobiles Dataset (2025) - Enhanced.csv,101.2692411558196
-Vivo,8.0,4200.0,6.44,199.0,2019.0,949,32.0,64.0,Qualcomm Snapdragon 855,Mobiles Dataset (2025) - Enhanced.csv,101.2692411558196
-Vivo,8.0,4600.0,6.78,182.0,2023.0,599,50.0,50.0,MediaTek Dimensity 8200,Mobiles Dataset (2025) - Enhanced.csv,100.06874287554058
-Vivo,8.0,4600.0,6.78,182.0,2023.0,649,50.0,50.0,MediaTek Dimensity 8200,Mobiles Dataset (2025) - Enhanced.csv,100.06874287554058
-Vivo,8.0,4600.0,6.78,182.0,2023.0,699,50.0,50.0,MediaTek Dimensity 8200,Mobiles Dataset (2025) - Enhanced.csv,100.06874287554058
-Vivo,8.0,4600.0,6.78,182.0,2023.0,749,50.0,50.0,MediaTek Dimensity 8200,Mobiles Dataset (2025) - Enhanced.csv,100.06874287554058
-Vivo,8.0,4830.0,6.56,190.0,2022.0,599,32.0,64.0,MediaTek Dimensity 1300,Mobiles Dataset (2025) - Enhanced.csv,112.2378792385485
-Vivo,8.0,4830.0,6.56,190.0,2022.0,649,32.0,64.0,MediaTek Dimensity 1300,Mobiles Dataset (2025) - Enhanced.csv,112.2378792385485
-Vivo,12.0,4870.0,6.78,221.0,2022.0,1099,32.0,50.0,MediaTek Dimensity 9200,Mobiles Dataset (2025) - Enhanced.csv,105.94234300084405
-Vivo,12.0,4870.0,6.78,221.0,2022.0,1199,32.0,50.0,MediaTek Dimensity 9200,Mobiles Dataset (2025) - Enhanced.csv,105.94234300084405
-Vivo,8.0,4500.0,6.44,190.0,2023.0,449,16.0,64.0,MediaTek Dimensity 900,Mobiles Dataset (2025) - Enhanced.csv,108.50275838123528
-Vivo,8.0,4500.0,6.44,190.0,2023.0,299,16.0,64.0,Qualcomm Snapdragon 695,Mobiles Dataset (2025) - Enhanced.csv,108.50275838123528
-Vivo,8.0,4500.0,6.44,190.0,2023.0,349,16.0,64.0,Qualcomm Snapdragon 695,Mobiles Dataset (2025) - Enhanced.csv,108.50275838123528
-Vivo,8.0,4200.0,6.44,179.0,2022.0,499,50.0,64.0,MediaTek Dimensity 920,Mobiles Dataset (2025) - Enhanced.csv,101.2692411558196
-Vivo,8.0,4200.0,6.44,179.0,2022.0,549,50.0,64.0,MediaTek Dimensity 920,Mobiles Dataset (2025) - Enhanced.csv,101.2692411558196
-Vivo,12.0,4700.0,6.78,206.0,2022.0,899,32.0,50.0,MediaTek Dimensity 9000,Mobiles Dataset (2025) - Enhanced.csv,102.24415032935669
-Vivo,12.0,4700.0,6.78,206.0,2022.0,999,32.0,50.0,MediaTek Dimensity 9000,Mobiles Dataset (2025) - Enhanced.csv,102.24415032935669
-Vivo,4.0,5000.0,6.51,182.0,2021.0,199,8.0,13.0,MediaTek Helio P35,Mobiles Dataset (2025) - Enhanced.csv,117.97990094407517
-Oppo,12.0,4805.0,7.82,239.0,2023.0,1399,32.0,48.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,78.57418515054192
-Oppo,12.0,4300.0,6.8,198.0,2023.0,999,32.0,50.0,MediaTek Dimensity 9200,Mobiles Dataset (2025) - Enhanced.csv,92.9930795847751
-Oppo,12.0,5000.0,6.8,210.0,2024.0,1299,32.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,108.13148788927337
-Oppo,8.0,4800.0,6.7,195.0,2024.0,1099,32.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,106.92804633548674
-Oppo,8.0,5800.0,6.67,192.0,2025.0,499,32.0,50.0,MediaTek Helio G100,Mobiles Dataset (2025) - Enhanced.csv,130.36959780979075
-Oppo,12.0,5800.0,6.83,210.0,2025.0,799,50.0,50.0,MediaTek Dimensity 8350,Mobiles Dataset (2025) - Enhanced.csv,124.33304965390396
-Oppo,12.0,5600.0,6.59,200.0,2025.0,699,50.0,50.0,MediaTek Dimensity 8350,Mobiles Dataset (2025) - Enhanced.csv,128.94876819386525
-Oppo,8.0,5000.0,6.7,187.0,2024.0,449,32.0,50.0,Snapdragon 685,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946535
-Oppo,12.0,4600.0,6.74,190.0,2024.0,749,32.0,50.0,MediaTek Dimensity 8200,Mobiles Dataset (2025) - Enhanced.csv,101.26002694397238
-Oppo,8.0,5000.0,6.7,185.0,2024.0,599,32.0,50.0,MediaTek Dimensity 7050,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946535
-Oppo,8.0,5000.0,6.7,185.0,2024.0,499,32.0,64.0,MediaTek Dimensity 7050,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946535
-Oppo,12.0,4600.0,6.74,190.0,2024.0,699,32.0,50.0,MediaTek Dimensity 8200,Mobiles Dataset (2025) - Enhanced.csv,101.26002694397238
-Oppo,8.0,6000.0,6.7,180.0,2024.0,599,16.0,50.0,Dimensity 7300,Mobiles Dataset (2025) - Enhanced.csv,133.66005791935842
-Oppo,12.0,6000.0,6.7,186.0,2024.0,699,16.0,50.0,Dimensity 7300,Mobiles Dataset (2025) - Enhanced.csv,133.66005791935842
-Oppo,8.0,5100.0,6.67,186.0,2024.0,499,8.0,50.0,Dimensity 6300,Mobiles Dataset (2025) - Enhanced.csv,114.63533600516084
-Oppo,4.0,5000.0,6.7,186.0,2024.0,399,5.0,50.0,Snapdragon 6s 4G Gen 1,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946535
-Oppo,4.0,5100.0,6.67,186.0,2024.0,449,8.0,8.0,Snapdragon 6s 4G Gen 1,Mobiles Dataset (2025) - Enhanced.csv,114.63533600516084
-Oppo,6.0,5100.0,6.67,186.0,2024.0,499,8.0,8.0,Snapdragon 6s 4G Gen 1,Mobiles Dataset (2025) - Enhanced.csv,114.63533600516084
-Oppo,8.0,5000.0,6.67,186.0,2024.0,449,8.0,50.0,Snapdragon 680 4G,Mobiles Dataset (2025) - Enhanced.csv,112.38758431878513
-Oppo,8.0,5000.0,6.67,186.0,2024.0,499,8.0,50.0,Snapdragon 680 4G,Mobiles Dataset (2025) - Enhanced.csv,112.38758431878513
-Oppo,8.0,6400.0,6.7,192.0,2024.0,699,16.0,50.0,Snapdragon 7 Gen 3,Mobiles Dataset (2025) - Enhanced.csv,142.57072844731564
-Oppo,12.0,6400.0,6.7,192.0,2024.0,799,16.0,50.0,Snapdragon 7 Gen 3,Mobiles Dataset (2025) - Enhanced.csv,142.57072844731564
-Oppo,8.0,5000.0,6.7,175.0,2024.0,549,32.0,64.0,Dimensity 7050,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946535
-Oppo,12.0,5000.0,6.7,177.0,2024.0,699,32.0,64.0,Dimensity 7050,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946535
-Oppo,8.0,4500.0,6.55,173.0,2023.0,549,32.0,64.0,Snapdragon 778G,Mobiles Dataset (2025) - Enhanced.csv,104.88899248295554
-Oppo,8.0,4500.0,6.55,173.0,2023.0,599,32.0,64.0,Snapdragon 778G,Mobiles Dataset (2025) - Enhanced.csv,104.88899248295554
-Oppo,12.0,5000.0,6.82,221.0,2024.0,1199,32.0,50.0,Snapdragon 8 Gen 3,Mobiles Dataset (2025) - Enhanced.csv,107.49821552962219
-Oppo,16.0,5000.0,6.82,221.0,2024.0,1299,32.0,50.0,Snapdragon 8 Gen 3,Mobiles Dataset (2025) - Enhanced.csv,107.49821552962219
-Oppo,12.0,5000.0,6.78,206.0,2024.0,1099,32.0,50.0,Dimensity 9300,Mobiles Dataset (2025) - Enhanced.csv,108.77037269080498
-Oppo,16.0,5000.0,6.78,206.0,2024.0,1199,32.0,50.0,Dimensity 9300,Mobiles Dataset (2025) - Enhanced.csv,108.77037269080498
-Oppo,12.0,5000.0,6.82,218.0,2023.0,999,32.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,107.49821552962219
-Oppo,16.0,5000.0,6.82,218.0,2023.0,1099,32.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,107.49821552962219
-Oppo,12.0,4800.0,6.74,207.0,2023.0,899,32.0,50.0,Dimensity 9200,Mobiles Dataset (2025) - Enhanced.csv,105.6626368111016
-Oppo,16.0,4800.0,6.74,207.0,2023.0,999,32.0,50.0,Dimensity 9200,Mobiles Dataset (2025) - Enhanced.csv,105.6626368111016
-Oppo,12.0,5000.0,6.7,218.0,2022.0,899,32.0,50.0,Snapdragon 8 Gen 1,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946535
-Oppo,16.0,5000.0,6.7,218.0,2022.0,999,32.0,50.0,Snapdragon 8 Gen 1,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946535
-Oppo,8.0,4800.0,6.55,196.0,2022.0,799,32.0,50.0,Snapdragon 888,Mobiles Dataset (2025) - Enhanced.csv,111.88159198181926
-Oppo,8.0,4300.0,6.8,191.0,2023.0,899,32.0,50.0,Dimensity 9000+,Mobiles Dataset (2025) - Enhanced.csv,92.9930795847751
-Oppo,12.0,4520.0,7.1,233.0,2022.0,1099,32.0,50.0,Snapdragon 8+ Gen 1,Mobiles Dataset (2025) - Enhanced.csv,89.66474905772665
-POCO,6.0,4700.0,6.67,219.0,2020.0,499,20.0,64.0,Snapdragon 865,Mobiles Dataset (2025) - Enhanced.csv,105.64432925965802
-POCO,4.0,5000.0,6.67,209.0,2020.0,199,16.0,48.0,Snapdragon 720G,Mobiles Dataset (2025) - Enhanced.csv,112.38758431878513
-POCO,6.0,5160.0,6.67,215.0,2020.0,229,20.0,64.0,Snapdragon 732G,Mobiles Dataset (2025) - Enhanced.csv,115.98398701698626
-POCO,4.0,6000.0,6.53,198.0,2020.0,149,8.0,48.0,Snapdragon 662,Mobiles Dataset (2025) - Enhanced.csv,140.70997563372254
-POCO,6.0,4520.0,6.67,196.0,2021.0,349,20.0,48.0,Snapdragon 870,Mobiles Dataset (2025) - Enhanced.csv,101.59837622418176
-POCO,6.0,5160.0,6.67,215.0,2021.0,249,20.0,48.0,Snapdragon 860,Mobiles Dataset (2025) - Enhanced.csv,115.98398701698626
-POCO,4.0,5000.0,6.5,190.0,2021.0,199,8.0,48.0,MediaTek Dimensity 700,Mobiles Dataset (2025) - Enhanced.csv,118.34319526627219
-POCO,6.0,5065.0,6.67,205.0,2021.0,399,16.0,64.0,MediaTek Dimensity 1200,Mobiles Dataset (2025) - Enhanced.csv,113.84862291492934
-POCO,6.0,5000.0,6.6,193.0,2021.0,279,16.0,64.0,MediaTek Dimensity 1100,Mobiles Dataset (2025) - Enhanced.csv,114.78420569329661
-POCO,4.0,5000.0,6.6,195.0,2021.0,219,16.0,50.0,MediaTek Dimensity 810,Mobiles Dataset (2025) - Enhanced.csv,114.78420569329661
-POCO,6.0,4500.0,6.67,195.0,2022.0,349,20.0,64.0,Snapdragon 870,Mobiles Dataset (2025) - Enhanced.csv,101.14882588690662
-POCO,8.0,4700.0,6.67,210.0,2022.0,499,20.0,64.0,Snapdragon 8 Gen 1,Mobiles Dataset (2025) - Enhanced.csv,105.64432925965802
-POCO,6.0,5000.0,6.67,205.0,2022.0,299,16.0,108.0,Snapdragon 695,Mobiles Dataset (2025) - Enhanced.csv,112.38758431878513
-POCO,6.0,5000.0,6.43,179.0,2022.0,219,16.0,64.0,MediaTek Helio G96,Mobiles Dataset (2025) - Enhanced.csv,120.9338999489659
-POCO,4.0,5000.0,6.58,201.0,2022.0,199,5.0,50.0,MediaTek Helio G99,Mobiles Dataset (2025) - Enhanced.csv,115.4830424700437
-POCO,4.0,5000.0,6.43,178.0,2022.0,229,13.0,64.0,MediaTek Helio G95,Mobiles Dataset (2025) - Enhanced.csv,120.9338999489659
-POCO,6.0,5000.0,6.67,181.0,2023.0,349,16.0,64.0,Snapdragon 7+ Gen 2,Mobiles Dataset (2025) - Enhanced.csv,112.38758431878513
-POCO,8.0,5160.0,6.67,204.0,2023.0,499,20.0,64.0,Snapdragon 8+ Gen 1,Mobiles Dataset (2025) - Enhanced.csv,115.98398701698626
-POCO,6.0,5000.0,6.67,189.0,2023.0,279,13.0,48.0,Snapdragon 695,Mobiles Dataset (2025) - Enhanced.csv,112.38758431878513
-POCO,6.0,5000.0,6.67,181.0,2023.0,329,16.0,108.0,Snapdragon 778G,Mobiles Dataset (2025) - Enhanced.csv,112.38758431878513
-POCO,6.0,5000.0,6.79,202.0,2023.0,219,8.0,50.0,Snapdragon 4 Gen 1,Mobiles Dataset (2025) - Enhanced.csv,108.45022460041514
-POCO,8.0,5000.0,6.67,205.0,2024.0,399,20.0,108.0,MediaTek Dimensity 8300,Mobiles Dataset (2025) - Enhanced.csv,112.38758431878513
-POCO,6.0,5000.0,6.67,190.0,2024.0,449,20.0,64.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,112.38758431878513
-POCO,8.0,5160.0,6.67,210.0,2024.0,549,20.0,108.0,Snapdragon 8+ Gen 2,Mobiles Dataset (2025) - Enhanced.csv,115.98398701698626
-POCO,4.0,5000.0,6.5,190.0,2024.0,149,5.0,50.0,MediaTek Helio G85,Mobiles Dataset (2025) - Enhanced.csv,118.34319526627219
-POCO,8.0,6000.0,6.67,207.0,2025.0,399,20.0,108.0,MediaTek Dimensity 8400,Mobiles Dataset (2025) - Enhanced.csv,134.86510118254216
-POCO,6.0,5110.0,6.67,198.0,2024.0,229,8.0,50.0,MediaTek Dimensity 7025,Mobiles Dataset (2025) - Enhanced.csv,114.8601111737984
-Samsung,12.0,4400.0,7.6,239.0,2024.0,1719,10.0,50.0,Snapdragon 8 Gen 3,Mobiles Dataset (2025) - Enhanced.csv,76.17728531855956
-Samsung,12.0,4400.0,7.6,239.0,2024.0,2259,10.0,50.0,Snapdragon 8 Gen 3,Mobiles Dataset (2025) - Enhanced.csv,76.17728531855956
+company,ram_gb,battery_mah,screen_inches,weight_grams,launch_year,price_usd,front_camera_mp,back_camera_mp,processor,_source_file,battery_efficiency,price_eur,price_inr
+Samsung,12.0,5000.0,6.8,234.0,2024.0,1199,12.0,200.0,Exynos 2400,Mobiles Dataset (2025) - Enhanced.csv,108.13148788927336,1103.0800000000002,99517.0
+Samsung,12.0,5000.0,6.8,234.0,2024.0,1299,12.0,200.0,Exynos 2400,Mobiles Dataset (2025) - Enhanced.csv,108.13148788927336,1195.0800000000002,107817.0
+Samsung,8.0,4800.0,6.6,196.0,2024.0,899,12.0,50.0,Exynos 2400,Mobiles Dataset (2025) - Enhanced.csv,110.19283746556476,827.08,74617.0
+Samsung,8.0,4800.0,6.6,196.0,2024.0,999,12.0,50.0,Exynos 2400,Mobiles Dataset (2025) - Enhanced.csv,110.19283746556476,919.08,82917.0
+Samsung,8.0,4000.0,6.1,168.0,2024.0,799,12.0,50.0,Exynos 2400,Mobiles Dataset (2025) - Enhanced.csv,107.49798441279228,735.08,66317.0
+Samsung,8.0,4000.0,6.1,168.0,2024.0,899,12.0,50.0,Exynos 2400,Mobiles Dataset (2025) - Enhanced.csv,107.49798441279228,827.08,74617.0
+Samsung,8.0,4700.0,6.6,196.0,2023.0,899,12.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,107.89715335169882,827.08,74617.0
+Samsung,8.0,4700.0,6.6,196.0,2023.0,999,12.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,107.89715335169882,919.08,82917.0
+Samsung,8.0,3900.0,6.1,168.0,2023.0,799,12.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,104.81053480247247,735.08,66317.0
+Samsung,8.0,3900.0,6.1,168.0,2023.0,899,12.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,104.81053480247247,827.08,74617.0
+Samsung,12.0,5000.0,6.8,228.0,2022.0,1099,10.0,108.0,Exynos 2200,Mobiles Dataset (2025) - Enhanced.csv,108.13148788927336,1011.08,91217.0
+Samsung,8.0,4500.0,6.6,195.0,2022.0,799,10.0,50.0,Exynos 2200,Mobiles Dataset (2025) - Enhanced.csv,103.30578512396696,735.08,66317.0
+Samsung,8.0,4500.0,6.6,195.0,2022.0,899,10.0,50.0,Exynos 2200,Mobiles Dataset (2025) - Enhanced.csv,103.30578512396696,827.08,74617.0
+Samsung,8.0,3800.0,6.1,167.0,2022.0,699,10.0,50.0,Exynos 2200,Mobiles Dataset (2025) - Enhanced.csv,102.12308519215266,643.08,58017.0
+Samsung,8.0,3800.0,6.1,167.0,2022.0,799,10.0,50.0,Exynos 2200,Mobiles Dataset (2025) - Enhanced.csv,102.12308519215266,735.08,66317.0
+Samsung,12.0,4400.0,7.6,254.0,2023.0,1799,10.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,76.17728531855956,1655.0800000000002,149317.0
+Samsung,12.0,4400.0,7.6,254.0,2023.0,1899,10.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,76.17728531855956,1747.0800000000002,157617.0
+Samsung,8.0,3700.0,6.7,187.0,2023.0,999,12.0,12.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,82.42370238360436,919.08,82917.0
+Samsung,8.0,3700.0,6.7,187.0,2023.0,1099,12.0,12.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,82.42370238360436,1011.08,91217.0
+Samsung,6.0,5000.0,6.4,189.0,2023.0,399,32.0,50.0,Exynos 1380,Mobiles Dataset (2025) - Enhanced.csv,122.07031249999996,367.08000000000004,33117.0
+Samsung,6.0,5000.0,6.4,189.0,2023.0,449,32.0,50.0,Exynos 1380,Mobiles Dataset (2025) - Enhanced.csv,122.07031249999996,413.08000000000004,37267.0
+Samsung,6.0,5000.0,6.6,199.0,2023.0,349,13.0,48.0,MediaTek Dimensity 1080,Mobiles Dataset (2025) - Enhanced.csv,114.7842056932966,321.08000000000004,28967.0
+Samsung,6.0,5000.0,6.6,199.0,2023.0,399,13.0,48.0,MediaTek Dimensity 1080,Mobiles Dataset (2025) - Enhanced.csv,114.7842056932966,367.08000000000004,33117.0
+Samsung,6.0,5000.0,6.5,195.0,2023.0,299,13.0,50.0,MediaTek Helio G99,Mobiles Dataset (2025) - Enhanced.csv,118.3431952662722,275.08,24817.0
+Samsung,6.0,5000.0,6.5,195.0,2023.0,349,13.0,50.0,MediaTek Helio G99,Mobiles Dataset (2025) - Enhanced.csv,118.3431952662722,321.08000000000004,28967.0
+Samsung,4.0,5000.0,6.6,190.0,2023.0,249,13.0,50.0,Exynos 850,Mobiles Dataset (2025) - Enhanced.csv,114.7842056932966,229.08,20667.0
+Samsung,4.0,5000.0,6.6,190.0,2023.0,299,13.0,50.0,Exynos 850,Mobiles Dataset (2025) - Enhanced.csv,114.7842056932966,275.08,24817.0
+Samsung,4.0,5000.0,6.5,188.0,2022.0,199,5.0,50.0,Exynos 850,Mobiles Dataset (2025) - Enhanced.csv,118.3431952662722,183.08,16517.0
+Samsung,4.0,5000.0,6.5,188.0,2022.0,249,5.0,50.0,Exynos 850,Mobiles Dataset (2025) - Enhanced.csv,118.3431952662722,229.08,20667.0
+Samsung,8.0,6000.0,6.7,202.0,2023.0,349,32.0,108.0,Exynos 1380,Mobiles Dataset (2025) - Enhanced.csv,133.66005791935842,321.08000000000004,28967.0
+Samsung,8.0,6000.0,6.7,202.0,2023.0,399,32.0,108.0,Exynos 1380,Mobiles Dataset (2025) - Enhanced.csv,133.66005791935842,367.08000000000004,33117.0
+Samsung,6.0,6000.0,6.5,199.0,2023.0,299,13.0,50.0,Exynos 1280,Mobiles Dataset (2025) - Enhanced.csv,142.01183431952663,275.08,24817.0
+Samsung,6.0,6000.0,6.5,199.0,2023.0,349,13.0,50.0,Exynos 1280,Mobiles Dataset (2025) - Enhanced.csv,142.01183431952663,321.08000000000004,28967.0
+Samsung,4.0,6000.0,6.6,202.0,2023.0,249,13.0,50.0,Exynos 850,Mobiles Dataset (2025) - Enhanced.csv,137.74104683195594,229.08,20667.0
+Samsung,4.0,6000.0,6.6,202.0,2023.0,299,13.0,50.0,Exynos 850,Mobiles Dataset (2025) - Enhanced.csv,137.74104683195594,275.08,24817.0
+Samsung,12.0,4500.0,6.9,208.0,2020.0,1299,10.0,108.0,Exynos 990,Mobiles Dataset (2025) - Enhanced.csv,94.51795841209828,1195.0800000000002,107817.0
+Samsung,12.0,4500.0,6.9,208.0,2020.0,1399,10.0,108.0,Exynos 990,Mobiles Dataset (2025) - Enhanced.csv,94.51795841209828,1287.0800000000002,116117.0
+Samsung,8.0,4300.0,6.7,192.0,2020.0,999,10.0,108.0,Exynos 990,Mobiles Dataset (2025) - Enhanced.csv,95.7897081755402,919.08,82917.0
+Samsung,8.0,4300.0,6.7,192.0,2020.0,1099,10.0,108.0,Exynos 990,Mobiles Dataset (2025) - Enhanced.csv,95.7897081755402,1011.08,91217.0
+Samsung,12.0,4300.0,6.8,196.0,2019.0,1099,10.0,12.0,Exynos 9825,Mobiles Dataset (2025) - Enhanced.csv,92.9930795847751,1011.08,91217.0
+Samsung,12.0,4300.0,6.8,196.0,2019.0,1199,10.0,12.0,Exynos 9825,Mobiles Dataset (2025) - Enhanced.csv,92.9930795847751,1103.0800000000002,99517.0
+Samsung,8.0,3500.0,6.3,168.0,2019.0,949,10.0,12.0,Exynos 9825,Mobiles Dataset (2025) - Enhanced.csv,88.18342151675486,873.08,78767.0
+Samsung,8.0,3500.0,6.3,168.0,2019.0,899,10.0,12.0,Exynos 9825,Mobiles Dataset (2025) - Enhanced.csv,88.18342151675486,827.08,74617.0
+Samsung,6.0,4050.0,6.6,235.0,2022.0,499,13.0,50.0,Exynos 1380,Mobiles Dataset (2025) - Enhanced.csv,92.97520661157026,459.08000000000004,41417.0
+Samsung,4.0,3000.0,5.3,172.0,2020.0,249,5.0,16.0,Exynos 850,Mobiles Dataset (2025) - Enhanced.csv,106.7995728017088,229.08,20667.0
+Samsung,4.0,3500.0,6.0,191.0,2018.0,199,16.0,16.0,Snapdragon 450,Mobiles Dataset (2025) - Enhanced.csv,97.22222222222224,183.08,16517.0
+Samsung,3.0,3600.0,5.5,181.0,2017.0,179,13.0,13.0,Exynos 7870,Mobiles Dataset (2025) - Enhanced.csv,119.00826446280992,164.68,14857.0
+Samsung,4.0,3300.0,6.0,178.0,2018.0,169,8.0,13.0,Snapdragon 425,Mobiles Dataset (2025) - Enhanced.csv,91.66666666666669,155.48000000000002,14027.0
+Samsung,2.0,3000.0,5.5,175.0,2018.0,129,5.0,13.0,Exynos 7570,Mobiles Dataset (2025) - Enhanced.csv,99.17355371900828,118.68,10707.0
+Samsung,6.0,4000.0,6.0,189.0,2016.0,399,16.0,16.0,Snapdragon 653,Mobiles Dataset (2025) - Enhanced.csv,111.11111111111111,367.08000000000004,33117.0
+Samsung,4.0,3300.0,5.7,165.0,2017.0,299,16.0,16.0,Snapdragon 625,Mobiles Dataset (2025) - Enhanced.csv,101.5697137580794,275.08,24817.0
+Samsung,4.0,2600.0,5.2,143.0,2016.0,249,8.0,16.0,Snapdragon 617,Mobiles Dataset (2025) - Enhanced.csv,96.15384615384616,229.08,20667.0
+Samsung,12.0,4500.0,7.6,228.0,2021.0,1499,10.0,108.0,Snapdragon 888,Mobiles Dataset (2025) - Enhanced.csv,77.90858725761773,1379.0800000000002,124417.0
+Samsung,12.0,4500.0,7.6,229.0,2020.0,1399,10.0,108.0,Snapdragon 888,Mobiles Dataset (2025) - Enhanced.csv,77.90858725761773,1287.0800000000002,116117.0
+Samsung,6.0,5050.0,8.0,433.0,2024.0,549,5.0,13.0,Exynos 1380,Mobiles Dataset (2025) - Enhanced.csv,78.90625,505.08000000000004,45567.0
+Samsung,4.0,5050.0,8.0,426.0,2020.0,499,5.0,13.0,Exynos 9810,Mobiles Dataset (2025) - Enhanced.csv,78.90625,459.08000000000004,41417.0
+Samsung,1.0,5000.0,8.0,360.0,2016.0,99,2.0,5.0,Qualcomm MSM8916,Mobiles Dataset (2025) - Enhanced.csv,78.125,91.08,8217.0
+OnePlus,12.0,5000.0,6.7,205.0,2024.0,799,32.0,50.0,Snapdragon 8 Gen 3,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946537,735.08,66317.0
+OnePlus,12.0,4500.0,6.7,203.0,2024.0,699,16.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,100.24504343951882,643.08,58017.0
+OnePlus,12.0,5000.0,6.7,205.0,2023.0,699,16.0,50.0,Snapdragon 8 Gen 1,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946537,643.08,58017.0
+OnePlus,12.0,5000.0,6.7,202.0,2023.0,599,16.0,50.0,Snapdragon 8 Gen 1,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946537,551.08,49717.0
+OnePlus,12.0,5000.0,6.74,190.0,2023.0,499,16.0,50.0,MediaTek Dimensity 9000,Mobiles Dataset (2025) - Enhanced.csv,110.06524667823084,459.08000000000004,41417.0
+OnePlus,8.0,5000.0,6.72,179.0,2023.0,399,16.0,50.0,Snapdragon 782G,Mobiles Dataset (2025) - Enhanced.csv,110.7213718820862,367.08000000000004,33117.0
+OnePlus,8.0,5000.0,6.72,195.0,2023.0,299,16.0,108.0,Snapdragon 695,Mobiles Dataset (2025) - Enhanced.csv,110.7213718820862,275.08,24817.0
+OnePlus,8.0,5000.0,6.72,192.0,2023.0,249,16.0,64.0,MediaTek Dimensity 6020,Mobiles Dataset (2025) - Enhanced.csv,110.7213718820862,229.08,20667.0
+OnePlus,16.0,4800.0,7.8,238.0,2024.0,1099,32.0,48.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,78.89546351084813,1011.08,91217.0
+OnePlus,12.0,5000.0,6.7,200.0,2022.0,899,32.0,50.0,Snapdragon 8 Gen 1,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946537,827.08,74617.0
+OnePlus,12.0,4500.0,6.7,203.0,2022.0,749,16.0,50.0,Snapdragon 8+ Gen 1,Mobiles Dataset (2025) - Enhanced.csv,100.24504343951882,689.08,62167.0
+OnePlus,8.0,4500.0,6.55,183.0,2021.0,599,16.0,48.0,Snapdragon 888,Mobiles Dataset (2025) - Enhanced.csv,104.88899248295554,551.08,49717.0
+OnePlus,16.0,5000.0,6.7,204.0,2023.0,899,32.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946537,827.08,74617.0
+OnePlus,8.0,4500.0,6.43,190.0,2022.0,399,32.0,50.0,MediaTek Dimensity 1300,Mobiles Dataset (2025) - Enhanced.csv,108.84050995406932,367.08000000000004,33117.0
+OnePlus,8.0,4500.0,6.43,190.0,2021.0,349,32.0,50.0,MediaTek Dimensity 1200-AI,Mobiles Dataset (2025) - Enhanced.csv,108.84050995406932,321.08000000000004,28967.0
+OnePlus,4.0,5000.0,6.49,189.0,2021.0,199,16.0,13.0,Snapdragon 480,Mobiles Dataset (2025) - Enhanced.csv,118.70817020852276,183.08,16517.0
+OnePlus,4.0,5000.0,6.52,185.0,2020.0,179,8.0,13.0,Qualcomm Snapdragon 460,Mobiles Dataset (2025) - Enhanced.csv,117.61827693929015,164.68,14857.0
+OnePlus,12.0,4500.0,6.55,188.0,2020.0,749,16.0,48.0,Snapdragon 865,Mobiles Dataset (2025) - Enhanced.csv,104.88899248295554,689.08,62167.0
+OnePlus,8.0,4500.0,6.55,192.0,2021.0,649,16.0,48.0,Snapdragon 888,Mobiles Dataset (2025) - Enhanced.csv,104.88899248295554,597.08,53867.0
+OnePlus,12.0,4500.0,6.55,188.0,2020.0,599,16.0,48.0,Snapdragon 865,Mobiles Dataset (2025) - Enhanced.csv,104.88899248295554,551.08,49717.0
+OnePlus,12.0,4510.0,6.78,199.0,2020.0,749,16.0,48.0,Snapdragon 865,Mobiles Dataset (2025) - Enhanced.csv,98.1108761671061,689.08,62167.0
+OnePlus,8.0,4300.0,6.55,180.0,2020.0,699,16.0,48.0,Snapdragon 865,Mobiles Dataset (2025) - Enhanced.csv,100.22725948371308,643.08,58017.0
+OnePlus,6.0,5000.0,6.59,195.0,2022.0,249,16.0,64.0,MediaTek Dimensity 900,Mobiles Dataset (2025) - Enhanced.csv,115.13282874452256,229.08,20667.0
+OnePlus,8.0,4500.0,6.43,173.0,2022.0,299,16.0,64.0,MediaTek Dimensity 1200,Mobiles Dataset (2025) - Enhanced.csv,108.84050995406932,275.08,24817.0
+OnePlus,6.0,4115.0,6.44,184.0,2020.0,349,16.0,48.0,Snapdragon 765G,Mobiles Dataset (2025) - Enhanced.csv,99.21974460861848,321.08000000000004,28967.0
+OnePlus,6.0,4500.0,6.43,170.0,2021.0,299,16.0,64.0,Snapdragon 750G,Mobiles Dataset (2025) - Enhanced.csv,108.84050995406932,275.08,24817.0
+OnePlus,6.0,4300.0,6.49,190.0,2020.0,299,16.0,64.0,Qualcomm Snapdragon 690,Mobiles Dataset (2025) - Enhanced.csv,102.08902637932958,275.08,24817.0
+OnePlus,8.0,4300.0,6.55,192.0,2020.0,649,16.0,48.0,Snapdragon 865,Mobiles Dataset (2025) - Enhanced.csv,100.22725948371308,597.08,53867.0
+OnePlus,6.0,3700.0,6.41,190.0,2020.0,599,16.0,48.0,Snapdragon 855,Mobiles Dataset (2025) - Enhanced.csv,90.0504038882304,551.08,49717.0
+OnePlus,10.0,3700.0,6.41,185.0,2018.0,799,16.0,20.0,Snapdragon 845,Mobiles Dataset (2025) - Enhanced.csv,90.0504038882304,735.08,66317.0
+OnePlus,6.0,3300.0,6.01,162.0,2017.0,649,16.0,16.0,Snapdragon 835,Mobiles Dataset (2025) - Enhanced.csv,91.3618733059986,597.08,53867.0
+OnePlus,8.0,4500.0,6.7,210.0,2023.0,849,16.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,100.24504343951882,781.08,70467.0
+OnePlus,8.0,4500.0,6.7,205.0,2022.0,599,16.0,50.0,MediaTek Dimensity 8100,Mobiles Dataset (2025) - Enhanced.csv,100.24504343951882,551.08,49717.0
+OnePlus,12.0,4000.0,6.67,206.0,2019.0,799,16.0,48.0,Snapdragon 855,Mobiles Dataset (2025) - Enhanced.csv,89.91006745502811,735.08,66317.0
+OnePlus,6.0,3300.0,6.28,177.0,2018.0,599,16.0,20.0,Snapdragon 845,Mobiles Dataset (2025) - Enhanced.csv,83.6747941092945,551.08,49717.0
+OnePlus,8.0,3300.0,5.5,155.0,2017.0,599,16.0,20.0,Snapdragon 835,Mobiles Dataset (2025) - Enhanced.csv,109.0909090909091,551.08,49717.0
+OnePlus,8.0,4000.0,6.44,190.0,2020.0,299,32.0,64.0,Snapdragon 765G,Mobiles Dataset (2025) - Enhanced.csv,96.4468963388758,275.08,24817.0
+OnePlus,12.0,4510.0,6.78,199.0,2020.0,899,16.0,48.0,Snapdragon 865,Mobiles Dataset (2025) - Enhanced.csv,98.1108761671061,827.08,74617.0
+OnePlus,12.0,4500.0,6.55,188.0,2020.0,799,16.0,48.0,Snapdragon 865,Mobiles Dataset (2025) - Enhanced.csv,104.88899248295554,735.08,66317.0
+OnePlus,12.0,4085.0,6.67,206.0,2019.0,899,16.0,48.0,Snapdragon 855,Mobiles Dataset (2025) - Enhanced.csv,91.82065638844746,827.08,74617.0
+OnePlus,12.0,5000.0,6.7,210.0,2023.0,849,32.0,50.0,Snapdragon 8 Gen 3,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946537,781.08,70467.0
+OnePlus,8.0,4800.0,6.55,202.0,2023.0,799,16.0,64.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,111.88159198181926,735.08,66317.0
+Vivo,12.0,6000.0,6.78,223.0,2024.0,999,32.0,50.0,Dimensity 9400,Mobiles Dataset (2025) - Enhanced.csv,130.52444722896598,919.08,82917.0
+Vivo,12.0,6000.0,6.78,223.0,2024.0,1099,32.0,50.0,Dimensity 9400,Mobiles Dataset (2025) - Enhanced.csv,130.52444722896598,1011.08,91217.0
+Vivo,16.0,6000.0,6.78,223.0,2024.0,1199,32.0,200.0,Dimensity 9400,Mobiles Dataset (2025) - Enhanced.csv,130.52444722896598,1103.0800000000002,99517.0
+Vivo,16.0,6000.0,6.78,223.0,2024.0,1299,32.0,200.0,Dimensity 9400,Mobiles Dataset (2025) - Enhanced.csv,130.52444722896598,1195.0800000000002,107817.0
+Vivo,16.0,5700.0,6.31,187.0,2024.0,949,32.0,50.0,Dimensity 9400,Mobiles Dataset (2025) - Enhanced.csv,143.1581696851274,873.08,78767.0
+Vivo,8.0,4100.0,6.44,179.0,2024.0,449,44.0,64.0,Snapdragon 778G,Mobiles Dataset (2025) - Enhanced.csv,98.8580687473477,413.08000000000004,37267.0
+Vivo,12.0,5000.0,6.58,190.0,2024.0,399,16.0,64.0,Dimensity 1200,Mobiles Dataset (2025) - Enhanced.csv,115.4830424700437,367.08000000000004,33117.0
+Vivo,8.0,5000.0,6.67,180.0,2024.0,349,16.0,50.0,Snapdragon 870,Mobiles Dataset (2025) - Enhanced.csv,112.38758431878512,321.08000000000004,28967.0
+Vivo,8.0,4500.0,6.38,181.0,2024.0,299,16.0,64.0,Dimensity 900,Mobiles Dataset (2025) - Enhanced.csv,110.55315887225952,275.08,24817.0
+Vivo,12.0,4700.0,6.56,189.0,2024.0,599,32.0,108.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,109.21698393813207,551.08,49717.0
+Vivo,12.0,4500.0,6.44,192.0,2024.0,549,32.0,64.0,Dimensity 1100,Mobiles Dataset (2025) - Enhanced.csv,108.50275838123528,505.08000000000004,45567.0
+Vivo,16.0,5000.0,6.78,210.0,2024.0,699,16.0,50.0,Snapdragon 8 Gen 3,Mobiles Dataset (2025) - Enhanced.csv,108.77037269080498,643.08,58017.0
+Vivo,6.0,3315.0,6.3,162.0,2018.0,249,12.0,16.0,Snapdragon 710,Mobiles Dataset (2025) - Enhanced.csv,83.5222978080121,229.08,20667.0
+Vivo,4.0,3260.0,6.3,150.0,2018.0,219,24.0,16.0,Snapdragon 626,Mobiles Dataset (2025) - Enhanced.csv,82.13655832703452,201.48000000000002,18177.0
+Vivo,6.0,4000.0,5.88,199.0,2017.0,299,20.0,16.0,Snapdragon 653,Mobiles Dataset (2025) - Enhanced.csv,115.69253551760842,275.08,24817.0
+Vivo,3.0,3260.0,6.22,146.0,2018.0,149,5.0,13.0,MediaTek Helio P22,Mobiles Dataset (2025) - Enhanced.csv,84.26298321977649,137.08,12367.0
+Vivo,2.0,2300.0,5.5,146.0,2014.0,199,5.0,13.0,Snapdragon 615,Mobiles Dataset (2025) - Enhanced.csv,76.03305785123968,183.08,16517.0
+Vivo,4.0,3055.0,5.5,158.0,2017.0,249,20.0,16.0,Snapdragon 625,Mobiles Dataset (2025) - Enhanced.csv,100.99173553719008,229.08,20667.0
+Vivo,4.0,4030.0,6.22,163.0,2018.0,199,20.0,13.0,Snapdragon 439,Mobiles Dataset (2025) - Enhanced.csv,104.16558968579731,183.08,16517.0
+Vivo,4.0,3000.0,5.5,168.0,2016.0,179,8.0,13.0,Snapdragon 652,Mobiles Dataset (2025) - Enhanced.csv,99.17355371900828,164.68,14857.0
+Vivo,1.0,2000.0,5.0,153.0,2014.0,139,5.0,13.0,MediaTek MT6592,Mobiles Dataset (2025) - Enhanced.csv,80.0,127.88000000000001,11537.0
+Vivo,3.0,3000.0,5.5,155.0,2017.0,179,16.0,13.0,Snapdragon 430,Mobiles Dataset (2025) - Enhanced.csv,99.17355371900828,164.68,14857.0
+Vivo,8.0,4500.0,6.44,176.0,2020.0,399,32.0,48.0,Qualcomm Snapdragon 712,Mobiles Dataset (2025) - Enhanced.csv,108.50275838123528,367.08000000000004,33117.0
+Vivo,8.0,4500.0,6.44,176.0,2020.0,429,32.0,48.0,Qualcomm Snapdragon 712,Mobiles Dataset (2025) - Enhanced.csv,108.50275838123528,394.68,35607.0
+Vivo,8.0,4100.0,6.44,201.0,2019.0,399,32.0,48.0,Qualcomm Snapdragon 675,Mobiles Dataset (2025) - Enhanced.csv,98.8580687473477,367.08000000000004,33117.0
+Vivo,8.0,4100.0,6.44,201.0,2019.0,429,32.0,48.0,Qualcomm Snapdragon 675,Mobiles Dataset (2025) - Enhanced.csv,98.8580687473477,394.68,35607.0
+Vivo,3.0,5000.0,6.51,191.0,2020.0,159,8.0,13.0,MediaTek Helio P35,Mobiles Dataset (2025) - Enhanced.csv,117.97990094407515,146.28,13197.0
+Vivo,4.0,5000.0,6.51,191.0,2020.0,179,8.0,13.0,MediaTek Helio P35,Mobiles Dataset (2025) - Enhanced.csv,117.97990094407515,164.68,14857.0
+Vivo,6.0,4500.0,6.38,185.0,2019.0,249,32.0,48.0,MediaTek Helio P65,Mobiles Dataset (2025) - Enhanced.csv,110.55315887225952,229.08,20667.0
+Vivo,6.0,4500.0,6.38,185.0,2019.0,269,32.0,48.0,MediaTek Helio P65,Mobiles Dataset (2025) - Enhanced.csv,110.55315887225952,247.48000000000002,22327.0
+Vivo,3.0,5000.0,6.35,190.0,2019.0,149,8.0,13.0,Qualcomm Snapdragon 439,Mobiles Dataset (2025) - Enhanced.csv,124.000248000496,137.08,12367.0
+Vivo,3.0,5000.0,6.35,190.0,2019.0,169,8.0,13.0,Qualcomm Snapdragon 439,Mobiles Dataset (2025) - Enhanced.csv,124.000248000496,155.48000000000002,14027.0
+Vivo,6.0,4000.0,6.53,190.0,2019.0,299,32.0,48.0,MediaTek Helio P70,Mobiles Dataset (2025) - Enhanced.csv,93.8066504224817,275.08,24817.0
+Vivo,6.0,4000.0,6.53,190.0,2019.0,319,32.0,48.0,MediaTek Helio P70,Mobiles Dataset (2025) - Enhanced.csv,93.8066504224817,293.48,26477.0
+Vivo,8.0,4000.0,6.39,190.0,2019.0,499,32.0,48.0,Qualcomm Snapdragon 710,Mobiles Dataset (2025) - Enhanced.csv,97.96214253001928,459.08000000000004,41417.0
+Vivo,8.0,4000.0,6.39,190.0,2019.0,549,32.0,48.0,Qualcomm Snapdragon 710,Mobiles Dataset (2025) - Enhanced.csv,97.96214253001928,505.08000000000004,45567.0
+Vivo,4.0,5000.0,6.47,193.0,2020.0,199,8.0,13.0,MediaTek Helio P35,Mobiles Dataset (2025) - Enhanced.csv,119.44320356227412,183.08,16517.0
+Vivo,3.0,5000.0,6.47,193.0,2020.0,169,8.0,13.0,MediaTek Helio P35,Mobiles Dataset (2025) - Enhanced.csv,119.44320356227412,155.48000000000002,14027.0
+Vivo,4.0,4500.0,6.53,159.0,2019.0,249,16.0,16.0,Qualcomm Snapdragon 712,Mobiles Dataset (2025) - Enhanced.csv,105.53248172529192,229.08,20667.0
+Vivo,6.0,4500.0,6.53,159.0,2019.0,299,16.0,16.0,Qualcomm Snapdragon 712,Mobiles Dataset (2025) - Enhanced.csv,105.53248172529192,275.08,24817.0
+Vivo,6.0,3200.0,6.28,156.0,2018.0,349,12.0,12.0,Qualcomm Snapdragon 660,Mobiles Dataset (2025) - Enhanced.csv,81.13919428780072,321.08000000000004,28967.0
+Vivo,4.0,3200.0,6.28,156.0,2018.0,299,12.0,12.0,Qualcomm Snapdragon 660,Mobiles Dataset (2025) - Enhanced.csv,81.13919428780072,275.08,24817.0
+Vivo,8.0,4050.0,6.44,172.0,2021.0,299,50.0,64.0,MediaTek Helio G96,Mobiles Dataset (2025) - Enhanced.csv,97.65248254311174,275.08,24817.0
+Vivo,8.0,4050.0,6.44,172.0,2021.0,349,50.0,64.0,MediaTek Helio G96,Mobiles Dataset (2025) - Enhanced.csv,97.65248254311174,321.08000000000004,28967.0
+Vivo,8.0,5000.0,6.58,182.0,2021.0,239,16.0,50.0,MediaTek Helio G80,Mobiles Dataset (2025) - Enhanced.csv,115.4830424700437,219.88,19837.0
+Vivo,4.0,5000.0,6.58,182.0,2021.0,179,16.0,50.0,MediaTek Helio G80,Mobiles Dataset (2025) - Enhanced.csv,115.4830424700437,164.68,14857.0
+Vivo,12.0,4200.0,6.56,190.0,2021.0,899,32.0,48.0,Qualcomm Snapdragon 870,Mobiles Dataset (2025) - Enhanced.csv,97.5981558596074,827.08,74617.0
+Vivo,12.0,4200.0,6.56,190.0,2021.0,999,32.0,48.0,Qualcomm Snapdragon 870,Mobiles Dataset (2025) - Enhanced.csv,97.5981558596074,919.08,82917.0
+Vivo,8.0,4000.0,6.44,173.0,2020.0,499,44.0,64.0,Qualcomm Snapdragon 765G,Mobiles Dataset (2025) - Enhanced.csv,96.4468963388758,459.08000000000004,41417.0
+Vivo,8.0,4000.0,6.44,173.0,2020.0,549,44.0,64.0,Qualcomm Snapdragon 765G,Mobiles Dataset (2025) - Enhanced.csv,96.4468963388758,505.08000000000004,45567.0
+Vivo,8.0,5000.0,6.58,179.0,2021.0,349,16.0,50.0,MediaTek Dimensity 700,Mobiles Dataset (2025) - Enhanced.csv,115.4830424700437,321.08000000000004,28967.0
+Vivo,8.0,5000.0,6.58,179.0,2021.0,399,16.0,50.0,MediaTek Dimensity 700,Mobiles Dataset (2025) - Enhanced.csv,115.4830424700437,367.08000000000004,33117.0
+Vivo,6.0,5000.0,6.58,190.0,2021.0,229,16.0,64.0,MediaTek Helio G80,Mobiles Dataset (2025) - Enhanced.csv,115.4830424700437,210.68,19007.0
+Vivo,6.0,5000.0,6.58,190.0,2021.0,179,16.0,64.0,MediaTek Helio G80,Mobiles Dataset (2025) - Enhanced.csv,115.4830424700437,164.68,14857.0
+Vivo,6.0,3700.0,6.39,185.0,2019.0,399,32.0,48.0,Qualcomm Snapdragon 675,Mobiles Dataset (2025) - Enhanced.csv,90.61498184026784,367.08000000000004,33117.0
+Vivo,6.0,3700.0,6.39,185.0,2019.0,449,32.0,48.0,Qualcomm Snapdragon 675,Mobiles Dataset (2025) - Enhanced.csv,90.61498184026784,413.08000000000004,37267.0
+Vivo,8.0,4450.0,6.56,185.0,2021.0,749,32.0,50.0,MediaTek Dimensity 1200,Mobiles Dataset (2025) - Enhanced.csv,103.40756989886974,689.08,62167.0
+Vivo,8.0,4450.0,6.56,185.0,2021.0,799,32.0,50.0,MediaTek Dimensity 1200,Mobiles Dataset (2025) - Enhanced.csv,103.40756989886974,735.08,66317.0
+Vivo,6.0,5000.0,6.58,181.0,2022.0,269,16.0,50.0,Qualcomm Snapdragon 695,Mobiles Dataset (2025) - Enhanced.csv,115.4830424700437,247.48000000000002,22327.0
+Vivo,8.0,5000.0,6.58,181.0,2022.0,319,16.0,50.0,Qualcomm Snapdragon 695,Mobiles Dataset (2025) - Enhanced.csv,115.4830424700437,293.48,26477.0
+Vivo,8.0,4200.0,6.44,199.0,2019.0,899,32.0,64.0,Qualcomm Snapdragon 855,Mobiles Dataset (2025) - Enhanced.csv,101.2692411558196,827.08,74617.0
+Vivo,8.0,4200.0,6.44,199.0,2019.0,949,32.0,64.0,Qualcomm Snapdragon 855,Mobiles Dataset (2025) - Enhanced.csv,101.2692411558196,873.08,78767.0
+Vivo,8.0,4600.0,6.78,182.0,2023.0,599,50.0,50.0,MediaTek Dimensity 8200,Mobiles Dataset (2025) - Enhanced.csv,100.06874287554058,551.08,49717.0
+Vivo,8.0,4600.0,6.78,182.0,2023.0,649,50.0,50.0,MediaTek Dimensity 8200,Mobiles Dataset (2025) - Enhanced.csv,100.06874287554058,597.08,53867.0
+Vivo,8.0,4600.0,6.78,182.0,2023.0,699,50.0,50.0,MediaTek Dimensity 8200,Mobiles Dataset (2025) - Enhanced.csv,100.06874287554058,643.08,58017.0
+Vivo,8.0,4600.0,6.78,182.0,2023.0,749,50.0,50.0,MediaTek Dimensity 8200,Mobiles Dataset (2025) - Enhanced.csv,100.06874287554058,689.08,62167.0
+Vivo,8.0,4830.0,6.56,190.0,2022.0,599,32.0,64.0,MediaTek Dimensity 1300,Mobiles Dataset (2025) - Enhanced.csv,112.2378792385485,551.08,49717.0
+Vivo,8.0,4830.0,6.56,190.0,2022.0,649,32.0,64.0,MediaTek Dimensity 1300,Mobiles Dataset (2025) - Enhanced.csv,112.2378792385485,597.08,53867.0
+Vivo,12.0,4870.0,6.78,221.0,2022.0,1099,32.0,50.0,MediaTek Dimensity 9200,Mobiles Dataset (2025) - Enhanced.csv,105.94234300084403,1011.08,91217.0
+Vivo,12.0,4870.0,6.78,221.0,2022.0,1199,32.0,50.0,MediaTek Dimensity 9200,Mobiles Dataset (2025) - Enhanced.csv,105.94234300084403,1103.0800000000002,99517.0
+Vivo,8.0,4500.0,6.44,190.0,2023.0,449,16.0,64.0,MediaTek Dimensity 900,Mobiles Dataset (2025) - Enhanced.csv,108.50275838123528,413.08000000000004,37267.0
+Vivo,8.0,4500.0,6.44,190.0,2023.0,299,16.0,64.0,Qualcomm Snapdragon 695,Mobiles Dataset (2025) - Enhanced.csv,108.50275838123528,275.08,24817.0
+Vivo,8.0,4500.0,6.44,190.0,2023.0,349,16.0,64.0,Qualcomm Snapdragon 695,Mobiles Dataset (2025) - Enhanced.csv,108.50275838123528,321.08000000000004,28967.0
+Vivo,8.0,4200.0,6.44,179.0,2022.0,499,50.0,64.0,MediaTek Dimensity 920,Mobiles Dataset (2025) - Enhanced.csv,101.2692411558196,459.08000000000004,41417.0
+Vivo,8.0,4200.0,6.44,179.0,2022.0,549,50.0,64.0,MediaTek Dimensity 920,Mobiles Dataset (2025) - Enhanced.csv,101.2692411558196,505.08000000000004,45567.0
+Vivo,12.0,4700.0,6.78,206.0,2022.0,899,32.0,50.0,MediaTek Dimensity 9000,Mobiles Dataset (2025) - Enhanced.csv,102.24415032935669,827.08,74617.0
+Vivo,12.0,4700.0,6.78,206.0,2022.0,999,32.0,50.0,MediaTek Dimensity 9000,Mobiles Dataset (2025) - Enhanced.csv,102.24415032935669,919.08,82917.0
+Vivo,4.0,5000.0,6.51,182.0,2021.0,199,8.0,13.0,MediaTek Helio P35,Mobiles Dataset (2025) - Enhanced.csv,117.97990094407515,183.08,16517.0
+Oppo,12.0,4805.0,7.82,239.0,2023.0,1399,32.0,48.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,78.57418515054192,1287.0800000000002,116117.0
+Oppo,12.0,4300.0,6.8,198.0,2023.0,999,32.0,50.0,MediaTek Dimensity 9200,Mobiles Dataset (2025) - Enhanced.csv,92.9930795847751,919.08,82917.0
+Oppo,12.0,5000.0,6.8,210.0,2024.0,1299,32.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,108.13148788927336,1195.0800000000002,107817.0
+Oppo,8.0,4800.0,6.7,195.0,2024.0,1099,32.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,106.92804633548674,1011.08,91217.0
+Oppo,8.0,5800.0,6.67,192.0,2025.0,499,32.0,50.0,MediaTek Helio G100,Mobiles Dataset (2025) - Enhanced.csv,130.36959780979075,459.08000000000004,41417.0
+Oppo,12.0,5800.0,6.83,210.0,2025.0,799,50.0,50.0,MediaTek Dimensity 8350,Mobiles Dataset (2025) - Enhanced.csv,124.33304965390396,735.08,66317.0
+Oppo,12.0,5600.0,6.59,200.0,2025.0,699,50.0,50.0,MediaTek Dimensity 8350,Mobiles Dataset (2025) - Enhanced.csv,128.94876819386525,643.08,58017.0
+Oppo,8.0,5000.0,6.7,187.0,2024.0,449,32.0,50.0,Snapdragon 685,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946537,413.08000000000004,37267.0
+Oppo,12.0,4600.0,6.74,190.0,2024.0,749,32.0,50.0,MediaTek Dimensity 8200,Mobiles Dataset (2025) - Enhanced.csv,101.26002694397238,689.08,62167.0
+Oppo,8.0,5000.0,6.7,185.0,2024.0,599,32.0,50.0,MediaTek Dimensity 7050,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946537,551.08,49717.0
+Oppo,8.0,5000.0,6.7,185.0,2024.0,499,32.0,64.0,MediaTek Dimensity 7050,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946537,459.08000000000004,41417.0
+Oppo,12.0,4600.0,6.74,190.0,2024.0,699,32.0,50.0,MediaTek Dimensity 8200,Mobiles Dataset (2025) - Enhanced.csv,101.26002694397238,643.08,58017.0
+Oppo,8.0,6000.0,6.7,180.0,2024.0,599,16.0,50.0,Dimensity 7300,Mobiles Dataset (2025) - Enhanced.csv,133.66005791935842,551.08,49717.0
+Oppo,12.0,6000.0,6.7,186.0,2024.0,699,16.0,50.0,Dimensity 7300,Mobiles Dataset (2025) - Enhanced.csv,133.66005791935842,643.08,58017.0
+Oppo,8.0,5100.0,6.67,186.0,2024.0,499,8.0,50.0,Dimensity 6300,Mobiles Dataset (2025) - Enhanced.csv,114.63533600516084,459.08000000000004,41417.0
+Oppo,4.0,5000.0,6.7,186.0,2024.0,399,5.0,50.0,Snapdragon 6s 4G Gen 1,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946537,367.08000000000004,33117.0
+Oppo,4.0,5100.0,6.67,186.0,2024.0,449,8.0,8.0,Snapdragon 6s 4G Gen 1,Mobiles Dataset (2025) - Enhanced.csv,114.63533600516084,413.08000000000004,37267.0
+Oppo,6.0,5100.0,6.67,186.0,2024.0,499,8.0,8.0,Snapdragon 6s 4G Gen 1,Mobiles Dataset (2025) - Enhanced.csv,114.63533600516084,459.08000000000004,41417.0
+Oppo,8.0,5000.0,6.67,186.0,2024.0,449,8.0,50.0,Snapdragon 680 4G,Mobiles Dataset (2025) - Enhanced.csv,112.38758431878512,413.08000000000004,37267.0
+Oppo,8.0,5000.0,6.67,186.0,2024.0,499,8.0,50.0,Snapdragon 680 4G,Mobiles Dataset (2025) - Enhanced.csv,112.38758431878512,459.08000000000004,41417.0
+Oppo,8.0,6400.0,6.7,192.0,2024.0,699,16.0,50.0,Snapdragon 7 Gen 3,Mobiles Dataset (2025) - Enhanced.csv,142.57072844731564,643.08,58017.0
+Oppo,12.0,6400.0,6.7,192.0,2024.0,799,16.0,50.0,Snapdragon 7 Gen 3,Mobiles Dataset (2025) - Enhanced.csv,142.57072844731564,735.08,66317.0
+Oppo,8.0,5000.0,6.7,175.0,2024.0,549,32.0,64.0,Dimensity 7050,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946537,505.08000000000004,45567.0
+Oppo,12.0,5000.0,6.7,177.0,2024.0,699,32.0,64.0,Dimensity 7050,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946537,643.08,58017.0
+Oppo,8.0,4500.0,6.55,173.0,2023.0,549,32.0,64.0,Snapdragon 778G,Mobiles Dataset (2025) - Enhanced.csv,104.88899248295554,505.08000000000004,45567.0
+Oppo,8.0,4500.0,6.55,173.0,2023.0,599,32.0,64.0,Snapdragon 778G,Mobiles Dataset (2025) - Enhanced.csv,104.88899248295554,551.08,49717.0
+Oppo,12.0,5000.0,6.82,221.0,2024.0,1199,32.0,50.0,Snapdragon 8 Gen 3,Mobiles Dataset (2025) - Enhanced.csv,107.4982155296222,1103.0800000000002,99517.0
+Oppo,16.0,5000.0,6.82,221.0,2024.0,1299,32.0,50.0,Snapdragon 8 Gen 3,Mobiles Dataset (2025) - Enhanced.csv,107.4982155296222,1195.0800000000002,107817.0
+Oppo,12.0,5000.0,6.78,206.0,2024.0,1099,32.0,50.0,Dimensity 9300,Mobiles Dataset (2025) - Enhanced.csv,108.77037269080498,1011.08,91217.0
+Oppo,16.0,5000.0,6.78,206.0,2024.0,1199,32.0,50.0,Dimensity 9300,Mobiles Dataset (2025) - Enhanced.csv,108.77037269080498,1103.0800000000002,99517.0
+Oppo,12.0,5000.0,6.82,218.0,2023.0,999,32.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,107.4982155296222,919.08,82917.0
+Oppo,16.0,5000.0,6.82,218.0,2023.0,1099,32.0,50.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,107.4982155296222,1011.08,91217.0
+Oppo,12.0,4800.0,6.74,207.0,2023.0,899,32.0,50.0,Dimensity 9200,Mobiles Dataset (2025) - Enhanced.csv,105.6626368111016,827.08,74617.0
+Oppo,16.0,4800.0,6.74,207.0,2023.0,999,32.0,50.0,Dimensity 9200,Mobiles Dataset (2025) - Enhanced.csv,105.6626368111016,919.08,82917.0
+Oppo,12.0,5000.0,6.7,218.0,2022.0,899,32.0,50.0,Snapdragon 8 Gen 1,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946537,827.08,74617.0
+Oppo,16.0,5000.0,6.7,218.0,2022.0,999,32.0,50.0,Snapdragon 8 Gen 1,Mobiles Dataset (2025) - Enhanced.csv,111.38338159946537,919.08,82917.0
+Oppo,8.0,4800.0,6.55,196.0,2022.0,799,32.0,50.0,Snapdragon 888,Mobiles Dataset (2025) - Enhanced.csv,111.88159198181926,735.08,66317.0
+Oppo,8.0,4300.0,6.8,191.0,2023.0,899,32.0,50.0,Dimensity 9000+,Mobiles Dataset (2025) - Enhanced.csv,92.9930795847751,827.08,74617.0
+Oppo,12.0,4520.0,7.1,233.0,2022.0,1099,32.0,50.0,Snapdragon 8+ Gen 1,Mobiles Dataset (2025) - Enhanced.csv,89.66474905772665,1011.08,91217.0
+POCO,6.0,4700.0,6.67,219.0,2020.0,499,20.0,64.0,Snapdragon 865,Mobiles Dataset (2025) - Enhanced.csv,105.64432925965802,459.08000000000004,41417.0
+POCO,4.0,5000.0,6.67,209.0,2020.0,199,16.0,48.0,Snapdragon 720G,Mobiles Dataset (2025) - Enhanced.csv,112.38758431878512,183.08,16517.0
+POCO,6.0,5160.0,6.67,215.0,2020.0,229,20.0,64.0,Snapdragon 732G,Mobiles Dataset (2025) - Enhanced.csv,115.98398701698626,210.68,19007.0
+POCO,4.0,6000.0,6.53,198.0,2020.0,149,8.0,48.0,Snapdragon 662,Mobiles Dataset (2025) - Enhanced.csv,140.70997563372254,137.08,12367.0
+POCO,6.0,4520.0,6.67,196.0,2021.0,349,20.0,48.0,Snapdragon 870,Mobiles Dataset (2025) - Enhanced.csv,101.59837622418176,321.08000000000004,28967.0
+POCO,6.0,5160.0,6.67,215.0,2021.0,249,20.0,48.0,Snapdragon 860,Mobiles Dataset (2025) - Enhanced.csv,115.98398701698626,229.08,20667.0
+POCO,4.0,5000.0,6.5,190.0,2021.0,199,8.0,48.0,MediaTek Dimensity 700,Mobiles Dataset (2025) - Enhanced.csv,118.3431952662722,183.08,16517.0
+POCO,6.0,5065.0,6.67,205.0,2021.0,399,16.0,64.0,MediaTek Dimensity 1200,Mobiles Dataset (2025) - Enhanced.csv,113.84862291492934,367.08000000000004,33117.0
+POCO,6.0,5000.0,6.6,193.0,2021.0,279,16.0,64.0,MediaTek Dimensity 1100,Mobiles Dataset (2025) - Enhanced.csv,114.7842056932966,256.68,23157.0
+POCO,4.0,5000.0,6.6,195.0,2021.0,219,16.0,50.0,MediaTek Dimensity 810,Mobiles Dataset (2025) - Enhanced.csv,114.7842056932966,201.48000000000002,18177.0
+POCO,6.0,4500.0,6.67,195.0,2022.0,349,20.0,64.0,Snapdragon 870,Mobiles Dataset (2025) - Enhanced.csv,101.14882588690662,321.08000000000004,28967.0
+POCO,8.0,4700.0,6.67,210.0,2022.0,499,20.0,64.0,Snapdragon 8 Gen 1,Mobiles Dataset (2025) - Enhanced.csv,105.64432925965802,459.08000000000004,41417.0
+POCO,6.0,5000.0,6.67,205.0,2022.0,299,16.0,108.0,Snapdragon 695,Mobiles Dataset (2025) - Enhanced.csv,112.38758431878512,275.08,24817.0
+POCO,6.0,5000.0,6.43,179.0,2022.0,219,16.0,64.0,MediaTek Helio G96,Mobiles Dataset (2025) - Enhanced.csv,120.9338999489659,201.48000000000002,18177.0
+POCO,4.0,5000.0,6.58,201.0,2022.0,199,5.0,50.0,MediaTek Helio G99,Mobiles Dataset (2025) - Enhanced.csv,115.4830424700437,183.08,16517.0
+POCO,4.0,5000.0,6.43,178.0,2022.0,229,13.0,64.0,MediaTek Helio G95,Mobiles Dataset (2025) - Enhanced.csv,120.9338999489659,210.68,19007.0
+POCO,6.0,5000.0,6.67,181.0,2023.0,349,16.0,64.0,Snapdragon 7+ Gen 2,Mobiles Dataset (2025) - Enhanced.csv,112.38758431878512,321.08000000000004,28967.0
+POCO,8.0,5160.0,6.67,204.0,2023.0,499,20.0,64.0,Snapdragon 8+ Gen 1,Mobiles Dataset (2025) - Enhanced.csv,115.98398701698626,459.08000000000004,41417.0
+POCO,6.0,5000.0,6.67,189.0,2023.0,279,13.0,48.0,Snapdragon 695,Mobiles Dataset (2025) - Enhanced.csv,112.38758431878512,256.68,23157.0
+POCO,6.0,5000.0,6.67,181.0,2023.0,329,16.0,108.0,Snapdragon 778G,Mobiles Dataset (2025) - Enhanced.csv,112.38758431878512,302.68,27307.0
+POCO,6.0,5000.0,6.79,202.0,2023.0,219,8.0,50.0,Snapdragon 4 Gen 1,Mobiles Dataset (2025) - Enhanced.csv,108.45022460041514,201.48000000000002,18177.0
+POCO,8.0,5000.0,6.67,205.0,2024.0,399,20.0,108.0,MediaTek Dimensity 8300,Mobiles Dataset (2025) - Enhanced.csv,112.38758431878512,367.08000000000004,33117.0
+POCO,6.0,5000.0,6.67,190.0,2024.0,449,20.0,64.0,Snapdragon 8 Gen 2,Mobiles Dataset (2025) - Enhanced.csv,112.38758431878512,413.08000000000004,37267.0
+POCO,8.0,5160.0,6.67,210.0,2024.0,549,20.0,108.0,Snapdragon 8+ Gen 2,Mobiles Dataset (2025) - Enhanced.csv,115.98398701698626,505.08000000000004,45567.0
+POCO,4.0,5000.0,6.5,190.0,2024.0,149,5.0,50.0,MediaTek Helio G85,Mobiles Dataset (2025) - Enhanced.csv,118.3431952662722,137.08,12367.0
+POCO,8.0,6000.0,6.67,207.0,2025.0,399,20.0,108.0,MediaTek Dimensity 8400,Mobiles Dataset (2025) - Enhanced.csv,134.86510118254216,367.08000000000004,33117.0
+POCO,6.0,5110.0,6.67,198.0,2024.0,229,8.0,50.0,MediaTek Dimensity 7025,Mobiles Dataset (2025) - Enhanced.csv,114.8601111737984,210.68,19007.0
+Samsung,12.0,4400.0,7.6,239.0,2024.0,1719,10.0,50.0,Snapdragon 8 Gen 3,Mobiles Dataset (2025) - Enhanced.csv,76.17728531855956,1581.48,142677.0
+Samsung,12.0,4400.0,7.6,239.0,2024.0,2259,10.0,50.0,Snapdragon 8 Gen 3,Mobiles Dataset (2025) - Enhanced.csv,76.17728531855956,2078.28,187497.0
