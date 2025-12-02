@@ -8,14 +8,22 @@ import sys
 import os
 from pathlib import Path
 
-# Add python_api to path
-sys.path.insert(0, str(Path(__file__).parent.parent / "python_api"))
+# Add python_api to path for imports
+script_dir = Path(__file__).parent
+project_root = script_dir.parent
+python_api_dir = project_root / "python_api"
+
+# Ensure python_api directory is in path
+if str(python_api_dir) not in sys.path:
+    sys.path.insert(0, str(python_api_dir))
 
 try:
-    from python_api.model_utils import safe_load_model, get_model_info
-except ImportError:
-    # Fallback for direct import if module structure differs
     from model_utils import safe_load_model, get_model_info
+except ImportError as e:
+    print(f"❌ Import error: {e}")
+    print("Make sure you're running this script from the python_api directory:")
+    print("  cd python_api && python ../scripts/check_model.py")
+    sys.exit(1)
 
 # Model files to validate
 MODELS_TO_CHECK = [
