@@ -1,3 +1,4 @@
+---
 name: Deploy to Production (SSH)
 
 on:
@@ -28,7 +29,8 @@ jobs:
           npm ci
           npm run build
           # bundle static output
-          tar -czf nuxt_output_${{ steps.version.outputs.VERSION }}.tar.gz .output || true
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          tar -czf nuxt_output_${VERSION}.tar.gz .output || true
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -38,14 +40,19 @@ jobs:
       - name: Package Python API
         run: |
           python -m pip install --upgrade pip
-          python -m pip install --upgrade -r python_api/requirements.txt || true
-          tar -czf python_api_${{ steps.version.outputs.VERSION }}.tar.gz python_api || true
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          python -m pip install --upgrade \
+            -r python_api/requirements.txt || true
+          tar -czf python_api_${VERSION}.tar.gz python_api || true
 
       - name: Prepare deploy artifacts
         run: |
           mkdir -p deploy_artifacts
-          mv nuxt_output_${{ steps.version.outputs.VERSION }}.tar.gz deploy_artifacts/nuxt_output.tar.gz || true
-          mv python_api_${{ steps.version.outputs.VERSION }}.tar.gz deploy_artifacts/python_api.tar.gz || true
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          mv nuxt_output_${VERSION}.tar.gz \
+            deploy_artifacts/nuxt_output.tar.gz || true
+          mv python_api_${VERSION}.tar.gz \
+            deploy_artifacts/python_api.tar.gz || true
 
       - name: Add SSH key to agent
         uses: webfactory/ssh-agent@v0.7.0
@@ -69,7 +76,8 @@ jobs:
           port: ${{ secrets.SERVER_PORT || '22' }}
           script: |
             set -euo pipefail
-            DEPLOY_PATH=${{ secrets.DEPLOY_PATH || '/var/www/matlab-mobile-dataset' }}
+            DEPLOY_PATH="${{ secrets.DEPLOY_PATH }}"
+            DEPLOY_PATH="${DEPLOY_PATH:-/var/www/matlab-mobile-dataset}"
             mkdir -p "$DEPLOY_PATH"
             cd "$DEPLOY_PATH"
 
@@ -106,7 +114,8 @@ jobs:
               chown -R www-data:www-data "$DEPLOY_PATH" || true
             fi
 
-            # Restart systemd services (systemd unit names provided in infrastructure/systemd/)
+            # Restart systemd services
+            # (systemd unit names in infrastructure/systemd/)
             if command -v systemctl >/dev/null 2>&1; then
               systemctl --no-block daemon-reload || true
               systemctl --no-block restart python-api.service || true

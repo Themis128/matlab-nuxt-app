@@ -1,3 +1,4 @@
+---
 name: Render Deployment Simulation
 
 on:
@@ -43,7 +44,7 @@ jobs:
       - name: Verify Sentry token is present
         run: |
           if [ -z "$SENTRY_AUTH_TOKEN" ]; then
-            echo "⚠️ SENTRY_AUTH_TOKEN is not set — skipping Sentry release/upload steps"
+            echo "⚠️ SENTRY_AUTH_TOKEN not set — skip Sentry steps"
           else
             echo "✅ SENTRY_AUTH_TOKEN is present"
           fi
@@ -75,7 +76,10 @@ jobs:
           python api.py &
           echo $! > api_pid.txt
           # Wait for API to start
-          timeout 30 bash -c 'until curl -f http://localhost:8000/health; do sleep 2; done' || (echo "API failed to start" && exit 1)
+          HEALTH_URL='http://localhost:8000/health'
+          timeout 30 bash -c \
+            "until curl -f $HEALTH_URL; do sleep 2; done" || \
+            (echo "API failed to start" && exit 1)
 
       - name: Test API endpoints
         working-directory: python_api
@@ -101,12 +105,17 @@ jobs:
           npm run preview &
           echo $! > frontend_pid.txt
           # Wait for frontend to start
-          timeout 30 bash -c 'until curl -f http://localhost:3000; do sleep 2; done' || (echo "Frontend failed to start" && exit 1)
+          FRONTEND_URL='http://localhost:3000'
+          timeout 30 bash -c \
+            "until curl -f $FRONTEND_URL; do sleep 2; done" || \
+            (echo "Frontend failed to start" && exit 1)
 
       - name: Test frontend health
         run: |
           # Basic health check for frontend
-          curl -f http://localhost:3000 || (echo "Frontend health check failed" && exit 1)
+          FRONTEND_URL='http://localhost:3000'
+          curl -f $FRONTEND_URL || \
+            (echo "Frontend health check failed" && exit 1)
           echo "✅ Frontend is accessible"
 
       - name: Cleanup processes
