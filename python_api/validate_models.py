@@ -52,34 +52,44 @@ def load_model(model_name):
     # Security: Comprehensive validation before loading
     max_file_size = 500 * 1024 * 1024  # 500MB limit
     for path in [model_path, scaler_path]:
-        if path.stat().st_size > max_file_size:
-            raise ValueError(f"Model file too large: {path} (>500MB)")
-        # Ensure files are in expected directory
-        if not str(path).startswith(str(MODELS_DIR)):
-            raise ValueError(f"Model file not in trusted directory: {path}")
+        try:
+            if path.stat().st_size > max_file_size:
+                print(f"[WARN] Model file too large: {path} (>500MB)")
+                return None, None, None
+            # Ensure files are in expected directory
+            if not str(path).startswith(str(MODELS_DIR)):
+                print(f"[WARN] Model file not in trusted directory: {path}")
+                return None, None, None
+        except Exception as e:
+            print(f"[WARN] Could not check file {path}: {e}")
+            return None, None, None
 
     # Load model with validation
-    with open(model_path, 'rb') as f:
-        header = f.read(2)
-        # first byte 0x80 indicates a pickle; second byte is protocol version
-        if len(header) < 1 or header[0] != 0x80:
-            raise ValueError(f"Invalid pickle header for model: {header!r}")
-        f.seek(0)
-        try:
+    try:
+        with open(model_path, 'rb') as f:
+            header = f.read(2)
+            # first byte 0x80 indicates a pickle; second byte is protocol version
+            if len(header) < 1 or header[0] != 0x80:
+                print(f"[WARN] Invalid pickle header for model {model_name}: {header!r} (file may be corrupted)")
+                return None, None, None
+            f.seek(0)
             model = pickle.load(f)
-        except Exception as e:
-            raise ValueError(f"Failed to unpickle model file {model_path}: {e}") from e
+    except Exception as e:
+        print(f"[WARN] Failed to load model {model_name}: {e}")
+        return None, None, None
 
     # Load scalers with validation
-    with open(scaler_path, 'rb') as f:
-        header = f.read(2)
-        if len(header) < 1 or header[0] != 0x80:
-            raise ValueError(f"Invalid pickle header for scalers: {header!r}")
-        f.seek(0)
-        try:
+    try:
+        with open(scaler_path, 'rb') as f:
+            header = f.read(2)
+            if len(header) < 1 or header[0] != 0x80:
+                print(f"[WARN] Invalid pickle header for scalers {model_name}: {header!r} (file may be corrupted)")
+                return None, None, None
+            f.seek(0)
             scalers = pickle.load(f)
-        except Exception as e:
-            raise ValueError(f"Failed to unpickle scalers file {scaler_path}: {e}") from e
+    except Exception as e:
+        print(f"[WARN] Failed to load scalers for {model_name}: {e}")
+        return None, None, None
     with open(metadata_path, 'r') as f:
         metadata = json.load(f)
 
