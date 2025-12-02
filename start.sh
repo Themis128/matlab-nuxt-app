@@ -24,6 +24,12 @@ cleanup() {
 # Set up signal handlers
 trap cleanup SIGINT SIGTERM
 
+# Install Python dependencies if needed
+if ! python -c "import fastapi" 2>/dev/null; then
+    echo "📦 Installing Python dependencies..."
+    pip install -r python_api/requirements.txt
+fi
+
 # Start Python API in background
 echo "🐍 Starting Python API server..."
 cd python_api
@@ -84,6 +90,12 @@ else
     echo "    The API may still work - tests might be too strict"
 fi
 cd ..
+
+# Install Node.js dependencies if needed
+if [ ! -d "node_modules" ]; then
+    echo "📦 Installing Node.js dependencies..."
+    PUPPETEER_SKIP_DOWNLOAD=true npm install
+fi
 
 # Start Nuxt.js development server
 echo "⚡ Starting Nuxt.js frontend..."
