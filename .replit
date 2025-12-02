@@ -3,8 +3,8 @@
 # Language and runtime
 language = "nodejs"
 
-# Run script that starts both Python API and Nuxt
-run = "bash start.sh"
+# Run production deployment script
+run = "bash scripts/deploy-production.sh"
 
 # Entry point
 entrypoint = "start.sh"
