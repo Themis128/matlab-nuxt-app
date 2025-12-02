@@ -93,9 +93,10 @@ def fix_currency_scalers():
             print(f"❌ No valid data for {currency_name}")
             continue
 
-        # Use different random states for each currency to ensure different scalers
-        # This prevents identical scalers even though features are the same
-        random_state = 42 + hash(currency_name) % 100  # Different seed per currency
+        # Use deterministic random states for each currency to ensure reproducible scalers
+        # This prevents identical scalers while ensuring consistency across runs
+        currency_seeds = {'USD': 110, 'EUR': 123, 'INR': 87}
+        random_state = currency_seeds[currency_name]
         X_train, _, _, _ = train_test_split(X, y, test_size=0.2, random_state=random_state)
 
         # Create and fit scaler
