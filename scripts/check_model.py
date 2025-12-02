@@ -56,11 +56,35 @@ def check_model_file(model_path):
             print(f"  ❌ WARNING: Does not appear to be a valid pickle file")
             return False
 
-        # Try to load the model
-        safe_load_model(model_path)
-        print("  ✅ SUCCESS: Model loaded successfully")
-        return True
+        # Try to load the model with timeout (Windows-compatible)
+        import time
+        import threading
 
+        result = [None]
+        exception = [None]
+
+        def load_with_timeout():
+            try:
+                result[0] = safe_load_model(model_path)
+            except Exception as e:
+                exception[0] = e
+
+        thread = threading.Thread(target=load_with_timeout)
+        thread.start()
+        thread.join(timeout=30)  # 30 second timeout
+
+        if thread.is_alive():
+            print(f"  ❌ TIMEOUT: Loading {model_path} took longer than 30 seconds")
+            return False
+        elif exception[0]:
+            raise exception[0]
+        else:
+            print("  ✅ SUCCESS: Model loaded successfully")
+            return True
+
+    except TimeoutError as e:
+        print(f"  ❌ TIMEOUT: {e}")
+        return False
     except Exception as e:
         print(f"  ❌ FAILED: {e}")
         return False
