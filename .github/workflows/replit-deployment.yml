@@ -1,3 +1,4 @@
+---
 name: Replit Deployment Validation
 on:
   push:
@@ -30,32 +31,52 @@ jobs:
       - name: Check required Replit files exist
         run: |
           echo "Checking required Replit configuration files..."
-          test -f ".replit" || (echo "❌ .replit file missing" && exit 1)
-          test -f "package.json" || (echo "❌ package.json file missing" && exit 1)
-          test -f "nuxt.config.ts" || (echo "❌ nuxt.config.ts file missing" && exit 1)
-          test -f "scripts/deploy-production.sh" || (echo "❌ scripts/deploy-production.sh file missing" && exit 1)
-          test -d "python_api" || (echo "❌ python_api directory missing" && exit 1)
-          test -f "python_api/api.py" || (echo "❌ python_api/api.py file missing" && exit 1)
-          test -f "python_api/requirements.txt" || (echo "❌ python_api/requirements.txt file missing" && exit 1)
+          test -f ".replit" || \
+            (echo "❌ .replit file missing" && exit 1)
+          test -f "package.json" || \
+            (echo "❌ package.json file missing" && exit 1)
+          test -f "nuxt.config.ts" || \
+            (echo "❌ nuxt.config.ts file missing" && exit 1)
+          test -f "scripts/deploy-production.sh" || \
+            (echo "❌ deploy-production.sh missing" && exit 1)
+          test -d "python_api" || \
+            (echo "❌ python_api directory missing" && exit 1)
+          test -f "python_api/api.py" || \
+            (echo "❌ python_api/api.py missing" && exit 1)
+          test -f "python_api/requirements.txt" || \
+            (echo "❌ requirements.txt missing" && exit 1)
           echo "✅ All required files exist"
       - name: Validate .replit configuration
         run: |
           echo "Validating .replit configuration..."
-          grep -q 'language = "nodejs"' .replit || (echo "❌ Language not set to nodejs" && exit 1)
-          grep -q 'run = "bash scripts/deploy-production.sh"' .replit || (echo "❌ Run command incorrect" && exit 1)
-          grep -q 'NODE_ENV = "production"' .replit || (echo "❌ NODE_ENV not set to production" && exit 1)
-          grep -q 'HOST = "0.0.0.0"' .replit || (echo "❌ HOST not set correctly" && exit 1)
-          grep -q 'PORT = "3000"' .replit || (echo "❌ PORT not set to 3000" && exit 1)
+          grep -q 'language = "nodejs"' .replit || \
+            (echo "❌ Language not set to nodejs" && exit 1)
+          grep -q 'run = "bash scripts/deploy-production.sh"' \
+            .replit || \
+            (echo "❌ Run command incorrect" && exit 1)
+          grep -q 'NODE_ENV = "production"' .replit || \
+            (echo "❌ NODE_ENV not set to production" && exit 1)
+          grep -q 'HOST = "0.0.0.0"' .replit || \
+            (echo "❌ HOST not set correctly" && exit 1)
+          grep -q 'PORT = "3000"' .replit || \
+            (echo "❌ PORT not set to 3000" && exit 1)
           echo "✅ .replit configuration is valid"
       - name: Validate deploy-production.sh script
         run: |
           echo "Validating deploy-production.sh script..."
-          grep -q "NODE_ENV=production" scripts/deploy-production.sh || (echo "❌ Script doesn't set NODE_ENV=production" && exit 1)
-          grep -q "HOST=0.0.0.0" scripts/deploy-production.sh || (echo "❌ Script doesn't set HOST=0.0.0.0" && exit 1)
-          grep -q "PORT=3000" scripts/deploy-production.sh || (echo "❌ Script doesn't set PORT=3000" && exit 1)
-          grep -q "npm run build" scripts/deploy-production.sh || (echo "❌ Script doesn't build Nuxt app" && exit 1)
-          grep -q "npm run preview" scripts/deploy-production.sh || (echo "❌ Script doesn't start Nuxt preview" && exit 1)
-          grep -q "python api.py" scripts/deploy-production.sh || (echo "❌ Script doesn't start Python API" && exit 1)
+          SCRIPT="scripts/deploy-production.sh"
+          grep -q "NODE_ENV=production" $SCRIPT || \
+            (echo "❌ Script missing NODE_ENV=production" && exit 1)
+          grep -q "HOST=0.0.0.0" $SCRIPT || \
+            (echo "❌ Script missing HOST=0.0.0.0" && exit 1)
+          grep -q "PORT=3000" $SCRIPT || \
+            (echo "❌ Script missing PORT=3000" && exit 1)
+          grep -q "npm run build" $SCRIPT || \
+            (echo "❌ Script missing npm run build" && exit 1)
+          grep -q "npm run preview" $SCRIPT || \
+            (echo "❌ Script missing npm run preview" && exit 1)
+          grep -q "python api.py" $SCRIPT || \
+            (echo "❌ Script missing python api.py" && exit 1)
           echo "✅ deploy-production.sh script is valid"
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -75,23 +96,26 @@ jobs:
           echo "Checking Python API dependencies..."
           cd python_api
           pip install -r requirements.txt
-          python -c "import api; print('✅ Python API module loads successfully')"
+          python -c "import api; \
+            print('✅ Python API module loads')"
           cd ..
           echo "✅ Python API dependencies installed"
       - name: Validate package.json scripts
         run: |
           echo "Validating package.json scripts..."
-          npm run --silent build --dry-run 2>/dev/null || echo "Note: build script validation skipped (may require full environment)"
+          npm run --silent build --dry-run 2>/dev/null || \
+            echo "Note: build script validation skipped"
           echo "✅ Package.json scripts are present"
       - name: Summary
         run: |
-          echo "## Replit Deployment Validation Summary" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Required files exist" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ .replit configuration is valid" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ deploy-production.sh script is valid" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Node.js dependencies can be installed" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Python API dependencies can be installed" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Package.json scripts are configured" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Ready for Replit Deployment 🚀" >> $GITHUB_STEP_SUMMARY
-          echo "All necessary files and configurations are in place for successful Replit deployment." >> $GITHUB_STEP_SUMMARY
+          SUM="$GITHUB_STEP_SUMMARY"
+          echo "## Replit Deployment Validation" >> $SUM
+          echo "- ✅ Required files exist" >> $SUM
+          echo "- ✅ .replit configuration is valid" >> $SUM
+          echo "- ✅ deploy-production.sh is valid" >> $SUM
+          echo "- ✅ Node.js dependencies install" >> $SUM
+          echo "- ✅ Python API dependencies install" >> $SUM
+          echo "- ✅ Package.json scripts configured" >> $SUM
+          echo "" >> $SUM
+          echo "### Ready for Replit Deployment 🚀" >> $SUM
+          echo "All files and configurations ready." >> $SUM
