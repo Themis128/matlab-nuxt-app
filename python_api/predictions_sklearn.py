@@ -21,18 +21,22 @@ _models_cache = {}
 _scalers_cache = {}
 
 def load_model(model_name: str):
-    """Load a trained sklearn model and its scaler"""
+    """Load a trained sklearn model and its scaler with file existence checks"""
     if model_name in _models_cache:
         return _models_cache[model_name], _scalers_cache[model_name]
 
     try:
         # Load model
         model_path = MODELS_DIR / f"{model_name}_sklearn.pkl"
+        if not model_path.exists():
+            raise FileNotFoundError(f"Model file not found: {model_path}")
         with open(model_path, 'rb') as f:
             model = pickle.load(f)
 
         # Load scaler
         scaler_path = MODELS_DIR / f"{model_name}_scalers.pkl"
+        if not scaler_path.exists():
+            raise FileNotFoundError(f"Scaler file not found: {scaler_path}")
         with open(scaler_path, 'rb') as f:
             scaler = pickle.load(f)
 

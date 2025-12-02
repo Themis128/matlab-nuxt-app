@@ -19,17 +19,17 @@ except ImportError:
 
 # Model files to validate
 MODELS_TO_CHECK = [
-    "python_api/trained_models/price_predictor_sklearn.pkl",
-    "python_api/trained_models/ram_predictor_sklearn.pkl",
-    "python_api/trained_models/battery_predictor_sklearn.pkl",
-    "python_api/trained_models/brand_classifier_sklearn.pkl",
-    "python_api/trained_models/distilled_price_model.pkl"
+    "trained_models/price_predictor_sklearn.pkl",
+    "trained_models/ram_predictor_sklearn.pkl",
+    "trained_models/battery_predictor_sklearn.pkl",
+    "trained_models/brand_classifier_sklearn.pkl",
+    "trained_models/distilled_price_model.pkl"
 ]
 
 # Optional models (don't fail if missing)
 OPTIONAL_MODELS = [
-    "python_api/trained_models/ensemble_stacking_model.pkl",
-    "python_api/trained_models/xgboost_conservative.pkl"
+    "trained_models/ensemble_stacking_model.pkl",
+    "trained_models/xgboost_conservative.pkl"
 ]
 
 
