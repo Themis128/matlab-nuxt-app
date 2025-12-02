@@ -158,7 +158,7 @@ graph TB
     end
 
     subgraph "Infrastructure"
-      G[Containerization (optional)]
+      G[Containerization - optional]
         H[🔄 CI/CD Pipeline<br/>GitHub Actions]
         I[📈 Monitoring<br/>Health Checks]
     end
@@ -363,7 +363,7 @@ RATE_LIMIT_WINDOW=60
 
 **DevOps**
 
-- 🐳 **Containerization (optional)** - Containerization support (legacy, optional)
+- 🐳 **Containerization - optional** - Containerization support (legacy, optional)
 - 🧪 **Playwright** - E2E testing framework with comprehensive coverage
 - 🔄 **GitHub Actions** - Automated CI/CD pipeline with multi-stage builds
 - 📝 **ESLint + Prettier** - Code quality and formatting tools
@@ -802,12 +802,12 @@ python scripts/ml_pipeline/orchestration/run_complete_analysis.py
 
 ### Benefits
 
-✅ **Better Organization** - Scripts grouped by functionality  
-✅ **Code Quality** - All scripts linted with `ruff` and formatted  
-✅ **Clear Documentation** - Each module has purpose and usage docs  
+✅ **Better Organization** - Scripts grouped by functionality
+✅ **Code Quality** - All scripts linted with `ruff` and formatted
+✅ **Clear Documentation** - Each module has purpose and usage docs
 ✅ **Professional Structure** - Industry-standard ML pipeline organization
 
-📖 **See detailed documentation:** [`scripts/ml_pipeline/README.md`](scripts/ml_pipeline/README.md)  
+📖 **See detailed documentation:** [`scripts/ml_pipeline/README.md`](scripts/ml_pipeline/README.md)
 🔄 **Migration guide:** [`PYTHON_SCRIPTS_MIGRATION.md`](PYTHON_SCRIPTS_MIGRATION.md)
 
 ---

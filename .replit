@@ -65,12 +65,20 @@ enabled = true
 # Packager configuration - optimized for disk space
 [packager]
 language = "nodejs"
-ignoredPackages = ["@types/node", "@types/unity", "unity-*", "*.unitypackage", "upm", "@upm/*"]
+ignoredPackages = ["@types/node", "@types/unity", "unity-*", "*.unitypackage", "upm", "@upm/*", "@playwright/test", "playwright", "sentry-sdk", "pytest", "pytest-asyncio"]
 
 [packager.features]
 packageSearch = false
 guessImports = false
 enabledForHosting = false
+
+# Disk space optimizations for Replit
+[disk]
+# Pre-install essential packages only
+preinstalled = ["nodejs", "python3"]
+
+# Clean up cache after builds
+cleanupCache = true
 
 # Debugger configuration
 [debugger]

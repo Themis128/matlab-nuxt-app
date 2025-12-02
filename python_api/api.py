@@ -5,12 +5,16 @@ Replaces MATLAB API endpoints
 
 
 import os
-# Sentry error tracking
-import sentry_sdk
-sentry_sdk.init(
-    dsn=os.getenv("SENTRY_DSN"),
-    traces_sample_rate=1.0
-)
+# Sentry error tracking (optional)
+try:
+    import sentry_sdk
+    sentry_sdk.init(
+        dsn=os.getenv("SENTRY_DSN"),
+        traces_sample_rate=1.0
+    )
+    SENTRY_AVAILABLE = True
+except ImportError:
+    SENTRY_AVAILABLE = False
 
 
 

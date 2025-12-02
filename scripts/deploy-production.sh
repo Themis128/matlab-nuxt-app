@@ -25,6 +25,16 @@ trap cleanup SIGINT SIGTERM
 # Start Python API in background
 echo "🐍 Starting Python API server..."
 cd python_api
+
+# Use lightweight requirements for Replit to save disk space
+if [ -n "$REPLIT_ENVIRONMENT" ] || [ -d "/home/runner" ]; then
+    echo "📦 Detected Replit environment, using lightweight requirements..."
+    pip install -r requirements-replit.txt --quiet
+else
+    echo "📦 Installing full requirements..."
+    pip install -r requirements.txt --quiet
+fi
+
 python api.py &
 PYTHON_PID=$!
 cd ..
