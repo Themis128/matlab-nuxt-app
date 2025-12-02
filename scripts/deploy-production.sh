@@ -92,6 +92,43 @@ fi
 
 echo "✅ Nuxt.js production server running on port 3000 (PID: $NUXT_PID)"
 echo ""
+# Calculate and display app size
+echo ""
+echo "📊 App Size Information:"
+echo "=========================="
+
+# Calculate total app size
+TOTAL_SIZE=$(du -sh . --exclude=.git --exclude=node_modules --exclude=python_api/__pycache__ --exclude=.nuxt 2>/dev/null | cut -f1)
+if [ -n "$TOTAL_SIZE" ]; then
+    echo "📁 Total App Size (excluding caches): $TOTAL_SIZE"
+fi
+
+# Calculate Python API size
+if [ -d "python_api" ]; then
+    PYTHON_SIZE=$(du -sh python_api --exclude=__pycache__ 2>/dev/null | cut -f1)
+    echo "🐍 Python API Size: $PYTHON_SIZE"
+fi
+
+# Calculate Node.js/Frontend size
+if [ -d "node_modules" ]; then
+    NODE_SIZE=$(du -sh node_modules 2>/dev/null | cut -f1)
+    echo "📦 Node Modules Size: $NODE_SIZE"
+fi
+
+if [ -d ".output" ]; then
+    BUILD_SIZE=$(du -sh .output 2>/dev/null | cut -f1)
+    echo "🏗️  Built App Size: $BUILD_SIZE"
+fi
+
+# Calculate data directory size
+if [ -d "data" ]; then
+    DATA_SIZE=$(du -sh data 2>/dev/null | cut -f1)
+    echo "📊 Data Directory Size: $DATA_SIZE"
+fi
+
+echo "=========================="
+echo ""
+
 echo "🎉 Production deployment is running!"
 echo "🌐 Frontend: http://localhost:3000"
 echo "🔧 API: http://localhost:8000"
