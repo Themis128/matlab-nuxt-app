@@ -18,7 +18,20 @@ export default defineNuxtConfig({
     port: process.env.NUXT_DEVTOOLS_PORT ? Number(process.env.NUXT_DEVTOOLS_PORT) : 24678,
   },
 
-  modules: ['@nuxt/ui', '@pinia/nuxt', '@sentry/nuxt/module'],
+  modules: [
+    '@nuxt/ui',
+    '@pinia/nuxt',
+    [
+      '@sentry/nuxt/module',
+      {
+        sourceMapsUploadOptions: {
+          org: process.env.SENTRY_ORG,
+          project: process.env.SENTRY_PROJECT,
+          authToken: process.env.SENTRY_AUTH_TOKEN,
+        },
+      },
+    ],
+  ],
 
   css: ['~/assets/css/main.css'],
 
