@@ -25,6 +25,6 @@ test.describe('Search & Filter Flow', () => {
     await page.goto('/search')
     await page.locator('[data-testid="ram-min-input"]').fill('100')
     await page.locator('[data-testid="search-button"]').click()
-    await expect(page.locator('.empty-state')).toBeVisible()
+    await expect(page.getByText('No models found matching your criteria')).toBeVisible()
   })
 })

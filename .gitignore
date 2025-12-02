@@ -90,3 +90,6 @@ npm-cache/
 
 # TypeScript output files
 tsconf-out.json
+
+# Sentry Config File
+.sentryclirc

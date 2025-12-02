@@ -18,7 +18,20 @@ export default defineNuxtConfig({
     port: process.env.NUXT_DEVTOOLS_PORT ? Number(process.env.NUXT_DEVTOOLS_PORT) : 24678,
   },
 
-  modules: ['@nuxt/ui', '@pinia/nuxt', '@sentry/nuxt/module'],
+  modules: [
+    '@nuxt/ui',
+    '@pinia/nuxt',
+    [
+      '@sentry/nuxt/module',
+      {
+        sourceMapsUploadOptions: {
+          org: process.env.SENTRY_ORG,
+          project: process.env.SENTRY_PROJECT,
+          authToken: process.env.SENTRY_AUTH_TOKEN,
+        },
+      },
+    ],
+  ],
 
   css: ['~/assets/css/main.css'],
 
@@ -87,14 +100,15 @@ export default defineNuxtConfig({
 
   // Enable source maps for Sentry integration
   sourcemap: {
-    client: 'hidden', // or true for full source maps
-    server: false,
+    client: 'hidden', // Generate source maps but don't expose them publicly
+    server: true, // Enable server-side source maps for proper error tracing
   },
 
-  // Production build optimizations
+  // Vite configuration for source maps
   vite: {
     build: {
       cssCodeSplit: true,
+      sourcemap: 'hidden', // Generate source maps for production builds
       rollupOptions: isProd
         ? {
             output: {

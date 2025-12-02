@@ -23,6 +23,7 @@
     "useDefineForClassFields": true,
     "noImplicitThis": true,
     "allowSyntheticDefaultImports": true,
+
     "paths": {
       "@@/*": ["../*"],
       "#shared": ["../shared"],
@@ -43,7 +44,15 @@
       "#components": ["./components"],
       "#build": ["."],
       "#build/*": ["./*"]
-    }
+    },
+
+    "sourceMap": true,
+    "inlineSources": true,
+
+    // Set `sourceRoot` to  "/" to strip the build path prefix
+    // from generated source code references.
+    // This improves issue grouping in Sentry.
+    "sourceRoot": "/"
   },
   "include": [
     "nuxt.d.ts",
