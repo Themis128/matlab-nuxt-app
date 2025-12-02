@@ -60,25 +60,26 @@ def load_model(model_name):
 
     # Load model with validation
     with open(model_path, 'rb') as f:
-        # Check pickle header for basic validation
         header = f.read(2)
-        if header != b'\x80\x03':  # Python 3 pickle protocol 3 header
-            raise ValueError("Invalid pickle file format for model")
-
-        # Reset and load
+        # first byte 0x80 indicates a pickle; second byte is protocol version
+        if len(header) < 1 or header[0] != 0x80:
+            raise ValueError(f"Invalid pickle header for model: {header!r}")
         f.seek(0)
-        model = pickle.load(f)
+        try:
+            model = pickle.load(f)
+        except Exception as e:
+            raise ValueError(f"Failed to unpickle model file {model_path}: {e}") from e
 
     # Load scalers with validation
     with open(scaler_path, 'rb') as f:
-        # Check pickle header for basic validation
         header = f.read(2)
-        if header != b'\x80\x03':  # Python 3 pickle protocol 3 header
-            raise ValueError("Invalid pickle file format for scalers")
-
-        # Reset and load
+        if len(header) < 1 or header[0] != 0x80:
+            raise ValueError(f"Invalid pickle header for scalers: {header!r}")
         f.seek(0)
-        scalers = pickle.load(f)
+        try:
+            scalers = pickle.load(f)
+        except Exception as e:
+            raise ValueError(f"Failed to unpickle scalers file {scaler_path}: {e}") from e
     with open(metadata_path, 'r') as f:
         metadata = json.load(f)
 
