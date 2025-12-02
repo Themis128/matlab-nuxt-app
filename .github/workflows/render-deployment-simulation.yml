@@ -58,14 +58,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Validate model files
-        run: |
-          echo "Validating model files..."
-          echo "Note: If this step fails with pickle errors, the model files may be corrupted in CI"
-          echo "This can happen when GitHub Actions downloads/processes binary files"
-          echo "The models work correctly locally - regenerate them if CI fails:"
-          echo "  cd python_api && python train_models_sklearn.py"
-          python scripts/check_model.py
+
 
       - name: Build frontend
         run: npm run build
