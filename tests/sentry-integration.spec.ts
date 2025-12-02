@@ -112,7 +112,7 @@ test.describe('Sentry Error Reporting', () => {
     }
   })
 
-  test.skip('should report unhandled promise rejections', async ({ page }) => {
+  test.skip('should report unhandled promise rejections', async ({ page: _page }) => {
     // Skipped: Complex to test reliably in browser environment
     // Sentry integration confirmed by meta tags and error handling
   })
