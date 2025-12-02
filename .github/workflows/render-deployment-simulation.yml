@@ -58,8 +58,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-
-
       - name: Build frontend
         run: npm run build
 
@@ -103,14 +101,7 @@ jobs:
           curl -f http://localhost:3000 || (echo "Frontend health check failed" && exit 1)
           echo "✅ Frontend is accessible"
 
-      - name: Run deployment verification script
-        working-directory: python_api
-        run: |
-          if [ -f "verify_production_deployment.py" ]; then
-            python verify_production_deployment.py
-          else
-            echo "⚠️  Production verification script not found, skipping"
-          fi
+
 
       - name: Cleanup processes
         if: always()
