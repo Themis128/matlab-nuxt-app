@@ -58,6 +58,18 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Generate ML models
+        working-directory: python_api
+        run: |
+          echo "Generating ML models for deployment..."
+          # Generate the core sklearn models
+          python train_models_sklearn.py
+          # Generate the distilled model
+          cd ..
+          python retrain_advanced_models.py
+          # Verify models were created
+          ls -la python_api/trained_models/
+
       - name: Build frontend
         run: npm run build
 
@@ -100,8 +112,6 @@ jobs:
           # Basic health check for frontend
           curl -f http://localhost:3000 || (echo "Frontend health check failed" && exit 1)
           echo "✅ Frontend is accessible"
-
-
 
       - name: Cleanup processes
         if: always()
