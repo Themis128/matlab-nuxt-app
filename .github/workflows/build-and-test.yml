@@ -190,15 +190,14 @@ jobs:
       - name: Start Nuxt dev server
         run: |
           npm run dev &
-          sleep 20
+          npx wait-on http://localhost:3000 --timeout 60000
         env:
           NODE_ENV: development
 
       - name: Run Playwright tests
-        run: |
-          npm ci
-          npx playwright install --with-deps
-          npm run test:ci
+        run: npx playwright test --reporter=dot
+        env:
+          BASE_URL: http://localhost:3000
 
       - name: Upload test results
         if: always()

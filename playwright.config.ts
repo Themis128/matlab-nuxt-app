@@ -11,6 +11,7 @@ export default defineConfig({
     viewport: { width: 1280, height: 720 },
     actionTimeout: 10_000,
     ignoreHTTPSErrors: true,
+    baseURL: process.env.BASE_URL || 'http://localhost:3000',
   },
   projects: [
     {
