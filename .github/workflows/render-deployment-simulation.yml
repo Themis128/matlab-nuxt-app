@@ -36,7 +36,7 @@ jobs:
           path: |
             ~/.cache/pip
             python_api/__pycache__
-          key: ${{ runner.os }}-pip-${{ hashFiles('python_api/requirements.txt') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
 
@@ -54,7 +54,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip setuptools wheel
-          pip install -r python_api/requirements.txt
+          pip install -r requirements.txt
 
       - name: Generate ML models
         run: |
