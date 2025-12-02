@@ -18,11 +18,13 @@ test.describe('UI Accessibility & Navigation', () => {
 
   test('Theme toggle is accessible', async ({ page }) => {
     await page.goto('/')
-    const toggle = page.locator('button[aria-label*="theme"]')
+    const toggle = page.locator('button[aria-label="theme toggle"]')
     await expect(toggle).toBeVisible()
     await toggle.click()
-    // Should toggle dark mode
-    await expect(page.locator('html')).toHaveAttribute('class', /dark/)
+    // Should toggle dark mode (may take a moment to apply)
+    await page.waitForTimeout(500)
+    const htmlClass = await page.locator('html').getAttribute('class')
+    expect(htmlClass).toMatch(/dark/)
   })
 
   test('All main routes are reachable', async ({ page }) => {
