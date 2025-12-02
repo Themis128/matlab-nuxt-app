@@ -18,6 +18,12 @@ logger = logging.getLogger(__name__)
 # Model directory
 MODELS_DIR = Path(__file__).parent / "trained_models"
 
+# Feature engineering placeholders (used when target variable is unknown during prediction)
+PLACEHOLDER_PRICE = 500.0  # Median smartphone price (USD) for feature engineering
+PLACEHOLDER_RAM_PRICE_RATIO = 100.0  # Approximate: $100 per GB RAM
+PLACEHOLDER_BATTERY_BASE = 3000.0  # Base battery capacity (mAh)
+PLACEHOLDER_BATTERY_SCREEN_MULTIPLIER = 500.0  # Additional mAh per inch of screen
+
 # Global model cache
 _models_cache = {}
 _scalers_cache = {}
@@ -227,8 +233,8 @@ def predict_price(ram: float, battery: float, screen: float, weight: float,
             unique_companies = metadata.get('unique_companies', [])
 
         # Use placeholder price for feature engineering (will be predicted)
-        # Use a median price based on specs as placeholder
-        placeholder_price = 500.0  # Median smartphone price
+        # Use median price as placeholder
+        placeholder_price = PLACEHOLDER_PRICE
         
         # Create features using the engineered features function
         X = create_engineered_features_single(
@@ -275,8 +281,8 @@ def predict_ram(battery: float, screen: float, weight: float, year: int,
             unique_companies = metadata.get('unique_companies', [])
 
         # Use placeholder RAM for feature engineering (will be predicted)
-        # Use a median RAM based on price as placeholder
-        placeholder_ram = max(4, price / 100)  # Rough estimate: $100 ~ 1GB RAM
+        # Estimate based on price
+        placeholder_ram = max(4, price / PLACEHOLDER_RAM_PRICE_RATIO)
         
         # Create features using the engineered features function
         X = create_engineered_features_single(
@@ -317,8 +323,8 @@ def predict_battery(ram: float, screen: float, weight: float, year: int,
             unique_companies = metadata.get('unique_companies', [])
 
         # Use placeholder battery for feature engineering (will be predicted)
-        # Use a median battery based on screen size as placeholder
-        placeholder_battery = 3000 + (screen * 500)  # Rough estimate
+        # Estimate based on screen size
+        placeholder_battery = PLACEHOLDER_BATTERY_BASE + (screen * PLACEHOLDER_BATTERY_SCREEN_MULTIPLIER)
         
         # Create features using the engineered features function
         X = create_engineered_features_single(
