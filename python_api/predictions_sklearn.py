@@ -4,13 +4,14 @@ Scikit-learn model predictions
 Uses the newly trained sklearn models for accurate predictions
 """
 
-import numpy as np
-import pandas as pd
-import pickle
 import json
+import logging
+import pickle
 from pathlib import Path
 from typing import Optional
-import logging
+
+import numpy as np
+import pandas as pd
 
 logger = logging.getLogger(__name__)
 
