@@ -22,18 +22,30 @@ cleanup() {
 # Set up signal handlers
 trap cleanup SIGINT SIGTERM
 
-# Start Python API in background
-echo "🐍 Starting Python API server..."
-cd python_api
-
-# Use ultra-lightweight requirements for Replit to save maximum disk space
+# Use minimal packages for Replit to stay under 2GB limit
 if [ -n "$REPLIT_ENVIRONMENT" ] || [ -d "/home/runner" ]; then
-    echo "📦 Detected Replit environment, using ultra-lightweight requirements..."
-    echo "⚠️  WARNING: Avoid installing additional packages manually as they may exceed disk quota!"
+    echo "📦 Detected Replit environment, using minimal packages for <2GB deployment..."
+    echo "⚠️  WARNING: This deployment is optimized for <2GB disk usage!"
+
+    # Use minimal package.json for Replit
+    if [ -f "package-replit.json" ]; then
+        cp package-replit.json package.json
+        echo "✅ Using minimal package.json for Replit"
+    fi
+
+    # Install minimal Node.js dependencies
+    npm install --production --quiet
+
+    # Install ultra-lightweight Python requirements
+    cd python_api
     pip install -r requirements-replit.txt --quiet
+    cd ..
 else
-    echo "📦 Installing full requirements..."
+    echo "📦 Installing full requirements for development..."
+    npm install --quiet
+    cd python_api
     pip install -r requirements.txt --quiet
+    cd ..
 fi
 
 python api.py &

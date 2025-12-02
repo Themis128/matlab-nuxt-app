@@ -49,9 +49,13 @@ build/
 .git/
 .gitignore
 
-# Documentation (optional - can include if needed)
-# docs/
-# wiki/
+# Documentation (exclude to save space)
+docs/
+wiki/
+mobiles-dataset-docs/
+*.md
+README.md
+CHANGELOG.md
 
 # Screenshots
 screenshots/

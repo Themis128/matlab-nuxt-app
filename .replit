@@ -29,10 +29,10 @@ PYTHONPATH = "/home/runner/workspace"
 channel = "stable-22_11"
 file = "config/replit.nix"
 
-# Deploy configuration - optimized for disk space
+# Deploy configuration - optimized for <2GB disk space
 [deploy]
 publicDir = ".output/public"
-run = ["sh", "-c", "bash scripts/enhanced-cleanup.sh && npm run build && npm run preview"]
+run = ["sh", "-c", "bash scripts/deploy-production.sh"]
 
 # Unit test
 [unitTest]
