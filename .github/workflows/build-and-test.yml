@@ -8,12 +8,16 @@ on:
 
 env:
   SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+  SENTRY_ORG: baltzakisthemiscom
+  SENTRY_PROJECT: matlab
 
 jobs:
   test-frontend:
     runs-on: ubuntu-latest
     env:
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_ORG: baltzakisthemiscom
+      SENTRY_PROJECT: matlab
 
     steps:
       - name: Checkout code
