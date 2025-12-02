@@ -239,3 +239,4 @@ The issue was not a bug in the code, but rather a **deployment configuration and
 4. **Prevention**: Clear warnings and guides to prevent future confusion
 
 The user should now be able to access the correct Nuxt frontend URL and see the web interface as expected.
+
