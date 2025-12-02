@@ -11,7 +11,11 @@ from pathlib import Path
 # Add python_api to path
 sys.path.insert(0, str(Path(__file__).parent.parent / "python_api"))
 
-from model_utils import safe_load_model, get_model_info
+try:
+    from python_api.model_utils import safe_load_model, get_model_info
+except ImportError:
+    # Fallback for direct import if module structure differs
+    from model_utils import safe_load_model, get_model_info
 
 # Model files to validate
 MODELS_TO_CHECK = [
