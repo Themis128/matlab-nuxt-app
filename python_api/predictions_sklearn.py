@@ -29,15 +29,31 @@ def load_model(model_name: str):
         # Load model
         model_path = MODELS_DIR / f"{model_name}_sklearn.pkl"
         if not model_path.exists():
-            raise FileNotFoundError(f"Model file not found: {model_path}")
+            logger.warning(f"Model file not found: {model_path}")
+            return None, None
+
+        # Validate it's a pickle file before loading
         with open(model_path, 'rb') as f:
+            header = f.read(2)
+            if len(header) < 2 or header[0] != 0x80:
+                logger.error(f"Invalid pickle file format for {model_path}: {header!r} (expected pickle protocol header)")
+                return None, None
+            f.seek(0)
             model = pickle.load(f)
 
         # Load scaler
         scaler_path = MODELS_DIR / f"{model_name}_scalers.pkl"
         if not scaler_path.exists():
-            raise FileNotFoundError(f"Scaler file not found: {scaler_path}")
+            logger.warning(f"Scaler file not found: {scaler_path}")
+            return None, None
+
+        # Validate scaler is a pickle file before loading
         with open(scaler_path, 'rb') as f:
+            header = f.read(2)
+            if len(header) < 2 or header[0] != 0x80:
+                logger.error(f"Invalid pickle file format for {scaler_path}: {header!r} (expected pickle protocol header)")
+                return None, None
+            f.seek(0)
             scaler = pickle.load(f)
 
         # Cache models
@@ -47,9 +63,12 @@ def load_model(model_name: str):
         logger.info(f"Loaded {model_name} model")
         return model, scaler
 
+    except pickle.UnpicklingError as e:
+        logger.error(f"Failed to unpickle {model_name} model: {e}")
+        return None, None
     except Exception as e:
         logger.error(f"Failed to load {model_name} model: {e}")
-        raise
+        return None, None
 
 def encode_company(company: str, unique_companies: list) -> np.ndarray:
     """One-hot encode company name"""
@@ -192,6 +211,11 @@ def predict_price(ram: float, battery: float, screen: float, weight: float,
     try:
         model, scaler = load_model('price_predictor')
 
+        # Check if model loaded successfully
+        if model is None or scaler is None:
+            logger.warning("Price predictor model not available, using fallback")
+            return _fallback_price_prediction(ram, battery, screen, weight, year, company)
+
         # Get unique companies from metadata
         metadata_path = MODELS_DIR / "price_predictor_metadata.json"
         with open(metadata_path, 'r') as f:
@@ -228,6 +252,11 @@ def predict_ram(battery: float, screen: float, weight: float, year: int,
     """
     try:
         model, scaler = load_model('ram_predictor')
+
+        # Check if model loaded successfully
+        if model is None or scaler is None:
+            logger.warning("RAM predictor model not available, using fallback")
+            return _fallback_ram_prediction(battery, screen, weight, year, price, company)
 
         # For RAM prediction, we need to create features but adjust for the different input order
         # RAM is the target, so we don't include it in features
@@ -278,6 +307,11 @@ def predict_battery(ram: float, screen: float, weight: float, year: int,
     try:
         model, scaler = load_model('battery_predictor')
 
+        # Check if model loaded successfully
+        if model is None or scaler is None:
+            logger.warning("Battery predictor model not available, using fallback")
+            return _fallback_battery_prediction(ram, screen, weight, year, price, company)
+
         front_camera = front_camera if front_camera is not None else 16.0
         back_camera = back_camera if back_camera is not None else 50.0
         storage = storage if storage is not None else 128.0
@@ -324,6 +358,11 @@ def predict_brand(ram: float, battery: float, screen: float, weight: float,
     """
     try:
         model, scaler = load_model('brand_classifier')
+
+        # Check if model loaded successfully
+        if model is None or scaler is None:
+            logger.warning("Brand classifier model not available, using fallback")
+            return _fallback_brand_prediction(ram, battery, screen, weight, year, price)
 
         front_camera = front_camera if front_camera is not None else 16.0
         back_camera = back_camera if back_camera is not None else 50.0
