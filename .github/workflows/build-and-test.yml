@@ -195,7 +195,10 @@ jobs:
           NODE_ENV: development
 
       - name: Run Playwright tests
-        run: npm test
+        run: |
+          npm ci
+          npx playwright install --with-deps
+          npm run test:ci
 
       - name: Upload test results
         if: always()

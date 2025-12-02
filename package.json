@@ -28,7 +28,7 @@
     "check:matlab": "node scripts/utils/check-capabilities.js",
     "next-steps": "node scripts/utils/run-next-steps.js",
     "pretest": "pwsh -NoProfile -File scripts/kill-devtools-port.ps1 -Verbose",
-    "test": "set PLAYWRIGHT_TEST=1&& set NUXT_TEST=1&& pwsh -NoProfile -File scripts/kill-devtools-port.ps1 && pwsh -NoProfile -File scripts/kill-devtools-port.ps1 -Port 3000 && playwright test",
+    "test": "playwright test",
     "test:manual": "set PLAYWRIGHT_TEST=1&& set NUXT_TEST=1&& playwright test",
     "dev:detached": "pwsh -NoProfile -File scripts/start-dev-detached.ps1",
     "dev:detached:stop": "pwsh -NoProfile -File scripts/stop-dev.ps1",
@@ -48,7 +48,8 @@
     "algolia:index": "node scripts/algolia/index_records.js",
     "vscode:show": "pwsh -NoProfile -File .\\.vscode\\settings-controls\\toggle-settings.ps1 -mode show -backup",
     "vscode:hide": "pwsh -NoProfile -File .\\.vscode\\settings-controls\\toggle-settings.ps1 -mode hide -backup",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org baltzakisthemiscom --project matlab .output/public && sentry-cli sourcemaps upload --org baltzakisthemiscom --project matlab .output/public"
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org baltzakisthemiscom --project matlab .output/public && sentry-cli sourcemaps upload --org baltzakisthemiscom --project matlab .output/public",
+    "test:ci": "playwright test --reporter=dot"
   },
   "dependencies": {
     "@heroicons/vue": "^2.2.0",
@@ -72,7 +73,7 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
-    "@playwright/test": "^1.56.1",
+    "@playwright/test": "^1.57.0",
     "@types/node": "^24.10.0",
     "@typescript-eslint/eslint-plugin": "^8.12.1",
     "@typescript-eslint/parser": "^8.12.1",
@@ -86,7 +87,6 @@
     "prettier": "^3.3.3",
     "simple-git-hooks": "^2.11.1",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.14",
     "vue-tsc": "^3.1.3"
   },
   "overrides": {
