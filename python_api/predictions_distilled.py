@@ -72,17 +72,34 @@ class DistilledPredictor:
                 print(f"[DEBUG] Trusted dirs: {trusted_dirs}")
                 return
 
-            # Load model package with basic validation
-            with open(DISTILLED_MODEL_PATH, 'rb') as f:
-                # Check if it's a valid pickle file (support protocol 3 and 5)
-                header = f.read(2)
-                if header not in [b'\x80\x03', b'\x80\x05']:  # Python 3 pickle protocol 3 or 5 header
-                    print(f"[ERROR] Invalid pickle file format: {header!r}")
-                    return
-
-                # Reset and load
-                f.seek(0)
-                model_package = joblib.load(f)
+            # Load model package with robust validation
+            try:
+                with open(DISTILLED_MODEL_PATH, 'rb') as f:
+                    # Check if it's a valid pickle file (support multiple protocols)
+                    header = f.read(2)
+                    # Accept any pickle protocol (0x80 + protocol version) or joblib formats
+                    if len(header) >= 1 and header[0] == 0x80:
+                        # Valid pickle header, proceed
+                        f.seek(0)
+                        model_package = joblib.load(f)
+                    else:
+                        # Not a valid pickle file
+                        print(f"[ERROR] Invalid pickle file format: {header!r} (expected pickle protocol header)")
+                        return
+            except Exception as load_error:
+                print(f"[ERROR] Failed to load model file {DISTILLED_MODEL_PATH}: {load_error}")
+                print(f"[DEBUG] File exists: {DISTILLED_MODEL_PATH.exists()}")
+                if DISTILLED_MODEL_PATH.exists():
+                    try:
+                        size = DISTILLED_MODEL_PATH.stat().st_size
+                        print(f"[DEBUG] File size: {size} bytes")
+                        # Try to read first few bytes for debugging
+                        with open(DISTILLED_MODEL_PATH, 'rb') as f:
+                            first_bytes = f.read(10)
+                            print(f"[DEBUG] First 10 bytes: {first_bytes!r}")
+                    except Exception as debug_error:
+                        print(f"[DEBUG] Could not read file for debugging: {debug_error}")
+                return
 
             if isinstance(model_package, dict):
                 self.model = model_package['model']
