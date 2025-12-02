@@ -19,6 +19,22 @@ Predict mobile phone specifications • Analyze datasets with AI • Train custo
 
 </div>
 
+---
+
+## 🚨 Deploying to Render? Important!
+
+If your Render deployment shows **JSON** instead of the **web interface**:
+
+**Problem**: You're accessing the Python API service instead of the Nuxt frontend.
+
+**Quick Fix**: 
+- ✅ Access `https://matlab-nuxt-frontend.onrender.com` (Frontend - Web Interface)
+- ❌ NOT `https://matlab-python-api.onrender.com` (API - JSON only)
+
+📖 **Complete Guide**: [RENDER_QUICKFIX.md](./RENDER_QUICKFIX.md) | [RENDER_DEPLOYMENT_GUIDE.md](./RENDER_DEPLOYMENT_GUIDE.md)
+
+---
+
 ## 🌟 Highlights
 
 ### 🚀 Performance & Accuracy

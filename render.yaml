@@ -1,5 +1,25 @@
+# ============================================================================
+# Render Blueprint Configuration - Two-Service Deployment (Recommended)
+# ============================================================================
+#
+# This configuration deploys TWO separate services:
+#
+# 1. matlab-python-api - Backend API service (FastAPI)
+#    URL: https://matlab-python-api.onrender.com
+#    Purpose: Serves JSON API endpoints for predictions
+#    ⚠️  Internal use only - not meant for direct user access
+#
+# 2. matlab-nuxt-frontend - Frontend web application (Nuxt.js) ⭐
+#    URL: https://matlab-nuxt-frontend.onrender.com
+#    Purpose: Serves the web interface that users interact with
+#    ✅ This is the main URL you should share with users
+#
+# For a simpler single-service deployment, see render-single.yaml instead.
+# ============================================================================
+
 services:
-  # Python API Service
+  # ===== BACKEND SERVICE =====
+  # Python API Service (Internal Use - Returns JSON)
   - type: web
     name: matlab-python-api
     runtime: python
@@ -22,7 +42,9 @@ services:
       - key: LOG_LEVEL
         value: INFO
 
-  # Main Nuxt.js Web Service
+  # ===== FRONTEND SERVICE (MAIN APPLICATION) =====
+  # Main Nuxt.js Web Service ⭐
+  # This is the service URL users should access to see the web interface
   - type: web
     name: matlab-nuxt-frontend
     runtime: node
