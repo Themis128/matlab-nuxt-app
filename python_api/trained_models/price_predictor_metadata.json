@@ -20,9 +20,9 @@
     "Xiaomi",
     "iQOO"
   ],
-  "r2": 0.9955114103791126,
-  "rmse": 28.57976897231961,
-  "mae": 12.373436774741812,
+  "r2": 0.9953824272981895,
+  "rmse": 28.98749150235818,
+  "mae": 11.826267189389732,
   "model_type": "sklearn_gradientboosting",
   "use_log_transform": true
 }

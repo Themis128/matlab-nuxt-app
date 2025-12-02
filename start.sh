@@ -8,7 +8,7 @@ echo "🚀 Starting Mobile Finder App on Replit..."
 # Set environment variables
 export NODE_ENV=production
 export HOST=0.0.0.0
-export PORT=3000
+export NUXT_PORT=3000  # Port for Nuxt frontend
 export PYTHON_API_URL=http://localhost:8000
 export PYTHONUNBUFFERED=1
 
@@ -25,7 +25,7 @@ trap cleanup SIGINT SIGTERM
 # Start Python API in background
 echo "🐍 Starting Python API server..."
 cd python_api
-python api.py &
+PORT=8000 python api.py &
 PYTHON_PID=$!
 cd ..
 
@@ -84,7 +84,7 @@ cd ..
 
 # Start Nuxt.js development server
 echo "⚡ Starting Nuxt.js frontend..."
-npm run dev &
+PORT=$NUXT_PORT npm run dev &
 NUXT_PID=$!
 
 # Wait a moment for Nuxt to start
