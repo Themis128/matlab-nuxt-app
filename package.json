@@ -9,14 +9,14 @@
     "build": "nuxt build && npm run sentry:sourcemaps",
     "dev": "nuxt dev --port 3000",
     "dev:python": "cd python_api && python api.py",
-    "dev:all": "pwsh -NoProfile -Command \"Write-Host '[DEV-ALL] 🚀 Starting MATLAB Nuxt App with all services...' -ForegroundColor Cyan; Write-Host '[DEV-ALL] � Loading environment variables...' -ForegroundColor Yellow; try { Get-Content .env | ForEach-Object { if ($_ -match '^([^#][^=]+)=(.*)$') { $key = $matches[1].Trim(); $value = $matches[2].Trim(); [Environment]::SetEnvironmentVariable($key, $value, 'Process') } } } catch { Write-Host '[DEV-ALL] ⚠️  No .env file found, using system environment variables' -ForegroundColor Yellow }; Write-Host '[DEV-ALL] �📊 Checking service configurations...' -ForegroundColor Yellow; if ($env:SENTRY_DSN -and $env:SENTRY_DSN -ne 'https://your-dsn@sentry.io/your-project-id' -and $env:SENTRY_DSN -notmatch '^https://your-dsn@') { Write-Host '[DEV-ALL] ✅ Sentry: Configured (Error tracking active)' -ForegroundColor Green } else { Write-Host '[DEV-ALL] ⚠️  Sentry: Not configured or using placeholder DSN' -ForegroundColor Yellow }; if ($env:ALGOLIA_APP_ID -and $env:ALGOLIA_APP_ID -ne 'YourAlgoliaAppIdHere' -and $env:ALGOLIA_APP_ID -notmatch '^Your') { Write-Host '[DEV-ALL] ✅ Algolia: Configured (Search indexing active)' -ForegroundColor Green } else { Write-Host '[DEV-ALL] ⚠️  Algolia: Not configured or using placeholder values' -ForegroundColor Yellow }; Write-Host '[DEV-ALL] 🔄 Starting services...' -ForegroundColor Cyan\" && concurrently -t -n PY,NUXT -c blue,green \"cd python_api && ..\\venv\\Scripts\\python api.py\" \"pwsh -NoProfile -File scripts/start-nuxt-dev.ps1 -Port 3000 -HostName localhost\"",
+    "dev:all": "echo '🚀 Starting MATLAB Nuxt App with all services...' && echo '📝 Loading environment variables...' && concurrently -n PYTHON,NUXT -c blue,green \"cd python_api && ..\\\\venv\\\\Scripts\\\\python api.py\" \"pwsh -NoProfile -File scripts/start-nuxt-dev.ps1 -Port 3000 -HostName localhost\"",
     "dev:health": "pwsh -NoProfile -File scripts/check-dev-health.ps1",
     "dev:all:ensure": "pwsh -NoProfile -File scripts/clear-ports.ps1 -Force && npm run dev:all",
     "typecheck": "npm run typecheck:ci",
     "typecheck:mem": "cross-env NODE_OPTIONS=--max_old_space_size=16384 npx vue-tsc --project tsconfig.ci.json --noEmit --skipLibCheck && cross-env NODE_OPTIONS=--max_old_space_size=16384 npx tsc -p tsconfig.ci.json --noEmit",
     "typecheck:ci": "cross-env NODE_OPTIONS=--max_old_space_size=8192 npx vue-tsc --project tsconfig.ci.json --noEmit && cross-env NODE_OPTIONS=--max_old_space_size=8192 npx tsc -p tsconfig.ci.json --noEmit",
     "precommit:check": "node scripts/hooks/check-no-vscode-settings.cjs",
-    "typecheck:local": "npm run typecheck:ci",
+    "typecheck:local": "cross-env NODE_OPTIONS=--max_old_space_size=8192 npx vue-tsc --project tsconfig.local.json --noEmit && cross-env NODE_OPTIONS=--max_old_space_size=8192 npx tsc -p tsconfig.local.json --noEmit",
     "lint": "eslint . --ext .js,.ts,.vue",
     "lint:yaml": "yamllint .github/workflows/*.yml .github/**/*.yml",
     "format": "prettier --write .",
@@ -49,9 +49,15 @@
     "vscode:show": "pwsh -NoProfile -File .\\.vscode\\settings-controls\\toggle-settings.ps1 -mode show -backup",
     "vscode:hide": "pwsh -NoProfile -File .\\.vscode\\settings-controls\\toggle-settings.ps1 -mode hide -backup",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org baltzakisthemiscom --project matlab .output/public && sentry-cli sourcemaps upload --org baltzakisthemiscom --project matlab .output/public",
-    "test:ci": "playwright test --reporter=dot"
+    "test:ci": "playwright test --reporter=dot",
+    "cli:cline": "npx cline",
+    "cli:cline:format": "npx cline --format compact",
+    "cli:cline:check": "npx cline --check",
+    "precommit:cline": "npx cline --check"
   },
   "dependencies": {
+    "@algolia/client-search": "^5.45.0",
+    "@algolia/transporter": "^4.25.3",
     "@heroicons/vue": "^2.2.0",
     "@modelcontextprotocol/sdk": "^1.23.0",
     "@nuxt/ui": "^2.19.0",
@@ -88,7 +94,9 @@
     "simple-git-hooks": "^2.11.1",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.1.3",
-    "wait-on": "^9.0.3"
+    "wait-on": "^9.0.3",
+    "lint-staged": "^13.2.0",
+    "cline": "^1.0.7"
   },
   "overrides": {
     "glob": "10.1.0",
@@ -130,6 +138,11 @@
   },
   "homepage": "https://github.com/Themis128/matlab-nuxt-app#readme",
   "simple-git-hooks": {
-    "pre-commit": "npm run precommit:check && npm run lint:yaml && npm run format && npm run lint && npm run typecheck"
+    "pre-commit": "npm run precommit:check && npm run lint:yaml && npm run format && npx lint-staged && npm run lint && npm run typecheck"
+  },
+  "lint-staged": {
+    "*.{js,ts,vue,py,md,json,html}": [
+      "npx cline --check"
+    ]
   }
 }

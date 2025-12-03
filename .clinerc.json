@@ -1,0 +1,14 @@
+{
+  "format": "compact",
+  "paths": [
+    "app",
+    "components",
+    "composables",
+    "pages",
+    "server",
+    "python_api",
+    "mobiles-dataset-docs"
+  ],
+  "autonomous": false,
+  "allowOverwrite": false
+}
