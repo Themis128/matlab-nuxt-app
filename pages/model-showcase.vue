@@ -333,361 +333,363 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, nextTick } from 'vue'
-import { useAdvancedModelsStore } from '~/stores/advancedModelsStore'
-import { usePredictionHistoryStore } from '~/stores/predictionHistoryStore'
-import { useRouter } from 'vue-router'
+  import { ref, computed, onMounted, nextTick } from 'vue'
+  import { useAdvancedModelsStore } from '~/stores/advancedModelsStore'
+  import { usePredictionHistoryStore } from '~/stores/predictionHistoryStore'
+  import { useRouter } from 'vue-router'
 
-// Import Chart.js components at the top level
-import {
-  Chart,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  LineController,
-  Title,
-  Tooltip,
-  Legend,
-  Filler,
-} from 'chart.js'
+  // Import Chart.js components at the top level
+  import {
+    Chart,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    LineController,
+    Title,
+    Tooltip,
+    Legend,
+    Filler,
+  } from 'chart.js'
 
-// Register Chart.js components globally
-Chart.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  LineController,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-)
+  // Register Chart.js components globally
+  Chart.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    LineController,
+    Title,
+    Tooltip,
+    Legend,
+    Filler
+  )
 
-// Use real data from stores
-const advancedStore = useAdvancedModelsStore()
-const historyStore = usePredictionHistoryStore()
-const router = useRouter()
+  // Use real data from stores
+  const advancedStore = useAdvancedModelsStore()
+  const historyStore = usePredictionHistoryStore()
+  const router = useRouter()
 
-// Initialize stores on mount
-onMounted(async () => {
-  await advancedStore.initialize()
-  // Defer chart creation to ensure DOM is ready
-  await nextTick()
-  createPerformanceChart()
-})
+  // Initialize stores on mount
+  onMounted(async () => {
+    await advancedStore.initialize()
+    // Defer chart creation to ensure DOM is ready
+    await nextTick()
+    createPerformanceChart()
+  })
 
-// Real data from stores with mock speed and accuracy data
-const modelData = computed(() =>
-  advancedStore.availableModels.map(model => ({
-    ...model,
-    speed: Math.floor(Math.random() * 200) + 50, // Mock speed in ms
-    accuracy: model.accuracy || Math.floor(85 + Math.random() * 15), // Ensure accuracy is set
-  }))
-)
-const recentPredictions = computed(() => {
-  // Get real prediction history
-  const realHistory = historyStore.getAllHistory.slice(0, 10).map(item => ({
-    id: item.id,
-    phoneModel: `Phone ${item.id.slice(0, 8)}`,
-    company: 'Various',
-    predictedPrice: typeof item.result === 'number' ? item.result : 500,
-    currencySymbol: '$',
-    modelUsed: item.model === 'price' ? 'Advanced Model' : `${item.model} Model`,
-    accuracy: 95 + Math.random() * 5, // Mock accuracy for display
-    specs: {
-      ram: Math.floor(Math.random() * 8) + 4,
-      battery: Math.floor(Math.random() * 2000) + 3000,
-      screen: 6 + Math.random(),
-    },
-    timestamp: new Date(item.timestamp).toLocaleString(),
-  }))
-
-  // If we have real history, use it; otherwise show mock data for demo
-  if (realHistory.length > 0) {
-    return realHistory
-  }
-
-  // Mock data for demonstration when no real predictions exist
-  return [
-    {
-      id: 'demo-1',
-      phoneModel: 'Samsung Galaxy S24 Ultra',
-      company: 'Samsung',
-      predictedPrice: 1199,
+  // Real data from stores with mock speed and accuracy data
+  const modelData = computed(() =>
+    advancedStore.availableModels.map(model => ({
+      ...model,
+      speed: Math.floor(Math.random() * 200) + 50, // Mock speed in ms
+      accuracy: model.accuracy || Math.floor(85 + Math.random() * 15), // Ensure accuracy is set
+    }))
+  )
+  const recentPredictions = computed(() => {
+    // Get real prediction history
+    const realHistory = historyStore.getAllHistory.slice(0, 10).map(item => ({
+      id: item.id,
+      phoneModel: `Phone ${item.id.slice(0, 8)}`,
+      company: 'Various',
+      predictedPrice: typeof item.result === 'number' ? item.result : 500,
       currencySymbol: '$',
-      modelUsed: 'Advanced Ensemble Model',
-      accuracy: 97.3,
+      modelUsed: item.model === 'price' ? 'Advanced Model' : `${item.model} Model`,
+      accuracy: 95 + Math.random() * 5, // Mock accuracy for display
       specs: {
-        ram: 12,
-        battery: 5000,
-        screen: 6.8,
+        ram: Math.floor(Math.random() * 8) + 4,
+        battery: Math.floor(Math.random() * 2000) + 3000,
+        screen: 6 + Math.random(),
       },
-      timestamp: new Date(Date.now() - 3600000).toLocaleString(), // 1 hour ago
-    },
-    {
-      id: 'demo-2',
-      phoneModel: 'iPhone 15 Pro Max',
-      company: 'Apple',
-      predictedPrice: 1299,
-      currencySymbol: '$',
-      modelUsed: 'XGBoost Deep Model',
-      accuracy: 98.1,
-      specs: {
-        ram: 8,
-        battery: 4680,
-        screen: 6.7,
-      },
-      timestamp: new Date(Date.now() - 7200000).toLocaleString(), // 2 hours ago
-    },
-    {
-      id: 'demo-3',
-      phoneModel: 'Google Pixel 8 Pro',
-      company: 'Google',
-      predictedPrice: 999,
-      currencySymbol: '$',
-      modelUsed: 'Distilled Model',
-      accuracy: 96.8,
-      specs: {
-        ram: 12,
-        battery: 5050,
-        screen: 6.7,
-      },
-      timestamp: new Date(Date.now() - 10800000).toLocaleString(), // 3 hours ago
-    },
-  ]
-})
+      timestamp: new Date(item.timestamp).toLocaleString(),
+    }))
 
-// Chart reference
-const performanceChart = ref<HTMLCanvasElement | null>(null)
-let _chartInstance: any = null
-
-// Computed properties
-const rankedModels = computed(() => {
-  return [...modelData.value].sort((a, b) => b.accuracy - a.accuracy)
-})
-
-const topModel = computed(
-  () =>
-    rankedModels.value[0] || {
-      name: 'No Models Available',
-      accuracy: 0,
-      speed: 0,
+    // If we have real history, use it; otherwise show mock data for demo
+    if (realHistory.length > 0) {
+      return realHistory
     }
-)
 
-const averageAccuracy = computed(() => {
-  if (modelData.value.length === 0) return '0.0'
-  const validModels = modelData.value.filter(
-    model => typeof model.accuracy === 'number' && !isNaN(model.accuracy)
-  )
-  if (validModels.length === 0) return '0.0'
-  const sum = validModels.reduce((acc, model) => acc + model.accuracy, 0)
-  return (sum / validModels.length).toFixed(1)
-})
-
-const successfulPredictions = computed(() => {
-  // Mock data - in real app this would be calculated from actual predictions
-  return Math.floor(Math.random() * 500) + 100
-})
-
-const fastestModel = computed(() => {
-  if (modelData.value.length === 0) {
-    return { name: 'No Models', speed: 0 }
-  }
-  return modelData.value.reduce((fastest, current) =>
-    current.speed < fastest.speed ? current : fastest
-  )
-})
-
-const xgboostModels = computed(() => modelData.value.filter(model => model.category === 'xgboost'))
-
-const ensembleModels = computed(() =>
-  modelData.value.filter(model => model.category === 'ensemble')
-)
-
-const specializedModels = computed(() =>
-  modelData.value.filter(model => model.category === 'currency' || model.category === 'distilled')
-)
-
-// Methods
-const getModelIcon = (category: string) => {
-  const icons: Record<string, string> = {
-    xgboost: '🚀',
-    ensemble: '🔗',
-    distilled: '⚡',
-    currency: '💰',
-  }
-  return icons[category] || '🤖'
-}
-
-const getRankColor = (index: number) => {
-  const colors = [
-    'bg-yellow-500 text-white', // 1st
-    'bg-gray-400 text-white', // 2nd
-    'bg-amber-600 text-white', // 3rd
-    'bg-blue-500 text-white', // others
-  ]
-  return colors[Math.min(index, 3)]
-}
-
-const getCategoryColor = (category: string) => {
-  const colors: Record<string, string> = {
-    xgboost: 'bg-green-100 text-green-800',
-    ensemble: 'bg-blue-100 text-blue-800',
-    distilled: 'bg-yellow-100 text-yellow-800',
-    currency: 'bg-purple-100 text-purple-800',
-  }
-  return colors[category] || 'bg-gray-100 text-gray-800'
-}
-
-const viewModelDetails = (model: any) => {
-  // In a real app, this would navigate to a detailed model page
-  // For now, show an alert
-  alert(
-    `Detailed information for ${model.name}:\n\nAccuracy: ${model.accuracy}%\nSpeed: ${model.speed}ms\nCategory: ${model.category}\n\n${model.description}`
-  )
-}
-
-const runQuickTest = async (model: any) => {
-  if (!model.available) return
-
-  // Mock quick test
-
-  // Simulate API call
-  await new Promise(resolve => setTimeout(resolve, 1000))
-
-  alert(
-    `Quick test completed for ${model.name}!\n\nTest Results:\n- Accuracy: ${model.accuracy}%\n- Response Time: ${Math.floor(Math.random() * 50) + model.speed}ms\n- Status: ✅ Passed`
-  )
-}
-
-const navigateTo = (path: string) => {
-  router.push(path)
-}
-
-const createPerformanceChart = () => {
-  if (!performanceChart.value) {
-    console.warn('Chart canvas not available yet')
-    return
-  }
-
-  // Clean up existing chart instance
-  if (_chartInstance) {
-    _chartInstance.destroy()
-  }
-
-  const ctx = performanceChart.value.getContext('2d')
-  if (!ctx) {
-    console.error('Could not get canvas context')
-    return
-  }
-
-  console.warn('Creating performance chart...')
-
-  // Mock performance trend data
-  const data = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-    datasets: [
+    // Mock data for demonstration when no real predictions exist
+    return [
       {
-        label: 'XGBoost Models',
-        data: [94.2, 95.1, 96.3, 96.8, 97.1, 97.3],
-        borderColor: 'rgb(34, 197, 94)',
-        backgroundColor: 'rgba(34, 197, 94, 0.1)',
-        tension: 0.4,
-        fill: true,
-      },
-      {
-        label: 'Ensemble Models',
-        data: [95.8, 96.2, 97.1, 97.8, 98.2, 98.8],
-        borderColor: 'rgb(59, 130, 246)',
-        backgroundColor: 'rgba(59, 130, 246, 0.1)',
-        tension: 0.4,
-        fill: true,
-      },
-      {
-        label: 'Distilled Models',
-        data: [92.1, 93.5, 94.2, 94.8, 95.1, 95.2],
-        borderColor: 'rgb(245, 158, 11)',
-        backgroundColor: 'rgba(245, 158, 11, 0.1)',
-        tension: 0.4,
-        fill: true,
-      },
-    ],
-  }
-
-  const config = {
-    type: 'line' as const,
-    data: data,
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: {
-        intersect: false,
-        mode: 'index' as const,
-      },
-      plugins: {
-        title: {
-          display: true,
-          text: 'Model Accuracy Trends (Last 6 Months)',
-          font: {
-            size: 16,
-          },
+        id: 'demo-1',
+        phoneModel: 'Samsung Galaxy S24 Ultra',
+        company: 'Samsung',
+        predictedPrice: 1199,
+        currencySymbol: '$',
+        modelUsed: 'Advanced Ensemble Model',
+        accuracy: 97.3,
+        specs: {
+          ram: 12,
+          battery: 5000,
+          screen: 6.8,
         },
-        legend: {
-          display: true,
-          position: 'top' as const,
+        timestamp: new Date(Date.now() - 3600000).toLocaleString(), // 1 hour ago
+      },
+      {
+        id: 'demo-2',
+        phoneModel: 'iPhone 15 Pro Max',
+        company: 'Apple',
+        predictedPrice: 1299,
+        currencySymbol: '$',
+        modelUsed: 'XGBoost Deep Model',
+        accuracy: 98.1,
+        specs: {
+          ram: 8,
+          battery: 4680,
+          screen: 6.7,
         },
-        tooltip: {
-          enabled: true,
-          mode: 'index' as const,
+        timestamp: new Date(Date.now() - 7200000).toLocaleString(), // 2 hours ago
+      },
+      {
+        id: 'demo-3',
+        phoneModel: 'Google Pixel 8 Pro',
+        company: 'Google',
+        predictedPrice: 999,
+        currencySymbol: '$',
+        modelUsed: 'Distilled Model',
+        accuracy: 96.8,
+        specs: {
+          ram: 12,
+          battery: 5050,
+          screen: 6.7,
+        },
+        timestamp: new Date(Date.now() - 10800000).toLocaleString(), // 3 hours ago
+      },
+    ]
+  })
+
+  // Chart reference
+  const performanceChart = ref<HTMLCanvasElement | null>(null)
+  let _chartInstance: any = null
+
+  // Computed properties
+  const rankedModels = computed(() => {
+    return [...modelData.value].sort((a, b) => b.accuracy - a.accuracy)
+  })
+
+  const topModel = computed(
+    () =>
+      rankedModels.value[0] || {
+        name: 'No Models Available',
+        accuracy: 0,
+        speed: 0,
+      }
+  )
+
+  const averageAccuracy = computed(() => {
+    if (modelData.value.length === 0) return '0.0'
+    const validModels = modelData.value.filter(
+      model => typeof model.accuracy === 'number' && !isNaN(model.accuracy)
+    )
+    if (validModels.length === 0) return '0.0'
+    const sum = validModels.reduce((acc, model) => acc + model.accuracy, 0)
+    return (sum / validModels.length).toFixed(1)
+  })
+
+  const successfulPredictions = computed(() => {
+    // Mock data - in real app this would be calculated from actual predictions
+    return Math.floor(Math.random() * 500) + 100
+  })
+
+  const fastestModel = computed(() => {
+    if (modelData.value.length === 0) {
+      return { name: 'No Models', speed: 0 }
+    }
+    return modelData.value.reduce((fastest, current) =>
+      current.speed < fastest.speed ? current : fastest
+    )
+  })
+
+  const xgboostModels = computed(() =>
+    modelData.value.filter(model => model.category === 'xgboost')
+  )
+
+  const ensembleModels = computed(() =>
+    modelData.value.filter(model => model.category === 'ensemble')
+  )
+
+  const specializedModels = computed(() =>
+    modelData.value.filter(model => model.category === 'currency' || model.category === 'distilled')
+  )
+
+  // Methods
+  const getModelIcon = (category: string) => {
+    const icons: Record<string, string> = {
+      xgboost: '🚀',
+      ensemble: '🔗',
+      distilled: '⚡',
+      currency: '💰',
+    }
+    return icons[category] || '🤖'
+  }
+
+  const getRankColor = (index: number) => {
+    const colors = [
+      'bg-yellow-500 text-white', // 1st
+      'bg-gray-400 text-white', // 2nd
+      'bg-amber-600 text-white', // 3rd
+      'bg-blue-500 text-white', // others
+    ]
+    return colors[Math.min(index, 3)]
+  }
+
+  const getCategoryColor = (category: string) => {
+    const colors: Record<string, string> = {
+      xgboost: 'bg-green-100 text-green-800',
+      ensemble: 'bg-blue-100 text-blue-800',
+      distilled: 'bg-yellow-100 text-yellow-800',
+      currency: 'bg-purple-100 text-purple-800',
+    }
+    return colors[category] || 'bg-gray-100 text-gray-800'
+  }
+
+  const viewModelDetails = (model: any) => {
+    // In a real app, this would navigate to a detailed model page
+    // For now, show an alert
+    alert(
+      `Detailed information for ${model.name}:\n\nAccuracy: ${model.accuracy}%\nSpeed: ${model.speed}ms\nCategory: ${model.category}\n\n${model.description}`
+    )
+  }
+
+  const runQuickTest = async (model: any) => {
+    if (!model.available) return
+
+    // Mock quick test
+
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000))
+
+    alert(
+      `Quick test completed for ${model.name}!\n\nTest Results:\n- Accuracy: ${model.accuracy}%\n- Response Time: ${Math.floor(Math.random() * 50) + model.speed}ms\n- Status: ✅ Passed`
+    )
+  }
+
+  const navigateTo = (path: string) => {
+    router.push(path)
+  }
+
+  const createPerformanceChart = () => {
+    if (!performanceChart.value) {
+      console.warn('Chart canvas not available yet')
+      return
+    }
+
+    // Clean up existing chart instance
+    if (_chartInstance) {
+      _chartInstance.destroy()
+    }
+
+    const ctx = performanceChart.value.getContext('2d')
+    if (!ctx) {
+      console.error('Could not get canvas context')
+      return
+    }
+
+    console.warn('Creating performance chart...')
+
+    // Mock performance trend data
+    const data = {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      datasets: [
+        {
+          label: 'XGBoost Models',
+          data: [94.2, 95.1, 96.3, 96.8, 97.1, 97.3],
+          borderColor: 'rgb(34, 197, 94)',
+          backgroundColor: 'rgba(34, 197, 94, 0.1)',
+          tension: 0.4,
+          fill: true,
+        },
+        {
+          label: 'Ensemble Models',
+          data: [95.8, 96.2, 97.1, 97.8, 98.2, 98.8],
+          borderColor: 'rgb(59, 130, 246)',
+          backgroundColor: 'rgba(59, 130, 246, 0.1)',
+          tension: 0.4,
+          fill: true,
+        },
+        {
+          label: 'Distilled Models',
+          data: [92.1, 93.5, 94.2, 94.8, 95.1, 95.2],
+          borderColor: 'rgb(245, 158, 11)',
+          backgroundColor: 'rgba(245, 158, 11, 0.1)',
+          tension: 0.4,
+          fill: true,
+        },
+      ],
+    }
+
+    const config = {
+      type: 'line' as const,
+      data: data,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: {
           intersect: false,
+          mode: 'index' as const,
         },
-      },
-      scales: {
-        x: {
-          display: true,
+        plugins: {
           title: {
             display: true,
-            text: 'Month',
+            text: 'Model Accuracy Trends (Last 6 Months)',
+            font: {
+              size: 16,
+            },
+          },
+          legend: {
+            display: true,
+            position: 'top' as const,
+          },
+          tooltip: {
+            enabled: true,
+            mode: 'index' as const,
+            intersect: false,
           },
         },
-        y: {
-          display: true,
-          beginAtZero: false,
-          min: 90,
-          max: 100,
-          title: {
+        scales: {
+          x: {
             display: true,
-            text: 'Accuracy (%)',
+            title: {
+              display: true,
+              text: 'Month',
+            },
           },
-          ticks: {
-            callback: function (value: any) {
-              return value + '%'
+          y: {
+            display: true,
+            beginAtZero: false,
+            min: 90,
+            max: 100,
+            title: {
+              display: true,
+              text: 'Accuracy (%)',
+            },
+            ticks: {
+              callback: function (value: any) {
+                return value + '%'
+              },
             },
           },
         },
       },
-    },
+    }
+
+    try {
+      _chartInstance = new Chart(ctx, config)
+      console.warn('Chart created successfully!')
+    } catch (error) {
+      console.error('Failed to create Chart.js chart:', error)
+    }
   }
 
-  try {
-    _chartInstance = new Chart(ctx, config)
-    console.warn('Chart created successfully!')
-  } catch (error) {
-    console.error('Failed to create Chart.js chart:', error)
-  }
-}
-
-// Set page metadata
-useHead({
-  title: 'Model Performance Showcase - Mobile Finder',
-  meta: [
-    {
-      name: 'description',
-      content: 'Explore the most accurate machine learning models for mobile price prediction',
-    },
-  ],
-})
+  // Set page metadata
+  useHead({
+    title: 'Model Performance Showcase - Mobile Finder',
+    meta: [
+      {
+        name: 'description',
+        content: 'Explore the most accurate machine learning models for mobile price prediction',
+      },
+    ],
+  })
 </script>

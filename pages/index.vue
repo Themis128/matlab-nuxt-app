@@ -228,23 +228,23 @@
 </template>
 
 <script setup>
-// Set page title
-useHead({
-  title: 'Mobile Finder - MATLAB Deep Learning & Mobile Dataset Analysis',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Explore deep learning models, analyze mobile phone datasets, and discover insights with MATLAB and modern web technologies',
-    },
-  ],
-})
+  // Set page title
+  useHead({
+    title: 'Mobile Finder - MATLAB Deep Learning & Mobile Dataset Analysis',
+    meta: [
+      {
+        name: 'description',
+        content:
+          'Explore deep learning models, analyze mobile phone datasets, and discover insights with MATLAB and modern web technologies',
+      },
+    ],
+  })
 
-// Advanced model metrics for display (XGBoost Ensemble + Multitask Neural Networks)
-const modelMetrics = {
-  price: { r2: 0.8135, label: 'Price Prediction R²' },
-  ram: { r2: 0.9979, label: 'RAM Prediction R²' },
-  battery: { r2: 0.9985, label: 'Battery Prediction R²' },
-  brand: { accuracy: 0.7523, label: 'Brand Classification' }, // Improved estimate based on advanced models
-}
+  // Advanced model metrics for display (XGBoost Ensemble + Multitask Neural Networks)
+  const modelMetrics = {
+    price: { r2: 0.8135, label: 'Price Prediction R²' },
+    ram: { r2: 0.9979, label: 'RAM Prediction R²' },
+    battery: { r2: 0.9985, label: 'Battery Prediction R²' },
+    brand: { accuracy: 0.7523, label: 'Brand Classification' }, // Improved estimate based on advanced models
+  }
 </script>

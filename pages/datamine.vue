@@ -414,236 +414,239 @@
 </template>
 
 <script setup lang="ts">
-// Page meta
-useHead({
-  title: 'Data Mining Studio - Mobile Finder',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Advanced data mining studio with AI-powered analysis, feature engineering, model training, and automated insights generation.',
-    },
-  ],
-})
-
-// Reactive state
-const fileInput = ref<HTMLInputElement | null>(null)
-const uploading = ref(false)
-const processing = ref(false)
-const training = ref(false)
-const currentDataset = ref(null)
-const activeTab = ref('profile')
-const selectedColumn = ref('')
-const scalingMethod = ref('')
-const encodingMethod = ref('')
-const targetVariable = ref('')
-const selectedAlgorithm = ref('')
-const testSize = ref(0.2)
-const randomState = ref(42)
-const trainingResults = ref(null)
-
-// Analysis tabs
-const analysisTabs = [
-  { label: 'Data Profiling', value: 'profile' },
-  { label: 'Visualization', value: 'visualize' },
-  { label: 'Feature Engineering', value: 'features' },
-  { label: 'Model Training', value: 'model' },
-  { label: 'AI Insights', value: 'insights' },
-]
-
-// Options
-const scalingOptions = [
-  { label: 'Standard Scaler', value: 'standard' },
-  { label: 'Min-Max Scaler', value: 'minmax' },
-  { label: 'Robust Scaler', value: 'robust' },
-]
-
-const encodingOptions = [
-  { label: 'Label Encoding', value: 'label' },
-  { label: 'One-Hot Encoding', value: 'onehot' },
-  { label: 'Ordinal Encoding', value: 'ordinal' },
-]
-
-const algorithmOptions = [
-  { label: 'Linear Regression', value: 'linear' },
-  { label: 'Random Forest', value: 'rf' },
-  { label: 'XGBoost', value: 'xgb' },
-  { label: 'Neural Network', value: 'nn' },
-]
-
-// Computed properties
-const numericColumns = computed(() => {
-  if (!currentDataset.value || !currentDataset.value.columnTypes) return []
-  return currentDataset.value.columnTypes
-    .filter((col: any) => col.type === 'numeric')
-    .map((col: any) => ({ label: col.name, value: col.name }))
-})
-
-const availableTargets = computed(() => {
-  if (!currentDataset.value || !currentDataset.value.columnTypes) return []
-  return currentDataset.value.columnTypes.map((col: any) => ({ label: col.name, value: col.name }))
-})
-
-const engineeredFeatures = ref([
-  { name: 'spec_density', type: 'numeric' },
-  { name: 'temporal_decay', type: 'numeric' },
-  { name: 'battery_weight_ratio', type: 'numeric' },
-])
-
-const insights = ref([
-  {
-    id: 1,
-    title: 'High Correlation Detected',
-    description: 'RAM and price show strong positive correlation (ρ = 0.78)',
-    icon: 'i-heroicons-arrow-trending-up',
-  },
-  {
-    id: 2,
-    title: 'Outlier Detection',
-    description: 'Found 15 potential outliers in price distribution',
-    icon: 'i-heroicons-exclamation-triangle',
-  },
-  {
-    id: 3,
-    title: 'Feature Importance',
-    description: 'Battery capacity is the most predictive feature (32% importance)',
-    icon: 'i-heroicons-light-bulb',
-  },
-])
-
-const dataQuality = ref({
-  completeness: 94,
-  consistency: 87,
-  accuracy: 92,
-})
-
-// Methods
-const handleFileUpload = async (event: Event) => {
-  const target = event.target as HTMLInputElement
-  const file = target.files?.[0]
-  if (!file) return
-
-  uploading.value = true
-
-  try {
-    const formData = new FormData()
-    formData.append('file', file)
-
-    // Simulate API call - in real implementation, this would call your backend
-    await new Promise(resolve => setTimeout(resolve, 2000))
-
-    // Mock dataset analysis result
-    currentDataset.value = {
-      name: file.name,
-      size: file.size,
-      rows: 1000,
-      columns: 12,
-      missingValues: 45,
-      columnTypes: [
-        { name: 'brand', type: 'categorical', unique: 15, missing: 0 },
-        { name: 'model', type: 'text', unique: 950, missing: 0 },
-        { name: 'price', type: 'numeric', unique: 234, missing: 12 },
-        { name: 'ram', type: 'numeric', unique: 8, missing: 5 },
-        { name: 'battery', type: 'numeric', unique: 156, missing: 8 },
-        { name: 'screen_size', type: 'numeric', unique: 67, missing: 3 },
-        { name: 'weight', type: 'numeric', unique: 89, missing: 7 },
-        { name: 'year', type: 'numeric', unique: 6, missing: 0 },
-      ],
-      preview: {
-        columns: ['brand', 'model', 'price', 'ram', 'battery'],
-        data: [
-          ['Apple', 'iPhone 15 Pro', 1199, 8, 3274],
-          ['Samsung', 'Galaxy S24', 899, 8, 4000],
-          ['Google', 'Pixel 8', 699, 8, 4575],
-          ['OnePlus', '12', 899, 12, 5000],
-        ],
+  // Page meta
+  useHead({
+    title: 'Data Mining Studio - Mobile Finder',
+    meta: [
+      {
+        name: 'description',
+        content:
+          'Advanced data mining studio with AI-powered analysis, feature engineering, model training, and automated insights generation.',
       },
+    ],
+  })
+
+  // Reactive state
+  const fileInput = ref<HTMLInputElement | null>(null)
+  const uploading = ref(false)
+  const processing = ref(false)
+  const training = ref(false)
+  const currentDataset = ref(null)
+  const activeTab = ref('profile')
+  const selectedColumn = ref('')
+  const scalingMethod = ref('')
+  const encodingMethod = ref('')
+  const targetVariable = ref('')
+  const selectedAlgorithm = ref('')
+  const testSize = ref(0.2)
+  const randomState = ref(42)
+  const trainingResults = ref(null)
+
+  // Analysis tabs
+  const analysisTabs = [
+    { label: 'Data Profiling', value: 'profile' },
+    { label: 'Visualization', value: 'visualize' },
+    { label: 'Feature Engineering', value: 'features' },
+    { label: 'Model Training', value: 'model' },
+    { label: 'AI Insights', value: 'insights' },
+  ]
+
+  // Options
+  const scalingOptions = [
+    { label: 'Standard Scaler', value: 'standard' },
+    { label: 'Min-Max Scaler', value: 'minmax' },
+    { label: 'Robust Scaler', value: 'robust' },
+  ]
+
+  const encodingOptions = [
+    { label: 'Label Encoding', value: 'label' },
+    { label: 'One-Hot Encoding', value: 'onehot' },
+    { label: 'Ordinal Encoding', value: 'ordinal' },
+  ]
+
+  const algorithmOptions = [
+    { label: 'Linear Regression', value: 'linear' },
+    { label: 'Random Forest', value: 'rf' },
+    { label: 'XGBoost', value: 'xgb' },
+    { label: 'Neural Network', value: 'nn' },
+  ]
+
+  // Computed properties
+  const numericColumns = computed(() => {
+    if (!currentDataset.value || !currentDataset.value.columnTypes) return []
+    return currentDataset.value.columnTypes
+      .filter((col: any) => col.type === 'numeric')
+      .map((col: any) => ({ label: col.name, value: col.name }))
+  })
+
+  const availableTargets = computed(() => {
+    if (!currentDataset.value || !currentDataset.value.columnTypes) return []
+    return currentDataset.value.columnTypes.map((col: any) => ({
+      label: col.name,
+      value: col.name,
+    }))
+  })
+
+  const engineeredFeatures = ref([
+    { name: 'spec_density', type: 'numeric' },
+    { name: 'temporal_decay', type: 'numeric' },
+    { name: 'battery_weight_ratio', type: 'numeric' },
+  ])
+
+  const insights = ref([
+    {
+      id: 1,
+      title: 'High Correlation Detected',
+      description: 'RAM and price show strong positive correlation (ρ = 0.78)',
+      icon: 'i-heroicons-arrow-trending-up',
+    },
+    {
+      id: 2,
+      title: 'Outlier Detection',
+      description: 'Found 15 potential outliers in price distribution',
+      icon: 'i-heroicons-exclamation-triangle',
+    },
+    {
+      id: 3,
+      title: 'Feature Importance',
+      description: 'Battery capacity is the most predictive feature (32% importance)',
+      icon: 'i-heroicons-light-bulb',
+    },
+  ])
+
+  const dataQuality = ref({
+    completeness: 94,
+    consistency: 87,
+    accuracy: 92,
+  })
+
+  // Methods
+  const handleFileUpload = async (event: Event) => {
+    const target = event.target as HTMLInputElement
+    const file = target.files?.[0]
+    if (!file) return
+
+    uploading.value = true
+
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+
+      // Simulate API call - in real implementation, this would call your backend
+      await new Promise(resolve => setTimeout(resolve, 2000))
+
+      // Mock dataset analysis result
+      currentDataset.value = {
+        name: file.name,
+        size: file.size,
+        rows: 1000,
+        columns: 12,
+        missingValues: 45,
+        columnTypes: [
+          { name: 'brand', type: 'categorical', unique: 15, missing: 0 },
+          { name: 'model', type: 'text', unique: 950, missing: 0 },
+          { name: 'price', type: 'numeric', unique: 234, missing: 12 },
+          { name: 'ram', type: 'numeric', unique: 8, missing: 5 },
+          { name: 'battery', type: 'numeric', unique: 156, missing: 8 },
+          { name: 'screen_size', type: 'numeric', unique: 67, missing: 3 },
+          { name: 'weight', type: 'numeric', unique: 89, missing: 7 },
+          { name: 'year', type: 'numeric', unique: 6, missing: 0 },
+        ],
+        preview: {
+          columns: ['brand', 'model', 'price', 'ram', 'battery'],
+          data: [
+            ['Apple', 'iPhone 15 Pro', 1199, 8, 3274],
+            ['Samsung', 'Galaxy S24', 899, 8, 4000],
+            ['Google', 'Pixel 8', 699, 8, 4575],
+            ['OnePlus', '12', 899, 12, 5000],
+          ],
+        },
+      }
+
+      // Show success message
+      // console.log('Dataset uploaded and analyzed successfully')
+    } catch (error) {
+      console.error('Upload failed:', error)
+      // Show error message
+    } finally {
+      uploading.value = false
     }
-
-    // Show success message
-    // console.log('Dataset uploaded and analyzed successfully')
-  } catch (error) {
-    console.error('Upload failed:', error)
-    // Show error message
-  } finally {
-    uploading.value = false
   }
-}
 
-const applyFeatureEngineering = async () => {
-  processing.value = true
+  const applyFeatureEngineering = async () => {
+    processing.value = true
 
-  try {
-    // Simulate processing
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    try {
+      // Simulate processing
+      await new Promise(resolve => setTimeout(resolve, 1500))
 
-    // Add new features
-    engineeredFeatures.value.push(
-      { name: 'ram_battery_ratio', type: 'numeric' },
-      { name: 'price_per_gb_ram', type: 'numeric' },
-      { name: 'brand_encoded', type: 'categorical' }
-    )
+      // Add new features
+      engineeredFeatures.value.push(
+        { name: 'ram_battery_ratio', type: 'numeric' },
+        { name: 'price_per_gb_ram', type: 'numeric' },
+        { name: 'brand_encoded', type: 'categorical' }
+      )
 
-    // console.log('Feature engineering completed')
-  } catch (error) {
-    console.error('Feature engineering failed:', error)
-  } finally {
-    processing.value = false
-  }
-}
-
-const trainModel = async () => {
-  if (!targetVariable.value || !selectedAlgorithm.value) return
-
-  training.value = true
-
-  try {
-    // Simulate training
-    await new Promise(resolve => setTimeout(resolve, 3000))
-
-    // Mock training results
-    trainingResults.value = {
-      r2: 0.8456,
-      rmse: 156.78,
-      featureImportance: [
-        { name: 'ram', importance: 0.32 },
-        { name: 'battery', importance: 0.28 },
-        { name: 'brand_encoded', importance: 0.18 },
-        { name: 'screen_size', importance: 0.12 },
-        { name: 'weight', importance: 0.1 },
-      ],
+      // console.log('Feature engineering completed')
+    } catch (error) {
+      console.error('Feature engineering failed:', error)
+    } finally {
+      processing.value = false
     }
-
-    // console.log('Model training completed')
-  } catch (error) {
-    console.error('Training failed:', error)
-  } finally {
-    training.value = false
   }
-}
 
-const formatFileSize = (bytes: number): string => {
-  if (bytes === 0) return '0 Bytes'
-  const k = 1024
-  const sizes = ['Bytes', 'KB', 'MB', 'GB']
-  const i = Math.floor(Math.log(bytes) / Math.log(k))
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
-}
+  const trainModel = async () => {
+    if (!targetVariable.value || !selectedAlgorithm.value) return
 
-const getTypeColor = (type: string): string => {
-  switch (type) {
-    case 'numeric':
-      return 'green'
-    case 'categorical':
-      return 'blue'
-    case 'text':
-      return 'orange'
-    default:
-      return 'gray'
+    training.value = true
+
+    try {
+      // Simulate training
+      await new Promise(resolve => setTimeout(resolve, 3000))
+
+      // Mock training results
+      trainingResults.value = {
+        r2: 0.8456,
+        rmse: 156.78,
+        featureImportance: [
+          { name: 'ram', importance: 0.32 },
+          { name: 'battery', importance: 0.28 },
+          { name: 'brand_encoded', importance: 0.18 },
+          { name: 'screen_size', importance: 0.12 },
+          { name: 'weight', importance: 0.1 },
+        ],
+      }
+
+      // console.log('Model training completed')
+    } catch (error) {
+      console.error('Training failed:', error)
+    } finally {
+      training.value = false
+    }
   }
-}
 
-const handleFileSelect = () => {
-  fileInput.value?.click()
-}
+  const formatFileSize = (bytes: number): string => {
+    if (bytes === 0) return '0 Bytes'
+    const k = 1024
+    const sizes = ['Bytes', 'KB', 'MB', 'GB']
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+  }
+
+  const getTypeColor = (type: string): string => {
+    switch (type) {
+      case 'numeric':
+        return 'green'
+      case 'categorical':
+        return 'blue'
+      case 'text':
+        return 'orange'
+      default:
+        return 'gray'
+    }
+  }
+
+  const handleFileSelect = () => {
+    fileInput.value?.click()
+  }
 </script>

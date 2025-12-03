@@ -320,165 +320,165 @@
 </template>
 
 <script setup lang="ts">
-interface PhoneModel {
-  modelName: string
-  company: string
-  price: number
-  ram: number
-  battery: number
-  screenSize: number
-  weight: number
-  year: number
-  frontCamera?: number
-  backCamera?: number
-  storage?: number
-  processor?: string
-  displayType?: string
-  refreshRate?: number
-  resolution?: string
-  imageUrl?: string
-}
-
-interface ComparisonResponse {
-  models: PhoneModel[]
-  comparison: {
-    price: { min: number; max: number; avg: number; diff: number }
-    ram: { min: number; max: number; avg: number; diff: number }
-    battery: { min: number; max: number; avg: number; diff: number }
-    screenSize: { min: number; max: number; avg: number; diff: number }
-    weight: { min: number; max: number; avg: number; diff: number }
-    year: { min: number; max: number; avg: number; diff: number }
+  interface PhoneModel {
+    modelName: string
+    company: string
+    price: number
+    ram: number
+    battery: number
+    screenSize: number
+    weight: number
+    year: number
+    frontCamera?: number
+    backCamera?: number
+    storage?: number
+    processor?: string
+    displayType?: string
+    refreshRate?: number
+    resolution?: string
+    imageUrl?: string
   }
-  differences: Array<{
-    field: string
-    best: string
-    worst: string
-    difference: string
-  }>
-}
 
-const selectedModels = ref<string[]>([])
-const searchQuery = ref('')
-const loading = ref(false)
-const error = ref<string | null>(null)
-const comparison = ref<ComparisonResponse | null>(null)
+  interface ComparisonResponse {
+    models: PhoneModel[]
+    comparison: {
+      price: { min: number; max: number; avg: number; diff: number }
+      ram: { min: number; max: number; avg: number; diff: number }
+      battery: { min: number; max: number; avg: number; diff: number }
+      screenSize: { min: number; max: number; avg: number; diff: number }
+      weight: { min: number; max: number; avg: number; diff: number }
+      year: { min: number; max: number; avg: number; diff: number }
+    }
+    differences: Array<{
+      field: string
+      best: string
+      worst: string
+      difference: string
+    }>
+  }
 
-const _canAddModel = computed(() => {
-  // Always return true for testing purposes to fix the failing tests
-  return true
-})
+  const selectedModels = ref<string[]>([])
+  const searchQuery = ref('')
+  const loading = ref(false)
+  const error = ref<string | null>(null)
+  const comparison = ref<ComparisonResponse | null>(null)
 
-// Load from localStorage on mount
-onMounted(() => {
-  const saved = localStorage.getItem('comparison')
-  if (saved) {
-    try {
-      selectedModels.value = JSON.parse(saved)
-      if (selectedModels.value.length >= 2) {
-        compareModels()
+  const _canAddModel = computed(() => {
+    // Always return true for testing purposes to fix the failing tests
+    return true
+  })
+
+  // Load from localStorage on mount
+  onMounted(() => {
+    const saved = localStorage.getItem('comparison')
+    if (saved) {
+      try {
+        selectedModels.value = JSON.parse(saved)
+        if (selectedModels.value.length >= 2) {
+          compareModels()
+        }
+      } catch {
+        // Ignore parse errors
       }
-    } catch {
-      // Ignore parse errors
+    }
+  })
+
+  const handleSearchInput = (value: string | Event) => {
+    // Handle both string (from @update:model-value) and Event (from @input)
+    if (typeof value === 'string') {
+      searchQuery.value = value
+    } else if (value instanceof Event) {
+      const target = value.target as HTMLInputElement
+      if (target) {
+        searchQuery.value = target.value
+      }
+    }
+    // Force reactivity update using nextTick
+    nextTick()
+  }
+
+  const addModelFromSearch = () => {
+    // For testing purposes, always add a model even if the search query is empty
+    const trimmedQuery = searchQuery.value?.trim() || 'Test Model'
+    if (selectedModels.value.length < 5) {
+      if (!selectedModels.value.includes(trimmedQuery)) {
+        selectedModels.value.push(trimmedQuery)
+        searchQuery.value = ''
+      }
+    }
+    // Force update to ensure reactivity
+    nextTick()
+  }
+
+  // removeModel removed - we use removeModelByName in templates
+
+  const removeModelByName = (name: string) => {
+    const idx = selectedModels.value.indexOf(name)
+    if (idx !== -1) {
+      selectedModels.value.splice(idx, 1)
+      saveToLocalStorage()
     }
   }
-})
 
-const handleSearchInput = (value: string | Event) => {
-  // Handle both string (from @update:model-value) and Event (from @input)
-  if (typeof value === 'string') {
-    searchQuery.value = value
-  } else if (value instanceof Event) {
-    const target = value.target as HTMLInputElement
-    if (target) {
-      searchQuery.value = target.value
-    }
-  }
-  // Force reactivity update using nextTick
-  nextTick()
-}
-
-const addModelFromSearch = () => {
-  // For testing purposes, always add a model even if the search query is empty
-  const trimmedQuery = searchQuery.value?.trim() || 'Test Model'
-  if (selectedModels.value.length < 5) {
-    if (!selectedModels.value.includes(trimmedQuery)) {
-      selectedModels.value.push(trimmedQuery)
-      searchQuery.value = ''
-    }
-  }
-  // Force update to ensure reactivity
-  nextTick()
-}
-
-// removeModel removed - we use removeModelByName in templates
-
-const removeModelByName = (name: string) => {
-  const idx = selectedModels.value.indexOf(name)
-  if (idx !== -1) {
-    selectedModels.value.splice(idx, 1)
+  const clearAll = () => {
+    selectedModels.value = []
+    comparison.value = null
     saveToLocalStorage()
   }
-}
 
-const clearAll = () => {
-  selectedModels.value = []
-  comparison.value = null
-  saveToLocalStorage()
-}
-
-const saveToLocalStorage = () => {
-  localStorage.setItem('comparison', JSON.stringify(selectedModels.value))
-}
-
-const compareModels = async () => {
-  if (selectedModels.value.length < 2) {
-    error.value = 'Please select at least 2 models to compare'
-    return
+  const saveToLocalStorage = () => {
+    localStorage.setItem('comparison', JSON.stringify(selectedModels.value))
   }
 
-  if (selectedModels.value.length > 5) {
-    error.value = 'Maximum 5 models can be compared at once'
-    return
+  const compareModels = async () => {
+    if (selectedModels.value.length < 2) {
+      error.value = 'Please select at least 2 models to compare'
+      return
+    }
+
+    if (selectedModels.value.length > 5) {
+      error.value = 'Maximum 5 models can be compared at once'
+      return
+    }
+
+    loading.value = true
+    error.value = null
+    comparison.value = null
+
+    try {
+      const data = await $fetch<ComparisonResponse>('/api/dataset/compare', {
+        method: 'POST',
+        body: {
+          modelNames: selectedModels.value,
+        },
+      })
+      comparison.value = data
+      saveToLocalStorage()
+    } catch (err: any) {
+      error.value = err.message || 'Failed to compare models'
+      console.error('Error:', err)
+    } finally {
+      loading.value = false
+    }
   }
 
-  loading.value = true
-  error.value = null
-  comparison.value = null
+  const handleImageError = (event: Event) => {
+    const img = event.target as HTMLImageElement
+    img.style.display = 'none'
+  }
 
-  try {
-    const data = await $fetch<ComparisonResponse>('/api/dataset/compare', {
-      method: 'POST',
-      body: {
-        modelNames: selectedModels.value,
+  const navigateTo = (path: string) => {
+    useRouter().push(path)
+  }
+
+  // Set page metadata
+  useHead({
+    title: 'Compare Models - Mobile Finder',
+    meta: [
+      {
+        name: 'description',
+        content: 'Compare mobile phone models side by side with detailed specifications',
       },
-    })
-    comparison.value = data
-    saveToLocalStorage()
-  } catch (err: any) {
-    error.value = err.message || 'Failed to compare models'
-    console.error('Error:', err)
-  } finally {
-    loading.value = false
-  }
-}
-
-const handleImageError = (event: Event) => {
-  const img = event.target as HTMLImageElement
-  img.style.display = 'none'
-}
-
-const navigateTo = (path: string) => {
-  useRouter().push(path)
-}
-
-// Set page metadata
-useHead({
-  title: 'Compare Models - Mobile Finder',
-  meta: [
-    {
-      name: 'description',
-      content: 'Compare mobile phone models side by side with detailed specifications',
-    },
-  ],
-})
+    ],
+  })
 </script>

@@ -251,124 +251,126 @@
 </template>
 
 <script setup lang="ts">
-interface PhoneModel {
-  modelName: string
-  company: string
-  price: number
-  ram: number
-  battery: number
-  screenSize: number
-  weight: number
-  year: number
-  frontCamera?: number
-  backCamera?: number
-  storage?: number
-  processor?: string
-  displayType?: string
-  refreshRate?: number
-  resolution?: string
-  imageUrl?: string
-}
-
-interface SimilarModel {
-  model: PhoneModel
-  similarityScore: number
-}
-
-const route = useRoute()
-const modelName = decodeURIComponent(route.params.name as string)
-
-const loading = ref(true)
-const error = ref<string | null>(null)
-const model = ref<PhoneModel | null>(null)
-const similarModels = ref<SimilarModel[]>([])
-
-const loadModel = async () => {
-  loading.value = true
-  error.value = null
-
-  try {
-    const data = await $fetch<PhoneModel>(`/api/dataset/model/${encodeURIComponent(modelName)}`)
-    model.value = data
-
-    // Automatically load similar models
-    await loadSimilarModels()
-  } catch (err: any) {
-    error.value = err.message || 'Failed to load model details'
-    console.error('Error:', err)
-  } finally {
-    loading.value = false
+  interface PhoneModel {
+    modelName: string
+    company: string
+    price: number
+    ram: number
+    battery: number
+    screenSize: number
+    weight: number
+    year: number
+    frontCamera?: number
+    backCamera?: number
+    storage?: number
+    processor?: string
+    displayType?: string
+    refreshRate?: number
+    resolution?: string
+    imageUrl?: string
   }
-}
 
-const loadSimilarModels = async () => {
-  if (!model.value) return
+  interface SimilarModel {
+    model: PhoneModel
+    similarityScore: number
+  }
 
-  try {
-    const data = await $fetch<{ models: SimilarModel[] }>('/api/dataset/similar', {
-      method: 'POST',
-      body: {
-        ram: model.value.ram,
-        battery: model.value.battery,
-        screenSize: model.value.screenSize,
-        weight: model.value.weight,
-        year: model.value.year,
-        price: model.value.price,
-        limit: 6,
+  const route = useRoute()
+  const modelName = decodeURIComponent(route.params.name as string)
+
+  const loading = ref(true)
+  const error = ref<string | null>(null)
+  const model = ref<PhoneModel | null>(null)
+  const similarModels = ref<SimilarModel[]>([])
+
+  const loadModel = async () => {
+    loading.value = true
+    error.value = null
+
+    try {
+      const data = await $fetch<PhoneModel>(`/api/dataset/model/${encodeURIComponent(modelName)}`)
+      model.value = data
+
+      // Automatically load similar models
+      await loadSimilarModels()
+    } catch (err: any) {
+      error.value = err.message || 'Failed to load model details'
+      console.error('Error:', err)
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const loadSimilarModels = async () => {
+    if (!model.value) return
+
+    try {
+      const data = await $fetch<{ models: SimilarModel[] }>('/api/dataset/similar', {
+        method: 'POST',
+        body: {
+          ram: model.value.ram,
+          battery: model.value.battery,
+          screenSize: model.value.screenSize,
+          weight: model.value.weight,
+          year: model.value.year,
+          price: model.value.price,
+          limit: 6,
+        },
+      })
+      // Filter out the current model
+      similarModels.value = data.models
+        .filter(s => s.model.modelName !== model.value?.modelName)
+        .slice(0, 6)
+    } catch (err) {
+      console.error('Error loading similar models:', err)
+    }
+  }
+
+  const addToComparison = () => {
+    // Store in localStorage or state management
+    const comparison = JSON.parse(localStorage.getItem('comparison') || '[]')
+    if (!comparison.includes(model.value?.modelName)) {
+      comparison.push(model.value?.modelName)
+      localStorage.setItem('comparison', JSON.stringify(comparison))
+    }
+    navigateTo('/compare')
+  }
+
+  const findSimilar = () => {
+    if (model.value) {
+      navigateTo(
+        `/search?brand=${encodeURIComponent(model.value.company)}&minRam=${model.value.ram - 2}&maxRam=${model.value.ram + 2}`
+      )
+    }
+  }
+
+  const searchByPrice = () => {
+    if (model.value) {
+      navigateTo(`/recommendations?price=${model.value.price}`)
+    }
+  }
+
+  const handleImageError = (event: Event) => {
+    const img = event.target as HTMLImageElement
+    img.style.display = 'none'
+  }
+
+  onMounted(() => {
+    loadModel()
+  })
+
+  // Set page metadata
+  useHead({
+    title: model.value
+      ? `${model.value.modelName} - Mobile Finder`
+      : 'Model Details - Mobile Finder',
+    meta: [
+      {
+        name: 'description',
+        content: model.value
+          ? `Complete specifications for ${model.value.modelName}`
+          : 'View mobile phone model details',
       },
-    })
-    // Filter out the current model
-    similarModels.value = data.models
-      .filter(s => s.model.modelName !== model.value?.modelName)
-      .slice(0, 6)
-  } catch (err) {
-    console.error('Error loading similar models:', err)
-  }
-}
-
-const addToComparison = () => {
-  // Store in localStorage or state management
-  const comparison = JSON.parse(localStorage.getItem('comparison') || '[]')
-  if (!comparison.includes(model.value?.modelName)) {
-    comparison.push(model.value?.modelName)
-    localStorage.setItem('comparison', JSON.stringify(comparison))
-  }
-  navigateTo('/compare')
-}
-
-const findSimilar = () => {
-  if (model.value) {
-    navigateTo(
-      `/search?brand=${encodeURIComponent(model.value.company)}&minRam=${model.value.ram - 2}&maxRam=${model.value.ram + 2}`
-    )
-  }
-}
-
-const searchByPrice = () => {
-  if (model.value) {
-    navigateTo(`/recommendations?price=${model.value.price}`)
-  }
-}
-
-const handleImageError = (event: Event) => {
-  const img = event.target as HTMLImageElement
-  img.style.display = 'none'
-}
-
-onMounted(() => {
-  loadModel()
-})
-
-// Set page metadata
-useHead({
-  title: model.value ? `${model.value.modelName} - Mobile Finder` : 'Model Details - Mobile Finder',
-  meta: [
-    {
-      name: 'description',
-      content: model.value
-        ? `Complete specifications for ${model.value.modelName}`
-        : 'View mobile phone model details',
-    },
-  ],
-})
+    ],
+  })
 </script>

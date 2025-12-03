@@ -34,7 +34,7 @@ services:
       - key: PYTHON_VERSION
         value: '3.13'
       - key: PORT
-        value: '10000'  # Render requires service to listen on this port
+        value: '10000' # Render requires service to listen on this port
       - key: PYTHONUNBUFFERED
         value: '1'
       - key: CORS_ORIGINS

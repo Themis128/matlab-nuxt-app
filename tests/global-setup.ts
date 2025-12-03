@@ -1,4 +1,4 @@
-/* eslint-disable no-console, @typescript-eslint/no-unused-vars */
+/* eslint-disable no-console */
 import type { FullConfig } from '@playwright/test'
 
 async function waitFor(url: string, timeoutMs: number, intervalMs = 500) {

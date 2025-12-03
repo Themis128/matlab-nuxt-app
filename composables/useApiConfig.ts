@@ -14,7 +14,7 @@ export const useApiConfig = () => {
    */
   const getPythonApiUrl = (): string => {
     // Use environment variable if set
-    if (config.public.apiBase && config.public.apiBase !== 'http://localhost:8000') {
+    if (config.public?.apiBase && config.public.apiBase !== 'http://localhost:8000') {
       return config.public.apiBase as string
     }
 
@@ -38,7 +38,7 @@ export const useApiConfig = () => {
     }
 
     // Server-side or fallback
-    return config.public.apiBase as string
+    return config.public?.apiBase as string
   }
 
   return {
@@ -51,6 +51,6 @@ export const useApiConfig = () => {
     /**
      * Check if Python API is disabled
      */
-    isPythonApiDisabled: config.public.pyApiDisabled as boolean,
+    isPythonApiDisabled: config.public?.pyApiDisabled as boolean,
   }
 }

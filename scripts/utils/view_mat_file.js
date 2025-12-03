@@ -6,7 +6,7 @@
  * Usage: node view_mat_file.js <file.mat> [output.json]
  */
 
-/* eslint-disable no-console, @typescript-eslint/no-unused-vars */
+/* eslint-disable no-console */
 
 import fs from 'node:fs'
 import path from 'node:path'

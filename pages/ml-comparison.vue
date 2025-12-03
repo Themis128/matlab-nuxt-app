@@ -343,318 +343,320 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, nextTick } from 'vue'
+  import { ref, computed, onMounted, nextTick } from 'vue'
 
-// Type definitions
-interface Model {
-  type: string
-  name: string
-  description: string
-  category: string
-  available: boolean
-}
-
-interface PredictionResult {
-  model_type: string
-  model_name: string
-  description: string
-  category: string
-  price: number | null
-}
-
-interface ComparisonResults {
-  predictions: PredictionResult[]
-  bestModel: string
-  bestPrice: number
-  averagePrice: number
-  priceRange: number
-  consistency: number
-}
-
-// Model data
-const availableModels = ref<Model[]>([])
-const selectedModels = ref<string[]>([])
-const loading = ref(false)
-const error = ref<string | null>(null)
-const comparisonResults = ref<ComparisonResults | null>(null)
-const processingTime = ref(0)
-
-// Test specifications
-const testSpecs = ref({
-  ram: '8',
-  battery: '4500',
-  screen: '6.5',
-  weight: '180',
-  year: '2023',
-  company: 'Samsung',
-})
-
-// Currency settings
-const currency = ref('USD')
-const currencySymbol = ref('$')
-
-const companyOptions = [
-  'Samsung',
-  'Apple',
-  'Xiaomi',
-  'Google',
-  'OnePlus',
-  'Oppo',
-  'Vivo',
-  'Realme',
-  'Huawei',
-  'Honor',
-  'Motorola',
-  'Nokia',
-  'Sony',
-  'LG',
-  'Asus',
-  'Lenovo',
-]
-
-const currencyOptions = [
-  { label: 'USD ($)', value: 'USD' },
-  { label: 'EUR (€)', value: 'EUR' },
-  { label: 'INR (₹)', value: 'INR' },
-]
-
-// Chart reference
-const chartCanvas = ref<HTMLCanvasElement | null>(null)
-let chartInstance: any = null
-
-const canRunTest = computed(() => {
-  return (
-    testSpecs.value.ram &&
-    testSpecs.value.battery &&
-    testSpecs.value.screen &&
-    testSpecs.value.weight &&
-    testSpecs.value.year &&
-    testSpecs.value.company
-  )
-})
-
-// Load available models
-onMounted(async () => {
-  try {
-    const response = await $fetch<{ models: Model[] }>('/api/advanced/models')
-    availableModels.value = response.models
-  } catch (err) {
-    console.error('Failed to load models:', err)
-  }
-})
-
-const getModelIcon = (category: string) => {
-  const icons: Record<string, string> = {
-    sklearn: '🧠',
-    xgboost: '🚀',
-    ensemble: '🔗',
-    distilled: '⚡',
-    currency: '💰',
-  }
-  return icons[category] || '🤖'
-}
-
-const getCategoryColor = (category: string): string => {
-  const colors: Record<string, string> = {
-    sklearn: 'bg-blue-100 text-blue-800',
-    xgboost: 'bg-green-100 text-green-800',
-    ensemble: 'bg-purple-100 text-purple-800',
-    distilled: 'bg-yellow-100 text-yellow-800',
-    currency: 'bg-red-100 text-red-800',
-  }
-  return colors[category] || 'bg-gray-100 text-gray-800'
-}
-
-const toggleModelSelection = (modelType: string) => {
-  const index = selectedModels.value.indexOf(modelType)
-  if (index > -1) {
-    selectedModels.value.splice(index, 1)
-  } else if (selectedModels.value.length < 6) {
-    selectedModels.value.push(modelType)
-  }
-}
-
-const clearSelection = () => {
-  selectedModels.value = []
-  comparisonResults.value = null
-}
-
-const selectAllAvailable = () => {
-  const availableTypes = availableModels.value
-    .filter((model: Model) => model.available)
-    .map((model: Model) => model.type)
-  selectedModels.value = availableTypes.slice(0, 6) // Limit to 6 models
-}
-
-const runComparison = async () => {
-  if (selectedModels.value.length < 2) {
-    error.value = 'Please select at least 2 models to compare'
-    return
+  // Type definitions
+  interface Model {
+    type: string
+    name: string
+    description: string
+    category: string
+    available: boolean
   }
 
-  if (!canRunTest.value) {
-    error.value = 'Please fill in all test specifications'
-    return
+  interface PredictionResult {
+    model_type: string
+    model_name: string
+    description: string
+    category: string
+    price: number | null
   }
 
-  loading.value = true
-  error.value = null
-  comparisonResults.value = null
-  const startTime = Date.now()
+  interface ComparisonResults {
+    predictions: PredictionResult[]
+    bestModel: string
+    bestPrice: number
+    averagePrice: number
+    priceRange: number
+    consistency: number
+  }
 
-  try {
-    // Update currency symbol
-    const symbols: Record<string, string> = { USD: '$', EUR: '€', INR: '₹' }
-    currencySymbol.value = symbols[currency.value] || '$'
+  // Model data
+  const availableModels = ref<Model[]>([])
+  const selectedModels = ref<string[]>([])
+  const loading = ref(false)
+  const error = ref<string | null>(null)
+  const comparisonResults = ref<ComparisonResults | null>(null)
+  const processingTime = ref(0)
 
-    const payload = {
-      ram: parseFloat(testSpecs.value.ram),
-      battery: parseFloat(testSpecs.value.battery),
-      screen: parseFloat(testSpecs.value.screen),
-      weight: parseFloat(testSpecs.value.weight),
-      year: parseInt(testSpecs.value.year),
-      company: testSpecs.value.company,
-      currency: currency.value,
+  // Test specifications
+  const testSpecs = ref({
+    ram: '8',
+    battery: '4500',
+    screen: '6.5',
+    weight: '180',
+    year: '2023',
+    company: 'Samsung',
+  })
+
+  // Currency settings
+  const currency = ref('USD')
+  const currencySymbol = ref('$')
+
+  const companyOptions = [
+    'Samsung',
+    'Apple',
+    'Xiaomi',
+    'Google',
+    'OnePlus',
+    'Oppo',
+    'Vivo',
+    'Realme',
+    'Huawei',
+    'Honor',
+    'Motorola',
+    'Nokia',
+    'Sony',
+    'LG',
+    'Asus',
+    'Lenovo',
+  ]
+
+  const currencyOptions = [
+    { label: 'USD ($)', value: 'USD' },
+    { label: 'EUR (€)', value: 'EUR' },
+    { label: 'INR (₹)', value: 'INR' },
+  ]
+
+  // Chart reference
+  const chartCanvas = ref<HTMLCanvasElement | null>(null)
+  let chartInstance: any = null
+
+  const canRunTest = computed(() => {
+    return (
+      testSpecs.value.ram &&
+      testSpecs.value.battery &&
+      testSpecs.value.screen &&
+      testSpecs.value.weight &&
+      testSpecs.value.year &&
+      testSpecs.value.company
+    )
+  })
+
+  // Load available models
+  onMounted(async () => {
+    try {
+      const response = await $fetch<{ models: Model[] }>('/api/advanced/models')
+      availableModels.value = response.models
+    } catch (err) {
+      console.error('Failed to load models:', err)
+    }
+  })
+
+  const getModelIcon = (category: string) => {
+    const icons: Record<string, string> = {
+      sklearn: '🧠',
+      xgboost: '🚀',
+      ensemble: '🔗',
+      distilled: '⚡',
+      currency: '💰',
+    }
+    return icons[category] || '🤖'
+  }
+
+  const getCategoryColor = (category: string): string => {
+    const colors: Record<string, string> = {
+      sklearn: 'bg-blue-100 text-blue-800',
+      xgboost: 'bg-green-100 text-green-800',
+      ensemble: 'bg-purple-100 text-purple-800',
+      distilled: 'bg-yellow-100 text-yellow-800',
+      currency: 'bg-red-100 text-red-800',
+    }
+    return colors[category] || 'bg-gray-100 text-gray-800'
+  }
+
+  const toggleModelSelection = (modelType: string) => {
+    const index = selectedModels.value.indexOf(modelType)
+    if (index > -1) {
+      selectedModels.value.splice(index, 1)
+    } else if (selectedModels.value.length < 6) {
+      selectedModels.value.push(modelType)
+    }
+  }
+
+  const clearSelection = () => {
+    selectedModels.value = []
+    comparisonResults.value = null
+  }
+
+  const selectAllAvailable = () => {
+    const availableTypes = availableModels.value
+      .filter((model: Model) => model.available)
+      .map((model: Model) => model.type)
+    selectedModels.value = availableTypes.slice(0, 6) // Limit to 6 models
+  }
+
+  const runComparison = async () => {
+    if (selectedModels.value.length < 2) {
+      error.value = 'Please select at least 2 models to compare'
+      return
     }
 
-    const response = await $fetch<{ predictions: PredictionResult[] }>('/api/advanced/compare', {
-      method: 'POST',
-      body: payload,
-    })
+    if (!canRunTest.value) {
+      error.value = 'Please fill in all test specifications'
+      return
+    }
 
-    comparisonResults.value = processComparisonResults(response)
-    processingTime.value = Date.now() - startTime
+    loading.value = true
+    error.value = null
+    comparisonResults.value = null
+    const startTime = Date.now()
 
-    // Update chart after results are processed
-    await nextTick()
-    updateChart()
-  } catch (err: any) {
-    error.value = err.message || 'Failed to run model comparison'
-    console.error('Comparison error:', err)
-  } finally {
-    loading.value = false
+    try {
+      // Update currency symbol
+      const symbols: Record<string, string> = { USD: '$', EUR: '€', INR: '₹' }
+      currencySymbol.value = symbols[currency.value] || '$'
+
+      const payload = {
+        ram: parseFloat(testSpecs.value.ram),
+        battery: parseFloat(testSpecs.value.battery),
+        screen: parseFloat(testSpecs.value.screen),
+        weight: parseFloat(testSpecs.value.weight),
+        year: parseInt(testSpecs.value.year),
+        company: testSpecs.value.company,
+        currency: currency.value,
+      }
+
+      const response = await $fetch<{ predictions: PredictionResult[] }>('/api/advanced/compare', {
+        method: 'POST',
+        body: payload,
+      })
+
+      comparisonResults.value = processComparisonResults(response)
+      processingTime.value = Date.now() - startTime
+
+      // Update chart after results are processed
+      await nextTick()
+      updateChart()
+    } catch (err: any) {
+      error.value = err.message || 'Failed to run model comparison'
+      console.error('Comparison error:', err)
+    } finally {
+      loading.value = false
+    }
   }
-}
 
-const processComparisonResults = (response: { predictions: PredictionResult[] }) => {
-  const successfulPredictions = response.predictions.filter(
-    p => p.price !== null && p.price !== undefined
-  )
+  const processComparisonResults = (response: { predictions: PredictionResult[] }) => {
+    const successfulPredictions = response.predictions.filter(
+      p => p.price !== null && p.price !== undefined
+    )
 
-  if (successfulPredictions.length === 0) {
+    if (successfulPredictions.length === 0) {
+      return {
+        predictions: response.predictions,
+        bestModel: 'None',
+        bestPrice: 0,
+        averagePrice: 0,
+        priceRange: 0,
+        consistency: 0,
+      }
+    }
+
+    const prices = successfulPredictions.map(p => p.price!)
+    const minPrice = Math.min(...prices)
+    const maxPrice = Math.max(...prices)
+    const avgPrice = prices.reduce((a, b) => (a ?? 0) + (b ?? 0), 0) / prices.length
+
+    // Consistency score (lower variance = higher consistency)
+    const variance =
+      prices.reduce((acc, price) => acc + Math.pow((price ?? 0) - avgPrice, 2), 0) / prices.length
+    const consistency = Math.max(0, Math.min(100, 100 - (Math.sqrt(variance) / avgPrice) * 100))
+
+    const bestPrediction = successfulPredictions.reduce((best, current) =>
+      (current.price ?? Infinity) < (best.price ?? Infinity) ? current : best
+    )
+
     return {
       predictions: response.predictions,
-      bestModel: 'None',
-      bestPrice: 0,
-      averagePrice: 0,
-      priceRange: 0,
-      consistency: 0,
+      bestModel: bestPrediction.model_name,
+      bestPrice: bestPrediction.price ?? 0,
+      averagePrice: Math.round(avgPrice),
+      priceRange: Math.round(maxPrice - minPrice),
+      consistency: Math.round(consistency),
     }
   }
 
-  const prices = successfulPredictions.map(p => p.price!)
-  const minPrice = Math.min(...prices)
-  const maxPrice = Math.max(...prices)
-  const avgPrice = prices.reduce((a, b) => (a ?? 0) + (b ?? 0), 0) / prices.length
+  const updateChart = () => {
+    if (!chartCanvas.value || !comparisonResults.value) return
 
-  // Consistency score (lower variance = higher consistency)
-  const variance =
-    prices.reduce((acc, price) => acc + Math.pow((price ?? 0) - avgPrice, 2), 0) / prices.length
-  const consistency = Math.max(0, Math.min(100, 100 - (Math.sqrt(variance) / avgPrice) * 100))
+    // Destroy existing chart
+    if (chartInstance) {
+      chartInstance.destroy()
+    }
 
-  const bestPrediction = successfulPredictions.reduce((best, current) =>
-    (current.price ?? Infinity) < (best.price ?? Infinity) ? current : best
-  )
+    const ctx = chartCanvas.value.getContext('2d')
+    const successfulPredictions = comparisonResults.value.predictions.filter(p => p.price !== null)
 
-  return {
-    predictions: response.predictions,
-    bestModel: bestPrediction.model_name,
-    bestPrice: bestPrediction.price ?? 0,
-    averagePrice: Math.round(avgPrice),
-    priceRange: Math.round(maxPrice - minPrice),
-    consistency: Math.round(consistency),
-  }
-}
-
-const updateChart = () => {
-  if (!chartCanvas.value || !comparisonResults.value) return
-
-  // Destroy existing chart
-  if (chartInstance) {
-    chartInstance.destroy()
-  }
-
-  const ctx = chartCanvas.value.getContext('2d')
-  const successfulPredictions = comparisonResults.value.predictions.filter(p => p.price !== null)
-
-  const data = {
-    labels: successfulPredictions.map(p => p.model_name),
-    datasets: [
-      {
-        label: 'Predicted Price',
-        data: successfulPredictions.map(p => p.price),
-        backgroundColor: successfulPredictions.map(p =>
-          p.price === comparisonResults.value!.bestPrice
-            ? 'rgba(34, 197, 94, 0.8)'
-            : 'rgba(59, 130, 246, 0.8)'
-        ),
-        borderColor: successfulPredictions.map(p =>
-          p.price === comparisonResults.value!.bestPrice ? 'rgb(34, 197, 94)' : 'rgb(59, 130, 246)'
-        ),
-        borderWidth: 2,
-      },
-    ],
-  }
-
-  const config = {
-    type: 'bar' as const,
-    data: data,
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          display: false,
+    const data = {
+      labels: successfulPredictions.map(p => p.model_name),
+      datasets: [
+        {
+          label: 'Predicted Price',
+          data: successfulPredictions.map(p => p.price),
+          backgroundColor: successfulPredictions.map(p =>
+            p.price === comparisonResults.value!.bestPrice
+              ? 'rgba(34, 197, 94, 0.8)'
+              : 'rgba(59, 130, 246, 0.8)'
+          ),
+          borderColor: successfulPredictions.map(p =>
+            p.price === comparisonResults.value!.bestPrice
+              ? 'rgb(34, 197, 94)'
+              : 'rgb(59, 130, 246)'
+          ),
+          borderWidth: 2,
         },
-        title: {
-          display: true,
-          text: 'Model Price Predictions',
+      ],
+    }
+
+    const config = {
+      type: 'bar' as const,
+      data: data,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          },
+          title: {
+            display: true,
+            text: 'Model Price Predictions',
+          },
         },
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            callback: function (value: any) {
-              return currencySymbol.value + value
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: function (value: any) {
+                return currencySymbol.value + value
+              },
             },
           },
         },
       },
-    },
+    }
+
+    // Import Chart.js dynamically
+    import('chart.js').then(({ Chart }) => {
+      if (ctx) {
+        chartInstance = new Chart(ctx, config)
+      }
+    })
   }
 
-  // Import Chart.js dynamically
-  import('chart.js').then(({ Chart }) => {
-    if (ctx) {
-      chartInstance = new Chart(ctx, config)
-    }
+  const navigateTo = (path: string) => {
+    useRouter().push(path)
+  }
+
+  // Set page metadata
+  useHead({
+    title: 'ML Model Comparison - Mobile Finder',
+    meta: [
+      {
+        name: 'description',
+        content:
+          'Compare performance across multiple machine learning models for mobile price prediction',
+      },
+    ],
   })
-}
-
-const navigateTo = (path: string) => {
-  useRouter().push(path)
-}
-
-// Set page metadata
-useHead({
-  title: 'ML Model Comparison - Mobile Finder',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Compare performance across multiple machine learning models for mobile price prediction',
-    },
-  ],
-})
 </script>

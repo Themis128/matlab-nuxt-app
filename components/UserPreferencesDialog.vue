@@ -89,117 +89,117 @@
 </template>
 
 <script setup lang="ts">
-interface Props {
-  modelValue: boolean
-}
+  interface Props {
+    modelValue: boolean
+  }
 
-interface Emits {
-  'update:modelValue': [value: boolean]
-}
+  interface Emits {
+    'update:modelValue': [value: boolean]
+  }
 
-const props = defineProps<Props>()
-const emit = defineEmits<Emits>()
+  const props = defineProps<Props>()
+  const emit = defineEmits<Emits>()
 
-import type { UserPreferences } from '~/stores/userPreferencesStore'
-const { useUserPreferencesStore } = await import('~/stores/userPreferencesStore')
-const preferencesStore = useUserPreferencesStore()
+  import type { UserPreferences } from '~/stores/userPreferencesStore'
+  const { useUserPreferencesStore } = await import('~/stores/userPreferencesStore')
+  const preferencesStore = useUserPreferencesStore()
 
-// Local state for immediate UI updates
-const localPreferences = ref<UserPreferences>({ ...preferencesStore.$state })
+  // Local state for immediate UI updates
+  const localPreferences = ref<UserPreferences>({ ...preferencesStore.$state })
 
-// Sync local preferences when props change
-watch(
-  () => props.modelValue,
-  (isOpen: boolean) => {
-    if (isOpen) {
-      localPreferences.value = { ...preferencesStore }
+  // Sync local preferences when props change
+  watch(
+    () => props.modelValue,
+    (isOpen: boolean) => {
+      if (isOpen) {
+        localPreferences.value = { ...preferencesStore }
+      }
+    }
+  )
+
+  // Watch for store changes and update local state
+  watch(
+    () => preferencesStore.$state,
+    (newPreferences: UserPreferences) => {
+      localPreferences.value = { ...newPreferences }
+    },
+    { deep: true }
+  )
+
+  // Computed properties
+  const isOpen = computed({
+    get: () => props.modelValue,
+    set: (value: boolean) => emit('update:modelValue', value),
+  })
+
+  const themeOptions = [
+    { label: 'Light', value: 'light', icon: 'i-heroicons-sun' },
+    { label: 'Dark', value: 'dark', icon: 'i-heroicons-moon' },
+    { label: 'System', value: 'system', icon: 'i-heroicons-computer-desktop' },
+  ]
+
+  // Methods
+  const handlePreferenceChange = (key: string, value: unknown) => {
+    // Update the store directly
+    ;(preferencesStore as any)[key] = value
+
+    // Apply theme change immediately
+    if (key === 'theme') {
+      applyTheme(value as string)
+    }
+
+    // Apply animation preference
+    if (key === 'animations') {
+      applyAnimationPreference(value as boolean)
     }
   }
-)
 
-// Watch for store changes and update local state
-watch(
-  () => preferencesStore.$state,
-  (newPreferences: UserPreferences) => {
-    localPreferences.value = { ...newPreferences }
-  },
-  { deep: true }
-)
-
-// Computed properties
-const isOpen = computed({
-  get: () => props.modelValue,
-  set: (value: boolean) => emit('update:modelValue', value),
-})
-
-const themeOptions = [
-  { label: 'Light', value: 'light', icon: 'i-heroicons-sun' },
-  { label: 'Dark', value: 'dark', icon: 'i-heroicons-moon' },
-  { label: 'System', value: 'system', icon: 'i-heroicons-computer-desktop' },
-]
-
-// Methods
-const handlePreferenceChange = (key: string, value: unknown) => {
-  // Update the store directly
-  ;(preferencesStore as any)[key] = value
-
-  // Apply theme change immediately
-  if (key === 'theme') {
-    applyTheme(value as string)
-  }
-
-  // Apply animation preference
-  if (key === 'animations') {
-    applyAnimationPreference(value as boolean)
-  }
-}
-
-const applyTheme = (_theme: string) => {
-  if (process.client) {
-    // For now, just store the preference - the ThemeToggle component handles the actual theme switching
-    // This can be enhanced later to work with @nuxtjs/color-mode if needed
-  }
-}
-
-const applyAnimationPreference = (enabled: boolean) => {
-  if (process.client) {
-    document.documentElement.style.setProperty('--animation-duration', enabled ? '300ms' : '0ms')
-
-    if (enabled) {
-      document.documentElement.classList.remove('no-animations')
-    } else {
-      document.documentElement.classList.add('no-animations')
+  const applyTheme = (_theme: string) => {
+    if (process.client) {
+      // For now, just store the preference - the ThemeToggle component handles the actual theme switching
+      // This can be enhanced later to work with @nuxtjs/color-mode if needed
     }
   }
-}
 
-const resetToDefaults = () => {
-  preferencesStore.resetToDefaults()
-  localPreferences.value = { ...preferencesStore }
-}
+  const applyAnimationPreference = (enabled: boolean) => {
+    if (process.client) {
+      document.documentElement.style.setProperty('--animation-duration', enabled ? '300ms' : '0ms')
 
-const closeDialog = () => {
-  isOpen.value = false
-}
-
-// Keyboard shortcuts
-const handleKeydown = (event: KeyboardEvent) => {
-  // Close dialog with Escape
-  if (event.key === 'Escape' && isOpen.value) {
-    closeDialog()
+      if (enabled) {
+        document.documentElement.classList.remove('no-animations')
+      } else {
+        document.documentElement.classList.add('no-animations')
+      }
+    }
   }
-}
 
-// Add keyboard event listener
-onMounted(() => {
-  if (process.client) {
-    document.addEventListener('keydown', handleKeydown)
+  const resetToDefaults = () => {
+    preferencesStore.resetToDefaults()
+    localPreferences.value = { ...preferencesStore }
   }
-})
 
-onUnmounted(() => {
-  if (process.client) {
-    document.removeEventListener('keydown', handleKeydown)
+  const closeDialog = () => {
+    isOpen.value = false
   }
-})
+
+  // Keyboard shortcuts
+  const handleKeydown = (event: KeyboardEvent) => {
+    // Close dialog with Escape
+    if (event.key === 'Escape' && isOpen.value) {
+      closeDialog()
+    }
+  }
+
+  // Add keyboard event listener
+  onMounted(() => {
+    if (process.client) {
+      document.addEventListener('keydown', handleKeydown)
+    }
+  })
+
+  onUnmounted(() => {
+    if (process.client) {
+      document.removeEventListener('keydown', handleKeydown)
+    }
+  })
 </script>

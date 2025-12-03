@@ -6,9 +6,69 @@
       "label": "Dev: Nuxt + Python",
       "type": "shell",
       "command": "pwsh",
-      "args": ["-NoLogo", "-NoProfile", "-Command", "nuxt dev"],
+      "args": [
+        "-NoLogo",
+        "-NoProfile",
+        "-Command",
+        "nuxt dev"
+      ],
       "isBackground": false,
       "problemMatcher": []
+    },
+    {
+      "label": "Dev: Fullstack (Shell)",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "./scripts/shell/start.sh"
+      ],
+      "isBackground": false,
+      "problemMatcher": []
+    }
+    {
+      "label": "Dev: Frontend (Container)",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "npm run dev"
+      ],
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Dev: API (Container)",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "cd python_api && python api.py"
+      ],
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Dev: Fullstack (Terminals)",
+      "dependsOn": [
+        "Dev: Frontend (Container)",
+        "Dev: API (Container)"
+      ],
+      "type": "shell",
+      "command": "echo",
+      "args": [
+        "Starting both front end and API (separate terminals)"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
     }
   ]
 }

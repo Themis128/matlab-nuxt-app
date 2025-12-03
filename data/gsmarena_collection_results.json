@@ -1,0 +1,62 @@
+[
+  {
+    "phone": "Realme15",
+    "images_found": 5,
+    "images_downloaded": 5,
+    "directory": "public/mobile_images/Realme_Realme15"
+  },
+  {
+    "phone": "RealmeGT 8 Pro",
+    "images_found": 5,
+    "images_downloaded": 5,
+    "directory": "public/mobile_images/Realme_RealmeGT_8_Pro"
+  },
+  {
+    "phone": "RealmeC85",
+    "images_found": 5,
+    "images_downloaded": 5,
+    "directory": "public/mobile_images/Realme_RealmeC85"
+  },
+  {
+    "phone": "Realme15 Pro",
+    "images_found": 5,
+    "images_downloaded": 5,
+    "directory": "public/mobile_images/Realme_Realme15_Pro"
+  },
+  {
+    "phone": "RealmeC85 Pro",
+    "images_found": 5,
+    "images_downloaded": 5,
+    "directory": "public/mobile_images/Realme_RealmeC85_Pro"
+  },
+  {
+    "phone": "Realme15T",
+    "images_found": 5,
+    "images_downloaded": 5,
+    "directory": "public/mobile_images/Realme_Realme15T"
+  },
+  {
+    "phone": "RealmeC71",
+    "images_found": 5,
+    "images_downloaded": 5,
+    "directory": "public/mobile_images/Realme_RealmeC71"
+  },
+  {
+    "phone": "RealmeGT 7",
+    "images_found": 5,
+    "images_downloaded": 5,
+    "directory": "public/mobile_images/Realme_RealmeGT_7"
+  },
+  {
+    "phone": "RealmeC75 4G",
+    "images_found": 5,
+    "images_downloaded": 5,
+    "directory": "public/mobile_images/Realme_RealmeC75_4G"
+  },
+  {
+    "phone": "Realme14 Pro+",
+    "images_found": 5,
+    "images_downloaded": 5,
+    "directory": "public/mobile_images/Realme_Realme14_Pro+"
+  }
+]

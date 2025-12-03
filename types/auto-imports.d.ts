@@ -9,7 +9,7 @@ declare module '#imports' {
   export function useRouter(): any
   export function navigateTo(url?: string, options?: any): any
   export function useLazyAsyncData(name: string | undefined, handler: any, opts?: any): any
-  export function useRuntimeConfig(): any
+  export function useRuntimeConfig(): AppRuntimeConfig
   export function useState<T = any>(key: string, factory?: () => T): any
   export function defineNuxtComponent<T = any>(comp: T): T
   export function useCookie(key: string, opts?: any): any

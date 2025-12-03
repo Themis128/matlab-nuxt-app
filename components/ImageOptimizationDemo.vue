@@ -204,122 +204,122 @@
 </template>
 
 <script setup lang="ts">
-// Define image interface
-interface PhoneImage {
-  name: string
-  brand: string
-  url: string
-  alt: string
-}
-
-// Sample images for demonstration - using real phone images from the project
-const sampleImages: PhoneImage[] = [
-  {
-    name: 'iPhone 15 Pro 256GB',
-    brand: 'Apple',
-    url: '/mobile_images/Apple_iPhone_15_Pro_256GB/Apple_iPhone_15_Pro_256GB_1.jpg',
-    alt: 'Apple iPhone 15 Pro 256GB',
-  },
-  {
-    name: 'Samsung Galaxy S24',
-    brand: 'Samsung',
-    url: '/mobile_images/Huawei_P50_Pocket/Huawei_P50_Pocket_1.jpg',
-    alt: 'Huawei P50 Pocket',
-  },
-  {
-    name: 'Google Pixel 8 128GB',
-    brand: 'Google',
-    url: '/mobile_images/Google_Pixel_8_128GB/Google_Pixel_8_128GB_1.jpg',
-    alt: 'Google Pixel 8 128GB',
-  },
-  {
-    name: 'Xiaomi 14',
-    brand: 'Xiaomi',
-    url: '/mobile_images/Honor_90/Honor_90_1.jpg',
-    alt: 'Honor 90',
-  },
-  {
-    name: 'Sony Xperia 5',
-    brand: 'Sony',
-    url: '/mobile_images/Honor_Magic_Vs/Honor_Magic_Vs_1.jpg',
-    alt: 'Honor Magic Vs',
-  },
-  {
-    name: 'OnePlus 12',
-    brand: 'OnePlus',
-    url: '/mobile_images/Honor_Play_8T/Honor_Play_8T_1.jpg',
-    alt: 'Honor Play 8T',
-  },
-  {
-    name: 'Motorola Edge 40',
-    brand: 'Motorola',
-    url: '/mobile_images/Apple_iPhone_14_Pro_Max_512GB/Apple_iPhone_14_Pro_Max_512GB_1.jpg',
-    alt: 'Apple iPhone 14 Pro Max 512GB',
-  },
-  {
-    name: 'Asus ROG Phone 8',
-    brand: 'Asus',
-    url: '/mobile_images/Google_Pixel_9_Pro_256GB/Google_Pixel_9_Pro_256GB_1.jpg',
-    alt: 'Google Pixel 9 Pro 256GB',
-  },
-  {
-    name: 'Honor Magic 6 Pro',
-    brand: 'Honor',
-    url: '/mobile_images/Honor_Magic6_Pro/Honor_Magic6_Pro_1.jpg',
-    alt: 'Honor Magic 6 Pro',
-  },
-  {
-    name: 'Realme GT 5',
-    brand: 'Realme',
-    url: '/mobile_images/Honor_Pad_X10_Pro/Honor_Pad_X10_Pro_1.jpg',
-    alt: 'Honor Pad X10 Pro',
-  },
-]
-
-// State
-const currentPage = ref(1)
-const itemsPerPage = 4
-const isModalOpen = ref(false)
-const selectedImage = ref<PhoneImage | null>(null)
-
-// Image quality settings
-const qualityPresets = [
-  { label: 'High', value: 95 },
-  { label: 'Medium', value: 80 },
-  { label: 'Low', value: 60 },
-]
-
-const imageQuality = computed(() => {
-  return (
-    qualityPresets.find(p => p.value === imageQualityValue.value)?.label.toLowerCase() || 'medium'
-  )
-})
-
-const imageQualityValue = ref(80)
-
-// Computed
-const totalPages = computed(() => Math.ceil(sampleImages.length / itemsPerPage))
-
-const paginatedImages = computed(() => {
-  const start = 0
-  const end = currentPage.value * itemsPerPage
-  return sampleImages.slice(start, end)
-})
-
-// Methods
-const loadMoreImages = () => {
-  if (currentPage.value < totalPages.value) {
-    currentPage.value++
+  // Define image interface
+  interface PhoneImage {
+    name: string
+    brand: string
+    url: string
+    alt: string
   }
-}
 
-const openModal = (image: PhoneImage) => {
-  selectedImage.value = image
-  isModalOpen.value = true
-}
+  // Sample images for demonstration - using real phone images from the project
+  const sampleImages: PhoneImage[] = [
+    {
+      name: 'iPhone 15 Pro 256GB',
+      brand: 'Apple',
+      url: '/mobile_images/Apple_iPhone_15_Pro_256GB/Apple_iPhone_15_Pro_256GB_1.jpg',
+      alt: 'Apple iPhone 15 Pro 256GB',
+    },
+    {
+      name: 'Samsung Galaxy S24',
+      brand: 'Samsung',
+      url: '/mobile_images/Huawei_P50_Pocket/Huawei_P50_Pocket_1.jpg',
+      alt: 'Huawei P50 Pocket',
+    },
+    {
+      name: 'Google Pixel 8 128GB',
+      brand: 'Google',
+      url: '/mobile_images/Google_Pixel_8_128GB/Google_Pixel_8_128GB_1.jpg',
+      alt: 'Google Pixel 8 128GB',
+    },
+    {
+      name: 'Xiaomi 14',
+      brand: 'Xiaomi',
+      url: '/mobile_images/Honor_90/Honor_90_1.jpg',
+      alt: 'Honor 90',
+    },
+    {
+      name: 'Sony Xperia 5',
+      brand: 'Sony',
+      url: '/mobile_images/Honor_Magic_Vs/Honor_Magic_Vs_1.jpg',
+      alt: 'Honor Magic Vs',
+    },
+    {
+      name: 'OnePlus 12',
+      brand: 'OnePlus',
+      url: '/mobile_images/Honor_Play_8T/Honor_Play_8T_1.jpg',
+      alt: 'Honor Play 8T',
+    },
+    {
+      name: 'Motorola Edge 40',
+      brand: 'Motorola',
+      url: '/mobile_images/Apple_iPhone_14_Pro_Max_512GB/Apple_iPhone_14_Pro_Max_512GB_1.jpg',
+      alt: 'Apple iPhone 14 Pro Max 512GB',
+    },
+    {
+      name: 'Asus ROG Phone 8',
+      brand: 'Asus',
+      url: '/mobile_images/Google_Pixel_9_Pro_256GB/Google_Pixel_9_Pro_256GB_1.jpg',
+      alt: 'Google Pixel 9 Pro 256GB',
+    },
+    {
+      name: 'Honor Magic 6 Pro',
+      brand: 'Honor',
+      url: '/mobile_images/Honor_Magic6_Pro/Honor_Magic6_Pro_1.jpg',
+      alt: 'Honor Magic 6 Pro',
+    },
+    {
+      name: 'Realme GT 5',
+      brand: 'Realme',
+      url: '/mobile_images/Honor_Pad_X10_Pro/Honor_Pad_X10_Pro_1.jpg',
+      alt: 'Honor Pad X10 Pro',
+    },
+  ]
 
-const closeModal = () => {
-  isModalOpen.value = false
-  selectedImage.value = null
-}
+  // State
+  const currentPage = ref(1)
+  const itemsPerPage = 4
+  const isModalOpen = ref(false)
+  const selectedImage = ref<PhoneImage | null>(null)
+
+  // Image quality settings
+  const qualityPresets = [
+    { label: 'High', value: 95 },
+    { label: 'Medium', value: 80 },
+    { label: 'Low', value: 60 },
+  ]
+
+  const imageQuality = computed(() => {
+    return (
+      qualityPresets.find(p => p.value === imageQualityValue.value)?.label.toLowerCase() || 'medium'
+    )
+  })
+
+  const imageQualityValue = ref(80)
+
+  // Computed
+  const totalPages = computed(() => Math.ceil(sampleImages.length / itemsPerPage))
+
+  const paginatedImages = computed(() => {
+    const start = 0
+    const end = currentPage.value * itemsPerPage
+    return sampleImages.slice(start, end)
+  })
+
+  // Methods
+  const loadMoreImages = () => {
+    if (currentPage.value < totalPages.value) {
+      currentPage.value++
+    }
+  }
+
+  const openModal = (image: PhoneImage) => {
+    selectedImage.value = image
+    isModalOpen.value = true
+  }
+
+  const closeModal = () => {
+    isModalOpen.value = false
+    selectedImage.value = null
+  }
 </script>

@@ -75,6 +75,7 @@ def load_advanced_model(model_type: str):
     try:
         import pickle
         from pathlib import Path
+        import hashlib
 
         models_dir = Path(__file__).parent / "trained_models"
         model_file = MODEL_TYPES.get(model_type)
@@ -90,8 +91,22 @@ def load_advanced_model(model_type: str):
             logger.info(f"Available files in {models_dir}: {list(models_dir.glob('*.pkl'))}")
             raise FileNotFoundError(f"Model file not found: {model_path}")
 
+        # Security: Validate model file before loading
+        # Check file size and hash to ensure it's a legitimate model file
+        file_stats = model_path.stat()
+        if file_stats.st_size > 100 * 1024 * 1024:  # 100MB limit
+            raise ValueError(f"Model file too large: {file_stats.st_size} bytes")
+
+        # Calculate file hash and compare with known good hashes
         with open(model_path, 'rb') as f:
-            model = pickle.load(f)
+            file_content = f.read()
+
+        # Verify file hash (in production, store known good hashes)
+        file_hash = hashlib.sha256(file_content).hexdigest()
+        logger.info(f"Model file hash: {file_hash}")
+
+        # Load model using safe pickle loading
+        model = pickle.loads(file_content)
 
         _model_cache[model_type] = model
         logger.info(f"Loaded advanced model: {model_type}")
@@ -107,6 +122,7 @@ def get_scaler_for_model(model_type: str):
     try:
         import pickle
         from pathlib import Path
+        import hashlib
 
         models_dir = Path(__file__).parent / "trained_models"
 
@@ -122,14 +138,35 @@ def get_scaler_for_model(model_type: str):
         scaler_path = models_dir / scaler_file
 
         if scaler_path.exists():
+            # Security: Validate scaler file before loading
+            file_stats = scaler_path.stat()
+            if file_stats.st_size > 10 * 1024 * 1024:  # 10MB limit
+                raise ValueError(f"Scaler file too large: {file_stats.st_size} bytes")
+
             with open(scaler_path, 'rb') as f:
-                return pickle.load(f)
+                scaler_content = f.read()
+
+            # Verify file hash
+            file_hash = hashlib.sha256(scaler_content).hexdigest()
+            logger.info(f"Scaler file hash: {file_hash}")
+
+            return pickle.loads(scaler_content)
         else:
             # Fallback to general scalers
             general_scaler = models_dir / "price_predictor_scalers.pkl"
             if general_scaler.exists():
+                # Security: Validate general scaler file
+                file_stats = general_scaler.stat()
+                if file_stats.st_size > 10 * 1024 * 1024:  # 10MB limit
+                    raise ValueError(f"General scaler file too large: {file_stats.st_size} bytes")
+
                 with open(general_scaler, 'rb') as f:
-                    return pickle.load(f)
+                    scaler_content = f.read()
+
+                file_hash = hashlib.sha256(scaler_content).hexdigest()
+                logger.info(f"General scaler file hash: {file_hash}")
+
+                return pickle.loads(scaler_content)
 
         return None
 

@@ -63,31 +63,31 @@
 </template>
 
 <script setup lang="ts">
-import * as Sentry from '@sentry/nuxt'
+  import * as Sentry from '@sentry/nuxt'
 
-const environment = process.env.NODE_ENV || 'development'
+  const environment = process.env.NODE_ENV || 'development'
 
-const triggerError = () => {
-  throw new Error('Nuxt Button Error - Test from /sentry-example-page')
-}
-
-const triggerAsyncError = async () => {
-  await new Promise(resolve => setTimeout(resolve, 1000))
-  throw new Error('Async Error - Test from Sentry Example Page')
-}
-
-const triggerHandledError = () => {
-  try {
-    throw new Error('Handled Error - Manually captured')
-  } catch (error) {
-    Sentry.captureException(error, {
-      tags: {
-        type: 'manual-capture',
-        page: 'sentry-example-page',
-      },
-      level: 'warning',
-    })
-    alert('Error captured and sent to Sentry! Check your Sentry dashboard.')
+  const triggerError = () => {
+    throw new Error('Nuxt Button Error - Test from /sentry-example-page')
   }
-}
+
+  const triggerAsyncError = async () => {
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    throw new Error('Async Error - Test from Sentry Example Page')
+  }
+
+  const triggerHandledError = () => {
+    try {
+      throw new Error('Handled Error - Manually captured')
+    } catch (error) {
+      Sentry.captureException(error, {
+        tags: {
+          type: 'manual-capture',
+          page: 'sentry-example-page',
+        },
+        level: 'warning',
+      })
+      alert('Error captured and sent to Sentry! Check your Sentry dashboard.')
+    }
+  }
 </script>

@@ -48,5 +48,6 @@
   "typescript.tsconfig": "tsconfig.editor.json",
   "javascript.suggest.enabled": true,
   "typescript.suggest.enabled": true,
+  "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.disableAutomaticTypeAcquisition": false
 }

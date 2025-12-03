@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": [
+    "server/**/*",
+    "pages/**/*",
+    "components/**/*",
+    "composables/**/*",
+    "stores/**/*",
+    "plugins/**/*",
+    "layouts/**/*",
+    "nuxt.config.*",
+    "app.vue",
+    "scripts/**/*",
+    "types/**/*"
+  ],
+  "exclude": ["node_modules", ".nuxt", ".output", "venv", "../**/*"]
+}

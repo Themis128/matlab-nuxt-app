@@ -54,7 +54,7 @@ declare global {
   function getMethod(event: any): string
 
   // Also export as `const` globals to help template and SFC scope
-  declare const useRuntimeConfig: any
+  declare const useRuntimeConfig: () => AppRuntimeConfig
   declare const navigateTo: any
   declare const useHead: any
   declare const useRoute: any
@@ -67,7 +67,7 @@ declare global {
 
 // Nuxt helpers
 declare function defineNuxtPlugin(fn: any): any
-declare function useRuntimeConfig(): any
+declare function useRuntimeConfig(): AppRuntimeConfig
 declare function useHead(arg?: any): any
 declare function navigateTo(url?: string, options?: any): any
 declare function useRoute(): any

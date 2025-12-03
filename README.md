@@ -8,6 +8,7 @@
 ![Node.js](https://img.shields.io/badge/Node.js-22-green.svg)
 ![Python](https://img.shields.io/badge/Python-3.14-blue.svg)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20Mac-lightgrey.svg)
+[![Open in Codespaces](https://img.shields.io/badge/Open%20in%20Codespaces-Setup-blue?logo=github)](https://github.com/codespaces/new?repo=Themis128/matlab-nuxt-app)
 ![Build and Test](https://github.com/Themis128/matlab-nuxt-app/workflows/Build%20and%20Test/badge.svg)
 ![Deploy](https://github.com/Themis128/matlab-nuxt-app/workflows/Deploy%20to%20Production/badge.svg)
 
@@ -127,6 +128,9 @@ Visit the interactive web application to:
 - ✅ **API Documentation** - Interactive Swagger/ReDoc for Python API
 - ✅ **E2E Testing** - Comprehensive Playwright test suite
 - ✅ **Type Safety** - Full TypeScript coverage
+ - ⚡ **TypeScript Nightly (optional)** - We recommend the "JavaScript & TypeScript Nightly" extension for early access to TypeScript features and language server improvements; see `docs/WORKSPACE_SETUP.md` for details and guidance on choosing the workspace version.
+ - ✅ **Local typecheck helper** - Use `tsconfig.local.json` for IDE/Local developer typechecking (mirrors `tsconfig.ci.json`). Run `npm run typecheck:local` or see `DEV_TYPECHECK.md` for details on configuring your editor to use the local config.
+ - 🧪 **Devcontainer (optional)** - A `.devcontainer` is included for consistent dev environments with Node + Python; see `.devcontainer/README.md` for details and quick start commands.
 - ✅ **Code Quality** - ESLint + Prettier + Type checking
 - ✅ **CI/CD** - GitHub Actions for testing and deployment
 - Optional: **Docker Support** - Containerization is available but not required for deployment
@@ -1942,6 +1946,8 @@ See [docs/deployment/README.md](docs/deployment/README.md) for detailed instruct
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+If you use VS Code, see `docs/GITHUB_PR_EXTENSION.md` for recommended extensions and tips for using the GitHub Pull Requests extension with this repository.
 
 ## 📄 License
 

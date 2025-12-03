@@ -1,6 +1,6 @@
 # Single-Service Render Deployment Configuration
 # This deploys both Nuxt frontend and Python API in a single service
-# 
+#
 # Use this if you want a simpler deployment with just one service.
 # For production, we recommend using render.yaml (two services) instead.
 #
@@ -13,34 +13,34 @@ services:
   - type: web
     name: matlab-nuxt-app
     runtime: node
-    
+
     # Build both Node and Python components
     buildCommand: |
       echo "📦 Installing Node.js dependencies..."
       npm ci
-      
+
       echo "🏗️  Building Nuxt application..."
       npm run build
-      
+
       echo "🐍 Installing Python dependencies..."
       pip install --upgrade pip setuptools wheel
       pip install -r requirements.txt
-      
+
       echo "🤖 Training ML models..."
       cd python_api && python train_models_sklearn.py
       cd .. && python retrain_advanced_models.py
-      
+
       echo "✅ Build complete!"
-    
+
     # Start both services (Python in background, Nuxt as main process)
     startCommand: |
       cd python_api && python api.py &
       sleep 5
       cd .. && npm run preview
-    
+
     # Health check on Nuxt frontend
     healthCheckPath: /
-    
+
     # Environment variables
     envVars:
       # Node/Nuxt configuration
@@ -50,20 +50,20 @@ services:
         value: 0.0.0.0
       - key: PORT
         value: '3000'
-      
+
       # Python API configuration
       # Note: API runs on port 8000 internally, but frontend is exposed on port 3000
       - key: NUXT_PUBLIC_API_BASE
         value: http://localhost:8000
       - key: PYTHON_API_URL
         value: http://localhost:8000
-      
+
       # Python settings
       - key: PYTHONUNBUFFERED
         value: '1'
       - key: LOG_LEVEL
         value: INFO
-      
+
       # CORS (allow requests from same origin)
       - key: CORS_ORIGINS
         value: http://localhost:3000,http://127.0.0.1:3000

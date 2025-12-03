@@ -353,36 +353,36 @@
 </template>
 
 <script setup lang="ts">
-const mobileMenuOpen = ref(false)
-const preferencesOpen = ref(false)
-const route = useRoute()
-const _colorMode = useColorMode()
-const currentYear = new Date().getFullYear()
+  const mobileMenuOpen = ref(false)
+  const preferencesOpen = ref(false)
+  const route = useRoute()
+  const _colorMode = useColorMode()
+  const currentYear = new Date().getFullYear()
 
-// Initialize keyboard shortcuts
-useKeyboardShortcuts()
+  // Initialize keyboard shortcuts
+  useKeyboardShortcuts()
 
-// Listen for preferences open event
-if (process.client) {
-  const handleOpenPreferences = () => {
-    preferencesOpen.value = true
+  // Listen for preferences open event
+  if (process.client) {
+    const handleOpenPreferences = () => {
+      preferencesOpen.value = true
+    }
+    window.addEventListener('open-preferences', handleOpenPreferences)
+
+    onUnmounted(() => {
+      window.removeEventListener('open-preferences', handleOpenPreferences)
+    })
   }
-  window.addEventListener('open-preferences', handleOpenPreferences)
 
-  onUnmounted(() => {
-    window.removeEventListener('open-preferences', handleOpenPreferences)
-  })
-}
-
-const closeMobileMenu = () => {
-  mobileMenuOpen.value = false
-}
-
-// Close mobile menu when route changes
-watch(
-  () => route.path,
-  () => {
+  const closeMobileMenu = () => {
     mobileMenuOpen.value = false
   }
-)
+
+  // Close mobile menu when route changes
+  watch(
+    () => route.path,
+    () => {
+      mobileMenuOpen.value = false
+    }
+  )
 </script>

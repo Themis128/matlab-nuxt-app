@@ -1,0 +1,4 @@
+
+> matlab-nuxt-app@1.0.0 typecheck:local
+> cross-env NODE_OPTIONS=--max_old_space_size=8192 npx vue-tsc --project tsconfig.local.json --noEmit && cross-env NODE_OPTIONS=--max_old_space_size=8192 npx tsc -p tsconfig.local.json --noEmit
+

@@ -5,8 +5,8 @@ import type { AlgoliaRecord } from '../../../types/algolia'
 
 export default defineEventHandler(async (event: H3Event) => {
   const body = await readBody(event)
-  // @ts-ignore - useRuntimeConfig is auto-imported in Nuxt
-  const config = typeof useRuntimeConfig === 'function' ? useRuntimeConfig() : undefined
+  // use typed runtime config; `types/runtime.d.ts` declares the runtime shape
+  const config = useRuntimeConfig()
   // Accept body with { indexName: string, objects: Array<object> }
   const indexName =
     body?.indexName || config?.ALGOLIA_INDEX || process.env.ALGOLIA_INDEX || 'movies_index'
@@ -29,7 +29,8 @@ export default defineEventHandler(async (event: H3Event) => {
     })
   }
 
-  const client = algoliasearch(appId, apiKey)
+  // At this point we've asserted `appId` and `apiKey` are present, so they are `string`.
+  const client = algoliasearch(String(appId), String(apiKey))
 
   let objects: any[] | undefined = body?.objects
   if (!Array.isArray(objects)) {

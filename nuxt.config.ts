@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { defineNuxtConfig } from 'nuxt/config'
 // Detect automated test context (Playwright / CI)
 const isTestEnv =
   !!process.env.PLAYWRIGHT ||

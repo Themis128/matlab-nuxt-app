@@ -330,317 +330,319 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue'
-import { useHead } from '#imports'
+  import { ref, reactive, computed } from 'vue'
+  import { useHead } from '#imports'
 
-// Set page title correctly
-useHead({
-  title: 'AI Predictions Lab',
-  meta: [
-    {
-      name: 'description',
-      content: 'Interactive demonstration of trained ML models for mobile phone predictions',
-    },
-  ],
-})
+  // Set page title correctly
+  useHead({
+    title: 'AI Predictions Lab',
+    meta: [
+      {
+        name: 'description',
+        content: 'Interactive demonstration of trained ML models for mobile phone predictions',
+      },
+    ],
+  })
 
-// Type definitions
-interface SmartForm {
-  budget: string
-  useCase: string
-  phoneAge: string
-  preferredBrand: string
-  dealPriority: string
-}
-
-// Form state
-const selectedTypes = ref<string[]>(['price', 'ram', 'battery', 'brand'])
-
-// Smart form state
-const smartForm = reactive<SmartForm>({
-  budget: '',
-  useCase: '',
-  phoneAge: 'any',
-  preferredBrand: '',
-  dealPriority: 'balanced',
-})
-
-const smartFormValid = computed(() => {
-  return Boolean(smartForm.budget && smartForm.useCase)
-})
-
-const resultsVisible = ref(false)
-
-// AI Buyer Advisor metrics
-const valueScore = ref(85)
-const valueAnalysis = ref('Good value for the specifications')
-const marketPosition = ref('Mid-range')
-const marketAnalysis = ref('Competitive pricing for this spec level')
-const buyingVerdict = ref('Recommended')
-const buyingAdvice = ref('Consider this phone if you need these specs')
-
-// Mock results
-const priceResult = ref(0)
-const ramResult = ref(0)
-const batteryResult = ref(0)
-const brandResult = ref('')
-
-function showType(t: string) {
-  return selectedTypes.value.includes(t)
-}
-
-async function clearSmartForm() {
-  smartForm.budget = ''
-  smartForm.useCase = ''
-  smartForm.phoneAge = 'any'
-  smartForm.preferredBrand = ''
-  smartForm.dealPriority = 'balanced'
-  resultsVisible.value = false
-}
-
-const isRunning = ref(false)
-
-async function runSmartRecommendations() {
-  if (!smartFormValid.value || isRunning.value) return
-  isRunning.value = true
-  resultsVisible.value = false
-
-  const budget = Number(smartForm.budget)
-  const useCase = smartForm.useCase
-
-  // Generate optimal specs based on budget and use case
-  let optimalSpecs = generateOptimalSpecs(budget, useCase)
-
-  // Apply preferences
-  if (smartForm.phoneAge === 'new') optimalSpecs.year = 2024
-  else if (smartForm.phoneAge === 'recent') optimalSpecs.year = 2022
-
-  if (smartForm.preferredBrand) optimalSpecs.company = smartForm.preferredBrand
-
-  // Prepare payload for API (exclude the field being predicted)
-  const basePayload: Record<string, unknown> = {
-    ram: optimalSpecs.ram,
-    battery: optimalSpecs.battery,
-    screen: optimalSpecs.screen,
-    weight: optimalSpecs.weight,
-    year: optimalSpecs.year,
-    company: optimalSpecs.company,
-    front_camera: undefined,
-    back_camera: undefined,
-    processor: undefined,
-    storage: undefined,
+  // Type definitions
+  interface SmartForm {
+    budget: string
+    useCase: string
+    phoneAge: string
+    preferredBrand: string
+    dealPriority: string
   }
 
-  try {
-    const promises: Promise<void>[] = []
+  // Form state
+  const selectedTypes = ref<string[]>(['price', 'ram', 'battery', 'brand'])
 
-    // Price prediction - exclude price from payload
-    promises.push(
-      $fetch('/api/predict/price', {
-        method: 'POST',
-        body: basePayload,
-      })
-        .then((res: any) => {
-          priceResult.value = Number(res?.price ?? res?.predicted_price ?? optimalSpecs.price)
+  // Smart form state
+  const smartForm = reactive<SmartForm>({
+    budget: '',
+    useCase: '',
+    phoneAge: 'any',
+    preferredBrand: '',
+    dealPriority: 'balanced',
+  })
+
+  const smartFormValid = computed(() => {
+    return Boolean(smartForm.budget && smartForm.useCase)
+  })
+
+  const resultsVisible = ref(false)
+
+  // AI Buyer Advisor metrics
+  const valueScore = ref(85)
+  const valueAnalysis = ref('Good value for the specifications')
+  const marketPosition = ref('Mid-range')
+  const marketAnalysis = ref('Competitive pricing for this spec level')
+  const buyingVerdict = ref('Recommended')
+  const buyingAdvice = ref('Consider this phone if you need these specs')
+
+  // Mock results
+  const priceResult = ref(0)
+  const ramResult = ref(0)
+  const batteryResult = ref(0)
+  const brandResult = ref('')
+
+  function showType(t: string) {
+    return selectedTypes.value.includes(t)
+  }
+
+  async function clearSmartForm() {
+    smartForm.budget = ''
+    smartForm.useCase = ''
+    smartForm.phoneAge = 'any'
+    smartForm.preferredBrand = ''
+    smartForm.dealPriority = 'balanced'
+    resultsVisible.value = false
+  }
+
+  const isRunning = ref(false)
+
+  async function runSmartRecommendations() {
+    if (!smartFormValid.value || isRunning.value) return
+    isRunning.value = true
+    resultsVisible.value = false
+
+    const budget = Number(smartForm.budget)
+    const useCase = smartForm.useCase
+
+    // Generate optimal specs based on budget and use case
+    let optimalSpecs = generateOptimalSpecs(budget, useCase)
+
+    // Apply preferences
+    if (smartForm.phoneAge === 'new') optimalSpecs.year = 2024
+    else if (smartForm.phoneAge === 'recent') optimalSpecs.year = 2022
+
+    if (smartForm.preferredBrand) optimalSpecs.company = smartForm.preferredBrand
+
+    // Prepare payload for API (exclude the field being predicted)
+    const basePayload: Record<string, unknown> = {
+      ram: optimalSpecs.ram,
+      battery: optimalSpecs.battery,
+      screen: optimalSpecs.screen,
+      weight: optimalSpecs.weight,
+      year: optimalSpecs.year,
+      company: optimalSpecs.company,
+      front_camera: undefined,
+      back_camera: undefined,
+      processor: undefined,
+      storage: undefined,
+    }
+
+    try {
+      const promises: Promise<void>[] = []
+
+      // Price prediction - exclude price from payload
+      promises.push(
+        $fetch('/api/predict/price', {
+          method: 'POST',
+          body: basePayload,
         })
-        .catch(() => {})
+          .then((res: any) => {
+            priceResult.value = Number(res?.price ?? res?.predicted_price ?? optimalSpecs.price)
+          })
+          .catch(() => {})
+      )
+
+      // RAM prediction - exclude ram from payload
+      const ramPayload = { ...basePayload }
+      delete ramPayload.ram
+      promises.push(
+        $fetch('/api/predict/ram', {
+          method: 'POST',
+          body: ramPayload,
+        })
+          .then((res: any) => {
+            ramResult.value = Number(res?.ram ?? optimalSpecs.ram)
+          })
+          .catch(() => {})
+      )
+
+      // Battery prediction - exclude battery from payload
+      const batteryPayload = { ...basePayload }
+      delete batteryPayload.battery
+      promises.push(
+        $fetch('/api/predict/battery', {
+          method: 'POST',
+          body: batteryPayload,
+        })
+          .then((res: any) => {
+            batteryResult.value = Number(res?.battery ?? optimalSpecs.battery)
+          })
+          .catch(() => {})
+      )
+
+      // Brand prediction - can use full payload
+      promises.push(
+        $fetch('/api/predict/brand', {
+          method: 'POST',
+          body: basePayload,
+        })
+          .then((res: any) => {
+            brandResult.value = String(res?.brand ?? optimalSpecs.company ?? 'Samsung')
+          })
+          .catch(() => {})
+      )
+
+      await Promise.all(promises)
+
+      // Calculate AI buyer advisor metrics
+      calculateBuyerAdvisorSmart(optimalSpecs)
+
+      resultsVisible.value = true
+    } catch (err) {
+      console.warn('Smart recommendations error:', err)
+      // Use fallback specs
+      priceResult.value = optimalSpecs.price
+      ramResult.value = optimalSpecs.ram
+      batteryResult.value = optimalSpecs.battery
+      brandResult.value = optimalSpecs.company || 'Samsung'
+
+      calculateBuyerAdvisorSmart(optimalSpecs)
+      resultsVisible.value = true
+    } finally {
+      isRunning.value = false
+    }
+  }
+
+  function generateOptimalSpecs(budget: number, useCase: string) {
+    let specs = {
+      ram: 8,
+      battery: 4500,
+      screen: 6.5,
+      weight: 180,
+      year: 2023,
+      company: 'Samsung',
+      price: budget,
+    }
+
+    // Adjust specs based on use case
+    switch (useCase) {
+      case 'gaming':
+        specs.ram = budget > 600 ? 12 : 8
+        specs.battery = budget > 600 ? 5000 : 4500
+        specs.screen = 6.7
+        break
+
+      case 'photography':
+        specs.ram = 8
+        specs.battery = 4500
+        specs.screen = 6.4
+        specs.company = 'Google'
+        break
+
+      case 'work':
+        specs.ram = budget > 500 ? 8 : 6
+        specs.battery = budget > 500 ? 5000 : 4500
+        specs.screen = 6.3
+        specs.company = 'Samsung'
+        break
+
+      case 'social':
+        specs.ram = 6
+        specs.battery = budget > 400 ? 4500 : 4000
+        specs.screen = 6.4
+        specs.company = 'Samsung'
+        break
+
+      case 'battery':
+        specs.ram = 6
+        specs.battery = budget > 400 ? 6000 : 5000
+        specs.screen = 6.5
+        specs.weight = 200
+        break
+
+      default: // general
+        specs.ram = budget > 500 ? 8 : 6
+        specs.battery = budget > 500 ? 4500 : 4000
+        specs.screen = 6.4
+        break
+    }
+
+    // Adjust based on budget constraints
+    if (budget < 300) {
+      specs.ram = Math.min(specs.ram, 4)
+      specs.battery = Math.min(specs.battery, 4000)
+      specs.company = 'Xiaomi'
+    } else if (budget < 500) {
+      specs.ram = Math.min(specs.ram, 8)
+      specs.battery = Math.min(specs.battery, 4500)
+    }
+
+    return specs
+  }
+
+  // Calculate AI buyer advisor metrics for smart recommendations
+  function calculateBuyerAdvisorSmart(optimalSpecs: any) {
+    const ram = ramResult.value || optimalSpecs.ram
+    const battery = batteryResult.value || optimalSpecs.battery
+    const screen = optimalSpecs.screen
+    const company = brandResult.value || optimalSpecs.company
+    const currentYear = new Date().getFullYear()
+
+    // Calculate value score based on specs vs expected price
+    const expectedPrice =
+      ram * 95 + battery * 0.12 + screen * 40 + (company === 'Apple' ? 350 : 120)
+    const actualPrice = priceResult.value || expectedPrice
+
+    // Value score: higher is better (100 = perfect value, 0 = terrible value)
+    let score = Math.max(
+      0,
+      Math.min(100, 100 - (Math.abs(actualPrice - expectedPrice) / expectedPrice) * 50)
     )
 
-    // RAM prediction - exclude ram from payload
-    const ramPayload = { ...basePayload }
-    delete ramPayload.ram
-    promises.push(
-      $fetch('/api/predict/ram', {
-        method: 'POST',
-        body: ramPayload,
-      })
-        .then((res: any) => {
-          ramResult.value = Number(res?.ram ?? optimalSpecs.ram)
-        })
-        .catch(() => {})
-    )
+    // Adjust score based on brand premium and year
+    if (company === 'Apple') score += 10
+    else if (['Samsung', 'Google'].includes(company)) score += 5
 
-    // Battery prediction - exclude battery from payload
-    const batteryPayload = { ...basePayload }
-    delete batteryPayload.battery
-    promises.push(
-      $fetch('/api/predict/battery', {
-        method: 'POST',
-        body: batteryPayload,
-      })
-        .then((res: any) => {
-          batteryResult.value = Number(res?.battery ?? optimalSpecs.battery)
-        })
-        .catch(() => {})
-    )
+    if (optimalSpecs.year < currentYear - 2)
+      score -= 15 // Older phone
+    else if (optimalSpecs.year === currentYear) score += 5 // New phone
 
-    // Brand prediction - can use full payload
-    promises.push(
-      $fetch('/api/predict/brand', {
-        method: 'POST',
-        body: basePayload,
-      })
-        .then((res: any) => {
-          brandResult.value = String(res?.brand ?? optimalSpecs.company ?? 'Samsung')
-        })
-        .catch(() => {})
-    )
+    valueScore.value = Math.round(score)
 
-    await Promise.all(promises)
+    // Value analysis
+    if (score >= 90) valueAnalysis.value = 'Excellent value! Great specs for the price'
+    else if (score >= 80) valueAnalysis.value = 'Good value for the specifications'
+    else if (score >= 70) valueAnalysis.value = 'Fair value, consider alternatives'
+    else if (score >= 60) valueAnalysis.value = 'Overpriced for these specs'
+    else valueAnalysis.value = 'Poor value, look for better deals'
 
-    // Calculate AI buyer advisor metrics
-    calculateBuyerAdvisorSmart(optimalSpecs)
+    // Market position
+    if (actualPrice > 1000) marketPosition.value = 'Premium'
+    else if (actualPrice > 600) marketPosition.value = 'Mid-range'
+    else if (actualPrice > 300) marketPosition.value = 'Budget'
+    else marketPosition.value = 'Entry-level'
 
-    resultsVisible.value = true
-  } catch (err) {
-    console.warn('Smart recommendations error:', err)
-    // Use fallback specs
-    priceResult.value = optimalSpecs.price
-    ramResult.value = optimalSpecs.ram
-    batteryResult.value = optimalSpecs.battery
-    brandResult.value = optimalSpecs.company || 'Samsung'
+    // Market analysis
+    if (ram >= 8 && battery >= 4000)
+      marketAnalysis.value = 'High-end specs with competitive pricing'
+    else if (ram >= 6 && battery >= 3500) marketAnalysis.value = 'Solid mid-range performance'
+    else if (ram <= 4) marketAnalysis.value = 'Budget-friendly but may lack power'
+    else marketAnalysis.value = 'Balanced specs for everyday use'
 
-    calculateBuyerAdvisorSmart(optimalSpecs)
-    resultsVisible.value = true
-  } finally {
-    isRunning.value = false
+    // Buying verdict and advice
+    if (score >= 85) {
+      buyingVerdict.value = 'Highly Recommended'
+      buyingAdvice.value = 'Excellent choice! This phone offers great value and performance'
+    } else if (score >= 75) {
+      buyingVerdict.value = 'Recommended'
+      buyingAdvice.value = 'Good option if these specs match your needs'
+    } else if (score >= 65) {
+      buyingVerdict.value = 'Consider Alternatives'
+      buyingAdvice.value = 'Look at similar phones with better price-performance ratio'
+    } else {
+      buyingVerdict.value = 'Not Recommended'
+      buyingAdvice.value = 'Overpriced or outdated. Consider newer models with better value'
+    }
+
+    // Special brand considerations
+    if (company === 'Apple' && score < 70) {
+      buyingAdvice.value += '. Apple products often hold value better long-term'
+    } else if (['Xiaomi', 'Realme', 'Oppo'].includes(company) && score > 85) {
+      buyingAdvice.value += '. Great value from Chinese manufacturers'
+    }
   }
-}
-
-function generateOptimalSpecs(budget: number, useCase: string) {
-  let specs = {
-    ram: 8,
-    battery: 4500,
-    screen: 6.5,
-    weight: 180,
-    year: 2023,
-    company: 'Samsung',
-    price: budget,
-  }
-
-  // Adjust specs based on use case
-  switch (useCase) {
-    case 'gaming':
-      specs.ram = budget > 600 ? 12 : 8
-      specs.battery = budget > 600 ? 5000 : 4500
-      specs.screen = 6.7
-      break
-
-    case 'photography':
-      specs.ram = 8
-      specs.battery = 4500
-      specs.screen = 6.4
-      specs.company = 'Google'
-      break
-
-    case 'work':
-      specs.ram = budget > 500 ? 8 : 6
-      specs.battery = budget > 500 ? 5000 : 4500
-      specs.screen = 6.3
-      specs.company = 'Samsung'
-      break
-
-    case 'social':
-      specs.ram = 6
-      specs.battery = budget > 400 ? 4500 : 4000
-      specs.screen = 6.4
-      specs.company = 'Samsung'
-      break
-
-    case 'battery':
-      specs.ram = 6
-      specs.battery = budget > 400 ? 6000 : 5000
-      specs.screen = 6.5
-      specs.weight = 200
-      break
-
-    default: // general
-      specs.ram = budget > 500 ? 8 : 6
-      specs.battery = budget > 500 ? 4500 : 4000
-      specs.screen = 6.4
-      break
-  }
-
-  // Adjust based on budget constraints
-  if (budget < 300) {
-    specs.ram = Math.min(specs.ram, 4)
-    specs.battery = Math.min(specs.battery, 4000)
-    specs.company = 'Xiaomi'
-  } else if (budget < 500) {
-    specs.ram = Math.min(specs.ram, 8)
-    specs.battery = Math.min(specs.battery, 4500)
-  }
-
-  return specs
-}
-
-// Calculate AI buyer advisor metrics for smart recommendations
-function calculateBuyerAdvisorSmart(optimalSpecs: any) {
-  const ram = ramResult.value || optimalSpecs.ram
-  const battery = batteryResult.value || optimalSpecs.battery
-  const screen = optimalSpecs.screen
-  const company = brandResult.value || optimalSpecs.company
-  const currentYear = new Date().getFullYear()
-
-  // Calculate value score based on specs vs expected price
-  const expectedPrice = ram * 95 + battery * 0.12 + screen * 40 + (company === 'Apple' ? 350 : 120)
-  const actualPrice = priceResult.value || expectedPrice
-
-  // Value score: higher is better (100 = perfect value, 0 = terrible value)
-  let score = Math.max(
-    0,
-    Math.min(100, 100 - (Math.abs(actualPrice - expectedPrice) / expectedPrice) * 50)
-  )
-
-  // Adjust score based on brand premium and year
-  if (company === 'Apple') score += 10
-  else if (['Samsung', 'Google'].includes(company)) score += 5
-
-  if (optimalSpecs.year < currentYear - 2)
-    score -= 15 // Older phone
-  else if (optimalSpecs.year === currentYear) score += 5 // New phone
-
-  valueScore.value = Math.round(score)
-
-  // Value analysis
-  if (score >= 90) valueAnalysis.value = 'Excellent value! Great specs for the price'
-  else if (score >= 80) valueAnalysis.value = 'Good value for the specifications'
-  else if (score >= 70) valueAnalysis.value = 'Fair value, consider alternatives'
-  else if (score >= 60) valueAnalysis.value = 'Overpriced for these specs'
-  else valueAnalysis.value = 'Poor value, look for better deals'
-
-  // Market position
-  if (actualPrice > 1000) marketPosition.value = 'Premium'
-  else if (actualPrice > 600) marketPosition.value = 'Mid-range'
-  else if (actualPrice > 300) marketPosition.value = 'Budget'
-  else marketPosition.value = 'Entry-level'
-
-  // Market analysis
-  if (ram >= 8 && battery >= 4000) marketAnalysis.value = 'High-end specs with competitive pricing'
-  else if (ram >= 6 && battery >= 3500) marketAnalysis.value = 'Solid mid-range performance'
-  else if (ram <= 4) marketAnalysis.value = 'Budget-friendly but may lack power'
-  else marketAnalysis.value = 'Balanced specs for everyday use'
-
-  // Buying verdict and advice
-  if (score >= 85) {
-    buyingVerdict.value = 'Highly Recommended'
-    buyingAdvice.value = 'Excellent choice! This phone offers great value and performance'
-  } else if (score >= 75) {
-    buyingVerdict.value = 'Recommended'
-    buyingAdvice.value = 'Good option if these specs match your needs'
-  } else if (score >= 65) {
-    buyingVerdict.value = 'Consider Alternatives'
-    buyingAdvice.value = 'Look at similar phones with better price-performance ratio'
-  } else {
-    buyingVerdict.value = 'Not Recommended'
-    buyingAdvice.value = 'Overpriced or outdated. Consider newer models with better value'
-  }
-
-  // Special brand considerations
-  if (company === 'Apple' && score < 70) {
-    buyingAdvice.value += '. Apple products often hold value better long-term'
-  } else if (['Xiaomi', 'Realme', 'Oppo'].includes(company) && score > 85) {
-    buyingAdvice.value += '. Great value from Chinese manufacturers'
-  }
-}
 </script>

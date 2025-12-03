@@ -1,0 +1,47 @@
+name: Pull Request Quick Checks
+on:
+  pull_request:
+    branches: [master, main]
+  workflow_dispatch: {}
+
+jobs:
+  frontend-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Quick type check + lint
+        run: |
+          npm run typecheck:ci
+          npm run lint
+
+  python-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+          cache: 'pip'
+
+      - name: Install Python dependencies
+        run: |
+          cd python_api
+          pip install -r requirements.txt
+
+      - name: Run Python tests (pytest)
+        run: |
+          cd python_api
+          python -m pytest -q --maxfail=1

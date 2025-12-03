@@ -93,3 +93,6 @@ tsconf-out.json
 
 # Sentry Config File
 .sentryclirc
+
+# Snyk Security Extension - AI Rules (auto-generated)
+.cursor/rules/snyk_rules.mdc

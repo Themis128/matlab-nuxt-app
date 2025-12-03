@@ -1,0 +1,52 @@
+[
+  {
+    "phone": "Samsung Galaxy S24 Ultra 256GB",
+    "success": true,
+    "images_collected": 3
+  },
+  {
+    "phone": "Samsung Galaxy S24+ 128GB",
+    "success": true,
+    "images_collected": 3
+  },
+  {
+    "phone": "Samsung Galaxy S24+ 256GB",
+    "success": true,
+    "images_collected": 3
+  },
+  {
+    "phone": "Samsung Galaxy S24 128GB",
+    "success": true,
+    "images_collected": 3
+  },
+  {
+    "phone": "Samsung Galaxy S24 256GB",
+    "success": true,
+    "images_collected": 3
+  },
+  {
+    "phone": "Samsung Galaxy S23 Ultra 128GB",
+    "success": true,
+    "images_collected": 3
+  },
+  {
+    "phone": "Samsung Galaxy S23 Ultra 256GB",
+    "success": true,
+    "images_collected": 3
+  },
+  {
+    "phone": "Samsung Galaxy S23+ 128GB",
+    "success": true,
+    "images_collected": 3
+  },
+  {
+    "phone": "Samsung Galaxy S23+ 256GB",
+    "success": true,
+    "images_collected": 3
+  },
+  {
+    "phone": "Samsung Galaxy S23 128GB",
+    "success": true,
+    "images_collected": 3
+  }
+]

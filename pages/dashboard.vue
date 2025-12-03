@@ -390,187 +390,199 @@
 </template>
 
 <script setup lang="ts">
-interface NumericSummary {
-  min: number
-  max: number
-  mean: number
-  median: number
-}
-
-// Full analytics data interface
-interface AnalyticsData {
-  yearly_trends?: { years: number[]; avg_price: number[]; avg_ram: number[]; avg_battery: number[] }
-  top_brands?: Record<string, number>
-  feature_importance?: Record<string, number>
-  numeric_summaries?: Record<string, NumericSummary>
-  geographical_analysis?: { regions: string[]; avg_prices: number[] }
-  metrics?: { accuracies: number[]; labels: string[] }
-}
-import { useHead, useAsyncData } from '#imports'
-// Page meta
-useHead({
-  title: 'AI Model Dashboard - Mobile Finder',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'View AI model performance metrics, accuracy trends, and technical analytics for mobile phone predictions.',
-    },
-  ],
-})
-
-// Fetch analytics summary and metrics from FastAPI backend
-import { ref, computed } from 'vue'
-import type { Ref } from 'vue'
-
-// ...existing code...
-interface AnalyticsData {
-  yearly_trends?: { years: number[]; avg_price: number[]; avg_ram: number[]; avg_battery: number[] }
-  top_brands?: Record<string, number>
-  feature_importance?: Record<string, number>
-  numeric_summaries?: Record<string, NumericSummary>
-  geographical_analysis?: { regions: string[]; avg_prices: number[] }
-  metrics?: { accuracies: number[]; labels: string[] }
-}
-import AnalyticsTopBrandsChart from '~/components/AnalyticsTopBrandsChart.vue'
-import AnalyticsFeatureImportanceChart from '~/components/AnalyticsFeatureImportanceChart.vue'
-import AnalyticsYearlyTrendsChart from '~/components/AnalyticsYearlyTrendsChart.vue'
-import AnalyticsGeographicalChart from '~/components/AnalyticsGeographicalChart.vue'
-import AnalyticsAccuracyChart from '~/components/AnalyticsAccuracyChart.vue'
-
-const { data } = await useAsyncData('analyticsSummary', () => $fetch('/api/analytics/summary'))
-// Cast to a typed ref to avoid deep type recursion from $fetch signatures
-const analyticsData = data as unknown as Ref<AnalyticsData | undefined>
-
-// Reactive filter values
-const selectedYear = ref('All')
-const selectedBrand = ref('All')
-const selectedTarget = ref('All')
-const selectedFeature = ref('All')
-
-// computed options
-const availableYears = computed(() =>
-  ((analyticsData.value?.yearly_trends?.years ?? []) as (number | undefined)[]).filter(
-    (y): y is number => typeof y === 'number'
-  )
-)
-const availableBrands = computed(() => Object.keys(analyticsData.value?.top_brands || {}))
-const availableTargets = computed(() => {
-  // produce a list of common model targets available on the dashboard
-  const defaults = ['Price', 'RAM', 'Battery', 'Brand']
-  return defaults
-})
-const availableFeatures = computed(() => Object.keys(analyticsData.value?.feature_importance || {}))
-
-// filtered datasets to pass to chart components
-const filteredTopBrands = computed(() => {
-  const brands = analyticsData.value?.top_brands || {}
-  if (selectedBrand.value === 'All') return brands
-  const val = brands[selectedBrand.value]
-  return val !== undefined ? { [selectedBrand.value]: val } : {}
-})
-
-// Numeric summaries: try analyticsData.numeric_summaries, else derive
-const derivedNumericSummaries = computed(() => {
-  if (
-    analyticsData.value?.numeric_summaries &&
-    Object.keys(analyticsData.value.numeric_summaries).length
-  ) {
-    return analyticsData.value.numeric_summaries
+  interface NumericSummary {
+    min: number
+    max: number
+    mean: number
+    median: number
   }
-  const d: Record<string, NumericSummary> = {}
-  Object.keys(analyticsData.value || {}).forEach(k => {
-    const v = (analyticsData.value as any)[k]
-    if (v && typeof v === 'object' && 'min' in v && 'max' in v && 'mean' in v && 'median' in v) {
-      d[k] = {
-        min: v.min,
-        max: v.max,
-        mean: v.mean,
-        median: v.median,
+
+  // Full analytics data interface
+  interface AnalyticsData {
+    yearly_trends?: {
+      years: number[]
+      avg_price: number[]
+      avg_ram: number[]
+      avg_battery: number[]
+    }
+    top_brands?: Record<string, number>
+    feature_importance?: Record<string, number>
+    numeric_summaries?: Record<string, NumericSummary>
+    geographical_analysis?: { regions: string[]; avg_prices: number[] }
+    metrics?: { accuracies: number[]; labels: string[] }
+  }
+  import { useHead, useAsyncData } from '#imports'
+  // Page meta
+  useHead({
+    title: 'AI Model Dashboard - Mobile Finder',
+    meta: [
+      {
+        name: 'description',
+        content:
+          'View AI model performance metrics, accuracy trends, and technical analytics for mobile phone predictions.',
+      },
+    ],
+  })
+
+  // Fetch analytics summary and metrics from FastAPI backend
+  import { ref, computed } from 'vue'
+  import type { Ref } from 'vue'
+
+  // ...existing code...
+  interface AnalyticsData {
+    yearly_trends?: {
+      years: number[]
+      avg_price: number[]
+      avg_ram: number[]
+      avg_battery: number[]
+    }
+    top_brands?: Record<string, number>
+    feature_importance?: Record<string, number>
+    numeric_summaries?: Record<string, NumericSummary>
+    geographical_analysis?: { regions: string[]; avg_prices: number[] }
+    metrics?: { accuracies: number[]; labels: string[] }
+  }
+  import AnalyticsTopBrandsChart from '~/components/AnalyticsTopBrandsChart.vue'
+  import AnalyticsFeatureImportanceChart from '~/components/AnalyticsFeatureImportanceChart.vue'
+  import AnalyticsYearlyTrendsChart from '~/components/AnalyticsYearlyTrendsChart.vue'
+  import AnalyticsGeographicalChart from '~/components/AnalyticsGeographicalChart.vue'
+  import AnalyticsAccuracyChart from '~/components/AnalyticsAccuracyChart.vue'
+
+  const { data } = await useAsyncData('analyticsSummary', () => $fetch('/api/analytics/summary'))
+  // Cast to a typed ref to avoid deep type recursion from $fetch signatures
+  const analyticsData = data as unknown as Ref<AnalyticsData | undefined>
+
+  // Reactive filter values
+  const selectedYear = ref('All')
+  const selectedBrand = ref('All')
+  const selectedTarget = ref('All')
+  const selectedFeature = ref('All')
+
+  // computed options
+  const availableYears = computed(() =>
+    ((analyticsData.value?.yearly_trends?.years ?? []) as (number | undefined)[]).filter(
+      (y): y is number => typeof y === 'number'
+    )
+  )
+  const availableBrands = computed(() => Object.keys(analyticsData.value?.top_brands || {}))
+  const availableTargets = computed(() => {
+    // produce a list of common model targets available on the dashboard
+    const defaults = ['Price', 'RAM', 'Battery', 'Brand']
+    return defaults
+  })
+  const availableFeatures = computed(() =>
+    Object.keys(analyticsData.value?.feature_importance || {})
+  )
+
+  // filtered datasets to pass to chart components
+  const filteredTopBrands = computed(() => {
+    const brands = analyticsData.value?.top_brands || {}
+    if (selectedBrand.value === 'All') return brands
+    const val = brands[selectedBrand.value]
+    return val !== undefined ? { [selectedBrand.value]: val } : {}
+  })
+
+  // Numeric summaries: try analyticsData.numeric_summaries, else derive
+  const derivedNumericSummaries = computed(() => {
+    if (
+      analyticsData.value?.numeric_summaries &&
+      Object.keys(analyticsData.value.numeric_summaries).length
+    ) {
+      return analyticsData.value.numeric_summaries
+    }
+    const d: Record<string, NumericSummary> = {}
+    Object.keys(analyticsData.value || {}).forEach(k => {
+      const v = (analyticsData.value as any)[k]
+      if (v && typeof v === 'object' && 'min' in v && 'max' in v && 'mean' in v && 'median' in v) {
+        d[k] = {
+          min: v.min,
+          max: v.max,
+          mean: v.mean,
+          median: v.median,
+        }
       }
+    })
+    return d
+  })
+
+  const filteredNumericSummaries = computed(() => {
+    if (selectedFeature.value === 'All') return derivedNumericSummaries.value
+    const v = derivedNumericSummaries.value[selectedFeature.value]
+    return v ? { [selectedFeature.value]: v } : {}
+  })
+
+  // Feature importance filter
+  const filteredFeatureImportance = computed(() => {
+    const importance = analyticsData.value?.feature_importance || {}
+    if (selectedFeature.value === 'All') return importance
+    const v = importance[selectedFeature.value]
+    return v !== undefined ? { [selectedFeature.value]: v } : {}
+  })
+
+  // Yearly trends filter: if a specific year is chosen show the single-year values (for the current demo)
+  const filteredYearlyTrends = computed(() => {
+    const trends = analyticsData.value?.yearly_trends || {
+      years: [],
+      avg_price: [],
+      avg_ram: [],
+      avg_battery: [],
+    }
+    if (!trends.years || selectedYear.value === 'All')
+      return {
+        years: (trends.years ?? []).filter((v): v is number => typeof v === 'number'),
+        avg_price: (trends.avg_price ?? []).map(n => n ?? 0),
+        avg_ram: (trends.avg_ram ?? []).map(n => n ?? 0),
+        avg_battery: (trends.avg_battery ?? []).map(n => n ?? 0),
+      }
+    const idx = trends.years.indexOf(Number(selectedYear.value))
+    if (idx === -1) return trends
+    const idxNumber = Number(idx)
+    return {
+      years: [(trends.years ?? [])[idxNumber] ?? 0],
+      avg_price: [(trends.avg_price ?? [])[idxNumber] ?? 0],
+      avg_ram: [(trends.avg_ram ?? [])[idxNumber] ?? 0],
+      avg_battery: [(trends.avg_battery ?? [])[idxNumber] ?? 0],
     }
   })
-  return d
-})
 
-const filteredNumericSummaries = computed(() => {
-  if (selectedFeature.value === 'All') return derivedNumericSummaries.value
-  const v = derivedNumericSummaries.value[selectedFeature.value]
-  return v ? { [selectedFeature.value]: v } : {}
-})
+  // Geographical analysis: not filterable for now, but still computed to match structure
+  const filteredGeographical = computed(() => {
+    const geo = analyticsData.value?.geographical_analysis || { regions: [], avg_prices: [] }
+    return geo
+  })
 
-// Feature importance filter
-const filteredFeatureImportance = computed(() => {
-  const importance = analyticsData.value?.feature_importance || {}
-  if (selectedFeature.value === 'All') return importance
-  const v = importance[selectedFeature.value]
-  return v !== undefined ? { [selectedFeature.value]: v } : {}
-})
-
-// Yearly trends filter: if a specific year is chosen show the single-year values (for the current demo)
-const filteredYearlyTrends = computed(() => {
-  const trends = analyticsData.value?.yearly_trends || {
-    years: [],
-    avg_price: [],
-    avg_ram: [],
-    avg_battery: [],
+  // Utility to reset filters
+  const resetFilters = () => {
+    selectedYear.value = 'All'
+    selectedBrand.value = 'All'
+    selectedTarget.value = 'All'
+    selectedFeature.value = 'All'
   }
-  if (!trends.years || selectedYear.value === 'All')
-    return {
-      years: (trends.years ?? []).filter((v): v is number => typeof v === 'number'),
-      avg_price: (trends.avg_price ?? []).map(n => n ?? 0),
-      avg_ram: (trends.avg_ram ?? []).map(n => n ?? 0),
-      avg_battery: (trends.avg_battery ?? []).map(n => n ?? 0),
-    }
-  const idx = trends.years.indexOf(Number(selectedYear.value))
-  if (idx === -1) return trends
-  const idxNumber = Number(idx)
-  return {
-    years: [(trends.years ?? [])[idxNumber] ?? 0],
-    avg_price: [(trends.avg_price ?? [])[idxNumber] ?? 0],
-    avg_ram: [(trends.avg_ram ?? [])[idxNumber] ?? 0],
-    avg_battery: [(trends.avg_battery ?? [])[idxNumber] ?? 0],
-  }
-})
 
-// Geographical analysis: not filterable for now, but still computed to match structure
-const filteredGeographical = computed(() => {
-  const geo = analyticsData.value?.geographical_analysis || { regions: [], avg_prices: [] }
-  return geo
-})
-
-// Utility to reset filters
-const resetFilters = () => {
-  selectedYear.value = 'All'
-  selectedBrand.value = 'All'
-  selectedTarget.value = 'All'
-  selectedFeature.value = 'All'
-}
-
-// Accuracy series and labels from analytics (if present), otherwise fallback
-const accuracySeries = computed((): number[] => {
-  // We might have analyticsData.metrics or similar; fallback values for now
-  const labels = analyticsData.value?.metrics?.labels || ['Price', 'RAM', 'Battery', 'Brand']
-  const accRaw = (analyticsData.value?.metrics?.accuracies ?? [
-    98.24, 95.16, 94.77, 65.22,
-  ]) as number[]
-  const accNumbers: number[] = accRaw.map(n => Number(n ?? 0))
-  if (selectedTarget.value !== 'All') {
-    const i = labels.indexOf(selectedTarget.value)
-    if (i >= 0 && i < accNumbers.length) {
-      const val = accNumbers[i] ?? 0
-      return [val]
+  // Accuracy series and labels from analytics (if present), otherwise fallback
+  const accuracySeries = computed((): number[] => {
+    // We might have analyticsData.metrics or similar; fallback values for now
+    const labels = analyticsData.value?.metrics?.labels || ['Price', 'RAM', 'Battery', 'Brand']
+    const accRaw = (analyticsData.value?.metrics?.accuracies ?? [
+      98.24, 95.16, 94.77, 65.22,
+    ]) as number[]
+    const accNumbers: number[] = accRaw.map(n => Number(n ?? 0))
+    if (selectedTarget.value !== 'All') {
+      const i = labels.indexOf(selectedTarget.value)
+      if (i >= 0 && i < accNumbers.length) {
+        const val = accNumbers[i] ?? 0
+        return [val]
+      }
+      return accNumbers
     }
     return accNumbers
-  }
-  return accNumbers
-})
-const accuracyLabels = computed(() => {
-  const labels = analyticsData.value?.metrics?.labels || ['Price', 'RAM', 'Battery', 'Brand']
-  if (selectedTarget.value !== 'All' && labels.includes(selectedTarget.value))
-    return [selectedTarget.value]
-  return labels
-})
+  })
+  const accuracyLabels = computed(() => {
+    const labels = analyticsData.value?.metrics?.labels || ['Price', 'RAM', 'Battery', 'Brand']
+    if (selectedTarget.value !== 'All' && labels.includes(selectedTarget.value))
+      return [selectedTarget.value]
+    return labels
+  })
 
-// Some code exposes analyticsData directly; no alias required
+  // Some code exposes analyticsData directly; no alias required
 </script>

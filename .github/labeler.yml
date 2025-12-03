@@ -1,0 +1,18 @@
+frontend:
+  - 'app/**'
+  - 'components/**'
+  - 'nuxt.config.ts'
+
+python:
+  - 'python_api/**'
+
+docs:
+  - 'docs/**'
+  - 'README.md'
+
+ml:
+  - 'scripts/**'
+  - 'scripts/**/*.py'
+
+ci:
+  - '.github/workflows/**'

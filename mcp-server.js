@@ -86,10 +86,34 @@ server.setRequestHandler('tools/call', async request => {
       try {
         const fs = await import('fs')
         const path = await import('path')
-        const items = fs.readdirSync(args.path)
+
+        // Security: Validate and sanitize the path to prevent path traversal
+        if (!args.path || typeof args.path !== 'string') {
+          throw new Error('Invalid path parameter')
+        }
+
+        // Resolve to absolute path and check it's within allowed directories
+        const resolvedPath = path.resolve(args.path)
+        const allowedDirs = [
+          'd:\\Nuxt Projects\\MatLab',
+          'C:\\Users\\baltz\\Documents',
+          'C:\\Users\\baltz\\Desktop',
+        ]
+
+        // Check if resolved path is within any allowed directory
+        const isPathAllowed = allowedDirs.some(allowedDir => {
+          const relative = path.relative(allowedDir, resolvedPath)
+          return relative && !relative.startsWith('..') && !path.isAbsolute(relative)
+        })
+
+        if (!isPathAllowed) {
+          throw new Error('Access to this directory is not allowed')
+        }
+
+        const items = fs.readdirSync(resolvedPath)
 
         const detailed = items.map(item => {
-          const fullPath = path.join(args.path, item)
+          const fullPath = path.join(resolvedPath, item)
           const stats = fs.statSync(fullPath)
           return `${stats.isDirectory() ? '[DIR]' : '[FILE]'} ${item}`
         })
@@ -98,7 +122,7 @@ server.setRequestHandler('tools/call', async request => {
           content: [
             {
               type: 'text',
-              text: `Contents of ${args.path}:\n${detailed.join('\n')}`,
+              text: `Contents of ${resolvedPath}:\n${detailed.join('\n')}`,
             },
           ],
         }

@@ -333,33 +333,33 @@
 </template>
 
 <script setup lang="ts">
-const nuxtBaseUrl = 'http://localhost:3001'
-const { pythonApiUrl } = useApiConfig()
-const pythonBaseUrl = pythonApiUrl
-const pythonApiStatus = ref('checking...')
+  const nuxtBaseUrl = 'http://localhost:3001'
+  const { pythonApiUrl } = useApiConfig()
+  const pythonBaseUrl = pythonApiUrl
+  const pythonApiStatus = ref('checking...')
 
-// Check Python API health
-onMounted(async () => {
-  try {
-    const response = await fetch(`${pythonBaseUrl}/health`)
-    if (response.ok) {
-      pythonApiStatus.value = 'healthy'
-    } else {
-      pythonApiStatus.value = 'unhealthy'
+  // Check Python API health
+  onMounted(async () => {
+    try {
+      const response = await fetch(`${pythonBaseUrl}/health`)
+      if (response.ok) {
+        pythonApiStatus.value = 'healthy'
+      } else {
+        pythonApiStatus.value = 'unhealthy'
+      }
+    } catch {
+      pythonApiStatus.value = 'unreachable'
     }
-  } catch {
-    pythonApiStatus.value = 'unreachable'
-  }
-})
+  })
 
-// Set page metadata
-useHead({
-  title: 'API Documentation - Mobile Finder',
-  meta: [
-    {
-      name: 'description',
-      content: 'Complete API documentation for all endpoints in the Mobile Finder application',
-    },
-  ],
-})
+  // Set page metadata
+  useHead({
+    title: 'API Documentation - Mobile Finder',
+    meta: [
+      {
+        name: 'description',
+        content: 'Complete API documentation for all endpoints in the Mobile Finder application',
+      },
+    ],
+  })
 </script>

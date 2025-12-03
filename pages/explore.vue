@@ -383,15 +383,15 @@
 </template>
 
 <script setup lang="ts">
-// Page meta
-useHead({
-  title: 'Explore Mobile Dataset - Mobile Finder',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Explore our comprehensive dataset of 900+ mobile phone models. Search by brand, price, specifications, and discover detailed insights.',
-    },
-  ],
-})
+  // Page meta
+  useHead({
+    title: 'Explore Mobile Dataset - Mobile Finder',
+    meta: [
+      {
+        name: 'description',
+        content:
+          'Explore our comprehensive dataset of 900+ mobile phone models. Search by brand, price, specifications, and discover detailed insights.',
+      },
+    ],
+  })
 </script>

@@ -465,209 +465,209 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+  import { ref, computed } from 'vue'
 
-// Model selection
-const selectedModel = ref('sklearn_price')
-const selectedCurrency = ref('USD')
+  // Model selection
+  const selectedModel = ref('sklearn_price')
+  const selectedCurrency = ref('USD')
 
-// Form data
-const form = ref({
-  ram: '',
-  battery: '',
-  screen: '',
-  weight: '',
-  year: '',
-  company: '',
-  front_camera: '',
-  back_camera: '',
-  storage: '',
-  processor: '',
-})
+  // Form data
+  const form = ref({
+    ram: '',
+    battery: '',
+    screen: '',
+    weight: '',
+    year: '',
+    company: '',
+    front_camera: '',
+    back_camera: '',
+    storage: '',
+    processor: '',
+  })
 
-// Results
-const result = ref<{
-  currency_symbol: string
-  price: number
-  model_used: string
-  accuracy_info?: {
-    r2_score: number
-    note: string
-  }
-} | null>(null)
-const isLoading = ref(false)
-const processingTime = ref(0)
+  // Results
+  const result = ref<{
+    currency_symbol: string
+    price: number
+    model_used: string
+    accuracy_info?: {
+      r2_score: number
+      note: string
+    }
+  } | null>(null)
+  const isLoading = ref(false)
+  const processingTime = ref(0)
 
-// Validation
-const canPredict = computed(() => {
-  return (
-    form.value.ram !== '' &&
-    form.value.battery !== '' &&
-    form.value.screen !== '' &&
-    form.value.weight !== '' &&
-    form.value.year !== '' &&
-    form.value.company !== '' &&
-    selectedModel.value !== ''
-  )
-})
+  // Validation
+  const canPredict = computed(() => {
+    return (
+      form.value.ram !== '' &&
+      form.value.battery !== '' &&
+      form.value.screen !== '' &&
+      form.value.weight !== '' &&
+      form.value.year !== '' &&
+      form.value.company !== '' &&
+      selectedModel.value !== ''
+    )
+  })
 
-// Phone image functions
-function getPhoneImage(company: string, type: string): string {
-  // Map company names to actual model directories that exist
-  const modelMap: Record<string, Record<string, string>> = {
-    Apple: {
-      primary: 'Apple_iPhone_16_128GB',
-      secondary: 'Apple_iPhone_15_Pro_128GB',
-      premium: 'Apple_iPhone_16_Pro_Max_512GB',
-    },
-    Samsung: {
-      primary: 'Apple_iPhone_16_128GB', // Fallback to Apple images
-      secondary: 'Apple_iPhone_15_Pro_128GB',
-      premium: 'Apple_iPhone_16_Pro_Max_512GB',
-    },
-    Google: {
-      primary: 'Google_Pixel_8_Pro_256GB',
-      secondary: 'Google_Pixel_8_128GB',
-      premium: 'Google_Pixel_9_Pro_256GB',
-    },
-    Xiaomi: {
-      primary: 'Xiaomi_14_Ultra',
-      secondary: 'Xiaomi_14',
-      premium: 'Xiaomi_15_Ultra',
-    },
-    OnePlus: {
-      primary: 'OnePlus_12_256GB',
-      secondary: 'OnePlus_11',
-      premium: 'OnePlus_12R',
-    },
-    Oppo: {
-      primary: 'Oppo_Find_X7_Ultra',
-      secondary: 'Oppo_Find_X7',
-      premium: 'Oppo_Find_X8_Pro',
-    },
-    Vivo: {
-      primary: 'Vivo_X100_Pro',
-      secondary: 'Vivo_X100',
-      premium: 'Vivo_X100_Ultra',
-    },
-    Realme: {
-      primary: 'Realme_GT5_Pro',
-      secondary: 'Realme_GT5',
-      premium: 'Realme_GT6',
-    },
-    Huawei: {
-      primary: 'Huawei_P60_Pro',
-      secondary: 'Huawei_P60',
-      premium: 'Huawei_Mate_60_Pro',
-    },
-    Honor: {
-      primary: 'Honor_90',
-      secondary: 'Honor_80_Pro',
-      premium: 'Honor_Magic6_Pro',
-    },
-    Motorola: {
-      primary: 'Motorola_Edge_50_Pro',
-      secondary: 'Motorola_Edge_50',
-      premium: 'Motorola_Edge_50_Ultra',
-    },
-    Nokia: {
-      primary: 'Nokia_X30',
-      secondary: 'Nokia_X20',
-      premium: 'Nokia_G60',
-    },
-  }
-
-  const models = modelMap[company]
-  if (!models) {
-    return '/images/placeholder-phone.jpg' // Fallback image
-  }
-
-  const modelDir = models[type] || models.primary
-  const imageName = `${modelDir}_1.jpg`
-
-  return `/mobile_images/${modelDir}/${imageName}`
-}
-
-function getPhoneModelName(company: string, type: string): string {
-  const modelMap: Record<string, Record<string, string>> = {
-    Apple: {
-      primary: 'iPhone 16 128GB',
-      secondary: 'iPhone 16 Plus 256GB',
-      premium: 'iPhone 16 Pro Max 512GB',
-    },
-    Samsung: {
-      primary: 'Galaxy S24 Ultra',
-      secondary: 'Galaxy S24+',
-      premium: 'Galaxy Z Fold 5',
-    },
-    Google: {
-      primary: 'Pixel 8 Pro',
-      secondary: 'Pixel 8',
-      premium: 'Pixel 9 Pro',
-    },
-    Xiaomi: {
-      primary: '14 Ultra',
-      secondary: '14 Pro',
-      premium: '15 Ultra',
-    },
-  }
-
-  return modelMap[company]?.[type] || `${company} Phone`
-}
-
-function handleImageError(event: Event): void {
-  // Fallback to a default image or hide the image
-  const target = event.target as HTMLImageElement
-  target.style.display = 'none'
-  const nextSibling = target.nextElementSibling as HTMLElement
-  if (nextSibling) {
-    nextSibling.textContent = 'Image not available'
-  }
-}
-
-// Run prediction
-async function runAdvancedPrediction() {
-  if (!canPredict.value || isLoading.value) return
-
-  isLoading.value = true
-  const startTime = Date.now()
-
-  try {
-    const payload = {
-      modelType: selectedModel.value,
-      currency: selectedCurrency.value,
-      ram: parseFloat(form.value.ram),
-      battery: parseFloat(form.value.battery),
-      screen: parseFloat(form.value.screen),
-      weight: parseFloat(form.value.weight),
-      year: parseInt(form.value.year),
-      company: form.value.company,
-      front_camera: form.value.front_camera ? parseFloat(form.value.front_camera) : undefined,
-      back_camera: form.value.back_camera ? parseFloat(form.value.back_camera) : undefined,
-      processor: form.value.processor || undefined,
-      storage: form.value.storage ? parseFloat(form.value.storage) : undefined,
+  // Phone image functions
+  function getPhoneImage(company: string, type: string): string {
+    // Map company names to actual model directories that exist
+    const modelMap: Record<string, Record<string, string>> = {
+      Apple: {
+        primary: 'Apple_iPhone_16_128GB',
+        secondary: 'Apple_iPhone_15_Pro_128GB',
+        premium: 'Apple_iPhone_16_Pro_Max_512GB',
+      },
+      Samsung: {
+        primary: 'Apple_iPhone_16_128GB', // Fallback to Apple images
+        secondary: 'Apple_iPhone_15_Pro_128GB',
+        premium: 'Apple_iPhone_16_Pro_Max_512GB',
+      },
+      Google: {
+        primary: 'Google_Pixel_8_Pro_256GB',
+        secondary: 'Google_Pixel_8_128GB',
+        premium: 'Google_Pixel_9_Pro_256GB',
+      },
+      Xiaomi: {
+        primary: 'Xiaomi_14_Ultra',
+        secondary: 'Xiaomi_14',
+        premium: 'Xiaomi_15_Ultra',
+      },
+      OnePlus: {
+        primary: 'OnePlus_12_256GB',
+        secondary: 'OnePlus_11',
+        premium: 'OnePlus_12R',
+      },
+      Oppo: {
+        primary: 'Oppo_Find_X7_Ultra',
+        secondary: 'Oppo_Find_X7',
+        premium: 'Oppo_Find_X8_Pro',
+      },
+      Vivo: {
+        primary: 'Vivo_X100_Pro',
+        secondary: 'Vivo_X100',
+        premium: 'Vivo_X100_Ultra',
+      },
+      Realme: {
+        primary: 'Realme_GT5_Pro',
+        secondary: 'Realme_GT5',
+        premium: 'Realme_GT6',
+      },
+      Huawei: {
+        primary: 'Huawei_P60_Pro',
+        secondary: 'Huawei_P60',
+        premium: 'Huawei_Mate_60_Pro',
+      },
+      Honor: {
+        primary: 'Honor_90',
+        secondary: 'Honor_80_Pro',
+        premium: 'Honor_Magic6_Pro',
+      },
+      Motorola: {
+        primary: 'Motorola_Edge_50_Pro',
+        secondary: 'Motorola_Edge_50',
+        premium: 'Motorola_Edge_50_Ultra',
+      },
+      Nokia: {
+        primary: 'Nokia_X30',
+        secondary: 'Nokia_X20',
+        premium: 'Nokia_G60',
+      },
     }
 
-    const response = await $fetch<{
-      currency_symbol: string
-      price: number
-      model_used: string
-      accuracy_info?: {
-        r2_score: number
-        note: string
-      }
-    }>('/api/advanced/predict', {
-      method: 'POST',
-      body: payload,
-    })
+    const models = modelMap[company]
+    if (!models) {
+      return '/images/placeholder-phone.jpg' // Fallback image
+    }
 
-    result.value = response
-    processingTime.value = Date.now() - startTime
-  } catch (error) {
-    console.error('Advanced prediction error:', error)
-    alert('Prediction failed. Please check your inputs and try again.')
-  } finally {
-    isLoading.value = false
+    const modelDir = models[type] || models.primary
+    const imageName = `${modelDir}_1.jpg`
+
+    return `/mobile_images/${modelDir}/${imageName}`
   }
-}
+
+  function getPhoneModelName(company: string, type: string): string {
+    const modelMap: Record<string, Record<string, string>> = {
+      Apple: {
+        primary: 'iPhone 16 128GB',
+        secondary: 'iPhone 16 Plus 256GB',
+        premium: 'iPhone 16 Pro Max 512GB',
+      },
+      Samsung: {
+        primary: 'Galaxy S24 Ultra',
+        secondary: 'Galaxy S24+',
+        premium: 'Galaxy Z Fold 5',
+      },
+      Google: {
+        primary: 'Pixel 8 Pro',
+        secondary: 'Pixel 8',
+        premium: 'Pixel 9 Pro',
+      },
+      Xiaomi: {
+        primary: '14 Ultra',
+        secondary: '14 Pro',
+        premium: '15 Ultra',
+      },
+    }
+
+    return modelMap[company]?.[type] || `${company} Phone`
+  }
+
+  function handleImageError(event: Event): void {
+    // Fallback to a default image or hide the image
+    const target = event.target as HTMLImageElement
+    target.style.display = 'none'
+    const nextSibling = target.nextElementSibling as HTMLElement
+    if (nextSibling) {
+      nextSibling.textContent = 'Image not available'
+    }
+  }
+
+  // Run prediction
+  async function runAdvancedPrediction() {
+    if (!canPredict.value || isLoading.value) return
+
+    isLoading.value = true
+    const startTime = Date.now()
+
+    try {
+      const payload = {
+        modelType: selectedModel.value,
+        currency: selectedCurrency.value,
+        ram: parseFloat(form.value.ram),
+        battery: parseFloat(form.value.battery),
+        screen: parseFloat(form.value.screen),
+        weight: parseFloat(form.value.weight),
+        year: parseInt(form.value.year),
+        company: form.value.company,
+        front_camera: form.value.front_camera ? parseFloat(form.value.front_camera) : undefined,
+        back_camera: form.value.back_camera ? parseFloat(form.value.back_camera) : undefined,
+        processor: form.value.processor || undefined,
+        storage: form.value.storage ? parseFloat(form.value.storage) : undefined,
+      }
+
+      const response = await $fetch<{
+        currency_symbol: string
+        price: number
+        model_used: string
+        accuracy_info?: {
+          r2_score: number
+          note: string
+        }
+      }>('/api/advanced/predict', {
+        method: 'POST',
+        body: payload,
+      })
+
+      result.value = response
+      processingTime.value = Date.now() - startTime
+    } catch (error) {
+      console.error('Advanced prediction error:', error)
+      alert('Prediction failed. Please check your inputs and try again.')
+    } finally {
+      isLoading.value = false
+    }
+  }
 </script>

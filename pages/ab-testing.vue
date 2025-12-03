@@ -363,311 +363,312 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+  import { ref, computed, onMounted } from 'vue'
 
-// Type definitions
-interface Model {
-  type: string
-  name: string
-  description: string
-  category: string
-  available: boolean
-}
-
-interface TestResults {
-  status: string
-  duration: number
-  winner: string
-  confidence: string
-  effectSize: string
-  practicalSignificance: string
-  rejectNull: boolean
-  modelA: {
+  // Type definitions
+  interface Model {
+    type: string
     name: string
-    mean: number
-    std: number
-    mae: number
-    r2: number
-  }
-  modelB: {
-    name: string
-    mean: number
-    std: number
-    mae: number
-    r2: number
-  }
-  recommendation: string
-  businessImpact: string
-  nextSteps: string[]
-}
-
-// Test configuration
-const testConfig = ref({
-  name: '',
-  type: 'accuracy',
-  sampleSize: '100',
-  confidence: '95',
-  nullHypothesis: '',
-  altHypothesis: '',
-})
-
-// Available data
-const availableModels = ref<Model[]>([])
-const selectedModelsForTest = ref<string[]>([])
-const runningTest = ref(false)
-const testResults = ref<TestResults | null>(null)
-
-// Chart references
-const distributionChart = ref<HTMLCanvasElement | null>(null)
-const errorChart = ref<HTMLCanvasElement | null>(null)
-let distChartInstance: any = null
-let errorChartInstance: any = null
-
-// Options
-const testTypes = [
-  { label: 'Accuracy Comparison', value: 'accuracy' },
-  { label: 'Performance Comparison', value: 'performance' },
-  { label: 'Robustness Test', value: 'robustness' },
-]
-
-const confidenceLevels = [
-  { label: '90% Confidence', value: '90' },
-  { label: '95% Confidence', value: '95' },
-  { label: '99% Confidence', value: '99' },
-]
-
-const canStartTest = computed(() => {
-  return (
-    testConfig.value.name &&
-    testConfig.value.type &&
-    testConfig.value.sampleSize &&
-    selectedModelsForTest.value.length === 2 &&
-    testConfig.value.nullHypothesis &&
-    testConfig.value.altHypothesis
-  )
-})
-
-// Load available models
-onMounted(async () => {
-  try {
-    const response = await $fetch<{ models: Model[] }>('/api/advanced/models')
-    availableModels.value = response.models
-  } catch (err) {
-    console.error('Failed to load models:', err)
-  }
-})
-
-const getModelIcon = (category: string) => {
-  const icons: Record<string, string> = {
-    sklearn: '🧠',
-    xgboost: '🚀',
-    ensemble: '🔗',
-    distilled: '⚡',
-    currency: '💰',
-  }
-  return icons[category] || '🤖'
-}
-
-const toggleTestModelSelection = (modelType: string) => {
-  const index = selectedModelsForTest.value.indexOf(modelType)
-  if (index > -1) {
-    selectedModelsForTest.value.splice(index, 1)
-  } else if (selectedModelsForTest.value.length < 2) {
-    selectedModelsForTest.value.push(modelType)
-  }
-}
-
-const loadExampleTest = () => {
-  testConfig.value = {
-    name: 'XGBoost vs Ensemble Accuracy Test',
-    type: 'accuracy',
-    sampleSize: '100',
-    confidence: '95',
-    nullHypothesis:
-      'There is no significant difference in price prediction accuracy between XGBoost and Ensemble models',
-    altHypothesis: 'XGBoost has significantly better price prediction accuracy than Ensemble model',
+    description: string
+    category: string
+    available: boolean
   }
 
-  // Select first two available models
-  const availableTypes = availableModels.value
-    .filter(model => model.available)
-    .map(model => model.type)
-  selectedModelsForTest.value = availableTypes.slice(0, 2)
-}
-
-const startABTest = async () => {
-  if (!canStartTest.value || runningTest.value) return
-
-  runningTest.value = true
-  testResults.value = null
-
-  try {
-    const payload = {
-      testConfig: testConfig.value,
-      models: selectedModelsForTest.value,
-      sampleSize: parseInt(testConfig.value.sampleSize),
-      confidence: parseFloat(testConfig.value.confidence) / 100,
-    }
-
-    const response = await $fetch<TestResults>('/api/ab-testing/run', {
-      method: 'POST',
-      body: payload,
-    })
-
-    testResults.value = response
-
-    // Create charts after results are loaded
-    await nextTick()
-    createCharts()
-  } catch (err: any) {
-    console.error('A/B test failed:', err)
-    // For demo purposes, create mock results
-    testResults.value = createMockResults()
-    await nextTick()
-    createCharts()
-  } finally {
-    runningTest.value = false
-  }
-}
-
-const createMockResults = (): TestResults => {
-  const modelA = availableModels.value.find(m => m.type === selectedModelsForTest.value[0])
-  const modelB = availableModels.value.find(m => m.type === selectedModelsForTest.value[1])
-
-  const modelAName = modelA?.name || 'Model A'
-  const modelBName = modelB?.name || 'Model B'
-
-  return {
-    status: 'completed',
-    duration: Math.floor(Math.random() * 2000) + 1000,
-    winner: Math.random() > 0.5 ? modelAName : modelBName,
-    confidence: testConfig.value.confidence,
-    effectSize: (Math.random() * 0.3 + 0.1).toFixed(3),
-    practicalSignificance: Math.random() > 0.5 ? 'Small effect' : 'Medium effect',
-    rejectNull: Math.random() > 0.3,
+  interface TestResults {
+    status: string
+    duration: number
+    winner: string
+    confidence: string
+    effectSize: string
+    practicalSignificance: string
+    rejectNull: boolean
     modelA: {
-      name: modelAName,
-      mean: Math.random() * 200 + 300,
-      std: Math.random() * 50 + 20,
-      mae: Math.random() * 30 + 10,
-      r2: Math.random() * 0.3 + 0.7,
-    },
+      name: string
+      mean: number
+      std: number
+      mae: number
+      r2: number
+    }
     modelB: {
-      name: modelBName,
-      mean: Math.random() * 200 + 300,
-      std: Math.random() * 50 + 20,
-      mae: Math.random() * 30 + 10,
-      r2: Math.random() * 0.3 + 0.7,
-    },
-    recommendation: `Based on the A/B test results, we recommend using ${Math.random() > 0.5 ? modelAName : modelBName} for production deployment due to its superior performance metrics.`,
-    businessImpact:
-      'Expected improvement in price prediction accuracy could lead to better inventory management and increased customer satisfaction.',
-    nextSteps: [
-      'Deploy the winning model to production',
-      'Monitor performance metrics for 30 days',
-      'Consider running follow-up tests with different datasets',
-      'Document the test results and methodology',
-    ],
-  }
-}
-
-const createCharts = () => {
-  if (!distributionChart.value || !errorChart.value || !testResults.value) return
-
-  // Destroy existing charts
-  if (distChartInstance) distChartInstance.destroy()
-  if (errorChartInstance) errorChartInstance.destroy()
-
-  // Create distribution chart
-  const distCtx = distributionChart.value?.getContext('2d')
-  const distData = {
-    labels: [testResults.value.modelA.name, testResults.value.modelB.name],
-    datasets: [
-      {
-        label: 'Mean Price',
-        data: [testResults.value.modelA.mean, testResults.value.modelB.mean],
-        backgroundColor: ['rgba(59, 130, 246, 0.8)', 'rgba(34, 197, 94, 0.8)'],
-        borderColor: ['rgb(59, 130, 246)', 'rgb(34, 197, 94)'],
-        borderWidth: 2,
-      },
-    ],
-  }
-
-  // Create error chart
-  const errorCtx = errorChart.value?.getContext('2d')
-  const errorData = {
-    labels: [testResults.value.modelA.name, testResults.value.modelB.name],
-    datasets: [
-      {
-        label: 'Mean Absolute Error',
-        data: [testResults.value.modelA.mae, testResults.value.modelB.mae],
-        backgroundColor: ['rgba(239, 68, 68, 0.8)', 'rgba(245, 158, 11, 0.8)'],
-        borderColor: ['rgb(239, 68, 68)', 'rgb(245, 158, 11)'],
-        borderWidth: 2,
-      },
-    ],
-  }
-
-  const chartConfig = {
-    type: 'bar',
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: { y: { beginAtZero: true } },
-    },
-  }
-
-  // Import Chart.js dynamically
-  import('chart.js').then(({ Chart }) => {
-    if (distCtx) {
-      distChartInstance = new Chart(distCtx, {
-        ...chartConfig,
-        data: distData,
-        type: 'bar' as const,
-      })
+      name: string
+      mean: number
+      std: number
+      mae: number
+      r2: number
     }
-    if (errorCtx) {
-      errorChartInstance = new Chart(errorCtx, {
-        ...chartConfig,
-        data: errorData,
-        type: 'bar' as const,
-      })
-    }
-  })
-}
+    recommendation: string
+    businessImpact: string
+    nextSteps: string[]
+  }
 
-const resetTest = () => {
-  testConfig.value = {
+  // Test configuration
+  const testConfig = ref({
     name: '',
     type: 'accuracy',
     sampleSize: '100',
     confidence: '95',
     nullHypothesis: '',
     altHypothesis: '',
+  })
+
+  // Available data
+  const availableModels = ref<Model[]>([])
+  const selectedModelsForTest = ref<string[]>([])
+  const runningTest = ref(false)
+  const testResults = ref<TestResults | null>(null)
+
+  // Chart references
+  const distributionChart = ref<HTMLCanvasElement | null>(null)
+  const errorChart = ref<HTMLCanvasElement | null>(null)
+  let distChartInstance: any = null
+  let errorChartInstance: any = null
+
+  // Options
+  const testTypes = [
+    { label: 'Accuracy Comparison', value: 'accuracy' },
+    { label: 'Performance Comparison', value: 'performance' },
+    { label: 'Robustness Test', value: 'robustness' },
+  ]
+
+  const confidenceLevels = [
+    { label: '90% Confidence', value: '90' },
+    { label: '95% Confidence', value: '95' },
+    { label: '99% Confidence', value: '99' },
+  ]
+
+  const canStartTest = computed(() => {
+    return (
+      testConfig.value.name &&
+      testConfig.value.type &&
+      testConfig.value.sampleSize &&
+      selectedModelsForTest.value.length === 2 &&
+      testConfig.value.nullHypothesis &&
+      testConfig.value.altHypothesis
+    )
+  })
+
+  // Load available models
+  onMounted(async () => {
+    try {
+      const response = await $fetch<{ models: Model[] }>('/api/advanced/models')
+      availableModels.value = response.models
+    } catch (err) {
+      console.error('Failed to load models:', err)
+    }
+  })
+
+  const getModelIcon = (category: string) => {
+    const icons: Record<string, string> = {
+      sklearn: '🧠',
+      xgboost: '🚀',
+      ensemble: '🔗',
+      distilled: '⚡',
+      currency: '💰',
+    }
+    return icons[category] || '🤖'
   }
-  selectedModelsForTest.value = []
-  testResults.value = null
 
-  // Destroy charts
-  if (distChartInstance) distChartInstance.destroy()
-  if (errorChartInstance) errorChartInstance.destroy()
-  distChartInstance = null
-  errorChartInstance = null
-}
+  const toggleTestModelSelection = (modelType: string) => {
+    const index = selectedModelsForTest.value.indexOf(modelType)
+    if (index > -1) {
+      selectedModelsForTest.value.splice(index, 1)
+    } else if (selectedModelsForTest.value.length < 2) {
+      selectedModelsForTest.value.push(modelType)
+    }
+  }
 
-const navigateTo = (path: string) => {
-  useRouter().push(path)
-}
+  const loadExampleTest = () => {
+    testConfig.value = {
+      name: 'XGBoost vs Ensemble Accuracy Test',
+      type: 'accuracy',
+      sampleSize: '100',
+      confidence: '95',
+      nullHypothesis:
+        'There is no significant difference in price prediction accuracy between XGBoost and Ensemble models',
+      altHypothesis:
+        'XGBoost has significantly better price prediction accuracy than Ensemble model',
+    }
 
-// Set page metadata
-useHead({
-  title: 'A/B Testing Framework - Mobile Finder',
-  meta: [
-    {
-      name: 'description',
-      content: 'Run statistical A/B tests to compare machine learning model performance',
-    },
-  ],
-})
+    // Select first two available models
+    const availableTypes = availableModels.value
+      .filter(model => model.available)
+      .map(model => model.type)
+    selectedModelsForTest.value = availableTypes.slice(0, 2)
+  }
+
+  const startABTest = async () => {
+    if (!canStartTest.value || runningTest.value) return
+
+    runningTest.value = true
+    testResults.value = null
+
+    try {
+      const payload = {
+        testConfig: testConfig.value,
+        models: selectedModelsForTest.value,
+        sampleSize: parseInt(testConfig.value.sampleSize),
+        confidence: parseFloat(testConfig.value.confidence) / 100,
+      }
+
+      const response = await $fetch<TestResults>('/api/ab-testing/run', {
+        method: 'POST',
+        body: payload,
+      })
+
+      testResults.value = response
+
+      // Create charts after results are loaded
+      await nextTick()
+      createCharts()
+    } catch (err: any) {
+      console.error('A/B test failed:', err)
+      // For demo purposes, create mock results
+      testResults.value = createMockResults()
+      await nextTick()
+      createCharts()
+    } finally {
+      runningTest.value = false
+    }
+  }
+
+  const createMockResults = (): TestResults => {
+    const modelA = availableModels.value.find(m => m.type === selectedModelsForTest.value[0])
+    const modelB = availableModels.value.find(m => m.type === selectedModelsForTest.value[1])
+
+    const modelAName = modelA?.name || 'Model A'
+    const modelBName = modelB?.name || 'Model B'
+
+    return {
+      status: 'completed',
+      duration: Math.floor(Math.random() * 2000) + 1000,
+      winner: Math.random() > 0.5 ? modelAName : modelBName,
+      confidence: testConfig.value.confidence,
+      effectSize: (Math.random() * 0.3 + 0.1).toFixed(3),
+      practicalSignificance: Math.random() > 0.5 ? 'Small effect' : 'Medium effect',
+      rejectNull: Math.random() > 0.3,
+      modelA: {
+        name: modelAName,
+        mean: Math.random() * 200 + 300,
+        std: Math.random() * 50 + 20,
+        mae: Math.random() * 30 + 10,
+        r2: Math.random() * 0.3 + 0.7,
+      },
+      modelB: {
+        name: modelBName,
+        mean: Math.random() * 200 + 300,
+        std: Math.random() * 50 + 20,
+        mae: Math.random() * 30 + 10,
+        r2: Math.random() * 0.3 + 0.7,
+      },
+      recommendation: `Based on the A/B test results, we recommend using ${Math.random() > 0.5 ? modelAName : modelBName} for production deployment due to its superior performance metrics.`,
+      businessImpact:
+        'Expected improvement in price prediction accuracy could lead to better inventory management and increased customer satisfaction.',
+      nextSteps: [
+        'Deploy the winning model to production',
+        'Monitor performance metrics for 30 days',
+        'Consider running follow-up tests with different datasets',
+        'Document the test results and methodology',
+      ],
+    }
+  }
+
+  const createCharts = () => {
+    if (!distributionChart.value || !errorChart.value || !testResults.value) return
+
+    // Destroy existing charts
+    if (distChartInstance) distChartInstance.destroy()
+    if (errorChartInstance) errorChartInstance.destroy()
+
+    // Create distribution chart
+    const distCtx = distributionChart.value?.getContext('2d')
+    const distData = {
+      labels: [testResults.value.modelA.name, testResults.value.modelB.name],
+      datasets: [
+        {
+          label: 'Mean Price',
+          data: [testResults.value.modelA.mean, testResults.value.modelB.mean],
+          backgroundColor: ['rgba(59, 130, 246, 0.8)', 'rgba(34, 197, 94, 0.8)'],
+          borderColor: ['rgb(59, 130, 246)', 'rgb(34, 197, 94)'],
+          borderWidth: 2,
+        },
+      ],
+    }
+
+    // Create error chart
+    const errorCtx = errorChart.value?.getContext('2d')
+    const errorData = {
+      labels: [testResults.value.modelA.name, testResults.value.modelB.name],
+      datasets: [
+        {
+          label: 'Mean Absolute Error',
+          data: [testResults.value.modelA.mae, testResults.value.modelB.mae],
+          backgroundColor: ['rgba(239, 68, 68, 0.8)', 'rgba(245, 158, 11, 0.8)'],
+          borderColor: ['rgb(239, 68, 68)', 'rgb(245, 158, 11)'],
+          borderWidth: 2,
+        },
+      ],
+    }
+
+    const chartConfig = {
+      type: 'bar',
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true } },
+      },
+    }
+
+    // Import Chart.js dynamically
+    import('chart.js').then(({ Chart }) => {
+      if (distCtx) {
+        distChartInstance = new Chart(distCtx, {
+          ...chartConfig,
+          data: distData,
+          type: 'bar' as const,
+        })
+      }
+      if (errorCtx) {
+        errorChartInstance = new Chart(errorCtx, {
+          ...chartConfig,
+          data: errorData,
+          type: 'bar' as const,
+        })
+      }
+    })
+  }
+
+  const resetTest = () => {
+    testConfig.value = {
+      name: '',
+      type: 'accuracy',
+      sampleSize: '100',
+      confidence: '95',
+      nullHypothesis: '',
+      altHypothesis: '',
+    }
+    selectedModelsForTest.value = []
+    testResults.value = null
+
+    // Destroy charts
+    if (distChartInstance) distChartInstance.destroy()
+    if (errorChartInstance) errorChartInstance.destroy()
+    distChartInstance = null
+    errorChartInstance = null
+  }
+
+  const navigateTo = (path: string) => {
+    useRouter().push(path)
+  }
+
+  // Set page metadata
+  useHead({
+    title: 'A/B Testing Framework - Mobile Finder',
+    meta: [
+      {
+        name: 'description',
+        content: 'Run statistical A/B tests to compare machine learning model performance',
+      },
+    ],
+  })
 </script>

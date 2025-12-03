@@ -353,265 +353,267 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useHead } from '#imports'
-import { useApiConfig } from '../composables/useApiConfig'
-import { useMobileImage } from '../composables/useMobileImage'
-import { useRouter } from 'vue-router'
+  import { ref, watch } from 'vue'
+  import { useHead } from '#imports'
+  import { useApiConfig } from '../composables/useApiConfig'
+  import { useMobileImage } from '../composables/useMobileImage'
+  import { useRouter } from 'vue-router'
 
-// Use mobile image composable for image handling
-const { handleImageError } = useMobileImage()
+  // Use mobile image composable for image handling
+  const { handleImageError } = useMobileImage()
 
-interface PhoneModel {
-  modelName: string
-  company: string
-  price: number
-  ram: number
-  battery: number
-  screenSize: number
-  weight: number
-  year: number
-  frontCamera?: number
-  backCamera?: number
-  storage?: number
-  processor?: string
-  displayType?: string
-  refreshRate?: number
-  resolution?: string
-  imageUrl?: string
-}
-
-interface SearchResponse {
-  models: PhoneModel[]
-  totalCount: number
-  filteredCount: number
-  filters: any
-  pagination: {
-    limit: number
-    offset: number
-    hasMore: boolean
-  }
-}
-
-const filters = ref({
-  brands: [] as string[],
-  minPrice: undefined as number | undefined,
-  maxPrice: undefined as number | undefined,
-  minRam: undefined as number | undefined,
-  maxRam: undefined as number | undefined,
-  minBattery: undefined as number | undefined,
-  maxBattery: undefined as number | undefined,
-  modelName: undefined as string | undefined,
-  years: [] as number[],
-})
-
-const sortBy = ref('price')
-const sortOrder = ref<'asc' | 'desc'>('asc')
-const loading = ref(false)
-const error = ref<string | null>(null)
-const results = ref<SearchResponse | null>(null)
-const currentOffset = ref(0)
-const limit = 20
-
-// Model selection for comparison
-const selectedModelsForComparison = ref<string[]>([])
-
-// Available models for selected brands
-const availableModels = ref<string[]>([])
-
-// Available brands (you can fetch this from API or hardcode)
-const availableBrands = [
-  'Apple',
-  'Samsung',
-  'Xiaomi',
-  'OnePlus',
-  'Google',
-  'Realme',
-  'Oppo',
-  'Vivo',
-  'Huawei',
-  'Sony',
-  'Motorola',
-  'Nokia',
-  'Nothing',
-  'Asus',
-  'LG',
-  'Tecno',
-  'Infinix',
-  'POCO',
-  'Redmi',
-]
-
-// Year options - converted to objects for USelectMenu
-const yearOptions = [
-  { label: '2025', value: 2025 },
-  { label: '2024', value: 2024 },
-  { label: '2023', value: 2023 },
-  { label: '2022', value: 2022 },
-  { label: '2021', value: 2021 },
-  { label: '2020', value: 2020 },
-  { label: '2019', value: 2019 },
-  { label: '2018', value: 2018 },
-  { label: '2017', value: 2017 },
-  { label: '2016', value: 2016 },
-  { label: '2015', value: 2015 },
-]
-
-const sortOptions = [
-  { label: 'Price', value: 'price' },
-  { label: 'RAM', value: 'ram' },
-  { label: 'Battery', value: 'battery' },
-  { label: 'Screen Size', value: 'screen' },
-  { label: 'Year', value: 'year' },
-]
-
-const { pythonApiUrl } = useApiConfig()
-const router = useRouter()
-
-// Fetch available models for selected brands
-const fetchAvailableModels = async (brands: string[]) => {
-  if (brands.length === 0) {
-    availableModels.value = []
-    filters.value.modelName = undefined
-    return
+  interface PhoneModel {
+    modelName: string
+    company: string
+    price: number
+    ram: number
+    battery: number
+    screenSize: number
+    weight: number
+    year: number
+    frontCamera?: number
+    backCamera?: number
+    storage?: number
+    processor?: string
+    displayType?: string
+    refreshRate?: number
+    resolution?: string
+    imageUrl?: string
   }
 
-  try {
-    const params = brands.map(brand => `brands=${encodeURIComponent(brand)}`).join('&')
-    const models = await $fetch<string[]>(`${pythonApiUrl}/api/dataset/models-by-company?${params}`)
-    availableModels.value = models
-  } catch (err) {
-    console.error('Error fetching models:', err)
-    availableModels.value = []
-  }
-}
-
-// Watch for brand changes and update available models
-watch(
-  () => filters.value.brands,
-  async (newBrands: string[]) => {
-    await fetchAvailableModels(newBrands)
-  },
-  { deep: true }
-)
-
-const searchModels = async (offset = 0) => {
-  loading.value = true
-  error.value = null
-  currentOffset.value = offset
-
-  try {
-    const searchParams = new URLSearchParams()
-    searchParams.append('sortBy', sortBy.value)
-    searchParams.append('sortOrder', sortOrder.value)
-    searchParams.append('limit', limit.toString())
-    searchParams.append('offset', offset.toString())
-
-    if (filters.value.brands.length > 0) {
-      filters.value.brands.forEach((b: string) => searchParams.append('brand', b))
-    }
-    if (filters.value.minPrice != undefined)
-      searchParams.append('minPrice', filters.value.minPrice.toString())
-    if (filters.value.maxPrice != undefined)
-      searchParams.append('maxPrice', filters.value.maxPrice.toString())
-    if (filters.value.minRam != undefined)
-      searchParams.append('minRam', filters.value.minRam.toString())
-    if (filters.value.maxRam != undefined)
-      searchParams.append('maxRam', filters.value.maxRam.toString())
-    if (filters.value.minBattery != undefined)
-      searchParams.append('minBattery', filters.value.minBattery.toString())
-    if (filters.value.maxBattery != undefined)
-      searchParams.append('maxBattery', filters.value.maxBattery.toString())
-    if (filters.value.years.length > 0) {
-      filters.value.years.forEach((y: number) => searchParams.append('year', y.toString()))
-    }
-    if (filters.value.modelName) searchParams.append('modelName', filters.value.modelName)
-
-    const data = await $fetch<SearchResponse>(
-      `${pythonApiUrl}/api/dataset/search?${searchParams.toString()}`
-    )
-    results.value = data
-  } catch (err: any) {
-    error.value = err.message || 'Failed to search models'
-    console.error('Error:', err)
-  } finally {
-    loading.value = false
-  }
-}
-
-const resetFilters = () => {
-  filters.value = {
-    brands: [],
-    minPrice: undefined,
-    maxPrice: undefined,
-    minRam: undefined,
-    maxRam: undefined,
-    minBattery: undefined,
-    maxBattery: undefined,
-    modelName: undefined,
-    years: [],
-  }
-  sortBy.value = 'price'
-  sortOrder.value = 'asc'
-  results.value = null
-  currentOffset.value = 0
-}
-
-const loadNextPage = () => {
-  if (results.value && results.value.pagination.hasMore) {
-    searchModels(results.value.pagination.offset + limit)
-  }
-}
-
-const loadPreviousPage = () => {
-  if (results.value && results.value.pagination.offset >= limit) {
-    searchModels(results.value.pagination.offset - limit)
-  }
-}
-
-// Model selection functions
-const isModelSelected = (model: PhoneModel) => {
-  return selectedModelsForComparison.value.includes(model.modelName)
-}
-
-const toggleModelSelection = (model: PhoneModel, selected: boolean) => {
-  if (selected) {
-    if (
-      selectedModelsForComparison.value.length < 5 &&
-      !selectedModelsForComparison.value.includes(model.modelName)
-    ) {
-      selectedModelsForComparison.value.push(model.modelName)
-    }
-  } else {
-    const index = selectedModelsForComparison.value.indexOf(model.modelName)
-    if (index > -1) {
-      selectedModelsForComparison.value.splice(index, 1)
+  interface SearchResponse {
+    models: PhoneModel[]
+    totalCount: number
+    filteredCount: number
+    filters: any
+    pagination: {
+      limit: number
+      offset: number
+      hasMore: boolean
     }
   }
-}
 
-const clearModelSelection = () => {
-  selectedModelsForComparison.value = []
-}
+  const filters = ref({
+    brands: [] as string[],
+    minPrice: undefined as number | undefined,
+    maxPrice: undefined as number | undefined,
+    minRam: undefined as number | undefined,
+    maxRam: undefined as number | undefined,
+    minBattery: undefined as number | undefined,
+    maxBattery: undefined as number | undefined,
+    modelName: undefined as string | undefined,
+    years: [] as number[],
+  })
 
-const compareSelectedModels = () => {
-  if (selectedModelsForComparison.value.length >= 2) {
-    // Store in localStorage for the compare page
-    localStorage.setItem('comparison', JSON.stringify(selectedModelsForComparison.value))
-    // Navigate to compare page
-    router.push('/compare')
+  const sortBy = ref('price')
+  const sortOrder = ref<'asc' | 'desc'>('asc')
+  const loading = ref(false)
+  const error = ref<string | null>(null)
+  const results = ref<SearchResponse | null>(null)
+  const currentOffset = ref(0)
+  const limit = 20
+
+  // Model selection for comparison
+  const selectedModelsForComparison = ref<string[]>([])
+
+  // Available models for selected brands
+  const availableModels = ref<string[]>([])
+
+  // Available brands (you can fetch this from API or hardcode)
+  const availableBrands = [
+    'Apple',
+    'Samsung',
+    'Xiaomi',
+    'OnePlus',
+    'Google',
+    'Realme',
+    'Oppo',
+    'Vivo',
+    'Huawei',
+    'Sony',
+    'Motorola',
+    'Nokia',
+    'Nothing',
+    'Asus',
+    'LG',
+    'Tecno',
+    'Infinix',
+    'POCO',
+    'Redmi',
+  ]
+
+  // Year options - converted to objects for USelectMenu
+  const yearOptions = [
+    { label: '2025', value: 2025 },
+    { label: '2024', value: 2024 },
+    { label: '2023', value: 2023 },
+    { label: '2022', value: 2022 },
+    { label: '2021', value: 2021 },
+    { label: '2020', value: 2020 },
+    { label: '2019', value: 2019 },
+    { label: '2018', value: 2018 },
+    { label: '2017', value: 2017 },
+    { label: '2016', value: 2016 },
+    { label: '2015', value: 2015 },
+  ]
+
+  const sortOptions = [
+    { label: 'Price', value: 'price' },
+    { label: 'RAM', value: 'ram' },
+    { label: 'Battery', value: 'battery' },
+    { label: 'Screen Size', value: 'screen' },
+    { label: 'Year', value: 'year' },
+  ]
+
+  const { pythonApiUrl } = useApiConfig()
+  const router = useRouter()
+
+  // Fetch available models for selected brands
+  const fetchAvailableModels = async (brands: string[]) => {
+    if (brands.length === 0) {
+      availableModels.value = []
+      filters.value.modelName = undefined
+      return
+    }
+
+    try {
+      const params = brands.map(brand => `brands=${encodeURIComponent(brand)}`).join('&')
+      const models = await $fetch<string[]>(
+        `${pythonApiUrl}/api/dataset/models-by-company?${params}`
+      )
+      availableModels.value = models
+    } catch (err) {
+      console.error('Error fetching models:', err)
+      availableModels.value = []
+    }
   }
-}
 
-// Set page metadata
-useHead({
-  title: 'Advanced Search - Mobile Finder',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Search mobile phones by multiple criteria including brand, price, RAM, battery, and more',
+  // Watch for brand changes and update available models
+  watch(
+    () => filters.value.brands,
+    async (newBrands: string[]) => {
+      await fetchAvailableModels(newBrands)
     },
-  ],
-})
+    { deep: true }
+  )
+
+  const searchModels = async (offset = 0) => {
+    loading.value = true
+    error.value = null
+    currentOffset.value = offset
+
+    try {
+      const searchParams = new URLSearchParams()
+      searchParams.append('sortBy', sortBy.value)
+      searchParams.append('sortOrder', sortOrder.value)
+      searchParams.append('limit', limit.toString())
+      searchParams.append('offset', offset.toString())
+
+      if (filters.value.brands.length > 0) {
+        filters.value.brands.forEach((b: string) => searchParams.append('brand', b))
+      }
+      if (filters.value.minPrice != undefined)
+        searchParams.append('minPrice', filters.value.minPrice.toString())
+      if (filters.value.maxPrice != undefined)
+        searchParams.append('maxPrice', filters.value.maxPrice.toString())
+      if (filters.value.minRam != undefined)
+        searchParams.append('minRam', filters.value.minRam.toString())
+      if (filters.value.maxRam != undefined)
+        searchParams.append('maxRam', filters.value.maxRam.toString())
+      if (filters.value.minBattery != undefined)
+        searchParams.append('minBattery', filters.value.minBattery.toString())
+      if (filters.value.maxBattery != undefined)
+        searchParams.append('maxBattery', filters.value.maxBattery.toString())
+      if (filters.value.years.length > 0) {
+        filters.value.years.forEach((y: number) => searchParams.append('year', y.toString()))
+      }
+      if (filters.value.modelName) searchParams.append('modelName', filters.value.modelName)
+
+      const data = await $fetch<SearchResponse>(
+        `${pythonApiUrl}/api/dataset/search?${searchParams.toString()}`
+      )
+      results.value = data
+    } catch (err: any) {
+      error.value = err.message || 'Failed to search models'
+      console.error('Error:', err)
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const resetFilters = () => {
+    filters.value = {
+      brands: [],
+      minPrice: undefined,
+      maxPrice: undefined,
+      minRam: undefined,
+      maxRam: undefined,
+      minBattery: undefined,
+      maxBattery: undefined,
+      modelName: undefined,
+      years: [],
+    }
+    sortBy.value = 'price'
+    sortOrder.value = 'asc'
+    results.value = null
+    currentOffset.value = 0
+  }
+
+  const loadNextPage = () => {
+    if (results.value && results.value.pagination.hasMore) {
+      searchModels(results.value.pagination.offset + limit)
+    }
+  }
+
+  const loadPreviousPage = () => {
+    if (results.value && results.value.pagination.offset >= limit) {
+      searchModels(results.value.pagination.offset - limit)
+    }
+  }
+
+  // Model selection functions
+  const isModelSelected = (model: PhoneModel) => {
+    return selectedModelsForComparison.value.includes(model.modelName)
+  }
+
+  const toggleModelSelection = (model: PhoneModel, selected: boolean) => {
+    if (selected) {
+      if (
+        selectedModelsForComparison.value.length < 5 &&
+        !selectedModelsForComparison.value.includes(model.modelName)
+      ) {
+        selectedModelsForComparison.value.push(model.modelName)
+      }
+    } else {
+      const index = selectedModelsForComparison.value.indexOf(model.modelName)
+      if (index > -1) {
+        selectedModelsForComparison.value.splice(index, 1)
+      }
+    }
+  }
+
+  const clearModelSelection = () => {
+    selectedModelsForComparison.value = []
+  }
+
+  const compareSelectedModels = () => {
+    if (selectedModelsForComparison.value.length >= 2) {
+      // Store in localStorage for the compare page
+      localStorage.setItem('comparison', JSON.stringify(selectedModelsForComparison.value))
+      // Navigate to compare page
+      router.push('/compare')
+    }
+  }
+
+  // Set page metadata
+  useHead({
+    title: 'Advanced Search - Mobile Finder',
+    meta: [
+      {
+        name: 'description',
+        content:
+          'Search mobile phones by multiple criteria including brand, price, RAM, battery, and more',
+      },
+    ],
+  })
 </script>

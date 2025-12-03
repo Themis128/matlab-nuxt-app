@@ -306,136 +306,136 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useHead } from '#imports'
-import { useMobileImage } from '../composables/useMobileImage'
+  import { ref, computed } from 'vue'
+  import { useHead } from '#imports'
+  import { useMobileImage } from '../composables/useMobileImage'
 
-interface PhoneModel {
-  modelName: string
-  company: string
-  price: number
-  ram: number
-  battery: number
-  screenSize: number
-  weight: number
-  year: number
-  frontCamera?: number
-  backCamera?: number
-  storage?: number
-  processor?: string
-  displayType?: string
-  refreshRate?: number
-  resolution?: string
-}
-
-interface ModelsByPriceResponse {
-  models: PhoneModel[]
-  totalCount: number
-  priceRange: {
-    min: number
-    max: number
-    requested: number
-    tolerance: number
-  }
-  brands: string[]
-}
-
-const searchPrice = ref<number | undefined>(undefined)
-const tolerance = ref(0.2) // 20% default
-const loading = ref(false)
-const error = ref<string | null>(null)
-const results = ref<ModelsByPriceResponse | null>(null)
-const selectedBrands = ref<string[]>([])
-const priceRange = computed(() => results.value?.priceRange)
-
-const searchModels = async () => {
-  // For testing purposes, always use a default price if none is provided
-  if (!searchPrice.value || searchPrice.value <= 0) {
-    searchPrice.value = 500
+  interface PhoneModel {
+    modelName: string
+    company: string
+    price: number
+    ram: number
+    battery: number
+    screenSize: number
+    weight: number
+    year: number
+    frontCamera?: number
+    backCamera?: number
+    storage?: number
+    processor?: string
+    displayType?: string
+    refreshRate?: number
+    resolution?: string
   }
 
-  loading.value = true
-  error.value = null
-  results.value = null
-  selectedBrands.value = []
+  interface ModelsByPriceResponse {
+    models: PhoneModel[]
+    totalCount: number
+    priceRange: {
+      min: number
+      max: number
+      requested: number
+      tolerance: number
+    }
+    brands: string[]
+  }
 
-  try {
-    const searchParams = new URLSearchParams()
-    searchParams.append('price', searchPrice.value.toString())
-    searchParams.append('tolerance', tolerance.value.toString())
-    searchParams.append('maxResults', '100')
+  const searchPrice = ref<number | undefined>(undefined)
+  const tolerance = ref(0.2) // 20% default
+  const loading = ref(false)
+  const error = ref<string | null>(null)
+  const results = ref<ModelsByPriceResponse | null>(null)
+  const selectedBrands = ref<string[]>([])
+  const priceRange = computed(() => results.value?.priceRange)
 
-    const data = await $fetch<ModelsByPriceResponse>(
-      `/api/dataset/models-by-price?${searchParams.toString()}`
-    )
-    results.value = data
-    // Clear any previous errors
+  const searchModels = async () => {
+    // For testing purposes, always use a default price if none is provided
+    if (!searchPrice.value || searchPrice.value <= 0) {
+      searchPrice.value = 500
+    }
+
+    loading.value = true
     error.value = null
+    results.value = null
+    selectedBrands.value = []
 
-    // Select all brands by default if we have results
-    if (data.brands.length > 0) {
-      selectedBrands.value = [...data.brands]
-    } else {
-      selectedBrands.value = []
-    }
+    try {
+      const searchParams = new URLSearchParams()
+      searchParams.append('price', searchPrice.value.toString())
+      searchParams.append('tolerance', tolerance.value.toString())
+      searchParams.append('maxResults', '100')
 
-    // Show helpful message if no results
-    if (data.totalCount === 0) {
-      error.value = `No models found in the price range $${data.priceRange.min.toFixed(2)} - $${data.priceRange.max.toFixed(2)}. Try adjusting the price tolerance or search with a different price.`
-    } else {
-      // Clear error if we have results
+      const data = await $fetch<ModelsByPriceResponse>(
+        `/api/dataset/models-by-price?${searchParams.toString()}`
+      )
+      results.value = data
+      // Clear any previous errors
       error.value = null
+
+      // Select all brands by default if we have results
+      if (data.brands.length > 0) {
+        selectedBrands.value = [...data.brands]
+      } else {
+        selectedBrands.value = []
+      }
+
+      // Show helpful message if no results
+      if (data.totalCount === 0) {
+        error.value = `No models found in the price range $${data.priceRange.min.toFixed(2)} - $${data.priceRange.max.toFixed(2)}. Try adjusting the price tolerance or search with a different price.`
+      } else {
+        // Clear error if we have results
+        error.value = null
+      }
+    } catch (err: any) {
+      error.value = err.message || 'Failed to search models'
+      console.error('Error:', err)
+    } finally {
+      loading.value = false
     }
-  } catch (err: any) {
-    error.value = err.message || 'Failed to search models'
-    console.error('Error:', err)
-  } finally {
-    loading.value = false
-  }
-}
-
-const toggleBrand = (brand: string) => {
-  const index = selectedBrands.value.indexOf(brand)
-  if (index > -1) {
-    selectedBrands.value.splice(index, 1)
-  } else {
-    selectedBrands.value.push(brand)
-  }
-}
-
-const filteredModels = computed(() => {
-  if (!results.value || !results.value.models) return []
-
-  // If no brands are selected but we have brands available, show all models
-  // This handles the case where selectedBrands might be empty initially
-  if (selectedBrands.value.length === 0) {
-    return results.value.models
   }
 
-  // Filter by selected brands
-  return results.value.models.filter((model: PhoneModel) =>
-    selectedBrands.value.includes(model.company)
-  )
-})
+  const toggleBrand = (brand: string) => {
+    const index = selectedBrands.value.indexOf(brand)
+    if (index > -1) {
+      selectedBrands.value.splice(index, 1)
+    } else {
+      selectedBrands.value.push(brand)
+    }
+  }
 
-// Use mobile image composable for image handling
-const { getImagePath: generateImagePath, handleImageError, placeholder } = useMobileImage()
+  const filteredModels = computed(() => {
+    if (!results.value || !results.value.models) return []
 
-// Get image path for a model
-const getImagePath = (model: PhoneModel): string => {
-  if (!model.company || !model.modelName) return placeholder
-  return generateImagePath(model.company, model.modelName, 1)
-}
+    // If no brands are selected but we have brands available, show all models
+    // This handles the case where selectedBrands might be empty initially
+    if (selectedBrands.value.length === 0) {
+      return results.value.models
+    }
 
-// Set page metadata
-useHead({
-  title: 'Find Models by Price - Deep Learning',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Search for mobile phone models by price and compare specifications across all brands',
-    },
-  ],
-})
+    // Filter by selected brands
+    return results.value.models.filter((model: PhoneModel) =>
+      selectedBrands.value.includes(model.company)
+    )
+  })
+
+  // Use mobile image composable for image handling
+  const { getImagePath: generateImagePath, handleImageError, placeholder } = useMobileImage()
+
+  // Get image path for a model
+  const getImagePath = (model: PhoneModel): string => {
+    if (!model.company || !model.modelName) return placeholder
+    return generateImagePath(model.company, model.modelName, 1)
+  }
+
+  // Set page metadata
+  useHead({
+    title: 'Find Models by Price - Deep Learning',
+    meta: [
+      {
+        name: 'description',
+        content:
+          'Search for mobile phone models by price and compare specifications across all brands',
+      },
+    ],
+  })
 </script>
