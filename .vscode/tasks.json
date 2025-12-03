@@ -26,6 +26,34 @@
       "isBackground": false,
       "problemMatcher": []
     }
+    ,
+    {
+      "label": "List TODOs (PowerShell)",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoLogo",
+        "-NoProfile",
+        "-Command",
+        "& '.\\scripts\\list-todos.ps1'"
+      ],
+      "presentation": {
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Check Critical TODOs (Node)",
+      "type": "shell",
+      "command": "node",
+      "args": [
+        "./scripts/check-critical-todos.js"
+      ],
+      "presentation": {
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    }
     {
       "label": "Dev: Frontend (Container)",
       "type": "shell",

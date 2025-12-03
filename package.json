@@ -53,7 +53,8 @@
     "cli:cline": "npx cline",
     "cli:cline:format": "npx cline --format compact",
     "cli:cline:check": "npx cline --check",
-    "precommit:cline": "npx cline --check"
+    "precommit:cline": "npx cline --check",
+    "check:todos": "node ./scripts/check-critical-todos.js"
   },
   "dependencies": {
     "@algolia/client-search": "^5.45.0",
@@ -144,6 +145,17 @@
     "pre-commit": "npm run precommit:check && npm run lint:yaml && npm run format && npx lint-staged && npm run lint && npm run typecheck"
   },
   "lint-staged": {
+    "*.{js,ts,vue}": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.{py}": [
+      "python -m pip install -U black && black"
+    ],
+    "*.{md,json,html}": [
+      "prettier --write",
+      "git add"
+    ],
     "*.{js,ts,vue,py,md,json,html}": [
       "node ./scripts/hooks/cline-check.cjs"
     ]

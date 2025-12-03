@@ -1949,6 +1949,19 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 If you use VS Code, see `docs/GITHUB_PR_EXTENSION.md` for recommended extensions and tips for using the GitHub Pull Requests extension with this repository.
 
+### Branch protection recommendations
+
+To keep the main branch stable, we recommend these branch protection rules in GitHub:
+
+- Require a pull request before merging (no direct pushes to `main`/`master`).
+- Require status checks to pass before merging:
+  - `Pull Request Quick Checks` — Fast feedback (typecheck, lint, pytest)
+  - `Build and Test` — Full test & deployment validation
+- Require review from code owners (`CODEOWNERS`) before merging.
+- Require at least one approving review and enforce linear history (rebase/merge) if desired.
+
+These settings ensure that the PR quick-checks run and that changes are reviewed before merging.
+
 ## 📄 License
 
 MIT License - see package.json for details.
