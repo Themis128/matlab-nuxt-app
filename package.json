@@ -98,7 +98,8 @@
     "lint-staged": "^13.2.0"
   },
   "optionalDependencies": {
-    "cline": "^1.0.7"
+    "cline": "^1.0.7",
+    "@involvex/cline-cli-win": "^1.1.17"
   },
   "overrides": {
     "glob": "10.1.0",
