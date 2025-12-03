@@ -20,11 +20,31 @@ const EXCLUDE_DIRS = [
   'dist',
   'playwright-report',
   '.parcel-cache',
-  'python_api/trained_models'
+  'python_api/trained_models',
 ]
 
 const TEXT_FILE_EXTENSIONS = [
-  '.js', '.ts', '.vue', '.m', '.py', '.ps1', '.sh', '.bash', '.json', '.yaml', '.yml', '.md', '.html', '.css', '.scss', '.txt', '.cjs', '.mjs', '.tsx', '.jsx', '.sql'
+  '.js',
+  '.ts',
+  '.vue',
+  '.m',
+  '.py',
+  '.ps1',
+  '.sh',
+  '.bash',
+  '.json',
+  '.yaml',
+  '.yml',
+  '.md',
+  '.html',
+  '.css',
+  '.scss',
+  '.txt',
+  '.cjs',
+  '.mjs',
+  '.tsx',
+  '.jsx',
+  '.sql',
 ]
 
 async function walkDir(dir) {
@@ -33,7 +53,7 @@ async function walkDir(dir) {
   for (const entry of entries) {
     const fullPath = path.join(dir, entry.name)
     if (entry.isDirectory()) {
-      if (EXCLUDE_DIRS.some((d) => fullPath.includes(path.normalize(d)))) continue
+      if (EXCLUDE_DIRS.some(d => fullPath.includes(path.normalize(d)))) continue
       files.push(...(await walkDir(fullPath)))
     } else if (entry.isFile()) {
       const ext = path.extname(entry.name).toLowerCase()
@@ -45,15 +65,20 @@ async function walkDir(dir) {
 
 async function scanFiles(root, tags, files = null) {
   const util = await import('util')
-  const nodePathFilter = (p) => {
+  const nodePathFilter = p => {
     // ignore binary or paths in EXCLUDE_DIRS
-    return !(EXCLUDE_DIRS.some((d) => p.includes(path.normalize(d))))
+    return !EXCLUDE_DIRS.some(d => p.includes(path.normalize(d)))
   }
   const fileList = files || (await walkDir(root)).filter(nodePathFilter)
   const results = []
   const tagsRegex = tags.join('|')
   // allow patterns like: FIXME, FIXME(@owner), FIXME(@owner): msg, FIXME @owner: msg
-  const re = new RegExp("(?:(?:\\/\\/|#|<!--|\\/\\*|\\*|%|;|--)\\s*)(?:" + tagsRegex + ")(?:\\([^)]*\\))?(?:\\s*@\\w+)?[:\\s-]*(.*)", 'i')
+  const re = new RegExp(
+    '(?:(?:\\/\\/|#|<!--|\\/\\*|\\*|%|;|--)\\s*)(?:' +
+      tagsRegex +
+      ')(?:\\([^)]*\\))?(?:\\s*@\\w+)?[:\\s-]*(.*)',
+    'i'
+  )
   for (const f of fileList) {
     try {
       const content = await fs.readFile(f, 'utf8')
@@ -100,8 +125,8 @@ async function main() {
   const root = process.cwd()
   const argv = process.argv.slice(2)
   const staged = argv.includes('--staged') || false
-  const filesArg = argv.find((a) => a.startsWith('--files='))
-  const baseArg = (argv.find((a) => a.startsWith('--base=')) || '').replace('--base=', '')
+  const filesArg = argv.find(a => a.startsWith('--files='))
+  const baseArg = (argv.find(a => a.startsWith('--base=')) || '').replace('--base=', '')
   let targetFiles = null
   if (staged) {
     try {
@@ -113,20 +138,26 @@ async function main() {
   }
   if (filesArg) {
     const val = filesArg.replace('--files=', '')
-    targetFiles = val.split(',').map((p) => p.trim()).filter(Boolean)
+    targetFiles = val
+      .split(',')
+      .map(p => p.trim())
+      .filter(Boolean)
   }
   if (baseArg) {
     try {
       // Fetch base and diff
       execSync(`git fetch origin ${baseArg}`, { stdio: 'ignore' })
-      const out = execSync(`git diff --name-only origin/${baseArg}...HEAD || git diff --name-only HEAD~1..HEAD`, { encoding: 'utf8' })
+      const out = execSync(
+        `git diff --name-only origin/${baseArg}...HEAD || git diff --name-only HEAD~1..HEAD`,
+        { encoding: 'utf8' }
+      )
       targetFiles = out.split(/\r?\n/).filter(Boolean)
     } catch (e) {
       // ignore
     }
   }
   const envTags = process.env.CRITICAL_TAGS
-  const tags = (envTags ? envTags.split(',') : DEFAULT_TAGS).map((t) => t.trim()).filter(Boolean)
+  const tags = (envTags ? envTags.split(',') : DEFAULT_TAGS).map(t => t.trim()).filter(Boolean)
   const matches = await scanFiles(root, tags, targetFiles)
   if (matches.length === 0) {
     console.warn('✅ No critical TODOs found.')

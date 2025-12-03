@@ -4,12 +4,14 @@ Consolidate all phone datasets into a single comprehensive CSV file.
 Combines data from multiple sources, handles duplicates, and prepares for model training.
 """
 
-import pandas as pd
-import numpy as np
-from pathlib import Path
 import os
-from typing import Dict, List, Tuple
 import warnings
+from pathlib import Path
+from typing import Dict, List, Tuple
+
+import numpy as np
+import pandas as pd
+
 warnings.filterwarnings('ignore')
 
 DATA_DIR = Path('data')

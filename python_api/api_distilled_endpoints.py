@@ -3,16 +3,18 @@ FastAPI endpoints for distilled model predictions
 Production-ready endpoint: 10x faster, 98% smaller, 100% accuracy retention
 """
 
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel, Field
 from typing import Optional
-from predictions_distilled import predict_price_distilled, get_distilled_predictor
+
+from fastapi import APIRouter, HTTPException
+from predictions_distilled import get_distilled_predictor, predict_price_distilled
+from pydantic import BaseModel, Field
 
 router = APIRouter(prefix="/api/distilled", tags=["Distilled Model (Production)"])
 
 
 class DistilledPriceRequest(BaseModel):
     """Request model for distilled price prediction"""
+
     ram: float = Field(..., description="RAM in GB", ge=1, le=32)
     battery: float = Field(..., description="Battery capacity in mAh", ge=1000, le=10000)
     screen: float = Field(..., description="Screen size in inches", ge=3.0, le=10.0)
@@ -27,6 +29,7 @@ class DistilledPriceRequest(BaseModel):
 
 class DistilledPriceResponse(BaseModel):
     """Response model for distilled price prediction"""
+
     predicted_price: float = Field(..., description="Predicted price in USD")
     model: str = Field(..., description="Model name used")
     speedup: str = Field(..., description="Speed improvement vs teacher")
@@ -39,6 +42,7 @@ class DistilledPriceResponse(BaseModel):
 
 class DistilledModelInfoResponse(BaseModel):
     """Response model for distilled model information"""
+
     available: bool = Field(..., description="Whether distilled model is available")
     model_path: Optional[str] = Field(None, description="Path to model file")
     model_size_kb: Optional[float] = Field(None, description="Model size in KB")
@@ -85,18 +89,18 @@ async def predict_price_distilled_endpoint(request: DistilledPriceRequest):
         # Get prediction
         result = predict_price_distilled(data)
 
-        if 'error' in result:
-            raise HTTPException(status_code=500, detail=result['error'])
+        if "error" in result:
+            raise HTTPException(status_code=500, detail=result["error"])
 
         return DistilledPriceResponse(
-            predicted_price=result['predicted_price'],
-            model=result['model'],
+            predicted_price=result["predicted_price"],
+            model=result["model"],
             speedup="10x faster than GBM teacher",
             accuracy_retention="100% (identical RMSE)",
             model_size="7.8 KB (98% smaller)",
             latency_ms="0.069ms average",
-            features_used=result.get('features_used', 18),
-            leakage_removed=result.get('leakage_removed', True)
+            features_used=result.get("features_used", 18),
+            leakage_removed=result.get("leakage_removed", True),
         )
 
     except HTTPException:
@@ -133,16 +137,16 @@ async def get_distilled_model_info():
         info = predictor.get_info()
 
         return DistilledModelInfoResponse(
-            available=info['available'],
-            model_path=info.get('model_path'),
-            model_size_kb=info.get('model_size_kb'),
-            speedup_factor=info.get('speedup_factor'),
-            accuracy_retention_pct=info.get('accuracy_retention_pct'),
-            avg_latency_ms=info.get('avg_latency_ms'),
-            features_required=info.get('features_required'),
-            features_count=info.get('features_count'),
-            size_reduction_pct=info.get('size_reduction_pct'),
-            leakage_features_removed=info.get('leakage_features_removed')
+            available=info["available"],
+            model_path=info.get("model_path"),
+            model_size_kb=info.get("model_size_kb"),
+            speedup_factor=info.get("speedup_factor"),
+            accuracy_retention_pct=info.get("accuracy_retention_pct"),
+            avg_latency_ms=info.get("avg_latency_ms"),
+            features_required=info.get("features_required"),
+            features_count=info.get("features_count"),
+            size_reduction_pct=info.get("size_reduction_pct"),
+            leakage_features_removed=info.get("leakage_features_removed"),
         )
 
     except Exception:
@@ -153,7 +157,7 @@ async def get_distilled_model_info():
             speedup_factor=None,
             accuracy_retention_pct=None,
             avg_latency_ms=None,
-            features_required=None
+            features_required=None,
         )
 
 
@@ -171,9 +175,9 @@ async def distilled_health_check():
     info = predictor.get_info()
 
     return {
-        "status": "healthy" if info['available'] else "unavailable",
-        "model_loaded": info['available'],
+        "status": "healthy" if info["available"] else "unavailable",
+        "model_loaded": info["available"],
         "speedup": "10x",
         "size_reduction": "98%",
-        "accuracy": "100% retention"
+        "accuracy": "100% retention",
     }

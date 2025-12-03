@@ -2,12 +2,50 @@
 import fs from 'fs/promises'
 import path from 'path'
 
-const DEFAULT_TAGS = ['TODO','FIXME','HACK','BUG','OPTIMIZE','NOTE','REVIEW','DEPRECATED','QUESTION']
+const DEFAULT_TAGS = [
+  'TODO',
+  'FIXME',
+  'HACK',
+  'BUG',
+  'OPTIMIZE',
+  'NOTE',
+  'REVIEW',
+  'DEPRECATED',
+  'QUESTION',
+]
 const EXCLUDE_DIRS = [
-  'node_modules', '.git', '.output', 'venv', '.venv', '__pycache__', 'dist', 'playwright-report', '.parcel-cache'
+  'node_modules',
+  '.git',
+  '.output',
+  'venv',
+  '.venv',
+  '__pycache__',
+  'dist',
+  'playwright-report',
+  '.parcel-cache',
 ]
 const TEXT_FILE_EXTENSIONS = [
-  '.js', '.ts', '.vue', '.m', '.py', '.ps1', '.sh', '.bash', '.json', '.yaml', '.yml', '.md', '.html', '.css', '.scss', '.txt', '.cjs', '.mjs', '.tsx', '.jsx', '.sql'
+  '.js',
+  '.ts',
+  '.vue',
+  '.m',
+  '.py',
+  '.ps1',
+  '.sh',
+  '.bash',
+  '.json',
+  '.yaml',
+  '.yml',
+  '.md',
+  '.html',
+  '.css',
+  '.scss',
+  '.txt',
+  '.cjs',
+  '.mjs',
+  '.tsx',
+  '.jsx',
+  '.sql',
 ]
 
 async function walkDir(dir) {
@@ -16,7 +54,7 @@ async function walkDir(dir) {
   for (const entry of entries) {
     const fullPath = path.join(dir, entry.name)
     if (entry.isDirectory()) {
-      if (EXCLUDE_DIRS.some((d) => fullPath.includes(path.normalize(d)))) continue
+      if (EXCLUDE_DIRS.some(d => fullPath.includes(path.normalize(d)))) continue
       files.push(...(await walkDir(fullPath)))
     } else if (entry.isFile()) {
       const ext = path.extname(entry.name).toLowerCase()
@@ -26,11 +64,16 @@ async function walkDir(dir) {
   return files
 }
 
-async function scanFiles(root, tags=DEFAULT_TAGS) {
+async function scanFiles(root, tags = DEFAULT_TAGS) {
   const files = await walkDir(root)
   const results = []
   const tagsRegex = tags.join('|')
-  const re = new RegExp("(?:(?:\\/\\/|#|<!--|\\/\\*|\\*|%|;|--)\\s*)(?:" + tagsRegex + ")(?:\\([^)]*\\))?(?:\\s*@\\w+)?[:\\s-]*(.*)", 'i')
+  const re = new RegExp(
+    '(?:(?:\\/\\/|#|<!--|\\/\\*|\\*|%|;|--)\\s*)(?:' +
+      tagsRegex +
+      ')(?:\\([^)]*\\))?(?:\\s*@\\w+)?[:\\s-]*(.*)',
+    'i'
+  )
   for (const f of files) {
     try {
       const content = await fs.readFile(f, 'utf8')

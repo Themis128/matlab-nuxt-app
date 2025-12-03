@@ -183,7 +183,7 @@ test.describe('LanceDB API Endpoints', () => {
     expect(Array.isArray(results)).toBeTruthy()
     expect(results.length).toBe(3)
 
-    results.forEach(result => {
+    results.forEach((result: any) => {
       expect(result).toHaveProperty('text')
       expect(result).toHaveProperty('embedding')
       expect(result).toHaveProperty('dimension')

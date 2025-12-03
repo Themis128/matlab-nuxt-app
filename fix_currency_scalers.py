@@ -5,13 +5,15 @@ The problem: All three currency scalers (EUR, INR, USD) have identical hashes
 because they were trained on the same data. We need separate scalers for each currency.
 """
 
-import pandas as pd
-import numpy as np
-from pathlib import Path
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
-import pickle
 import os
+import pickle
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
 
 def fix_currency_scalers():
     """Fix the identical currency scalers issue"""

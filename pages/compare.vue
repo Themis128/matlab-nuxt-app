@@ -190,14 +190,20 @@
 </template>
 
 <script setup lang="ts">
-  useHead({
-    title: 'Compare Phones - MATLAB Analytics',
-    meta: [
-      {
-        name: 'description',
-        content: 'Compare mobile phones side by side with detailed specifications',
-      },
-    ],
+  import { ref, onMounted } from 'vue'
+
+  // Page meta fallback
+  onMounted(() => {
+    document.title = 'Compare Phones - MATLAB Analytics'
+    const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
+    const content = 'Compare mobile phones side by side with detailed specifications'
+    if (existing) existing.content = content
+    else {
+      const m = document.createElement('meta')
+      m.name = 'description'
+      m.content = content
+      document.head.appendChild(m)
+    }
   })
 
   const selectedPhones = ref(['', '', '', ''])

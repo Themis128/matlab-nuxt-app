@@ -3,21 +3,19 @@ Improved Stacking Ensemble with Proper Cross-Validation
 Uses out-of-fold predictions to prevent overfitting
 """
 
-import pandas as pd
-import numpy as np
-from sklearn.ensemble import (
-    GradientBoostingRegressor, RandomForestRegressor, 
-    ExtraTreesRegressor, AdaBoostRegressor
-)
-from sklearn.linear_model import Ridge, Lasso
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.model_selection import cross_val_predict, train_test_split, KFold
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import mean_squared_error, r2_score
-import xgboost as xgb
 import json
-import pickle
 import os
+import pickle
+
+import numpy as np
+import pandas as pd
+import xgboost as xgb
+from sklearn.ensemble import AdaBoostRegressor, ExtraTreesRegressor, GradientBoostingRegressor, RandomForestRegressor
+from sklearn.linear_model import Lasso, Ridge
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.model_selection import KFold, cross_val_predict, train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.tree import DecisionTreeRegressor
 
 print("=" * 80)
 print("IMPROVED STACKING ENSEMBLE")

@@ -11,19 +11,31 @@ Scrapes:
 """
 
 import re
-from typing import Dict, Any, Optional, List
+from typing import Any, Dict, List, Optional
 
 try:
     from .common import (
-        fetch_url, parse_html, clean_text, extract_number,
-        normalize_phone_name, retry_on_failure, logger,
-        save_json_cache, load_json_cache
+        clean_text,
+        extract_number,
+        fetch_url,
+        load_json_cache,
+        logger,
+        normalize_phone_name,
+        parse_html,
+        retry_on_failure,
+        save_json_cache,
     )
 except ImportError:
     from common import (
-        fetch_url, parse_html, clean_text, extract_number,
-        normalize_phone_name, retry_on_failure, logger,
-        save_json_cache, load_json_cache
+        clean_text,
+        extract_number,
+        fetch_url,
+        load_json_cache,
+        logger,
+        normalize_phone_name,
+        parse_html,
+        retry_on_failure,
+        save_json_cache,
     )
 
 

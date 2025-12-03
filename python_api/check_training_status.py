@@ -7,10 +7,10 @@ from pathlib import Path
 MODELS_DIR = Path(__file__).parent / "trained_models"
 
 required_files = {
-    'price': ['price_predictor_sklearn.pkl', 'price_predictor_scalers.pkl', 'price_predictor_metadata.json'],
-    'ram': ['ram_predictor_sklearn.pkl', 'ram_predictor_scalers.pkl', 'ram_predictor_metadata.json'],
-    'battery': ['battery_predictor_sklearn.pkl', 'battery_predictor_scalers.pkl', 'battery_predictor_metadata.json'],
-    'brand': ['brand_classifier_sklearn.pkl', 'brand_classifier_scalers.pkl', 'brand_classifier_metadata.json']
+    "price": ["price_predictor_sklearn.pkl", "price_predictor_scalers.pkl", "price_predictor_metadata.json"],
+    "ram": ["ram_predictor_sklearn.pkl", "ram_predictor_scalers.pkl", "ram_predictor_metadata.json"],
+    "battery": ["battery_predictor_sklearn.pkl", "battery_predictor_scalers.pkl", "battery_predictor_metadata.json"],
+    "brand": ["brand_classifier_sklearn.pkl", "brand_classifier_scalers.pkl", "brand_classifier_metadata.json"],
 }
 
 print("=" * 60)

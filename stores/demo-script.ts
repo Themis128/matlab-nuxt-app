@@ -427,7 +427,7 @@ export const useDemo = () => {
       if (body.processor === null) delete body.processor
       if (body.storage === null) delete body.storage
 
-      const response = await $fetch<{ ram: number }>('/api/predict/ram', {
+      const response = await $fetch('/api/predict/ram', {
         method: 'POST',
         body,
       })
@@ -480,12 +480,7 @@ export const useDemo = () => {
     ramClosestModel.value = null
 
     try {
-      const response = await $fetch<{
-        modelName: string
-        company: string
-        similarityScore: number
-        ram: number
-      }>('/api/find-closest-model', {
+      const response = await $fetch('/api/find-closest-model', {
         method: 'POST',
         body: {
           ...ramInput.value,
@@ -558,7 +553,7 @@ export const useDemo = () => {
       if (body.processor === null) delete body.processor
       if (body.storage === null) delete body.storage
 
-      const response = await $fetch<{ battery: number }>('/api/predict/battery', {
+      const response = await $fetch('/api/predict/battery', {
         method: 'POST',
         body,
       })
@@ -611,12 +606,7 @@ export const useDemo = () => {
     batteryClosestModel.value = null
 
     try {
-      const response = await $fetch<{
-        modelName: string
-        company: string
-        similarityScore: number
-        battery: number
-      }>('/api/find-closest-model', {
+      const response = await $fetch('/api/find-closest-model', {
         method: 'POST',
         body: {
           ...batteryInput.value,

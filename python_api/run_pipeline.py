@@ -11,6 +11,7 @@ sys.path.append(str(Path(__file__).parent))
 
 from data_pipeline import DataPipeline
 
+
 def main():
     """Run the data pipeline on the dataset with images"""
     print("Starting Data Pipeline...")
@@ -26,19 +27,16 @@ def main():
         print(f"Processing CSV file: {csv_file}")
         print(f"Image directory: {image_dir}")
 
-        results = pipeline.load_dataset_with_images(
-            csv_path=csv_file,
-            image_base_dir=image_dir
-        )
+        results = pipeline.load_dataset_with_images(csv_path=csv_file, image_base_dir=image_dir)
 
         print("\n=== Results ===")
         print(f"Dataset ID: {results['dataset_id']}")
         print(f"Images loaded: {len(results['images_loaded'])}")
         print(f"Errors: {len(results['errors'])}")
 
-        if results['errors']:
+        if results["errors"]:
             print("\nErrors encountered:")
-            for error in results['errors'][:5]:  # Show first 5 errors
+            for error in results["errors"][:5]:  # Show first 5 errors
                 print(f"  - {error}")
 
         # Print final stats
@@ -53,6 +51,7 @@ def main():
     except Exception as e:
         print(f"Pipeline failed: {e}")
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()

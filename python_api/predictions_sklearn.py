@@ -11,7 +11,6 @@ from pathlib import Path
 from typing import Optional
 
 import numpy as np
-import pandas as pd
 
 logger = logging.getLogger(__name__)
 
@@ -21,6 +20,7 @@ MODELS_DIR = Path(__file__).parent / "trained_models"
 # Global model cache
 _models_cache = {}
 _scalers_cache = {}
+
 
 def load_model(model_name: str):
     """Load a trained sklearn model and its scaler with file existence checks"""
@@ -35,10 +35,12 @@ def load_model(model_name: str):
             return None, None
 
         # Validate it's a pickle file before loading
-        with open(model_path, 'rb') as f:
+        with open(model_path, "rb") as f:
             header = f.read(2)
             if len(header) < 2 or header[0] != 0x80:
-                logger.error(f"Invalid pickle file format for {model_path}: {header!r} (expected pickle protocol header)")
+                logger.error(
+                    f"Invalid pickle file format for {model_path}: {header!r} (expected pickle protocol header)"
+                )
                 return None, None
             f.seek(0)
             model = pickle.load(f)
@@ -50,10 +52,12 @@ def load_model(model_name: str):
             return None, None
 
         # Validate scaler is a pickle file before loading
-        with open(scaler_path, 'rb') as f:
+        with open(scaler_path, "rb") as f:
             header = f.read(2)
             if len(header) < 2 or header[0] != 0x80:
-                logger.error(f"Invalid pickle file format for {scaler_path}: {header!r} (expected pickle protocol header)")
+                logger.error(
+                    f"Invalid pickle file format for {scaler_path}: {header!r} (expected pickle protocol header)"
+                )
                 return None, None
             f.seek(0)
             scaler = pickle.load(f)
@@ -72,6 +76,7 @@ def load_model(model_name: str):
         logger.error(f"Failed to load {model_name} model: {e}")
         return None, None
 
+
 def encode_company(company: str, unique_companies: list) -> np.ndarray:
     """One-hot encode company name"""
     if not unique_companies:
@@ -87,6 +92,7 @@ def encode_company(company: str, unique_companies: list) -> np.ndarray:
     encoded[idx] = 1
     return encoded
 
+
 def encode_processor(processor: Optional[str]) -> np.ndarray:
     """Encode processor information"""
     if not processor:
@@ -96,26 +102,60 @@ def encode_processor(processor: Optional[str]) -> np.ndarray:
     proc_str = str(processor).upper()
 
     # Brand encoding (0=Other, 1=Apple, 2=Snapdragon, 3=MediaTek, 4=Exynos)
-    if 'A' in proc_str and any(x in proc_str for x in ['BIONIC', 'CHIP', 'A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'A10', 'A11', 'A12', 'A13', 'A14', 'A15', 'A16', 'A17', 'A18']):
+    if "A" in proc_str and any(
+        x in proc_str
+        for x in [
+            "BIONIC",
+            "CHIP",
+            "A1",
+            "A2",
+            "A3",
+            "A4",
+            "A5",
+            "A6",
+            "A7",
+            "A8",
+            "A9",
+            "A10",
+            "A11",
+            "A12",
+            "A13",
+            "A14",
+            "A15",
+            "A16",
+            "A17",
+            "A18",
+        ]
+    ):
         processor_encoded[0] = 1  # Apple
         processor_encoded[2] = 1  # is_apple
-    elif 'SNAPDRAGON' in proc_str or 'SD' in proc_str:
+    elif "SNAPDRAGON" in proc_str or "SD" in proc_str:
         processor_encoded[0] = 2  # Snapdragon
-    elif 'MEDIATEK' in proc_str or 'MT' in proc_str or 'DIMENSITY' in proc_str:
+    elif "MEDIATEK" in proc_str or "MT" in proc_str or "DIMENSITY" in proc_str:
         processor_encoded[0] = 3  # MediaTek
-    elif 'EXYNOS' in proc_str:
+    elif "EXYNOS" in proc_str:
         processor_encoded[0] = 4  # Exynos
 
     # High-end indicator
-    if any(x in proc_str for x in ['8 GEN', '888', '8+', 'A15', 'A16', 'A17', 'A18', 'M1', 'M2', 'M3']):
+    if any(x in proc_str for x in ["8 GEN", "888", "8+", "A15", "A16", "A17", "A18", "M1", "M2", "M3"]):
         processor_encoded[1] = 1  # is_high_end
 
     return processor_encoded
 
-def create_features(ram: float, battery: float, screen: float, weight: float,
-                   year: int, company: str, front_camera: Optional[float] = None,
-                   back_camera: Optional[float] = None, processor: Optional[str] = None,
-                   storage: Optional[float] = None, unique_companies: Optional[list] = None) -> np.ndarray:
+
+def create_features(
+    ram: float,
+    battery: float,
+    screen: float,
+    weight: float,
+    year: int,
+    company: str,
+    front_camera: Optional[float] = None,
+    back_camera: Optional[float] = None,
+    processor: Optional[str] = None,
+    storage: Optional[float] = None,
+    unique_companies: Optional[list] = None,
+) -> np.ndarray:
     """Create feature vector matching training data"""
 
     # Handle missing values (fill with medians from training data)
@@ -124,10 +164,7 @@ def create_features(ram: float, battery: float, screen: float, weight: float,
     storage = storage if storage is not None else 128.0
 
     # Base features (must match training order)
-    base_features = [
-        ram, battery, screen, weight, year,
-        front_camera, back_camera, storage
-    ]
+    base_features = [ram, battery, screen, weight, year, front_camera, back_camera, storage]
 
     # Company encoding
     if unique_companies:
@@ -141,33 +178,37 @@ def create_features(ram: float, battery: float, screen: float, weight: float,
     base_features.extend(processor_encoded)
 
     # Convert to numpy array
-    X = np.array(base_features)
+    _ = np.array(base_features)
 
     # Create interaction features (must match training)
-    interactions = np.array([
-        ram * battery,           # RAM-Battery interaction
-        ram * screen,            # RAM-Screen interaction
-        battery * screen,         # Battery-Screen interaction
-        ram * year,              # RAM-Year (tech evolution)
-        battery * year,          # Battery-Year (capacity growth)
-        screen * weight,         # Screen-Weight (form factor)
-        front_camera * back_camera,  # Camera quality interaction
-        ram * storage,           # RAM-Storage (premium indicator)
-        back_camera * 500,       # Camera-Price (premium phones) - using avg price
-        processor_encoded[1] * 500,  # High-end processor * price
-    ])
+    interactions = np.array(
+        [
+            ram * battery,  # RAM-Battery interaction
+            ram * screen,  # RAM-Screen interaction
+            battery * screen,  # Battery-Screen interaction
+            ram * year,  # RAM-Year (tech evolution)
+            battery * year,  # Battery-Year (capacity growth)
+            screen * weight,  # Screen-Weight (form factor)
+            front_camera * back_camera,  # Camera quality interaction
+            ram * storage,  # RAM-Storage (premium indicator)
+            back_camera * 500,  # Camera-Price (premium phones) - using avg price
+            processor_encoded[1] * 500,  # High-end processor * price
+        ]
+    )
 
     # Ratio features
-    ratios = np.array([
-        500 / (ram + 1),         # Price per GB RAM
-        500 / (battery + 1),     # Price per mAh
-        500 / (screen + 0.1),    # Price per inch
-        500 / (storage + 1),     # Price per GB storage
-        ram / (battery + 1),    # RAM-Battery ratio
-        screen / (weight + 1),  # Screen-Weight ratio
-        battery / (weight + 1), # Battery-Weight ratio
-        back_camera / (500 + 1),  # Camera per dollar
-    ])
+    ratios = np.array(
+        [
+            500 / (ram + 1),  # Price per GB RAM
+            500 / (battery + 1),  # Price per mAh
+            500 / (screen + 0.1),  # Price per inch
+            500 / (storage + 1),  # Price per GB storage
+            ram / (battery + 1),  # RAM-Battery ratio
+            screen / (weight + 1),  # Screen-Weight ratio
+            battery / (weight + 1),  # Battery-Weight ratio
+            back_camera / (500 + 1),  # Camera per dollar
+        ]
+    )
 
     # Regional price ratios (set to neutral since we don't have regional data)
     regional_ratios = np.array([1.0, 1.0, 1.0])  # USA/India, USA/China, USA/Pakistan ratios
@@ -176,42 +217,49 @@ def create_features(ram: float, battery: float, screen: float, weight: float,
     # Temporal features
     years_since_2020 = year - 2020
     is_recent = 1.0 if year >= 2023 else 0.0
-    temporal = np.array([
-        years_since_2020,
-        is_recent,
-        years_since_2020 ** 2,  # Quadratic trend
-    ])
+    temporal = np.array(
+        [
+            years_since_2020,
+            is_recent,
+            years_since_2020**2,  # Quadratic trend
+        ]
+    )
 
     # Polynomial features
-    polynomials = np.array([
-        ram ** 2,
-        battery ** 2,
-        screen ** 2,
-        np.sqrt(ram),      # Square root for diminishing returns
-        np.sqrt(battery),
-        np.sqrt(back_camera + 1),  # Camera quality
-    ])
+    polynomials = np.array(
+        [
+            ram**2,
+            battery**2,
+            screen**2,
+            np.sqrt(ram),  # Square root for diminishing returns
+            np.sqrt(battery),
+            np.sqrt(back_camera + 1),  # Camera quality
+        ]
+    )
 
     # Combine all features in correct order
-    features = np.concatenate([
-        base_features,
-        interactions,
-        ratios,
-        temporal,
-        polynomials
-    ])
+    features = np.concatenate([base_features, interactions, ratios, temporal, polynomials])
 
     return features.reshape(1, -1)  # Return as row vector
 
-def predict_price(ram: float, battery: float, screen: float, weight: float,
-                 year: int, company: str, front_camera: Optional[float] = None,
-                 back_camera: Optional[float] = None, processor: Optional[str] = None,
-                 storage: Optional[float] = None) -> float:
+
+def predict_price(
+    ram: float,
+    battery: float,
+    screen: float,
+    weight: float,
+    year: int,
+    company: str,
+    front_camera: Optional[float] = None,
+    back_camera: Optional[float] = None,
+    processor: Optional[str] = None,
+    storage: Optional[float] = None,
+) -> float:
     """
     Predict mobile phone price using trained sklearn model
     """
     try:
-        model, scaler = load_model('price_predictor')
+        model, scaler = load_model("price_predictor")
 
         # Check if model loaded successfully
         if model is None or scaler is None:
@@ -220,20 +268,21 @@ def predict_price(ram: float, battery: float, screen: float, weight: float,
 
         # Get unique companies from metadata
         metadata_path = MODELS_DIR / "price_predictor_metadata.json"
-        with open(metadata_path, 'r') as f:
+        with open(metadata_path, "r") as f:
             metadata = json.load(f)
-            unique_companies = metadata.get('unique_companies', [])
+            unique_companies = metadata.get("unique_companies", [])
 
         # Create features
-        X = create_features(ram, battery, screen, weight, year, company,
-                          front_camera, back_camera, processor, storage, unique_companies)
+        X = create_features(
+            ram, battery, screen, weight, year, company, front_camera, back_camera, processor, storage, unique_companies
+        )
 
         # Scale features
-        X_scaled = scaler['X_scaler'].transform(X)
+        X_scaled = scaler["X_scaler"].transform(X)
 
         # Make prediction
         y_pred_norm = model.predict(X_scaled)
-        y_pred_log = scaler['y_scaler'].inverse_transform(y_pred_norm.reshape(-1, 1)).flatten()
+        y_pred_log = scaler["y_scaler"].inverse_transform(y_pred_norm.reshape(-1, 1)).flatten()
 
         # Reverse log transformation
         price = np.expm1(y_pred_log[0])
@@ -245,15 +294,24 @@ def predict_price(ram: float, battery: float, screen: float, weight: float,
         # Fallback to basic prediction
         return _fallback_price_prediction(ram, battery, screen, weight, year, company)
 
-def predict_ram(battery: float, screen: float, weight: float, year: int,
-               price: float, company: str, front_camera: Optional[float] = None,
-               back_camera: Optional[float] = None, processor: Optional[str] = None,
-               storage: Optional[float] = None) -> float:
+
+def predict_ram(
+    battery: float,
+    screen: float,
+    weight: float,
+    year: int,
+    price: float,
+    company: str,
+    front_camera: Optional[float] = None,
+    back_camera: Optional[float] = None,
+    processor: Optional[str] = None,
+    storage: Optional[float] = None,
+) -> float:
     """
     Predict RAM capacity using trained sklearn model
     """
     try:
-        model, scaler = load_model('ram_predictor')
+        model, scaler = load_model("ram_predictor")
 
         # Check if model loaded successfully
         if model is None or scaler is None:
@@ -268,14 +326,20 @@ def predict_ram(battery: float, screen: float, weight: float, year: int,
 
         # Get unique companies
         metadata_path = MODELS_DIR / "ram_predictor_metadata.json"
-        with open(metadata_path, 'r') as f:
+        with open(metadata_path, "r") as f:
             metadata = json.load(f)
-            unique_companies = metadata.get('unique_companies', [])
+            unique_companies = metadata.get("unique_companies", [])
 
         # Create features (without RAM)
         base_features = [
-            battery, screen, weight, year, price,  # Different order for RAM prediction
-            front_camera, back_camera, storage
+            battery,
+            screen,
+            weight,
+            year,
+            price,  # Different order for RAM prediction
+            front_camera,
+            back_camera,
+            storage,
         ]
 
         # Company encoding
@@ -289,9 +353,9 @@ def predict_ram(battery: float, screen: float, weight: float, year: int,
         X = np.array(base_features)
 
         # Scale and predict
-        X_scaled = scaler['X_scaler'].transform(X.reshape(1, -1))
+        X_scaled = scaler["X_scaler"].transform(X.reshape(1, -1))
         y_pred_norm = model.predict(X_scaled)
-        ram = scaler['y_scaler'].inverse_transform(y_pred_norm.reshape(-1, 1)).flatten()[0]
+        ram = scaler["y_scaler"].inverse_transform(y_pred_norm.reshape(-1, 1)).flatten()[0]
 
         return max(2, float(ram))
 
@@ -299,15 +363,24 @@ def predict_ram(battery: float, screen: float, weight: float, year: int,
         logger.error(f"RAM prediction failed: {e}")
         return _fallback_ram_prediction(battery, screen, weight, year, price, company)
 
-def predict_battery(ram: float, screen: float, weight: float, year: int,
-                   price: float, company: str, front_camera: Optional[float] = None,
-                   back_camera: Optional[float] = None, processor: Optional[str] = None,
-                   storage: Optional[float] = None) -> float:
+
+def predict_battery(
+    ram: float,
+    screen: float,
+    weight: float,
+    year: int,
+    price: float,
+    company: str,
+    front_camera: Optional[float] = None,
+    back_camera: Optional[float] = None,
+    processor: Optional[str] = None,
+    storage: Optional[float] = None,
+) -> float:
     """
     Predict battery capacity using trained sklearn model
     """
     try:
-        model, scaler = load_model('battery_predictor')
+        model, scaler = load_model("battery_predictor")
 
         # Check if model loaded successfully
         if model is None or scaler is None:
@@ -320,14 +393,20 @@ def predict_battery(ram: float, screen: float, weight: float, year: int,
 
         # Get unique companies
         metadata_path = MODELS_DIR / "battery_predictor_metadata.json"
-        with open(metadata_path, 'r') as f:
+        with open(metadata_path, "r") as f:
             metadata = json.load(f)
-            unique_companies = metadata.get('unique_companies', [])
+            unique_companies = metadata.get("unique_companies", [])
 
         # Create features (without battery)
         base_features = [
-            ram, screen, weight, year, price,  # Different order for battery prediction
-            front_camera, back_camera, storage
+            ram,
+            screen,
+            weight,
+            year,
+            price,  # Different order for battery prediction
+            front_camera,
+            back_camera,
+            storage,
         ]
 
         # Company encoding
@@ -341,9 +420,9 @@ def predict_battery(ram: float, screen: float, weight: float, year: int,
         X = np.array(base_features)
 
         # Scale and predict
-        X_scaled = scaler['X_scaler'].transform(X.reshape(1, -1))
+        X_scaled = scaler["X_scaler"].transform(X.reshape(1, -1))
         y_pred_norm = model.predict(X_scaled)
-        battery = scaler['y_scaler'].inverse_transform(y_pred_norm.reshape(-1, 1)).flatten()[0]
+        battery = scaler["y_scaler"].inverse_transform(y_pred_norm.reshape(-1, 1)).flatten()[0]
 
         return max(2000, float(battery))
 
@@ -351,15 +430,24 @@ def predict_battery(ram: float, screen: float, weight: float, year: int,
         logger.error(f"Battery prediction failed: {e}")
         return _fallback_battery_prediction(ram, screen, weight, year, price, company)
 
-def predict_brand(ram: float, battery: float, screen: float, weight: float,
-                 year: int, price: float, front_camera: Optional[float] = None,
-                 back_camera: Optional[float] = None, processor: Optional[str] = None,
-                 storage: Optional[float] = None) -> str:
+
+def predict_brand(
+    ram: float,
+    battery: float,
+    screen: float,
+    weight: float,
+    year: int,
+    price: float,
+    front_camera: Optional[float] = None,
+    back_camera: Optional[float] = None,
+    processor: Optional[str] = None,
+    storage: Optional[float] = None,
+) -> str:
     """
     Predict brand using trained sklearn model
     """
     try:
-        model, scaler = load_model('brand_classifier')
+        model, scaler = load_model("brand_classifier")
 
         # Check if model loaded successfully
         if model is None or scaler is None:
@@ -372,15 +460,12 @@ def predict_brand(ram: float, battery: float, screen: float, weight: float,
 
         # Get unique brands from metadata
         metadata_path = MODELS_DIR / "brand_classifier_metadata.json"
-        with open(metadata_path, 'r') as f:
+        with open(metadata_path, "r") as f:
             metadata = json.load(f)
-            unique_brands = metadata.get('unique_brands', ['Apple', 'Samsung', 'Xiaomi'])
+            unique_brands = metadata.get("unique_brands", ["Apple", "Samsung", "Xiaomi"])
 
         # Create features (without company)
-        base_features = [
-            ram, battery, screen, weight, year, price,
-            front_camera, back_camera, storage
-        ]
+        base_features = [ram, battery, screen, weight, year, price, front_camera, back_camera, storage]
 
         # Add dummy company encoding (will be ignored by the model)
         dummy_company = np.zeros(len(unique_brands))
@@ -393,17 +478,18 @@ def predict_brand(ram: float, battery: float, screen: float, weight: float,
         X = np.array(base_features)
 
         # Scale and predict
-        X_scaled = scaler['X_scaler'].transform(X.reshape(1, -1))
+        X_scaled = scaler["X_scaler"].transform(X.reshape(1, -1))
         y_pred = model.predict(X_scaled)
 
         # Convert prediction back to brand name
-        predicted_brand = unique_brands[y_pred[0]] if y_pred[0] < len(unique_brands) else 'Unknown'
+        predicted_brand = unique_brands[y_pred[0]] if y_pred[0] < len(unique_brands) else "Unknown"
 
         return predicted_brand
 
     except Exception as e:
         logger.error(f"Brand prediction failed: {e}")
         return _fallback_brand_prediction(ram, battery, screen, weight, year, price)
+
 
 # Fallback functions for when models fail
 def _fallback_price_prediction(ram, battery, screen, weight, year, company, **kwargs):
@@ -415,13 +501,14 @@ def _fallback_price_prediction(ram, battery, screen, weight, year, company, **kw
     year_mult = (year - 2020) * 20
 
     company_mult = 1.0
-    if company.lower() == 'apple':
+    if company.lower() == "apple":
         company_mult = 1.5
-    elif company.lower() == 'samsung':
+    elif company.lower() == "samsung":
         company_mult = 1.2
 
     price = (base_price + ram_mult + battery_mult + screen_mult + year_mult) * company_mult
     return max(100, round(price))
+
 
 def _fallback_ram_prediction(battery, screen, weight, year, price, company, **kwargs):
     """Fallback RAM prediction"""
@@ -431,6 +518,7 @@ def _fallback_ram_prediction(battery, screen, weight, year, price, company, **kw
     ram = base_ram + price_mult + year_mult
     return max(2, round(ram * 10) / 10)
 
+
 def _fallback_battery_prediction(ram, screen, weight, year, price, company, **kwargs):
     """Fallback battery prediction"""
     base_battery = 3000
@@ -439,13 +527,14 @@ def _fallback_battery_prediction(ram, screen, weight, year, price, company, **kw
     battery = base_battery + screen_mult + price_mult
     return max(2000, round(battery))
 
+
 def _fallback_brand_prediction(ram, battery, screen, weight, year, price, **kwargs):
     """Fallback brand prediction"""
     if price > 800:
-        return 'Apple'
+        return "Apple"
     elif price > 500:
-        return 'Samsung'
+        return "Samsung"
     elif price > 300:
-        return 'Xiaomi'
+        return "Xiaomi"
     else:
-        return 'Other'
+        return "Other"

@@ -448,6 +448,7 @@ class EuroPriceScraper:
             # Handle numpy types and pandas types first
             try:
                 import numpy as np
+
                 # Check for numpy integer types
                 if isinstance(obj, np.integer):
                     return int(obj)

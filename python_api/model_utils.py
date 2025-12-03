@@ -3,9 +3,9 @@ Safe Model Loading Utilities
 Provides robust pickle loading with clear diagnostics for CI/CD environments
 """
 
+import binascii
 import os
 import pickle
-import binascii
 
 
 def safe_load_model(path, head_bytes=64):
@@ -105,7 +105,7 @@ def get_model_info(path):
             "size_mb": round(size / (1024 * 1024), 2),
             "appears_valid_pickle": is_pickle,
             "header_bytes": header.hex() if header else None,
-            "pickle_protocol": header[1] if is_pickle and len(header) > 1 else None
+            "pickle_protocol": header[1] if is_pickle and len(header) > 1 else None,
         }
     except Exception as e:
         return {"error": str(e), "path": path}

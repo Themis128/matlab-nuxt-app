@@ -3,37 +3,38 @@ Model Validation Script
 Tests trained models on unseen data to check for overfitting
 """
 
-import sys
 import io
-from pathlib import Path
-import warnings
-import numpy as np
-import pickle
 import json
-from sklearn.model_selection import train_test_split
+import pickle
+import sys
+import warnings
+from pathlib import Path
+
+import numpy as np
 from sklearn.metrics import (
-    r2_score,
-    mean_squared_error,
-    mean_absolute_error,
     accuracy_score,
+    mean_absolute_error,
+    mean_squared_error,
+    r2_score,
 )
+from sklearn.model_selection import train_test_split
 
 # Import training functions to reuse data loading (imports must be at top)
 sys.path.insert(0, str(Path(__file__).parent))
 from train_models_sklearn import (
-    load_and_preprocess_data,
+    create_engineered_features,
     encode_companies,
     encode_processors,
-    create_engineered_features,
+    load_and_preprocess_data,
 )
 
-warnings.filterwarnings('ignore')
+warnings.filterwarnings("ignore")
 
 # Fix Windows console encoding
-if sys.platform == 'win32':
+if sys.platform == "win32":
     try:
-        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
-        sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+        sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
     except (AttributeError, OSError):
         pass
 
@@ -66,7 +67,7 @@ def load_model(model_name):
 
     # Load model with validation
     try:
-        with open(model_path, 'rb') as f:
+        with open(model_path, "rb") as f:
             header = f.read(2)
             # first byte 0x80 indicates a pickle; second byte is protocol version
             if len(header) < 1 or header[0] != 0x80:
@@ -80,7 +81,7 @@ def load_model(model_name):
 
     # Load scalers with validation
     try:
-        with open(scaler_path, 'rb') as f:
+        with open(scaler_path, "rb") as f:
             header = f.read(2)
             if len(header) < 1 or header[0] != 0x80:
                 print(f"[WARN] Invalid pickle header for scalers {model_name}: {header!r} (file may be corrupted)")
@@ -90,7 +91,7 @@ def load_model(model_name):
     except Exception as e:
         print(f"[WARN] Failed to load scalers for {model_name}: {e}")
         return None, None, None
-    with open(metadata_path, 'r') as f:
+    with open(metadata_path, "r") as f:
         metadata = json.load(f)
 
     return model, scalers, metadata
@@ -98,43 +99,39 @@ def load_model(model_name):
 
 def validate_price_model():
     """Validate price prediction model"""
-    print("\n" + "="*80)
+    print("\n" + "=" * 80)
     print("VALIDATING PRICE PREDICTION MODEL")
-    print("="*80)
+    print("=" * 80)
 
     # Load data
     data = load_and_preprocess_data()
 
     # Prepare features
-    company_encoded, unique_companies = encode_companies(data['companies'])
-    processor_encoded = encode_processors(data.get('processors', ['Unknown'] * len(data['companies'])))
+    company_encoded, unique_companies = encode_companies(data["companies"])
+    processor_encoded = encode_processors(data.get("processors", ["Unknown"] * len(data["companies"])))
     X = create_engineered_features(data, company_encoded, processor_encoded)
-    y = data['price']
+    y = data["price"]
 
     # Use same split as training (70/15/15)
-    X_train, X_temp, y_train, y_temp = train_test_split(
-        X, y, test_size=0.3, random_state=42
-    )
-    X_val, X_test, y_val, y_test = train_test_split(
-        X_temp, y_temp, test_size=0.5, random_state=42
-    )
+    X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.3, random_state=42)
+    X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
 
     # Load model
-    model, scalers, metadata = load_model('price_predictor')
+    model, scalers, metadata = load_model("price_predictor")
     if model is None:
         print("[ERROR] Model not found!")
         return
 
     # Normalize test data
-    X_scaler = scalers['X_scaler']
-    y_scaler = scalers['y_scaler']
+    X_scaler = scalers["X_scaler"]
+    y_scaler = scalers["y_scaler"]
     X_test_norm = X_scaler.transform(X_test)
 
     # Predict
     y_pred_norm = model.predict(X_test_norm)
 
     # Handle log transformation
-    use_log = scalers.get('use_log', False)
+    use_log = scalers.get("use_log", False)
     if use_log:
         y_pred_log = y_scaler.inverse_transform(y_pred_norm.reshape(-1, 1)).flatten()
         y_pred = np.expm1(y_pred_log)
@@ -201,30 +198,26 @@ def validate_price_model():
 
 def validate_ram_model():
     """Validate RAM prediction model"""
-    print("\n" + "="*80)
+    print("\n" + "=" * 80)
     print("VALIDATING RAM PREDICTION MODEL")
-    print("="*80)
+    print("=" * 80)
 
     data = load_and_preprocess_data()
-    company_encoded, unique_companies = encode_companies(data['companies'])
-    processor_encoded = encode_processors(data.get('processors', ['Unknown'] * len(data['companies'])))
+    company_encoded, unique_companies = encode_companies(data["companies"])
+    processor_encoded = encode_processors(data.get("processors", ["Unknown"] * len(data["companies"])))
     X = create_engineered_features(data, company_encoded, processor_encoded)
-    y = data['ram']
+    y = data["ram"]
 
-    X_train, X_temp, y_train, y_temp = train_test_split(
-        X, y, test_size=0.3, random_state=42
-    )
-    X_val, X_test, y_val, y_test = train_test_split(
-        X_temp, y_temp, test_size=0.5, random_state=42
-    )
+    X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.3, random_state=42)
+    X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
 
-    model, scalers, metadata = load_model('ram_predictor')
+    model, scalers, metadata = load_model("ram_predictor")
     if model is None:
         print("[ERROR] Model not found!")
         return
 
-    X_scaler = scalers['X_scaler']
-    y_scaler = scalers['y_scaler']
+    X_scaler = scalers["X_scaler"]
+    y_scaler = scalers["y_scaler"]
     X_test_norm = X_scaler.transform(X_test)
 
     y_pred_norm = model.predict(X_test_norm)
@@ -267,30 +260,26 @@ def validate_ram_model():
 
 def validate_battery_model():
     """Validate battery prediction model"""
-    print("\n" + "="*80)
+    print("\n" + "=" * 80)
     print("VALIDATING BATTERY PREDICTION MODEL")
-    print("="*80)
+    print("=" * 80)
 
     data = load_and_preprocess_data()
-    company_encoded, unique_companies = encode_companies(data['companies'])
-    processor_encoded = encode_processors(data.get('processors', ['Unknown'] * len(data['companies'])))
+    company_encoded, unique_companies = encode_companies(data["companies"])
+    processor_encoded = encode_processors(data.get("processors", ["Unknown"] * len(data["companies"])))
     X = create_engineered_features(data, company_encoded, processor_encoded)
-    y = data['battery']
+    y = data["battery"]
 
-    X_train, X_temp, y_train, y_temp = train_test_split(
-        X, y, test_size=0.3, random_state=42
-    )
-    X_val, X_test, y_val, y_test = train_test_split(
-        X_temp, y_temp, test_size=0.5, random_state=42
-    )
+    X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.3, random_state=42)
+    X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
 
-    model, scalers, metadata = load_model('battery_predictor')
+    model, scalers, metadata = load_model("battery_predictor")
     if model is None:
         print("[ERROR] Model not found!")
         return
 
-    X_scaler = scalers['X_scaler']
-    y_scaler = scalers['y_scaler']
+    X_scaler = scalers["X_scaler"]
+    y_scaler = scalers["y_scaler"]
     X_test_norm = X_scaler.transform(X_test)
 
     y_pred_norm = model.predict(X_test_norm)
@@ -301,6 +290,7 @@ def validate_battery_model():
     mae = mean_absolute_error(y_test, y_pred)
 
     import logging
+
     log = logging.getLogger("python_api")
     log.info("\n[STATS] Test Set Performance:")
     log.info("   R² Score: %.4f", r2)
@@ -327,18 +317,19 @@ def validate_battery_model():
 
 def validate_brand_model():
     """Validate brand classification model"""
-    print("\n" + "="*80)
+    print("\n" + "=" * 80)
     print("VALIDATING BRAND CLASSIFICATION MODEL")
-    print("="*80)
+    print("=" * 80)
 
     data = load_and_preprocess_data()
-    company_encoded, unique_companies = encode_companies(data['companies'])
-    processor_encoded = encode_processors(data.get('processors', ['Unknown'] * len(data['companies'])))
+    company_encoded, unique_companies = encode_companies(data["companies"])
+    processor_encoded = encode_processors(data.get("processors", ["Unknown"] * len(data["companies"])))
     X = create_engineered_features(data, company_encoded, processor_encoded)
-    y = np.array(data['companies'])
+    y = np.array(data["companies"])
 
     # Filter brands with < 4 samples (same as training)
     from collections import Counter
+
     brand_counts = Counter(y)
     min_samples = 4
     valid_brands = [brand for brand, count in brand_counts.items() if count >= min_samples]
@@ -346,22 +337,20 @@ def validate_brand_model():
     X = X[valid_mask]
     y = y[valid_mask]
 
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.15, random_state=42, stratify=y
-    )
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.15, random_state=42, stratify=y)
 
-    model, scalers, metadata = load_model('brand_classifier')
+    model, scalers, metadata = load_model("brand_classifier")
     if model is None:
         print("[ERROR] Model not found!")
         return
 
-    X_scaler = scalers['X_scaler']
+    X_scaler = scalers["X_scaler"]
     X_test_norm = X_scaler.transform(X_test)
 
     y_pred_idx = model.predict(X_test_norm)
 
     # Map predictions back to brand names
-    unique_brands = metadata.get('unique_brands', valid_brands)
+    unique_brands = metadata.get("unique_brands", valid_brands)
     y_pred = np.array([unique_brands[int(idx)] for idx in y_pred_idx])
 
     accuracy = accuracy_score(y_test, y_pred)
@@ -391,6 +380,7 @@ def validate_brand_model():
 
     # Confusion matrix for misclassifications
     from sklearn.metrics import confusion_matrix
+
     cm = confusion_matrix(y_test, y_pred, labels=unique_brands)
     misclassified = np.sum(cm) - np.trace(cm)
     print(f"\n[MISC] Misclassifications: {misclassified} out of {len(y_test)} ({misclassified/len(y_test)*100:.2f}%)")
@@ -398,9 +388,9 @@ def validate_brand_model():
 
 def main():
     """Run all validations"""
-    print("="*80)
+    print("=" * 80)
     print("MODEL VALIDATION - Testing for Overfitting")
-    print("="*80)
+    print("=" * 80)
     print("\nThis script validates trained models on test data")
     print("and checks for potential overfitting issues.\n")
 
@@ -409,9 +399,9 @@ def main():
     validate_battery_model()
     validate_brand_model()
 
-    print("\n" + "="*80)
+    print("\n" + "=" * 80)
     print("VALIDATION COMPLETE")
-    print("="*80)
+    print("=" * 80)
     print("\n[RECOMMENDATIONS]")
     print("   1. Monitor real-world prediction errors")
     print("   2. Retrain periodically with new data")

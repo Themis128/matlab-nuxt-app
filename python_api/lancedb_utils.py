@@ -4,26 +4,29 @@ Handles CSV datasets and images with vector search capabilities
 """
 
 import os
+
 try:
     import lancedb
+
     _HAS_LANCEDB = True
 except Exception:  # pragma: no cover - optional dependency
     lancedb = None
     _HAS_LANCEDB = False
-import pandas as pd
-import numpy as np
-from typing import List, Dict, Any, Optional, Tuple
-import logging
-from pathlib import Path
 import base64
-from PIL import Image
-import io
 import hashlib
-from datetime import datetime
+import io
 import json
+import logging
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+import pandas as pd
 import requests
+from PIL import Image
 
 logger = logging.getLogger(__name__)
+
 
 class OllamaEmbeddings:
     """Ollama-based embeddings using local AI models"""
@@ -36,7 +39,7 @@ class OllamaEmbeddings:
             base_url: Ollama server URL
             model: Embedding model name (e.g., 'nomic-embed-text', 'mxbai-embed-large')
         """
-        self.base_url = base_url.rstrip('/')
+        self.base_url = base_url.rstrip("/")
         self.model = model
         self._check_ollama_connection()
 
@@ -45,11 +48,11 @@ class OllamaEmbeddings:
         try:
             response = requests.get(f"{self.base_url}/api/tags", timeout=5)
             if response.status_code == 200:
-                models = response.json().get('models', [])
-                model_names = [m['name'] for m in models]
+                models = response.json().get("models", [])
+                model_names = [m["name"] for m in models]
                 # Check if model exists (with or without tag)
-                model_base = self.model.split(':')[0]
-                available_models = [name.split(':')[0] for name in model_names]
+                model_base = self.model.split(":")[0]
+                available_models = [name.split(":")[0] for name in model_names]
                 if model_base not in available_models:
                     logger.warning(f"Model '{self.model}' not found in Ollama. Available models: {model_names}")
                     logger.info(f"Pulling model '{self.model}'...")
@@ -69,7 +72,7 @@ class OllamaEmbeddings:
             response = requests.post(
                 f"{self.base_url}/api/pull",
                 json={"name": self.model},
-                timeout=300  # 5 minutes timeout for model download
+                timeout=300,  # 5 minutes timeout for model download
             )
             if response.status_code == 200:
                 logger.info(f"Successfully pulled model: {self.model}")
@@ -91,17 +94,12 @@ class OllamaEmbeddings:
         """
         try:
             response = requests.post(
-                f"{self.base_url}/api/embeddings",
-                json={
-                    "model": self.model,
-                    "prompt": text
-                },
-                timeout=30
+                f"{self.base_url}/api/embeddings", json={"model": self.model, "prompt": text}, timeout=30
             )
 
             if response.status_code == 200:
                 data = response.json()
-                return data.get('embedding', [])
+                return data.get("embedding", [])
             else:
                 raise Exception(f"Ollama API error: {response.status_code} - {response.text}")
 
@@ -130,12 +128,19 @@ class OllamaEmbeddings:
                 embeddings.append([0.0] * 768)  # Common embedding dimension
         return embeddings
 
+
 class LanceDBManager:
     """LanceDB manager for multimodal data operations"""
 
-    def __init__(self, db_path: str = "./lancedb_data", cloud_uri: str = None,
-                 api_key: str = None, region: str = "us-east-1",
-                 ollama_base_url: str = None, ollama_model: str = None):
+    def __init__(
+        self,
+        db_path: str = "./lancedb_data",
+        cloud_uri: str = None,
+        api_key: str = None,
+        region: str = "us-east-1",
+        ollama_base_url: str = None,
+        ollama_model: str = None,
+    ):
         """
         Initialize LanceDB connection
 
@@ -152,11 +157,7 @@ class LanceDBManager:
             self.db_path = cloud_uri
             self.is_cloud = True
             if _HAS_LANCEDB:
-                self.db = lancedb.connect(
-                    uri=cloud_uri,
-                    api_key=api_key,
-                    region=region
-                )
+                self.db = lancedb.connect(uri=cloud_uri, api_key=api_key, region=region)
                 logger.info(f"Connected to LanceDB Cloud: {cloud_uri}")
             else:
                 raise Exception("LanceDB library required for cloud connections")
@@ -229,10 +230,7 @@ class LanceDBManager:
 
         # Initialize Ollama embeddings
         try:
-            self.embeddings = OllamaEmbeddings(
-                base_url=ollama_base_url,
-                model=ollama_model
-            )
+            self.embeddings = OllamaEmbeddings(base_url=ollama_base_url, model=ollama_model)
             logger.info(f"Ollama embeddings initialized with model: {ollama_model}")
         except Exception as e:
             logger.warning(f"Failed to initialize Ollama embeddings: {e}")
@@ -247,8 +245,9 @@ class LanceDBManager:
         # rather than pre-defining strict schemas
         pass
 
-    def store_csv_dataset(self, file_path: str, description: str = "",
-                         tags: List[str] = None, metadata: Dict[str, Any] = None) -> str:
+    def store_csv_dataset(
+        self, file_path: str, description: str = "", tags: List[str] = None, metadata: Dict[str, Any] = None
+    ) -> str:
         """
         Store a CSV dataset in LanceDB
 
@@ -271,7 +270,7 @@ class LanceDBManager:
 
             # Analyze data types and sample
             data_types = df.dtypes.astype(str).to_dict()
-            sample_data = df.head(5).to_dict('records')
+            sample_data = df.head(5).to_dict("records")
             columns = df.columns.tolist()
 
             # Prepare dataset record - store complex data as JSON strings for flexibility
@@ -285,7 +284,7 @@ class LanceDBManager:
                 "sample_data_json": json.dumps(sample_data),
                 "upload_date": datetime.now().isoformat(),
                 "tags_json": json.dumps(tags or []),
-                "metadata_json": json.dumps(metadata or {})
+                "metadata_json": json.dumps(metadata or {}),
             }
 
             # Store in LanceDB (create table if it doesn't exist)
@@ -308,8 +307,9 @@ class LanceDBManager:
             logger.error(f"Failed to store CSV dataset: {e}")
             raise
 
-    def store_image(self, file_path: str, description: str = "",
-                   tags: List[str] = None, metadata: Dict[str, Any] = None) -> str:
+    def store_image(
+        self, file_path: str, description: str = "", tags: List[str] = None, metadata: Dict[str, Any] = None
+    ) -> str:
         """
         Store an image in LanceDB
 
@@ -326,8 +326,8 @@ class LanceDBManager:
             # Read and process image
             with Image.open(file_path) as img:
                 # Convert to RGB if necessary
-                if img.mode != 'RGB':
-                    img = img.convert('RGB')
+                if img.mode != "RGB":
+                    img = img.convert("RGB")
 
                 # Get image properties
                 width, height = img.size
@@ -335,7 +335,7 @@ class LanceDBManager:
 
                 # Convert to base64
                 buffer = io.BytesIO()
-                img.save(buffer, format='JPEG')
+                img.save(buffer, format="JPEG")
                 image_data = base64.b64encode(buffer.getvalue()).decode()
 
                 # Generate hash for deduplication
@@ -361,7 +361,7 @@ class LanceDBManager:
                 "upload_date": datetime.now().isoformat(),
                 "tags": tags or [],
                 "metadata": metadata or {},
-                "vector_embedding": None  # Placeholder for future embedding
+                "vector_embedding": None,  # Placeholder for future embedding
             }
 
             # Store in LanceDB (create table if it doesn't exist)
@@ -394,7 +394,7 @@ class LanceDBManager:
                 "text_content": text_content,
                 "image_embedding": None,
                 "metadata": {},
-                "created_date": datetime.now().isoformat()
+                "created_date": datetime.now().isoformat(),
             }
 
             table = self.db.open_table("multimodal_index")
@@ -403,8 +403,7 @@ class LanceDBManager:
         except Exception as e:
             logger.error(f"Failed to add to multimodal index: {e}")
 
-    def search_datasets(self, query: str = "", tags: List[str] = None,
-                       limit: int = 10) -> List[Dict[str, Any]]:
+    def search_datasets(self, query: str = "", tags: List[str] = None, limit: int = 10) -> List[Dict[str, Any]]:
         """
         Search CSV datasets by text query and tags
 
@@ -444,8 +443,7 @@ class LanceDBManager:
             logger.error(f"Failed to search datasets: {e}")
             return []
 
-    def search_images(self, query: str = "", tags: List[str] = None,
-                     limit: int = 10) -> List[Dict[str, Any]]:
+    def search_images(self, query: str = "", tags: List[str] = None, limit: int = 10) -> List[Dict[str, Any]]:
         """
         Search images by text query and tags
 
@@ -465,7 +463,9 @@ class LanceDBManager:
 
             if query:
                 # Simple text search in description and filename
-                conditions.append(f"description.str.contains('{query}', case=False) | filename.str.contains('{query}', case=False)")
+                conditions.append(
+                    f"description.str.contains('{query}', case=False) | filename.str.contains('{query}', case=False)"
+                )
 
             if tags:
                 tag_conditions = [f"'{tag}' in tags" for tag in tags]
@@ -545,8 +545,9 @@ class LanceDBManager:
             logger.error(f"Failed to delete image {image_id}: {e}")
             return False
 
-    def vector_search(self, vector: List[float], limit: int = 10,
-                     metric: str = "L2", table_name: str = None) -> List[Dict[str, Any]]:
+    def vector_search(
+        self, vector: List[float], limit: int = 10, metric: str = "L2", table_name: str = None
+    ) -> List[Dict[str, Any]]:
         """
         Perform vector similarity search
 
@@ -563,7 +564,7 @@ class LanceDBManager:
             if table_name:
                 table = self.db.open_table(table_name)
                 results = table.search(vector).metric(metric).limit(limit).to_pandas()
-                return results.to_dict('records') if hasattr(results, 'to_dict') else results
+                return results.to_dict("records") if hasattr(results, "to_dict") else results
             else:
                 # Cross-table search - search all tables with vector columns
                 all_results = []
@@ -573,17 +574,17 @@ class LanceDBManager:
                         # Check if table has vector data (simplified check)
                         results = table.search(vector).metric(metric).limit(limit).to_pandas()
                         if not results.empty:
-                            table_results = results.to_dict('records')
+                            table_results = results.to_dict("records")
                             # Add table name to results
                             for result in table_results:
-                                result['_table'] = table_name
+                                result["_table"] = table_name
                             all_results.extend(table_results[:limit])
                     except Exception:
                         # Skip tables that don't support vector search
                         continue
 
                 # Sort by score and limit
-                all_results.sort(key=lambda x: x.get('_score', 0), reverse=True)
+                all_results.sort(key=lambda x: x.get("_score", 0), reverse=True)
                 return all_results[:limit]
 
         except Exception as e:
@@ -641,7 +642,7 @@ class LanceDBManager:
                 "text_content": text,
                 "vector_embedding": embedding,
                 "metadata": metadata or {},
-                "created_date": datetime.now().isoformat()
+                "created_date": datetime.now().isoformat(),
             }
 
             # Store in vector table
@@ -650,14 +651,17 @@ class LanceDBManager:
             except Exception:
                 # Create table with vector column
                 import pyarrow as pa
-                schema = pa.schema([
-                    pa.field("id", pa.string()),
-                    pa.field("content_type", pa.string()),
-                    pa.field("text_content", pa.string()),
-                    pa.field("vector_embedding", pa.list_(pa.float32(), len(embedding))),
-                    pa.field("metadata", pa.string()),  # JSON string
-                    pa.field("created_date", pa.string())
-                ])
+
+                schema = pa.schema(
+                    [
+                        pa.field("id", pa.string()),
+                        pa.field("content_type", pa.string()),
+                        pa.field("text_content", pa.string()),
+                        pa.field("vector_embedding", pa.list_(pa.float32(), len(embedding))),
+                        pa.field("metadata", pa.string()),  # JSON string
+                        pa.field("created_date", pa.string()),
+                    ]
+                )
                 table = self.db.create_table("vector_content", schema=schema)
 
             table.add([record])
@@ -687,11 +691,12 @@ class LanceDBManager:
             table = self.db.open_table("vector_content")
             results = table.search(query_embedding).limit(limit).to_pandas()
 
-            return results.to_dict('records') if hasattr(results, 'to_dict') else results
+            return results.to_dict("records") if hasattr(results, "to_dict") else results
 
         except Exception as e:
             logger.error(f"Failed to perform semantic search: {e}")
             return []
+
 
 # Global instance - configure for cloud or local
 def _create_db_manager():
@@ -712,17 +717,15 @@ def _create_db_manager():
             api_key=api_key,
             region=region,
             ollama_base_url=ollama_base_url,
-            ollama_model=ollama_model
+            ollama_model=ollama_model,
         )
     else:
         logger.info("Initializing LanceDB OSS local connection")
-        return LanceDBManager(
-            db_path="./lancedb_data",
-            ollama_base_url=ollama_base_url,
-            ollama_model=ollama_model
-        )
+        return LanceDBManager(db_path="./lancedb_data", ollama_base_url=ollama_base_url, ollama_model=ollama_model)
+
 
 db_manager = _create_db_manager()
+
 
 def get_db_manager() -> LanceDBManager:
     """Get the global LanceDB manager instance"""

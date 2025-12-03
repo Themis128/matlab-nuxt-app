@@ -4,8 +4,8 @@ Pre-start Model Validation Script
 Validates model files before starting the API server in CI/CD environments
 """
 
-import sys
 import os
+import sys
 from pathlib import Path
 
 # Add python_api to path for imports
@@ -18,7 +18,7 @@ if str(python_api_dir) not in sys.path:
     sys.path.insert(0, str(python_api_dir))
 
 try:
-    from model_utils import safe_load_model, get_model_info
+    from model_utils import get_model_info, safe_load_model
 except ImportError as e:
     print(f"❌ Import error: {e}")
     print("Make sure you're running this script from the python_api directory:")
@@ -69,8 +69,8 @@ def check_model_file(model_path):
             return False
 
         # Try to load the model with timeout (Windows-compatible)
-        import time
         import threading
+        import time
 
         result = [None]
         exception = [None]

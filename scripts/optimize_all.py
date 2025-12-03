@@ -1,10 +1,10 @@
 """
 Master optimization script - runs all optimizations at once.
 """
-import sys
-import subprocess
-from pathlib import Path
 import os
+import subprocess
+import sys
+from pathlib import Path
 
 # Ensure UTF-8 encoding for emoji support
 os.environ['PYTHONIOENCODING'] = 'utf-8'

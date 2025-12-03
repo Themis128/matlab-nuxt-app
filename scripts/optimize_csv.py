@@ -1,12 +1,14 @@
 """
 Optimize CSV data files by removing duplicates, compressing, and cleaning data.
 """
-import pandas as pd
 import gzip
 import os
 from pathlib import Path
 from typing import Dict, List, Optional
+
+import pandas as pd
 from pandas.errors import EmptyDataError
+
 
 def optimize_csv(
     csv_path: str,

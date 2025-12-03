@@ -4,12 +4,14 @@ GSM Arena Realme Phone Image Scraper
 Scrapes high-quality phone images from GSM Arena database
 """
 
-import requests
+import json
 import os
 import time
-from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
-import json
+
+import requests
+from bs4 import BeautifulSoup
+
 
 class GSMArenaScraper:
     def __init__(self):

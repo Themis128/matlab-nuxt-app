@@ -1,7 +1,8 @@
 """Check Euro price scraper status"""
 import json
-import pandas as pd
 from pathlib import Path
+
+import pandas as pd
 
 # Get project root
 project_root = Path(__file__).parent.parent.parent

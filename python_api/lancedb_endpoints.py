@@ -3,17 +3,14 @@ LanceDB API endpoints for multimodal data management
 Provides REST API for CSV datasets and image storage/retrieval
 """
 
-import os
-import tempfile
-from typing import List, Dict, Any, Optional
-from pathlib import Path
-import logging
-
-from fastapi import APIRouter, UploadFile, File, Form, HTTPException, Query
-from fastapi.responses import JSONResponse
-from pydantic import BaseModel, Field
-import base64
 import json
+import logging
+import tempfile
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+from fastapi import APIRouter, File, Form, HTTPException, Query, UploadFile
+from pydantic import BaseModel, Field
 
 try:
     # Prefer top-level import when API is started using e.g. `python python_api/api.py`
@@ -24,8 +21,9 @@ except Exception:
 
 # Detect optional multipart dependency used by FastAPI for form/file endpoints
 try:
-    import multipart  # type: ignore
-    _HAS_MULTIPART = True
+    import importlib.util
+
+    _HAS_MULTIPART = importlib.util.find_spec("multipart") is not None
 except Exception:  # pragma: no cover - optional dependency
     _HAS_MULTIPART = False
 
@@ -33,21 +31,25 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/lancedb", tags=["LanceDB"])
 
+
 # Request/Response models
 class DatasetUploadRequest(BaseModel):
     description: str = Field("", description="Description of the dataset")
     tags: List[str] = Field(default_factory=list, description="Tags for categorization")
     metadata: Dict[str, Any] = Field(default_factory=dict, description="Additional metadata")
 
+
 class ImageUploadRequest(BaseModel):
     description: str = Field("", description="Description of the image")
     tags: List[str] = Field(default_factory=list, description="Tags for categorization")
     metadata: Dict[str, Any] = Field(default_factory=dict, description="Additional metadata")
 
+
 class SearchRequest(BaseModel):
     query: str = Field("", description="Search query")
     tags: List[str] = Field(default_factory=list, description="Filter by tags")
     limit: int = Field(10, description="Maximum results", ge=1, le=100)
+
 
 class VectorSearchRequest(BaseModel):
     vector: List[float] = Field(..., description="Query vector for similarity search")
@@ -55,11 +57,13 @@ class VectorSearchRequest(BaseModel):
     metric: str = Field("L2", description="Distance metric (L2, cosine, dot)")
     table_name: Optional[str] = Field(None, description="Specific table to search (optional)")
 
+
 class CreateTableRequest(BaseModel):
     name: str = Field(..., description="Table name")
     schema: Optional[Dict[str, Any]] = Field(None, description="Table schema (optional)")
     data: Optional[List[Dict[str, Any]]] = Field(None, description="Initial data (optional)")
     mode: str = Field("create", description="Creation mode (create, overwrite)")
+
 
 class CreateIndexRequest(BaseModel):
     table_name: str = Field(..., description="Table to create index on")
@@ -67,6 +71,7 @@ class CreateIndexRequest(BaseModel):
     vector_column_name: str = Field(..., description="Name of vector column")
     index_name: Optional[str] = Field(None, description="Custom index name")
     wait_timeout_seconds: int = Field(120, description="Timeout for index creation")
+
 
 class FilteredSearchRequest(BaseModel):
     vector: List[float] = Field(..., description="Query vector")
@@ -76,9 +81,13 @@ class FilteredSearchRequest(BaseModel):
     metric: str = Field("L2", description="Distance metric")
     table_name: Optional[str] = Field(None, description="Specific table to search")
 
+
 class AlterColumnsRequest(BaseModel):
     table_name: str = Field(..., description="Table to alter")
-    column_changes: Dict[str, Dict[str, Any]] = Field(..., description="Column changes (column_name -> {data_type: ..., ...})")
+    column_changes: Dict[str, Dict[str, Any]] = Field(
+        ..., description="Column changes (column_name -> {data_type: ..., ...})"
+    )
+
 
 class CompactTableRequest(BaseModel):
     table_name: str = Field(..., description="Table to compact")
@@ -86,10 +95,12 @@ class CompactTableRequest(BaseModel):
     max_fragments: Optional[int] = Field(100, description="Maximum number of fragments to keep")
     wait_timeout_seconds: int = Field(300, description="Timeout for compaction operation")
 
+
 class CleanupVersionsRequest(BaseModel):
     table_name: str = Field(..., description="Table to clean up")
     older_than_seconds: int = Field(86400, description="Remove versions older than this many seconds")
     keep_min_versions: int = Field(1, description="Minimum number of versions to keep")
+
 
 class DatasetResponse(BaseModel):
     id: str
@@ -102,6 +113,7 @@ class DatasetResponse(BaseModel):
     upload_date: str
     tags: List[str]
     metadata: Dict[str, Any]
+
 
 class ImageResponse(BaseModel):
     id: str
@@ -116,21 +128,24 @@ class ImageResponse(BaseModel):
     metadata: Dict[str, Any]
     image_data: Optional[str] = None  # Base64 encoded image data
 
+
 class SearchResponse(BaseModel):
     datasets: List[DatasetResponse] = []
     images: List[ImageResponse] = []
     total_datasets: int
     total_images: int
 
+
 # Global database manager
 db_manager = get_db_manager()
+
 
 @router.post("/upload/csv", response_model=Dict[str, str])
 async def upload_csv_dataset(
     file: UploadFile = File(...),
     description: str = Form(""),
     tags: str = Form(""),  # Comma-separated string
-    metadata: str = Form("{}")  # JSON string
+    metadata: str = Form("{}"),  # JSON string
 ):
     """
     Upload a CSV dataset to LanceDB
@@ -146,18 +161,18 @@ async def upload_csv_dataset(
     """
     try:
         # Validate file type
-        if not file.filename.lower().endswith('.csv'):
+        if not file.filename.lower().endswith(".csv"):
             raise HTTPException(status_code=400, detail="Only CSV files are allowed")
 
         # Parse tags and metadata
-        tag_list = [tag.strip() for tag in tags.split(',') if tag.strip()] if tags else []
+        tag_list = [tag.strip() for tag in tags.split(",") if tag.strip()] if tags else []
         try:
             metadata_dict = json.loads(metadata) if metadata else {}
         except json.JSONDecodeError:
             metadata_dict = {}
 
         # Save uploaded file temporarily
-        with tempfile.NamedTemporaryFile(delete=False, suffix='.csv') as temp_file:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".csv") as temp_file:
             content = await file.read()
             temp_file.write(content)
             temp_file_path = temp_file.name
@@ -165,10 +180,7 @@ async def upload_csv_dataset(
         try:
             # Store in LanceDB
             dataset_id = db_manager.store_csv_dataset(
-                file_path=temp_file_path,
-                description=description,
-                tags=tag_list,
-                metadata=metadata_dict
+                file_path=temp_file_path, description=description, tags=tag_list, metadata=metadata_dict
             )
 
             return {"dataset_id": dataset_id, "message": "Dataset uploaded successfully"}
@@ -181,12 +193,13 @@ async def upload_csv_dataset(
         logger.error(f"Failed to upload CSV dataset: {e}")
         raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}") from e
 
+
 @router.post("/upload/image", response_model=Dict[str, str])
 async def upload_image(
     file: UploadFile = File(...),
     description: str = Form(""),
     tags: str = Form(""),  # Comma-separated string
-    metadata: str = Form("{}")  # JSON string
+    metadata: str = Form("{}"),  # JSON string
 ):
     """
     Upload an image to LanceDB
@@ -202,16 +215,15 @@ async def upload_image(
     """
     try:
         # Validate file type
-        allowed_extensions = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'}
+        allowed_extensions = {".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp"}
         file_ext = Path(file.filename.lower()).suffix
         if file_ext not in allowed_extensions:
             raise HTTPException(
-                status_code=400,
-                detail=f"Only image files are allowed: {', '.join(allowed_extensions)}"
+                status_code=400, detail=f"Only image files are allowed: {', '.join(allowed_extensions)}"
             )
 
         # Parse tags and metadata
-        tag_list = [tag.strip() for tag in tags.split(',') if tag.strip()] if tags else []
+        tag_list = [tag.strip() for tag in tags.split(",") if tag.strip()] if tags else []
         try:
             metadata_dict = json.loads(metadata) if metadata else {}
         except json.JSONDecodeError:
@@ -226,10 +238,7 @@ async def upload_image(
         try:
             # Store in LanceDB
             image_id = db_manager.store_image(
-                file_path=temp_file_path,
-                description=description,
-                tags=tag_list,
-                metadata=metadata_dict
+                file_path=temp_file_path, description=description, tags=tag_list, metadata=metadata_dict
             )
 
             return {"image_id": image_id, "message": "Image uploaded successfully"}
@@ -242,6 +251,7 @@ async def upload_image(
         logger.error(f"Failed to upload image: {e}")
         raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}") from e
 
+
 @router.get("/datasets", response_model=List[DatasetResponse])
 async def get_all_datasets(limit: int = Query(50, ge=1, le=500)):
     """Get all CSV datasets"""
@@ -249,15 +259,16 @@ async def get_all_datasets(limit: int = Query(50, ge=1, le=500)):
         datasets = db_manager.get_all_datasets(limit=limit)
         # Decode JSON fields
         for dataset in datasets:
-            dataset['columns'] = json.loads(dataset.pop('columns_json', '[]'))
-            dataset['data_types'] = json.loads(dataset.pop('data_types_json', '{}'))
-            dataset['sample_data'] = json.loads(dataset.pop('sample_data_json', '[]'))
-            dataset['tags'] = json.loads(dataset.pop('tags_json', '[]'))
-            dataset['metadata'] = json.loads(dataset.pop('metadata_json', '{}'))
+            dataset["columns"] = json.loads(dataset.pop("columns_json", "[]"))
+            dataset["data_types"] = json.loads(dataset.pop("data_types_json", "{}"))
+            dataset["sample_data"] = json.loads(dataset.pop("sample_data_json", "[]"))
+            dataset["tags"] = json.loads(dataset.pop("tags_json", "[]"))
+            dataset["metadata"] = json.loads(dataset.pop("metadata_json", "{}"))
         return datasets
     except Exception as e:
         logger.error(f"Failed to get datasets: {e}")
         raise HTTPException(status_code=500, detail=f"Failed to retrieve datasets: {str(e)}") from e
+
 
 @router.get("/images", response_model=List[ImageResponse])
 async def get_all_images(limit: int = Query(50, ge=1, le=500), include_data: bool = Query(False)):
@@ -267,11 +278,12 @@ async def get_all_images(limit: int = Query(50, ge=1, le=500), include_data: boo
         # Optionally include base64 image data
         if not include_data:
             for img in images:
-                img.pop('image_data', None)
+                img.pop("image_data", None)
         return images
     except Exception as e:
         logger.error(f"Failed to get images: {e}")
         raise HTTPException(status_code=500, detail=f"Failed to retrieve images: {str(e)}") from e
+
 
 @router.get("/datasets/{dataset_id}", response_model=DatasetResponse)
 async def get_dataset(dataset_id: str):
@@ -282,11 +294,11 @@ async def get_dataset(dataset_id: str):
             raise HTTPException(status_code=404, detail="Dataset not found")
 
         # Decode JSON fields
-        dataset['columns'] = json.loads(dataset.pop('columns_json', '[]'))
-        dataset['data_types'] = json.loads(dataset.pop('data_types_json', '{}'))
-        dataset['sample_data'] = json.loads(dataset.pop('sample_data_json', '[]'))
-        dataset['tags'] = json.loads(dataset.pop('tags_json', '[]'))
-        dataset['metadata'] = json.loads(dataset.pop('metadata_json', '{}'))
+        dataset["columns"] = json.loads(dataset.pop("columns_json", "[]"))
+        dataset["data_types"] = json.loads(dataset.pop("data_types_json", "{}"))
+        dataset["sample_data"] = json.loads(dataset.pop("sample_data_json", "[]"))
+        dataset["tags"] = json.loads(dataset.pop("tags_json", "[]"))
+        dataset["metadata"] = json.loads(dataset.pop("metadata_json", "{}"))
 
         return dataset
     except HTTPException:
@@ -294,6 +306,7 @@ async def get_dataset(dataset_id: str):
     except Exception as e:
         logger.error(f"Failed to get dataset {dataset_id}: {e}")
         raise HTTPException(status_code=500, detail=f"Failed to retrieve dataset: {str(e)}") from e
+
 
 @router.get("/images/{image_id}", response_model=ImageResponse)
 async def get_image(image_id: str, include_data: bool = Query(True)):
@@ -305,7 +318,7 @@ async def get_image(image_id: str, include_data: bool = Query(True)):
 
         # Optionally exclude base64 data for metadata-only requests
         if not include_data:
-            image.pop('image_data', None)
+            image.pop("image_data", None)
 
         return image
     except HTTPException:
@@ -314,31 +327,20 @@ async def get_image(image_id: str, include_data: bool = Query(True)):
         logger.error(f"Failed to get image {image_id}: {e}")
         raise HTTPException(status_code=500, detail=f"Failed to retrieve image: {str(e)}") from e
 
+
 @router.post("/search", response_model=SearchResponse)
 async def search_multimodal(request: SearchRequest):
     """Search across both datasets and images"""
     try:
-        datasets = db_manager.search_datasets(
-            query=request.query,
-            tags=request.tags,
-            limit=request.limit
-        )
+        datasets = db_manager.search_datasets(query=request.query, tags=request.tags, limit=request.limit)
 
-        images = db_manager.search_images(
-            query=request.query,
-            tags=request.tags,
-            limit=request.limit
-        )
+        images = db_manager.search_images(query=request.query, tags=request.tags, limit=request.limit)
 
-        return SearchResponse(
-            datasets=datasets,
-            images=images,
-            total_datasets=len(datasets),
-            total_images=len(images)
-        )
+        return SearchResponse(datasets=datasets, images=images, total_datasets=len(datasets), total_images=len(images))
     except Exception as e:
         logger.error(f"Failed to search: {e}")
         raise HTTPException(status_code=500, detail=f"Search failed: {str(e)}") from e
+
 
 @router.post("/search/vector", response_model=List[Dict[str, Any]])
 async def search_vectors(request: VectorSearchRequest):
@@ -351,17 +353,14 @@ async def search_vectors(request: VectorSearchRequest):
             results = table.search(request.vector).metric(request.metric).limit(request.limit).to_pandas()
         else:
             # Search across all tables (implementation depends on db_manager structure)
-            results = db_manager.vector_search(
-                vector=request.vector,
-                limit=request.limit,
-                metric=request.metric
-            )
+            results = db_manager.vector_search(vector=request.vector, limit=request.limit, metric=request.metric)
 
-        return results.to_dict('records') if hasattr(results, 'to_dict') else results
+        return results.to_dict("records") if hasattr(results, "to_dict") else results
 
     except Exception as e:
         logger.error(f"Failed to perform vector search: {e}")
         raise HTTPException(status_code=500, detail=f"Vector search failed: {str(e)}") from e
+
 
 @router.delete("/datasets/{dataset_id}")
 async def delete_dataset(dataset_id: str):
@@ -378,6 +377,7 @@ async def delete_dataset(dataset_id: str):
         logger.error(f"Failed to delete dataset {dataset_id}: {e}")
         raise HTTPException(status_code=500, detail=f"Delete failed: {str(e)}") from e
 
+
 @router.delete("/images/{image_id}")
 async def delete_image(image_id: str):
     """Delete an image by ID"""
@@ -393,20 +393,17 @@ async def delete_image(image_id: str):
         logger.error(f"Failed to delete image {image_id}: {e}")
         raise HTTPException(status_code=500, detail=f"Delete failed: {str(e)}") from e
 
+
 @router.post("/tables", response_model=Dict[str, str])
 async def create_table(request: CreateTableRequest):
     """Create a new LanceDB table"""
     try:
-        table = db_manager.db.create_table(
-            request.name,
-            data=request.data,
-            schema=request.schema,
-            mode=request.mode
-        )
+        db_manager.db.create_table(request.name, data=request.data, schema=request.schema, mode=request.mode)
         return {"table_name": request.name, "message": "Table created successfully"}
     except Exception as e:
         logger.error(f"Failed to create table {request.name}: {e}")
         raise HTTPException(status_code=500, detail=f"Table creation failed: {str(e)}") from e
+
 
 @router.get("/tables", response_model=List[str])
 async def list_tables():
@@ -418,6 +415,7 @@ async def list_tables():
         logger.error(f"Failed to list tables: {e}")
         raise HTTPException(status_code=500, detail=f"Failed to list tables: {str(e)}") from e
 
+
 @router.delete("/tables/{table_name}")
 async def drop_table(table_name: str, ignore_missing: bool = Query(False)):
     """Drop a table from the database"""
@@ -428,26 +426,29 @@ async def drop_table(table_name: str, ignore_missing: bool = Query(False)):
         logger.error(f"Failed to drop table {table_name}: {e}")
         raise HTTPException(status_code=500, detail=f"Failed to drop table: {str(e)}") from e
 
+
 @router.post("/indexes", response_model=Dict[str, Any])
 async def create_index(request: CreateIndexRequest):
     """Create a vector index on a table (asynchronous for Cloud)"""
     try:
         from datetime import timedelta
+
         table = db_manager.db.open_table(request.table_name)
-        index_result = table.create_index(
+        table.create_index(
             request.metric,
             vector_column_name=request.vector_column_name,
-            wait_timeout=timedelta(seconds=request.wait_timeout_seconds)
+            wait_timeout=timedelta(seconds=request.wait_timeout_seconds),
         )
         return {
             "table_name": request.table_name,
             "index_name": request.index_name or f"{request.vector_column_name}_idx",
             "metric": request.metric,
-            "message": "Index creation initiated successfully"
+            "message": "Index creation initiated successfully",
         }
     except Exception as e:
         logger.error(f"Failed to create index on {request.table_name}: {e}")
         raise HTTPException(status_code=500, detail=f"Index creation failed: {str(e)}") from e
+
 
 @router.get("/indexes/{table_name}", response_model=Dict[str, Any])
 async def get_index_stats(table_name: str, index_name: Optional[str] = None):
@@ -455,14 +456,11 @@ async def get_index_stats(table_name: str, index_name: Optional[str] = None):
     try:
         table = db_manager.db.open_table(table_name)
         stats = table.index_stats(index_name)
-        return {
-            "table_name": table_name,
-            "index_stats": stats,
-            "message": "Index stats retrieved successfully"
-        }
+        return {"table_name": table_name, "index_stats": stats, "message": "Index stats retrieved successfully"}
     except Exception as e:
         logger.error(f"Failed to get index stats for {table_name}: {e}")
         raise HTTPException(status_code=500, detail=f"Failed to get index stats: {str(e)}") from e
+
 
 @router.post("/search/filtered", response_model=List[Dict[str, Any]])
 async def search_with_filters(request: FilteredSearchRequest):
@@ -483,11 +481,12 @@ async def search_with_filters(request: FilteredSearchRequest):
             # Cross-table search (would need custom implementation)
             raise HTTPException(status_code=400, detail="Table name required for filtered search")
 
-        return results.to_dict('records') if hasattr(results, 'to_dict') else results
+        return results.to_dict("records") if hasattr(results, "to_dict") else results
 
     except Exception as e:
         logger.error(f"Failed to perform filtered search: {e}")
         raise HTTPException(status_code=500, detail=f"Filtered search failed: {str(e)}") from e
+
 
 @router.put("/tables/{table_name}/schema", response_model=Dict[str, str])
 async def alter_table_schema(table_name: str, request: AlterColumnsRequest):
@@ -498,40 +497,43 @@ async def alter_table_schema(table_name: str, request: AlterColumnsRequest):
         # Convert column changes to the format expected by LanceDB
         alterations = {}
         for col_name, changes in request.column_changes.items():
-            if 'data_type' in changes:
+            if "data_type" in changes:
                 alterations[col_name] = changes
 
         table.alter_columns(alterations)
         return {
             "table_name": table_name,
-            "message": f"Schema altered successfully for columns: {list(request.column_changes.keys())}"
+            "message": f"Schema altered successfully for columns: {list(request.column_changes.keys())}",
         }
     except Exception as e:
         logger.error(f"Failed to alter schema for {table_name}: {e}")
         raise HTTPException(status_code=500, detail=f"Schema alteration failed: {str(e)}") from e
+
 
 @router.post("/tables/{table_name}/compact", response_model=Dict[str, Any])
 async def compact_table(table_name: str, request: CompactTableRequest):
     """Compact table fragments for optimal performance"""
     try:
         from datetime import timedelta
+
         table = db_manager.db.open_table(table_name)
 
         # Perform compaction with specified parameters
         compaction_result = table.compact_files(
             target_rows_per_fragment=request.target_rows_per_fragment,
             max_fragments=request.max_fragments,
-            wait_timeout=timedelta(seconds=request.wait_timeout_seconds)
+            wait_timeout=timedelta(seconds=request.wait_timeout_seconds),
         )
 
         return {
             "table_name": table_name,
             "compaction_result": compaction_result,
-            "message": "Table compaction completed successfully"
+            "message": "Table compaction completed successfully",
         }
     except Exception as e:
         logger.error(f"Failed to compact table {table_name}: {e}")
         raise HTTPException(status_code=500, detail=f"Table compaction failed: {str(e)}") from e
+
 
 @router.post("/tables/{table_name}/cleanup", response_model=Dict[str, Any])
 async def cleanup_versions(table_name: str, request: CleanupVersionsRequest):
@@ -542,18 +544,19 @@ async def cleanup_versions(table_name: str, request: CleanupVersionsRequest):
         # Clean up old versions
         cleanup_result = table.cleanup_old_versions(
             older_than_seconds=request.older_than_seconds,
-            delete_unverified=False  # Keep versions that might still be in use
+            delete_unverified=False,  # Keep versions that might still be in use
         )
 
         return {
             "table_name": table_name,
             "versions_removed": cleanup_result.get("versions_removed", 0),
             "bytes_removed": cleanup_result.get("bytes_removed", 0),
-            "message": f"Cleaned up {cleanup_result.get('versions_removed', 0)} old versions"
+            "message": f"Cleaned up {cleanup_result.get('versions_removed', 0)} old versions",
         }
     except Exception as e:
         logger.error(f"Failed to cleanup versions for {table_name}: {e}")
         raise HTTPException(status_code=500, detail=f"Version cleanup failed: {str(e)}") from e
+
 
 @router.get("/tables/{table_name}/fragments", response_model=Dict[str, Any])
 async def get_table_fragments(table_name: str):
@@ -569,8 +572,9 @@ async def get_table_fragments(table_name: str):
             fragment_info = {
                 "id": fragment.id(),
                 "num_rows": fragment.count_rows(),
-                "num_deletions": fragment.num_deletions() if hasattr(fragment, 'num_deletions') else 0,
-                "physical_rows": fragment.count_rows() - (fragment.num_deletions() if hasattr(fragment, 'num_deletions') else 0)
+                "num_deletions": fragment.num_deletions() if hasattr(fragment, "num_deletions") else 0,
+                "physical_rows": fragment.count_rows()
+                - (fragment.num_deletions() if hasattr(fragment, "num_deletions") else 0),
             }
             fragments_info.append(fragment_info)
 
@@ -580,11 +584,12 @@ async def get_table_fragments(table_name: str):
             "fragments": fragments_info,
             "total_rows": sum(f["num_rows"] for f in fragments_info),
             "total_deletions": sum(f["num_deletions"] for f in fragments_info),
-            "message": f"Found {len(fragments_info)} fragments in table"
+            "message": f"Found {len(fragments_info)} fragments in table",
         }
     except Exception as e:
         logger.error(f"Failed to get fragments for {table_name}: {e}")
         raise HTTPException(status_code=500, detail=f"Failed to get fragments: {str(e)}") from e
+
 
 @router.get("/stats")
 async def get_database_stats():
@@ -594,18 +599,19 @@ async def get_database_stats():
         images = db_manager.get_all_images(limit=1000)
 
         total_dataset_size = sum(len(str(d)) for d in datasets)
-        total_image_size = sum(img.get('size_bytes', 0) for img in images)
+        total_image_size = sum(img.get("size_bytes", 0) for img in images)
 
         return {
             "total_datasets": len(datasets),
             "total_images": len(images),
             "estimated_dataset_storage_mb": round(total_dataset_size / (1024 * 1024), 2),
             "total_image_storage_mb": round(total_image_size / (1024 * 1024), 2),
-            "database_path": str(db_manager.db_path)
+            "database_path": str(db_manager.db_path),
         }
     except Exception as e:
         logger.error(f"Failed to get stats: {e}")
         raise HTTPException(status_code=500, detail=f"Failed to get statistics: {str(e)}") from e
+
 
 # Ollama Embeddings Endpoints
 @router.post("/embeddings/generate", response_model=Dict[str, Any])
@@ -617,14 +623,11 @@ async def generate_text_embedding(request: Dict[str, str]):
             raise HTTPException(status_code=400, detail="Text is required")
 
         embedding = db_manager.generate_embedding(text)
-        return {
-            "embedding": embedding,
-            "dimension": len(embedding),
-            "model": "ollama-nomic-embed-text"
-        }
+        return {"embedding": embedding, "dimension": len(embedding), "model": "ollama-nomic-embed-text"}
     except Exception as e:
         logger.error(f"Failed to generate embedding: {e}")
         raise HTTPException(status_code=500, detail=f"Embedding generation failed: {str(e)}") from e
+
 
 @router.post("/embeddings/batch", response_model=List[Dict[str, Any]])
 async def generate_batch_embeddings(request: Dict[str, List[str]]):
@@ -636,16 +639,13 @@ async def generate_batch_embeddings(request: Dict[str, List[str]]):
 
         embeddings = db_manager.generate_embeddings_batch(texts)
         return [
-            {
-                "text": text,
-                "embedding": embedding,
-                "dimension": len(embedding)
-            }
+            {"text": text, "embedding": embedding, "dimension": len(embedding)}
             for text, embedding in zip(texts, embeddings)
         ]
     except Exception as e:
         logger.error(f"Failed to generate batch embeddings: {e}")
         raise HTTPException(status_code=500, detail=f"Batch embedding generation failed: {str(e)}") from e
+
 
 @router.post("/embeddings/store", response_model=Dict[str, str])
 async def embed_and_store_content(request: Dict[str, Any]):
@@ -658,13 +658,11 @@ async def embed_and_store_content(request: Dict[str, Any]):
             raise HTTPException(status_code=400, detail="Text is required")
 
         content_id = db_manager.embed_and_store_text(text, metadata)
-        return {
-            "content_id": content_id,
-            "message": "Content embedded and stored successfully"
-        }
+        return {"content_id": content_id, "message": "Content embedded and stored successfully"}
     except Exception as e:
         logger.error(f"Failed to embed and store content: {e}")
         raise HTTPException(status_code=500, detail=f"Content storage failed: {str(e)}") from e
+
 
 @router.post("/search/semantic", response_model=List[Dict[str, Any]])
 async def semantic_search(request: Dict[str, Any]):
@@ -682,6 +680,7 @@ async def semantic_search(request: Dict[str, Any]):
         logger.error(f"Failed to perform semantic search: {e}")
         raise HTTPException(status_code=500, detail=f"Semantic search failed: {str(e)}") from e
 
+
 # Health check for LanceDB
 @router.get("/health")
 async def lancedb_health():
@@ -695,7 +694,7 @@ async def lancedb_health():
             "tables": tables,
             "database_path": str(db_manager.db_path),
             "ollama_embeddings": ollama_status,
-            "is_cloud": db_manager.is_cloud
+            "is_cloud": db_manager.is_cloud,
         }
     except Exception as e:
         logger.error(f"LanceDB health check failed: {e}")

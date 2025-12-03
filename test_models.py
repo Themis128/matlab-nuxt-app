@@ -4,8 +4,8 @@ Test script to check which trained models can be loaded and work properly
 """
 
 import os
-import sys
 import pickle
+import sys
 from pathlib import Path
 
 # Add current directory to path

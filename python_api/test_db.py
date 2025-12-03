@@ -5,13 +5,14 @@ Test script to check database contents
 
 import lancedb
 
+
 def main():
     # Connect to database
-    db = lancedb.connect('./lancedb_data')
+    db = lancedb.connect("./lancedb_data")
 
     # Check CSV datasets
     try:
-        table = db.open_table('csv_datasets')
+        table = db.open_table("csv_datasets")
         df = table.to_pandas()
         print(f"CSV datasets: {len(df)}")
         if len(df) > 0:
@@ -23,7 +24,7 @@ def main():
 
     # Check images
     try:
-        table = db.open_table('images')
+        table = db.open_table("images")
         df = table.to_pandas()
         print(f"Images: {len(df)}")
         if len(df) > 0:
@@ -32,6 +33,7 @@ def main():
                 print(f"  {idx}: {row['filename']} - {row['width']}x{row['height']}")
     except Exception as e:
         print(f"Error accessing images: {e}")
+
 
 if __name__ == "__main__":
     main()

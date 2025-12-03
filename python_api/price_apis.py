@@ -9,8 +9,9 @@ Supported APIs:
 """
 
 import os
+from typing import Dict, Optional
+
 import requests
-from typing import Optional, Dict
 
 
 class GoogleShoppingAPI:
@@ -22,8 +23,8 @@ class GoogleShoppingAPI:
 
         API credentials are loaded from environment variables only.
         """
-        self.api_key = os.getenv('GOOGLE_API_KEY')
-        self.search_engine_id = os.getenv('GOOGLE_SEARCH_ENGINE_ID')
+        self.api_key = os.getenv("GOOGLE_API_KEY")
+        self.search_engine_id = os.getenv("GOOGLE_SEARCH_ENGINE_ID")
         self.base_url = "https://www.googleapis.com/customsearch/v1"
 
     def is_configured(self) -> bool:
@@ -47,13 +48,13 @@ class GoogleShoppingAPI:
 
         try:
             params = {
-                'key': self.api_key,
-                'cx': self.search_engine_id,
-                'q': f"{query} kaufen preis",
-                'gl': country,
-                'hl': language,
-                'num': 10,
-                'safe': 'off'
+                "key": self.api_key,
+                "cx": self.search_engine_id,
+                "q": f"{query} kaufen preis",
+                "gl": country,
+                "hl": language,
+                "num": 10,
+                "safe": "off",
             }
 
             response = requests.get(self.base_url, params=params, timeout=10)
@@ -62,31 +63,32 @@ class GoogleShoppingAPI:
             data = response.json()
 
             # Extract price information from search results
-            items = data.get('items', [])
+            items = data.get("items", [])
             for item in items:
-                snippet = item.get('snippet', '')
-                title = item.get('title', '')
+                snippet = item.get("snippet", "")
+                title = item.get("title", "")
 
                 # Look for price patterns in snippet/title
                 import re
+
                 price_patterns = [
-                    r'€\s*(\d{1,3}(?:[.,]\d{2})?)',
-                    r'(\d{1,3}(?:[.,]\d{2})?)\s*€',
-                    r'EUR\s*(\d{1,3}(?:[.,]\d{2})?)',
+                    r"€\s*(\d{1,3}(?:[.,]\d{2})?)",
+                    r"(\d{1,3}(?:[.,]\d{2})?)\s*€",
+                    r"EUR\s*(\d{1,3}(?:[.,]\d{2})?)",
                 ]
 
                 for pattern in price_patterns:
-                    match = re.search(pattern, snippet + ' ' + title, re.IGNORECASE)
+                    match = re.search(pattern, snippet + " " + title, re.IGNORECASE)
                     if match:
                         try:
-                            price = float(match.group(1).replace(',', '.'))
+                            price = float(match.group(1).replace(",", "."))
                             if 50 <= price <= 5000:  # Reasonable price range
                                 return {
-                                    'price': price,
-                                    'currency': 'EUR',
-                                    'source': 'Google Shopping',
-                                    'url': item.get('link'),
-                                    'title': title
+                                    "price": price,
+                                    "currency": "EUR",
+                                    "source": "Google Shopping",
+                                    "url": item.get("link"),
+                                    "title": title,
                                 }
                         except ValueError:
                             continue
@@ -113,20 +115,20 @@ class AmazonPAAPI:
         Args:
             region: Region (de, com, co.uk, fr, etc.)
         """
-        self.access_key = os.getenv('AMAZON_ACCESS_KEY')
-        self.secret_key = os.getenv('AMAZON_SECRET_KEY')
-        self.partner_tag = os.getenv('AMAZON_PARTNER_TAG')
+        self.access_key = os.getenv("AMAZON_ACCESS_KEY")
+        self.secret_key = os.getenv("AMAZON_SECRET_KEY")
+        self.partner_tag = os.getenv("AMAZON_PARTNER_TAG")
         self.region = region
 
         # API endpoints by region
         self.endpoints = {
-            'de': 'https://webservices.amazon.de/paapi5/searchitems',
-            'com': 'https://webservices.amazon.com/paapi5/searchitems',
-            'co.uk': 'https://webservices.amazon.co.uk/paapi5/searchitems',
-            'fr': 'https://webservices.amazon.fr/paapi5/searchitems',
+            "de": "https://webservices.amazon.de/paapi5/searchitems",
+            "com": "https://webservices.amazon.com/paapi5/searchitems",
+            "co.uk": "https://webservices.amazon.co.uk/paapi5/searchitems",
+            "fr": "https://webservices.amazon.fr/paapi5/searchitems",
         }
 
-        self.endpoint = self.endpoints.get(region, self.endpoints['de'])
+        self.endpoint = self.endpoints.get(region, self.endpoints["de"])
 
     def is_configured(self) -> bool:
         """Check if API is properly configured"""
@@ -156,6 +158,7 @@ class AmazonPAAPI:
             # or implement proper AWS signing
 
             import logging
+
             logging.getLogger("python_api").warning(
                 "Amazon PA-API requires AWS Signature V4 - use paapi5-python-sdk (request keywords: %s)",
                 query,
@@ -169,6 +172,7 @@ class AmazonPAAPI:
 
 class PriceComparisonAPI:
     """Price comparison APIs (Idealo, Geizhals, etc.)"""
+
     def search_idealo(self, query: str) -> Optional[Dict]:
         """Search Idealo (placeholder; public API may not be available)"""
         try:
@@ -202,9 +206,9 @@ class PriceAPIManager:
         self.price_comparison = PriceComparisonAPI()
 
         self.stats = {
-            'google_shopping': {'success': 0, 'failed': 0},
-            'amazon_paapi': {'success': 0, 'failed': 0},
-            'price_comparison': {'success': 0, 'failed': 0}
+            "google_shopping": {"success": 0, "failed": 0},
+            "amazon_paapi": {"success": 0, "failed": 0},
+            "price_comparison": {"success": 0, "failed": 0},
         }
 
     def get_price(self, product_name: str, preferred_source: Optional[str] = None) -> Optional[Dict]:
@@ -221,41 +225,41 @@ class PriceAPIManager:
         print(f"  [→] Searching APIs for: {product_name}")
 
         # Try Google Shopping first (most reliable)
-        if not preferred_source or preferred_source == 'google':
+        if not preferred_source or preferred_source == "google":
             if self.google_shopping.is_configured():
                 print("    [→] Trying Google Shopping API...")
                 result = self.google_shopping.search_product(product_name)
                 if result:
                     print(f"    [OK] Found on Google Shopping: €{result['price']:.2f}")
-                    self.stats['google_shopping']['success'] += 1
+                    self.stats["google_shopping"]["success"] += 1
                     return result
-                self.stats['google_shopping']['failed'] += 1
+                self.stats["google_shopping"]["failed"] += 1
             else:
                 print("    [!] Google Shopping API not configured")
 
         # Try Amazon PA-API
-        if not preferred_source or preferred_source == 'amazon':
+        if not preferred_source or preferred_source == "amazon":
             if self.amazon_paapi.is_configured():
                 print("    [→] Trying Amazon PA-API...")
                 result = self.amazon_paapi.search_product(product_name)
                 if result:
                     print(f"    [OK] Found on Amazon: €{result['price']:.2f}")
-                    self.stats['amazon_paapi']['success'] += 1
+                    self.stats["amazon_paapi"]["success"] += 1
                     return result
-                self.stats['amazon_paapi']['failed'] += 1
+                self.stats["amazon_paapi"]["failed"] += 1
             else:
                 print("    [!] Amazon PA-API not configured")
 
         # Try price comparison APIs
-        if not preferred_source or preferred_source == 'comparison':
+        if not preferred_source or preferred_source == "comparison":
             if self.price_comparison.api_key:
                 print("    [→] Trying Price Comparison API...")
                 result = self.price_comparison.search_idealo(product_name)
                 if result:
                     print(f"    [OK] Found on Price Comparison: €{result['price']:.2f}")
-                    self.stats['price_comparison']['success'] += 1
+                    self.stats["price_comparison"]["success"] += 1
                     return result
-                self.stats['price_comparison']['failed'] += 1
+                self.stats["price_comparison"]["failed"] += 1
 
         print(f"  [!] No price found via APIs for {product_name}")
         return None
@@ -267,9 +271,9 @@ class PriceAPIManager:
     def is_any_configured(self) -> bool:
         """Check if at least one API is configured"""
         return (
-            self.google_shopping.is_configured() or
-            self.amazon_paapi.is_configured() or
-            bool(self.price_comparison.api_key)
+            self.google_shopping.is_configured()
+            or self.amazon_paapi.is_configured()
+            or bool(self.price_comparison.api_key)
         )
 
 
@@ -287,4 +291,4 @@ def get_product_price(product_name: str, api_key: Optional[str] = None) -> Optio
     """
     manager = PriceAPIManager()
     result = manager.get_price(product_name)
-    return result['price'] if result else None
+    return result["price"] if result else None

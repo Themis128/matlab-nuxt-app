@@ -4,11 +4,12 @@ Provides access to distilled, ensemble, XGBoost, and multi-currency models
 """
 
 import logging
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel, Field
-from typing import Optional
 import os
+from typing import Optional
+
 import pandas as pd
+from fastapi import APIRouter
+from pydantic import BaseModel, Field
 from sklearn.preprocessing import LabelEncoder
 
 logger = logging.getLogger(__name__)
@@ -18,30 +19,25 @@ router = APIRouter()
 # Model type mappings - Only using models that can actually be loaded
 MODEL_TYPES = {
     # Working sklearn models
-    'sklearn_price': 'price_predictor_sklearn.pkl',
-    'sklearn_ram': 'ram_predictor_sklearn.pkl',
-    'sklearn_battery': 'battery_predictor_sklearn.pkl',
-    'sklearn_brand': 'brand_classifier_sklearn.pkl',
-
+    "sklearn_price": "price_predictor_sklearn.pkl",
+    "sklearn_ram": "ram_predictor_sklearn.pkl",
+    "sklearn_battery": "battery_predictor_sklearn.pkl",
+    "sklearn_brand": "brand_classifier_sklearn.pkl",
     # Working currency models
-    'price_eur': 'price_eur_model.pkl',
-    'price_inr': 'price_inr_model.pkl',
-    'price_usd': 'price_usd_model.pkl',
-
+    "price_eur": "price_eur_model.pkl",
+    "price_inr": "price_inr_model.pkl",
+    "price_usd": "price_usd_model.pkl",
     # Now working with consolidated dataset
-    'distilled': 'distilled_price_model.pkl',
-    'ensemble_stacking': 'ensemble_stacking_model.pkl',
-    'xgboost_conservative': 'xgboost_conservative.pkl',
-    'xgboost_aggressive': 'xgboost_aggressive.pkl',
-    'xgboost_deep': 'xgboost_deep.pkl'
+    "distilled": "distilled_price_model.pkl",
+    "ensemble_stacking": "ensemble_stacking_model.pkl",
+    "xgboost_conservative": "xgboost_conservative.pkl",
+    "xgboost_aggressive": "xgboost_aggressive.pkl",
+    "xgboost_deep": "xgboost_deep.pkl",
 }
 
 # Currency symbols
-CURRENCY_SYMBOLS = {
-    'USD': '$',
-    'EUR': '€',
-    'INR': '₹'
-}
+CURRENCY_SYMBOLS = {"USD": "$", "EUR": "€", "INR": "₹"}
+
 
 class AdvancedPredictionRequest(BaseModel):
     ram: float = Field(..., description="RAM in GB", ge=1, le=24)
@@ -57,6 +53,7 @@ class AdvancedPredictionRequest(BaseModel):
     model_type: str = Field(..., description="Model type to use")
     currency: str = Field("USD", description="Currency for pricing models")
 
+
 class AdvancedPredictionResponse(BaseModel):
     price: float
     model_used: str
@@ -64,8 +61,10 @@ class AdvancedPredictionResponse(BaseModel):
     currency: str
     currency_symbol: str
 
+
 # Global model cache
 _model_cache = {}
+
 
 def load_advanced_model(model_type: str):
     """Load advanced model by type"""
@@ -73,9 +72,9 @@ def load_advanced_model(model_type: str):
         return _model_cache[model_type]
 
     try:
+        import hashlib
         import pickle
         from pathlib import Path
-        import hashlib
 
         models_dir = Path(__file__).parent / "trained_models"
         model_file = MODEL_TYPES.get(model_type)
@@ -98,7 +97,7 @@ def load_advanced_model(model_type: str):
             raise ValueError(f"Model file too large: {file_stats.st_size} bytes")
 
         # Calculate file hash and compare with known good hashes
-        with open(model_path, 'rb') as f:
+        with open(model_path, "rb") as f:
             file_content = f.read()
 
         # Verify file hash (in production, store known good hashes)
@@ -117,19 +116,20 @@ def load_advanced_model(model_type: str):
         # Instead of raising, return None to indicate model is not available
         return None
 
+
 def get_scaler_for_model(model_type: str):
     """Get appropriate scaler for model type"""
     try:
+        import hashlib
         import pickle
         from pathlib import Path
-        import hashlib
 
         models_dir = Path(__file__).parent / "trained_models"
 
         # Different models have different scaler naming conventions
-        if model_type.startswith('xgboost'):
+        if model_type.startswith("xgboost"):
             scaler_file = "xgboost_scaler.pkl"
-        elif model_type in ['price_eur', 'price_inr', 'price_usd']:
+        elif model_type in ["price_eur", "price_inr", "price_usd"]:
             scaler_file = f"{model_type}_scaler.pkl"
         else:
             # For other models, try to find a matching scaler
@@ -143,7 +143,7 @@ def get_scaler_for_model(model_type: str):
             if file_stats.st_size > 10 * 1024 * 1024:  # 10MB limit
                 raise ValueError(f"Scaler file too large: {file_stats.st_size} bytes")
 
-            with open(scaler_path, 'rb') as f:
+            with open(scaler_path, "rb") as f:
                 scaler_content = f.read()
 
             # Verify file hash
@@ -160,7 +160,7 @@ def get_scaler_for_model(model_type: str):
                 if file_stats.st_size > 10 * 1024 * 1024:  # 10MB limit
                     raise ValueError(f"General scaler file too large: {file_stats.st_size} bytes")
 
-                with open(general_scaler, 'rb') as f:
+                with open(general_scaler, "rb") as f:
                     scaler_content = f.read()
 
                 file_hash = hashlib.sha256(scaler_content).hexdigest()
@@ -174,8 +174,10 @@ def get_scaler_for_model(model_type: str):
         logger.warning(f"Could not load scaler for {model_type}: {e}")
         return None
 
-def create_features_advanced(ram, battery, screen, weight, year, company,
-                           front_camera=None, back_camera=None, processor=None, storage=None):
+
+def create_features_advanced(
+    ram, battery, screen, weight, year, company, front_camera=None, back_camera=None, processor=None, storage=None
+):
     """Create feature vector EXACTLY matching the consolidated dataset structure used in training"""
     # Handle missing values (same defaults as training)
     front_camera = front_camera if front_camera is not None else 16.0
@@ -185,33 +187,44 @@ def create_features_advanced(ram, battery, screen, weight, year, company,
     # Create features in EXACT order from consolidated dataset
     # This MUST match the training data structure
     features = [
-        company,           # company (categorical - will be label encoded)
-        ram,              # ram_gb (numeric)
-        battery,          # battery_mah (numeric)
-        screen,           # screen_inches (numeric)
-        weight,           # weight_grams (numeric)
-        year,             # launch_year (numeric)
-        front_camera,     # front_camera_mp (numeric)
-        back_camera,      # back_camera_mp (numeric)
-        storage,          # storage_gb (numeric)
-        processor or 'Unknown',  # processor (categorical - will be label encoded)
+        company,  # company (categorical - will be label encoded)
+        ram,  # ram_gb (numeric)
+        battery,  # battery_mah (numeric)
+        screen,  # screen_inches (numeric)
+        weight,  # weight_grams (numeric)
+        year,  # launch_year (numeric)
+        front_camera,  # front_camera_mp (numeric)
+        back_camera,  # back_camera_mp (numeric)
+        storage,  # storage_gb (numeric)
+        processor or "Unknown",  # processor (categorical - will be label encoded)
     ]
 
     # Add derived features (EXACT same calculations as training)
     ram_storage_ratio = ram / storage if storage != 0 else ram
-    battery_efficiency = battery / (screen ** 2) if screen != 0 else battery
+    battery_efficiency = battery / (screen**2) if screen != 0 else battery
 
-    features.extend([
-        ram_storage_ratio,     # ram_storage_ratio (derived)
-        battery_efficiency     # battery_efficiency (derived)
-    ])
+    features.extend(
+        [ram_storage_ratio, battery_efficiency]  # ram_storage_ratio (derived)  # battery_efficiency (derived)
+    )
 
     # Convert to DataFrame for proper encoding
-    df = pd.DataFrame([features], columns=[
-        'company', 'ram_gb', 'battery_mah', 'screen_inches', 'weight_grams',
-        'launch_year', 'front_camera_mp', 'back_camera_mp', 'storage_gb',
-        'processor', 'ram_storage_ratio', 'battery_efficiency'
-    ])
+    df = pd.DataFrame(
+        [features],
+        columns=[
+            "company",
+            "ram_gb",
+            "battery_mah",
+            "screen_inches",
+            "weight_grams",
+            "launch_year",
+            "front_camera_mp",
+            "back_camera_mp",
+            "storage_gb",
+            "processor",
+            "ram_storage_ratio",
+            "battery_efficiency",
+        ],
+    )
 
     # CRITICAL: Use the SAME label encoding as training
     # The encoders must map categories the same way as during training
@@ -220,11 +233,12 @@ def create_features_advanced(ram, battery, screen, weight, year, company,
 
     # Fit on the same possible categories (this needs to match training)
     # For now, we'll fit on the current data, but ideally we'd save/load the encoders
-    df['company'] = le_company.fit_transform(df['company'].astype(str))
-    df['processor'] = le_processor.fit_transform(df['processor'].astype(str))
+    df["company"] = le_company.fit_transform(df["company"].astype(str))
+    df["processor"] = le_processor.fit_transform(df["processor"].astype(str))
 
     # Return as flattened numpy array (same as training)
     return df.values.flatten()
+
 
 def get_mock_prediction(request: AdvancedPredictionRequest):
     """Provide mock prediction when models are not available"""
@@ -237,31 +251,31 @@ def get_mock_prediction(request: AdvancedPredictionRequest):
 
     # Company multiplier
     company_mult = 1.0
-    if request.company.lower() == 'apple':
+    if request.company.lower() == "apple":
         company_mult = 2.2
-    elif request.company.lower() == 'samsung':
+    elif request.company.lower() == "samsung":
         company_mult = 1.6
-    elif request.company.lower() in ['google', 'oneplus']:
+    elif request.company.lower() in ["google", "oneplus"]:
         company_mult = 1.3
 
     price = (base_price + ram_bonus + battery_bonus + screen_bonus + year_bonus) * company_mult
 
     # Apply currency conversion
-    if request.model_type == 'price_eur':
-        actual_currency = 'EUR'
-    elif request.model_type == 'price_inr':
-        actual_currency = 'INR'
+    if request.model_type == "price_eur":
+        actual_currency = "EUR"
+    elif request.model_type == "price_inr":
+        actual_currency = "INR"
         price = price * 83  # USD to INR
     else:
         actual_currency = request.currency
 
     # Get accuracy info based on model type
     accuracy_info = None
-    if request.model_type == 'distilled':
+    if request.model_type == "distilled":
         accuracy_info = {"r2_score": 0.9824, "note": "Mock prediction - model unavailable"}
-    elif request.model_type.startswith('ensemble'):
+    elif request.model_type.startswith("ensemble"):
         accuracy_info = {"r2_score": 0.9876, "note": "Mock prediction - model unavailable"}
-    elif request.model_type.startswith('xgboost'):
+    elif request.model_type.startswith("xgboost"):
         accuracy_info = {"r2_score": 0.9732, "note": "Mock prediction - model unavailable"}
 
     return AdvancedPredictionResponse(
@@ -269,8 +283,9 @@ def get_mock_prediction(request: AdvancedPredictionRequest):
         model_used=request.model_type,
         accuracy_info=accuracy_info,
         currency=actual_currency,
-        currency_symbol=CURRENCY_SYMBOLS.get(actual_currency, '$')
+        currency_symbol=CURRENCY_SYMBOLS.get(actual_currency, "$"),
     )
+
 
 @router.post("/api/advanced/predict", response_model=AdvancedPredictionResponse)
 async def advanced_predict(request: AdvancedPredictionRequest):
@@ -287,9 +302,16 @@ async def advanced_predict(request: AdvancedPredictionRequest):
 
         # Create features
         features = create_features_advanced(
-            request.ram, request.battery, request.screen, request.weight,
-            request.year, request.company, request.front_camera,
-            request.back_camera, request.processor, request.storage
+            request.ram,
+            request.battery,
+            request.screen,
+            request.weight,
+            request.year,
+            request.company,
+            request.front_camera,
+            request.back_camera,
+            request.processor,
+            request.storage,
         )
 
         # Load scaler if available
@@ -297,6 +319,7 @@ async def advanced_predict(request: AdvancedPredictionRequest):
 
         # Prepare features for prediction
         import numpy as np
+
         X = np.array(features).reshape(1, -1)
 
         if scaler:
@@ -305,8 +328,8 @@ async def advanced_predict(request: AdvancedPredictionRequest):
             X_scaled = X
 
         # Make prediction
-        if hasattr(model, 'predict'):
-            if request.model_type.startswith('xgboost'):
+        if hasattr(model, "predict"):
+            if request.model_type.startswith("xgboost"):
                 # XGBoost models need different handling
                 prediction = model.predict(X_scaled)
             else:
@@ -321,14 +344,14 @@ async def advanced_predict(request: AdvancedPredictionRequest):
             price = float(prediction)
 
         # Apply currency conversion for currency-specific models
-        if request.model_type == 'price_eur':
+        if request.model_type == "price_eur":
             # Convert EUR to USD (approximate)
             price = price * 1.08
-            actual_currency = 'EUR'
-        elif request.model_type == 'price_inr':
+            actual_currency = "EUR"
+        elif request.model_type == "price_inr":
             # Convert INR to USD (approximate)
             price = price * 0.012
-            actual_currency = 'INR'
+            actual_currency = "INR"
         else:
             actual_currency = request.currency
 
@@ -337,11 +360,11 @@ async def advanced_predict(request: AdvancedPredictionRequest):
 
         # Get accuracy info if available
         accuracy_info = None
-        if request.model_type == 'distilled':
+        if request.model_type == "distilled":
             accuracy_info = {"r2_score": 0.9824, "note": "Production-ready distilled model"}
-        elif request.model_type.startswith('ensemble'):
+        elif request.model_type.startswith("ensemble"):
             accuracy_info = {"r2_score": 0.9876, "note": "Ensemble stacking model"}
-        elif request.model_type.startswith('xgboost'):
+        elif request.model_type.startswith("xgboost"):
             accuracy_info = {"r2_score": 0.9732, "note": "XGBoost optimized model"}
 
         return AdvancedPredictionResponse(
@@ -349,7 +372,7 @@ async def advanced_predict(request: AdvancedPredictionRequest):
             model_used=request.model_type,
             accuracy_info=accuracy_info,
             currency=actual_currency,
-            currency_symbol=CURRENCY_SYMBOLS.get(actual_currency, '$')
+            currency_symbol=CURRENCY_SYMBOLS.get(actual_currency, "$"),
         )
 
     except Exception as e:
@@ -357,6 +380,7 @@ async def advanced_predict(request: AdvancedPredictionRequest):
         # Fall back to mock prediction when real models fail
         logger.info(f"Falling back to mock prediction for {request.model_type}")
         return get_mock_prediction(request)
+
 
 # Model information endpoint
 @router.get("/api/advanced/models")
@@ -370,28 +394,37 @@ async def get_available_models():
 
         # Get model description
         descriptions = {
-            'distilled': 'Production-ready distilled model (10x faster)',
-            'ensemble_stacking': 'Ensemble stacking with multiple algorithms',
-            'ensemble_gbm': 'Gradient boosting ensemble model',
-            'xgboost_conservative': 'Conservative XGBoost configuration',
-            'xgboost_aggressive': 'Aggressive XGBoost configuration',
-            'xgboost_deep': 'Deep XGBoost with complex features',
-            'price_eur': 'Price prediction model trained on EUR prices',
-            'price_inr': 'Price prediction model trained on INR prices',
-            'price_usd': 'Price prediction model trained on USD prices',
+            "distilled": "Production-ready distilled model (10x faster)",
+            "ensemble_stacking": "Ensemble stacking with multiple algorithms",
+            "ensemble_gbm": "Gradient boosting ensemble model",
+            "xgboost_conservative": "Conservative XGBoost configuration",
+            "xgboost_aggressive": "Aggressive XGBoost configuration",
+            "xgboost_deep": "Deep XGBoost with complex features",
+            "price_eur": "Price prediction model trained on EUR prices",
+            "price_inr": "Price prediction model trained on INR prices",
+            "price_usd": "Price prediction model trained on USD prices",
         }
 
-        models_info.append({
-            "type": model_type,
-            "name": model_type.replace('_', ' ').title(),
-            "description": descriptions.get(model_type, f"{model_type} model"),
-            "available": available,
-            "category": "currency" if model_type.startswith('price_') else
-                       "xgboost" if model_type.startswith('xgboost') else
-                       "ensemble" if model_type.startswith('ensemble') else "distilled"
-        })
+        models_info.append(
+            {
+                "type": model_type,
+                "name": model_type.replace("_", " ").title(),
+                "description": descriptions.get(model_type, f"{model_type} model"),
+                "available": available,
+                "category": (
+                    "currency"
+                    if model_type.startswith("price_")
+                    else (
+                        "xgboost"
+                        if model_type.startswith("xgboost")
+                        else "ensemble" if model_type.startswith("ensemble") else "distilled"
+                    )
+                ),
+            }
+        )
 
     return {"models": models_info}
+
 
 # Model comparison endpoint
 @router.post("/api/advanced/compare", response_model=dict)
@@ -400,23 +433,30 @@ async def compare_models(request: AdvancedPredictionRequest):
     try:
         # Define models to compare (focus on the best performing ones)
         models_to_compare = [
-            'sklearn_price',      # Baseline
-            'xgboost_conservative',  # Best XGBoost
-            'ensemble_stacking',     # Best ensemble
-            'distilled'             # Fast model
+            "sklearn_price",  # Baseline
+            "xgboost_conservative",  # Best XGBoost
+            "ensemble_stacking",  # Best ensemble
+            "distilled",  # Fast model
         ]
 
         results = []
-        best_prediction = float('inf')
+        best_prediction = float("inf")
         worst_prediction = 0
         total_predictions = 0
         valid_predictions = 0
 
         # Create features once for all models
         features = create_features_advanced(
-            request.ram, request.battery, request.screen, request.weight,
-            request.year, request.company, request.front_camera,
-            request.back_camera, request.processor, request.storage
+            request.ram,
+            request.battery,
+            request.screen,
+            request.weight,
+            request.year,
+            request.company,
+            request.front_camera,
+            request.back_camera,
+            request.processor,
+            request.storage,
         )
 
         for model_type in models_to_compare:
@@ -424,15 +464,23 @@ async def compare_models(request: AdvancedPredictionRequest):
                 # Load model
                 model = load_advanced_model(model_type)
                 if model is None:
-                    results.append({
-                        "model_type": model_type,
-                        "model_name": model_type.replace('_', ' ').title(),
-                        "price": None,
-                        "error": "Model not available",
-                        "category": "xgboost" if model_type.startswith('xgboost') else
-                                   "ensemble" if model_type.startswith('ensemble') else
-                                   "sklearn" if model_type.startswith('sklearn') else "other"
-                    })
+                    results.append(
+                        {
+                            "model_type": model_type,
+                            "model_name": model_type.replace("_", " ").title(),
+                            "price": None,
+                            "error": "Model not available",
+                            "category": (
+                                "xgboost"
+                                if model_type.startswith("xgboost")
+                                else (
+                                    "ensemble"
+                                    if model_type.startswith("ensemble")
+                                    else "sklearn" if model_type.startswith("sklearn") else "other"
+                                )
+                            ),
+                        }
+                    )
                     continue
 
                 # Load scaler
@@ -440,6 +488,7 @@ async def compare_models(request: AdvancedPredictionRequest):
 
                 # Prepare features
                 import numpy as np
+
                 X = np.array(features).reshape(1, -1)
                 if scaler:
                     X_scaled = scaler.transform(X)
@@ -447,7 +496,7 @@ async def compare_models(request: AdvancedPredictionRequest):
                     X_scaled = X
 
                 # Make prediction
-                if hasattr(model, 'predict'):
+                if hasattr(model, "predict"):
                     prediction = model.predict(X_scaled)
                 else:
                     raise ValueError(f"Model {model_type} doesn't have predict method")
@@ -459,9 +508,9 @@ async def compare_models(request: AdvancedPredictionRequest):
                     price = float(prediction)
 
                 # Apply currency conversion
-                if model_type == 'price_eur':
+                if model_type == "price_eur":
                     price = price * 1.08  # EUR to USD
-                elif model_type == 'price_inr':
+                elif model_type == "price_inr":
                     price = price * 0.012  # INR to USD
 
                 price = max(50, price)  # Ensure positive
@@ -474,60 +523,70 @@ async def compare_models(request: AdvancedPredictionRequest):
                     worst_prediction = max(worst_prediction, price)
 
                 # Get model category and description
-                category = "xgboost" if model_type.startswith('xgboost') else \
-                          "ensemble" if model_type.startswith('ensemble') else \
-                          "sklearn" if model_type.startswith('sklearn') else "other"
+                category = (
+                    "xgboost"
+                    if model_type.startswith("xgboost")
+                    else (
+                        "ensemble"
+                        if model_type.startswith("ensemble")
+                        else "sklearn" if model_type.startswith("sklearn") else "other"
+                    )
+                )
 
                 descriptions = {
-                    'sklearn_price': 'Traditional ML baseline',
-                    'xgboost_conservative': 'Best overall accuracy (96% R²)',
-                    'ensemble_stacking': 'Multi-algorithm ensemble',
-                    'distilled': 'Fast optimized model'
+                    "sklearn_price": "Traditional ML baseline",
+                    "xgboost_conservative": "Best overall accuracy (96% R²)",
+                    "ensemble_stacking": "Multi-algorithm ensemble",
+                    "distilled": "Fast optimized model",
                 }
 
-                results.append({
-                    "model_type": model_type,
-                    "model_name": model_type.replace('_', ' ').title(),
-                    "price": round(price, 2),
-                    "category": category,
-                    "description": descriptions.get(model_type, f"{model_type} model")
-                })
+                results.append(
+                    {
+                        "model_type": model_type,
+                        "model_name": model_type.replace("_", " ").title(),
+                        "price": round(price, 2),
+                        "category": category,
+                        "description": descriptions.get(model_type, f"{model_type} model"),
+                    }
+                )
 
             except Exception as e:
                 logger.error(f"Error predicting with {model_type}: {e}")
-                results.append({
-                    "model_type": model_type,
-                    "model_name": model_type.replace('_', ' ').title(),
-                    "price": None,
-                    "error": str(e),
-                    "category": "error"
-                })
+                results.append(
+                    {
+                        "model_type": model_type,
+                        "model_name": model_type.replace("_", " ").title(),
+                        "price": None,
+                        "error": str(e),
+                        "category": "error",
+                    }
+                )
 
         # Calculate comparison statistics
-        successful_predictions = [r for r in results if r['price'] is not None]
+        successful_predictions = [r for r in results if r["price"] is not None]
         if successful_predictions:
-            prices = [r['price'] for r in successful_predictions]
+            prices = [r["price"] for r in successful_predictions]
             avg_price = sum(prices) / len(prices)
             price_range = max(prices) - min(prices)
 
             # Find best and worst models
-            best_model = min(successful_predictions, key=lambda x: x['price'])
-            worst_model = max(successful_predictions, key=lambda x: x['price'])
+            best_model = min(successful_predictions, key=lambda x: x["price"])
+            worst_model = max(successful_predictions, key=lambda x: x["price"])
 
             comparison_stats = {
                 "total_models": len(results),
                 "successful_predictions": len(successful_predictions),
                 "average_price": round(avg_price, 2),
                 "price_range": round(price_range, 2),
-                "best_model": best_model['model_name'],
-                "worst_model": worst_model['model_name'],
-                "consistency_score": round(1 - (price_range / avg_price), 3)  # Lower variance = higher consistency
+                "best_model": best_model["model_name"],
+                "worst_model": worst_model["model_name"],
+                "consistency_score": round(1 - (price_range / avg_price), 3),  # Lower variance = higher consistency
             }
         else:
             comparison_stats = {
                 "total_models": len(results),
                 "successful_predictions": 0,
-                "error": "No successful predictions"
+                "error": "No successful predictions",
             }
 
         return {
@@ -541,12 +600,12 @@ async def compare_models(request: AdvancedPredictionRequest):
                 "front_camera_mp": request.front_camera,
                 "back_camera_mp": request.back_camera,
                 "storage_gb": request.storage,
-                "processor": request.processor
+                "processor": request.processor,
             },
             "predictions": results,
             "comparison_stats": comparison_stats,
             "currency": request.currency,
-            "currency_symbol": CURRENCY_SYMBOLS.get(request.currency, '$')
+            "currency_symbol": CURRENCY_SYMBOLS.get(request.currency, "$"),
         }
 
     except Exception as e:
@@ -559,8 +618,8 @@ async def compare_models(request: AdvancedPredictionRequest):
                 "screen_inches": request.screen,
                 "weight_grams": request.weight,
                 "launch_year": request.year,
-                "company": request.company
+                "company": request.company,
             },
             "predictions": [],
-            "comparison_stats": {}
+            "comparison_stats": {},
         }

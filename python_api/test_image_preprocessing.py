@@ -4,14 +4,14 @@ Test script for image preprocessing functionality
 """
 
 import sys
-from pathlib import Path
-import os
 import time
+from pathlib import Path
 
 # Add the current directory to Python path for imports
 sys.path.append(str(Path(__file__).parent))
 
 from data_preprocessing import DataPreprocessor
+
 
 def test_image_preprocessing():
     """Test the image preprocessing functionality"""
@@ -24,7 +24,7 @@ def test_image_preprocessing():
     test_image_dir = Path("../public/mobile_images")
 
     # Look for image files to test with
-    image_extensions = ['.jpg', '.jpeg', '.png', '.webp']
+    image_extensions = [".jpg", ".jpeg", ".png", ".webp"]
     test_images = []
 
     if test_image_dir.exists():
@@ -72,7 +72,7 @@ def test_image_preprocessing():
         if successful_preprocessing > 0:
             avg_original = total_original_size / len(test_images)
             avg_processed = total_processed_size / successful_preprocessing
-            avg_reduction = ((avg_original - avg_processed) / avg_original * 100)
+            avg_reduction = (avg_original - avg_processed) / avg_original * 100
 
             print("\n=== SUMMARY STATISTICS ===")
             print(f"Images tested: {len(test_images)}")
@@ -82,7 +82,7 @@ def test_image_preprocessing():
             print(f"Average size reduction: {avg_reduction:.1f}%")
 
             # Show preprocessing config
-            config = preprocessor.config['image_preprocessing']
+            config = preprocessor.config["image_preprocessing"]
             print("\nImage preprocessing settings:")
             print(f"  Max size: {config['max_size']}")
             print(f"  Quality: {config['quality']}%")
@@ -93,13 +93,14 @@ def test_image_preprocessing():
     else:
         print("No test images found in ../public/mobile_images")
         print("Image preprocessing configuration:")
-        config = preprocessor.config['image_preprocessing']
+        config = preprocessor.config["image_preprocessing"]
         print(f"  Max size: {config['max_size']}")
         print(f"  Quality: {config['quality']}%")
         print(f"  Format: {config['format']}")
         print(f"  Convert to RGB: {config['convert_to_rgb']}")
 
     print("\nImage preprocessing test completed!")
+
 
 if __name__ == "__main__":
     test_image_preprocessing()

@@ -2,10 +2,12 @@
 Optimize image files (PNG, JPG) by compressing without visible quality loss.
 Uses Pillow for optimization and conversion to WebP format.
 """
-from PIL import Image
 import os
 from pathlib import Path
 from typing import Dict, List
+
+from PIL import Image
+
 
 def optimize_png(image_path: str, output_path: str | None = None, quality: int = 85) -> Dict:
     """

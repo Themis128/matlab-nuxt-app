@@ -2,13 +2,14 @@
 Common utilities for web scraping.
 """
 
-import time
+import logging
 import random
+import time
+from functools import wraps
+from typing import Any, Dict, Optional
+
 import requests
 from bs4 import BeautifulSoup
-from typing import Optional, Dict, Any
-import logging
-from functools import wraps
 
 # Configure logging
 logging.basicConfig(

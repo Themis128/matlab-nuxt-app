@@ -1,12 +1,13 @@
 """
 Analyze Phone Models - Extract Insights
 """
-import pandas as pd
-import numpy as np
+import json
 import re
 from collections import Counter
-import json
 from pathlib import Path
+
+import numpy as np
+import pandas as pd
 
 # Get project root and load dataset
 project_root = Path(__file__).parent.parent.parent

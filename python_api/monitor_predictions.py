@@ -3,15 +3,16 @@ Prediction Monitoring Script
 Tracks real-world prediction errors and logs them for analysis
 """
 
-import json
 import csv
+import json
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Optional
+
 import numpy as np
 
 # Import prediction functions
-from predictions_sklearn import predict_price, predict_ram, predict_battery, predict_brand
+from predictions_sklearn import predict_battery, predict_brand, predict_price, predict_ram
 
 MONITORING_DIR = Path(__file__).parent / "monitoring"
 MONITORING_DIR.mkdir(exist_ok=True)
@@ -22,11 +23,7 @@ STATS_FILE = MONITORING_DIR / "prediction_stats.json"
 
 
 def log_prediction(
-    prediction_type: str,
-    inputs: Dict,
-    predicted: float,
-    actual: Optional[float] = None,
-    error: Optional[float] = None
+    prediction_type: str, inputs: Dict, predicted: float, actual: Optional[float] = None, error: Optional[float] = None
 ):
     """Log a prediction for monitoring"""
     timestamp = datetime.now().isoformat()
@@ -38,23 +35,22 @@ def log_prediction(
         "predicted": predicted,
         "actual": actual,
         "error": error,
-        "error_pct": (error / actual * 100) if actual and error else None
+        "error_pct": (error / actual * 100) if actual and error else None,
     }
 
     # Append to JSONL log
-    with open(LOG_FILE, 'a') as f:
-        f.write(json.dumps(log_entry) + '\n')
+    with open(LOG_FILE, "a") as f:
+        f.write(json.dumps(log_entry) + "\n")
 
     # If actual value provided, log error
     if actual is not None and error is not None:
-        with open(ERROR_LOG, 'a', newline='') as f:
+        with open(ERROR_LOG, "a", newline="") as f:
             writer = csv.writer(f)
             if ERROR_LOG.stat().st_size == 0:  # Write header if new file
-                writer.writerow(['timestamp', 'type', 'predicted', 'actual', 'error', 'error_pct'])
-            writer.writerow([
-                timestamp, prediction_type, predicted, actual, error,
-                error / actual * 100 if actual != 0 else 0
-            ])
+                writer.writerow(["timestamp", "type", "predicted", "actual", "error", "error_pct"])
+            writer.writerow(
+                [timestamp, prediction_type, predicted, actual, error, error / actual * 100 if actual != 0 else 0]
+            )
 
 
 def calculate_stats():
@@ -65,11 +61,11 @@ def calculate_stats():
     errors = []
     error_pcts = []
 
-    with open(ERROR_LOG, 'r') as f:
+    with open(ERROR_LOG, "r") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            errors.append(float(row['error']))
-            error_pcts.append(float(row['error_pct']))
+            errors.append(float(row["error"]))
+            error_pcts.append(float(row["error_pct"]))
 
     if not errors:
         return None
@@ -82,11 +78,11 @@ def calculate_stats():
         "mean_error_pct": np.mean(error_pcts),
         "median_error_pct": np.median(error_pcts),
         "std_error_pct": np.std(error_pcts),
-        "last_updated": datetime.now().isoformat()
+        "last_updated": datetime.now().isoformat(),
     }
 
     # Save stats
-    with open(STATS_FILE, 'w') as f:
+    with open(STATS_FILE, "w") as f:
         json.dump(stats, f, indent=2)
 
     return stats
@@ -100,9 +96,9 @@ def print_stats():
         print("No prediction data logged yet.")
         return
 
-    print("\n" + "="*80)
+    print("\n" + "=" * 80)
     print("PREDICTION MONITORING STATISTICS")
-    print("="*80)
+    print("=" * 80)
     print(f"\nTotal Predictions Logged: {stats['total_predictions']}")
     print(f"Last Updated: {stats['last_updated']}")
 
@@ -118,21 +114,17 @@ def print_stats():
 
     # Performance assessment
     print("\n💡 Performance Assessment:")
-    if stats['mean_error_pct'] < 5:
+    if stats["mean_error_pct"] < 5:
         print("   ✅ Excellent: Mean error < 5%")
-    elif stats['mean_error_pct'] < 10:
+    elif stats["mean_error_pct"] < 10:
         print("   ✓ Good: Mean error < 10%")
-    elif stats['mean_error_pct'] < 20:
+    elif stats["mean_error_pct"] < 20:
         print("   ⚠️  Acceptable: Mean error < 20%")
     else:
         print("   ❌ Poor: Mean error > 20% - consider retraining")
 
 
-def test_prediction_with_actual(
-    prediction_type: str,
-    inputs: Dict,
-    actual_value: float
-):
+def test_prediction_with_actual(prediction_type: str, inputs: Dict, actual_value: float):
     """Make a prediction and compare with actual value"""
     try:
         if prediction_type == "price":
@@ -168,9 +160,9 @@ def main():
         print_stats()
         return
 
-    print("="*80)
+    print("=" * 80)
     print("PREDICTION MONITORING")
-    print("="*80)
+    print("=" * 80)
     print("\nThis script helps monitor real-world prediction performance.")
     print("\nUsage:")
     print("  python monitor_predictions.py stats  - View statistics")
@@ -179,7 +171,7 @@ def main():
 
     # Show current stats if available
     if STATS_FILE.exists():
-        print("\n" + "-"*80)
+        print("\n" + "-" * 80)
         print_stats()
 
 

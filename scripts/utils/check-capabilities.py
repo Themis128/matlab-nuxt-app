@@ -5,10 +5,11 @@ Alternative approach if MATLAB Engine for Python is installed
 """
 
 import json
+import os
 import subprocess
 import sys
-import os
 from pathlib import Path
+
 
 def check_matlab_via_cli():
     """Check MATLAB capabilities via command line interface"""

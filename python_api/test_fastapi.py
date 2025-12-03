@@ -3,8 +3,8 @@ Pytest test suite for FastAPI endpoints
 Tests all API routes, models, and error handling
 """
 
-from fastapi.testclient import TestClient
 from api import app
+from fastapi.testclient import TestClient
 
 client = TestClient(app)
 
@@ -37,7 +37,7 @@ class TestPricePrediction:
             "front_camera": 12,
             "back_camera": 48,
             "processor": "Snapdragon 8 Gen 2",
-            "storage": 256
+            "storage": 256,
         }
         response = client.post("/api/predict/price", json=payload)
         assert response.status_code == 200
@@ -50,7 +50,7 @@ class TestPricePrediction:
         """Test POST /api/predict/price with missing required fields"""
         payload = {
             "ram": 8,
-            "battery": 5000
+            "battery": 5000,
             # Missing other required fields
         }
         response = client.post("/api/predict/price", json=payload)
@@ -68,7 +68,7 @@ class TestPricePrediction:
             "front_camera": 12,
             "back_camera": 48,
             "processor": "Snapdragon 8 Gen 2",
-            "storage": 256
+            "storage": 256,
         }
         response = client.post("/api/predict/price", json=payload)
         assert response.status_code == 422
@@ -89,7 +89,7 @@ class TestRAMPrediction:
             "front_camera": 12,
             "back_camera": 48,
             "processor": "Snapdragon 8 Gen 2",
-            "storage": 256
+            "storage": 256,
         }
         response = client.post("/api/predict/ram", json=payload)
         assert response.status_code == 200
@@ -114,7 +114,7 @@ class TestBatteryPrediction:
             "front_camera": 12,
             "back_camera": 48,
             "processor": "Snapdragon 8 Gen 2",
-            "storage": 256
+            "storage": 256,
         }
         response = client.post("/api/predict/battery", json=payload)
         assert response.status_code == 200
@@ -139,7 +139,7 @@ class TestBrandPrediction:
             "front_camera": 12,
             "back_camera": 48,
             "processor": "Snapdragon 8 Gen 2",
-            "storage": 256
+            "storage": 256,
         }
         response = client.post("/api/predict/brand", json=payload)
         assert response.status_code == 200
@@ -212,7 +212,7 @@ class TestErrorHandling:
             "front_camera": 999,
             "back_camera": 999,
             "processor": "Test",
-            "storage": 999999
+            "storage": 999999,
         }
         response = client.post("/api/predict/price", json=payload)
         # Should either predict or return validation error, not crash
@@ -230,7 +230,7 @@ class TestErrorHandling:
             "front_camera": -12,
             "back_camera": -48,
             "processor": "Test",
-            "storage": -256
+            "storage": -256,
         }
         response = client.post("/api/predict/price", json=payload)
         # Should handle gracefully
@@ -252,7 +252,7 @@ class TestResponseFormat:
             "front_camera": 12,
             "back_camera": 48,
             "processor": "Snapdragon 8 Gen 2",
-            "storage": 256
+            "storage": 256,
         }
         response = client.post("/api/predict/price", json=payload)
         if response.status_code == 200:

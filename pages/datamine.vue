@@ -333,17 +333,20 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
-  // Page meta
-  useHead({
-    title: 'Data Mining & Exploration - MATLAB Deep Learning Platform',
-    meta: [
-      {
-        name: 'description',
-        content:
-          'Discover hidden patterns and insights in mobile datasets with advanced data mining techniques',
-      },
-    ],
+  import { ref, onMounted } from 'vue'
+  // Page meta (fallback)
+  onMounted(() => {
+    document.title = 'Data Mining & Exploration - MATLAB Deep Learning Platform'
+    const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
+    const content =
+      'Discover hidden patterns and insights in mobile datasets with advanced data mining techniques'
+    if (existing) existing.content = content
+    else {
+      const m = document.createElement('meta')
+      m.name = 'description'
+      m.content = content
+      document.head.appendChild(m)
+    }
   })
 
   // Selected dataset

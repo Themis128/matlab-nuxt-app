@@ -3,27 +3,30 @@
 Test script for data preprocessing functionality
 """
 
-import pandas as pd
 import sys
 from pathlib import Path
+
+import pandas as pd
 
 # Add the current directory to Python path for imports
 sys.path.append(str(Path(__file__).parent))
 
 from data_preprocessing import DataPreprocessor
 
+
 def create_sample_data():
     """Create sample mobile phone data for testing"""
     data = {
-        'Company Name': ['apple', 'Samsung', 'Google', 'OnePlus', 'xiaomi', 'Unknown'],
-        'Model Name': ['iPhone 15', 'Galaxy S24', 'Pixel 8', 'OnePlus 12', 'Mi 14', 'Unknown Phone'],
-        'Price': [999, 899, 699, 599, 799, -100],  # Invalid negative price
-        'Storage': [128, 256, 128, 256, 512, 10000],  # Invalid storage
-        'RAM': [8, 8, 8, 12, 8, None],  # Missing RAM
-        'Rating': [4.5, 4.2, 4.8, 4.1, 4.3, 6.0],  # Invalid rating > 5
-        'Operating System': ['ios', 'android', 'Android', 'Android', 'HarmonyOS', None]
+        "Company Name": ["apple", "Samsung", "Google", "OnePlus", "xiaomi", "Unknown"],
+        "Model Name": ["iPhone 15", "Galaxy S24", "Pixel 8", "OnePlus 12", "Mi 14", "Unknown Phone"],
+        "Price": [999, 899, 699, 599, 799, -100],  # Invalid negative price
+        "Storage": [128, 256, 128, 256, 512, 10000],  # Invalid storage
+        "RAM": [8, 8, 8, 12, 8, None],  # Missing RAM
+        "Rating": [4.5, 4.2, 4.8, 4.1, 4.3, 6.0],  # Invalid rating > 5
+        "Operating System": ["ios", "android", "Android", "Android", "HarmonyOS", None],
     }
     return pd.DataFrame(data)
+
 
 def test_preprocessing():
     """Test the preprocessing functionality"""
@@ -59,10 +62,11 @@ def test_preprocessing():
     print(f"  Duplicate rows: {quality_report['duplicate_rows']}")
 
     print("\nColumn completeness:")
-    for col, completeness in quality_report['column_completeness'].items():
+    for col, completeness in quality_report["column_completeness"].items():
         print(f"  {col}: {completeness}")
 
     print("\nPreprocessing test completed successfully!")
+
 
 if __name__ == "__main__":
     test_preprocessing()

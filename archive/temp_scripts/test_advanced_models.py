@@ -4,8 +4,8 @@ Test script to check the advanced models used in the Vue page
 """
 
 import os
-import sys
 import pickle
+import sys
 from pathlib import Path
 
 # Add current directory to path

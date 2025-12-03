@@ -2,19 +2,20 @@
 Main scraper orchestrator to run all scrapers and merge results.
 """
 
-import sys
 import json
-import pandas as pd
+import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any, Dict, List
+
+import pandas as pd
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from scripts.scrapers.gsmarena_scraper import GSMArenaScraper
 from scripts.scrapers.benchmark_scraper import BenchmarkScraper
-from scripts.scrapers.review_scraper import ReviewScraper
 from scripts.scrapers.common import logger
+from scripts.scrapers.gsmarena_scraper import GSMArenaScraper
+from scripts.scrapers.review_scraper import ReviewScraper
 
 
 class ScraperOrchestrator:

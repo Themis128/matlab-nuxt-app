@@ -194,17 +194,20 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed } from 'vue'
-  // Page meta
-  useHead({
-    title: 'ML Model Comparison - MATLAB Deep Learning Platform',
-    meta: [
-      {
-        name: 'description',
-        content:
-          'Compare machine learning models for mobile dataset analysis with performance metrics and recommendations',
-      },
-    ],
+  import { ref, computed, onMounted } from 'vue'
+  // Page meta (fallback)
+  onMounted(() => {
+    document.title = 'ML Model Comparison - MATLAB Deep Learning Platform'
+    const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
+    const content =
+      'Compare machine learning models for mobile dataset analysis with performance metrics and recommendations'
+    if (existing) existing.content = content
+    else {
+      const m = document.createElement('meta')
+      m.name = 'description'
+      m.content = content
+      document.head.appendChild(m)
+    }
   })
 
   // Model interface

@@ -3,16 +3,17 @@ TensorFlow/Keras Model Training Scripts
 Replicates MATLAB training process for better accuracy
 """
 
+import json
+import os
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras import layers, models
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-import os
-from pathlib import Path
-import json
+from tensorflow import keras
+from tensorflow.keras import layers, models
 
 # Set random seeds for reproducibility
 np.random.seed(42)
@@ -31,7 +32,7 @@ def load_and_preprocess_data(csv_path: str = None):
             "../data/consolidated/consolidated_phone_dataset.csv",  # New consolidated dataset
             "../Mobiles Dataset (2025).csv",
             "Mobiles Dataset (2025).csv",
-            "../mobiles-dataset-docs/Mobiles Dataset (2025).csv"
+            "../mobiles-dataset-docs/Mobiles Dataset (2025).csv",
         ]
         for path in possible_paths:
             if os.path.exists(path):
@@ -48,25 +49,29 @@ def load_and_preprocess_data(csv_path: str = None):
     print(f"✓ Dataset loaded: {len(df)} rows, {len(df.columns)} columns")
 
     # Check if this is the consolidated dataset (it has standardized column names)
-    is_consolidated = 'ram_gb' in df.columns and 'battery_mah' in df.columns and 'price_usd' in df.columns
+    is_consolidated = "ram_gb" in df.columns and "battery_mah" in df.columns and "price_usd" in df.columns
 
     if is_consolidated:
         print("✓ Detected consolidated dataset with standardized column names")
         # Use standardized column names directly
-        ram_clean = df['ram_gb'].values
-        battery_clean = df['battery_mah'].values
-        screen_clean = df['screen_inches'].values
-        weight_clean = df['weight_grams'].values
-        price_clean = df['price_usd'].values
-        year_clean = df['launch_year'].fillna(2023).values.astype(int)  # Default to 2023 if missing
-        companies_clean = df['company'].fillna('Unknown').values
+        ram_clean = df["ram_gb"].values
+        battery_clean = df["battery_mah"].values
+        screen_clean = df["screen_inches"].values
+        weight_clean = df["weight_grams"].values
+        price_clean = df["price_usd"].values
+        year_clean = df["launch_year"].fillna(2023).values.astype(int)  # Default to 2023 if missing
+        companies_clean = df["company"].fillna("Unknown").values
 
         # Filter out invalid data
         valid_mask = (
-            (ram_clean >= 1) & (ram_clean <= 24) &
-            (battery_clean >= 1000) & (battery_clean <= 7000) &
-            (screen_clean >= 4) & (screen_clean <= 8) &
-            (price_clean > 50) & (price_clean < 5000)
+            (ram_clean >= 1)
+            & (ram_clean <= 24)
+            & (battery_clean >= 1000)
+            & (battery_clean <= 7000)
+            & (screen_clean >= 4)
+            & (screen_clean <= 8)
+            & (price_clean > 50)
+            & (price_clean < 5000)
         )
 
         ram_clean = ram_clean[valid_mask]
@@ -78,94 +83,105 @@ def load_and_preprocess_data(csv_path: str = None):
         companies_clean = companies_clean[valid_mask]
 
         # Set df_clean for consistency with original format
-        df_clean = pd.DataFrame({
-            'ram_parsed': ram_clean,
-            'battery_parsed': battery_clean,
-            'screen_parsed': screen_clean,
-            'weight_parsed': weight_clean,
-            'price_parsed': price_clean,
-            'year_parsed': year_clean,
-            'company': companies_clean
-        })
+        df_clean = pd.DataFrame(
+            {
+                "ram_parsed": ram_clean,
+                "battery_parsed": battery_clean,
+                "screen_parsed": screen_clean,
+                "weight_parsed": weight_clean,
+                "price_parsed": price_clean,
+                "year_parsed": year_clean,
+                "company": companies_clean,
+            }
+        )
 
     else:
         print("✓ Detected original dataset format - parsing required")
+
         # Parse numerical features from original format
-        def extract_number(value, pattern=r'(\d+\.?\d*)'):
+        def extract_number(value, pattern=r"(\d+\.?\d*)"):
             import re
+
             if pd.isna(value):
                 return np.nan
             value_str = str(value)
-            match = re.search(pattern, value_str.replace(',', ''))
+            match = re.search(pattern, value_str.replace(",", ""))
             return float(match.group(1)) if match else np.nan
 
         # Parse RAM
-        df['ram_parsed'] = df['RAM'].apply(lambda x: extract_number(str(x), r'(\d+)'))
+        df["ram_parsed"] = df["RAM"].apply(lambda x: extract_number(str(x), r"(\d+)"))
 
         # Parse Battery - Fix column name to match actual CSV
         battery_col = None
-        for col in ['Battery Capacity', 'BatteryCapacity', 'Battery_Capacity', 'Battery']:
+        for col in ["Battery Capacity", "BatteryCapacity", "Battery_Capacity", "Battery"]:
             if col in df.columns:
                 battery_col = col
                 break
         if battery_col:
-            df['battery_parsed'] = df[battery_col].apply(lambda x: extract_number(str(x), r'([\d,]+)'))
+            df["battery_parsed"] = df[battery_col].apply(lambda x: extract_number(str(x), r"([\d,]+)"))
 
         # Parse Screen Size - Fix column name to match actual CSV
         screen_col = None
-        for col in ['Screen Size', 'ScreenSize', 'Screen_Size', 'Screen', 'Display_Size']:
+        for col in ["Screen Size", "ScreenSize", "Screen_Size", "Screen", "Display_Size"]:
             if col in df.columns:
                 screen_col = col
                 break
         if screen_col:
-            df['screen_parsed'] = df[screen_col].apply(lambda x: extract_number(str(x), r'(\d+\.?\d*)'))
+            df["screen_parsed"] = df[screen_col].apply(lambda x: extract_number(str(x), r"(\d+\.?\d*)"))
 
         # Parse Weight - Fix column name to match actual CSV
         weight_col = None
-        for col in ['Mobile Weight', 'Mobile_Weight', 'MobileWeight', 'Weight', 'Phone_Weight']:
+        for col in ["Mobile Weight", "Mobile_Weight", "MobileWeight", "Weight", "Phone_Weight"]:
             if col in df.columns:
                 weight_col = col
                 break
         if weight_col:
-            df['weight_parsed'] = df[weight_col].apply(lambda x: extract_number(str(x), r'(\d+)'))
+            df["weight_parsed"] = df[weight_col].apply(lambda x: extract_number(str(x), r"(\d+)"))
 
         # Parse Price (USD) - Fix column name to match actual CSV
         price_col = None
-        for col in ['Launched Price (USA)', 'Price_USD', 'Price', 'USD_Price', 'Price (USD)']:
+        for col in ["Launched Price (USA)", "Price_USD", "Price", "USD_Price", "Price (USD)"]:
             if col in df.columns:
                 price_col = col
                 break
         if price_col:
-            df['price_parsed'] = df[price_col].apply(lambda x: extract_number(str(x), r'([\d,]+)'))
+            df["price_parsed"] = df[price_col].apply(lambda x: extract_number(str(x), r"([\d,]+)"))
 
         # Parse Year - Fix column name to match actual CSV
         year_col = None
-        for col in ['Launched Year', 'Launched_Year', 'Year', 'Launch_Year', 'Launched Year']:
+        for col in ["Launched Year", "Launched_Year", "Year", "Launch_Year", "Launched Year"]:
             if col in df.columns:
                 year_col = col
                 break
         if year_col:
-            df['year_parsed'] = df[year_col].apply(lambda x: extract_number(str(x), r'(\d{4})'))
+            df["year_parsed"] = df[year_col].apply(lambda x: extract_number(str(x), r"(\d{4})"))
 
         # Get company name - Fix column name to match actual CSV
         company_col = None
-        for col in ['Company Name', 'Company', 'Brand', 'Company_Name']:
+        for col in ["Company Name", "Company", "Brand", "Company_Name"]:
             if col in df.columns:
                 company_col = col
                 break
 
         # Clean data - remove rows with missing critical values
-        required_cols = ['ram_parsed', 'battery_parsed', 'screen_parsed', 'weight_parsed', 'price_parsed', 'year_parsed']
+        required_cols = [
+            "ram_parsed",
+            "battery_parsed",
+            "screen_parsed",
+            "weight_parsed",
+            "price_parsed",
+            "year_parsed",
+        ]
         df_clean = df[required_cols + [company_col]].dropna()
 
         # Convert to numpy arrays
-        ram_clean = df_clean['ram_parsed'].values
-        battery_clean = df_clean['battery_parsed'].values
-        screen_clean = df_clean['screen_parsed'].values
-        weight_clean = df_clean['weight_parsed'].values
-        price_clean = df_clean['price_parsed'].values
-        year_clean = df_clean['year_parsed'].values.astype(int)
-        companies_clean = df_clean[company_col].values if company_col else ['Unknown'] * len(df_clean)
+        ram_clean = df_clean["ram_parsed"].values
+        battery_clean = df_clean["battery_parsed"].values
+        screen_clean = df_clean["screen_parsed"].values
+        weight_clean = df_clean["weight_parsed"].values
+        price_clean = df_clean["price_parsed"].values
+        year_clean = df_clean["year_parsed"].values.astype(int)
+        companies_clean = df_clean[company_col].values if company_col else ["Unknown"] * len(df_clean)
 
     print(f"✓ Cleaned data: {len(df_clean)} samples")
     print(f"  RAM range: {ram_clean.min():.0f} - {ram_clean.max():.0f} GB")
@@ -173,13 +189,13 @@ def load_and_preprocess_data(csv_path: str = None):
     print(f"  Price range: ${price_clean.min():.0f} - ${price_clean.max():.0f}")
 
     return {
-        'ram': ram_clean,
-        'battery': battery_clean,
-        'screen': screen_clean,
-        'weight': weight_clean,
-        'price': price_clean,
-        'year': year_clean,
-        'companies': companies_clean
+        "ram": ram_clean,
+        "battery": battery_clean,
+        "screen": screen_clean,
+        "weight": weight_clean,
+        "price": price_clean,
+        "year": year_clean,
+        "companies": companies_clean,
     }
 
 
@@ -200,16 +216,9 @@ def train_price_model(data, epochs=100, batch_size=64):
     print("\n=== Training Price Prediction Model ===")
 
     # Prepare features
-    company_encoded, unique_companies = encode_companies(data['companies'])
-    X = np.column_stack([
-        data['ram'],
-        data['battery'],
-        data['screen'],
-        data['weight'],
-        data['year'],
-        company_encoded
-    ])
-    y = data['price']
+    company_encoded, unique_companies = encode_companies(data["companies"])
+    X = np.column_stack([data["ram"], data["battery"], data["screen"], data["weight"], data["year"], company_encoded])
+    y = data["price"]
 
     print(f"Features: {X.shape[0]} samples × {X.shape[1]} features")
     print(f"Price range: ${y.min():.0f} - ${y.max():.0f}")
@@ -222,42 +231,37 @@ def train_price_model(data, epochs=100, batch_size=64):
     y_normalized = y_scaler.fit_transform(y.reshape(-1, 1)).flatten()
 
     # Split data (70/15/15)
-    X_train, X_temp, y_train, y_temp = train_test_split(
-        X_normalized, y_normalized, test_size=0.3, random_state=42
-    )
-    X_val, X_test, y_val, y_test = train_test_split(
-        X_temp, y_temp, test_size=0.5, random_state=42
-    )
+    X_train, X_temp, y_train, y_temp = train_test_split(X_normalized, y_normalized, test_size=0.3, random_state=42)
+    X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
 
     # Build model (matching MATLAB architecture)
     num_features = X.shape[1]
-    model = models.Sequential([
-        layers.Dense(128, activation='relu', input_shape=(num_features,)),
-        layers.Dropout(0.3),
-        layers.Dense(64, activation='relu'),
-        layers.Dropout(0.2),
-        layers.Dense(32, activation='relu'),
-        layers.Dense(1)  # Regression output
-    ])
-
-    model.compile(
-        optimizer=keras.optimizers.Adam(learning_rate=0.001),
-        loss='mse',
-        metrics=['mae']
+    model = models.Sequential(
+        [
+            layers.Dense(128, activation="relu", input_shape=(num_features,)),
+            layers.Dropout(0.3),
+            layers.Dense(64, activation="relu"),
+            layers.Dropout(0.2),
+            layers.Dense(32, activation="relu"),
+            layers.Dense(1),  # Regression output
+        ]
     )
+
+    model.compile(optimizer=keras.optimizers.Adam(learning_rate=0.001), loss="mse", metrics=["mae"])
 
     # Train
     print("\nTraining model...")
     model.fit(
-        X_train, y_train,
+        X_train,
+        y_train,
         validation_data=(X_val, y_val),
         epochs=epochs,
         batch_size=batch_size,
         verbose=1,
         callbacks=[
             keras.callbacks.EarlyStopping(patience=10, restore_best_weights=True),
-            keras.callbacks.ReduceLROnPlateau(patience=5, factor=0.5)
-        ]
+            keras.callbacks.ReduceLROnPlateau(patience=5, factor=0.5),
+        ],
     )
 
     # Evaluate
@@ -285,18 +289,18 @@ def train_price_model(data, epochs=100, batch_size=64):
 
     # Save normalization and metadata
     metadata = {
-        'X_mean': X_scaler.mean_.tolist(),
-        'X_std': X_scaler.scale_.tolist(),
-        'y_mean': float(y_scaler.mean_[0]),
-        'y_std': float(y_scaler.scale_[0]),
-        'unique_companies': unique_companies,
-        'r2': float(r2),
-        'rmse': float(rmse),
-        'mae': float(mae)
+        "X_mean": X_scaler.mean_.tolist(),
+        "X_std": X_scaler.scale_.tolist(),
+        "y_mean": float(y_scaler.mean_[0]),
+        "y_std": float(y_scaler.scale_[0]),
+        "unique_companies": unique_companies,
+        "r2": float(r2),
+        "rmse": float(rmse),
+        "mae": float(mae),
     }
 
     metadata_path = MODELS_DIR / "price_predictor_metadata.json"
-    with open(metadata_path, 'w') as f:
+    with open(metadata_path, "w") as f:
         json.dump(metadata, f, indent=2)
     print(f"✓ Metadata saved: {metadata_path}")
 
@@ -308,16 +312,9 @@ def train_ram_model(data, epochs=100, batch_size=64):
     print("\n=== Training RAM Prediction Model ===")
 
     # Features: Battery, Screen, Weight, Year, Price, Company
-    company_encoded, unique_companies = encode_companies(data['companies'])
-    X = np.column_stack([
-        data['battery'],
-        data['screen'],
-        data['weight'],
-        data['year'],
-        data['price'],
-        company_encoded
-    ])
-    y = data['ram']
+    company_encoded, unique_companies = encode_companies(data["companies"])
+    X = np.column_stack([data["battery"], data["screen"], data["weight"], data["year"], data["price"], company_encoded])
+    y = data["ram"]
 
     print(f"Features: {X.shape[0]} samples × {X.shape[1]} features")
     print(f"RAM range: {y.min():.0f} - {y.max():.0f} GB")
@@ -330,37 +327,30 @@ def train_ram_model(data, epochs=100, batch_size=64):
     y_normalized = y_scaler.fit_transform(y.reshape(-1, 1)).flatten()
 
     # Split
-    X_train, X_temp, y_train, y_temp = train_test_split(
-        X_normalized, y_normalized, test_size=0.3, random_state=42
-    )
-    X_val, X_test, y_val, y_test = train_test_split(
-        X_temp, y_temp, test_size=0.5, random_state=42
-    )
+    X_train, X_temp, y_train, y_temp = train_test_split(X_normalized, y_normalized, test_size=0.3, random_state=42)
+    X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
 
     # Build model
-    model = models.Sequential([
-        layers.Dense(64, activation='relu', input_shape=(X.shape[1],)),
-        layers.Dropout(0.3),
-        layers.Dense(32, activation='relu'),
-        layers.Dense(1)
-    ])
-
-    model.compile(
-        optimizer=keras.optimizers.Adam(learning_rate=0.001),
-        loss='mse',
-        metrics=['mae']
+    model = models.Sequential(
+        [
+            layers.Dense(64, activation="relu", input_shape=(X.shape[1],)),
+            layers.Dropout(0.3),
+            layers.Dense(32, activation="relu"),
+            layers.Dense(1),
+        ]
     )
+
+    model.compile(optimizer=keras.optimizers.Adam(learning_rate=0.001), loss="mse", metrics=["mae"])
 
     # Train
     model.fit(
-        X_train, y_train,
+        X_train,
+        y_train,
         validation_data=(X_val, y_val),
         epochs=epochs,
         batch_size=batch_size,
         verbose=1,
-        callbacks=[
-            keras.callbacks.EarlyStopping(patience=10, restore_best_weights=True)
-        ]
+        callbacks=[keras.callbacks.EarlyStopping(patience=10, restore_best_weights=True)],
     )
 
     # Evaluate
@@ -376,15 +366,15 @@ def train_ram_model(data, epochs=100, batch_size=64):
     # Save
     model.save(str(MODELS_DIR / "ram_predictor.h5"))
     metadata = {
-        'X_mean': X_scaler.mean_.tolist(),
-        'X_std': X_scaler.scale_.tolist(),
-        'y_mean': float(y_scaler.mean_[0]),
-        'y_std': float(y_scaler.scale_[0]),
-        'unique_companies': unique_companies,
-        'r2': float(r2),
-        'rmse': float(rmse)
+        "X_mean": X_scaler.mean_.tolist(),
+        "X_std": X_scaler.scale_.tolist(),
+        "y_mean": float(y_scaler.mean_[0]),
+        "y_std": float(y_scaler.scale_[0]),
+        "unique_companies": unique_companies,
+        "r2": float(r2),
+        "rmse": float(rmse),
     }
-    with open(MODELS_DIR / "ram_predictor_metadata.json", 'w') as f:
+    with open(MODELS_DIR / "ram_predictor_metadata.json", "w") as f:
         json.dump(metadata, f, indent=2)
 
     return model, metadata
@@ -395,16 +385,9 @@ def train_battery_model(data, epochs=100, batch_size=64):
     print("\n=== Training Battery Prediction Model ===")
 
     # Features: RAM, Screen, Weight, Year, Price, Company
-    company_encoded, unique_companies = encode_companies(data['companies'])
-    X = np.column_stack([
-        data['ram'],
-        data['screen'],
-        data['weight'],
-        data['year'],
-        data['price'],
-        company_encoded
-    ])
-    y = data['battery']
+    company_encoded, unique_companies = encode_companies(data["companies"])
+    X = np.column_stack([data["ram"], data["screen"], data["weight"], data["year"], data["price"], company_encoded])
+    y = data["battery"]
 
     print(f"Features: {X.shape[0]} samples × {X.shape[1]} features")
     print(f"Battery range: {y.min():.0f} - {y.max():.0f} mAh")
@@ -417,37 +400,30 @@ def train_battery_model(data, epochs=100, batch_size=64):
     y_normalized = y_scaler.fit_transform(y.reshape(-1, 1)).flatten()
 
     # Split
-    X_train, X_temp, y_train, y_temp = train_test_split(
-        X_normalized, y_normalized, test_size=0.3, random_state=42
-    )
-    X_val, X_test, y_val, y_test = train_test_split(
-        X_temp, y_temp, test_size=0.5, random_state=42
-    )
+    X_train, X_temp, y_train, y_temp = train_test_split(X_normalized, y_normalized, test_size=0.3, random_state=42)
+    X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
 
     # Build model
-    model = models.Sequential([
-        layers.Dense(64, activation='relu', input_shape=(X.shape[1],)),
-        layers.Dropout(0.3),
-        layers.Dense(32, activation='relu'),
-        layers.Dense(1)
-    ])
-
-    model.compile(
-        optimizer=keras.optimizers.Adam(learning_rate=0.001),
-        loss='mse',
-        metrics=['mae']
+    model = models.Sequential(
+        [
+            layers.Dense(64, activation="relu", input_shape=(X.shape[1],)),
+            layers.Dropout(0.3),
+            layers.Dense(32, activation="relu"),
+            layers.Dense(1),
+        ]
     )
+
+    model.compile(optimizer=keras.optimizers.Adam(learning_rate=0.001), loss="mse", metrics=["mae"])
 
     # Train
     model.fit(
-        X_train, y_train,
+        X_train,
+        y_train,
         validation_data=(X_val, y_val),
         epochs=epochs,
         batch_size=batch_size,
         verbose=1,
-        callbacks=[
-            keras.callbacks.EarlyStopping(patience=10, restore_best_weights=True)
-        ]
+        callbacks=[keras.callbacks.EarlyStopping(patience=10, restore_best_weights=True)],
     )
 
     # Evaluate
@@ -463,15 +439,15 @@ def train_battery_model(data, epochs=100, batch_size=64):
     # Save
     model.save(str(MODELS_DIR / "battery_predictor.h5"))
     metadata = {
-        'X_mean': X_scaler.mean_.tolist(),
-        'X_std': X_scaler.scale_.tolist(),
-        'y_mean': float(y_scaler.mean_[0]),
-        'y_std': float(y_scaler.scale_[0]),
-        'unique_companies': unique_companies,
-        'r2': float(r2),
-        'rmse': float(rmse)
+        "X_mean": X_scaler.mean_.tolist(),
+        "X_std": X_scaler.scale_.tolist(),
+        "y_mean": float(y_scaler.mean_[0]),
+        "y_std": float(y_scaler.scale_[0]),
+        "unique_companies": unique_companies,
+        "r2": float(r2),
+        "rmse": float(rmse),
     }
-    with open(MODELS_DIR / "battery_predictor_metadata.json", 'w') as f:
+    with open(MODELS_DIR / "battery_predictor_metadata.json", "w") as f:
         json.dump(metadata, f, indent=2)
 
     return model, metadata
@@ -482,19 +458,12 @@ def train_brand_model(data, epochs=100, batch_size=64):
     print("\n=== Training Brand Classification Model ===")
 
     # Features: RAM, Battery, Screen, Weight, Year, Price
-    X = np.column_stack([
-        data['ram'],
-        data['battery'],
-        data['screen'],
-        data['weight'],
-        data['year'],
-        data['price']
-    ])
+    X = np.column_stack([data["ram"], data["battery"], data["screen"], data["weight"], data["year"], data["price"]])
 
     # Encode brands as integers
-    unique_brands = sorted(list(set(data['companies'])))
+    unique_brands = sorted(list(set(data["companies"])))
     brand_to_idx = {brand: idx for idx, brand in enumerate(unique_brands)}
-    y = np.array([brand_to_idx[brand] for brand in data['companies']])
+    y = np.array([brand_to_idx[brand] for brand in data["companies"]])
     num_classes = len(unique_brands)
 
     print(f"Features: {X.shape[0]} samples × {X.shape[1]} features")
@@ -505,37 +474,34 @@ def train_brand_model(data, epochs=100, batch_size=64):
     X_normalized = X_scaler.fit_transform(X)
 
     # Split
-    X_train, X_temp, y_train, y_temp = train_test_split(
-        X_normalized, y, test_size=0.3, random_state=42, stratify=y
-    )
-    X_val, X_test, y_val, y_test = train_test_split(
-        X_temp, y_temp, test_size=0.5, random_state=42, stratify=y_temp
-    )
+    X_train, X_temp, y_train, y_temp = train_test_split(X_normalized, y, test_size=0.3, random_state=42, stratify=y)
+    X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42, stratify=y_temp)
 
     # Build model
-    model = models.Sequential([
-        layers.Dense(64, activation='relu', input_shape=(X.shape[1],)),
-        layers.Dropout(0.3),
-        layers.Dense(32, activation='relu'),
-        layers.Dense(num_classes, activation='softmax')
-    ])
+    model = models.Sequential(
+        [
+            layers.Dense(64, activation="relu", input_shape=(X.shape[1],)),
+            layers.Dropout(0.3),
+            layers.Dense(32, activation="relu"),
+            layers.Dense(num_classes, activation="softmax"),
+        ]
+    )
 
     model.compile(
         optimizer=keras.optimizers.Adam(learning_rate=0.001),
-        loss='sparse_categorical_crossentropy',
-        metrics=['accuracy']
+        loss="sparse_categorical_crossentropy",
+        metrics=["accuracy"],
     )
 
     # Train
     model.fit(
-        X_train, y_train,
+        X_train,
+        y_train,
         validation_data=(X_val, y_val),
         epochs=epochs,
         batch_size=batch_size,
         verbose=1,
-        callbacks=[
-            keras.callbacks.EarlyStopping(patience=10, restore_best_weights=True)
-        ]
+        callbacks=[keras.callbacks.EarlyStopping(patience=10, restore_best_weights=True)],
     )
 
     # Evaluate
@@ -548,12 +514,12 @@ def train_brand_model(data, epochs=100, batch_size=64):
     # Save
     model.save(str(MODELS_DIR / "brand_classifier.h5"))
     metadata = {
-        'X_mean': X_scaler.mean_.tolist(),
-        'X_std': X_scaler.scale_.tolist(),
-        'unique_brands': unique_brands,
-        'accuracy': float(accuracy)
+        "X_mean": X_scaler.mean_.tolist(),
+        "X_std": X_scaler.scale_.tolist(),
+        "unique_brands": unique_brands,
+        "accuracy": float(accuracy),
     }
-    with open(MODELS_DIR / "brand_classifier_metadata.json", 'w') as f:
+    with open(MODELS_DIR / "brand_classifier_metadata.json", "w") as f:
         json.dump(metadata, f, indent=2)
 
     return model, metadata

@@ -6,13 +6,15 @@ Test script for LanceDB integration
 import os
 import sys
 import tempfile
-import pandas as pd
 from pathlib import Path
+
+import pandas as pd
 
 # Add current directory to path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from lancedb_utils import LanceDBManager
+
 
 def test_lancedb_basic():
     """Test basic LanceDB functionality"""
@@ -32,15 +34,15 @@ def test_lancedb_basic():
 
     # Create test CSV data
     test_data = {
-        'name': ['iPhone 15', 'Samsung Galaxy S24', 'Google Pixel 8'],
-        'price': [999, 899, 699],
-        'ram': [8, 12, 8],
-        'battery': [4000, 5000, 4500]
+        "name": ["iPhone 15", "Samsung Galaxy S24", "Google Pixel 8"],
+        "price": [999, 899, 699],
+        "ram": [8, 12, 8],
+        "battery": [4000, 5000, 4500],
     }
     df = pd.DataFrame(test_data)
 
     # Save to temporary CSV file
-    with tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False) as f:
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".csv", delete=False) as f:
         df.to_csv(f.name, index=False)
         csv_path = f.name
 
@@ -48,9 +50,7 @@ def test_lancedb_basic():
         # Test CSV upload
         print("📊 Testing CSV upload...")
         dataset_id = db_manager.store_csv_dataset(
-            file_path=csv_path,
-            description="Test mobile phone dataset",
-            tags=["test", "mobile", "phones"]
+            file_path=csv_path, description="Test mobile phone dataset", tags=["test", "mobile", "phones"]
         )
         print(f"✅ CSV uploaded successfully: {dataset_id}")
 
@@ -67,10 +67,7 @@ def test_lancedb_basic():
         print(f"✅ Search returned {len(results)} datasets")
 
         # Test stats
-        stats = {
-            "datasets": len(db_manager.get_all_datasets()),
-            "images": len(db_manager.get_all_images())
-        }
+        stats = {"datasets": len(db_manager.get_all_datasets()), "images": len(db_manager.get_all_images())}
         print(f"✅ Database stats: {stats['datasets']} datasets, {stats['images']} images")
 
         # Clean up test data
@@ -86,6 +83,7 @@ def test_lancedb_basic():
     finally:
         # Clean up temp file
         Path(csv_path).unlink(missing_ok=True)
+
 
 if __name__ == "__main__":
     success = test_lancedb_basic()

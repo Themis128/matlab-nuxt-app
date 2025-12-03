@@ -3,13 +3,13 @@ Verify production deployment of distilled price model.
 Tests: model size, loading time, accuracy, latency benchmarks.
 """
 
-import os
 import json
-import time
 import pickle
+import time
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
-from pathlib import Path
 
 # Paths
 BASE_DIR = Path(__file__).resolve().parent
@@ -18,6 +18,7 @@ DATA_DIR = BASE_DIR.parent / "data"
 DISTILLED_MODEL_PATH = MODELS_DIR / "distilled_price_model.pkl"
 BENCHMARK_PATH = DATA_DIR / "clean_distillation_benchmark.json"
 
+
 def check_model_file_size():
     """Verify model file size (should be ~14.5 KB)."""
     size_bytes = DISTILLED_MODEL_PATH.stat().st_size
@@ -25,14 +26,16 @@ def check_model_file_size():
     print(f"✓ Model file size: {size_kb:.2f} KB")
     return size_kb
 
+
 def measure_loading_time():
     """Measure model loading time."""
     start = time.perf_counter()
-    with open(DISTILLED_MODEL_PATH, 'rb') as f:
+    with open(DISTILLED_MODEL_PATH, "rb") as f:
         model = pickle.load(f)
     load_time = (time.perf_counter() - start) * 1000  # ms
     print(f"✓ Model loading time: {load_time:.3f} ms")
     return model, load_time
+
 
 def verify_accuracy():
     """Verify accuracy against benchmark."""
@@ -43,42 +46,44 @@ def verify_accuracy():
     with open(BENCHMARK_PATH) as f:
         benchmark = json.load(f)
 
-    student_rmse = benchmark['student_metrics']['rmse']
+    student_rmse = benchmark["student_metrics"]["rmse"]
     print(f"✓ Model RMSE: ${student_rmse:,.2f}")
     return student_rmse
+
 
 def benchmark_latency(model, num_iterations=1000):
     """Benchmark prediction latency."""
     # Create realistic test data (18 clean features)
     np.random.seed(42)
-    test_data = pd.DataFrame({
-        # Base features
-        'ram': np.random.randint(2, 16, num_iterations),
-        'battery': np.random.randint(3000, 6000, num_iterations),
-        'screen': np.random.uniform(5.0, 7.0, num_iterations),
-        'weight': np.random.randint(140, 220, num_iterations),
-        'year': np.random.randint(2020, 2026, num_iterations),
-
-        # Derived features (computed from base)
-        'ram_battery_interaction': np.random.randint(2, 16, num_iterations) * np.random.randint(3000, 6000, num_iterations),
-        'screen_weight_ratio': np.random.uniform(5.0, 7.0, num_iterations) / np.random.randint(140, 220, num_iterations),
-        'months_since_launch': np.random.randint(0, 60, num_iterations),
-        'technology_generation': np.random.choice([4, 5], num_iterations),
-
-        # One-hot encoded brand features
-        'company_Apple': np.random.choice([0, 1], num_iterations),
-        'company_Huawei': np.random.choice([0, 1], num_iterations),
-        'company_Oppo': np.random.choice([0, 1], num_iterations),
-        'company_Realme': np.random.choice([0, 1], num_iterations),
-        'company_Samsung': np.random.choice([0, 1], num_iterations),
-        'company_Vivo': np.random.choice([0, 1], num_iterations),
-        'company_Xiaomi': np.random.choice([0, 1], num_iterations),
-        'company_other': np.random.choice([0, 1], num_iterations),
-
-        # Brand segment
-        'brand_segment_mid': np.random.choice([0, 1], num_iterations),
-        'brand_segment_premium': np.random.choice([0, 1], num_iterations),
-    })
+    test_data = pd.DataFrame(
+        {
+            # Base features
+            "ram": np.random.randint(2, 16, num_iterations),
+            "battery": np.random.randint(3000, 6000, num_iterations),
+            "screen": np.random.uniform(5.0, 7.0, num_iterations),
+            "weight": np.random.randint(140, 220, num_iterations),
+            "year": np.random.randint(2020, 2026, num_iterations),
+            # Derived features (computed from base)
+            "ram_battery_interaction": np.random.randint(2, 16, num_iterations)
+            * np.random.randint(3000, 6000, num_iterations),
+            "screen_weight_ratio": np.random.uniform(5.0, 7.0, num_iterations)
+            / np.random.randint(140, 220, num_iterations),
+            "months_since_launch": np.random.randint(0, 60, num_iterations),
+            "technology_generation": np.random.choice([4, 5], num_iterations),
+            # One-hot encoded brand features
+            "company_Apple": np.random.choice([0, 1], num_iterations),
+            "company_Huawei": np.random.choice([0, 1], num_iterations),
+            "company_Oppo": np.random.choice([0, 1], num_iterations),
+            "company_Realme": np.random.choice([0, 1], num_iterations),
+            "company_Samsung": np.random.choice([0, 1], num_iterations),
+            "company_Vivo": np.random.choice([0, 1], num_iterations),
+            "company_Xiaomi": np.random.choice([0, 1], num_iterations),
+            "company_other": np.random.choice([0, 1], num_iterations),
+            # Brand segment
+            "brand_segment_mid": np.random.choice([0, 1], num_iterations),
+            "brand_segment_premium": np.random.choice([0, 1], num_iterations),
+        }
+    )
 
     # Warm-up
     for _ in range(10):
@@ -88,7 +93,7 @@ def benchmark_latency(model, num_iterations=1000):
     latencies = []
     for i in range(num_iterations):
         start = time.perf_counter()
-        _ = model.predict(test_data.iloc[i:i+1])
+        _ = model.predict(test_data.iloc[i : i + 1])
         latencies.append((time.perf_counter() - start) * 1000)  # ms
 
     latencies = np.array(latencies)
@@ -101,6 +106,7 @@ def benchmark_latency(model, num_iterations=1000):
 
     return latencies
 
+
 def generate_report(size_kb, load_time, rmse, latencies):
     """Generate deployment verification report."""
     report = {
@@ -109,16 +115,16 @@ def generate_report(size_kb, load_time, rmse, latencies):
             "path": str(DISTILLED_MODEL_PATH.relative_to(BASE_DIR.parent)),
             "size_kb": round(size_kb, 2),
             "size_claim_kb": 14.5,
-            "status": "✓ PASS" if abs(size_kb - 14.5) < 2 else "⚠ WARN"
+            "status": "✓ PASS" if abs(size_kb - 14.5) < 2 else "⚠ WARN",
         },
         "loading_performance": {
             "loading_time_ms": round(load_time, 3),
-            "status": "✓ PASS" if load_time < 10 else "⚠ WARN"
+            "status": "✓ PASS" if load_time < 10 else "⚠ WARN",
         },
         "accuracy": {
             "rmse_usd": round(rmse, 2) if rmse else None,
             "rmse_claim_usd": 32366,
-            "status": "✓ PASS" if rmse and abs(rmse - 32366) < 1000 else ("⚠ NO BENCHMARK" if not rmse else "⚠ WARN")
+            "status": "✓ PASS" if rmse and abs(rmse - 32366) < 1000 else ("⚠ NO BENCHMARK" if not rmse else "⚠ WARN"),
         },
         "latency_benchmarks": {
             "iterations": len(latencies),
@@ -128,12 +134,13 @@ def generate_report(size_kb, load_time, rmse, latencies):
             "p99_ms": round(np.percentile(latencies, 99), 4),
             "max_ms": round(latencies.max(), 4),
             "target_ms": 1.0,
-            "status": "✓ PASS" if latencies.mean() < 1.0 else "⚠ WARN"
+            "status": "✓ PASS" if latencies.mean() < 1.0 else "⚠ WARN",
         },
-        "overall_status": "✓ PRODUCTION READY"
+        "overall_status": "✓ PRODUCTION READY",
     }
 
     return report
+
 
 def main():
     """Run production deployment verification."""
@@ -166,7 +173,7 @@ def main():
     # 5. Generate report
     report = generate_report(size_kb, load_time, rmse, latencies)
     report_path = DATA_DIR / "deployment_verification_report.json"
-    with open(report_path, 'w') as f:
+    with open(report_path, "w") as f:
         json.dump(report, f, indent=2)
 
     print("=" * 70)
@@ -178,12 +185,14 @@ def main():
     print()
 
     # Final status
-    all_pass = all([
-        report['model_file']['status'] == '✓ PASS',
-        report['loading_performance']['status'] == '✓ PASS',
-        report['accuracy']['status'] in ['✓ PASS', '⚠ NO BENCHMARK'],
-        report['latency_benchmarks']['status'] == '✓ PASS'
-    ])
+    all_pass = all(
+        [
+            report["model_file"]["status"] == "✓ PASS",
+            report["loading_performance"]["status"] == "✓ PASS",
+            report["accuracy"]["status"] in ["✓ PASS", "⚠ NO BENCHMARK"],
+            report["latency_benchmarks"]["status"] == "✓ PASS",
+        ]
+    )
 
     if all_pass:
         print("🎉 ALL CHECKS PASSED - MODEL IS PRODUCTION READY")
@@ -191,6 +200,7 @@ def main():
         print("⚠ SOME CHECKS FAILED - REVIEW REPORT ABOVE")
 
     return all_pass
+
 
 if __name__ == "__main__":
     success = main()

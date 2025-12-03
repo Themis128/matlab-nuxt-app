@@ -19,9 +19,9 @@ test.describe('Algolia Search Integration', () => {
       window.__algoliaErrors = []
 
       // Override algoliasearch to track calls
-      if (window.algoliasearch) {
-        const originalAlgoliasearch = window.algoliasearch
-        window.algoliasearch = function (appId, apiKey) {
+      if ((window as any).algoliasearch) {
+        const originalAlgoliasearch = (window as any).algoliasearch
+        ;(window as any).algoliasearch = function (appId: any, apiKey: any) {
           window.__algoliaEvents!.push({
             type: 'init',
             appId,
@@ -32,9 +32,9 @@ test.describe('Algolia Search Integration', () => {
           const client = originalAlgoliasearch(appId, apiKey)
 
           // Override search method to track queries
-          if (client && client.search) {
-            const originalSearch = client.search
-            client.search = function (queries, options) {
+          if (client && (client as any).search) {
+            const originalSearch = (client as any).search
+            ;(client as any).search = function (queries: any, options: any) {
               window.__algoliaEvents!.push({
                 type: 'search',
                 queries,
@@ -46,7 +46,7 @@ test.describe('Algolia Search Integration', () => {
           }
 
           return client
-        }
+        } as any
       }
     })
   })

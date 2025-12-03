@@ -3,10 +3,11 @@ TensorFlow-based Prediction Functions
 Uses trained TensorFlow/Keras models for accurate predictions
 """
 
-import numpy as np
+import importlib.util
 import json
 from pathlib import Path
-import importlib.util
+
+import numpy as np
 
 # Detect TensorFlow availability without importing heavy modules unless needed
 TENSORFLOW_AVAILABLE = importlib.util.find_spec("tensorflow") is not None
@@ -29,21 +30,22 @@ class TensorFlowPredictor:
             return
 
         model_files = {
-            'price': 'price_predictor.h5',
-            'ram': 'ram_predictor.h5',
-            'battery': 'battery_predictor.h5',
-            'brand': 'brand_classifier.h5'
+            "price": "price_predictor.h5",
+            "ram": "ram_predictor.h5",
+            "battery": "battery_predictor.h5",
+            "brand": "brand_classifier.h5",
         }
 
         for model_name, model_file in model_files.items():
             model_path = MODELS_DIR / model_file
-            metadata_path = MODELS_DIR / model_file.replace('.h5', '_metadata.json')
+            metadata_path = MODELS_DIR / model_file.replace(".h5", "_metadata.json")
 
             if model_path.exists() and metadata_path.exists():
                 try:
                     import tensorflow as tf  # Imported lazily to avoid undefined names
+
                     self.models[model_name] = tf.keras.models.load_model(str(model_path))
-                    with open(metadata_path, 'r') as f:
+                    with open(metadata_path, "r") as f:
                         self.metadata[model_name] = json.load(f)
                     print(f"✓ Loaded {model_name} model")
                 except Exception as e:
@@ -54,7 +56,7 @@ class TensorFlowPredictor:
         if model_name not in self.metadata:
             return np.zeros(1)
 
-        companies = self.metadata[model_name].get('unique_companies', [])
+        companies = self.metadata[model_name].get("unique_companies", [])
         if not companies:
             return np.zeros(1)
 
@@ -68,31 +70,32 @@ class TensorFlowPredictor:
         encoded[idx] = 1
         return encoded
 
-    def predict_price(self, ram: float, battery: float, screen_size: float,
-                     weight: float, year: int, company: str) -> float:
+    def predict_price(
+        self, ram: float, battery: float, screen_size: float, weight: float, year: int, company: str
+    ) -> float:
         """Predict price using TensorFlow model"""
-        if 'price' not in self.models:
+        if "price" not in self.models:
             return _mock_price_prediction(ram, battery, screen_size, weight, year, company)
 
         try:
             # Encode company
-            company_encoded = self.encode_company(company, 'price')
+            company_encoded = self.encode_company(company, "price")
 
             # Prepare features
             features = np.array([ram, battery, screen_size, weight, year] + company_encoded.tolist())
             features = features.reshape(1, -1)
 
             # Normalize
-            meta = self.metadata['price']
-            X_mean = np.array(meta['X_mean'])
-            X_std = np.array(meta['X_std'])
-            y_mean = meta['y_mean']
-            y_std = meta['y_std']
+            meta = self.metadata["price"]
+            X_mean = np.array(meta["X_mean"])
+            X_std = np.array(meta["X_std"])
+            y_mean = meta["y_mean"]
+            y_std = meta["y_std"]
 
             features_norm = (features - X_mean) / (X_std + 1e-8)
 
             # Predict
-            pred_norm = self.models['price'].predict(features_norm, verbose=0)
+            pred_norm = self.models["price"].predict(features_norm, verbose=0)
             price = pred_norm[0, 0] * y_std + y_mean
 
             return max(100, round(price))
@@ -100,67 +103,70 @@ class TensorFlowPredictor:
             print(f"Error in TensorFlow price prediction: {e}")
             return _mock_price_prediction(ram, battery, screen_size, weight, year, company)
 
-    def predict_ram(self, battery: float, screen_size: float, weight: float,
-                   year: int, price: float, company: str) -> float:
+    def predict_ram(
+        self, battery: float, screen_size: float, weight: float, year: int, price: float, company: str
+    ) -> float:
         """Predict RAM using TensorFlow model"""
-        if 'ram' not in self.models:
+        if "ram" not in self.models:
             return _mock_ram_prediction(battery, screen_size, weight, year, price, company)
 
         try:
-            company_encoded = self.encode_company(company, 'ram')
+            company_encoded = self.encode_company(company, "ram")
             features = np.array([battery, screen_size, weight, year, price] + company_encoded.tolist())
             features = features.reshape(1, -1)
 
-            meta = self.metadata['ram']
-            features_norm = (features - np.array(meta['X_mean'])) / (np.array(meta['X_std']) + 1e-8)
+            meta = self.metadata["ram"]
+            features_norm = (features - np.array(meta["X_mean"])) / (np.array(meta["X_std"]) + 1e-8)
 
-            pred_norm = self.models['ram'].predict(features_norm, verbose=0)
-            ram = pred_norm[0, 0] * meta['y_std'] + meta['y_mean']
+            pred_norm = self.models["ram"].predict(features_norm, verbose=0)
+            ram = pred_norm[0, 0] * meta["y_std"] + meta["y_mean"]
 
             return max(2, round(ram * 10) / 10)
         except Exception as e:
             print(f"Error in TensorFlow RAM prediction: {e}")
             return _mock_ram_prediction(battery, screen_size, weight, year, price, company)
 
-    def predict_battery(self, ram: float, screen_size: float, weight: float,
-                       year: int, price: float, company: str) -> float:
+    def predict_battery(
+        self, ram: float, screen_size: float, weight: float, year: int, price: float, company: str
+    ) -> float:
         """Predict battery using TensorFlow model"""
-        if 'battery' not in self.models:
+        if "battery" not in self.models:
             return _mock_battery_prediction(ram, screen_size, weight, year, price, company)
 
         try:
-            company_encoded = self.encode_company(company, 'battery')
+            company_encoded = self.encode_company(company, "battery")
             features = np.array([ram, screen_size, weight, year, price] + company_encoded.tolist())
             features = features.reshape(1, -1)
 
-            meta = self.metadata['battery']
-            features_norm = (features - np.array(meta['X_mean'])) / (np.array(meta['X_std']) + 1e-8)
+            meta = self.metadata["battery"]
+            features_norm = (features - np.array(meta["X_mean"])) / (np.array(meta["X_std"]) + 1e-8)
 
-            pred_norm = self.models['battery'].predict(features_norm, verbose=0)
-            battery = pred_norm[0, 0] * meta['y_std'] + meta['y_mean']
+            pred_norm = self.models["battery"].predict(features_norm, verbose=0)
+            battery = pred_norm[0, 0] * meta["y_std"] + meta["y_mean"]
 
             return max(2000, round(battery))
         except Exception as e:
             print(f"Error in TensorFlow battery prediction: {e}")
             return _mock_battery_prediction(ram, screen_size, weight, year, price, company)
 
-    def predict_brand(self, ram: float, battery: float, screen_size: float,
-                     weight: float, year: int, price: float) -> str:
+    def predict_brand(
+        self, ram: float, battery: float, screen_size: float, weight: float, year: int, price: float
+    ) -> str:
         """Predict brand using TensorFlow model"""
-        if 'brand' not in self.models:
+        if "brand" not in self.models:
             return _mock_brand_prediction(ram, battery, screen_size, weight, year, price)
 
         try:
             features = np.array([ram, battery, screen_size, weight, year, price])
             features = features.reshape(1, -1)
 
-            meta = self.metadata['brand']
-            features_norm = (features - np.array(meta['X_mean'])) / (np.array(meta['X_std']) + 1e-8)
+            meta = self.metadata["brand"]
+            features_norm = (features - np.array(meta["X_mean"])) / (np.array(meta["X_std"]) + 1e-8)
 
-            pred_probs = self.models['brand'].predict(features_norm, verbose=0)
+            pred_probs = self.models["brand"].predict(features_norm, verbose=0)
             pred_idx = np.argmax(pred_probs[0])
 
-            brands = meta['unique_brands']
+            brands = meta["unique_brands"]
             return brands[pred_idx]
         except Exception as e:
             print(f"Error in TensorFlow brand prediction: {e}")
@@ -169,6 +175,7 @@ class TensorFlowPredictor:
 
 # Global predictor instance
 _predictor = None
+
 
 def get_predictor():
     """Get or create global predictor instance"""
@@ -179,49 +186,47 @@ def get_predictor():
 
 
 # Public prediction functions
-def predict_price(ram: float, battery: float, screen_size: float,
-                 weight: float, year: int, company: str) -> float:
+def predict_price(ram: float, battery: float, screen_size: float, weight: float, year: int, company: str) -> float:
     """Predict price - uses TensorFlow if available, else mock"""
     predictor = get_predictor()
     return predictor.predict_price(ram, battery, screen_size, weight, year, company)
 
 
-def predict_ram(battery: float, screen_size: float, weight: float,
-               year: int, price: float, company: str) -> float:
+def predict_ram(battery: float, screen_size: float, weight: float, year: int, price: float, company: str) -> float:
     """Predict RAM - uses TensorFlow if available, else mock"""
     predictor = get_predictor()
     return predictor.predict_ram(battery, screen_size, weight, year, price, company)
 
 
-def predict_battery(ram: float, screen_size: float, weight: float,
-                   year: int, price: float, company: str) -> float:
+def predict_battery(ram: float, screen_size: float, weight: float, year: int, price: float, company: str) -> float:
     """Predict battery - uses TensorFlow if available, else mock"""
     predictor = get_predictor()
     return predictor.predict_battery(ram, screen_size, weight, year, price, company)
 
 
-def predict_brand(ram: float, battery: float, screen_size: float,
-                 weight: float, year: int, price: float) -> str:
+def predict_brand(ram: float, battery: float, screen_size: float, weight: float, year: int, price: float) -> str:
     """Predict brand - uses TensorFlow if available, else mock"""
     predictor = get_predictor()
     return predictor.predict_brand(ram, battery, screen_size, weight, year, price)
 
 
 # Mock prediction functions (fallback)
-def _mock_price_prediction(ram: float, battery: float, screen_size: float,
-                          weight: float, year: int, company: str) -> float:
+def _mock_price_prediction(
+    ram: float, battery: float, screen_size: float, weight: float, year: int, company: str
+) -> float:
     base_price = 200
     ram_mult = ram * 50
     battery_mult = battery * 0.1
     screen_mult = screen_size * 100
     year_mult = (year - 2020) * 20
-    company_mult = 1.5 if company.lower() == 'apple' else 1.2 if company.lower() == 'samsung' else 1.0
+    company_mult = 1.5 if company.lower() == "apple" else 1.2 if company.lower() == "samsung" else 1.0
     price = (base_price + ram_mult + battery_mult + screen_mult + year_mult) * company_mult
     return max(100, round(price))
 
 
-def _mock_ram_prediction(battery: float, screen_size: float, weight: float,
-                         year: int, price: float, company: str) -> float:
+def _mock_ram_prediction(
+    battery: float, screen_size: float, weight: float, year: int, price: float, company: str
+) -> float:
     base_ram = 4
     price_mult = price / 200
     year_mult = (year - 2020) * 0.5
@@ -229,8 +234,9 @@ def _mock_ram_prediction(battery: float, screen_size: float, weight: float,
     return max(2, round(ram * 10) / 10)
 
 
-def _mock_battery_prediction(ram: float, screen_size: float, weight: float,
-                            year: int, price: float, company: str) -> float:
+def _mock_battery_prediction(
+    ram: float, screen_size: float, weight: float, year: int, price: float, company: str
+) -> float:
     base_battery = 3000
     screen_mult = screen_size * 500
     price_mult = price / 10
@@ -238,13 +244,14 @@ def _mock_battery_prediction(ram: float, screen_size: float, weight: float,
     return max(2000, round(battery))
 
 
-def _mock_brand_prediction(ram: float, battery: float, screen_size: float,
-                          weight: float, year: int, price: float) -> str:
+def _mock_brand_prediction(
+    ram: float, battery: float, screen_size: float, weight: float, year: int, price: float
+) -> str:
     if price > 800:
-        return 'Apple'
+        return "Apple"
     elif price > 500:
-        return 'Samsung'
+        return "Samsung"
     elif price > 300:
-        return 'Xiaomi'
+        return "Xiaomi"
     else:
-        return 'Other'
+        return "Other"

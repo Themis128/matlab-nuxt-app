@@ -306,27 +306,32 @@
 </template>
 
 <script setup lang="ts">
+  import { ref, reactive, onMounted } from 'vue'
+
   interface PredictionResult {
-    price: number;
-    priceConfidence: number;
-    performanceScore: number;
-    marketPosition: string;
-    marketDescription: string;
-    insights: string[];
-    overallConfidence: number;
-    trainingSamples: string;
+    price: number
+    priceConfidence: number
+    performanceScore: number
+    marketPosition: string
+    marketDescription: string
+    insights: string[]
+    overallConfidence: number
+    trainingSamples: string
   }
 
-  // Page meta
-  useHead({
-    title: 'AI Predictions Demo - MATLAB Analytics',
-    meta: [
-      {
-        name: 'description',
-        content:
-          'Experience AI-powered phone predictions using advanced MATLAB deep learning models',
-      },
-    ],
+  // Page meta (fallback for environments without Nuxt auto-imports)
+  onMounted(() => {
+    document.title = 'AI Predictions Demo - MATLAB Analytics'
+    const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
+    const content =
+      'Experience AI-powered phone predictions using advanced MATLAB deep learning models'
+    if (existing) existing.content = content
+    else {
+      const m = document.createElement('meta')
+      m.name = 'description'
+      m.content = content
+      document.head.appendChild(m)
+    }
   })
 
   // Reactive data
@@ -417,7 +422,7 @@
     let basePrice = 300
 
     // Brand multiplier
-    const brandMultipliers = {
+    const brandMultipliers: Record<string, number> = {
       samsung: 1.2,
       apple: 2.5,
       google: 1.8,
@@ -427,7 +432,7 @@
       motorola: 0.8,
       other: 1.0,
     }
-    basePrice *= brandMultipliers[demoData.brand] || 1
+    basePrice *= (brandMultipliers as Record<string, number>)[demoData.brand] || 1
 
     // RAM multiplier
     const ramValue = parseInt(demoData.ram) || 8
@@ -448,7 +453,7 @@
     let score = 50
 
     // Processor score
-    const processorScores = {
+    const processorScores: Record<string, number> = {
       sd8g3: 95,
       a17pro: 98,
       'tensor-g3': 88,
@@ -457,7 +462,7 @@
       sd7g1: 75,
       other: 60,
     }
-    score = processorScores[demoData.processor] || 60
+    score = (processorScores as Record<string, number>)[demoData.processor] || 60
 
     // RAM adjustment
     const ramValue = parseInt(demoData.ram) || 8
@@ -470,7 +475,7 @@
     return Math.min(100, Math.max(30, score))
   }
 
-  const getMarketPosition = score => {
+  const getMarketPosition = (score: number) => {
     if (score >= 95) return 'Flagship'
     if (score >= 85) return 'Premium'
     if (score >= 75) return 'Mid-Range'
@@ -478,7 +483,7 @@
     return 'Entry-Level'
   }
 
-  const getMarketDescription = score => {
+  const getMarketDescription = (score: number) => {
     if (score >= 95) return 'Top-tier performance and features'
     if (score >= 85) return 'High-end specifications with premium features'
     if (score >= 75) return 'Balanced performance and value'
@@ -500,7 +505,7 @@
 
   const resetForm = () => {
     Object.keys(demoData).forEach(key => {
-      demoData[key] = ''
+      ;(demoData as any)[key] = ''
     })
     predictionResults.value = null
   }

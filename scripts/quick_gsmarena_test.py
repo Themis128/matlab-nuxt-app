@@ -4,9 +4,11 @@ Quick GSM Arena Test
 Test GSM Arena image extraction for one Realme phone
 """
 
+from urllib.parse import urljoin
+
 import requests
 from bs4 import BeautifulSoup
-from urllib.parse import urljoin
+
 
 def test_gsmarena():
     """Test GSM Arena image extraction for one phone"""

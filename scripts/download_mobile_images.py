@@ -27,15 +27,16 @@ Notes:
     - Use `--dry-run` first to verify targets.
 """
 from __future__ import annotations
-import os
-import sys
+
 import argparse
 import csv
 import importlib
+import os
+import sys
 import urllib.request
-from pathlib import Path
 from dataclasses import dataclass
-from typing import Dict, List, Iterable
+from pathlib import Path
+from typing import Dict, Iterable, List
 
 DATASET_PATHS = [
     os.path.join("public", "dataset_with_images.csv"),

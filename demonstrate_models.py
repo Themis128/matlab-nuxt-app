@@ -4,10 +4,11 @@ Comprehensive demonstration that all ML models produce correct, valid outcomes.
 Tests various realistic phone specifications to validate model predictions.
 """
 
-import requests
 import json
 import sys
 from pathlib import Path
+
+import requests
 
 API_BASE = "http://localhost:8000"
 

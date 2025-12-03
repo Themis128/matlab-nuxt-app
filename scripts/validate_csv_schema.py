@@ -2,10 +2,11 @@
 CSV Schema Validator for Mobiles Dataset
 Validates that CSV files have the expected column structure and data types.
 """
-import pandas as pd
 import sys
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
+
+import pandas as pd
 
 # Expected schema for Mobiles Dataset (2025)
 # Column name mapping: actual CSV headers -> normalized names

@@ -4,9 +4,9 @@ MATLAB .mat File Viewer
 Converts .mat files to readable JSON/text format for viewing in editors
 """
 
-import sys
-import json
 import argparse
+import json
+import sys
 from pathlib import Path
 
 try:

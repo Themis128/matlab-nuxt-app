@@ -6,19 +6,13 @@ import requests
 
 API_URL = "http://localhost:8000"
 
+
 def test_price_prediction():
     """Test price prediction endpoint"""
     print("Testing Price Prediction...")
     response = requests.post(
         f"{API_URL}/api/predict/price",
-        json={
-            "ram": 8,
-            "battery": 4000,
-            "screen": 6.1,
-            "weight": 174,
-            "year": 2024,
-            "company": "Apple"
-        }
+        json={"ram": 8, "battery": 4000, "screen": 6.1, "weight": 174, "year": 2024, "company": "Apple"},
     )
     if response.status_code == 200:
         result = response.json()
@@ -28,19 +22,13 @@ def test_price_prediction():
         print(f"  [ERROR] Error: {response.status_code} - {response.text}")
         return False
 
+
 def test_ram_prediction():
     """Test RAM prediction endpoint"""
     print("Testing RAM Prediction...")
     response = requests.post(
         f"{API_URL}/api/predict/ram",
-        json={
-            "battery": 4000,
-            "screen": 6.1,
-            "weight": 174,
-            "year": 2024,
-            "price": 999,
-            "company": "Apple"
-        }
+        json={"battery": 4000, "screen": 6.1, "weight": 174, "year": 2024, "price": 999, "company": "Apple"},
     )
     if response.status_code == 200:
         result = response.json()
@@ -50,19 +38,13 @@ def test_ram_prediction():
         print(f"  [ERROR] Error: {response.status_code} - {response.text}")
         return False
 
+
 def test_battery_prediction():
     """Test battery prediction endpoint"""
     print("Testing Battery Prediction...")
     response = requests.post(
         f"{API_URL}/api/predict/battery",
-        json={
-            "ram": 8,
-            "screen": 6.1,
-            "weight": 174,
-            "year": 2024,
-            "price": 999,
-            "company": "Apple"
-        }
+        json={"ram": 8, "screen": 6.1, "weight": 174, "year": 2024, "price": 999, "company": "Apple"},
     )
     if response.status_code == 200:
         result = response.json()
@@ -72,19 +54,13 @@ def test_battery_prediction():
         print(f"  [ERROR] Error: {response.status_code} - {response.text}")
         return False
 
+
 def test_brand_prediction():
     """Test brand prediction endpoint"""
     print("Testing Brand Prediction...")
     response = requests.post(
         f"{API_URL}/api/predict/brand",
-        json={
-            "ram": 8,
-            "battery": 4000,
-            "screen": 6.1,
-            "weight": 174,
-            "year": 2024,
-            "price": 999
-        }
+        json={"ram": 8, "battery": 4000, "screen": 6.1, "weight": 174, "year": 2024, "price": 999},
     )
     if response.status_code == 200:
         result = response.json()
@@ -93,6 +69,7 @@ def test_brand_prediction():
     else:
         print(f"  [ERROR] Error: {response.status_code} - {response.text}")
         return False
+
 
 def test_health():
     """Test health endpoint"""
@@ -108,6 +85,7 @@ def test_health():
     except requests.exceptions.ConnectionError:
         print(f"  [ERROR] Cannot connect to API. Is it running on {API_URL}?")
         return False
+
 
 if __name__ == "__main__":
     print("=" * 60)

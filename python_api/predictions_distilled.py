@@ -18,13 +18,15 @@ Author: ML Improvement Initiative
 Date: 2025-11-30
 """
 
-import numpy as np
 import json
 from pathlib import Path
 from typing import Dict, Optional
 
+import numpy as np
+
 try:
     import joblib
+
     JOBLIB_AVAILABLE = True
 except ImportError:
     JOBLIB_AVAILABLE = False
@@ -62,9 +64,9 @@ class DistilledPredictor:
                 return
 
             # Only load from trusted paths
-            trusted_dirs = ['python_api/trained_models', 'data']
-            model_path_abs = str(DISTILLED_MODEL_PATH.resolve()).replace('\\', '/').lower()
-            is_trusted = any(trusted_dir.replace('\\', '/').lower() in model_path_abs for trusted_dir in trusted_dirs)
+            trusted_dirs = ["python_api/trained_models", "data"]
+            model_path_abs = str(DISTILLED_MODEL_PATH.resolve()).replace("\\", "/").lower()
+            is_trusted = any(trusted_dir.replace("\\", "/").lower() in model_path_abs for trusted_dir in trusted_dirs)
 
             if not is_trusted:
                 print(f"[ERROR] Model file not in trusted directory: {DISTILLED_MODEL_PATH}")
@@ -74,7 +76,7 @@ class DistilledPredictor:
 
             # Load model package with robust validation
             try:
-                with open(DISTILLED_MODEL_PATH, 'rb') as f:
+                with open(DISTILLED_MODEL_PATH, "rb") as f:
                     # Check if it's a valid pickle file (support multiple protocols)
                     header = f.read(2)
                     # Accept any pickle protocol (0x80 + protocol version) or joblib formats
@@ -94,7 +96,7 @@ class DistilledPredictor:
                         size = DISTILLED_MODEL_PATH.stat().st_size
                         print(f"[DEBUG] File size: {size} bytes")
                         # Try to read first few bytes for debugging
-                        with open(DISTILLED_MODEL_PATH, 'rb') as f:
+                        with open(DISTILLED_MODEL_PATH, "rb") as f:
                             first_bytes = f.read(10)
                             print(f"[DEBUG] First 10 bytes: {first_bytes!r}")
                     except Exception as debug_error:
@@ -102,9 +104,9 @@ class DistilledPredictor:
                 return
 
             if isinstance(model_package, dict):
-                self.model = model_package['model']
-                self.feature_names = model_package.get('feature_names', [])
-                self.metadata = model_package.get('metadata', {})
+                self.model = model_package["model"]
+                self.feature_names = model_package.get("feature_names", [])
+                self.metadata = model_package.get("metadata", {})
             else:
                 # Legacy: raw model without packaging
                 self.model = model_package
@@ -112,11 +114,11 @@ class DistilledPredictor:
 
             # Load clean metadata (feature list, encoders)
             if METADATA_PATH.exists():
-                with open(METADATA_PATH, 'r') as f:
+                with open(METADATA_PATH, "r") as f:
                     clean_meta = json.load(f)
                     if not self.feature_names:
-                        self.feature_names = clean_meta.get('features', [])
-                    self.categorical_encoders = clean_meta.get('categorical_encoders', {})
+                        self.feature_names = clean_meta.get("features", [])
+                    self.categorical_encoders = clean_meta.get("categorical_encoders", {})
 
             print(f"[OK] Distilled model loaded: {len(self.feature_names)} clean features (no leakage)")
 
@@ -138,7 +140,7 @@ class DistilledPredictor:
             Dict with predicted_price and model info, or error
         """
         if not self.is_available():
-            return {'error': 'Distilled model not available'}
+            return {"error": "Distilled model not available"}
 
         try:
             # Build feature vector matching training order
@@ -146,12 +148,12 @@ class DistilledPredictor:
 
             for feat_name in self.feature_names:
                 # Handle encoded categorical features
-                if feat_name.endswith('_encoded'):
-                    base_name = feat_name.replace('_encoded', '')
+                if feat_name.endswith("_encoded"):
+                    base_name = feat_name.replace("_encoded", "")
 
                     # Get value from input (handle different key formats)
                     input_val = None
-                    for key in [base_name, base_name.lower(), base_name.replace(' ', '_').lower()]:
+                    for key in [base_name, base_name.lower(), base_name.replace(" ", "_").lower()]:
                         if key in input_data:
                             input_val = str(input_data[key])
                             break
@@ -180,8 +182,8 @@ class DistilledPredictor:
                     else:
                         key_variants = [
                             feat_name.lower(),
-                            feat_name.replace(' ', '_').lower(),
-                            feat_name.replace('_', ' ').title()
+                            feat_name.replace(" ", "_").lower(),
+                            feat_name.replace("_", " ").title(),
                         ]
                         for key in key_variants:
                             if key in input_data:
@@ -199,78 +201,84 @@ class DistilledPredictor:
             price_prediction = float(self.model.predict(X)[0])
 
             return {
-                'predicted_price': price_prediction,
-                'model': 'distilled_decision_tree_clean',
-                'features_used': len(feature_values),
-                'leakage_removed': True
+                "predicted_price": price_prediction,
+                "model": "distilled_decision_tree_clean",
+                "features_used": len(feature_values),
+                "leakage_removed": True,
             }
 
         except Exception as e:
-            return {'error': f'Prediction failed: {str(e)}'}
+            return {"error": f"Prediction failed: {str(e)}"}
 
     def _compute_derived_feature(self, feat_name: str, input_data: Dict) -> Optional[float]:
         """Compute derived engineered features from base inputs"""
 
         # Ratios
-        if feat_name == 'spec_density':
-            if all(k in input_data for k in ['ram', 'battery', 'screen', 'weight']):
-                return (input_data['ram'] + input_data['battery']/1000 + input_data['screen']) / max(input_data['weight'], 1)
+        if feat_name == "spec_density":
+            if all(k in input_data for k in ["ram", "battery", "screen", "weight"]):
+                return (input_data["ram"] + input_data["battery"] / 1000 + input_data["screen"]) / max(
+                    input_data["weight"], 1
+                )
 
-        elif feat_name == 'temporal_decay':
-            if 'year' in input_data:
-                age_months = (2025 - input_data['year']) * 12
+        elif feat_name == "temporal_decay":
+            if "year" in input_data:
+                age_months = (2025 - input_data["year"]) * 12
                 return float(np.exp(-age_months / 24))
 
-        elif feat_name.endswith('_weight_ratio'):
-            base_feat = feat_name.replace('_weight_ratio', '')
-            weight = input_data.get('weight', 1)
-            if base_feat == 'battery' and 'battery' in input_data:
-                return input_data['battery'] / max(weight, 1)
-            elif base_feat == 'screen' and 'screen' in input_data:
-                return input_data['screen'] / max(weight, 1)
-            elif base_feat == 'ram' and 'ram' in input_data:
-                return input_data['ram'] / max(weight, 1)
+        elif feat_name.endswith("_weight_ratio"):
+            base_feat = feat_name.replace("_weight_ratio", "")
+            weight = input_data.get("weight", 1)
+            if base_feat == "battery" and "battery" in input_data:
+                return input_data["battery"] / max(weight, 1)
+            elif base_feat == "screen" and "screen" in input_data:
+                return input_data["screen"] / max(weight, 1)
+            elif base_feat == "ram" and "ram" in input_data:
+                return input_data["ram"] / max(weight, 1)
 
-        elif feat_name == 'ram_battery_interaction_v2':
-            if 'ram' in input_data and 'battery' in input_data:
-                return input_data['ram'] * (input_data['battery'] / 1000)
+        elif feat_name == "ram_battery_interaction_v2":
+            if "ram" in input_data and "battery" in input_data:
+                return input_data["ram"] * (input_data["battery"] / 1000)
 
-        elif feat_name.endswith('_percentile_global'):
+        elif feat_name.endswith("_percentile_global"):
             # Approximate percentiles (can't compute without full dataset)
-            if 'ram_percentile' in feat_name and 'ram' in input_data:
-                return min(input_data['ram'] / 16.0, 1.0)  # Normalize to 16GB max
-            elif 'battery_percentile' in feat_name and 'battery' in input_data:
-                return min(input_data['battery'] / 6000.0, 1.0)  # Normalize to 6000mAh max
+            if "ram_percentile" in feat_name and "ram" in input_data:
+                return min(input_data["ram"] / 16.0, 1.0)  # Normalize to 16GB max
+            elif "battery_percentile" in feat_name and "battery" in input_data:
+                return min(input_data["battery"] / 6000.0, 1.0)  # Normalize to 6000mAh max
 
-        elif feat_name == 'price_percentile_brand':
+        elif feat_name == "price_percentile_brand":
             # Approximation: mid-range default
             return 0.5
 
-        elif feat_name == 'spec_value_ratio':
-            if all(k in input_data for k in ['ram', 'battery', 'screen']):
-                return (input_data['ram'] * 100 + input_data['battery'] + input_data['screen'] * 500) / 10000
+        elif feat_name == "spec_value_ratio":
+            if all(k in input_data for k in ["ram", "battery", "screen"]):
+                return (input_data["ram"] * 100 + input_data["battery"] + input_data["screen"] * 500) / 10000
 
         return 0.0  # Default for unknown features
 
     def get_info(self) -> Dict:
         """Get model information"""
         if not self.is_available():
-            return {'available': False}
+            return {"available": False}
 
         return {
-            'available': True,
-            'model_type': 'DecisionTreeRegressor (distilled, clean)',
-            'features_count': len(self.feature_names),
-            'features': self.feature_names,
-            'leakage_features_removed': ['price_percentile_global', 'price_elasticity_proxy', 'cross_brand_price_delta'],
-            'speedup_factor': self.metadata.get('speedup', 12.0) if self.metadata else 12.0,
-            'size_reduction_pct': self.metadata.get('size_reduction_pct', 97.6) if self.metadata else 97.6,
-            'accuracy_retention_pct': self.metadata.get('accuracy_retention_pct', 71.1) if self.metadata else 71.1,
-            'model_path': str(DISTILLED_MODEL_PATH),
-            'model_size_kb': 14.5,
-            'avg_latency_ms': 0.0,  # Negligible
-            'production_ready': True,
-            'clean_features': True
+            "available": True,
+            "model_type": "DecisionTreeRegressor (distilled, clean)",
+            "features_count": len(self.feature_names),
+            "features": self.feature_names,
+            "leakage_features_removed": [
+                "price_percentile_global",
+                "price_elasticity_proxy",
+                "cross_brand_price_delta",
+            ],
+            "speedup_factor": self.metadata.get("speedup", 12.0) if self.metadata else 12.0,
+            "size_reduction_pct": self.metadata.get("size_reduction_pct", 97.6) if self.metadata else 97.6,
+            "accuracy_retention_pct": self.metadata.get("accuracy_retention_pct", 71.1) if self.metadata else 71.1,
+            "model_path": str(DISTILLED_MODEL_PATH),
+            "model_size_kb": 14.5,
+            "avg_latency_ms": 0.0,  # Negligible
+            "production_ready": True,
+            "clean_features": True,
         }
 
 

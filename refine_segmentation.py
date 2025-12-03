@@ -3,14 +3,15 @@ Residual-Based Market Segmentation
 Segments devices based on prediction residuals to identify value/premium tiers
 """
 
-import pandas as pd
+import json
+import os
+
 import numpy as np
+import pandas as pd
+from sklearn.cluster import KMeans
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.cluster import KMeans
-import json
-import os
 
 print("=" * 80)
 print("RESIDUAL-BASED MARKET SEGMENTATION")

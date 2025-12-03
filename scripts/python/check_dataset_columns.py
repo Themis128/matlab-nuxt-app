@@ -3,12 +3,13 @@ Dataset Columns Analyzer
 Checks which columns exist in the mobile phones dataset and provides recommendations
 """
 
-import pandas as pd
-import numpy as np
-from pathlib import Path
+import io
 import json
 import sys
-import io
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
 
 # Fix Windows console encoding for emoji support
 if sys.platform == 'win32':

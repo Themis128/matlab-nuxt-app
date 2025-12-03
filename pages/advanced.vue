@@ -226,16 +226,21 @@
 </template>
 
 <script setup lang="ts">
-  // Page meta
-  useHead({
-    title: 'Advanced Analytics - MATLAB Deep Learning Platform',
-    meta: [
-      {
-        name: 'description',
-        content:
-          'Advanced analytics dashboard with deep learning model configuration and real-time monitoring',
-      },
-    ],
+  import { ref, reactive, onMounted, onUnmounted } from 'vue'
+
+  // Page meta (fallback)
+  onMounted(() => {
+    document.title = 'Advanced Analytics - MATLAB Deep Learning Platform'
+    const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
+    const content =
+      'Advanced analytics dashboard with deep learning model configuration and real-time monitoring'
+    if (existing) existing.content = content
+    else {
+      const m = document.createElement('meta')
+      m.name = 'description'
+      m.content = content
+      document.head.appendChild(m)
+    }
   })
 
   // Reactive configuration

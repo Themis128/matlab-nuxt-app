@@ -2,11 +2,13 @@
 Optimize trained ML model files by compressing and removing unnecessary data.
 Reduces file size while maintaining model performance.
 """
-import pickle
-import joblib
 import gzip
 import os
+import pickle
 from pathlib import Path
+
+import joblib
+
 
 def optimize_sklearn_model(model_path: str, output_path: str | None = None) -> dict:
     """

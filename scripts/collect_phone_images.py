@@ -4,14 +4,16 @@ Phone Image Collection Script
 Collects missing phone images for Samsung, Vivo, and Realme devices
 """
 
-import requests
-import os
-import pandas as pd
-from urllib.parse import urlparse, urljoin
-from bs4 import BeautifulSoup
-import time
 import json
+import os
+import time
 from pathlib import Path
+from urllib.parse import urljoin, urlparse
+
+import pandas as pd
+import requests
+from bs4 import BeautifulSoup
+
 
 class PhoneImageCollector:
     def __init__(self, dataset_path="data/Mobiles Dataset (2025).csv"):

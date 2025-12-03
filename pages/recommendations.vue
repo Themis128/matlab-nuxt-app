@@ -109,17 +109,23 @@
 </template>
 
 <script setup lang="ts">
-  useHead({
-    title: 'Price Recommendations - MATLAB Analytics',
-    meta: [
-      {
-        name: 'description',
-        content: 'Get AI-powered mobile phone recommendations based on your budget',
-      },
-    ],
+  import { ref, onMounted } from 'vue'
+
+  // Page meta fallback
+  onMounted(() => {
+    document.title = 'Price Recommendations - MATLAB Analytics'
+    const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
+    const content = 'Get AI-powered mobile phone recommendations based on your budget'
+    if (existing) existing.content = content
+    else {
+      const m = document.createElement('meta')
+      m.name = 'description'
+      m.content = content
+      document.head.appendChild(m)
+    }
   })
 
-  const budgetRange = ref([300, 800])
+  const budgetRange = ref<any>([300, 800])
 
   const recommendations = [
     {

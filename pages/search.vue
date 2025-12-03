@@ -114,14 +114,19 @@
 </template>
 
 <script setup lang="ts">
-  useHead({
-    title: 'Advanced Search - MATLAB Analytics',
-    meta: [
-      {
-        name: 'description',
-        content: 'Search and filter through comprehensive MATLAB deep learning models',
-      },
-    ],
+  import { ref, onMounted } from 'vue'
+
+  onMounted(() => {
+    document.title = 'Advanced Search - MATLAB Analytics'
+    const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
+    const content = 'Search and filter through comprehensive MATLAB deep learning models'
+    if (existing) existing.content = content
+    else {
+      const m = document.createElement('meta')
+      m.name = 'description'
+      m.content = content
+      document.head.appendChild(m)
+    }
   })
 
   const searchQuery = ref('')

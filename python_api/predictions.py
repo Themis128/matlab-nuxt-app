@@ -3,11 +3,13 @@ Python Prediction Functions - MATLAB Model Alternatives
 This module provides Python equivalents of MATLAB prediction functions.
 """
 
-import numpy as np
 from pathlib import Path
+
+import numpy as np
 
 try:
     from scipy.io import loadmat
+
     SCIPY_AVAILABLE = True
 except ImportError:
     SCIPY_AVAILABLE = False
@@ -40,37 +42,33 @@ class ModelLoader:
             mat_data = loadmat(str(model_path))
 
             # Extract model data
-            if 'net' in mat_data:
-                self.models[model_name] = mat_data['net']
-            elif 'net_tuned' in mat_data:
-                self.models[model_name] = mat_data['net_tuned']
+            if "net" in mat_data:
+                self.models[model_name] = mat_data["net"]
+            elif "net_tuned" in mat_data:
+                self.models[model_name] = mat_data["net_tuned"]
             else:
                 print(f"No network found in {model_name}")
                 return False
 
             # Extract normalization parameters
-            if 'normalizationParams' in mat_data:
-                norm_params = mat_data['normalizationParams']
+            if "normalizationParams" in mat_data:
+                norm_params = mat_data["normalizationParams"]
                 self.normalization_params[model_name] = {
-                    'X_mean': norm_params['X_mean'][0, 0].flatten(),
-                    'X_std': norm_params['X_std'][0, 0].flatten(),
-                    'y_mean': norm_params['y_mean'][0, 0].item(),
-                    'y_std': norm_params['y_std'][0, 0].item()
+                    "X_mean": norm_params["X_mean"][0, 0].flatten(),
+                    "X_std": norm_params["X_std"][0, 0].flatten(),
+                    "y_mean": norm_params["y_mean"][0, 0].item(),
+                    "y_std": norm_params["y_std"][0, 0].item(),
                 }
 
             # Extract unique companies
-            if 'uniqueCompanies' in mat_data:
-                companies = mat_data['uniqueCompanies']
+            if "uniqueCompanies" in mat_data:
+                companies = mat_data["uniqueCompanies"]
                 # Handle different MATLAB cell array formats
                 if companies.size > 0:
                     if isinstance(companies[0, 0], np.ndarray):
-                        self.unique_companies[model_name] = [
-                            str(companies[0, i][0]) for i in range(companies.shape[1])
-                        ]
+                        self.unique_companies[model_name] = [str(companies[0, i][0]) for i in range(companies.shape[1])]
                     else:
-                        self.unique_companies[model_name] = [
-                            str(companies[0, i]) for i in range(companies.shape[1])
-                        ]
+                        self.unique_companies[model_name] = [str(companies[0, i]) for i in range(companies.shape[1])]
 
             return True
 
@@ -100,8 +98,7 @@ class ModelLoader:
 model_loader = ModelLoader()
 
 
-def predict_price(ram: float, battery: float, screen_size: float,
-                  weight: float, year: int, company: str) -> float:
+def predict_price(ram: float, battery: float, screen_size: float, weight: float, year: int, company: str) -> float:
     """
     Predict mobile phone price
 
@@ -139,8 +136,7 @@ def predict_price(ram: float, battery: float, screen_size: float,
         raise Exception(f"Price prediction failed: {str(e)}")
 
 
-def predict_ram(battery: float, screen_size: float, weight: float,
-                year: int, price: float, company: str) -> float:
+def predict_ram(battery: float, screen_size: float, weight: float, year: int, price: float, company: str) -> float:
     """Predict RAM capacity"""
     model_name = "ram_predictor"
 
@@ -161,8 +157,7 @@ def predict_ram(battery: float, screen_size: float, weight: float,
         raise Exception(f"RAM prediction failed: {str(e)}")
 
 
-def predict_battery(ram: float, screen_size: float, weight: float,
-                    year: int, price: float, company: str) -> float:
+def predict_battery(ram: float, screen_size: float, weight: float, year: int, price: float, company: str) -> float:
     """Predict battery capacity"""
     model_name = "battery_predictor"
 
@@ -182,8 +177,7 @@ def predict_battery(ram: float, screen_size: float, weight: float,
         raise Exception(f"Battery prediction failed: {str(e)}")
 
 
-def predict_brand(ram: float, battery: float, screen_size: float,
-                  weight: float, year: int, price: float) -> str:
+def predict_brand(ram: float, battery: float, screen_size: float, weight: float, year: int, price: float) -> str:
     """Predict brand"""
     model_name = "brand_classifier"
 
