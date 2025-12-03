@@ -28,6 +28,7 @@ jobs:
           node --version
           git fetch origin $GITHUB_BASE_REF || true
           echo "PR base: $GITHUB_BASE_REF"
+          INPUT_MODE="${{ inputs.mode }}"
           if [ -n "$GITHUB_BASE_REF" ] || [ "$INPUT_MODE" = 'diff' ]; then
             echo "Detecting changed files against $GITHUB_BASE_REF"
             FILES=$(git diff --name-only origin/$GITHUB_BASE_REF...HEAD || git diff --name-only HEAD~1..HEAD)
