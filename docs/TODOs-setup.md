@@ -42,6 +42,22 @@ To run locally:
 ```bash
 npm run check:todos
 ```
+You can also run the scoped checks:
+
+```bash
+# scan only staged files
+npm run check:todos:staged
+
+# scan files changed against origin/main (PR diff)
+npm run check:todos:pr-diff
+
+# list TODOs across repo
+npm run list:todos
+
+# run list or check for specific tags
+node ./scripts/list-todos.js --tags="TODO,FIXME"
+node ./scripts/check-critical-todos.js --files="app/components/MyComponent.vue,server/api/myRouter.js"
+```
 
 You can change the tags checked by setting the environment variable `CRITICAL_TAGS`, e.g. `CRITICAL_TAGS=FIXME,BUG,CRITICAL npm run check:todos`.
 

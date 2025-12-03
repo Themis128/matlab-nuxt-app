@@ -14,10 +14,10 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 // Read MATLAB configuration
-const config = JSON.parse(readFileSync('matlab.config.json', 'utf8'))
+const config = JSON.parse(readFileSync('config/matlab.config.json', 'utf8'))
 const matlabPath = config.matlab.installPath
 const matlabExe = join(matlabPath, 'matlab.exe')
-const scriptPath = join(__dirname, 'mobiles-dataset-docs', 'run_next_steps.m')
+const scriptPath = join(__dirname, '..', '..', 'mobiles-dataset-docs', 'run_next_steps.m')
 
 console.log('🚀 Running Next Steps: Evaluation, Visualization, and Brand Classification\n')
 console.log(`MATLAB Path: ${matlabExe}\n`)
@@ -26,7 +26,7 @@ console.log(`Script: ${scriptPath}\n`)
 // MATLAB command to run the script in batch mode
 // -batch flag runs MATLAB in batch mode (non-interactive)
 // Change to the mobiles-dataset-docs directory first
-const mobilesDir = join(__dirname, 'mobiles-dataset-docs').replace(/\\/g, '/')
+const mobilesDir = join(__dirname, '..', '..', 'mobiles-dataset-docs').replace(/\\/g, '/')
 const matlabCommand = `"${matlabExe}" -batch "cd('${mobilesDir}'); run('run_next_steps.m')"`
 
 console.log('Executing MATLAB script...\n')

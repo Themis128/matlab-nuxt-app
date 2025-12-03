@@ -1,0 +1,107 @@
+---
+name: Deploy to Production (Server)
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  deploy-ssh:
+    name: Deploy (SSH) on tag push or manual dispatch
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install Node dependencies & Build (Release)
+        run: |
+          npm ci
+          npm run build
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          tar -czf nuxt_output_${VERSION}.tar.gz .output || true
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Package Python API
+        run: |
+          python -m pip install --upgrade pip
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          python -m pip install --upgrade -r python_api/requirements.txt || true
+          tar -czf python_api_${VERSION}.tar.gz python_api || true
+
+      - name: Prepare deploy artifacts
+        run: |
+          mkdir -p deploy_artifacts
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          mv nuxt_output_${VERSION}.tar.gz deploy_artifacts/nuxt_output.tar.gz || true
+          mv python_api_${VERSION}.tar.gz deploy_artifacts/python_api.tar.gz || true
+
+      - name: Check secrets present (fail early if missing)
+        run: |
+          if [ -z "${{ secrets.SERVER_SSH_KEY }}" ]; then echo "Missing SERVER_SSH_KEY" && exit 1; fi
+          if [ -z "${{ secrets.SERVER_HOST }}" ]; then echo "Missing SERVER_HOST" && exit 1; fi
+          if [ -z "${{ secrets.SERVER_USER }}" ]; then echo "Missing SERVER_USER" && exit 1; fi
+          if [ -z "${{ secrets.SERVER_PORT }}" ]; then echo "Missing SERVER_PORT" && exit 1; fi
+
+      - name: Add SSH key to agent
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
+
+      - name: Upload artifacts to server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          port: ${{ secrets.SERVER_PORT || '22' }}
+          source: "deploy_artifacts/*"
+          target: /var/www/matlab-mobile-dataset
+
+      - name: Remote deploy: extract artifacts, venv, install deps, restart
+        uses: appleboy/ssh-action@v0.1.9
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          port: ${{ secrets.SERVER_PORT || '22' }}
+          script: |
+            set -euo pipefail
+            DEPLOY_PATH=/var/www/matlab-mobile-dataset
+            mkdir -p "$DEPLOY_PATH"
+            cd "$DEPLOY_PATH"
+            if [ -f python_api.tar.gz ]; then tar -xzf python_api.tar.gz -C ./ || true; fi
+            if [ ! -d ./venv ]; then python3 -m venv ./venv || true; fi
+            if [ -f ./python_api/requirements.txt ]; then
+              . ./venv/bin/activate || true
+              ./venv/bin/pip install --upgrade pip || true
+              ./venv/bin/pip install -r ./python_api/requirements.txt || true
+              deactivate || true
+            fi
+            if [ -f nuxt_output.tar.gz ]; then tar -xzf nuxt_output.tar.gz -C ./ || true; fi
+            if [ -f ./package.json ]; then
+              if command -v npm >/dev/null 2>&1; then npm ci --omit=dev || true; fi
+            fi
+            if id -u www-data >/dev/null 2>&1; then
+              chown -R www-data:www-data "$DEPLOY_PATH" || true
+            fi
+            if command -v systemctl >/dev/null 2>&1; then
+              systemctl --no-block daemon-reload || true
+              systemctl --no-block restart python-api.service || true
+              systemctl --no-block restart nuxt-app.service || true
+            fi
+
+      - name: Done
+        run: echo "Deployment completed"

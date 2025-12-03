@@ -179,6 +179,14 @@ try:
 except Exception as e:
     logging.getLogger("python_api").warning(f"Could not load advanced endpoints: {e}")
 
+# Include LanceDB endpoints
+try:
+    from lancedb_endpoints import router as lancedb_router
+    app.include_router(lancedb_router)
+    logging.getLogger("python_api").info("🗄️ LanceDB multimodal endpoints loaded")
+except Exception as e:
+    logging.getLogger("python_api").warning(f"Could not load LanceDB endpoints: {e}")
+
 
 # Request/Response models
 class PriceRequest(BaseModel):

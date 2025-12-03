@@ -1,0 +1,434 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "matlab-nuxt-app"
+version = "1.0.0"
+description = "MATLAB Nuxt.js application with Python ML backend"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+
+dependencies = [
+    # Core scientific computing libraries
+    "numpy>=1.24.0",
+    "scipy>=1.10.0",
+    "pandas>=2.0.0",
+
+    # MATLAB file reading
+    "h5py>=3.8.0",
+
+    # Development tools
+    "ipython>=8.0.0",
+
+    # Machine Learning
+    "scikit-learn>=1.3.0",
+    "joblib>=1.3.0",
+    "lightgbm>=4.0.0",
+    "shap>=0.44.0",
+    "xgboost>=3.1.2",
+
+    # FastAPI and server dependencies
+    "fastapi>=0.104.0",
+    "uvicorn[standard]>=0.24.0",
+    "pydantic>=2.0.0",
+
+    # HTTP client
+    "requests>=2.31.0",
+
+    # Error tracking
+    "sentry-sdk>=1.38.0",
+
+    # Visualization
+    "matplotlib>=3.7.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "isort>=5.12.0",
+    "mypy>=1.0.0",
+    "pylint>=3.0.0",
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+]
+scraping = [
+    "beautifulsoup4>=4.12.0",
+    "lxml>=4.9.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+exclude = ["tests*", "docs*", "scripts*", "playwright-report*", ".nuxt*", ".output*", "node_modules*"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312', 'py313', 'py314']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | \.nuxt
+  | \.output
+  | node_modules
+)/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+known_first_party = ["matlab_app", "python_api"]
+skip = [".nuxt", ".output", "node_modules", "venv", ".venv"]
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+exclude = [
+    ".git",
+    "__pycache__",
+    "build",
+    "dist",
+    ".venv",
+    "venv",
+    ".nuxt",
+    ".output",
+    "node_modules",
+    "*.egg-info",
+]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = true
+disallow_untyped_decorators = false
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+exclude = [
+    "venv/",
+    ".venv/",
+    ".nuxt/",
+    ".output/",
+    "node_modules/",
+]
+
+[[tool.mypy.overrides]]
+module = [
+    "lightgbm.*",
+    "shap.*",
+    "xgboost.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --strict-markers --strict-config"
+testpaths = [
+    "tests",
+    "python_api/tests",
+]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::PendingDeprecationWarning",
+]
+
+[tool.coverage.run]
+source = ["python_api", "scripts"]
+omit = [
+    "*/tests/*",
+    "*/test_*.py",
+    "venv/*",
+    ".venv/*",
+    ".nuxt/*",
+    ".output/*",
+    "node_modules/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == \\.__main__\\.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+
+[tool.ruff]
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    ".nuxt",
+    ".output",
+    "venv",
+    ".venv",
+    "lancedb_data",
+    "trained_models",
+    "__pycache__",
+    ".pytest_cache",
+]
+
+# Same as Black.
+line-length = 88
+indent-width = 4
+
+# Assume Python 3.8+
+target-version = "py38"
+
+[tool.ruff.lint]
+# Enable pycodestyle (`E`) and Pyflakes (`F`) codes by default.
+# Additional rule categories that make sense for this project:
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # Pyflakes
+    "I",   # isort
+    "N",   # pep8-naming
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "A",   # flake8-builtins
+    "C4",  # flake8-comprehensions
+    "T10", # flake8-debugger
+    "EM",  # flake8-errmsg
+    "EXE", # flake8-executable
+    "FA",  # flake8-future-annotations
+    "ISC", # flake8-implicit-str-concat
+    "ICN", # flake8-import-conventions
+    "G",   # flake8-logging-format
+    "PIE", # flake8-pie
+    "T20", # flake8-print
+    "PT",  # flake8-pytest-style
+    "Q",   # flake8-quotes
+    "RSE", # flake8-raise
+    "RET", # flake8-return
+    "SLF", # flake8-self
+    "SLOT",# flake8-slots
+    "SIM", # flake8-simplify
+    "TID", # flake8-tidy-imports
+    "TCH", # flake8-type-checking
+    "ARG", # flake8-unused-arguments
+    "PTH", # flake8-use-pathlib
+    "ERA", # eradicate
+    "PD",  # pandas-vet
+    "PGH", # pygrep-hooks
+    "PL",  # Pylint
+    "TRY", # tryceratops
+    "FLY", # flynt
+    "NPY", # NumPy-specific rules
+    "PERF",# Perflint
+    "FURB",# refurb
+    "LOG", # flake8-logging
+]
+
+# Ignore some rules that are too strict for ML/data science code
+ignore = [
+    "E501",  # line too long (handled by black)
+    "PLR0913", # too many arguments (ML functions often need many params)
+    "PLR0912", # too many branches (ML logic can be complex)
+    "PLR0915", # too many statements (ML functions can be long)
+    "PLR2004", # magic value comparison (ML code uses many magic numbers)
+    "PLR0917", # too many positional arguments (ML APIs need many args)
+    "PD",      # pandas-vet (too strict for exploratory data analysis)
+    "NPY002",  # numpy-random-seed (not always applicable)
+    "B905",    # zip-without-an-explicit-strict= parameter (Python 3.10+ only)
+    "TRY003",  # avoid specifying long messages outside exception class
+    "EM101",   # exception must not use a string literal
+    "EM102",   # exception must not use an f-string literal
+    "EM103",   # exception must not use a .format() call
+    "FBT001",  # boolean positional arg in function definition
+    "FBT002",  # boolean default positional argument in function definition
+    "FBT003",  # boolean positional value in function call
+    "A003",    # class attribute shadows a python builtin
+    "C901",    # too complex (handled by mccabe via flake8)
+    "BLE001",  # do not catch blind exception
+    "S101",    # use of assert detected
+    "T201",    # print found
+    "INP001",  # file is part of implicit namespace package
+    "ERA001",  # found commented-out code
+    "FIX002",  # line contains TODO
+    "TD002",   # missing author in TODO
+    "TD003",   # missing issue link in TODO
+    "D100",    # missing docstring in public module
+    "D101",    # missing docstring in public class
+    "D102",    # missing docstring in public method
+    "D103",    # missing docstring in public function
+    "D104",    # missing docstring in public package
+    "D105",    # missing docstring in magic method
+    "D106",    # missing docstring in public nested class
+    "D107",    # missing docstring in __init__
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Allow print statements in test files and scripts
+"test_*.py" = ["T201", "S101"]
+"**/tests/**" = ["T201", "S101"]
+"scripts/**" = ["T201", "S101"]
+"*.py" = ["T201"]  # Allow print in all Python files for debugging
+
+[tool.ruff.lint.isort]
+known-first-party = ["matlab_app", "python_api"]
+force-sort-within-sections = true
+
+[tool.ruff.format]
+# Same as Black.
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.pylint.main]
+# Basic configuration
+extension-pkg-allow-list = ["pydantic", "numpy", "pandas"]
+load-plugins = []
+persistent = true
+
+# Output configuration
+output-format = "colorized"
+reports = false
+score = true
+
+# Message control - disable some overly strict rules for ML/data science code
+disable = [
+    "C0103",  # invalid-name - allow ML variable names like X, y
+    "C0114",  # missing-module-docstring - modules often don't need docstrings
+    "C0115",  # missing-class-docstring - classes often self-documenting
+    "C0116",  # missing-function-docstring - functions often self-documenting
+    "R0902",  # too-many-instance-attributes - ML classes can have many attrs
+    "R0903",  # too-few-public-methods - utility classes may have few methods
+    "R0912",  # too-many-branches - ML logic can be complex
+    "R0913",  # too-many-arguments - ML functions often need many params
+    "R0914",  # too-many-locals - data processing functions use many locals
+    "R0915",  # too-many-statements - ML functions can be long
+    "W0613",  # unused-argument - ML APIs may have unused params
+    "W0703",  # broad-except - intentional for robustness in ML apps
+    "W0718",  # broad-exception-caught - intentional for error handling
+    "C0209",  # consider-using-f-string - allow .format() for compatibility
+    "C0301",  # line-too-long - handled by black
+    "E1101",  # no-member - dynamic attrs in ML libraries
+    "E0401",  # import-error - optional dependencies
+    "I1101",  # c-extension-no-member - numpy/pandas extensions
+    "R0801",  # duplicate-code - ML code often has similar patterns
+    "W0621",  # redefined-outer-name - common in ML pipelines
+    "C0413",  # wrong-import-position - allow flexible imports for optional deps
+    "W1203",  # logging-fstring-interpolation - allow f-strings in logging
+    "W0719",  # broad-exception-raised - allow broad exceptions for robustness
+    "R1705",  # no-else-return - allow else after return for clarity
+    "R1704",  # redefined-argument-from-local - allow parameter redefinition
+    "C0415",  # import-outside-toplevel - allow conditional imports
+    "C0411",  # wrong-import-order - allow flexible import ordering
+    "W0611",  # unused-import - allow unused imports for optional deps
+    "W0107",  # unnecessary-pass - allow pass statements for structure
+    "R0917",  # too-many-positional-arguments - allow more args for ML APIs
+]
+
+[tool.pylint.format]
+# Formatting - let black handle most formatting
+max-line-length = 88
+good-names = ["X", "y", "df", "X_train", "X_test", "y_train", "y_test", "i", "j", "k", "_"]
+good-names-rgxs = ["^[_a-z][_a-z0-9]?$", "^[_a-z][_a-z0-9_]*$"]
+include-naming-hint = true
+
+[tool.pylint.logging]
+# Logging configuration
+logging-format-style = "old"
+
+[tool.pylint.miscellaneous]
+# Miscellaneous
+notes = ["FIXME", "XXX", "TODO"]
+
+[tool.pylint.similarities]
+# Similarities - less strict for ML code
+min-similarity-lines = 6
+ignore-comments = true
+ignore-docstrings = true
+ignore-imports = true
+
+[tool.pylint.design]
+# Design - relaxed for ML applications
+max-args = 10
+max-locals = 20
+max-returns = 8
+max-branches = 15
+max-statements = 60
+max-parents = 10
+max-attributes = 12
+
+[tool.pylint.classes]
+# Classes - allow more flexibility for ML classes
+exclude-protected = ["_asdict", "_fields", "_replace", "_source", "_make"]
+valid-metaclass = ["ABCMeta", "type"]
+
+[tool.pylint.imports]
+# Imports - allow star imports for convenience in notebooks/scripts
+allow-wildcard-with-all = true
+analyse-fallback-blocks = true
+
+[tool.pylint.variables]
+# Variables - allow more flexibility
+additional-builtins = ["__IPYTHON__"]
+callbacks = ["cb_", "_cb"]
+redefining-builtins-modules = ["six.moves", "future.builtins"]
+
+[tool.pylint.refactoring]
+# Refactoring - less strict for rapid ML development
+max-nested-blocks = 6
+never-returning-functions = ["sys.exit", "argparse.parse_error"]

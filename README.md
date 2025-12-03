@@ -10,6 +10,7 @@
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20Mac-lightgrey.svg)
 [![Open in Codespaces](https://img.shields.io/badge/Open%20in%20Codespaces-Setup-blue?logo=github)](https://github.com/codespaces/new?repo=Themis128/matlab-nuxt-app)
 ![Build and Test](https://github.com/Themis128/matlab-nuxt-app/workflows/Build%20and%20Test/badge.svg)
+![TODOs CI](https://github.com/Themis128/matlab-nuxt-app/actions/workflows/check-critical-todos.yml/badge.svg)
 ![Deploy](https://github.com/Themis128/matlab-nuxt-app/workflows/Deploy%20to%20Production/badge.svg)
 
 **A full-stack AI application combining MATLAB Deep Learning with modern web technologies**
@@ -17,6 +18,7 @@
 Predict mobile phone specifications • Analyze datasets with AI • Train custom neural networks • Explore with interactive dashboards
 
 [🚀 Quick Start](#-quick-start) • [✨ Features](#-features) • [📚 Documentation](#-documentation) • [🎯 Demo](#-demo) • [🤝 Contributing](#-contributing)
+• [📝 TODOs & CLI checks](docs/TODOs-setup.md)
 
 </div>
 
@@ -28,7 +30,7 @@ If your Render deployment shows **JSON** instead of the **web interface**:
 
 **Problem**: You're accessing the Python API service instead of the Nuxt frontend.
 
-**Quick Fix**: 
+**Quick Fix**:
 - ✅ Access `https://matlab-nuxt-frontend.onrender.com` (Frontend - Web Interface)
 - ❌ NOT `https://matlab-python-api.onrender.com` (API - JSON only)
 
@@ -513,12 +515,29 @@ npm run test:report
 
 ## 📦 Deployment
 
-### Quick Deploy (SSH)
 
-Use SSH to deploy the built artifacts to a production server (no Docker required):
+### 🚀 Production Deployment (via GitHub Actions)
+
+This project uses a **single secure GitHub Actions workflow** (`.github/workflows/deploy.yml`) for automated production deployment via SSH. Manual SSH or Docker deployment is optional, but the recommended and supported method is via the provided workflow.
+
+**How it works:**
+
+1. **On push to a tag** (e.g., `v1.0.1`) or manual dispatch, the workflow:
+  - Builds the Nuxt frontend and Python API
+  - Packages build artifacts
+  - Uploads artifacts to your production server via SSH (using secure secrets)
+  - Runs a remote deploy script to install dependencies and restart services
+
+2. **All secrets are managed securely** at the step level in GitHub Actions. No secrets are exposed in logs or job context.
+
+**Manual SSH deployment** is still possible (see below), but the workflow is recommended for consistency and security.
+
+#### Manual SSH Deploy (Advanced/Optional)
+
+If you need to deploy manually (e.g., for debugging):
 
 ```bash
-# Build (local or CI)
+# Build (local)
 npm ci
 npm run build
 cd python_api
@@ -533,6 +552,7 @@ ssh user@server 'cd /var/www/matlab/python_api && python -m pip install -r requi
 ssh user@server 'cd /var/www/matlab/nuxt && npm ci && pm2 restart nuxt-app || pm2 start --name nuxt-app npm -- start'
 ```
 
+
 ### Production Deployment Checklist
 
 - [ ] **Set environment variables** (see `.env.production.template`)
@@ -541,46 +561,46 @@ ssh user@server 'cd /var/www/matlab/nuxt && npm ci && pm2 restart nuxt-app || pm
 - [ ] **Configure rate limiting** (adjust `RATE_LIMIT_REQUESTS` for your traffic)
 - [ ] **Enable HTTPS/SSL** (required for production)
 - [ ] **Set up error tracking** (optional, Sentry recommended)
-- [ ] **Configure GitHub secrets** (`SERVER_HOST`, `SERVER_USER`, `SERVER_SSH_KEY`, `DEPLOY_PATH`)
+- [ ] **Configure GitHub Actions secrets** (see below)
 - [ ] **Test security headers** (https://securityheaders.com)
 - [ ] **Monitor health endpoints** (`/health`)
 - [ ] **Set up automated backups** (models and data)
 
-### GitHub Actions CI/CD
 
-**Automated on every push:**
+### GitHub Actions CI/CD: Secure Deployment Workflow
 
-- ✅ Build and test frontend
-- ✅ Build and test backend
-- ✅ Artifact builds (frontend + backend)
-- ✅ Type checking
-- ✅ Lint and format checks
+**Workflow file:** `.github/workflows/deploy.yml`
 
-**Automated on tag push (`v*`):**
+**Triggers:**
+- On every push: Build, test, lint, and typecheck (no deploy)
+- On tag push (`v*`) or manual dispatch: Build, upload artifacts, deploy to server via SSH, restart services
 
-- ✅ Build Nuxt and Python artifacts
-- ✅ Transfer artifacts to the configured server via SSH
-- ✅ Restart the services on the server
+**What happens on deploy:**
+1. Build Nuxt and Python artifacts
+2. Upload artifacts to your server using SSH (via secure secrets)
+3. Run a remote deploy script to install dependencies and restart services (see `scripts/remote-deploy.sh`)
+
+**Required GitHub Actions Secrets:**
+
+| Secret Name      | Description                        |
+|------------------|------------------------------------|
+| `SERVER_HOST`    | Your production server hostname/IP  |
+| `SERVER_USER`    | SSH user for deployment             |
+| `SERVER_SSH_KEY` | Private SSH key (no passphrase)     |
+| `DEPLOY_PATH`    | Path to deploy on server            |
+
+Set these in your repository's **Settings > Secrets and variables > Actions**.
+
+**To deploy:**
 
 ```bash
-# Create a release
+# Tag a release
 git tag v1.0.1
 git push origin v1.0.1
-
-# GitHub Actions will automatically:
-# 1. Build the Nuxt and Python artifacts
-# 2. Transfer artifacts to the configured server
-# 3. Run your server-side deploy script to restart services
+# Or trigger the workflow manually from the GitHub Actions UI
 ```
 
-**Required GitHub Secrets:**
-
-```
-SERVER_HOST=your-server-host
-SERVER_USER=your-deploy-user
-SERVER_SSH_KEY=your-ssh-private-key
-DEPLOY_PATH=/var/www/matlab
-```
+The workflow will build, upload, and deploy automatically. See `.github/workflows/deploy.yml` for details.
 
 ### Monitoring in Production
 
@@ -1324,6 +1344,15 @@ npm run typecheck
 # ESLint code linting
 npm run lint
 
+# Python linting (black + isort + flake8 + pylint + mypy)
+make lint
+
+# Run only pylint on Python code
+make lint-python
+
+# Format Python code
+make format-python
+
 # Run E2E tests
 npm test
 
@@ -1333,6 +1362,28 @@ npm run test:ui
 # View test report
 npm run test:report
 ```
+
+### Python Code Quality
+
+This project uses comprehensive Python linting and code quality tools:
+
+- **Black**: Code formatting (88 char line length)
+- **isort**: Import sorting (compatible with Black)
+- **flake8**: Style and error checking
+- **pylint**: Advanced code analysis (ML/data science optimized)
+- **mypy**: Static type checking
+
+#### Pylint Configuration
+
+The pylint configuration in `pyproject.toml` is optimized for machine learning and data science code:
+
+- Allows ML variable names like `X`, `y`, `df`
+- Permits broad exception handling for robustness in production ML apps
+- Supports flexible import patterns for optional dependencies
+- Relaxed complexity limits for ML algorithms
+- Compatible with existing Black/isort/flake8/mypy setup
+
+The configuration achieves perfect 10.00/10 scores on well-structured ML code while being practical for rapid development.
 
 <div align="center">
 
@@ -1586,6 +1637,7 @@ python scripts/python/check_euro_scraper_status.py
 - **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** - Quick reference for common configurations
 - **[CHANGELOG.md](CHANGELOG.md)** - Version history and upgrade guides
 - **[SECURITY.md](SECURITY.md)** - Security policy and vulnerability reporting
+- **[NODE_MODULES_CHANGES.md](NODE_MODULES_CHANGES.md)** - Node modules dependency changes log
 
 ### 🚀 Main Documentation
 

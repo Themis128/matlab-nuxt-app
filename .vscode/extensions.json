@@ -1,33 +1,25 @@
 {
   "recommendations": [
-    // MATLAB
+    "ms-vscode-remote.remote-containers",
+    "ms-vscode-remote.vscode-remote-extensionpack",
+    "ms-python.python",
+    "ms-azuretools.vscode-docker",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "Vue.volar",
     "jeffersonqin.better-matlab-syntax",
     "mathworks.matlab",
-    // Nuxt & Vue
-    "vue.volar",
     "antfu.iconify",
-    // Testing
     "ms-playwright.playwright",
-    // Python
-    "ms-python.python",
     "ms-python.vscode-pylance",
-    // General
     "editorconfig.editorconfig",
-    "esbenp.prettier-vscode",
-    // TypeScript + JS: Nightly (optional but recommended for latest features)
     "ms-vscode.vscode-typescript-next",
-    // Data & CSV
     "mechatroner.rainbow-csv",
-    // TODO / TODO Tree helpers
     "gruntfuggly.todo-tree",
     "wayou.vscode-todo-highlight",
-    // Cline: add the context menu extension which integrates with the Cline CLI/Workflows
     "stat.cline-context-menu",
-    // Optional: Deepseek Cline admin extension for admin UI generation
     "liuguibin.deepseek-cline-admin-extension",
-    // GitHub Pull Request & Issues - helpful to review PRs and apply patches within VS Code
     "GitHub.vscode-pull-request-github",
-    // GitLens improves Git insight in editor - recommended alongside PR extension
     "eamodio.gitlens"
   ]
 }

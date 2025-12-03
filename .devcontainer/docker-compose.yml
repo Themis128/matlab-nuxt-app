@@ -1,0 +1,51 @@
+version: '3.8'
+services:
+  frontend:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile.frontend
+    image: matlab-nuxt-frontend:dev
+    container_name: matlab-nuxt-frontend
+    volumes:
+      - ..:/workspace:cached
+      - frontend_node_modules:/workspace/node_modules
+    working_dir: /workspace
+    environment:
+      - NODE_ENV=development
+    ports:
+      - '3000:3000'
+    command: ['/bin/bash', '-lc', '/workspace/.devcontainer/wrap-npm-run.sh']
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:3000']
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  api:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile.api
+    image: matlab-nuxt-api:dev
+    container_name: matlab-nuxt-api
+    volumes:
+      - ..:/workspace:cached
+      - api_venv:/workspace/.venv
+    working_dir: /workspace/python_api
+    ports:
+      - '8000:8000'
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: ['/bin/bash', '-lc', '/workspace/.devcontainer/wrap-python-run.sh']
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:8000']
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  frontend_node_modules:
+    name: matlab-nuxt-frontend-node-modules
+  api_venv:
+    name: matlab-nuxt-api-venv
+  workspace:
+    name: matlab-nuxt-workspace

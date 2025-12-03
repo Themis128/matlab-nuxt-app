@@ -107,12 +107,13 @@ function formatData(data) {
 }
 
 function fallbackToPython(matPath, outputPath) {
+  const pythonExe = path.join(__dirname, '..', '..', 'venv', 'Scripts', 'python.exe')
   const args = ['view_mat_file.py', matPath]
   // Let Python handle output format; default json
   if (outputPath) {
     args.push('-o', outputPath)
   }
-  const result = spawnSync('python', args, { stdio: 'inherit' })
+  const result = spawnSync(pythonExe, args, { stdio: 'inherit' })
   if (result.error) {
     console.error('Error invoking Python fallback:', result.error.message)
     process.exit(1)

@@ -1,9 +1,31 @@
+# Dev Container for Nuxt + Python API
+
+This repository includes a Dev Container using Docker Compose to run both the Nuxt frontend and the Python API as two separate services. The container environment attaches to the `frontend` service so you can use VS Code to inspect and edit both projects simultaneously.
+
+Ports forwarded:
+- 3000 — Nuxt dev server
+- 8000 — Python API
+- 9229 — Node debugger (optional)
+
+Start/Run guidelines (Dev Container w/ Docker Compose):
+1. Open the repository in VS Code Remote - Containers: Reopen in Container.
+2. The post-create script will run automatically in the attached service (`frontend`) to install node deps; the API service installs its Python dependencies during image build.
+3. Both services (frontend & api) will be started automatically after the container is created via `runServices` in `devcontainer.json`. If you need to start them manually, run:
+```
+# From inside the devcontainer terminal
+npm run dev            # Nuxt (frontend container handles this by default)
+cd python_api && python api.py  # Python API (this runs in the api service container)
+```
+
+Notes:
+- MATLAB is not included in the container image — use MATLAB on your host if needed.
+- If you use custom Python or Node versions, adjust the Dockerfile accordingly.
 # Devcontainer for MATLAB Nuxt App
 
 This repository includes a minimal VS Code Devcontainer (`.devcontainer/devcontainer.json`) to provide a consistent local development environment for contributors using Codespaces or Remote - Containers.
 
 Key points
-- Node.js (20) is available via the base image.
+- Node.js (22) is available via the base image.
 - Python 3.14 is installed via the `devcontainer` features (so the Python and Node tooling are available).
 - Recommended extensions are preinstalled in the container; this includes the `JavaScript & TypeScript Nightly` (`ms-vscode.vscode-typescript-next`) extension.
 - Ports forwarded:
@@ -16,6 +38,15 @@ Health checks & start scripts
   ```bash
   ./scripts/shell/start.sh
   ```
+  
+Security & dependency maintenance
+--------------------------------
+This repository includes overrides in `package.json` to pin some nested dependencies to known safe versions (e.g., `micromatch` and `tar-fs`). After changing `package.json` you must regenerate the lockfile and ensure the changes are applied by running:
+```
+npm install
+npm audit fix
+```
+If vulnerabilities remain, review the output and run `npm audit fix --force` only after reviewing the changes as it can upgrade major versions.
   The script installs dependencies if they are missing, starts the Python API, trains models if necessary, and starts the Nuxt dev server.
 
 Notes

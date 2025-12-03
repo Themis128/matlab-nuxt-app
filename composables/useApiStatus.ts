@@ -19,10 +19,10 @@ export const useApiStatus = () => {
 
     try {
       // Check Python API health through Nuxt API endpoint
-      const response = await $fetch<{ status: string; error?: string }>('/api/health', {
+      const response = (await $fetch('/api/health', {
         method: 'GET',
         timeout: 3000, // 3 second timeout
-      })
+      })) as { status: string; error?: string }
 
       if (response?.status === 'healthy') {
         status.value.isOnline = true

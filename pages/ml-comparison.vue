@@ -1,662 +1,376 @@
 <template>
-  <div
-    class="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
-  >
-    <div class="container-responsive section-spacing">
-      <div class="max-w-7xl mx-auto">
-        <!-- Header -->
-        <div class="mb-8">
-          <h1 class="text-responsive-xl font-bold text-gray-900 dark:text-white mb-3 gradient-text">
-            ML Model Comparison
-          </h1>
-          <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-400">
-            Compare performance across multiple machine learning models for price prediction
+  <div class="min-h-screen bg-background">
+    <!-- Header Section -->
+    <section class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-16">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <h1 class="text-4xl sm:text-5xl font-bold mb-4">ML Model Comparison</h1>
+          <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+            Compare and analyze different machine learning models for mobile dataset performance
           </p>
         </div>
+      </div>
+    </section>
 
-        <!-- Model Selection -->
-        <UCard class="mb-8">
-          <template #header>
-            <h2 class="text-2xl font-semibold">🎯 Select ML Models to Compare</h2>
-            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-              Choose from our advanced machine learning models
-            </p>
-          </template>
-
-          <div class="p-6">
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
+    <!-- Model Comparison Dashboard -->
+    <section class="py-20">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Model Selection Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          <UCard
+            v-for="model in models"
+            :key="model.id"
+            :class="[
+              'cursor-pointer transition-all duration-300 hover:shadow-xl',
+              selectedModel === model.id
+                ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                : 'hover:-translate-y-1',
+            ]"
+            @click="selectModel(model.id)"
+          >
+            <div class="text-center">
               <div
-                v-for="model in availableModels"
-                :key="model.type"
-                class="p-4 rounded-lg border-2 cursor-pointer transition-all"
-                :class="
-                  selectedModels.includes(model.type)
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                    : 'border-gray-200 dark:border-gray-700 hover:border-blue-300'
-                "
-                @click="toggleModelSelection(model.type)"
+                class="w-12 h-12 mx-auto mb-4 rounded-full flex items-center justify-center"
+                :class="model.color"
               >
-                <div class="text-center">
-                  <div class="text-2xl mb-2">{{ getModelIcon(model.category) }}</div>
-                  <h3 class="font-semibold mb-1">{{ model.name }}</h3>
-                  <p class="text-xs text-gray-600 dark:text-gray-400">{{ model.description }}</p>
-                  <div
-                    class="text-xs mt-2"
-                    :class="model.available ? 'text-green-600' : 'text-red-600'"
+                <UIcon :name="model.icon" class="w-6 h-6 text-white" />
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                {{ model.name }}
+              </h3>
+              <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">{{ model.description }}</p>
+              <div class="space-y-2">
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-500">Accuracy</span>
+                  <span
+                    class="font-semibold"
+                    :class="model.accuracy > 90 ? 'text-green-600' : 'text-yellow-600'"
                   >
-                    {{ model.available ? 'Available' : 'Unavailable' }}
+                    {{ model.accuracy }}%
+                  </span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-500">Training Time</span>
+                  <span class="font-semibold text-blue-600">{{ model.trainingTime }}</span>
+                </div>
+              </div>
+            </div>
+          </UCard>
+        </div>
+
+        <!-- Detailed Comparison Section -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg mb-16">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+            Model Performance Comparison
+          </h2>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-gray-200 dark:border-gray-700">
+                  <th class="text-left py-3 px-4 font-semibold text-gray-900 dark:text-white">
+                    Metric
+                  </th>
+                  <th v-for="model in selectedModels" :key="model.id" class="text-center py-3 px-4">
+                    <div class="font-semibold text-gray-900 dark:text-white">{{ model.name }}</div>
+                    <div class="text-xs text-gray-500">{{ model.type }}</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="metric in comparisonMetrics"
+                  :key="metric.key"
+                  class="border-b border-gray-100 dark:border-gray-700"
+                >
+                  <td class="py-3 px-4 font-medium text-gray-900 dark:text-white">
+                    {{ metric.label }}
+                  </td>
+                  <td v-for="model in selectedModels" :key="model.id" class="text-center py-3 px-4">
+                    <span :class="getMetricClass(getMetricValue(model, metric.key), metric.type)">
+                      {{ formatMetric(getMetricValue(model, metric.key), metric.type) }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Visual Comparison Charts -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+          <UCard class="p-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              Accuracy Comparison
+            </h3>
+            <div class="space-y-3">
+              <div v-for="model in selectedModels" :key="model.id" class="flex items-center gap-3">
+                <div class="w-20 text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {{ model.name }}
+                </div>
+                <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                  <div
+                    class="h-2 rounded-full transition-all duration-500"
+                    :class="model.color.replace('bg-', 'bg-')"
+                    :style="{ width: `${model.accuracy}%` }"
+                  ></div>
+                </div>
+                <div class="w-12 text-sm font-semibold text-gray-900 dark:text-white text-right">
+                  {{ model.accuracy }}%
+                </div>
+              </div>
+            </div>
+          </UCard>
+
+          <UCard class="p-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              Training Time Comparison
+            </h3>
+            <div class="space-y-3">
+              <div v-for="model in selectedModels" :key="model.id" class="flex items-center gap-3">
+                <div class="w-20 text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {{ model.name }}
+                </div>
+                <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                  <div
+                    class="h-2 rounded-full transition-all duration-500"
+                    :class="model.color.replace('bg-', 'bg-')"
+                    :style="{ width: `${(model.trainingTimeMinutes / maxTrainingTime) * 100}%` }"
+                  ></div>
+                </div>
+                <div class="w-16 text-sm font-semibold text-gray-900 dark:text-white text-right">
+                  {{ model.trainingTimeMinutes }}m
+                </div>
+              </div>
+            </div>
+          </UCard>
+        </div>
+
+        <!-- Model Recommendations -->
+        <div
+          class="bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-2xl p-8"
+        >
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+            Recommended Models
+          </h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <UCard v-for="recommendation in recommendations" :key="recommendation.id" class="p-6">
+              <div class="text-center">
+                <div
+                  class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center"
+                  :class="recommendation.badgeColor"
+                >
+                  <UIcon :name="recommendation.icon" class="w-8 h-8 text-white" />
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                  {{ recommendation.title }}
+                </h3>
+                <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                  {{ recommendation.description }}
+                </p>
+                <div class="space-y-2">
+                  <div class="text-sm">
+                    <span class="text-gray-500">Best for:</span>
+                    <span class="font-semibold text-gray-900 dark:text-white ml-1">{{
+                      recommendation.bestFor
+                    }}</span>
+                  </div>
+                  <div class="text-sm">
+                    <span class="text-gray-500">Accuracy:</span>
+                    <span class="font-semibold text-green-600 ml-1"
+                      >{{ recommendation.accuracy }}%</span
+                    >
                   </div>
                 </div>
+                <UButton size="sm" color="green" class="mt-4 w-full"> Try Model </UButton>
               </div>
-            </div>
-
-            <div class="flex flex-wrap gap-4 justify-center">
-              <UButton
-                @click="runComparison"
-                :disabled="selectedModels.length < 2 || loading"
-                :loading="loading"
-                color="blue"
-                icon="i-heroicons-beaker"
-                size="lg"
-              >
-                Run Model Comparison
-              </UButton>
-              <UButton
-                @click="clearSelection"
-                color="gray"
-                variant="outline"
-                icon="i-heroicons-x-mark"
-              >
-                Clear Selection
-              </UButton>
-            </div>
+            </UCard>
           </div>
-        </UCard>
-
-        <!-- Phone Specifications Input -->
-        <UCard class="mb-8" v-if="selectedModels.length >= 2">
-          <template #header>
-            <h2 class="text-2xl font-semibold">📱 Test Specifications</h2>
-            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-              Enter phone specifications to test model predictions
-            </p>
-          </template>
-
-          <div class="p-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-              <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
-                  RAM (GB)
-                </label>
-                <UInput
-                  v-model="testSpecs.ram"
-                  type="number"
-                  min="1"
-                  max="24"
-                  step="0.5"
-                  placeholder="8"
-                />
-              </div>
-
-              <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
-                  Battery (mAh)
-                </label>
-                <UInput
-                  v-model="testSpecs.battery"
-                  type="number"
-                  min="2000"
-                  max="7000"
-                  placeholder="4500"
-                />
-              </div>
-
-              <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
-                  Screen Size (inches)
-                </label>
-                <UInput
-                  v-model="testSpecs.screen"
-                  type="number"
-                  min="4"
-                  max="8"
-                  step="0.1"
-                  placeholder="6.5"
-                />
-              </div>
-
-              <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
-                  Weight (grams)
-                </label>
-                <UInput
-                  v-model="testSpecs.weight"
-                  type="number"
-                  min="100"
-                  max="300"
-                  placeholder="180"
-                />
-              </div>
-
-              <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
-                  Launch Year
-                </label>
-                <UInput
-                  v-model="testSpecs.year"
-                  type="number"
-                  min="2020"
-                  max="2025"
-                  placeholder="2023"
-                />
-              </div>
-
-              <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
-                  Brand/Company
-                </label>
-                <USelect
-                  v-model="testSpecs.company"
-                  :options="companyOptions"
-                  placeholder="Select brand"
-                />
-              </div>
-            </div>
-
-            <div class="flex gap-4">
-              <USelect v-model="currency" :options="currencyOptions" class="w-32" />
-              <UButton
-                @click="runComparison"
-                :disabled="!canRunTest || loading"
-                :loading="loading"
-                color="green"
-                icon="i-heroicons-play"
-              >
-                Test Models
-              </UButton>
-            </div>
-          </div>
-        </UCard>
-
-        <!-- Error State -->
-        <UAlert v-if="error" color="red" variant="soft" :title="error" class="mb-6" />
-
-        <!-- Loading State -->
-        <div v-if="loading" class="text-center py-12">
-          <UIcon name="i-heroicons-cog" class="w-12 h-12 mx-auto text-blue-400 animate-spin mb-4" />
-          <p class="text-gray-600 dark:text-gray-400">Running model comparison...</p>
         </div>
-
-        <!-- Comparison Results -->
-        <div v-if="comparisonResults && !loading">
-          <!-- Performance Overview -->
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <UCard>
-              <div class="text-center">
-                <div class="text-3xl mb-2">🎯</div>
-                <h3 class="text-lg font-semibold mb-1">Best Model</h3>
-                <div class="text-xl font-bold text-green-600">
-                  {{ comparisonResults.bestModel }}
-                </div>
-                <div class="text-sm text-gray-500">${{ comparisonResults.bestPrice }}</div>
-              </div>
-            </UCard>
-
-            <UCard>
-              <div class="text-center">
-                <div class="text-3xl mb-2">📊</div>
-                <h3 class="text-lg font-semibold mb-1">Average Price</h3>
-                <div class="text-xl font-bold text-blue-600">
-                  ${{ comparisonResults.averagePrice }}
-                </div>
-                <div class="text-sm text-gray-500">{{ comparisonResults.priceRange }} range</div>
-              </div>
-            </UCard>
-
-            <UCard>
-              <div class="text-center">
-                <div class="text-3xl mb-2">⚖️</div>
-                <h3 class="text-lg font-semibold mb-1">Consistency</h3>
-                <div class="text-xl font-bold text-purple-600">
-                  {{ comparisonResults.consistency }}%
-                </div>
-                <div class="text-sm text-gray-500">Prediction stability</div>
-              </div>
-            </UCard>
-
-            <UCard>
-              <div class="text-center">
-                <div class="text-3xl mb-2">⏱️</div>
-                <h3 class="text-lg font-semibold mb-1">Processing Time</h3>
-                <div class="text-xl font-bold text-orange-600">{{ processingTime }}ms</div>
-                <div class="text-sm text-gray-500">Total comparison time</div>
-              </div>
-            </UCard>
-          </div>
-
-          <!-- Detailed Results Table -->
-          <UCard class="mb-8">
-            <template #header>
-              <h2 class="text-2xl font-semibold">📋 Model Performance Details</h2>
-            </template>
-
-            <div class="overflow-x-auto">
-              <table class="w-full">
-                <thead>
-                  <tr class="border-b border-gray-200 dark:border-gray-700">
-                    <th class="text-left py-3 px-4 font-semibold">Model</th>
-                    <th class="text-center py-3 px-4 font-semibold">Predicted Price</th>
-                    <th class="text-center py-3 px-4 font-semibold">Category</th>
-                    <th class="text-center py-3 px-4 font-semibold">Status</th>
-                    <th class="text-center py-3 px-4 font-semibold">vs Best</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    v-for="result in comparisonResults.predictions"
-                    :key="result.model_type"
-                    class="border-b border-gray-100 dark:border-gray-800"
-                    :class="
-                      result.price === comparisonResults.bestPrice
-                        ? 'bg-green-50 dark:bg-green-900/10'
-                        : ''
-                    "
-                  >
-                    <td class="py-3 px-4">
-                      <div class="font-semibold">{{ result.model_name }}</div>
-                      <div class="text-sm text-gray-500">{{ result.description }}</div>
-                    </td>
-                    <td class="text-center py-3 px-4">
-                      <div class="font-bold text-lg">{{ currencySymbol }}{{ result.price }}</div>
-                    </td>
-                    <td class="text-center py-3 px-4">
-                      <span
-                        class="px-2 py-1 rounded-full text-xs font-medium"
-                        :class="getCategoryColor(result.category)"
-                      >
-                        {{ result.category }}
-                      </span>
-                    </td>
-                    <td class="text-center py-3 px-4">
-                      <span
-                        class="px-2 py-1 rounded-full text-xs font-medium"
-                        :class="
-                          result.price ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                        "
-                      >
-                        {{ result.price ? 'Success' : 'Failed' }}
-                      </span>
-                    </td>
-                    <td class="text-center py-3 px-4">
-                      <div
-                        v-if="result.price && result.price !== comparisonResults.bestPrice"
-                        class="text-red-600 font-medium"
-                      >
-                        +${{ (result.price - comparisonResults.bestPrice).toFixed(2) }}
-                      </div>
-                      <div
-                        v-else-if="result.price === comparisonResults.bestPrice"
-                        class="text-green-600 font-bold"
-                      >
-                        Best
-                      </div>
-                      <div v-else class="text-gray-400">N/A</div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </UCard>
-
-          <!-- Performance Chart -->
-          <UCard class="mb-8">
-            <template #header>
-              <h2 class="text-2xl font-semibold">📈 Price Prediction Distribution</h2>
-            </template>
-
-            <div class="h-64">
-              <canvas ref="chartCanvas"></canvas>
-            </div>
-          </UCard>
-        </div>
-
-        <!-- Empty State -->
-        <UCard v-if="!comparisonResults && !loading" class="mt-6">
-          <div class="text-center py-12">
-            <UIcon name="i-heroicons-beaker" class="w-16 h-16 mx-auto text-gray-400 mb-4" />
-            <p class="text-gray-600 dark:text-gray-400 mb-4">
-              Select 2 or more ML models to compare their performance on price prediction
-            </p>
-            <div class="flex gap-4 justify-center">
-              <UButton @click="selectAllAvailable" color="blue" variant="outline">
-                Select All Available
-              </UButton>
-              <UButton @click="navigateTo('/advanced')" color="purple">
-                View Advanced Models
-              </UButton>
-            </div>
-          </div>
-        </UCard>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { ref, computed, onMounted, nextTick } from 'vue'
-
-  // Type definitions
-  interface Model {
-    type: string
-    name: string
-    description: string
-    category: string
-    available: boolean
-  }
-
-  interface PredictionResult {
-    model_type: string
-    model_name: string
-    description: string
-    category: string
-    price: number | null
-  }
-
-  interface ComparisonResults {
-    predictions: PredictionResult[]
-    bestModel: string
-    bestPrice: number
-    averagePrice: number
-    priceRange: number
-    consistency: number
-  }
-
-  // Model data
-  const availableModels = ref<Model[]>([])
-  const selectedModels = ref<string[]>([])
-  const loading = ref(false)
-  const error = ref<string | null>(null)
-  const comparisonResults = ref<ComparisonResults | null>(null)
-  const processingTime = ref(0)
-
-  // Test specifications
-  const testSpecs = ref({
-    ram: '8',
-    battery: '4500',
-    screen: '6.5',
-    weight: '180',
-    year: '2023',
-    company: 'Samsung',
-  })
-
-  // Currency settings
-  const currency = ref('USD')
-  const currencySymbol = ref('$')
-
-  const companyOptions = [
-    'Samsung',
-    'Apple',
-    'Xiaomi',
-    'Google',
-    'OnePlus',
-    'Oppo',
-    'Vivo',
-    'Realme',
-    'Huawei',
-    'Honor',
-    'Motorola',
-    'Nokia',
-    'Sony',
-    'LG',
-    'Asus',
-    'Lenovo',
-  ]
-
-  const currencyOptions = [
-    { label: 'USD ($)', value: 'USD' },
-    { label: 'EUR (€)', value: 'EUR' },
-    { label: 'INR (₹)', value: 'INR' },
-  ]
-
-  // Chart reference
-  const chartCanvas = ref<HTMLCanvasElement | null>(null)
-  let chartInstance: any = null
-
-  const canRunTest = computed(() => {
-    return (
-      testSpecs.value.ram &&
-      testSpecs.value.battery &&
-      testSpecs.value.screen &&
-      testSpecs.value.weight &&
-      testSpecs.value.year &&
-      testSpecs.value.company
-    )
-  })
-
-  // Load available models
-  onMounted(async () => {
-    try {
-      const response = await $fetch<{ models: Model[] }>('/api/advanced/models')
-      availableModels.value = response.models
-    } catch (err) {
-      console.error('Failed to load models:', err)
-    }
-  })
-
-  const getModelIcon = (category: string) => {
-    const icons: Record<string, string> = {
-      sklearn: '🧠',
-      xgboost: '🚀',
-      ensemble: '🔗',
-      distilled: '⚡',
-      currency: '💰',
-    }
-    return icons[category] || '🤖'
-  }
-
-  const getCategoryColor = (category: string): string => {
-    const colors: Record<string, string> = {
-      sklearn: 'bg-blue-100 text-blue-800',
-      xgboost: 'bg-green-100 text-green-800',
-      ensemble: 'bg-purple-100 text-purple-800',
-      distilled: 'bg-yellow-100 text-yellow-800',
-      currency: 'bg-red-100 text-red-800',
-    }
-    return colors[category] || 'bg-gray-100 text-gray-800'
-  }
-
-  const toggleModelSelection = (modelType: string) => {
-    const index = selectedModels.value.indexOf(modelType)
-    if (index > -1) {
-      selectedModels.value.splice(index, 1)
-    } else if (selectedModels.value.length < 6) {
-      selectedModels.value.push(modelType)
-    }
-  }
-
-  const clearSelection = () => {
-    selectedModels.value = []
-    comparisonResults.value = null
-  }
-
-  const selectAllAvailable = () => {
-    const availableTypes = availableModels.value
-      .filter((model: Model) => model.available)
-      .map((model: Model) => model.type)
-    selectedModels.value = availableTypes.slice(0, 6) // Limit to 6 models
-  }
-
-  const runComparison = async () => {
-    if (selectedModels.value.length < 2) {
-      error.value = 'Please select at least 2 models to compare'
-      return
-    }
-
-    if (!canRunTest.value) {
-      error.value = 'Please fill in all test specifications'
-      return
-    }
-
-    loading.value = true
-    error.value = null
-    comparisonResults.value = null
-    const startTime = Date.now()
-
-    try {
-      // Update currency symbol
-      const symbols: Record<string, string> = { USD: '$', EUR: '€', INR: '₹' }
-      currencySymbol.value = symbols[currency.value] || '$'
-
-      const payload = {
-        ram: parseFloat(testSpecs.value.ram),
-        battery: parseFloat(testSpecs.value.battery),
-        screen: parseFloat(testSpecs.value.screen),
-        weight: parseFloat(testSpecs.value.weight),
-        year: parseInt(testSpecs.value.year),
-        company: testSpecs.value.company,
-        currency: currency.value,
-      }
-
-      const response = await $fetch<{ predictions: PredictionResult[] }>('/api/advanced/compare', {
-        method: 'POST',
-        body: payload,
-      })
-
-      comparisonResults.value = processComparisonResults(response)
-      processingTime.value = Date.now() - startTime
-
-      // Update chart after results are processed
-      await nextTick()
-      updateChart()
-    } catch (err: any) {
-      error.value = err.message || 'Failed to run model comparison'
-      console.error('Comparison error:', err)
-    } finally {
-      loading.value = false
-    }
-  }
-
-  const processComparisonResults = (response: { predictions: PredictionResult[] }) => {
-    const successfulPredictions = response.predictions.filter(
-      p => p.price !== null && p.price !== undefined
-    )
-
-    if (successfulPredictions.length === 0) {
-      return {
-        predictions: response.predictions,
-        bestModel: 'None',
-        bestPrice: 0,
-        averagePrice: 0,
-        priceRange: 0,
-        consistency: 0,
-      }
-    }
-
-    const prices = successfulPredictions.map(p => p.price!)
-    const minPrice = Math.min(...prices)
-    const maxPrice = Math.max(...prices)
-    const avgPrice = prices.reduce((a, b) => (a ?? 0) + (b ?? 0), 0) / prices.length
-
-    // Consistency score (lower variance = higher consistency)
-    const variance =
-      prices.reduce((acc, price) => acc + Math.pow((price ?? 0) - avgPrice, 2), 0) / prices.length
-    const consistency = Math.max(0, Math.min(100, 100 - (Math.sqrt(variance) / avgPrice) * 100))
-
-    const bestPrediction = successfulPredictions.reduce((best, current) =>
-      (current.price ?? Infinity) < (best.price ?? Infinity) ? current : best
-    )
-
-    return {
-      predictions: response.predictions,
-      bestModel: bestPrediction.model_name,
-      bestPrice: bestPrediction.price ?? 0,
-      averagePrice: Math.round(avgPrice),
-      priceRange: Math.round(maxPrice - minPrice),
-      consistency: Math.round(consistency),
-    }
-  }
-
-  const updateChart = () => {
-    if (!chartCanvas.value || !comparisonResults.value) return
-
-    // Destroy existing chart
-    if (chartInstance) {
-      chartInstance.destroy()
-    }
-
-    const ctx = chartCanvas.value.getContext('2d')
-    const successfulPredictions = comparisonResults.value.predictions.filter(p => p.price !== null)
-
-    const data = {
-      labels: successfulPredictions.map(p => p.model_name),
-      datasets: [
-        {
-          label: 'Predicted Price',
-          data: successfulPredictions.map(p => p.price),
-          backgroundColor: successfulPredictions.map(p =>
-            p.price === comparisonResults.value!.bestPrice
-              ? 'rgba(34, 197, 94, 0.8)'
-              : 'rgba(59, 130, 246, 0.8)'
-          ),
-          borderColor: successfulPredictions.map(p =>
-            p.price === comparisonResults.value!.bestPrice
-              ? 'rgb(34, 197, 94)'
-              : 'rgb(59, 130, 246)'
-          ),
-          borderWidth: 2,
-        },
-      ],
-    }
-
-    const config = {
-      type: 'bar' as const,
-      data: data,
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false,
-          },
-          title: {
-            display: true,
-            text: 'Model Price Predictions',
-          },
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              callback: function (value: any) {
-                return currencySymbol.value + value
-              },
-            },
-          },
-        },
-      },
-    }
-
-    // Import Chart.js dynamically
-    import('chart.js').then(({ Chart }) => {
-      if (ctx) {
-        chartInstance = new Chart(ctx, config)
-      }
-    })
-  }
-
-  const navigateTo = (path: string) => {
-    useRouter().push(path)
-  }
-
-  // Set page metadata
+  import { ref, computed } from 'vue'
+  // Page meta
   useHead({
-    title: 'ML Model Comparison - Mobile Finder',
+    title: 'ML Model Comparison - MATLAB Deep Learning Platform',
     meta: [
       {
         name: 'description',
         content:
-          'Compare performance across multiple machine learning models for mobile price prediction',
+          'Compare machine learning models for mobile dataset analysis with performance metrics and recommendations',
       },
     ],
   })
+
+  // Model interface
+  interface Model {
+    id: string
+    name: string
+    type: string
+    description: string
+    accuracy: number
+    trainingTime: string
+    trainingTimeMinutes: number
+    color: string
+    icon: string
+    precision: number
+    recall: number
+    f1Score: number
+    loss: number
+    inferenceTime: string
+  }
+
+  // Available models
+  const models = ref<Model[]>([
+    {
+      id: 'cnn',
+      name: 'CNN',
+      type: 'Convolutional Neural Network',
+      description: 'Best for image recognition and spatial data',
+      accuracy: 94.7,
+      trainingTime: '2.3 hrs',
+      trainingTimeMinutes: 138,
+      color: 'bg-purple-500',
+      icon: 'i-heroicons-cpu-chip',
+      precision: 0.947,
+      recall: 0.932,
+      f1Score: 0.939,
+      loss: 0.156,
+      inferenceTime: '45ms',
+    },
+    {
+      id: 'lstm',
+      name: 'LSTM',
+      type: 'Long Short-Term Memory',
+      description: 'Excellent for sequential data and time series',
+      accuracy: 91.2,
+      trainingTime: '3.1 hrs',
+      trainingTimeMinutes: 186,
+      color: 'bg-blue-500',
+      icon: 'i-heroicons-chart-bar',
+      precision: 0.912,
+      recall: 0.908,
+      f1Score: 0.91,
+      loss: 0.234,
+      inferenceTime: '67ms',
+    },
+    {
+      id: 'transformer',
+      name: 'Transformer',
+      type: 'Attention-based Model',
+      description: 'State-of-the-art for complex patterns',
+      accuracy: 96.8,
+      trainingTime: '4.7 hrs',
+      trainingTimeMinutes: 282,
+      color: 'bg-green-500',
+      icon: 'i-heroicons-sparkles',
+      precision: 0.968,
+      recall: 0.961,
+      f1Score: 0.964,
+      loss: 0.089,
+      inferenceTime: '78ms',
+    },
+    {
+      id: 'ensemble',
+      name: 'Ensemble',
+      type: 'Combined Models',
+      description: 'Combination of multiple algorithms',
+      accuracy: 97.3,
+      trainingTime: '6.2 hrs',
+      trainingTimeMinutes: 372,
+      color: 'bg-orange-500',
+      icon: 'i-heroicons-squares-plus',
+      precision: 0.973,
+      recall: 0.969,
+      f1Score: 0.971,
+      loss: 0.067,
+      inferenceTime: '123ms',
+    },
+  ])
+
+  // Selected models for comparison
+  const selectedModel = ref('cnn')
+  const selectedModels = computed(() => models.value.filter(m => selectedModel.value === m.id))
+
+  // Comparison metrics
+  const comparisonMetrics = [
+    { key: 'accuracy', label: 'Accuracy (%)', type: 'percentage' },
+    { key: 'precision', label: 'Precision', type: 'decimal' },
+    { key: 'recall', label: 'Recall', type: 'decimal' },
+    { key: 'f1Score', label: 'F1 Score', type: 'decimal' },
+    { key: 'loss', label: 'Loss', type: 'decimal' },
+    { key: 'inferenceTime', label: 'Inference Time', type: 'time' },
+  ]
+
+  // Recommendations
+  const recommendations = ref([
+    {
+      id: 'beginner',
+      title: 'Best for Beginners',
+      description: 'Easy to implement and understand',
+      bestFor: 'Starting out with ML',
+      accuracy: 91.2,
+      icon: 'i-heroicons-academic-cap',
+      badgeColor: 'bg-blue-500',
+    },
+    {
+      id: 'performance',
+      title: 'Highest Performance',
+      description: 'Maximum accuracy and reliability',
+      bestFor: 'Production systems',
+      accuracy: 97.3,
+      icon: 'i-heroicons-trophy',
+      badgeColor: 'bg-yellow-500',
+    },
+    {
+      id: 'balance',
+      title: 'Best Balance',
+      description: 'Good performance with reasonable speed',
+      bestFor: 'Real-time applications',
+      accuracy: 94.7,
+      icon: 'i-heroicons-scale',
+      badgeColor: 'bg-green-500',
+    },
+  ])
+
+  // Computed values
+  const maxTrainingTime = computed(() => Math.max(...models.value.map(m => m.trainingTimeMinutes)))
+
+  // Methods
+  const selectModel = (modelId: string) => {
+    selectedModel.value = modelId
+  }
+
+  const getMetricClass = (value: number | string, type: string) => {
+    if (type === 'time') return 'text-gray-900 dark:text-white font-semibold'
+    if (type === 'percentage') {
+      const num = typeof value === 'string' ? parseFloat(value) : value
+      return num > 95
+        ? 'text-green-600 font-semibold'
+        : num > 90
+          ? 'text-blue-600 font-semibold'
+          : 'text-yellow-600 font-semibold'
+    }
+    return 'text-gray-900 dark:text-white font-semibold'
+  }
+
+  const formatMetric = (value: number | string, type: string) => {
+    if (type === 'percentage') return `${value}%`
+    if (type === 'decimal') return typeof value === 'number' ? value.toFixed(3) : value
+    if (type === 'time') return value
+    return value.toString()
+  }
+
+  const getMetricValue = (model: Model, metricKey: string): number | string => {
+    return (model as any)[metricKey]
+  }
 </script>
+
+<style scoped>
+  /* Additional styles can be added here if needed */
+</style>

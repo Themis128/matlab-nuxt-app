@@ -58,11 +58,11 @@ async function main() {
   const tags = filterTagsArg ? filterTagsArg.replace('--tags=', '').split(',') : DEFAULT_TAGS
   const matches = await scanFiles(root, tags)
   if (matches.length === 0) {
-    console.log('No TODOs found for tags: ' + tags.join(','))
+    console.warn('No TODOs found for tags: ' + tags.join(','))
     return process.exit(0)
   }
   for (const m of matches) {
-    console.log(`${m.file}:${m.line} [${m.tag}] ${m.message}`)
+    console.error(`${m.file}:${m.line} [${m.tag}] ${m.message}`)
   }
   process.exit(0)
 }

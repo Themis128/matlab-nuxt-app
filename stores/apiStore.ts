@@ -149,7 +149,7 @@ export const useApiStore = defineStore('api', {
 
       try {
         // Check Python API health through Nuxt API endpoint
-        const response = await $fetch<ApiHealthResponse>('/api/health', {
+        const response = await $fetch('/api/health', {
           method: 'GET',
           timeout: 5000, // 5 second timeout
           retry: false,

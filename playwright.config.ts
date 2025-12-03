@@ -1,22 +1,42 @@
 import { defineConfig, devices } from '@playwright/test'
 
 export default defineConfig({
-  timeout: 30_000,
-  testDir: 'tests', // adjust if your tests are in a different folder
+  testDir: './tests',
+  testMatch: '**/*.spec.ts',
+  testIgnore: ['**/mcp-servers/**', '**/node_modules/**'],
   fullyParallel: true,
+  forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  reporter: 'list',
+  workers: process.env.CI ? 1 : undefined,
+  reporter: 'html',
   use: {
-    headless: true,
-    viewport: { width: 1280, height: 720 },
-    actionTimeout: 10_000,
-    ignoreHTTPSErrors: true,
-    baseURL: process.env.BASE_URL || 'http://localhost:3000',
+    baseURL: 'http://localhost:3000',
+    trace: 'on-first-retry',
   },
   projects: [
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+    },
+  ],
+  webServer: [
+    {
+      command: 'cd python_api && python api.py',
+      port: 8000,
+      reuseExistingServer: !process.env.CI,
+    },
+    {
+      command: 'npm run dev',
+      port: 3000,
+      reuseExistingServer: !process.env.CI,
     },
   ],
 })

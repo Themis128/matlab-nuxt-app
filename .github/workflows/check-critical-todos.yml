@@ -4,6 +4,12 @@ on:
     branches: [master, main]
   push:
     branches: [master, main]
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'When set to `full`, scan entire repo. Use `diff` to scan only diff.'
+        required: false
+        default: 'diff'
 
 jobs:
   todo-check:
@@ -17,9 +23,22 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Run check:todos (scan for FIXME/BUG)
+      - name: Run check:todos (scan changed files for FIXME/BUG)
         run: |
           node --version
-          node ./scripts/check-critical-todos.js
+          git fetch origin $GITHUB_BASE_REF || true
+          echo "PR base: $GITHUB_BASE_REF"
+          if [ -n "$GITHUB_BASE_REF" ] || [ "$INPUT_MODE" = 'diff' ]; then
+            echo "Detecting changed files against $GITHUB_BASE_REF"
+            FILES=$(git diff --name-only origin/$GITHUB_BASE_REF...HEAD || git diff --name-only HEAD~1..HEAD)
+            echo "Files changed: $FILES"
+            if [ -z "$FILES" ]; then
+              echo "No files changed — skipping TODO check"
+              exit 0
+            fi
+            node ./scripts/check-critical-todos.js --files="$FILES"
+          else
+            node ./scripts/check-critical-todos.js
+          fi
         env:
           CI: true

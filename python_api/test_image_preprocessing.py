@@ -1,0 +1,105 @@
+#!/usr/bin/env python3
+"""
+Test script for image preprocessing functionality
+"""
+
+import sys
+from pathlib import Path
+import os
+import time
+
+# Add the current directory to Python path for imports
+sys.path.append(str(Path(__file__).parent))
+
+from data_preprocessing import DataPreprocessor
+
+def test_image_preprocessing():
+    """Test the image preprocessing functionality"""
+    print("Testing Image Preprocessing...")
+
+    # Initialize preprocessor
+    preprocessor = DataPreprocessor()
+
+    # Test with multiple images from the dataset
+    test_image_dir = Path("../public/mobile_images")
+
+    # Look for image files to test with
+    image_extensions = ['.jpg', '.jpeg', '.png', '.webp']
+    test_images = []
+
+    if test_image_dir.exists():
+        print(f"Scanning directory: {test_image_dir.absolute()}")
+        for ext in image_extensions:
+            for img_file in test_image_dir.rglob(f"*{ext}"):
+                test_images.append(img_file)
+                if len(test_images) >= 5:  # Test with up to 5 images
+                    break
+            if len(test_images) >= 5:
+                break
+
+    print(f"Found {len(test_images)} test images")
+
+    if test_images:
+        total_original_size = 0
+        total_processed_size = 0
+        successful_preprocessing = 0
+
+        for i, test_image in enumerate(test_images, 1):
+            print(f"\n--- Testing Image {i}/{len(test_images)} ---")
+            print(f"Image: {test_image.name}")
+            original_size = test_image.stat().st_size
+            total_original_size += original_size
+            print(f"Original size: {original_size:,} bytes")
+
+            # Test preprocessing
+            start_time = time.time()
+            processed_path = preprocessor.preprocess_image(str(test_image))
+            processing_time = time.time() - start_time
+
+            if processed_path:
+                processed_size = Path(processed_path).stat().st_size
+                total_processed_size += processed_size
+                successful_preprocessing += 1
+
+                print(f"Processed: {Path(processed_path).name}")
+                print(f"Processed size: {processed_size:,} bytes")
+                print(f"Size reduction: {((original_size - processed_size) / original_size * 100):.1f}%")
+                print(f"Processing time: {processing_time:.3f} seconds")
+            else:
+                print("❌ Preprocessing failed")
+
+        # Summary statistics
+        if successful_preprocessing > 0:
+            avg_original = total_original_size / len(test_images)
+            avg_processed = total_processed_size / successful_preprocessing
+            avg_reduction = ((avg_original - avg_processed) / avg_original * 100)
+
+            print("\n=== SUMMARY STATISTICS ===")
+            print(f"Images tested: {len(test_images)}")
+            print(f"Successful preprocessing: {successful_preprocessing}")
+            print(f"Average original size: {avg_original:,.0f} bytes")
+            print(f"Average processed size: {avg_processed:,.0f} bytes")
+            print(f"Average size reduction: {avg_reduction:.1f}%")
+
+            # Show preprocessing config
+            config = preprocessor.config['image_preprocessing']
+            print("\nImage preprocessing settings:")
+            print(f"  Max size: {config['max_size']}")
+            print(f"  Quality: {config['quality']}%")
+            print(f"  Format: {config['format']}")
+            print(f"  Convert to RGB: {config['convert_to_rgb']}")
+        else:
+            print("❌ No images were successfully preprocessed")
+    else:
+        print("No test images found in ../public/mobile_images")
+        print("Image preprocessing configuration:")
+        config = preprocessor.config['image_preprocessing']
+        print(f"  Max size: {config['max_size']}")
+        print(f"  Quality: {config['quality']}%")
+        print(f"  Format: {config['format']}")
+        print(f"  Convert to RGB: {config['convert_to_rgb']}")
+
+    print("\nImage preprocessing test completed!")
+
+if __name__ == "__main__":
+    test_image_preprocessing()

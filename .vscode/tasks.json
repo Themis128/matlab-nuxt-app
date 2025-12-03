@@ -3,6 +3,163 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "Dev: Start Docker Compose Dev Container",
+      "type": "shell",
+      "command": "docker compose -f .devcontainer/docker-compose.yml -f docker-compose.override.yml up -d --build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Dev: Stop Docker Compose Dev Container",
+      "type": "shell",
+      "command": "docker compose -f .devcontainer/docker-compose.yml -f docker-compose.override.yml down",
+      "problemMatcher": []
+    },
+    {
+      "label": "Dev: Rebuild Docker Compose Dev Container",
+      "type": "shell",
+      "command": "docker compose -f .devcontainer/docker-compose.yml -f docker-compose.override.yml build --no-cache",
+      "problemMatcher": []
+    },
+    {
+      "label": "Python: Install Dependencies",
+      "type": "shell",
+      "command": "./venv/Scripts/python.exe",
+      "args": [
+        "-m",
+        "pip",
+        "install",
+        "-r",
+        "requirements.txt"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Python: Install Dev Dependencies",
+      "type": "shell",
+      "command": "./venv/Scripts/python.exe",
+      "args": [
+        "-m",
+        "pip",
+        "install",
+        "-e",
+        ".[dev]"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Python: Install Scraper Dependencies",
+      "type": "shell",
+      "command": "./venv/Scripts/python.exe",
+      "args": [
+        "-m",
+        "pip",
+        "install",
+        "-e",
+        ".[scraping]"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Python: Format Code (Black)",
+      "type": "shell",
+      "command": "./venv/Scripts/black.exe",
+      "args": [
+        "."
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Python: Sort Imports (isort)",
+      "type": "shell",
+      "command": "./venv/Scripts/isort.exe",
+      "args": [
+        "."
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Python: Lint Code (Flake8)",
+      "type": "shell",
+      "command": "./venv/Scripts/flake8.exe",
+      "args": [
+        "."
+      ],
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Python: Type Check (MyPy)",
+      "type": "shell",
+      "command": "./venv/Scripts/mypy.exe",
+      "args": [
+        "."
+      ],
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Python: Run Tests",
+      "type": "shell",
+      "command": "./venv/Scripts/pytest.exe",
+      "args": [
+        "--verbose",
+        "--tb=short"
+      ],
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Python: Test Model Loading",
+      "type": "shell",
+      "command": "./venv/Scripts/python.exe",
+      "args": [
+        "test_models.py"
+      ],
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "Dev: Nuxt + Python",
       "type": "shell",
       "command": "pwsh",
@@ -64,7 +221,46 @@
         "reveal": "always"
       },
       "problemMatcher": []
-    }
+    },
+    {
+      "label": "Check Critical TODOs (Staged)",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "run",
+        "check:todos:staged"
+      ],
+      "presentation": {
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Check Critical TODOs (PR Diff)",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "run",
+        "check:todos:pr-diff"
+      ],
+      "presentation": {
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Check Critical TODOs (All Files)",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "run",
+        "check:todos"
+      ],
+      "presentation": {
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
     {
       "label": "Dev: Frontend (Container)",
       "type": "shell",
@@ -80,6 +276,35 @@
       }
     },
     {
+      "label": "NPM: Audit Fix (safe)",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "audit",
+        "fix"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "NPM: Audit Fix (force)",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "audit",
+        "fix",
+        "--force"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    }
+    {
       "label": "Dev: API (Container)",
       "type": "shell",
       "command": "bash",
@@ -93,6 +318,32 @@
         "panel": "dedicated"
       }
     },
+    {
+      "label": "NPM: Install (CI)",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "ci"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "NPM: Install",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "install"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    }
     {
       "label": "Dev: Fullstack (Terminals)",
       "dependsOn": [

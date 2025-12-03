@@ -128,13 +128,10 @@ export const useDemo = () => {
       // Try to get prediction from API
       let response
       try {
-        response = await $fetch<{ price: number; error?: string; statusCode?: number }>(
-          '/api/predict/price',
-          {
-            method: 'POST',
-            body,
-          }
-        )
+        response = await $fetch('/api/predict/price', {
+          method: 'POST',
+          body,
+        })
 
         // Check if the response contains an error
         if (response.error) {
@@ -225,12 +222,7 @@ export const useDemo = () => {
     priceClosestModel.value = null
 
     try {
-      const response = await $fetch<{
-        modelName: string
-        company: string
-        similarityScore: number
-        price: number
-      }>('/api/find-closest-model', {
+      const response = await $fetch('/api/predict/price/closest', {
         method: 'POST',
         body: {
           ...priceInput.value,
@@ -303,7 +295,7 @@ export const useDemo = () => {
       if (body.processor === null) delete body.processor
       if (body.storage === null) delete body.storage
 
-      const response = await $fetch<{ brand: string }>('/api/predict/brand', {
+      const response = await $fetch('/api/predict/brand', {
         method: 'POST',
         body,
       })
@@ -356,11 +348,7 @@ export const useDemo = () => {
     brandClosestModel.value = null
 
     try {
-      const response = await $fetch<{
-        modelName: string
-        company: string
-        similarityScore: number
-      }>('/api/find-closest-model', {
+      const response = await $fetch('/api/predict/brand/closest', {
         method: 'POST',
         body: {
           ram: brandInput.value.ram,

@@ -93,6 +93,28 @@ Thank you for your interest in contributing! This document provides guidelines a
 - Add examples for new functions
 - Update relevant guides in `mobiles-dataset-docs/`
 
+## 🛠 TODO Policy & CI checks
+
+To keep the repository healthy, we aim to avoid critical TODOs (e.g., `FIXME` or `BUG`) being merged. The rules are:
+
+- Prefer to open an issue and link it instead of leaving `FIXME` in merged code.
+- If you must add a `FIXME` for immediate progress, add a reviewer, and prefer `TODO` for non-blocking remarks.
+- Use `// FIXME(@owner): xyz` if tagging a specific person for follow-up.
+
+CI and local verification:
+
+- A GitHub Action (`.github/workflows/check-critical-todos.yml`) runs on PRs (diff scan) and on pushes to `master`/`main` (full scan) to detect `FIXME`, `BUG`, and other critical tags.
+- Locally you can run:
+   ```bash
+   npm run check:todos        # scan full repo
+   npm run check:todos:staged # scan only staged files
+   npm run check:todos:pr-diff # scan files changed against origin/main
+   npm run list:todos         # list all TODOs
+   ```
+- The pre-commit hook also runs the staged TODO scan: `npm run check:todos:staged`.
+
+If you want to allow a `FIXME` in a PR, add a comment in the PR to explain why and link to the issue that tracks the follow-up.
+
 ## 🧪 Testing
 
 ### MATLAB Testing

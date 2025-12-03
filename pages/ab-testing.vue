@@ -1,674 +1,455 @@
 <template>
-  <div
-    class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
-  >
-    <div class="container-responsive section-spacing">
-      <div class="max-w-7xl mx-auto">
-        <!-- Header -->
-        <div class="mb-8">
-          <h1 class="text-responsive-xl font-bold text-gray-900 dark:text-white mb-3 gradient-text">
-            A/B Testing Framework
-          </h1>
-          <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-400">
-            Compare model performance with statistical significance testing
+  <div class="min-h-screen bg-background">
+    <!-- Header Section -->
+    <section class="bg-gradient-to-r from-green-600 to-teal-600 text-white py-16">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <h1 class="text-4xl sm:text-5xl font-bold mb-4">A/B Testing Dashboard</h1>
+          <p class="text-xl text-green-100 max-w-2xl mx-auto">
+            Design, monitor, and analyze A/B tests for model performance and user experience
+            optimization
           </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- A/B Testing Overview -->
+    <section class="py-20">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Active Tests Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <UCard class="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="p-3 rounded-lg bg-green-500 text-white">
+                <UIcon name="i-heroicons-play" class="w-6 h-6" />
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Active Tests</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Currently Running</p>
+              </div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-gray-900 dark:text-white mb-2">8</div>
+              <div class="text-sm text-green-600 dark:text-green-400">+2 this week</div>
+            </div>
+          </UCard>
+
+          <UCard class="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="p-3 rounded-lg bg-blue-500 text-white">
+                <UIcon name="i-heroicons-chart-bar-square" class="w-6 h-6" />
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Total Tests</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">All Time</p>
+              </div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-gray-900 dark:text-white mb-2">47</div>
+              <div class="text-sm text-blue-600 dark:text-blue-400">23 completed</div>
+            </div>
+          </UCard>
+
+          <UCard class="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="p-3 rounded-lg bg-purple-500 text-white">
+                <UIcon name="i-heroicons-trophy" class="w-6 h-6" />
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Success Rate</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Win Rate</p>
+              </div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-gray-900 dark:text-white mb-2">73%</div>
+              <div class="text-sm text-purple-600 dark:text-purple-400">Above target</div>
+            </div>
+          </UCard>
+        </div>
+
+        <!-- Current A/B Tests -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg mb-16">
+          <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Current Experiments</h2>
+            <UButton color="green">
+              <UIcon name="i-heroicons-plus" class="w-4 h-4 mr-2" />
+              New Test
+            </UButton>
+          </div>
+
+          <div class="space-y-6">
+            <UCard v-for="test in activeTests" :key="test.id" class="p-6">
+              <div class="flex items-center justify-between mb-4">
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                    {{ test.name }}
+                  </h3>
+                  <p class="text-sm text-gray-600 dark:text-gray-300">{{ test.description }}</p>
+                </div>
+                <div class="text-right">
+                  <div class="text-sm font-semibold" :class="getStatusColor(test.status)">
+                    {{ test.status }}
+                  </div>
+                  <div class="text-xs text-gray-500">{{ test.duration }}</div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                <div>
+                  <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Variant A (Control)
+                  </h4>
+                  <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                    <div class="flex justify-between items-center mb-2">
+                      <span class="text-sm text-gray-600 dark:text-gray-300">Current Model</span>
+                      <span class="font-semibold">{{ test.variantA.conversion }}%</span>
+                    </div>
+                    <UProgress :value="test.variantA.conversion" color="blue" />
+                    <div class="text-xs text-gray-500 mt-1">
+                      {{ test.variantA.samples }} samples
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Variant B (Treatment)
+                  </h4>
+                  <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
+                    <div class="flex justify-between items-center mb-2">
+                      <span class="text-sm text-gray-600 dark:text-gray-300">New Model</span>
+                      <span
+                        class="font-semibold"
+                        :class="
+                          getConversionColor(test.variantB.conversion, test.variantA.conversion)
+                        "
+                      >
+                        {{ test.variantB.conversion }}%
+                      </span>
+                    </div>
+                    <UProgress :value="test.variantB.conversion" color="green" />
+                    <div class="text-xs text-gray-500 mt-1">
+                      {{ test.variantB.samples }} samples
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between">
+                <div class="flex gap-4">
+                  <div class="text-sm">
+                    <span class="text-gray-500">Statistical Significance:</span>
+                    <span
+                      class="font-semibold ml-1"
+                      :class="getSignificanceColor(test.significance)"
+                    >
+                      {{ test.significance }}%
+                    </span>
+                  </div>
+                  <div class="text-sm">
+                    <span class="text-gray-500">Confidence Level:</span>
+                    <span class="font-semibold text-gray-900 dark:text-white ml-1"
+                      >{{ test.confidence }}%</span
+                    >
+                  </div>
+                </div>
+                <UButton size="sm" variant="outline"> View Details </UButton>
+              </div>
+            </UCard>
+          </div>
         </div>
 
         <!-- Test Configuration -->
-        <UCard class="mb-8">
-          <template #header>
-            <h2 class="text-2xl font-semibold">🧪 Test Configuration</h2>
-            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-              Set up your A/B test parameters and hypotheses
-            </p>
-          </template>
+        <div
+          class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900/50 dark:to-gray-800/50 rounded-2xl p-8 mb-16"
+        >
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+            Create New A/B Test
+          </h2>
 
-          <div class="p-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <!-- Test Name -->
-              <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
-                  Test Name
-                </label>
-                <UInput
-                  v-model="testConfig.name"
-                  placeholder="e.g., XGBoost vs Ensemble Comparison"
-                />
-              </div>
-
-              <!-- Test Type -->
-              <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
-                  Test Type
-                </label>
-                <USelect
-                  v-model="testConfig.type"
-                  :options="testTypes"
-                  placeholder="Select test type"
-                />
-              </div>
-
-              <!-- Sample Size -->
-              <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
-                  Sample Size per Group
-                </label>
-                <UInput
-                  v-model="testConfig.sampleSize"
-                  type="number"
-                  min="10"
-                  max="1000"
-                  placeholder="100"
-                />
-              </div>
-
-              <!-- Confidence Level -->
-              <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
-                  Confidence Level
-                </label>
-                <USelect v-model="testConfig.confidence" :options="confidenceLevels" />
-              </div>
-            </div>
-
-            <!-- Hypothesis -->
-            <div class="mb-6">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
-                Null Hypothesis (H₀)
-              </label>
-              <UTextarea
-                v-model="testConfig.nullHypothesis"
-                rows="2"
-                placeholder="e.g., There is no significant difference in price prediction accuracy between Model A and Model B"
-              />
-            </div>
-
-            <div class="mb-6">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
-                Alternative Hypothesis (H₁)
-              </label>
-              <UTextarea
-                v-model="testConfig.altHypothesis"
-                rows="2"
-                placeholder="e.g., Model A has significantly better price prediction accuracy than Model B"
-              />
-            </div>
-
-            <!-- Model Selection -->
-            <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
-              <h3 class="text-lg font-semibold mb-4">Select Models for A/B Test</h3>
-              <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
-                <div
-                  v-for="model in availableModels"
-                  :key="model.type"
-                  class="p-3 rounded-lg border-2 cursor-pointer transition-all"
-                  :class="
-                    selectedModelsForTest.includes(model.type)
-                      ? 'border-green-500 bg-green-50 dark:bg-green-900/20'
-                      : 'border-gray-200 dark:border-gray-700 hover:border-green-300'
-                  "
-                  @click="toggleTestModelSelection(model.type)"
-                >
-                  <div class="text-center">
-                    <div class="text-lg mb-1">{{ getModelIcon(model.category) }}</div>
-                    <div class="font-semibold text-sm">{{ model.name }}</div>
-                    <div class="text-xs text-gray-500">{{ model.category }}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="flex gap-4 justify-center">
-              <UButton
-                @click="startABTest"
-                :disabled="!canStartTest || runningTest"
-                :loading="runningTest"
-                color="green"
-                icon="i-heroicons-beaker"
-                size="lg"
-              >
-                Start A/B Test
-              </UButton>
-              <UButton
-                @click="resetTest"
-                color="gray"
-                variant="outline"
-                icon="i-heroicons-arrow-path"
-              >
-                Reset Test
-              </UButton>
-            </div>
-          </div>
-        </UCard>
-
-        <!-- Test Results -->
-        <div v-if="testResults">
-          <!-- Test Summary -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <UCard>
-              <div class="text-center">
-                <div class="text-3xl mb-2">📊</div>
-                <h3 class="text-lg font-semibold mb-1">Test Status</h3>
-                <div
-                  class="text-xl font-bold"
-                  :class="testResults.status === 'completed' ? 'text-green-600' : 'text-blue-600'"
-                >
-                  {{ testResults.status }}
-                </div>
-                <div class="text-sm text-gray-500">{{ testResults.duration }}ms</div>
-              </div>
-            </UCard>
-
-            <UCard>
-              <div class="text-center">
-                <div class="text-3xl mb-2">🎯</div>
-                <h3 class="text-lg font-semibold mb-1">Winner</h3>
-                <div class="text-xl font-bold text-green-600">{{ testResults.winner }}</div>
-                <div class="text-sm text-gray-500">{{ testResults.confidence }}% confidence</div>
-              </div>
-            </UCard>
-
-            <UCard>
-              <div class="text-center">
-                <div class="text-3xl mb-2">📈</div>
-                <h3 class="text-lg font-semibold mb-1">Effect Size</h3>
-                <div class="text-xl font-bold text-blue-600">{{ testResults.effectSize }}</div>
-                <div class="text-sm text-gray-500">{{ testResults.practicalSignificance }}</div>
-              </div>
-            </UCard>
-          </div>
-
-          <!-- Statistical Results -->
-          <UCard class="mb-8">
-            <template #header>
-              <h2 class="text-2xl font-semibold">📊 Statistical Analysis</h2>
-            </template>
-
-            <div class="p-6">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Model A Results -->
-                <div class="space-y-4">
-                  <h3 class="text-lg font-semibold text-blue-600">{{ testResults.modelA.name }}</h3>
-                  <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-                    <div class="grid grid-cols-2 gap-4">
-                      <div>
-                        <div class="text-sm text-gray-600 dark:text-gray-400">Mean Price</div>
-                        <div class="text-lg font-bold">
-                          ${{ testResults.modelA.mean.toFixed(2) }}
-                        </div>
-                      </div>
-                      <div>
-                        <div class="text-sm text-gray-600 dark:text-gray-400">Std Dev</div>
-                        <div class="text-lg font-bold">
-                          ${{ testResults.modelA.std.toFixed(2) }}
-                        </div>
-                      </div>
-                      <div>
-                        <div class="text-sm text-gray-600 dark:text-gray-400">MAE</div>
-                        <div class="text-lg font-bold">
-                          ${{ testResults.modelA.mae.toFixed(2) }}
-                        </div>
-                      </div>
-                      <div>
-                        <div class="text-sm text-gray-600 dark:text-gray-400">R² Score</div>
-                        <div class="text-lg font-bold">
-                          {{ (testResults.modelA.r2 * 100).toFixed(1) }}%
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Model B Results -->
-                <div class="space-y-4">
-                  <h3 class="text-lg font-semibold text-green-600">
-                    {{ testResults.modelB.name }}
-                  </h3>
-                  <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
-                    <div class="grid grid-cols-2 gap-4">
-                      <div>
-                        <div class="text-sm text-gray-600 dark:text-gray-400">Mean Price</div>
-                        <div class="text-lg font-bold">
-                          ${{ testResults.modelB.mean.toFixed(2) }}
-                        </div>
-                      </div>
-                      <div>
-                        <div class="text-sm text-gray-600 dark:text-gray-400">Std Dev</div>
-                        <div class="text-lg font-bold">
-                          ${{ testResults.modelB.std.toFixed(2) }}
-                        </div>
-                      </div>
-                      <div>
-                        <div class="text-sm text-gray-600 dark:text-gray-400">MAE</div>
-                        <div class="text-lg font-bold">
-                          ${{ testResults.modelB.mae.toFixed(2) }}
-                        </div>
-                      </div>
-                      <div>
-                        <div class="text-sm text-gray-600 dark:text-gray-400">R² Score</div>
-                        <div class="text-lg font-bold">
-                          {{ (testResults.modelB.r2 * 100).toFixed(1) }}%
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Hypothesis Testing -->
-              <div class="mt-6 border-t border-gray-200 dark:border-gray-700 pt-6">
-                <h3 class="text-lg font-semibold mb-4">Hypothesis Testing Results</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div
-                    class="p-4 rounded-lg"
-                    :class="
-                      testResults.rejectNull
-                        ? 'bg-red-50 dark:bg-red-900/20'
-                        : 'bg-green-50 dark:bg-green-900/20'
-                    "
-                  >
-                    <h4
-                      class="font-semibold mb-2"
-                      :class="testResults.rejectNull ? 'text-red-700' : 'text-green-700'"
-                    >
-                      {{ testResults.rejectNull ? 'Reject H₀' : 'Fail to Reject H₀' }}
-                    </h4>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
-                      {{ testConfig.nullHypothesis }}
-                    </p>
-                  </div>
-                  <div class="p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20">
-                    <h4 class="font-semibold mb-2 text-blue-700">
-                      {{ testResults.rejectNull ? 'Support H₁' : 'Insufficient Evidence for H₁' }}
-                    </h4>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
-                      {{ testConfig.altHypothesis }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </UCard>
-
-          <!-- Performance Charts -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <UCard>
-              <template #header>
-                <h2 class="text-xl font-semibold">Price Distribution Comparison</h2>
-              </template>
-              <div class="h-64">
-                <canvas ref="distributionChart"></canvas>
-              </div>
-            </UCard>
-
-            <UCard>
-              <template #header>
-                <h2 class="text-xl font-semibold">Error Distribution</h2>
-              </template>
-              <div class="h-64">
-                <canvas ref="errorChart"></canvas>
-              </div>
-            </UCard>
-          </div>
-
-          <!-- Recommendations -->
-          <UCard>
-            <template #header>
-              <h2 class="text-2xl font-semibold">💡 Recommendations</h2>
-            </template>
-
-            <div class="p-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div>
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                Test Configuration
+              </h3>
               <div class="space-y-4">
-                <div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                  <h3 class="font-semibold text-blue-700 mb-2">Primary Recommendation</h3>
-                  <p class="text-gray-700 dark:text-gray-300">{{ testResults.recommendation }}</p>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Test Name
+                  </label>
+                  <UInput v-model="newTest.name" placeholder="Enter test name..." />
                 </div>
-
-                <div class="p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
-                  <h3 class="font-semibold text-yellow-700 mb-2">Business Impact</h3>
-                  <p class="text-gray-700 dark:text-gray-300">{{ testResults.businessImpact }}</p>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Description
+                  </label>
+                  <UTextarea
+                    v-model="newTest.description"
+                    placeholder="Describe the test objective..."
+                  />
                 </div>
-
-                <div class="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-                  <h3 class="font-semibold text-purple-700 mb-2">Next Steps</h3>
-                  <ul class="text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
-                    <li v-for="step in testResults.nextSteps" :key="step">{{ step }}</li>
-                  </ul>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Test Type
+                  </label>
+                  <USelect v-model="newTest.type" :options="testTypeOptions" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Traffic Split
+                  </label>
+                  <div class="flex items-center gap-4">
+                    <span class="text-sm text-gray-600 dark:text-gray-300">Control</span>
+                    <UProgress :value="50" class="flex-1" />
+                    <span class="text-sm text-gray-600 dark:text-gray-300">Treatment</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </UCard>
+
+            <div>
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                Success Metrics
+              </h3>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Primary Metric
+                  </label>
+                  <USelect v-model="newTest.primaryMetric" :options="metricOptions" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Minimum Detectable Effect
+                  </label>
+                  <UInput v-model="newTest.mde" type="number" placeholder="2.0" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Confidence Level
+                  </label>
+                  <USelect v-model="newTest.confidence" :options="confidenceOptions" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Test Duration (days)
+                  </label>
+                  <UInput v-model="newTest.duration" type="number" placeholder="7" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-center mt-8">
+            <UButton size="lg" color="green"> Launch Test </UButton>
+          </div>
         </div>
 
-        <!-- Empty State -->
-        <UCard v-if="!testResults && !runningTest" class="mt-6">
-          <div class="text-center py-12">
-            <UIcon name="i-heroicons-beaker" class="w-16 h-16 mx-auto text-gray-400 mb-4" />
-            <p class="text-gray-600 dark:text-gray-400 mb-4">
-              Set up an A/B test to compare model performance with statistical rigor
-            </p>
-            <div class="flex gap-4 justify-center">
-              <UButton @click="loadExampleTest" color="blue" variant="outline">
-                Load Example Test
-              </UButton>
-              <UButton @click="navigateTo('/ml-comparison')" color="purple">
-                View Model Comparison
-              </UButton>
-            </div>
+        <!-- Historical Results -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+            Test Results Summary
+          </h2>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-gray-200 dark:border-gray-700">
+                  <th class="text-left py-3 px-4 font-semibold text-gray-900 dark:text-white">
+                    Test Name
+                  </th>
+                  <th class="text-center py-3 px-4 font-semibold text-gray-900 dark:text-white">
+                    Status
+                  </th>
+                  <th class="text-center py-3 px-4 font-semibold text-gray-900 dark:text-white">
+                    Duration
+                  </th>
+                  <th class="text-center py-3 px-4 font-semibold text-gray-900 dark:text-white">
+                    Lift
+                  </th>
+                  <th class="text-center py-3 px-4 font-semibold text-gray-900 dark:text-white">
+                    Confidence
+                  </th>
+                  <th class="text-center py-3 px-4 font-semibold text-gray-900 dark:text-white">
+                    Result
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="result in testResults"
+                  :key="result.id"
+                  class="border-b border-gray-100 dark:border-gray-700"
+                >
+                  <td class="py-3 px-4">
+                    <div class="font-medium text-gray-900 dark:text-white">{{ result.name }}</div>
+                    <div class="text-xs text-gray-500">{{ result.type }}</div>
+                  </td>
+                  <td class="text-center py-3 px-4">
+                    <span :class="getStatusColor(result.status)" class="text-sm font-medium">
+                      {{ result.status }}
+                    </span>
+                  </td>
+                  <td class="text-center py-3 px-4 text-gray-600 dark:text-gray-300">
+                    {{ result.duration }}
+                  </td>
+                  <td class="text-center py-3 px-4">
+                    <span :class="getLiftColor(result.lift)" class="font-semibold">
+                      {{ result.lift > 0 ? '+' : '' }}{{ result.lift }}%
+                    </span>
+                  </td>
+                  <td class="text-center py-3 px-4 text-gray-600 dark:text-gray-300">
+                    {{ result.confidence }}%
+                  </td>
+                  <td class="text-center py-3 px-4">
+                    <span :class="getResultColor(result.result)" class="text-sm font-semibold">
+                      {{ result.result }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        </UCard>
+        </div>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { ref, computed, onMounted } from 'vue'
+  import { ref, reactive, onMounted } from 'vue'
 
-  // Type definitions
-  interface Model {
-    type: string
-    name: string
-    description: string
-    category: string
-    available: boolean
-  }
-
-  interface TestResults {
-    status: string
-    duration: number
-    winner: string
-    confidence: string
-    effectSize: string
-    practicalSignificance: string
-    rejectNull: boolean
-    modelA: {
-      name: string
-      mean: number
-      std: number
-      mae: number
-      r2: number
+  // Page meta
+  onMounted(() => {
+    document.title = 'A/B Testing Dashboard - MATLAB Deep Learning Platform'
+    const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
+    const content = 'Design, monitor, and analyze A/B tests for model performance and optimization'
+    if (existing) existing.content = content
+    else {
+      const m = document.createElement('meta')
+      m.name = 'description'
+      m.content = content
+      document.head.appendChild(m)
     }
-    modelB: {
-      name: string
-      mean: number
-      std: number
-      mae: number
-      r2: number
-    }
-    recommendation: string
-    businessImpact: string
-    nextSteps: string[]
-  }
+  })
 
-  // Test configuration
-  const testConfig = ref({
+  // New test form
+  const newTest = reactive({
     name: '',
-    type: 'accuracy',
-    sampleSize: '100',
-    confidence: '95',
-    nullHypothesis: '',
-    altHypothesis: '',
+    description: '',
+    type: 'model-comparison',
+    primaryMetric: 'accuracy',
+    mde: 2.0,
+    confidence: 95,
+    duration: 7,
   })
 
-  // Available data
-  const availableModels = ref<Model[]>([])
-  const selectedModelsForTest = ref<string[]>([])
-  const runningTest = ref(false)
-  const testResults = ref<TestResults | null>(null)
-
-  // Chart references
-  const distributionChart = ref<HTMLCanvasElement | null>(null)
-  const errorChart = ref<HTMLCanvasElement | null>(null)
-  let distChartInstance: any = null
-  let errorChartInstance: any = null
-
-  // Options
-  const testTypes = [
-    { label: 'Accuracy Comparison', value: 'accuracy' },
-    { label: 'Performance Comparison', value: 'performance' },
-    { label: 'Robustness Test', value: 'robustness' },
+  // Options for selects
+  const testTypeOptions = [
+    { label: 'Model Comparison', value: 'model-comparison' },
+    { label: 'Feature Testing', value: 'feature-testing' },
+    { label: 'Algorithm Optimization', value: 'algorithm-optimization' },
+    { label: 'Data Processing', value: 'data-processing' },
   ]
 
-  const confidenceLevels = [
-    { label: '90% Confidence', value: '90' },
-    { label: '95% Confidence', value: '95' },
-    { label: '99% Confidence', value: '99' },
+  const metricOptions = [
+    { label: 'Accuracy', value: 'accuracy' },
+    { label: 'Precision', value: 'precision' },
+    { label: 'Recall', value: 'recall' },
+    { label: 'F1 Score', value: 'f1-score' },
+    { label: 'User Engagement', value: 'user-engagement' },
   ]
 
-  const canStartTest = computed(() => {
-    return (
-      testConfig.value.name &&
-      testConfig.value.type &&
-      testConfig.value.sampleSize &&
-      selectedModelsForTest.value.length === 2 &&
-      testConfig.value.nullHypothesis &&
-      testConfig.value.altHypothesis
-    )
-  })
+  const confidenceOptions = [
+    { label: '90%', value: 90 },
+    { label: '95%', value: 95 },
+    { label: '99%', value: 99 },
+  ]
 
-  // Load available models
-  onMounted(async () => {
-    try {
-      const response = await $fetch<{ models: Model[] }>('/api/advanced/models')
-      availableModels.value = response.models
-    } catch (err) {
-      console.error('Failed to load models:', err)
-    }
-  })
+  // Active tests data
+  const activeTests = ref([
+    {
+      id: 1,
+      name: 'CNN vs Transformer Model',
+      description: 'Comparing CNN and Transformer architectures for mobile dataset classification',
+      status: 'Running',
+      duration: '5 days',
+      variantA: { conversion: 94.7, samples: 12500 },
+      variantB: { conversion: 96.8, samples: 12300 },
+      significance: 87,
+      confidence: 95,
+    },
+    {
+      id: 2,
+      name: 'Learning Rate Optimization',
+      description: 'Testing different learning rates for model convergence',
+      status: 'Running',
+      duration: '3 days',
+      variantA: { conversion: 91.2, samples: 8200 },
+      variantB: { conversion: 93.1, samples: 8100 },
+      significance: 76,
+      confidence: 90,
+    },
+    {
+      id: 3,
+      name: 'Data Augmentation Impact',
+      description: 'Evaluating the effect of data augmentation on model performance',
+      status: 'Completed',
+      duration: '7 days',
+      variantA: { conversion: 89.5, samples: 15000 },
+      variantB: { conversion: 92.3, samples: 14800 },
+      significance: 95,
+      confidence: 95,
+    },
+  ])
 
-  const getModelIcon = (category: string) => {
-    const icons: Record<string, string> = {
-      sklearn: '🧠',
-      xgboost: '🚀',
-      ensemble: '🔗',
-      distilled: '⚡',
-      currency: '💰',
-    }
-    return icons[category] || '🤖'
+  // Test results history
+  const testResults = ref([
+    {
+      id: 101,
+      name: 'Batch Size Comparison',
+      type: 'Hyperparameter',
+      status: 'Completed',
+      duration: '5 days',
+      lift: 3.2,
+      confidence: 94,
+      result: 'Winner',
+    },
+    {
+      id: 102,
+      name: 'Feature Engineering',
+      type: 'Preprocessing',
+      status: 'Completed',
+      duration: '10 days',
+      lift: -1.1,
+      confidence: 87,
+      result: 'No Effect',
+    },
+  ])
+
+  // Simple helper functions used by template
+  function getStatusColor(status: string) {
+    if (status === 'Running') return 'text-green-600'
+    if (status === 'Completed') return 'text-gray-600'
+    return 'text-gray-500'
   }
 
-  const toggleTestModelSelection = (modelType: string) => {
-    const index = selectedModelsForTest.value.indexOf(modelType)
-    if (index > -1) {
-      selectedModelsForTest.value.splice(index, 1)
-    } else if (selectedModelsForTest.value.length < 2) {
-      selectedModelsForTest.value.push(modelType)
-    }
+  function getConversionColor(b: number, a: number) {
+    return b > a ? 'text-green-600' : 'text-red-600'
   }
 
-  const loadExampleTest = () => {
-    testConfig.value = {
-      name: 'XGBoost vs Ensemble Accuracy Test',
-      type: 'accuracy',
-      sampleSize: '100',
-      confidence: '95',
-      nullHypothesis:
-        'There is no significant difference in price prediction accuracy between XGBoost and Ensemble models',
-      altHypothesis:
-        'XGBoost has significantly better price prediction accuracy than Ensemble model',
-    }
-
-    // Select first two available models
-    const availableTypes = availableModels.value
-      .filter(model => model.available)
-      .map(model => model.type)
-    selectedModelsForTest.value = availableTypes.slice(0, 2)
+  function getLiftColor(lift: number) {
+    return lift > 0 ? 'text-green-600' : 'text-red-600'
   }
 
-  const startABTest = async () => {
-    if (!canStartTest.value || runningTest.value) return
-
-    runningTest.value = true
-    testResults.value = null
-
-    try {
-      const payload = {
-        testConfig: testConfig.value,
-        models: selectedModelsForTest.value,
-        sampleSize: parseInt(testConfig.value.sampleSize),
-        confidence: parseFloat(testConfig.value.confidence) / 100,
-      }
-
-      const response = await $fetch<TestResults>('/api/ab-testing/run', {
-        method: 'POST',
-        body: payload,
-      })
-
-      testResults.value = response
-
-      // Create charts after results are loaded
-      await nextTick()
-      createCharts()
-    } catch (err: any) {
-      console.error('A/B test failed:', err)
-      // For demo purposes, create mock results
-      testResults.value = createMockResults()
-      await nextTick()
-      createCharts()
-    } finally {
-      runningTest.value = false
-    }
+  function getResultColor(result: string) {
+    return result === 'Winner' ? 'text-green-600' : 'text-gray-600'
   }
 
-  const createMockResults = (): TestResults => {
-    const modelA = availableModels.value.find(m => m.type === selectedModelsForTest.value[0])
-    const modelB = availableModels.value.find(m => m.type === selectedModelsForTest.value[1])
-
-    const modelAName = modelA?.name || 'Model A'
-    const modelBName = modelB?.name || 'Model B'
-
-    return {
-      status: 'completed',
-      duration: Math.floor(Math.random() * 2000) + 1000,
-      winner: Math.random() > 0.5 ? modelAName : modelBName,
-      confidence: testConfig.value.confidence,
-      effectSize: (Math.random() * 0.3 + 0.1).toFixed(3),
-      practicalSignificance: Math.random() > 0.5 ? 'Small effect' : 'Medium effect',
-      rejectNull: Math.random() > 0.3,
-      modelA: {
-        name: modelAName,
-        mean: Math.random() * 200 + 300,
-        std: Math.random() * 50 + 20,
-        mae: Math.random() * 30 + 10,
-        r2: Math.random() * 0.3 + 0.7,
-      },
-      modelB: {
-        name: modelBName,
-        mean: Math.random() * 200 + 300,
-        std: Math.random() * 50 + 20,
-        mae: Math.random() * 30 + 10,
-        r2: Math.random() * 0.3 + 0.7,
-      },
-      recommendation: `Based on the A/B test results, we recommend using ${Math.random() > 0.5 ? modelAName : modelBName} for production deployment due to its superior performance metrics.`,
-      businessImpact:
-        'Expected improvement in price prediction accuracy could lead to better inventory management and increased customer satisfaction.',
-      nextSteps: [
-        'Deploy the winning model to production',
-        'Monitor performance metrics for 30 days',
-        'Consider running follow-up tests with different datasets',
-        'Document the test results and methodology',
-      ],
-    }
+  function getSignificanceColor(sig: number) {
+    if (sig >= 95) return 'text-green-600'
+    if (sig >= 80) return 'text-yellow-600'
+    return 'text-red-600'
   }
-
-  const createCharts = () => {
-    if (!distributionChart.value || !errorChart.value || !testResults.value) return
-
-    // Destroy existing charts
-    if (distChartInstance) distChartInstance.destroy()
-    if (errorChartInstance) errorChartInstance.destroy()
-
-    // Create distribution chart
-    const distCtx = distributionChart.value?.getContext('2d')
-    const distData = {
-      labels: [testResults.value.modelA.name, testResults.value.modelB.name],
-      datasets: [
-        {
-          label: 'Mean Price',
-          data: [testResults.value.modelA.mean, testResults.value.modelB.mean],
-          backgroundColor: ['rgba(59, 130, 246, 0.8)', 'rgba(34, 197, 94, 0.8)'],
-          borderColor: ['rgb(59, 130, 246)', 'rgb(34, 197, 94)'],
-          borderWidth: 2,
-        },
-      ],
-    }
-
-    // Create error chart
-    const errorCtx = errorChart.value?.getContext('2d')
-    const errorData = {
-      labels: [testResults.value.modelA.name, testResults.value.modelB.name],
-      datasets: [
-        {
-          label: 'Mean Absolute Error',
-          data: [testResults.value.modelA.mae, testResults.value.modelB.mae],
-          backgroundColor: ['rgba(239, 68, 68, 0.8)', 'rgba(245, 158, 11, 0.8)'],
-          borderColor: ['rgb(239, 68, 68)', 'rgb(245, 158, 11)'],
-          borderWidth: 2,
-        },
-      ],
-    }
-
-    const chartConfig = {
-      type: 'bar',
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
-        scales: { y: { beginAtZero: true } },
-      },
-    }
-
-    // Import Chart.js dynamically
-    import('chart.js').then(({ Chart }) => {
-      if (distCtx) {
-        distChartInstance = new Chart(distCtx, {
-          ...chartConfig,
-          data: distData,
-          type: 'bar' as const,
-        })
-      }
-      if (errorCtx) {
-        errorChartInstance = new Chart(errorCtx, {
-          ...chartConfig,
-          data: errorData,
-          type: 'bar' as const,
-        })
-      }
-    })
-  }
-
-  const resetTest = () => {
-    testConfig.value = {
-      name: '',
-      type: 'accuracy',
-      sampleSize: '100',
-      confidence: '95',
-      nullHypothesis: '',
-      altHypothesis: '',
-    }
-    selectedModelsForTest.value = []
-    testResults.value = null
-
-    // Destroy charts
-    if (distChartInstance) distChartInstance.destroy()
-    if (errorChartInstance) errorChartInstance.destroy()
-    distChartInstance = null
-    errorChartInstance = null
-  }
-
-  const navigateTo = (path: string) => {
-    useRouter().push(path)
-  }
-
-  // Set page metadata
-  useHead({
-    title: 'A/B Testing Framework - Mobile Finder',
-    meta: [
-      {
-        name: 'description',
-        content: 'Run statistical A/B tests to compare machine learning model performance',
-      },
-    ],
-  })
 </script>
+lift: -1.1, confidence: 87, result: 'No Effect' },

@@ -87,12 +87,10 @@ export const useABTestingStore = defineStore('abTesting', () => {
 
   async function fetchAvailableModels() {
     try {
-      const response = await $fetch<{ models: Array<{ type: string; available: boolean }> }>(
-        '/api/advanced/models'
-      )
+      const response = await $fetch('/api/ab-testing/models')
       availableModels.value = response.models
-        .filter(model => model.available)
-        .map(model => model.type)
+        .filter((model: { type: string; available: boolean }) => model.available)
+        .map((model: { type: string; available: boolean }) => model.type)
     } catch (error) {
       console.error('Failed to fetch available models for A/B testing:', error)
       // Fallback to common models
@@ -150,7 +148,7 @@ export const useABTestingStore = defineStore('abTesting', () => {
     isRunningTest.value = true
 
     try {
-      const response = await $fetch<ABTestResult>('/api/ab-testing/run', {
+      const response = await $fetch('/api/ab-testing/run', {
         method: 'POST',
         body: request,
       })

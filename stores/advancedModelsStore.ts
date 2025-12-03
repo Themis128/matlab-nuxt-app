@@ -81,7 +81,7 @@ export const useAdvancedModelsStore = defineStore('advancedModels', () => {
 
     isLoadingModels.value = true
     try {
-      const response = await $fetch<{ models: AdvancedModel[] }>('/api/advanced/models')
+      const response = await $fetch('/api/advanced/models')
       availableModels.value = response.models || []
 
       // Set default model if current selection is not available
@@ -142,7 +142,7 @@ export const useAdvancedModelsStore = defineStore('advancedModels', () => {
     const startTime = Date.now()
 
     try {
-      const response = await $fetch<PredictionResult>('/api/advanced/predict', {
+      const response = await $fetch('/api/advanced/predict', {
         method: 'POST',
         body: request,
       })

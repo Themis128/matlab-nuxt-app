@@ -3,8 +3,8 @@
   Usage: pwsh -NoProfile -File scripts/start-dev-detached.ps1
 #>
 param(
-    [int]$PythonPort = 8000,
-    [int]$NuxtPort = 3000
+  [int]$PythonPort = 8000,
+  [int]$NuxtPort = 3000
 )
 
 $ErrorActionPreference = 'Stop'
@@ -27,8 +27,8 @@ $pythonProc = Start-Process -FilePath $pythonExe -ArgumentList 'api.py' -Working
 Start-Sleep -Milliseconds 300
 Write-Log "Starting Nuxt dev detached (port $NuxtPort)"
 # Use `npx` or the installed globally npm config. We'll try using `npm run dev` in the repo root via pwsh.
-  # Start Nuxt dev explicitly on port 3000 and host localhost
-  $nuxtProc = Start-Process -FilePath "pwsh" -ArgumentList "-NoProfile -NoLogo -Command cd '$projectRoot' ; npm run dev -- --port 3000 --hostname localhost" -WorkingDirectory $projectRoot -PassThru -WindowStyle Hidden
+# Start Nuxt dev explicitly on port 3000 and host localhost
+$nuxtProc = Start-Process -FilePath "pwsh" -ArgumentList "-NoProfile -NoLogo -Command Set-Location -Path '$projectRoot' ; npm run dev -- --port $NuxtPort --hostname localhost" -WorkingDirectory $projectRoot -PassThru -WindowStyle Hidden
 
 Start-Sleep -Seconds 1
 $devPids = @{ python = $pythonProc.Id; nuxt = $nuxtProc.Id }
@@ -42,9 +42,9 @@ $end = (Get-Date).AddSeconds(30)
 $pythonUp = $false
 $nuxtUp = $false
 while ((Get-Date) -lt $end -and (-not ($pythonUp -and $nuxtUp))) {
-    try { Invoke-WebRequest -Uri "http://localhost:$PythonPort/health" -UseBasicParsing -TimeoutSec 2 -ErrorAction Stop; $pythonUp = $true } catch { }
-    try { Invoke-WebRequest -Uri "http://localhost:$NuxtPort/" -UseBasicParsing -TimeoutSec 2 -ErrorAction Stop; $nuxtUp = $true } catch { }
-    Start-Sleep -Milliseconds 500
+  try { Invoke-WebRequest -Uri "http://localhost:$PythonPort/health" -UseBasicParsing -TimeoutSec 2 -ErrorAction Stop; $pythonUp = $true } catch { }
+  try { Invoke-WebRequest -Uri "http://localhost:$NuxtPort/" -UseBasicParsing -TimeoutSec 2 -ErrorAction Stop; $nuxtUp = $true } catch { }
+  Start-Sleep -Milliseconds 500
 }
 Write-Log "Python API up: $pythonUp, Nuxt up: $nuxtUp"
 

@@ -1,35 +1,459 @@
 {
-  "name": "matlab-nuxt-app devcontainer",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "name": "Nuxt + Python Dev Container (Docker Compose)",
+  "dockerComposeFile": [
+    "docker-compose.yml",
+    "../docker-compose.override.yml"
+  ],
+  "service": "frontend",
   "workspaceFolder": "/workspace",
-  "features": {
-    "ghcr.io/devcontainers/features/python": {
-      "version": "3.14"
-    }
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "runServices": [
+    "frontend",
+    "api"
+  ],
+  "postCreateCommand": "/workspace/.devcontainer/post-create.sh",
+  "postStartCommand": "/workspace/.devcontainer/post-create.sh",
+  "forwardPorts": [
+    3000,
+    8000,
+    9229
+  ],
+  "containerEnv": {
+    "DEVCONTAINER": "true"
   },
   "customizations": {
     "vscode": {
       "extensions": [
-        "ms-vscode.vscode-typescript-next",
-        "vue.volar",
+        "ms-vscode-remote.remote-containers",
         "ms-python.python",
-        "ms-python.vscode-pylance",
-        "ms-playwright.playwright",
-        "esbenp.prettier-vscode"
+        "ms-azuretools.vscode-docker",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "vue.volar",
+        "eamodio.gitlens"
       ],
       "settings": {
-        "typescript.tsdk": "node_modules/typescript/lib",
-        "typescript.enablePromptUseWorkspaceTsdk": true,
-        "javascript.suggest.enabled": true,
-        "typescript.suggest.enabled": true
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "editor.formatOnSave": true,
+        "eslint.validate": [
+          "javascript",
+          "typescript",
+          "vue"
+        ],
+        "python.pythonPath": "/usr/bin/python3",
+        "files.exclude": {
+          "**/node_modules": true,
+          "**/.git": true
+        }
       }
     }
   },
-  "postCreateCommand": "bash -lc 'npm ci && cd python_api && python -m pip install --upgrade pip && pip install -r requirements.txt && sudo apt-get update && sudo apt-get install -y awscli tmux || true && npm install -g @sentry/cli || true && chmod +x .devcontainer/health-check.sh .devcontainer/start-dev.sh .devcontainer/start-servers-tmux.sh scripts/shell/start.sh'",
-  "containerEnv": {
-    "DEVCONTAINER_AUTO_START_SERVERS": "true"
-  },
-  "postStartCommand": "bash -lc './.devcontainer/health-check.sh; if [ \"$DEVCONTAINER_AUTO_START_SERVERS\" = \"true\" ]; then ./.devcontainer/start-servers-tmux.sh || true; fi; echo Devcontainer ready. Ports forwarded: 3000 (frontend), 8000 (Python API)'",
-  "forwardPorts": [3000, 8000],
-  "remoteUser": "vscode"
+  "remoteUser": "vscode",
+  "shutdownAction": "stopContainer",
+  "overrideCommand": false
 }
+{
+  "name": "Nuxt + Python Dev Container (Docker Compose)",
+  "dockerComposeFile": [
+    "docker-compose.yml",
+    "../docker-compose.override.yml"
+  ],
+  "service": "frontend",
+  "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "runServices": [
+    "frontend",
+    "api"
+  ],
+  "postCreateCommand": "/workspace/.devcontainer/post-create.sh",
+  "postStartCommand": "/workspace/.devcontainer/post-create.sh",
+  "forwardPorts": [
+    3000,
+    8000,
+    9229
+  ],
+  "containerEnv": {
+    "DEVCONTAINER": "true"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode-remote.remote-containers",
+        "ms-python.python",
+        "ms-azuretools.vscode-docker",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "vue.volar",
+        "eamodio.gitlens"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "editor.formatOnSave": true,
+        "eslint.validate": [
+          "javascript",
+          "typescript",
+          "vue"
+        ],
+        "python.pythonPath": "/usr/bin/python3",
+        "files.exclude": {
+          "**/node_modules": true,
+          "**/.git": true
+        }
+      }
+    }
+  },
+  "remoteUser": "vscode",
+  "shutdownAction": "stopContainer",
+  "overrideCommand": false
+}
+{
+  "name": "Nuxt + Python Dev Container (Docker Compose)",
+  "dockerComposeFile": [
+    "docker-compose.yml",
+    "../docker-compose.override.yml"
+  ],
+  "service": "frontend",
+  "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "runServices": [
+    "frontend",
+    "api"
+  ],
+  "postCreateCommand": "/workspace/.devcontainer/post-create.sh",
+  "postStartCommand": "/workspace/.devcontainer/post-create.sh",
+  "forwardPorts": [
+    3000,
+    8000,
+    9229
+  ],
+  "containerEnv": {
+    "DEVCONTAINER": "true"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode-remote.remote-containers",
+        "ms-python.python",
+        "ms-azuretools.vscode-docker",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        {
+          "name": "Nuxt + Python Dev Container (Docker Compose)",
+          "dockerComposeFile": [
+            "docker-compose.yml",
+            "../docker-compose.override.yml"
+          ],
+          "service": "frontend",
+          "workspaceFolder": "/workspace",
+          "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+          "runServices": [
+            "frontend",
+            "api"
+          ],
+          "postCreateCommand": "/workspace/.devcontainer/post-create.sh",
+          "postStartCommand": "/workspace/.devcontainer/post-create.sh",
+          "forwardPorts": [
+            3000,
+            8000,
+            9229
+          ],
+          "containerEnv": {
+            "DEVCONTAINER": "true"
+          },
+          "customizations": {
+            "vscode": {
+              "extensions": [
+                "ms-vscode-remote.remote-containers",
+                "ms-python.python",
+                "ms-azuretools.vscode-docker",
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "vue.volar",
+                "eamodio.gitlens"
+              ],
+              "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "editor.formatOnSave": true,
+                "eslint.validate": [
+                  "javascript",
+                  "typescript",
+                  "vue"
+                ],
+                "python.pythonPath": "/usr/bin/python3",
+                "files.exclude": {
+                  "**/node_modules": true,
+                  "**/.git": true
+                }
+              }
+            }
+          },
+          "remoteUser": "vscode",
+          "shutdownAction": "stopContainer",
+          "overrideCommand": false
+        }
+  "forwardPorts": [
+          3000,
+          8000,
+          9229
+        ],
+        "containerEnv": {
+          "DEVCONTAINER": "true"
+        },
+        "customizations": {
+          "vscode": {
+            "extensions": [
+              "ms-vscode-remote.remote-containers",
+              "ms-python.python",
+              "ms-azuretools.vscode-docker",
+              "dbaeumer.vscode-eslint",
+              "esbenp.prettier-vscode",
+              "vue.volar",
+              "eamodio.gitlens"
+            ],
+            "settings": {
+              "terminal.integrated.defaultProfile.linux": "bash",
+              "editor.formatOnSave": true,
+              "eslint.validate": [
+                "javascript",
+                "typescript",
+                "vue"
+              ],
+              "python.pythonPath": "/usr/bin/python3",
+              "files.exclude": {
+                "**/node_modules": true,
+                "**/.git": true
+              }
+            }
+          }
+        },
+        "remoteUser": "vscode",
+        "shutdownAction": "stopContainer",
+        "overrideCommand": false
+      }
+{
+        "name": "Nuxt + Python Dev Container",
+        "dockerComposeFile": [
+          "docker-compose.yml",
+          "../docker-compose.override.yml"
+        ],
+        "service": "frontend",
+        "workspaceFolder": "/workspace",
+        "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+        "runServices": [
+          "frontend",
+          "api"
+        ],
+        "postCreateCommand": "/workspace/.devcontainer/post-create.sh",
+        "postStartCommand": "/workspace/.devcontainer/post-create.sh",
+        "forwardPorts": [
+          3000,
+          8000,
+          9229
+        ],
+        "containerEnv": {
+          "DEVCONTAINER": "true"
+        },
+        "customizations": {
+          "vscode": {
+            "extensions": [
+              "ms-vscode-remote.remote-containers",
+              "ms-python.python",
+              "ms-azuretools.vscode-docker",
+              "dbaeumer.vscode-eslint",
+              "esbenp.prettier-vscode",
+              "vue.volar",
+              "octref.vetur",
+              "eamodio.gitlens"
+            ],
+            "settings": {
+              "terminal.integrated.defaultProfile.linux": "bash",
+              "editor.formatOnSave": true,
+              "eslint.validate": [
+                "javascript",
+                "typescript",
+                "vue"
+              ],
+              "python.pythonPath": "/usr/bin/python3",
+              "files.exclude": {
+                "**/node_modules": true,
+                "**/.git": true
+              }
+            }
+          }
+        },
+        "remoteUser": "vscode",
+        "shutdownAction": "stopContainer",
+        "overrideCommand": false
+      }
+{
+        "name": "Nuxt + Python Dev Container",
+        "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+        "workspaceFolder": "/workspace",
+        "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+        "features": {
+          "ghcr.io/devcontainers/features/python": {
+            "version": "3.14"
+          },
+          "ghcr.io/devcontainers/features/git": {},
+          "ghcr.io/devcontainers/features/docker-in-docker": {}
+        },
+        "customizations": {
+          "vscode": {
+            "extensions": [
+              "ms-vscode.vscode-typescript-next",
+              "vue.volar",
+              "ms-python.python",
+              "ms-python.vscode-pylance",
+              "ms-playwright.playwright",
+              "esbenp.prettier-vscode",
+              "dbaeumer.vscode-eslint",
+              "eamodio.gitlens",
+              "ms-azuretools.vscode-docker",
+              "streetsidesoftware.code-spell-checker",
+              "octref.vetur"
+            ],
+            "settings": {
+              "typescript.tsdk": "node_modules/typescript/lib",
+              "typescript.enablePromptUseWorkspaceTsdk": true,
+              "javascript.suggest.enabled": true,
+              "typescript.suggest.enabled": true,
+              "editor.formatOnSave": true,
+              "editor.codeActionsOnSave": {
+                "source.fixAll.eslint": true
+              },
+              "eslint.validate": [
+                "javascript",
+                "typescript",
+                "vue"
+              ],
+              "files.exclude": {
+                "**/node_modules": true,
+                "**/.git": true,
+                "**/.venv": true
+              }
+            }
+          }
+        },
+        "postCreateCommand": "bash -lc 'npm ci && npx playwright install --with-deps && cd python_api && python -m pip install --upgrade pip && pip install -r requirements.txt && sudo apt-get update && sudo apt-get install -y awscli tmux || true && npm install -g @sentry/cli || true && chmod +x .devcontainer/health-check.sh .devcontainer/start-dev.sh .devcontainer/start-servers-tmux.sh scripts/shell/start.sh'",
+        "postStartCommand": "bash -lc './.devcontainer/health-check.sh; if [ \"$DEVCONTAINER_AUTO_START_SERVERS\" = \"true\" ]; then ./.devcontainer/start-servers-tmux.sh || true; fi; echo Devcontainer ready. Ports forwarded: 3000 (frontend), 8000 (Python API)'",
+        "containerEnv": {
+          "DEVCONTAINER_AUTO_START_SERVERS": "true"
+        },
+        "forwardPorts": [
+          3000,
+          8000,
+          9229
+        ],
+        "remoteUser": "vscode",
+        "shutdownAction": "stopContainer",
+        "overrideCommand": false
+      }
+{
+        "name": "Nuxt + Python Dev Container",
+        "dockerComposeFile": "docker-compose.yml",
+        "service": "frontend",
+        "workspaceFolder": "/workspace",
+        "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+        "customizations": {
+          "vscode": {
+            "extensions": [
+              "ms-vscode-remote.remote-containers",
+              "ms-vscode-remote.vscode-remote-extensionpack",
+              "ms-python.python",
+              "ms-azuretools.vscode-docker",
+              "dbaeumer.vscode-eslint",
+              "esbenp.prettier-vscode",
+              "Vue.volar",
+              "octref.vetur"
+            ]
+          }
+        },
+        "workspaceFolder": "/workspace",
+        "postStartCommand": "bash -lc './.devcontainer/health-check.sh; if [ \"$DEVCONTAINER_AUTO_START_SERVERS\" = \"true\" ]; then ./.devcontainer/start-servers-tmux.sh || true; fi; echo Devcontainer ready. Ports forwarded: 3000 (frontend), 8000 (Python API)'",
+        "features": {},
+        "postCreateCommand": "bash -lc \"./.devcontainer/post-create.sh\"",
+        "forwardPorts": [
+          3000,
+          8000
+        ],
+        "runServices": [
+          "frontend",
+          "api"
+        ],
+        "forwardPorts": [
+          3000,
+          8000,
+          9229
+        ],
+        "remoteUser": "vscode",
+        "containerEnv": {
+          "DEVCONTAINER": "true"
+        },
+        "overrideCommand": false,
+        "shutdownAction": "stopContainer"
+      }
+{
+        "name": "matlab-nuxt-app devcontainer",
+        "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+        "workspaceFolder": "/workspace",
+        "features": {
+          "ghcr.io/devcontainers/features/python": {
+            "version": "3.14"
+          }
+        },
+        "customizations": {
+          "vscode": {
+            "extensions": [
+              "ms-vscode.vscode-typescript-next",
+              "vue.volar",
+              "ms-python.python",
+              "ms-python.vscode-pylance",
+              "ms-playwright.playwright",
+              "esbenp.prettier-vscode",
+              "dbaeumer.vscode-eslint",
+              "eamodio.gitlens",
+              "ms-azuretools.vscode-docker",
+              "streetsidesoftware.code-spell-checker",
+              "octref.vetur"
+            ],
+            "settings": {
+              "typescript.tsdk": "node_modules/typescript/lib",
+              "typescript.enablePromptUseWorkspaceTsdk": true,
+              "javascript.suggest.enabled": true,
+              "typescript.suggest.enabled": true,
+              "editor.formatOnSave": true,
+              "editor.codeActionsOnSave": {
+                "source.fixAll.eslint": true
+              },
+              "eslint.validate": [
+                "javascript",
+                "typescript",
+                "vue"
+              ],
+              "files.exclude": {
+                "**/node_modules": true,
+                "**/.git": true,
+                "**/.venv": true
+              }
+            }
+          }
+        },
+        "postStartCommand": "bash -lc \"/workspace/.devcontainer/post-create.sh\"""postCreateCommand": "bash -lc 'npm ci && npx playwright install --with-deps && cd python_api && python -m pip install --upgrade pip && pip install -r requirements.txt && sudo apt-get update && sudo apt-get install -y awscli tmux || true && npm install -g @sentry/cli || true && chmod +x .devcontainer/health-check.sh .devcontainer/start-dev.sh .devcontainer/start-servers-tmux.sh scripts/shell/start.sh'",
+        "containerEnv": {
+          "DEVCONTAINER_AUTO_START_SERVERS": "true"
+        },
+        "postStartCommand": "bash -lc './.devcontainer/health-check.sh; if [ \"$DEVCONTAINER_AUTO_START_SERVERS\" = \"true\" ]; then ./.devcontainer/start-servers-tmux.sh || true; fi; echo Devcontainer ready. Ports forwarded: 3000 (frontend), 8000 (Python API)'",
+        "forwardPorts": [
+          3000,
+          8000,
+          9229
+        ],
+        "remoteUser": "vscode",
+        "features": {
+          "ghcr.io/devcontainers/features/docker-in-docker": {},
+          "ghcr.io/devcontainers/features/git": {},
+          "ghcr.io/devcontainers/features/node": {
+            "version": "22"
+          }
+        }
+      }

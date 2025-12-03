@@ -1,9 +1,4 @@
 /* ESLint Flat Config for Nuxt 4 + Vue 3 + TypeScript + Prettier */
-const vueParser = require('vue-eslint-parser')
-const tsParser = require('@typescript-eslint/parser')
-const vuePlugin = require('eslint-plugin-vue')
-const tsPlugin = require('@typescript-eslint/eslint-plugin')
-const prettierPlugin = require('eslint-plugin-prettier')
 
 module.exports = [
   {
@@ -27,18 +22,18 @@ module.exports = [
       'python_api/__pycache__/**',
     ],
     languageOptions: {
-      parser: vueParser,
+      parser: require('vue-eslint-parser'),
       parserOptions: {
-        parser: tsParser,
+        parser: require('@typescript-eslint/parser'),
         ecmaVersion: 2022,
         sourceType: 'module',
         extraFileExtensions: ['.vue']
       }
     },
     plugins: {
-      vue: vuePlugin,
-      '@typescript-eslint': tsPlugin,
-      prettier: prettierPlugin
+      vue: require('eslint-plugin-vue'),
+      '@typescript-eslint': require('@typescript-eslint/eslint-plugin'),
+      prettier: require('eslint-plugin-prettier')
     },
     rules: {
       'prettier/prettier': 'error',

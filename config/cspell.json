@@ -10,6 +10,7 @@
     "fprintf",
     "fullfile",
     "fullpath",
+    "heroicons",
     "iscategorical",
     "iscell",
     "isfinite",

@@ -9,7 +9,11 @@ This directory contains end-to-end tests for the Mobile Finder application using
 ### Option 1: Automatic (Recommended for CI)
 
 ```powershell
-npm test  # Auto-starts servers, runs tests, cleans up
+# Windows (PowerShell)
+npm run test:with-dev  # Starts servers automatically using PowerShell scripts, runs tests, cleans up
+
+# Linux / CI (Bash)
+npm run test:ci:e2e  # Cross-platform helper for CI that starts servers, runs Playwright, cleans up
 ```
 
 ### Option 2: Manual (Recommended for Development)

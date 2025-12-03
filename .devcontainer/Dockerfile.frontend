@@ -1,0 +1,27 @@
+FROM node:18-bullseye-slim
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+WORKDIR /workspace
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    bash git curl ca-certificates build-essential python3 python3-pip && rm -rf /var/lib/apt/lists/*
+
+RUN groupadd -g 1000 node && useradd -m -u 1000 -g node node
+USER node
+
+ENV PATH=/home/node/.local/bin:/usr/local/bin:${PATH}
+
+# Copy package files early to leverage Docker build cache for dependencies
+COPY --chown=node:node package*.json ./
+RUN npm ci --no-audit --no-fund --ignore-scripts || npm install --no-audit --no-fund --ignore-scripts || true
+
+# Copy the rest of the workspace
+COPY --chown=node:node . /workspace
+
+# Optional: install top-level requirements.txt (not the API requirements)
+RUN if [ -f "/workspace/requirements.txt" ]; then python3 -m pip install -r /workspace/requirements.txt || true; fi
+RUN chmod +x /workspace/.devcontainer/wrap-npm-run.sh || true
+
+# Default command is to start the dev server, but in compose we override it.
+CMD ["sleep","infinity"]

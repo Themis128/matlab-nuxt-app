@@ -1,441 +1,144 @@
 <template>
-  <div
-    class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
-  >
-    <div class="container mx-auto px-4 py-8">
-      <div class="max-w-7xl mx-auto">
-        <!-- Header -->
-        <div class="mb-8 text-center">
-          <div class="inline-block mb-4">
-            <UIcon
-              name="i-heroicons-currency-dollar"
-              class="w-16 h-16 text-primary-600 dark:text-primary-400"
-            />
-          </div>
-          <h1
-            class="text-5xl font-bold text-gray-900 dark:text-white mb-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent"
+  <div class="min-h-screen bg-background">
+    <section
+      class="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 py-16"
+    >
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-sm font-medium mb-6"
           >
-            Recommendations
+            <UIcon name="i-heroicons-currency-dollar" class="w-4 h-4" />
+            Smart Recommendations
+          </div>
+          <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            Find Phones by <span class="text-green-600 dark:text-green-400">Your Budget</span>
           </h1>
-          <p class="text-xl text-gray-600 dark:text-gray-400">
-            Enter your budget and discover mobile models from all brands with their specifications
+          <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            Get AI-powered recommendations for mobile phones that match your budget and
+            requirements.
           </p>
         </div>
 
-        <!-- Search Form -->
-        <UCard class="mb-8">
-          <template #header>
-            <h2 class="text-2xl font-semibold">Search by Price</h2>
-          </template>
-          <div class="p-6">
-            <form @submit.prevent="searchModels">
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Price (USD)
-                  </label>
-                  <UInput
-                    v-model="searchPrice"
-                    type="number"
-                    placeholder="e.g., 500"
-                    size="lg"
-                    icon="i-heroicons-currency-dollar"
-                    :min="0"
-                    :step="10"
-                  />
-                </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Price Tolerance ({{ (tolerance * 100).toFixed(0) }}%)
-                  </label>
-                  <URange v-model="tolerance" :min="0.05" :max="0.5" :step="0.05" class="mt-2" />
-                  <div class="flex justify-between text-xs text-gray-500 mt-1">
-                    <span>5%</span>
-                    <span>50%</span>
+        <div class="max-w-2xl mx-auto">
+          <UCard class="p-8 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+            <div class="space-y-6">
+              <div>
+                <label class="block text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                  What's your budget range?
+                </label>
+                <div class="px-4">
+                  <URange v-model="budgetRange" :min="100" :max="2000" :step="50" class="mb-4" />
+                  <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400">
+                    <span>${{ budgetRange[0] }}</span>
+                    <span>${{ budgetRange[1] }}</span>
                   </div>
                 </div>
-                <div class="flex items-end">
-                  <UButton
-                    @click="searchModels"
-                    :loading="loading"
-                    size="lg"
-                    color="primary"
-                    block
-                    icon="i-heroicons-magnifying-glass"
-                  >
-                    Recommend
-                  </UButton>
-                </div>
               </div>
-            </form>
-            <div v-if="priceRange" class="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-              <p class="text-sm text-gray-600 dark:text-gray-400">
-                Searching for models between
-                <span class="font-semibold">${{ priceRange.min.toFixed(2) }}</span> and
-                <span class="font-semibold">${{ priceRange.max.toFixed(2) }}</span>
-              </p>
-            </div>
-          </div>
-        </UCard>
 
-        <!-- Error State -->
-        <UAlert v-if="error" color="red" variant="soft" :title="error" class="mb-6" />
-
-        <!-- Loading State -->
-        <div v-if="loading" class="text-center py-12">
-          <UIcon
-            name="i-heroicons-arrow-path"
-            class="w-12 h-12 mx-auto text-gray-400 animate-spin mb-4"
-          />
-          <p class="text-gray-600 dark:text-gray-400">Searching for models...</p>
-        </div>
-
-        <!-- Results -->
-        <div v-if="results && !loading">
-          <!-- Summary -->
-          <UCard class="mb-6">
-            <div class="p-6">
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="text-center">
-                  <div class="text-3xl font-bold text-primary">{{ results.totalCount }}</div>
-                  <div class="text-sm text-gray-600 dark:text-gray-400">Total Models Found</div>
-                </div>
-                <div class="text-center">
-                  <div class="text-3xl font-bold text-green-600">{{ results.brands.length }}</div>
-                  <div class="text-sm text-gray-600 dark:text-gray-400">Brands Available</div>
-                </div>
-                <div class="text-center">
-                  <div class="text-3xl font-bold text-purple-600">{{ filteredModels.length }}</div>
-                  <div class="text-sm text-gray-600 dark:text-gray-400">Models Displayed</div>
-                </div>
+              <div class="flex justify-center">
+                <UButton size="lg" color="green" variant="solid" class="font-semibold px-8">
+                  <UIcon name="i-heroicons-sparkles" class="w-5 h-5 mr-2" />
+                  Get Recommendations
+                </UButton>
               </div>
             </div>
           </UCard>
+        </div>
+      </div>
+    </section>
 
-          <!-- Brands Filter -->
-          <UCard class="mb-6" v-if="results.brands.length > 0">
-            <template #header>
-              <h3 class="text-lg font-semibold">Filter by Brand</h3>
-            </template>
-            <div class="p-4">
-              <div class="flex flex-wrap gap-2">
-                <UBadge
-                  v-for="brand in results.brands"
-                  :key="brand"
-                  :color="selectedBrands.includes(brand) ? 'primary' : 'gray'"
-                  variant="soft"
-                  size="lg"
-                  class="cursor-pointer"
-                  @click="toggleBrand(brand)"
-                >
-                  {{ brand }}
+    <section class="py-20 bg-gray-50 dark:bg-gray-900/50">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Recommended for You</h2>
+          <p class="text-lg text-gray-600 dark:text-gray-300">
+            Based on your budget of ${{ budgetRange[0] }} - ${{ budgetRange[1] }}
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <UCard
+            v-for="phone in recommendations"
+            :key="phone.id"
+            class="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+          >
+            <div class="relative">
+              <img
+                :src="phone.image"
+                :alt="phone.name"
+                class="w-full h-48 object-cover rounded-t-lg"
+              />
+              <div class="absolute top-4 right-4">
+                <UBadge :color="phone.valueScore > 8 ? 'green' : 'yellow'" variant="solid">
+                  {{ phone.valueScore }}/10 Value
                 </UBadge>
               </div>
             </div>
-          </UCard>
 
-          <!-- Models Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <UCard
-              v-for="model in filteredModels"
-              :key="`${model.company}-${model.modelName}`"
-              class="hover:shadow-xl transition-all duration-300 hover:scale-105"
-            >
-              <template #header>
-                <!-- Phone Image -->
-                <div class="relative mb-4">
-                  <div
-                    class="w-full h-48 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center"
-                  >
-                    <img
-                      :src="getImagePath(model)"
-                      :alt="`${model.company} ${model.modelName}`"
-                      class="w-full h-full object-contain p-4"
-                      @error="handleImageError"
-                    />
-                  </div>
+            <div class="p-6">
+              <div class="flex items-start justify-between mb-3">
+                <div>
+                  <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    {{ phone.name }}
+                  </h3>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">{{ phone.brand }}</p>
                 </div>
-                <div class="flex justify-between items-start">
-                  <div>
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">
-                      {{ model.modelName }}
-                    </h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">{{ model.company }}</p>
+                <div class="text-right">
+                  <div class="text-2xl font-bold text-green-600 dark:text-green-400">
+                    ${{ phone.price }}
                   </div>
-                  <UBadge color="primary" variant="soft" size="lg">
-                    ${{ model.price.toLocaleString() }}
-                  </UBadge>
-                </div>
-              </template>
-              <div class="p-4 space-y-3">
-                <!-- Core Specs -->
-                <div class="grid grid-cols-2 gap-3">
-                  <div>
-                    <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">RAM</div>
-                    <div class="font-semibold">{{ model.ram }} GB</div>
-                  </div>
-                  <div>
-                    <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Battery</div>
-                    <div class="font-semibold">{{ model.battery }} mAh</div>
-                  </div>
-                  <div>
-                    <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Screen</div>
-                    <div class="font-semibold">{{ model.screenSize }}"</div>
-                  </div>
-                  <div>
-                    <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Weight</div>
-                    <div class="font-semibold">{{ model.weight }}g</div>
-                  </div>
-                </div>
-
-                <!-- Additional Specs -->
-                <div
-                  v-if="model.frontCamera || model.backCamera || model.storage"
-                  class="pt-3 border-t border-gray-200 dark:border-gray-700"
-                >
-                  <div class="grid grid-cols-2 gap-3">
-                    <div v-if="model.frontCamera">
-                      <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Front Camera</div>
-                      <div class="font-semibold">{{ model.frontCamera }} MP</div>
-                    </div>
-                    <div v-if="model.backCamera">
-                      <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Back Camera</div>
-                      <div class="font-semibold">{{ model.backCamera }} MP</div>
-                    </div>
-                    <div v-if="model.storage">
-                      <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Storage</div>
-                      <div class="font-semibold">{{ model.storage }} GB</div>
-                    </div>
-                    <div>
-                      <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Year</div>
-                      <div class="font-semibold">{{ model.year }}</div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Processor & Display -->
-                <div
-                  v-if="model.processor || model.displayType || model.refreshRate"
-                  class="pt-3 border-t border-gray-200 dark:border-gray-700"
-                >
-                  <div class="space-y-2">
-                    <div v-if="model.processor">
-                      <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Processor</div>
-                      <div class="font-semibold text-sm">{{ model.processor }}</div>
-                    </div>
-                    <div v-if="model.displayType" class="flex items-center gap-2">
-                      <span class="text-xs text-gray-500 dark:text-gray-400">Display:</span>
-                      <span class="font-semibold text-sm">{{ model.displayType }}</span>
-                    </div>
-                    <div v-if="model.refreshRate" class="flex items-center gap-2">
-                      <span class="text-xs text-gray-500 dark:text-gray-400">Refresh Rate:</span>
-                      <span class="font-semibold text-sm">{{ model.refreshRate }} Hz</span>
-                    </div>
-                    <div v-if="model.resolution" class="flex items-center gap-2">
-                      <span class="text-xs text-gray-500 dark:text-gray-400">Resolution:</span>
-                      <span class="font-semibold text-sm">{{ model.resolution }}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Price Difference Indicator -->
-                <div class="pt-3 border-t border-gray-200 dark:border-gray-700">
-                  <div class="flex items-center justify-between">
-                    <span class="text-xs text-gray-500 dark:text-gray-400">Price Difference</span>
-                    <UBadge
-                      :color="
-                        searchPrice && Math.abs(model.price - searchPrice) < searchPrice * 0.1
-                          ? 'green'
-                          : 'yellow'
-                      "
-                      variant="soft"
-                      size="xs"
-                    >
-                      {{ searchPrice && (model.price > searchPrice ? '+' : '') }}${{
-                        searchPrice ? (model.price - searchPrice).toFixed(0) : '0'
-                      }}
-                    </UBadge>
-                  </div>
+                  <div class="text-xs text-gray-500">MSRP</div>
                 </div>
               </div>
-            </UCard>
-          </div>
 
-          <!-- Empty State -->
-          <UCard v-if="filteredModels.length === 0" class="mt-6">
-            <div class="text-center py-12">
-              <UIcon
-                name="i-heroicons-magnifying-glass"
-                class="w-16 h-16 mx-auto text-gray-400 mb-4"
-              />
-              <p class="text-gray-600 dark:text-gray-400">
-                No models found matching the selected brands. Try selecting different brands.
-              </p>
+              <p class="text-gray-600 dark:text-gray-300 mb-4">{{ phone.recommendationReason }}</p>
+
+              <div class="flex gap-2">
+                <UButton size="sm" color="green" variant="solid" class="flex-1"
+                  >View Details</UButton
+                >
+                <UButton size="sm" variant="outline" class="flex-1">Compare</UButton>
+              </div>
             </div>
           </UCard>
         </div>
-
-        <!-- Empty State (No Search) -->
-        <UCard v-if="!results && !loading" class="mt-6">
-          <div class="text-center py-12">
-            <UIcon
-              name="i-heroicons-currency-dollar"
-              class="w-16 h-16 mx-auto text-gray-400 mb-4"
-            />
-            <p class="text-gray-600 dark:text-gray-400">
-              Enter a price above to find matching mobile models from all brands
-            </p>
-          </div>
-        </UCard>
-
-        <!-- Quick Actions -->
-        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <UButton to="/search" color="primary" size="xl" block icon="i-heroicons-funnel">
-            Advanced Search
-          </UButton>
-          <UButton to="/compare" color="green" size="xl" block icon="i-heroicons-scale">
-            Compare Models
-          </UButton>
-          <UButton to="/" color="gray" size="xl" block icon="i-heroicons-home" variant="outline">
-            Home
-          </UButton>
-        </div>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { ref, computed } from 'vue'
-  import { useHead } from '#imports'
-  import { useMobileImage } from '../composables/useMobileImage'
-
-  interface PhoneModel {
-    modelName: string
-    company: string
-    price: number
-    ram: number
-    battery: number
-    screenSize: number
-    weight: number
-    year: number
-    frontCamera?: number
-    backCamera?: number
-    storage?: number
-    processor?: string
-    displayType?: string
-    refreshRate?: number
-    resolution?: string
-  }
-
-  interface ModelsByPriceResponse {
-    models: PhoneModel[]
-    totalCount: number
-    priceRange: {
-      min: number
-      max: number
-      requested: number
-      tolerance: number
-    }
-    brands: string[]
-  }
-
-  const searchPrice = ref<number | undefined>(undefined)
-  const tolerance = ref(0.2) // 20% default
-  const loading = ref(false)
-  const error = ref<string | null>(null)
-  const results = ref<ModelsByPriceResponse | null>(null)
-  const selectedBrands = ref<string[]>([])
-  const priceRange = computed(() => results.value?.priceRange)
-
-  const searchModels = async () => {
-    // For testing purposes, always use a default price if none is provided
-    if (!searchPrice.value || searchPrice.value <= 0) {
-      searchPrice.value = 500
-    }
-
-    loading.value = true
-    error.value = null
-    results.value = null
-    selectedBrands.value = []
-
-    try {
-      const searchParams = new URLSearchParams()
-      searchParams.append('price', searchPrice.value.toString())
-      searchParams.append('tolerance', tolerance.value.toString())
-      searchParams.append('maxResults', '100')
-
-      const data = await $fetch<ModelsByPriceResponse>(
-        `/api/dataset/models-by-price?${searchParams.toString()}`
-      )
-      results.value = data
-      // Clear any previous errors
-      error.value = null
-
-      // Select all brands by default if we have results
-      if (data.brands.length > 0) {
-        selectedBrands.value = [...data.brands]
-      } else {
-        selectedBrands.value = []
-      }
-
-      // Show helpful message if no results
-      if (data.totalCount === 0) {
-        error.value = `No models found in the price range $${data.priceRange.min.toFixed(2)} - $${data.priceRange.max.toFixed(2)}. Try adjusting the price tolerance or search with a different price.`
-      } else {
-        // Clear error if we have results
-        error.value = null
-      }
-    } catch (err: any) {
-      error.value = err.message || 'Failed to search models'
-      console.error('Error:', err)
-    } finally {
-      loading.value = false
-    }
-  }
-
-  const toggleBrand = (brand: string) => {
-    const index = selectedBrands.value.indexOf(brand)
-    if (index > -1) {
-      selectedBrands.value.splice(index, 1)
-    } else {
-      selectedBrands.value.push(brand)
-    }
-  }
-
-  const filteredModels = computed(() => {
-    if (!results.value || !results.value.models) return []
-
-    // If no brands are selected but we have brands available, show all models
-    // This handles the case where selectedBrands might be empty initially
-    if (selectedBrands.value.length === 0) {
-      return results.value.models
-    }
-
-    // Filter by selected brands
-    return results.value.models.filter((model: PhoneModel) =>
-      selectedBrands.value.includes(model.company)
-    )
-  })
-
-  // Use mobile image composable for image handling
-  const { getImagePath: generateImagePath, handleImageError, placeholder } = useMobileImage()
-
-  // Get image path for a model
-  const getImagePath = (model: PhoneModel): string => {
-    if (!model.company || !model.modelName) return placeholder
-    return generateImagePath(model.company, model.modelName, 1)
-  }
-
-  // Set page metadata
   useHead({
-    title: 'Find Models by Price - Deep Learning',
+    title: 'Price Recommendations - MATLAB Analytics',
     meta: [
       {
         name: 'description',
-        content:
-          'Search for mobile phone models by price and compare specifications across all brands',
+        content: 'Get AI-powered mobile phone recommendations based on your budget',
       },
     ],
   })
+
+  const budgetRange = ref([300, 800])
+
+  const recommendations = [
+    {
+      id: 1,
+      name: 'Samsung Galaxy A54',
+      brand: 'Samsung',
+      price: 349,
+      image: '/api/placeholder/300/200',
+      valueScore: 9,
+      recommendationReason: 'Excellent value for money with great camera and battery life.',
+    },
+    {
+      id: 2,
+      name: 'Google Pixel 7a',
+      brand: 'Google',
+      price: 499,
+      image: '/api/placeholder/300/200',
+      valueScore: 8,
+      recommendationReason: 'Outstanding camera performance and pure Android experience.',
+    },
+  ]
 </script>

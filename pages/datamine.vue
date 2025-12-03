@@ -1,652 +1,440 @@
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
-    <!-- Header -->
-    <div class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
-      <div class="max-w-7xl mx-auto container-responsive">
-        <div class="flex justify-between items-center py-6">
-          <div>
-            <h1 class="text-responsive-lg font-bold text-gray-900 dark:text-white gradient-text">
-              🔍 Data Mining Studio
-            </h1>
-            <p class="mt-2 text-gray-600 dark:text-gray-400">
-              Upload, analyze, and mine insights from your datasets with advanced AI
-            </p>
-          </div>
-          <div class="flex items-center space-x-4">
-            <div class="text-sm text-gray-500 dark:text-gray-400">
-              {{ currentDataset ? `Analyzing: ${currentDataset.name}` : 'No dataset loaded' }}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="max-w-7xl mx-auto container-responsive section-spacing">
-      <!-- Upload Section -->
-      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
-        <div
-          class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center"
-        >
-          <UIcon name="i-heroicons-cloud-arrow-up" class="w-12 h-12 mx-auto text-gray-400 mb-4" />
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-            Upload Your Dataset
-          </h3>
-          <p class="text-gray-600 dark:text-gray-400 mb-4">
-            Support for CSV, JSON, Excel files. Maximum 50MB.
+  <div class="min-h-screen bg-background">
+    <!-- Header Section -->
+    <section class="bg-gradient-to-r from-violet-600 to-purple-600 text-white py-16">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <h1 class="text-4xl sm:text-5xl font-bold mb-4">Data Mining & Exploration</h1>
+          <p class="text-xl text-violet-100 max-w-2xl mx-auto">
+            Discover hidden patterns and insights in your mobile datasets with advanced data mining
+            techniques
           </p>
-          <input
-            ref="fileInput"
-            type="file"
-            accept=".csv,.json,.xlsx,.xls"
-            @change="handleFileUpload"
-            class="hidden"
-          />
-          <UButton
-            @click="handleFileSelect"
-            color="primary"
-            size="lg"
-            :loading="uploading"
-            :disabled="uploading"
-          >
-            <UIcon name="i-heroicons-document-plus" class="w-5 h-5 mr-2" />
-            Choose File
-          </UButton>
         </div>
       </div>
+    </section>
 
-      <!-- Analysis Tabs -->
-      <div v-if="currentDataset" class="mb-8">
-        <UTabs v-model="activeTab" :items="analysisTabs" />
-
-        <!-- Data Profiling Tab -->
-        <div v-if="activeTab === 'profile'" class="mt-6">
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-            <!-- Dataset Overview -->
-            <div class="lg:col-span-1">
-              <UCard>
-                <h3 class="text-lg font-semibold mb-4">Dataset Overview</h3>
-                <div class="space-y-3">
-                  <div class="flex justify-between">
-                    <span class="text-gray-600 dark:text-gray-400">Rows:</span>
-                    <span class="font-semibold">{{ currentDataset.rows }}</span>
-                  </div>
-                  <div class="flex justify-between">
-                    <span class="text-gray-600 dark:text-gray-400">Columns:</span>
-                    <span class="font-semibold">{{ currentDataset.columns }}</span>
-                  </div>
-                  <div class="flex justify-between">
-                    <span class="text-gray-600 dark:text-gray-400">File Size:</span>
-                    <span class="font-semibold">{{ formatFileSize(currentDataset.size) }}</span>
-                  </div>
-                  <div class="flex justify-between">
-                    <span class="text-gray-600 dark:text-gray-400">Missing Values:</span>
-                    <span class="font-semibold">{{ currentDataset.missingValues }}</span>
-                  </div>
-                </div>
-              </UCard>
+    <!-- Data Mining Dashboard -->
+    <section class="py-20">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Data Overview Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          <UCard class="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="p-3 rounded-lg bg-violet-500 text-white">
+                <UIcon name="i-heroicons-database" class="w-6 h-6" />
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Total Records</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Dataset Size</p>
+              </div>
             </div>
-
-            <!-- Column Types -->
-            <div class="lg:col-span-2">
-              <UCard>
-                <h3 class="text-lg font-semibold mb-4">Column Analysis</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div
-                    v-for="col in currentDataset.columnTypes"
-                    :key="col.name"
-                    class="p-3 bg-gray-50 dark:bg-gray-700 rounded"
-                  >
-                    <div class="flex justify-between items-center">
-                      <span class="font-medium">{{ col.name }}</span>
-                      <UBadge :color="getTypeColor(col.type)">{{ col.type }}</UBadge>
-                    </div>
-                    <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                      {{ col.unique }} unique • {{ col.missing }} missing
-                    </div>
-                  </div>
-                </div>
-              </UCard>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-gray-900 dark:text-white mb-2">2.4M</div>
+              <div class="text-sm text-violet-600 dark:text-violet-400">+12% this month</div>
             </div>
-          </div>
+          </UCard>
 
-          <!-- Data Preview -->
-          <UCard>
-            <template #header>
-              <h3 class="text-lg font-semibold">Data Preview (First 10 Rows)</h3>
-            </template>
-            <div class="overflow-x-auto">
-              <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                <thead class="bg-gray-50 dark:bg-gray-700">
-                  <tr>
-                    <th
-                      v-for="col in currentDataset.preview.columns"
-                      :key="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-                    >
-                      {{ col }}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody
-                  class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700"
-                >
-                  <tr v-for="row in currentDataset.preview.data" :key="row.id">
-                    <td
-                      v-for="value in row"
-                      :key="value"
-                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100"
-                    >
-                      {{ value }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+          <UCard class="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="p-3 rounded-lg bg-blue-500 text-white">
+                <UIcon name="i-heroicons-chart-bar" class="w-6 h-6" />
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Patterns Found</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Discovered</p>
+              </div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-gray-900 dark:text-white mb-2">147</div>
+              <div class="text-sm text-blue-600 dark:text-blue-400">+23 this week</div>
+            </div>
+          </UCard>
+
+          <UCard class="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="p-3 rounded-lg bg-green-500 text-white">
+                <UIcon name="i-heroicons-sparkles" class="w-6 h-6" />
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Clusters</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Identified</p>
+              </div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-gray-900 dark:text-white mb-2">8</div>
+              <div class="text-sm text-green-600 dark:text-green-400">Optimal groups</div>
+            </div>
+          </UCard>
+
+          <UCard class="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="p-3 rounded-lg bg-orange-500 text-white">
+                <UIcon name="i-heroicons-lightning-bolt" class="w-6 h-6" />
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Anomalies</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Detected</p>
+              </div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-gray-900 dark:text-white mb-2">23</div>
+              <div class="text-sm text-orange-600 dark:text-orange-400">Requires attention</div>
             </div>
           </UCard>
         </div>
 
-        <!-- Visualization Tab -->
-        <div v-if="activeTab === 'visualize'" class="mt-6">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <UCard>
-              <h3 class="text-lg font-semibold mb-4">Distribution Analysis</h3>
-              <div class="space-y-4">
-                <USelectMenu
-                  v-model="selectedColumn"
-                  :options="numericColumns"
-                  placeholder="Select numeric column"
-                  class="w-full"
-                />
-                <div v-if="selectedColumn" class="h-64">
-                  <!-- Chart placeholder - would integrate with Chart.js or similar -->
+        <!-- Data Mining Tools -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg mb-16">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+            Data Mining Tools
+          </h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <UCard
+              v-for="tool in dataMiningTools"
+              :key="tool.id"
+              class="p-6 cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            >
+              <div class="text-center">
+                <div
+                  class="w-12 h-12 mx-auto mb-4 rounded-full flex items-center justify-center"
+                  :style="{ backgroundColor: tool.color }"
+                >
+                  <UIcon :name="tool.icon" class="w-6 h-6 text-white" />
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                  {{ tool.name }}
+                </h3>
+                <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">{{ tool.description }}</p>
+                <div class="space-y-2">
+                  <div class="flex justify-between text-sm">
+                    <span class="text-gray-500">Status</span>
+                    <span :class="tool.status === 'Active' ? 'text-green-600' : 'text-gray-500'">{{
+                      tool.status
+                    }}</span>
+                  </div>
+                  <div class="flex justify-between text-sm">
+                    <span class="text-gray-500">Last Run</span>
+                    <span class="font-semibold text-gray-900 dark:text-white">{{
+                      tool.lastRun
+                    }}</span>
+                  </div>
+                </div>
+                <UButton
+                  size="sm"
+                  :color="tool.color === '#8B5CF6' ? 'violet' : 'blue'"
+                  class="mt-4 w-full"
+                >
+                  Run Analysis
+                </UButton>
+              </div>
+            </UCard>
+          </div>
+        </div>
+
+        <!-- Pattern Discovery -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+          <UCard class="p-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              Frequent Patterns
+            </h3>
+            <div class="space-y-4">
+              <div
+                v-for="pattern in frequentPatterns"
+                :key="pattern.id"
+                class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
+              >
+                <div class="flex items-center gap-3">
                   <div
-                    class="h-full bg-gray-100 dark:bg-gray-700 rounded flex items-center justify-center"
+                    class="w-8 h-8 rounded-full flex items-center justify-center"
+                    :style="{ backgroundColor: pattern.color }"
                   >
-                    <div class="text-center">
-                      <UIcon
-                        name="i-heroicons-chart-bar"
-                        class="w-12 h-12 mx-auto text-gray-400 mb-2"
-                      />
-                      <p class="text-gray-600 dark:text-gray-400">
-                        Histogram of {{ selectedColumn }}
-                      </p>
-                      <p class="text-sm text-gray-500 dark:text-gray-500">
-                        Interactive chart would render here
-                      </p>
-                    </div>
+                    <UIcon :name="pattern.icon" class="w-4 h-4 text-white" />
+                  </div>
+                  <div>
+                    <div class="font-medium text-gray-900 dark:text-white">{{ pattern.name }}</div>
+                    <div class="text-sm text-gray-500">{{ pattern.frequency }}% occurrence</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div class="text-sm font-semibold text-gray-900 dark:text-white">
+                    {{ pattern.support }}
+                  </div>
+                  <div class="text-xs text-gray-500">support</div>
+                </div>
+              </div>
+            </div>
+          </UCard>
+
+          <UCard class="p-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              Association Rules
+            </h3>
+            <div class="space-y-4">
+              <div
+                v-for="rule in associationRules"
+                :key="rule.id"
+                class="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
+              >
+                <div class="flex items-center justify-between mb-2">
+                  <div class="font-medium text-gray-900 dark:text-white">{{ rule.antecedent }}</div>
+                  <UIcon name="i-heroicons-arrow-right" class="w-4 h-4 text-gray-400" />
+                  <div class="font-medium text-gray-900 dark:text-white">{{ rule.consequent }}</div>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <div>
+                    <span class="text-gray-500">Confidence:</span>
+                    <span class="font-semibold text-gray-900 dark:text-white ml-1"
+                      >{{ rule.confidence }}%</span
+                    >
+                  </div>
+                  <div>
+                    <span class="text-gray-500">Lift:</span>
+                    <span class="font-semibold text-gray-900 dark:text-white ml-1">{{
+                      rule.lift
+                    }}</span>
                   </div>
                 </div>
               </div>
-            </UCard>
+            </div>
+          </UCard>
+        </div>
 
-            <UCard>
-              <h3 class="text-lg font-semibold mb-4">Correlation Matrix</h3>
+        <!-- Cluster Analysis -->
+        <div
+          class="bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-900/20 dark:to-purple-900/20 rounded-2xl p-8 mb-16"
+        >
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+            Cluster Analysis Results
+          </h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <UCard v-for="cluster in clusters" :key="cluster.id" class="p-6">
+              <div class="text-center mb-4">
+                <div
+                  class="w-12 h-12 mx-auto mb-3 rounded-full flex items-center justify-center"
+                  :style="{ backgroundColor: cluster.color }"
+                >
+                  <UIcon :name="cluster.icon" class="w-6 h-6 text-white" />
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                  {{ cluster.name }}
+                </h3>
+                <p class="text-sm text-gray-600 dark:text-gray-300">{{ cluster.description }}</p>
+              </div>
+
+              <div class="space-y-3">
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-500">Size</span>
+                  <span class="font-semibold text-gray-900 dark:text-white">{{
+                    cluster.size
+                  }}</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-500">Density</span>
+                  <span class="font-semibold text-gray-900 dark:text-white">{{
+                    cluster.density
+                  }}</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-500">Silhouette</span>
+                  <span class="font-semibold text-green-600">{{ cluster.silhouette }}</span>
+                </div>
+              </div>
+
+              <UButton size="sm" variant="outline" class="mt-4 w-full"> Explore Cluster </UButton>
+            </UCard>
+          </div>
+        </div>
+
+        <!-- Data Exploration -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg">
+          <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+              Interactive Data Explorer
+            </h2>
+            <div class="flex gap-4">
+              <USelect v-model="selectedDataset" :options="datasetOptions" />
+              <UButton color="violet">
+                <UIcon name="i-heroicons-play" class="w-4 h-4 mr-2" />
+                Analyze
+              </UButton>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2">
               <div
-                class="h-64 bg-gray-100 dark:bg-gray-700 rounded flex items-center justify-center"
+                class="bg-gray-100 dark:bg-gray-700 rounded-lg p-6 h-96 flex items-center justify-center"
               >
                 <div class="text-center">
                   <UIcon
-                    name="i-heroicons-squares-2x2"
-                    class="w-12 h-12 mx-auto text-gray-400 mb-2"
+                    name="i-heroicons-chart-bar-square"
+                    class="w-16 h-16 mx-auto mb-4 text-gray-400"
                   />
-                  <p class="text-gray-600 dark:text-gray-400">Correlation Heatmap</p>
-                  <p class="text-sm text-gray-500 dark:text-gray-500">
-                    Feature correlation analysis
+                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                    Data Visualization
+                  </h3>
+                  <p class="text-gray-600 dark:text-gray-300">
+                    Interactive charts and graphs will appear here
                   </p>
                 </div>
               </div>
-            </UCard>
-          </div>
-        </div>
+            </div>
 
-        <!-- Feature Engineering Tab -->
-        <div v-if="activeTab === 'features'" class="mt-6">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <UCard>
-              <h3 class="text-lg font-semibold mb-4">Feature Engineering Tools</h3>
+            <div>
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                Dataset Statistics
+              </h3>
               <div class="space-y-4">
-                <div>
-                  <label class="block text-sm font-medium mb-2">Scaling Method</label>
-                  <USelectMenu
-                    v-model="scalingMethod"
-                    :options="scalingOptions"
-                    placeholder="Choose scaling method"
-                  />
+                <div class="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                  <div class="text-sm text-gray-500 mb-1">Total Features</div>
+                  <div class="text-lg font-semibold text-gray-900 dark:text-white">24</div>
                 </div>
-                <div>
-                  <label class="block text-sm font-medium mb-2">Encoding Method</label>
-                  <USelectMenu
-                    v-model="encodingMethod"
-                    :options="encodingOptions"
-                    placeholder="Choose encoding method"
-                  />
+                <div class="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                  <div class="text-sm text-gray-500 mb-1">Missing Values</div>
+                  <div class="text-lg font-semibold text-gray-900 dark:text-white">0.02%</div>
                 </div>
-                <UButton @click="applyFeatureEngineering" color="primary" :loading="processing">
-                  Apply Transformations
-                </UButton>
+                <div class="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                  <div class="text-sm text-gray-500 mb-1">Data Quality Score</div>
+                  <div class="text-lg font-semibold text-green-600">98.5%</div>
+                </div>
+                <div class="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                  <div class="text-sm text-gray-500 mb-1">Last Updated</div>
+                  <div class="text-sm font-semibold text-gray-900 dark:text-white">2 hours ago</div>
+                </div>
               </div>
-            </UCard>
 
-            <UCard>
-              <h3 class="text-lg font-semibold mb-4">Generated Features</h3>
-              <div class="space-y-2">
-                <div
-                  v-for="feature in engineeredFeatures"
-                  :key="feature.name"
-                  class="flex justify-between items-center p-2 bg-gray-50 dark:bg-gray-700 rounded"
-                >
-                  <span class="text-sm">{{ feature.name }}</span>
-                  <UBadge :color="feature.type === 'numeric' ? 'green' : 'blue'">{{
-                    feature.type
-                  }}</UBadge>
+              <div class="mt-6">
+                <h4 class="text-md font-semibold text-gray-900 dark:text-white mb-3">
+                  Export Options
+                </h4>
+                <div class="space-y-2">
+                  <UButton size="sm" variant="outline" class="w-full">
+                    <UIcon name="i-heroicons-document-arrow-down" class="w-4 h-4 mr-2" />
+                    Export to CSV
+                  </UButton>
+                  <UButton size="sm" variant="outline" class="w-full">
+                    <UIcon name="i-heroicons-code-bracket" class="w-4 h-4 mr-2" />
+                    Export to JSON
+                  </UButton>
+                  <UButton size="sm" variant="outline" class="w-full">
+                    <UIcon name="i-heroicons-presentation-chart-bar" class="w-4 h-4 mr-2" />
+                    Generate Report
+                  </UButton>
                 </div>
               </div>
-            </UCard>
-          </div>
-        </div>
-
-        <!-- Model Training Tab -->
-        <div v-if="activeTab === 'model'" class="mt-6">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <UCard>
-              <h3 class="text-lg font-semibold mb-4">Model Configuration</h3>
-              <div class="space-y-4">
-                <div>
-                  <label class="block text-sm font-medium mb-2">Target Variable</label>
-                  <USelectMenu
-                    v-model="targetVariable"
-                    :options="availableTargets"
-                    placeholder="Select target column"
-                  />
-                </div>
-                <div>
-                  <label class="block text-sm font-medium mb-2">Algorithm</label>
-                  <USelectMenu
-                    v-model="selectedAlgorithm"
-                    :options="algorithmOptions"
-                    placeholder="Choose algorithm"
-                  />
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                  <div>
-                    <label class="block text-sm font-medium mb-2">Test Size</label>
-                    <UInput v-model="testSize" type="number" step="0.1" min="0.1" max="0.5" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium mb-2">Random State</label>
-                    <UInput v-model="randomState" type="number" />
-                  </div>
-                </div>
-                <UButton @click="trainModel" color="primary" :loading="training" block>
-                  <UIcon name="i-heroicons-cpu-chip" class="w-5 h-5 mr-2" />
-                  Train Model
-                </UButton>
-              </div>
-            </UCard>
-
-            <UCard>
-              <h3 class="text-lg font-semibold mb-4">Training Results</h3>
-              <div v-if="trainingResults" class="space-y-3">
-                <div class="grid grid-cols-2 gap-4">
-                  <div class="text-center p-3 bg-green-50 dark:bg-green-900 rounded">
-                    <div class="text-2xl font-bold text-green-600">
-                      {{ trainingResults.r2.toFixed(4) }}
-                    </div>
-                    <div class="text-sm text-green-700 dark:text-green-300">R² Score</div>
-                  </div>
-                  <div class="text-center p-3 bg-blue-50 dark:bg-blue-900 rounded">
-                    <div class="text-2xl font-bold text-blue-600">
-                      {{ trainingResults.rmse.toFixed(2) }}
-                    </div>
-                    <div class="text-sm text-blue-700 dark:text-blue-300">RMSE</div>
-                  </div>
-                </div>
-                <div class="mt-4">
-                  <h4 class="font-medium mb-2">Feature Importance</h4>
-                  <div class="space-y-1">
-                    <div
-                      v-for="feature in trainingResults.featureImportance.slice(0, 5)"
-                      :key="feature.name"
-                      class="flex justify-between text-sm"
-                    >
-                      <span>{{ feature.name }}</span>
-                      <span>{{ feature.importance.toFixed(3) }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div v-else class="text-center py-8 text-gray-500 dark:text-gray-400">
-                <UIcon name="i-heroicons-chart-bar" class="w-12 h-12 mx-auto mb-2" />
-                <p>Train a model to see results</p>
-              </div>
-            </UCard>
-          </div>
-        </div>
-
-        <!-- Insights Tab -->
-        <div v-if="activeTab === 'insights'" class="mt-6">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <UCard>
-              <h3 class="text-lg font-semibold mb-4">Automated Insights</h3>
-              <div class="space-y-3">
-                <div
-                  v-for="insight in insights"
-                  :key="insight.id"
-                  class="p-3 bg-blue-50 dark:bg-blue-900 rounded"
-                >
-                  <div class="flex items-start">
-                    <UIcon
-                      :name="insight.icon"
-                      class="w-5 h-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0"
-                    />
-                    <div>
-                      <h4 class="font-medium text-blue-900 dark:text-blue-100">
-                        {{ insight.title }}
-                      </h4>
-                      <p class="text-sm text-blue-700 dark:text-blue-300">
-                        {{ insight.description }}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </UCard>
-
-            <UCard>
-              <h3 class="text-lg font-semibold mb-4">Data Quality Report</h3>
-              <div class="space-y-3">
-                <div class="flex justify-between items-center">
-                  <span class="text-sm">Completeness</span>
-                  <div class="flex items-center">
-                    <div class="w-24 bg-gray-200 rounded-full h-2 mr-2">
-                      <div
-                        class="bg-green-600 h-2 rounded-full"
-                        :style="{ width: dataQuality.completeness + '%' }"
-                      ></div>
-                    </div>
-                    <span class="text-sm font-medium">{{ dataQuality.completeness }}%</span>
-                  </div>
-                </div>
-                <div class="flex justify-between items-center">
-                  <span class="text-sm">Consistency</span>
-                  <div class="flex items-center">
-                    <div class="w-24 bg-gray-200 rounded-full h-2 mr-2">
-                      <div
-                        class="bg-blue-600 h-2 rounded-full"
-                        :style="{ width: dataQuality.consistency + '%' }"
-                      ></div>
-                    </div>
-                    <span class="text-sm font-medium">{{ dataQuality.consistency }}%</span>
-                  </div>
-                </div>
-                <div class="flex justify-between items-center">
-                  <span class="text-sm">Accuracy</span>
-                  <div class="flex items-center">
-                    <div class="w-24 bg-gray-200 rounded-full h-2 mr-2">
-                      <div
-                        class="bg-purple-600 h-2 rounded-full"
-                        :style="{ width: dataQuality.accuracy + '%' }"
-                      ></div>
-                    </div>
-                    <span class="text-sm font-medium">{{ dataQuality.accuracy }}%</span>
-                  </div>
-                </div>
-              </div>
-            </UCard>
+            </div>
           </div>
         </div>
       </div>
-
-      <!-- Empty State -->
-      <div v-else class="text-center py-16">
-        <UIcon name="i-heroicons-magnifying-glass" class="w-16 h-16 mx-auto text-gray-400 mb-4" />
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">No Dataset Loaded</h3>
-        <p class="text-gray-600 dark:text-gray-400 mb-6">
-          Upload a dataset to start mining insights with advanced AI algorithms
-        </p>
-        <UButton @click="handleFileSelect" color="primary" size="lg">
-          <UIcon name="i-heroicons-document-plus" class="w-5 h-5 mr-2" />
-          Choose File
-        </UButton>
-      </div>
-    </div>
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
+  import { ref } from 'vue'
   // Page meta
   useHead({
-    title: 'Data Mining Studio - Mobile Finder',
+    title: 'Data Mining & Exploration - MATLAB Deep Learning Platform',
     meta: [
       {
         name: 'description',
         content:
-          'Advanced data mining studio with AI-powered analysis, feature engineering, model training, and automated insights generation.',
+          'Discover hidden patterns and insights in mobile datasets with advanced data mining techniques',
       },
     ],
   })
 
-  // Reactive state
-  const fileInput = ref<HTMLInputElement | null>(null)
-  const uploading = ref(false)
-  const processing = ref(false)
-  const training = ref(false)
-  const currentDataset = ref(null)
-  const activeTab = ref('profile')
-  const selectedColumn = ref('')
-  const scalingMethod = ref('')
-  const encodingMethod = ref('')
-  const targetVariable = ref('')
-  const selectedAlgorithm = ref('')
-  const testSize = ref(0.2)
-  const randomState = ref(42)
-  const trainingResults = ref(null)
+  // Selected dataset
+  const selectedDataset = ref('mobile-devices')
 
-  // Analysis tabs
-  const analysisTabs = [
-    { label: 'Data Profiling', value: 'profile' },
-    { label: 'Visualization', value: 'visualize' },
-    { label: 'Feature Engineering', value: 'features' },
-    { label: 'Model Training', value: 'model' },
-    { label: 'AI Insights', value: 'insights' },
+  // Dataset options
+  const datasetOptions = [
+    { label: 'Mobile Devices Dataset', value: 'mobile-devices' },
+    { label: 'User Behavior Data', value: 'user-behavior' },
+    { label: 'App Usage Statistics', value: 'app-usage' },
+    { label: 'Market Research Data', value: 'market-research' },
   ]
 
-  // Options
-  const scalingOptions = [
-    { label: 'Standard Scaler', value: 'standard' },
-    { label: 'Min-Max Scaler', value: 'minmax' },
-    { label: 'Robust Scaler', value: 'robust' },
-  ]
-
-  const encodingOptions = [
-    { label: 'Label Encoding', value: 'label' },
-    { label: 'One-Hot Encoding', value: 'onehot' },
-    { label: 'Ordinal Encoding', value: 'ordinal' },
-  ]
-
-  const algorithmOptions = [
-    { label: 'Linear Regression', value: 'linear' },
-    { label: 'Random Forest', value: 'rf' },
-    { label: 'XGBoost', value: 'xgb' },
-    { label: 'Neural Network', value: 'nn' },
-  ]
-
-  // Computed properties
-  const numericColumns = computed(() => {
-    if (!currentDataset.value || !currentDataset.value.columnTypes) return []
-    return currentDataset.value.columnTypes
-      .filter((col: any) => col.type === 'numeric')
-      .map((col: any) => ({ label: col.name, value: col.name }))
-  })
-
-  const availableTargets = computed(() => {
-    if (!currentDataset.value || !currentDataset.value.columnTypes) return []
-    return currentDataset.value.columnTypes.map((col: any) => ({
-      label: col.name,
-      value: col.name,
-    }))
-  })
-
-  const engineeredFeatures = ref([
-    { name: 'spec_density', type: 'numeric' },
-    { name: 'temporal_decay', type: 'numeric' },
-    { name: 'battery_weight_ratio', type: 'numeric' },
-  ])
-
-  const insights = ref([
+  // Data mining tools
+  const dataMiningTools = ref([
     {
-      id: 1,
-      title: 'High Correlation Detected',
-      description: 'RAM and price show strong positive correlation (ρ = 0.78)',
-      icon: 'i-heroicons-arrow-trending-up',
+      id: 'association-rule',
+      name: 'Association Rules',
+      description: 'Discover relationships between different attributes',
+      color: '#8B5CF6',
+      icon: 'i-heroicons-link',
+      status: 'Active',
+      lastRun: '5 min ago',
     },
     {
-      id: 2,
-      title: 'Outlier Detection',
-      description: 'Found 15 potential outliers in price distribution',
+      id: 'clustering',
+      name: 'Clustering Analysis',
+      description: 'Group similar data points together',
+      color: '#3B82F6',
+      icon: 'i-heroicons-squares-2x2',
+      status: 'Active',
+      lastRun: '12 min ago',
+    },
+    {
+      id: 'outlier-detection',
+      name: 'Outlier Detection',
+      description: 'Identify unusual patterns and anomalies',
+      color: '#EF4444',
       icon: 'i-heroicons-exclamation-triangle',
-    },
-    {
-      id: 3,
-      title: 'Feature Importance',
-      description: 'Battery capacity is the most predictive feature (32% importance)',
-      icon: 'i-heroicons-light-bulb',
+      status: 'Active',
+      lastRun: '12 min ago',
     },
   ])
 
-  const dataQuality = ref({
-    completeness: 94,
-    consistency: 87,
-    accuracy: 92,
-  })
+  // Frequent patterns (placeholder data)
+  const frequentPatterns = ref([
+    {
+      id: 'p1',
+      name: 'High RAM & Battery',
+      frequency: 72,
+      support: 320,
+      color: '#3B82F6',
+      icon: 'i-heroicons-sparkles',
+    },
+    {
+      id: 'p2',
+      name: 'Budget Flagship',
+      frequency: 45,
+      support: 210,
+      color: '#10B981',
+      icon: 'i-heroicons-flag',
+    },
+  ])
 
-  // Methods
-  const handleFileUpload = async (event: Event) => {
-    const target = event.target as HTMLInputElement
-    const file = target.files?.[0]
-    if (!file) return
+  // Association rules (placeholder data)
+  const associationRules = ref([
+    { id: 'r1', antecedent: 'high_ram', consequent: 'high_price', confidence: 92, lift: 1.4 },
+    { id: 'r2', antecedent: 'large_battery', consequent: 'long_life', confidence: 88, lift: 1.2 },
+  ])
 
-    uploading.value = true
-
-    try {
-      const formData = new FormData()
-      formData.append('file', file)
-
-      // Simulate API call - in real implementation, this would call your backend
-      await new Promise(resolve => setTimeout(resolve, 2000))
-
-      // Mock dataset analysis result
-      currentDataset.value = {
-        name: file.name,
-        size: file.size,
-        rows: 1000,
-        columns: 12,
-        missingValues: 45,
-        columnTypes: [
-          { name: 'brand', type: 'categorical', unique: 15, missing: 0 },
-          { name: 'model', type: 'text', unique: 950, missing: 0 },
-          { name: 'price', type: 'numeric', unique: 234, missing: 12 },
-          { name: 'ram', type: 'numeric', unique: 8, missing: 5 },
-          { name: 'battery', type: 'numeric', unique: 156, missing: 8 },
-          { name: 'screen_size', type: 'numeric', unique: 67, missing: 3 },
-          { name: 'weight', type: 'numeric', unique: 89, missing: 7 },
-          { name: 'year', type: 'numeric', unique: 6, missing: 0 },
-        ],
-        preview: {
-          columns: ['brand', 'model', 'price', 'ram', 'battery'],
-          data: [
-            ['Apple', 'iPhone 15 Pro', 1199, 8, 3274],
-            ['Samsung', 'Galaxy S24', 899, 8, 4000],
-            ['Google', 'Pixel 8', 699, 8, 4575],
-            ['OnePlus', '12', 899, 12, 5000],
-          ],
-        },
-      }
-
-      // Show success message
-      // console.log('Dataset uploaded and analyzed successfully')
-    } catch (error) {
-      console.error('Upload failed:', error)
-      // Show error message
-    } finally {
-      uploading.value = false
-    }
-  }
-
-  const applyFeatureEngineering = async () => {
-    processing.value = true
-
-    try {
-      // Simulate processing
-      await new Promise(resolve => setTimeout(resolve, 1500))
-
-      // Add new features
-      engineeredFeatures.value.push(
-        { name: 'ram_battery_ratio', type: 'numeric' },
-        { name: 'price_per_gb_ram', type: 'numeric' },
-        { name: 'brand_encoded', type: 'categorical' }
-      )
-
-      // console.log('Feature engineering completed')
-    } catch (error) {
-      console.error('Feature engineering failed:', error)
-    } finally {
-      processing.value = false
-    }
-  }
-
-  const trainModel = async () => {
-    if (!targetVariable.value || !selectedAlgorithm.value) return
-
-    training.value = true
-
-    try {
-      // Simulate training
-      await new Promise(resolve => setTimeout(resolve, 3000))
-
-      // Mock training results
-      trainingResults.value = {
-        r2: 0.8456,
-        rmse: 156.78,
-        featureImportance: [
-          { name: 'ram', importance: 0.32 },
-          { name: 'battery', importance: 0.28 },
-          { name: 'brand_encoded', importance: 0.18 },
-          { name: 'screen_size', importance: 0.12 },
-          { name: 'weight', importance: 0.1 },
-        ],
-      }
-
-      // console.log('Model training completed')
-    } catch (error) {
-      console.error('Training failed:', error)
-    } finally {
-      training.value = false
-    }
-  }
-
-  const formatFileSize = (bytes: number): string => {
-    if (bytes === 0) return '0 Bytes'
-    const k = 1024
-    const sizes = ['Bytes', 'KB', 'MB', 'GB']
-    const i = Math.floor(Math.log(bytes) / Math.log(k))
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
-  }
-
-  const getTypeColor = (type: string): string => {
-    switch (type) {
-      case 'numeric':
-        return 'green'
-      case 'categorical':
-        return 'blue'
-      case 'text':
-        return 'orange'
-      default:
-        return 'gray'
-    }
-  }
-
-  const handleFileSelect = () => {
-    fileInput.value?.click()
-  }
+  // Clusters (placeholder data)
+  const clusters = ref([
+    {
+      id: 'c1',
+      name: 'Flagship',
+      description: 'Premium devices',
+      color: '#8B5CF6',
+      icon: 'i-heroicons-star',
+      size: 1200,
+      density: 0.82,
+      silhouette: 0.61,
+    },
+    {
+      id: 'c2',
+      name: 'Budget',
+      description: 'Value devices',
+      color: '#F59E0B',
+      icon: 'i-heroicons-currency-dollar',
+      size: 5400,
+      density: 0.64,
+      silhouette: 0.48,
+    },
+  ])
 </script>

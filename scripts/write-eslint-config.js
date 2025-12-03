@@ -45,4 +45,4 @@ module.exports = [
 ]
 `
 fs.writeFileSync('eslint.config.cjs', content, 'utf8')
-console.log('eslint.config.cjs written')
+console.warn('eslint.config.cjs written')
