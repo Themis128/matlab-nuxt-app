@@ -1,61 +1,61 @@
 name: CI - Devcontainer Health Check
 
 on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+    push:
+        branches: [master]
+    pull_request:
+        branches: [master]
 
 jobs:
-  health-check:
-    name: Devcontainer Health Check
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    health-check:
+        name: Devcontainer Health Check
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
 
-      - name: Set up Node.js 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
+            - name: Set up Node.js 20
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
 
-      - name: Set up Python 3.14
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.14'
+            - name: Set up Python 3.14
+              uses: actions/setup-python@v4
+              with:
+                  python-version: "3.14"
 
-      - name: Install frontend deps
-        run: npm ci
+            - name: Install frontend deps
+              run: npm ci
 
-      - name: Install python deps
-        run: |
-          cd python_api
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+            - name: Install python deps
+              run: |
+                  cd python_api
+                  python -m pip install --upgrade pip
+                  pip install -r requirements.txt
 
-      - name: Run devcontainer health check
-        env:
-          CI: 'true'
-        run: |
-          chmod +x .devcontainer/health-check.sh || true
-          bash .devcontainer/health-check.sh
+            - name: Run devcontainer health check
+              env:
+                  CI: "true"
+              run: |
+                  chmod +x .devcontainer/health-check.sh || true
+                  bash .devcontainer/health-check.sh
 
-      - name: Verify TypeScript installed
-        run: |
-          if [ -f "node_modules/typescript/package.json" ]; then
-            node -p "require('./node_modules/typescript/package.json').version"
-          else
-            echo "TypeScript not installed in node_modules" && exit 1
-          fi
+            - name: Verify TypeScript installed
+              run: |
+                  if [ -f "node_modules/typescript/package.json" ]; then
+                    node -p "require('./node_modules/typescript/package.json').version"
+                  else
+                    echo "TypeScript not installed in node_modules" && exit 1
+                  fi
 
-      - name: Node/Python versions
-        run: |
-          node -v
-          npm -v
-          python -V
+            - name: Node/Python versions
+              run: |
+                  node -v
+                  npm -v
+                  python -V
 
-      - name: Run TypeScript checks (ci)
-        run: |
-          npm run typecheck:ci
-        env:
-          NODE_OPTIONS: --max-old-space-size=8192
+            - name: Run TypeScript checks (ci)
+              run: |
+                  npm run typecheck:ci
+              env:
+                  NODE_OPTIONS: --max-old-space-size=8192

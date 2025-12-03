@@ -1,9 +1,9 @@
 {
-    "mappings": [
-        { "path": "python_api/", "reviewers": ["Themis128"] },
-        { "path": "app/", "reviewers": ["Themis128"] },
-        { "path": "components/", "reviewers": ["Themis128"] },
-        { "path": "scripts/", "reviewers": ["Themis128"] },
-        { "path": "docs/", "reviewers": ["Themis128"] }
-    ]
+  "mappings": [
+    { "path": "python_api/", "reviewers": ["Themis128"] },
+    { "path": "app/", "reviewers": ["Themis128"] },
+    { "path": "components/", "reviewers": ["Themis128"] },
+    { "path": "scripts/", "reviewers": ["Themis128"] },
+    { "path": "docs/", "reviewers": ["Themis128"] }
+  ]
 }

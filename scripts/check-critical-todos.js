@@ -6,6 +6,7 @@
 
 import fs from 'fs/promises'
 import path from 'path'
+import { execSync } from 'child_process'
 
 const DEFAULT_TAGS = ['FIXME', 'BUG']
 
@@ -42,13 +43,13 @@ async function walkDir(dir) {
   return files
 }
 
-async function scanFiles(root, tags) {
-  const files = await walkDir(root)
+async function scanFiles(root, tags, files = null) {
+  const fileList = files || (await walkDir(root))
   const results = []
   const tagsRegex = tags.join('|')
   // allow patterns like: FIXME, FIXME(@owner), FIXME(@owner): msg, FIXME @owner: msg
   const re = new RegExp("(?:(?:\\/\\/|#|<!--|\\/\\*|\\*|%|;|--)\\s*)(?:" + tagsRegex + ")(?:\\([^)]*\\))?(?:\\s*@\\w+)?[:\\s-]*(.*)", 'i')
-  for (const f of files) {
+  for (const f of fileList) {
     try {
       const content = await fs.readFile(f, 'utf8')
       const lines = content.split('\n')
@@ -71,9 +72,36 @@ async function scanFiles(root, tags) {
 
 async function main() {
   const root = process.cwd()
+  const argv = process.argv.slice(2)
+  const staged = argv.includes('--staged') || false
+  const filesArg = argv.find((a) => a.startsWith('--files='))
+  const baseArg = (argv.find((a) => a.startsWith('--base=')) || '').replace('--base=', '')
+  let targetFiles = null
+  if (staged) {
+    try {
+      const out = execSync('git diff --staged --name-only', { encoding: 'utf8' })
+      targetFiles = out.split(/\r?\n/).filter(Boolean)
+    } catch (e) {
+      // ignore
+    }
+  }
+  if (filesArg) {
+    const val = filesArg.replace('--files=', '')
+    targetFiles = val.split(',').map((p) => p.trim()).filter(Boolean)
+  }
+  if (baseArg) {
+    try {
+      // Fetch base and diff
+      execSync(`git fetch origin ${baseArg}`, { stdio: 'ignore' })
+      const out = execSync(`git diff --name-only origin/${baseArg}...HEAD`, { encoding: 'utf8' })
+      targetFiles = out.split(/\r?\n/).filter(Boolean)
+    } catch (e) {
+      // ignore
+    }
+  }
   const envTags = process.env.CRITICAL_TAGS
   const tags = (envTags ? envTags.split(',') : DEFAULT_TAGS).map((t) => t.trim()).filter(Boolean)
-  const matches = await scanFiles(root, tags)
+  const matches = await scanFiles(root, tags, targetFiles)
   if (matches.length === 0) {
     console.log('✅ No critical TODOs found.')
     process.exit(0)

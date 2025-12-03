@@ -30,6 +30,9 @@
     "DEVCONTAINER_AUTO_START_SERVERS": "true"
   },
   "postStartCommand": "bash -lc './.devcontainer/health-check.sh; if [ \"$DEVCONTAINER_AUTO_START_SERVERS\" = \"true\" ]; then ./.devcontainer/start-servers-tmux.sh || true; fi; echo Devcontainer ready. Ports forwarded: 3000 (frontend), 8000 (Python API)'",
-  "forwardPorts": [3000, 8000],
+  "forwardPorts": [
+    3000,
+    8000
+  ],
   "remoteUser": "vscode"
 }

@@ -54,7 +54,10 @@
     "cli:cline:format": "npx cline --format compact",
     "cli:cline:check": "npx cline --check",
     "precommit:cline": "npx cline --check",
-    "check:todos": "node ./scripts/check-critical-todos.js"
+    "check:todos": "node ./scripts/check-critical-todos.js",
+    "check:todos:staged": "node ./scripts/check-critical-todos.js --staged",
+    "check:todos:pr-diff": "node ./scripts/check-critical-todos.js --base=origin/main",
+    "list:todos": "node ./scripts/list-todos.js"
   },
   "dependencies": {
     "@algolia/client-search": "^5.45.0",
@@ -142,7 +145,7 @@
   },
   "homepage": "https://github.com/Themis128/matlab-nuxt-app#readme",
   "simple-git-hooks": {
-    "pre-commit": "npm run precommit:check && npm run lint:yaml && npm run format && npx lint-staged && npm run lint && npm run typecheck"
+    "pre-commit": "npm run precommit:check && npm run check:todos:staged && npm run lint:yaml && npm run format && npx lint-staged && npm run lint && npm run typecheck"
   },
   "lint-staged": {
     "*.{js,ts,vue}": [

@@ -1,25 +1,25 @@
-name: 'Check Critical TODOs'
+name: "Check Critical TODOs"
 on:
-  pull_request:
-    branches: [master, main]
-  push:
-    branches: [master, main]
+    pull_request:
+        branches: [master, main]
+    push:
+        branches: [master, main]
 
 jobs:
-  todo-check:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    todo-check:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "22"
 
-      - name: Run check:todos (scan for FIXME/BUG)
-        run: |
-          node --version
-          node ./scripts/check-critical-todos.js
-        env:
-          CI: true
+            - name: Run check:todos (scan for FIXME/BUG)
+              run: |
+                  node --version
+                  node ./scripts/check-critical-todos.js
+              env:
+                  CI: true

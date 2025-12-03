@@ -25,8 +25,7 @@
       ],
       "isBackground": false,
       "problemMatcher": []
-    }
-    ,
+    },
     {
       "label": "List TODOs (PowerShell)",
       "type": "shell",
@@ -48,6 +47,18 @@
       "command": "node",
       "args": [
         "./scripts/check-critical-todos.js"
+      ],
+      "presentation": {
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "List TODOs (Node)",
+      "type": "shell",
+      "command": "node",
+      "args": [
+        "./scripts/list-todos.js"
       ],
       "presentation": {
         "reveal": "always"
