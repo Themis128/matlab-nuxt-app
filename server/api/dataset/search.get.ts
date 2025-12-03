@@ -252,14 +252,14 @@ export default defineEventHandler(async (event: H3Event): Promise<SearchResponse
         weight: phoneWeight,
         year: phoneYear,
         frontCamera:
-          frontCameraIdx !== -1 ? (extractNumber(values[frontCameraIdx]) ?? undefined) : undefined,
+          frontCameraIdx !== -1 ? extractNumber(values[frontCameraIdx]) ?? undefined : undefined,
         backCamera:
-          backCameraIdx !== -1 ? (extractNumber(values[backCameraIdx]) ?? undefined) : undefined,
+          backCameraIdx !== -1 ? extractNumber(values[backCameraIdx]) ?? undefined : undefined,
         storage: phoneStorage ?? undefined,
         processor: processorIdx !== -1 ? values[processorIdx] || undefined : undefined,
         displayType: displayTypeIdx !== -1 ? values[displayTypeIdx] || undefined : undefined,
         refreshRate:
-          refreshRateIdx !== -1 ? (extractNumber(values[refreshRateIdx]) ?? undefined) : undefined,
+          refreshRateIdx !== -1 ? extractNumber(values[refreshRateIdx]) ?? undefined : undefined,
         resolution: resolutionIdx !== -1 ? values[resolutionIdx] || undefined : undefined,
         imageUrl,
       })

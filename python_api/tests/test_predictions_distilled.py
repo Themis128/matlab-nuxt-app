@@ -10,7 +10,7 @@ import pytest
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from predictions_distilled import (
+from predictions_distilled import (  # noqa: E402
     get_distilled_predictor,
     predict_price_distilled,
 )

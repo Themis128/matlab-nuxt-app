@@ -10,10 +10,10 @@ from pathlib import Path
 
 import pandas as pd
 
-from lancedb_utils import LanceDBManager
-
 # Add current directory to path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from lancedb_utils import LanceDBManager
 
 
 def test_lancedb_basic():

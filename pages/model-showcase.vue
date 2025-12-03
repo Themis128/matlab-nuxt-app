@@ -36,160 +36,7 @@
             v-for="model in filteredModels"
             :key="model.id"
             class="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer"
-
-              <div class="min-h-screen bg-background">
-                <!-- Header Section -->
-                <section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-16">
-                  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="text-center">
-                      <h1 class="text-4xl sm:text-5xl font-bold mb-4">Model Showcase</h1>
-                      <p class="text-xl text-indigo-100 max-w-2xl mx-auto">
-                        Explore and interact with our collection of machine learning models trained on mobile datasets
-                      </p>
-                    </div>
-                  </div>
-                </section>
-
-                <!-- Featured Models -->
-                <section class="py-20">
-                  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <!-- Model Categories -->
-                    <div class="flex flex-wrap justify-center gap-4 mb-16">
-                      <UButton
-                        v-for="category in categories"
-                        :key="category.id"
-                        :color="selectedCategory === category.id ? 'purple' : 'gray'"
-                        variant="outline"
-                        @click="selectedCategory = category.id"
-                      >
-                        <UIcon :name="category.icon" class="w-4 h-4 mr-2" />
-                        {{ category.name }}
-                      </UButton>
-                    </div>
-
-                    <!-- Models Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-                      <UCard
-                        v-for="model in filteredModels"
-                        :key="model.id"
-                        class="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer"
-                        @click="selectModel(model)"
-                      >
-                        <div class="relative">
-                          <div class="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 rounded-lg mb-4 overflow-hidden">
-                            <img
-                              :src="model.previewImage"
-                              :alt="model.name"
-                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                            />
-                            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                              <UButton color="white" variant="solid" size="sm">
-                                <UIcon name="i-heroicons-play" class="w-4 h-4 mr-2" />
-                                Demo
-                              </UButton>
-                            </div>
-                          </div>
-
-                          <div class="flex items-center gap-3 mb-3">
-                            <div class="w-10 h-10 rounded-lg flex items-center justify-center" :style="{ backgroundColor: model.color }">
-                              <UIcon :name="model.icon" class="w-5 h-5 text-white" />
-                            </div>
-                            <div>
-                              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ model.name }}</h3>
-                              <p class="text-sm text-gray-500 dark:text-gray-400">{{ model.category }}</p>
-                            </div>
-                          </div>
-
-                          <p class="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">{{ model.description }}</p>
-
-                          <div class="grid grid-cols-2 gap-4 mb-4">
-                            <div class="text-center">
-                              <div class="text-lg font-bold text-gray-900 dark:text-white">{{ model.accuracy }}%</div>
-                              <div class="text-xs text-gray-500">Accuracy</div>
-                            </div>
-                            <div class="text-center">
-                              <div class="text-lg font-bold text-gray-900 dark:text-white">{{ model.inferenceTime }}ms</div>
-                              <div class="text-xs text-gray-500">Inference</div>
-                            </div>
-                          </div>
-
-                          <div class="flex gap-2">
-                            <UButton size="sm" color="purple" variant="outline" class="flex-1">Try Model</UButton>
-                            <UButton size="sm" variant="outline">
-                              <UIcon name="i-heroicons-code-bracket" class="w-4 h-4" />
-                            </UButton>
-                          </div>
-                        </div>
-                      </UCard>
-                    </div>
-
-                    <!-- Interactive Demo Section -->
-                    <div v-if="selectedModel" class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg mb-16">
-                      <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 rounded-lg flex items-center justify-center" :style="{ backgroundColor: selectedModel.color }">
-                          <UIcon :name="selectedModel.icon" class="w-6 h-6 text-white" />
-                        </div>
-                        <div>
-                          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{{ selectedModel.name }} Demo</h2>
-                          <p class="text-gray-600 dark:text-gray-300">{{ selectedModel.description }}</p>
-                        </div>
-                      </div>
-
-                      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div>
-                          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Input Data</h3>
-                          <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-4">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Mobile Dataset Sample</label>
-                            <UTextarea v-model="demoInput" placeholder="Enter sample mobile dataset features..." rows="6" />
-                          </div>
-                          <UButton color="purple" @click="runDemo" :loading="isRunning">
-                            <UIcon name="i-heroicons-play" class="w-4 h-4 mr-2" />
-                            Run Prediction
-                          </UButton>
-                        </div>
-                        <div>
-                          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Results</h3>
-                          <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                            <div v-if="demoResult" class="space-y-4">
-                              <div class="flex justify-between items-center">
-                                <span class="text-gray-600 dark:text-gray-300">Prediction</span>
-                                <span class="font-semibold text-gray-900 dark:text-white">{{ demoResult.prediction }}</span>
-                              </div>
-                              <div class="flex justify-between items-center">
-                                <span class="text-gray-600 dark:text-gray-300">Confidence</span>
-                                <span class="font-semibold text-green-600">{{ demoResult.confidence }}%</span>
-                              </div>
-                              <div class="flex justify-between items-center">
-                                <span class="text-gray-600 dark:text-gray-300">Processing Time</span>
-                                <span class="font-semibold text-blue-600">{{ demoResult.processingTime }}ms</span>
-                              </div>
-                              <div>
-                                <div class="text-sm text-gray-600 dark:text-gray-300 mb-2">Class Probabilities</div>
-                                <div class="space-y-2">
-                                  <div v-for="prob in demoResult.probabilities" :key="prob.class" class="flex justify-between items-center">
-                                    <span class="text-sm text-gray-600 dark:text-gray-300">{{ prob.class }}</span>
-                                    <div class="flex items-center gap-2">
-                                      <div class="w-20 bg-gray-200 dark:bg-gray-600 rounded-full h-2">
-                                        <div class="h-2 rounded-full transition-all duration-500" :style="{ width: `${prob.probability * 100}%`, backgroundColor: selectedModel.color }"></div>
-                                      </div>
-                                      <span class="text-sm font-semibold text-gray-900 dark:text-white w-12">{{ (prob.probability * 100).toFixed(1) }}%</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div v-else class="text-center text-gray-500 dark:text-gray-400 py-8">
-                              <UIcon name="i-heroicons-chart-bar-square" class="w-12 h-12 mx-auto mb-2 opacity-50" />
-                              <p>Run a prediction to see results</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-              </div>
-
+            @click="selectModel(model)"
           >
             <div class="relative">
               <div
@@ -245,9 +92,14 @@
               </div>
 
               <div class="flex gap-2">
-                <UButton size="sm" color="purple" variant="outline" class="flex-1">
-                  Try Model
-                </UButton>
+                <UButton
+                  size="sm"
+                  color="purple"
+                  variant="outline"
+                  class="flex-1"
+                  @click="selectModel(model)"
+                  >Try Model</UButton
+                >
                 <UButton size="sm" variant="outline">
                   <UIcon name="i-heroicons-code-bracket" class="w-4 h-4" />
                 </UButton>
@@ -277,13 +129,13 @@
             <div>
               <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Input Data</h3>
               <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-4">
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Mobile Dataset Sample
-                </label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                  >Mobile Dataset Sample</label
+                >
                 <UTextarea
                   v-model="demoInput"
                   placeholder="Enter sample mobile dataset features..."
-                  rows="6"
+                  :rows="6"
                 />
               </div>
               <UButton color="purple" @click="runDemo" :loading="isRunning">
@@ -335,9 +187,9 @@
                               }"
                             ></div>
                           </div>
-                          <span class="text-sm font-semibold text-gray-900 dark:text-white w-12">
-                            {{ (prob.probability * 100).toFixed(1) }}%
-                          </span>
+                          <span class="text-sm font-semibold text-gray-900 dark:text-white w-12"
+                            >{{ (prob.probability * 100).toFixed(1) }}%</span
+                          >
                         </div>
                       </div>
                     </div>
@@ -400,7 +252,7 @@
                   <p class="text-gray-600 dark:text-gray-300">{{ selectedModel?.category }}</p>
                 </div>
               </div>
-
+            </template>
 
             <div class="space-y-6">
               <div>
@@ -443,32 +295,17 @@
                 <UButton color="purple" class="flex-1"> Deploy Model </UButton>
                 <UButton variant="outline"> Download </UButton>
               </div>
-
+            </template>
           </UCard>
         </UModal>
       </div>
     </section>
   </div>
-
+</template>
 
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue'
+  import { ref, computed } from 'vue'
 
-  // Page meta (fallback)
-  onMounted(() => {
-    document.title = 'Model Showcase - MATLAB Deep Learning Platform'
-    const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
-    const content = 'Explore and interact with machine learning models trained on mobile datasets'
-    if (existing) existing.content = content
-    else {
-      const m = document.createElement('meta')
-      m.name = 'description'
-      m.content = content
-      document.head.appendChild(m)
-    }
-  })
-
-  // Categories
   const categories = ref([
     { id: 'all', name: 'All Models', icon: 'i-heroicons-squares-2x2' },
     { id: 'classification', name: 'Classification', icon: 'i-heroicons-tag' },
@@ -478,10 +315,8 @@
     { id: 'computer-vision', name: 'Computer Vision', icon: 'i-heroicons-eye' },
   ])
 
-  // Selected category
   const selectedCategory = ref('all')
 
-  // Models data
   const models = ref([
     {
       id: 1,
@@ -590,4 +425,77 @@
       ],
     },
   ])
+
+  const filteredModels = computed(() => {
+    if (selectedCategory.value === 'all') return models.value
+    return models.value.filter(model => model.categoryId === selectedCategory.value)
+  })
+
+  const selectedModel = ref<any>(null)
+
+  function selectModel(model: any) {
+    selectedModel.value = model
+    showModelDetails.value = true
+  }
+
+  const demoInput = ref('')
+
+  const isRunning = ref(false)
+
+  const demoResult = ref<any>(null)
+
+  async function runDemo() {
+    isRunning.value = true
+    // Simulate API call
+    setTimeout(() => {
+      demoResult.value = {
+        prediction: 'Premium Smartphone',
+        confidence: 92.5,
+        processingTime: 45,
+        probabilities: [
+          { class: 'Budget', probability: 0.02 },
+          { class: 'Mid-range', probability: 0.15 },
+          { class: 'Premium', probability: 0.83 },
+        ],
+      }
+      isRunning.value = false
+    }, 1000)
+  }
+
+  const performanceStats = ref([
+    {
+      id: 'accuracy',
+      title: 'Highest Accuracy',
+      value: '96.8%',
+      description: 'Transformer Classifier',
+      color: '#EF4444',
+      icon: 'i-heroicons-sparkles',
+    },
+    {
+      id: 'speed',
+      title: 'Fastest Inference',
+      value: '12ms',
+      description: 'Random Forest',
+      color: '#10B981',
+      icon: 'i-heroicons-zap',
+    },
+    {
+      id: 'models',
+      title: 'Total Models',
+      value: '5',
+      description: 'Across all categories',
+      color: '#8B5CF6',
+      icon: 'i-heroicons-squares-2x2',
+    },
+    {
+      id: 'categories',
+      title: 'Categories',
+      value: '6',
+      description: 'ML techniques covered',
+      color: '#3B82F6',
+      icon: 'i-heroicons-tag',
+    },
+  ])
+
+  const showModelDetails = ref(false)
 </script>

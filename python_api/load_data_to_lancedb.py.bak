@@ -8,9 +8,8 @@ import logging
 import os
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import List
 
-import pandas as pd
 
 # Add the current directory to Python path for imports
 sys.path.append(str(Path(__file__).parent))
@@ -18,11 +17,9 @@ sys.path.append(str(Path(__file__).parent))
 from lancedb_utils import get_db_manager
 
 # Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
+
 
 def load_csv_datasets(data_dir: str = "../data", limit: int = None) -> List[str]:
     """Load CSV datasets from data directory into LanceDB"""
@@ -44,7 +41,7 @@ def load_csv_datasets(data_dir: str = "../data", limit: int = None) -> List[str]
             dataset_id = db_manager.store_csv_dataset(
                 file_path=csv_file,
                 description=f"Dataset loaded from {Path(csv_file).name}",
-                tags=["mobile_data", "automated_import"]
+                tags=["mobile_data", "automated_import"],
             )
             loaded_datasets.append(dataset_id)
             logger.info(f"Successfully loaded dataset: {dataset_id}")
@@ -55,13 +52,14 @@ def load_csv_datasets(data_dir: str = "../data", limit: int = None) -> List[str]
 
     return loaded_datasets
 
+
 def load_images(image_dir: str = "../public/mobile_images", limit: int = None) -> List[str]:
     """Load images from mobile_images directory into LanceDB"""
     db_manager = get_db_manager()
     loaded_images = []
 
     # Find all image files
-    image_extensions = ['*.jpg', '*.jpeg', '*.png', '*.gif', '*.webp', '*.bmp']
+    image_extensions = ["*.jpg", "*.jpeg", "*.png", "*.gif", "*.webp", "*.bmp"]
     image_files = []
 
     for ext in image_extensions:
@@ -86,7 +84,7 @@ def load_images(image_dir: str = "../public/mobile_images", limit: int = None) -
             image_id = db_manager.store_image(
                 file_path=image_file,
                 description=f"Mobile phone image: {model_name}",
-                tags=["mobile_image", "automated_import", model_name.split('_')[0]]  # Brand as tag
+                tags=["mobile_image", "automated_import", model_name.split("_")[0]],  # Brand as tag
             )
             loaded_images.append(image_id)
             logger.info(f"Successfully loaded image: {image_id}")
@@ -96,6 +94,7 @@ def load_images(image_dir: str = "../public/mobile_images", limit: int = None) -
             continue
 
     return loaded_images
+
 
 def main():
     """Main function to load data into LanceDB"""
@@ -134,6 +133,7 @@ def main():
     logger.info(f"CSV Datasets: {len(csv_datasets)}")
     logger.info(f"Images: {len(images)}")
     logger.info("Data loading completed successfully!")
+
 
 if __name__ == "__main__":
     main()

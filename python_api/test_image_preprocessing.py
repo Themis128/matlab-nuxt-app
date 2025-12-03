@@ -7,10 +7,10 @@ import sys
 import time
 from pathlib import Path
 
+from data_preprocessing import DataPreprocessor
+
 # Add the current directory to Python path for imports
 sys.path.append(str(Path(__file__).parent))
-
-from data_preprocessing import DataPreprocessor
 
 
 def test_image_preprocessing():

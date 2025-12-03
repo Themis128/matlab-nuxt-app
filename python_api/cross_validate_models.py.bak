@@ -18,7 +18,7 @@ from sklearn.model_selection import KFold, cross_val_score
 from sklearn.preprocessing import StandardScaler
 
 sys.path.insert(0, str(Path(__file__).parent))
-from train_models_sklearn import (  # noqa: E402
+from train_models_sklearn import (
     create_engineered_features,
     encode_companies,
     encode_processors,

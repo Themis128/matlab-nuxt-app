@@ -14,7 +14,7 @@ import numpy as np
 # Add current directory to path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from train_models_sklearn import (
+from train_models_sklearn import (  # noqa: E402
     create_engineered_features,
     encode_companies,
     encode_processors,

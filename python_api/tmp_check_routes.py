@@ -2,6 +2,8 @@ import importlib
 import os
 import sys
 
+import pkgutil
+
 print("CWD:", os.getcwd())
 print("PYTHONPATH includes:")
 for p in sys.path[:5]:
@@ -16,7 +18,6 @@ try:
 except Exception:
     m = importlib.import_module("lancedb_endpoints")
 print("Imported", m.__name__)
-import pkgutil
 
 print("python-multipart installed:", pkgutil.find_loader("multipart") is not None)
 try:

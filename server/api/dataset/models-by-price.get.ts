@@ -222,15 +222,14 @@ export default defineEventHandler(async (event: H3Event): Promise<ModelsByPriceR
 
       // Extract optional fields
       const frontCamera =
-        frontCameraIdx !== -1 ? (extractNumber(values[frontCameraIdx]) ?? undefined) : undefined
+        frontCameraIdx !== -1 ? extractNumber(values[frontCameraIdx]) ?? undefined : undefined
       const backCamera =
-        backCameraIdx !== -1 ? (extractNumber(values[backCameraIdx]) ?? undefined) : undefined
-      const storage =
-        storageIdx !== -1 ? (extractNumber(values[storageIdx]) ?? undefined) : undefined
+        backCameraIdx !== -1 ? extractNumber(values[backCameraIdx]) ?? undefined : undefined
+      const storage = storageIdx !== -1 ? extractNumber(values[storageIdx]) ?? undefined : undefined
       const processor = processorIdx !== -1 ? values[processorIdx] || undefined : undefined
       const displayType = displayTypeIdx !== -1 ? values[displayTypeIdx] || undefined : undefined
       const refreshRate =
-        refreshRateIdx !== -1 ? (extractNumber(values[refreshRateIdx]) ?? undefined) : undefined
+        refreshRateIdx !== -1 ? extractNumber(values[refreshRateIdx]) ?? undefined : undefined
       const resolution = resolutionIdx !== -1 ? values[resolutionIdx] || undefined : undefined
 
       models.push({

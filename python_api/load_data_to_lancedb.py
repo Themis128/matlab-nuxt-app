@@ -11,10 +11,11 @@ from pathlib import Path
 from typing import List
 
 
+from lancedb_utils import get_db_manager
+
 # Add the current directory to Python path for imports
 sys.path.append(str(Path(__file__).parent))
 
-from lancedb_utils import get_db_manager
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")

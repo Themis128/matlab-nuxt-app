@@ -1,5 +1,3 @@
-// devtools.js
-
 // Store settings with defaults
 let settings = {
   logLimit: 50,
@@ -47,8 +45,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   // Handle connection status updates from page refreshes
   if (message.type === 'CONNECTION_STATUS_UPDATE') {
     console.log(
-      `DevTools received connection status update: ${
-        message.isConnected ? 'Connected' : 'Disconnected'
+      `DevTools received connection status update: ${message.isConnected ? 'Connected' : 'Disconnected'
       }`
     )
 

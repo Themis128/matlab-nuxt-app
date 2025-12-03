@@ -19,11 +19,12 @@ from typing import Any, Dict, List, Optional
 
 import pandas as pd
 
+from data_preprocessing import DataPreprocessor
+from lancedb_utils import get_db_manager
+
 # Add the current directory to Python path for imports
 sys.path.append(str(Path(__file__).parent))
 
-from data_preprocessing import DataPreprocessor
-from lancedb_utils import get_db_manager
 
 # Configure logging
 logging.basicConfig(
@@ -210,7 +211,7 @@ class DataPipeline:
 
         # Process in batches
         for i in range(0, len(image_tasks), self.batch_size):
-            batch = image_tasks[i : i + self.batch_size]
+            batch = image_tasks[i: i + self.batch_size]
             logger.info(f"Processing batch {i//self.batch_size + 1} with {len(batch)} images")
 
             with ThreadPoolExecutor(max_workers=self.max_workers) as executor:

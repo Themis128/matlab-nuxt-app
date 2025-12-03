@@ -6,10 +6,10 @@ import pytest
 from fastapi.testclient import TestClient
 from PIL import Image
 
-from api import app  # import the FastAPI app defined in api.py
-
 # Ensure top-level imports work
 sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from api import app  # import the FastAPI app defined in api.py
 
 
 @pytest.mark.integration
