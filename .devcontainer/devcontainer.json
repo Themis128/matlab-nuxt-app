@@ -4,7 +4,7 @@
   "workspaceFolder": "/workspace",
   "features": {
     "ghcr.io/devcontainers/features/python": {
-      "version": "3.14"
+      "version": "3.12"
     },
     "ghcr.io/devcontainers/features/git": {},
     "ghcr.io/devcontainers/features/docker-in-docker": {}
@@ -21,8 +21,7 @@
         "dbaeumer.vscode-eslint",
         "eamodio.gitlens",
         "ms-azuretools.vscode-docker",
-        "streetsidesoftware.code-spell-checker",
-        "octref.vetur"
+        "streetsidesoftware.code-spell-checker"
       ],
       "settings": {
         "typescript.tsdk": "node_modules/typescript/lib",
@@ -31,9 +30,14 @@
         "typescript.suggest.enabled": true,
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
-          "source.fixAll.eslint": true
+          "source.fixAll.eslint": "explicit"
         },
-        "eslint.validate": ["javascript", "typescript", "vue"],
+        "eslint.validate": [
+          "javascript",
+          "typescript",
+          "vue"
+        ],
+        "vue.server.hybridMode": "auto",
         "files.exclude": {
           "**/node_modules": true,
           "**/.git": true,
@@ -42,12 +46,16 @@
       }
     }
   },
-  "postCreateCommand": "bash -lc 'npm ci && npx playwright install --with-deps && cd python_api && python -m pip install --upgrade pip && pip install -r requirements.txt && sudo apt-get update && sudo apt-get install -y awscli tmux || true && npm install -g @sentry/cli || true && chmod +x .devcontainer/health-check.sh .devcontainer/start-dev.sh .devcontainer/start-servers-tmux.sh scripts/shell/start.sh'",
+  "postCreateCommand": "bash -lc './.devcontainer/post-create.sh'",
   "postStartCommand": "bash -lc './.devcontainer/health-check.sh; if [ \"$DEVCONTAINER_AUTO_START_SERVERS\" = \"true\" ]; then ./.devcontainer/start-servers-tmux.sh || true; fi; echo Devcontainer ready. Ports forwarded: 3000 (frontend), 8000 (Python API)'",
   "containerEnv": {
     "DEVCONTAINER_AUTO_START_SERVERS": "true"
   },
-  "forwardPorts": [3000, 8000, 9229],
+  "forwardPorts": [
+    3000,
+    8000,
+    9229
+  ],
   "remoteUser": "vscode",
   "overrideCommand": false,
   "shutdownAction": "stopContainer"

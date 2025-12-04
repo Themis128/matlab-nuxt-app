@@ -211,7 +211,7 @@ class DataPipeline:
 
         # Process in batches
         for i in range(0, len(image_tasks), self.batch_size):
-            batch = image_tasks[i: i + self.batch_size]
+            batch = image_tasks[slice(i, i + self.batch_size)]
             logger.info(f"Processing batch {i//self.batch_size + 1} with {len(batch)} images")
 
             with ThreadPoolExecutor(max_workers=self.max_workers) as executor:

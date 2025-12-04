@@ -60,7 +60,7 @@ except ImportError:
         "Analytics API endpoints not available (api_analytics_endpoints.py not found)"
     )
 
-# Try distilled model first (production-ready, 10x faster), then sklearn, then TensorFlow, then basic
+# Try distilled model first (production-ready, 10x faster), then sklearn, then TensorFlow, then mock, then basic
 DISTILLED_AVAILABLE = False
 try:
     from predictions_distilled import get_distilled_predictor
@@ -69,10 +69,12 @@ try:
     if predictor_info.get("available"):
         DISTILLED_AVAILABLE = True
         logging.getLogger("python_api").info("⭐ Distilled model loaded (10x faster, production-ready)")
+    else:
+        logging.getLogger("python_api").info("Distilled model not available (info check failed)")
 except (ImportError, Exception) as e:
     logging.getLogger("python_api").info("Distilled model unavailable: %s", type(e).__name__)
 
-# Try scikit-learn predictions first (works with Python 3.14), then TensorFlow, then basic
+# Try scikit-learn predictions first (works with Python 3.14), then TensorFlow, then mock, then basic
 try:
     from predictions_sklearn import predict_battery, predict_brand, predict_price, predict_ram
 
@@ -85,10 +87,16 @@ except (ImportError, Exception) as e:
         logging.getLogger("python_api").info("Using TensorFlow models for predictions")
     except (ImportError, Exception) as tf_error:
         logging.getLogger("python_api").info("TensorFlow predictions unavailable: %s", type(tf_error).__name__)
-        # Fallback to basic predictions
-        from predictions import predict_battery, predict_brand, predict_price, predict_ram
+        try:
+            from predictions_mock import predict_battery, predict_brand, predict_price, predict_ram
 
-        logging.getLogger("python_api").warning("Using basic predictions (trained models not available)")
+            logging.getLogger("python_api").info("Using mock predictions for development")
+        except (ImportError, Exception) as mock_error:
+            logging.getLogger("python_api").info("Mock predictions unavailable: %s", type(mock_error).__name__)
+            # Fallback to basic predictions
+            from predictions import predict_battery, predict_brand, predict_price, predict_ram
+
+            logging.getLogger("python_api").warning("Using basic predictions (trained models not available)")
 
 # Configure logging for verbose output
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")

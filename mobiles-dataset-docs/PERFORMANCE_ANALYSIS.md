@@ -37,16 +37,19 @@
 **Recommendations for Improvement:**
 
 1. **Feature Engineering:**
+
    - Add interaction features (e.g., RAM × Battery, Price per GB RAM)
    - Create price segments/bins as additional features
    - Add polynomial features for key predictors
 
 2. **Architecture Tuning:**
+
    - Try deeper network (256→128→64→32→16) - you already have `train_price_prediction_deep.m`
    - Experiment with wider network (512→256→128) - you have `train_price_prediction_wide.m`
    - Adjust dropout rates (try 0.2, 0.4, 0.5)
 
 3. **Training Improvements:**
+
    - Increase epochs to 200-300 with early stopping
    - Use learning rate scheduling (reduce on plateau)
    - Try different optimizers (AdamW, RMSprop)
@@ -93,17 +96,20 @@
    ```
 
 2. **Feature Engineering:**
+
    - Add brand-specific features (price-to-spec ratios)
    - Create brand clusters/segments
    - Add more features if available (OS type, camera count, etc.)
 
 3. **Architecture Improvements:**
+
    - Increase network capacity: 256→128→64→32
    - Add more layers: 256→128→64→32→16
    - Use residual connections if possible
    - Experiment with different activation functions (Swish, GELU)
 
 4. **Training Improvements:**
+
    - Use stratified sampling (already done, but verify)
    - Increase epochs to 200-300
    - Use data augmentation (slight noise to features)
@@ -143,16 +149,19 @@
 **Recommendations for Improvement:**
 
 1. **Feature Engineering:**
+
    - Price is a strong indicator - create price-to-RAM ratio features
    - Year is important - create year-based RAM trends
    - Add interaction features (Price × Year, Battery × Screen Size)
 
 2. **Architecture:**
+
    - Try wider network: 256→128→64
    - Add attention mechanism if possible
    - Experiment with different architectures
 
 3. **Data Analysis:**
+
    - RAM values are often discrete (2, 4, 6, 8, 12, 16 GB)
    - Consider treating as classification problem (RAM bins)
    - Or use ordinal regression

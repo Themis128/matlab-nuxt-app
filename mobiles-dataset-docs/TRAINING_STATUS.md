@@ -109,10 +109,12 @@ segments.Premium.avgPrice
 ### Common Issues:
 
 1. **Insufficient Camera Data**
+
    - Solution: Check that camera columns exist in the dataset
    - Run `preprocess_dataset.m` again
 
 2. **Out of Memory**
+
    - Solution: Close other applications
    - Reduce batch size in training scripts
 

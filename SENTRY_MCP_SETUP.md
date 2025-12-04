@@ -27,6 +27,7 @@ cp .env.sentry .env
 1. Go to [Sentry.io](https://sentry.io/)
 2. Navigate to **Settings → API → Auth Tokens**
 3. Create a new token with these scopes:
+
    - `org:read`
    - `project:read`
    - `project:write`
@@ -78,7 +79,7 @@ Sentry.init({
   environment: process.env.NODE_ENV || 'development',
   release: process.env.npm_package_version || 'mcp-server@1.0.0',
   tracesSampleRate: 1.0,
-})
+});
 ```
 
 ### 2. Add Sentry to Your Nuxt Config
@@ -96,7 +97,7 @@ export default defineNuxtConfig({
       tracesSampleRate: 1.0,
     },
   },
-})
+});
 ```
 
 ## 🛡️ Security Considerations

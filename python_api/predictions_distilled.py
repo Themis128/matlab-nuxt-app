@@ -21,6 +21,8 @@ Date: 2025-11-30
 import json
 from pathlib import Path
 from typing import Dict, Optional
+import signal
+import time
 
 import numpy as np
 
@@ -74,33 +76,11 @@ class DistilledPredictor:
                 print(f"[DEBUG] Trusted dirs: {trusted_dirs}")
                 return
 
-            # Load model package with robust validation
-            try:
-                with open(DISTILLED_MODEL_PATH, "rb") as f:
-                    # Check if it's a valid pickle file (support multiple protocols)
-                    header = f.read(2)
-                    # Accept any pickle protocol (0x80 + protocol version) or joblib formats
-                    if len(header) >= 1 and header[0] == 0x80:
-                        # Valid pickle header, proceed
-                        f.seek(0)
-                        model_package = joblib.load(f)
-                    else:
-                        # Not a valid pickle file
-                        print(f"[ERROR] Invalid pickle file format: {header!r} (expected pickle protocol header)")
-                        return
-            except Exception as load_error:
-                print(f"[ERROR] Failed to load model file {DISTILLED_MODEL_PATH}: {load_error}")
-                print(f"[DEBUG] File exists: {DISTILLED_MODEL_PATH.exists()}")
-                if DISTILLED_MODEL_PATH.exists():
-                    try:
-                        size = DISTILLED_MODEL_PATH.stat().st_size
-                        print(f"[DEBUG] File size: {size} bytes")
-                        # Try to read first few bytes for debugging
-                        with open(DISTILLED_MODEL_PATH, "rb") as f:
-                            first_bytes = f.read(10)
-                            print(f"[DEBUG] First 10 bytes: {first_bytes!r}")
-                    except Exception as debug_error:
-                        print(f"[DEBUG] Could not read file for debugging: {debug_error}")
+            # Load model package with timeout to prevent hanging
+            model_package = self._load_with_timeout(DISTILLED_MODEL_PATH, timeout_seconds=30)
+
+            if model_package is None:
+                print("[ERROR] Model loading timed out or failed")
                 return
 
             if isinstance(model_package, dict):
@@ -124,6 +104,43 @@ class DistilledPredictor:
 
         except Exception as e:
             print(f"[ERROR] Failed to load distilled model: {e}")
+
+    def _load_with_timeout(self, file_path: Path, timeout_seconds: int = 30):
+        """Load model with timeout to prevent hanging"""
+        import threading
+        import queue
+
+        result_queue = queue.Queue()
+
+        def load_worker():
+            try:
+                with open(file_path, "rb") as f:
+                    # Check if it's a valid pickle file
+                    header = f.read(2)
+                    if len(header) >= 1 and header[0] == 0x80:
+                        f.seek(0)
+                        model_package = joblib.load(f)
+                        result_queue.put(("success", model_package))
+                    else:
+                        result_queue.put(("error", f"Invalid pickle file format: {header!r}"))
+            except Exception as e:
+                result_queue.put(("error", str(e)))
+
+        # Start loading in a separate thread
+        load_thread = threading.Thread(target=load_worker, daemon=True)
+        load_thread.start()
+
+        # Wait for result with timeout
+        try:
+            result_type, result = result_queue.get(timeout=timeout_seconds)
+            if result_type == "success":
+                return result
+            else:
+                print(f"[ERROR] Model loading failed: {result}")
+                return None
+        except queue.Empty:
+            print(f"[ERROR] Model loading timed out after {timeout_seconds} seconds")
+            return None
 
     def is_available(self) -> bool:
         """Check if model is loaded and ready"""

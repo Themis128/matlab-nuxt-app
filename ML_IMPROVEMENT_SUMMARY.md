@@ -52,11 +52,13 @@
 ### High Priority
 
 1. **Fix Ensemble Architecture**
+
    - Reduce meta-learner complexity
    - Add L2 regularization
    - Use simpler models (Linear/Ridge) for meta-learner
 
 2. **Improve Segmentation**
+
    - Use quartile-based thresholds
    - Consider brand-specific baselines
    - Multi-dimensional clustering (price + specs)
@@ -69,6 +71,7 @@
 ### Medium Priority
 
 4. **Cross-Market Prediction**
+
    - Train on PPP-adjusted prices
    - Inflation normalization
    - Regional feature interactions

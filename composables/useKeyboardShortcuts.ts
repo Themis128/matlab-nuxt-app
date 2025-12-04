@@ -3,17 +3,17 @@
  * Provides global keyboard shortcuts for improved user experience
  */
 
-import { ref, readonly, onMounted, onUnmounted } from 'vue'
+import { ref, readonly, onMounted, onUnmounted } from 'vue';
 
 interface ShortcutAction {
-  key: string
-  ctrlKey?: boolean
-  altKey?: boolean
-  shiftKey?: boolean
-  metaKey?: boolean
-  description: string
-  action: () => void
-  disabled?: boolean
+  key: string;
+  ctrlKey?: boolean;
+  altKey?: boolean;
+  shiftKey?: boolean;
+  metaKey?: boolean;
+  description: string;
+  action: () => void;
+  disabled?: boolean;
 }
 
 export function useKeyboardShortcuts() {
@@ -54,12 +54,12 @@ export function useKeyboardShortcuts() {
       description: 'Refresh data',
       action: () => refreshData(),
     },
-  ])
+  ]);
 
   // Handle keyboard events
   const handleKeydown = (event: KeyboardEvent) => {
     // Skip if user is typing in an input field
-    const activeElement = document.activeElement
+    const activeElement = document.activeElement;
     if (
       activeElement &&
       (activeElement.tagName === 'INPUT' ||
@@ -67,27 +67,27 @@ export function useKeyboardShortcuts() {
         activeElement.tagName === 'SELECT' ||
         activeElement.hasAttribute('contenteditable'))
     ) {
-      return
+      return;
     }
 
     // Check for matching shortcuts
     for (const shortcut of shortcuts.value) {
-      if (shortcut.disabled) continue
+      if (shortcut.disabled) continue;
 
-      const keyMatches = event.key.toLowerCase() === shortcut.key.toLowerCase()
-      const ctrlMatches = !!shortcut.ctrlKey === event.ctrlKey
-      const altMatches = !!shortcut.altKey === event.altKey
-      const shiftMatches = !!shortcut.shiftKey === event.shiftKey
-      const metaMatches = !!shortcut.metaKey === (event.metaKey || event.ctrlKey)
+      const keyMatches = event.key.toLowerCase() === shortcut.key.toLowerCase();
+      const ctrlMatches = !!shortcut.ctrlKey === event.ctrlKey;
+      const altMatches = !!shortcut.altKey === event.altKey;
+      const shiftMatches = !!shortcut.shiftKey === event.shiftKey;
+      const metaMatches = !!shortcut.metaKey === (event.metaKey || event.ctrlKey);
 
       if (keyMatches && ctrlMatches && altMatches && shiftMatches && metaMatches) {
-        event.preventDefault()
-        event.stopPropagation()
-        shortcut.action()
-        break
+        event.preventDefault();
+        event.stopPropagation();
+        shortcut.action();
+        break;
       }
     }
-  }
+  };
 
   // Shortcut actions
   const showShortcutsHelp = () => {
@@ -100,62 +100,62 @@ export function useKeyboardShortcuts() {
         'Ctrl+D - Toggle theme\n' +
         'Ctrl+R - Refresh data\n' +
         'Shift+? - Show this help'
-    )
-  }
+    );
+  };
 
   const focusSearch = () => {
     const searchInput = document.querySelector(
       'input[placeholder*="search" i], input[type="search"]'
-    ) as HTMLInputElement
+    ) as HTMLInputElement;
     if (searchInput) {
-      searchInput.focus()
-      searchInput.select()
+      searchInput.focus();
+      searchInput.select();
     } else {
       // Try to navigate to search page
-      window.location.href = '/search'
+      window.location.href = '/search';
     }
-  }
+  };
 
   const openPreferences = () => {
     // Emit event to open preferences dialog
     // This will be handled by the parent component
-    const event = new CustomEvent('open-preferences')
-    window.dispatchEvent(event)
-  }
+    const event = new CustomEvent('open-preferences');
+    window.dispatchEvent(event);
+  };
 
   const navigateToHome = () => {
-    window.location.href = '/'
-  }
+    window.location.href = '/';
+  };
 
   const toggleTheme = () => {
     // Toggle theme via existing ThemeToggle component
-    const themeToggle = document.querySelector('[data-theme-toggle]') as HTMLElement
+    const themeToggle = document.querySelector('[data-theme-toggle]') as HTMLElement;
     if (themeToggle) {
-      themeToggle.click()
+      themeToggle.click();
     } else {
       // Fallback: toggle a class on document
-      document.documentElement.classList.toggle('dark')
+      document.documentElement.classList.toggle('dark');
     }
-  }
+  };
 
   const refreshData = () => {
     // Refresh current page data
-    window.location.reload()
-  }
+    window.location.reload();
+  };
 
   // Add keyboard event listener
   onMounted(() => {
     if (process.client) {
-      document.addEventListener('keydown', handleKeydown)
+      document.addEventListener('keydown', handleKeydown);
     }
-  })
+  });
 
   // Remove keyboard event listener
   onUnmounted(() => {
     if (process.client) {
-      document.removeEventListener('keydown', handleKeydown)
+      document.removeEventListener('keydown', handleKeydown);
     }
-  })
+  });
 
   return {
     shortcuts: readonly(shortcuts),
@@ -165,5 +165,5 @@ export function useKeyboardShortcuts() {
     navigateToHome,
     toggleTheme,
     refreshData,
-  }
+  };
 }

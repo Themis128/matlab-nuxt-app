@@ -161,11 +161,13 @@ After running all steps, you should have:
 ## Next Steps After Training
 
 1. **Evaluate Model:**
+
    - Review training progress plot
    - Check test set metrics
    - Compare predictions vs actual prices
 
 2. **Improve Model:**
+
    - Fine-tune hyperparameters
    - Try different architectures
    - Add more features

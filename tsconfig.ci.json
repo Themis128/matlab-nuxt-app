@@ -1,9 +1,7 @@
 {
-    "extends": "./.nuxt/tsconfig.json",
-    "compilerOptions": {
-        "module": "ESNext"
-    },
-    "exclude": [
-        "mcp-servers/**/*"
-    ]
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext"
+  },
+  "exclude": ["mcp-servers/**/*"]
 }

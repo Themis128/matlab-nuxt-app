@@ -5,6 +5,7 @@ This directory contains various Model Context Protocol (MCP) server implementati
 ## Fetched MCP Servers
 
 ### 1. Official MCP Servers (`mcp-servers-official/`)
+
 - **Source**: https://github.com/modelcontextprotocol/servers
 - **Contains**: Core MCP server implementations including:
   - `filesystem/` - File system operations
@@ -16,16 +17,19 @@ This directory contains various Model Context Protocol (MCP) server implementati
   - `sequentialthinking/` - Sequential thinking patterns
 
 ### 2. GitHub MCP Server (`mcp-github/`)
+
 - **Source**: https://github.com/github/github-mcp-server
 - **Purpose**: GitHub API integration for repository management, issues, pull requests, etc.
 - **Tools**: Repository operations, issue management, pull request handling, code search
 
 ### 3. Snyk MCP Server (`mcp-snyk/`)
+
 - **Source**: https://github.com/snyk/snyk-ls
 - **Purpose**: Security scanning and vulnerability assessment
 - **Tools**: Code analysis, dependency scanning, security recommendations
 
 ### 4. Algolia MCP Server (`mcp-node/`)
+
 - **Source**: https://github.com/algolia/mcp-node
 - **Purpose**: Algolia search and analytics integration
 - **Tools**: Search operations, analytics, index management
@@ -48,6 +52,7 @@ For configuration examples, see the main project's `MCP_EVENTS_README.md` file.
 ## Note on Missing Servers
 
 Some MCP servers mentioned in the documentation were not found at their expected GitHub locations:
+
 - Playwright MCP Server (likely distributed via npm: `@executeautomation/playwright-mcp-server`)
 - AWS Cost Explorer MCP Server (likely distributed via pip: `awslabs.cost-explorer-mcp-server`)
 

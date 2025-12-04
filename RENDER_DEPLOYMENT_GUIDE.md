@@ -19,6 +19,7 @@ If you're seeing the **Python API backend** (JSON responses) instead of the **Nu
 This application has two components:
 
 1. **Nuxt Frontend** (`/`) - The web interface users interact with
+
    - Built with Nuxt.js 4
    - Serves HTML pages, forms, visualizations
    - Runs on Node.js
@@ -37,22 +38,26 @@ This application has two components:
 ### Option 1: Two-Service Deployment (Recommended)
 
 **✅ Pros:**
+
 - Better performance (services scaled independently)
 - Easier debugging (separate logs for each service)
 - Proper separation of concerns
 - Automatic CORS configuration
 
 **❌ Cons:**
+
 - Uses two Render services (might cost more on paid plans)
 - Requires managing two deployments
 
 ### Option 2: Single-Service Deployment
 
 **✅ Pros:**
+
 - Single deployment to manage
 - Uses only one Render service
 
 **❌ Cons:**
+
 - All traffic goes through one service
 - More complex configuration
 - Shared resources between frontend and backend
@@ -79,10 +84,12 @@ If your current `matlab-nuxt-app-2` service is showing the Python backend:
 2. **Click "New" → "Blueprint"**
 
 3. **Connect Your Repository**:
+
    - Select your GitHub repository: `Themis128/matlab-nuxt-app`
    - Click "Connect"
 
 4. **Render Will Auto-Detect `render.yaml`**:
+
    - It will create TWO services:
      - `matlab-python-api` - Backend API
      - `matlab-nuxt-frontend` - Frontend Web App ⭐ (This is your main URL)
@@ -94,6 +101,7 @@ If your current `matlab-nuxt-app-2` service is showing the Python backend:
 Both services will build and deploy. This can take 5-10 minutes.
 
 **Monitor Build Logs** to ensure:
+
 - ✅ Python service: Dependencies install, models train successfully
 - ✅ Nuxt service: `npm run build` completes successfully
 
@@ -102,6 +110,7 @@ Both services will build and deploy. This can take 5-10 minutes.
 Once deployed, you'll have two URLs:
 
 - **Frontend (Main App)**: `https://matlab-nuxt-frontend.onrender.com` ⭐
+
   - **This is the URL to share with users**
   - Shows the Nuxt web interface
 
@@ -135,19 +144,19 @@ services:
       # Install Node dependencies
       npm ci
       npm run build
-      
+
       # Install Python and dependencies
       pip install --upgrade pip setuptools wheel
       pip install -r requirements.txt
-      
+
       # Train ML models
       cd python_api && python train_models_sklearn.py
       cd .. && python retrain_advanced_models.py
-    
+
     startCommand: bash start.sh
-    
+
     healthCheckPath: /
-    
+
     envVars:
       - key: NODE_ENV
         value: production
@@ -160,7 +169,7 @@ services:
       - key: PYTHONUNBUFFERED
         value: '1'
       - key: PORT
-        value: '3000'  # Render uses this port for health checks
+        value: '3000' # Render uses this port for health checks
 ```
 
 ### Step 2: Update `start.sh` for Production
@@ -202,6 +211,7 @@ npm run preview
 ### Step 4: Access Your Application
 
 Your app will be available at:
+
 - `https://matlab-nuxt-app.onrender.com` (Shows Nuxt frontend)
 
 ---
@@ -211,13 +221,15 @@ Your app will be available at:
 ### Issue: Seeing JSON Instead of Web Interface
 
 **Symptom**: When you open your URL, you see:
+
 ```json
-{"message": "Mobile Phone Prediction API", "status": "running"}
+{ "message": "Mobile Phone Prediction API", "status": "running" }
 ```
 
 **Cause**: You're accessing the Python API service instead of the Nuxt frontend.
 
 **Solution**:
+
 - If using **Two-Service Deployment**: Access the `matlab-nuxt-frontend` URL, not the `matlab-python-api` URL
 - If using **Single-Service Deployment**: Check that `start.sh` starts Nuxt as the main process (not Python)
 
@@ -228,12 +240,14 @@ Your app will be available at:
 **Cause**: Frontend can't reach the backend API.
 
 **Solution for Two-Service Deployment**:
+
 1. Ensure both services are running
 2. Check `NUXT_PUBLIC_API_BASE` environment variable in frontend service
 3. Should be set to: `https://matlab-python-api.onrender.com`
 4. Ensure `CORS_ORIGINS` in Python service includes: `https://matlab-nuxt-frontend.onrender.com`
 
 **Solution for Single-Service Deployment**:
+
 1. Check that Python API starts before Nuxt
 2. Ensure `PYTHON_API_URL` or `NUXT_PUBLIC_API_BASE` is set to `http://localhost:8000`
 
@@ -242,11 +256,13 @@ Your app will be available at:
 **Symptom**: Deployment fails during build.
 
 **Common Causes**:
+
 1. **Missing dependencies**: Check `requirements.txt` includes all packages
 2. **Model training fails**: Check logs for Python errors
 3. **Nuxt build fails**: Check `package.json` scripts are correct
 
 **Solution**:
+
 1. Review build logs carefully
 2. Test build locally: `npm run build` and `pip install -r requirements.txt`
 3. Ensure all required files are committed to git
@@ -256,11 +272,13 @@ Your app will be available at:
 **Symptom**: Service starts but crashes after a few minutes.
 
 **Common Causes**:
+
 1. **Port binding issues**: Service not listening on `$PORT` environment variable
 2. **Memory issues**: ML models too large for free tier
 3. **Python/Node version mismatch**
 
 **Solution**:
+
 1. Check logs for crash reason
 2. Ensure `api.py` binds to `0.0.0.0:$PORT`
 3. Ensure `nuxt.config.ts` uses correct port configuration
@@ -277,7 +295,8 @@ Your app will be available at:
 3. Access the `matlab-nuxt-frontend` URL (not `matlab-python-api`)
 4. Share the frontend URL with users
 
-**Main Takeaway**: 
+**Main Takeaway**:
+
 - ✅ `https://matlab-nuxt-frontend.onrender.com` → Web Interface (what users see)
 - ❌ `https://matlab-python-api.onrender.com` → JSON API (internal use only)
 
@@ -295,9 +314,11 @@ If you're still experiencing issues:
 **Common Environment Variables to Check**:
 
 **Frontend Service**:
+
 - `NODE_ENV=production`
 - `NUXT_PUBLIC_API_BASE=https://matlab-python-api.onrender.com`
 
 **Backend Service**:
+
 - `CORS_ORIGINS=https://matlab-nuxt-frontend.onrender.com`
 - `PORT=10000` (or whatever Render assigns)

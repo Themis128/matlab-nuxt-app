@@ -5,30 +5,30 @@ declare global {
   interface Window {
     // Sentry test properties
     __sentryErrors?: Array<{
-      error?: Error
-      message?: string
-      level?: string
-      hint?: any
-      timestamp: number
-    }>
-    __sentryTransactions?: any[]
-    __navigationStart?: number
+      error?: Error;
+      message?: string;
+      level?: string;
+      hint?: any;
+      timestamp: number;
+    }>;
+    __sentryTransactions?: any[];
+    __navigationStart?: number;
 
     // Algolia test properties
     __algoliaEvents?: Array<{
-      type: string
-      appId?: string
-      apiKey?: string
-      queries?: any
-      options?: any
-      timestamp: number
-    }>
-    __algoliaErrors?: any[]
+      type: string;
+      appId?: string;
+      apiKey?: string;
+      queries?: any;
+      options?: any;
+      timestamp: number;
+    }>;
+    __algoliaErrors?: any[];
 
     // Algolia global objects
-    algoliasearch?: any
-    instantsearch?: any
+    algoliasearch?: any;
+    instantsearch?: any;
   }
 }
 
-export {}
+export {};

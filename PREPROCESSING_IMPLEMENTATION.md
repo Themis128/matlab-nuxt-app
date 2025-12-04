@@ -344,13 +344,13 @@ with open('data/Mobiles_Dataset_Cleaned_summary.json') as f:
 
 ```javascript
 // Get preprocessing status
-const status = await $fetch('/api/dataset/preprocessing-status')
+const status = await $fetch('/api/dataset/preprocessing-status');
 
 // Get quality report
-const quality = await $fetch('/api/dataset/quality-report')
+const quality = await $fetch('/api/dataset/quality-report');
 
 // Get sample data
-const data = await $fetch('/api/dataset/cleaned-data?limit=100')
+const data = await $fetch('/api/dataset/cleaned-data?limit=100');
 ```
 
 **3. Handle outliers:**
@@ -379,11 +379,11 @@ df[['storage']] = imputer.fit_transform(df[['storage']])
 
 ```vue
 <script setup lang="ts">
-const { data: status } = await useFetch('/api/dataset/preprocessing-status')
-const { data: quality } = await useFetch('/api/dataset/quality-report')
+const { data: status } = await useFetch('/api/dataset/preprocessing-status');
+const { data: quality } = await useFetch('/api/dataset/quality-report');
 const { data: sample } = await useFetch('/api/dataset/cleaned-data', {
   query: { limit: 10 },
-})
+});
 </script>
 
 <template>
@@ -434,17 +434,20 @@ const { data: sample } = await useFetch('/api/dataset/cleaned-data', {
 ### Before Model Training (Recommended)
 
 4. **Feature Engineering**
+
    - Add `phone_age = 2025 - year`
    - Add `brand_tier` (budget/mid/premium based on avg price)
    - Add `price_ratio` features (ram_to_price, battery_to_price)
    - Add `camera_total = front_camera + back_camera`
 
 5. **Encode Categorical Variables**
+
    - One-hot encode `company` (19 categories)
    - Group `processor` by family (Snapdragon, MediaTek, Apple, etc.)
    - Drop or extract features from `model` (too unique)
 
 6. **Normalize Prices**
+
    - Convert all to USD or create unified price feature
    - Handle currency conversion rates
 
@@ -510,9 +513,9 @@ curl http://localhost:3000/api/dataset/cleaned-data?limit=5
 
 ```javascript
 // In browser console or Nuxt component
-const status = await $fetch('/api/dataset/preprocessing-status')
-console.log('Dataset has', status.cleanedDataset.rows, 'rows')
-console.log('Quality score:', status.cleanedDataset.dataQuality.overallScore)
+const status = await $fetch('/api/dataset/preprocessing-status');
+console.log('Dataset has', status.cleanedDataset.rows, 'rows');
+console.log('Quality score:', status.cleanedDataset.dataQuality.overallScore);
 ```
 
 ---

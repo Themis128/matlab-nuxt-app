@@ -317,139 +317,139 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted } from 'vue';
 
-  // Page meta
-  onMounted(() => {
-    document.title = 'A/B Testing Dashboard - MATLAB Deep Learning Platform'
-    const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
-    const content = 'Design, monitor, and analyze A/B tests for model performance and optimization'
-    if (existing) existing.content = content
-    else {
-      const m = document.createElement('meta')
-      m.name = 'description'
-      m.content = content
-      document.head.appendChild(m)
-    }
-  })
+// Page meta
+onMounted(() => {
+  document.title = 'A/B Testing Dashboard - MATLAB Deep Learning Platform';
+  const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+  const content = 'Design, monitor, and analyze A/B tests for model performance and optimization';
+  if (existing) existing.content = content;
+  else {
+    const m = document.createElement('meta');
+    m.name = 'description';
+    m.content = content;
+    document.head.appendChild(m);
+  }
+});
 
-  // New test form
-  const newTest = reactive({
-    name: '',
-    description: '',
-    type: 'model-comparison',
-    primaryMetric: 'accuracy',
-    mde: 2.0,
+// New test form
+const newTest = reactive({
+  name: '',
+  description: '',
+  type: 'model-comparison',
+  primaryMetric: 'accuracy',
+  mde: 2.0,
+  confidence: 95,
+  duration: 7,
+});
+
+// Options for selects
+const testTypeOptions = [
+  { label: 'Model Comparison', value: 'model-comparison' },
+  { label: 'Feature Testing', value: 'feature-testing' },
+  { label: 'Algorithm Optimization', value: 'algorithm-optimization' },
+  { label: 'Data Processing', value: 'data-processing' },
+];
+
+const metricOptions = [
+  { label: 'Accuracy', value: 'accuracy' },
+  { label: 'Precision', value: 'precision' },
+  { label: 'Recall', value: 'recall' },
+  { label: 'F1 Score', value: 'f1-score' },
+  { label: 'User Engagement', value: 'user-engagement' },
+];
+
+const confidenceOptions = [
+  { label: '90%', value: 90 },
+  { label: '95%', value: 95 },
+  { label: '99%', value: 99 },
+];
+
+// Active tests data
+const activeTests = ref([
+  {
+    id: 1,
+    name: 'CNN vs Transformer Model',
+    description: 'Comparing CNN and Transformer architectures for mobile dataset classification',
+    status: 'Running',
+    duration: '5 days',
+    variantA: { conversion: 94.7, samples: 12500 },
+    variantB: { conversion: 96.8, samples: 12300 },
+    significance: 87,
     confidence: 95,
-    duration: 7,
-  })
+  },
+  {
+    id: 2,
+    name: 'Learning Rate Optimization',
+    description: 'Testing different learning rates for model convergence',
+    status: 'Running',
+    duration: '3 days',
+    variantA: { conversion: 91.2, samples: 8200 },
+    variantB: { conversion: 93.1, samples: 8100 },
+    significance: 76,
+    confidence: 90,
+  },
+  {
+    id: 3,
+    name: 'Data Augmentation Impact',
+    description: 'Evaluating the effect of data augmentation on model performance',
+    status: 'Completed',
+    duration: '7 days',
+    variantA: { conversion: 89.5, samples: 15000 },
+    variantB: { conversion: 92.3, samples: 14800 },
+    significance: 95,
+    confidence: 95,
+  },
+]);
 
-  // Options for selects
-  const testTypeOptions = [
-    { label: 'Model Comparison', value: 'model-comparison' },
-    { label: 'Feature Testing', value: 'feature-testing' },
-    { label: 'Algorithm Optimization', value: 'algorithm-optimization' },
-    { label: 'Data Processing', value: 'data-processing' },
-  ]
+// Test results history
+const testResults = ref([
+  {
+    id: 101,
+    name: 'Batch Size Comparison',
+    type: 'Hyperparameter',
+    status: 'Completed',
+    duration: '5 days',
+    lift: 3.2,
+    confidence: 94,
+    result: 'Winner',
+  },
+  {
+    id: 102,
+    name: 'Feature Engineering',
+    type: 'Preprocessing',
+    status: 'Completed',
+    duration: '10 days',
+    lift: -1.1,
+    confidence: 87,
+    result: 'No Effect',
+  },
+]);
 
-  const metricOptions = [
-    { label: 'Accuracy', value: 'accuracy' },
-    { label: 'Precision', value: 'precision' },
-    { label: 'Recall', value: 'recall' },
-    { label: 'F1 Score', value: 'f1-score' },
-    { label: 'User Engagement', value: 'user-engagement' },
-  ]
+// Simple helper functions used by template
+function getStatusColor(status: string) {
+  if (status === 'Running') return 'text-green-600';
+  if (status === 'Completed') return 'text-gray-600';
+  return 'text-gray-500';
+}
 
-  const confidenceOptions = [
-    { label: '90%', value: 90 },
-    { label: '95%', value: 95 },
-    { label: '99%', value: 99 },
-  ]
+function getConversionColor(b: number, a: number) {
+  return b > a ? 'text-green-600' : 'text-red-600';
+}
 
-  // Active tests data
-  const activeTests = ref([
-    {
-      id: 1,
-      name: 'CNN vs Transformer Model',
-      description: 'Comparing CNN and Transformer architectures for mobile dataset classification',
-      status: 'Running',
-      duration: '5 days',
-      variantA: { conversion: 94.7, samples: 12500 },
-      variantB: { conversion: 96.8, samples: 12300 },
-      significance: 87,
-      confidence: 95,
-    },
-    {
-      id: 2,
-      name: 'Learning Rate Optimization',
-      description: 'Testing different learning rates for model convergence',
-      status: 'Running',
-      duration: '3 days',
-      variantA: { conversion: 91.2, samples: 8200 },
-      variantB: { conversion: 93.1, samples: 8100 },
-      significance: 76,
-      confidence: 90,
-    },
-    {
-      id: 3,
-      name: 'Data Augmentation Impact',
-      description: 'Evaluating the effect of data augmentation on model performance',
-      status: 'Completed',
-      duration: '7 days',
-      variantA: { conversion: 89.5, samples: 15000 },
-      variantB: { conversion: 92.3, samples: 14800 },
-      significance: 95,
-      confidence: 95,
-    },
-  ])
+function getLiftColor(lift: number) {
+  return lift > 0 ? 'text-green-600' : 'text-red-600';
+}
 
-  // Test results history
-  const testResults = ref([
-    {
-      id: 101,
-      name: 'Batch Size Comparison',
-      type: 'Hyperparameter',
-      status: 'Completed',
-      duration: '5 days',
-      lift: 3.2,
-      confidence: 94,
-      result: 'Winner',
-    },
-    {
-      id: 102,
-      name: 'Feature Engineering',
-      type: 'Preprocessing',
-      status: 'Completed',
-      duration: '10 days',
-      lift: -1.1,
-      confidence: 87,
-      result: 'No Effect',
-    },
-  ])
+function getResultColor(result: string) {
+  return result === 'Winner' ? 'text-green-600' : 'text-gray-600';
+}
 
-  // Simple helper functions used by template
-  function getStatusColor(status: string) {
-    if (status === 'Running') return 'text-green-600'
-    if (status === 'Completed') return 'text-gray-600'
-    return 'text-gray-500'
-  }
-
-  function getConversionColor(b: number, a: number) {
-    return b > a ? 'text-green-600' : 'text-red-600'
-  }
-
-  function getLiftColor(lift: number) {
-    return lift > 0 ? 'text-green-600' : 'text-red-600'
-  }
-
-  function getResultColor(result: string) {
-    return result === 'Winner' ? 'text-green-600' : 'text-gray-600'
-  }
-
-  function getSignificanceColor(sig: number) {
-    if (sig >= 95) return 'text-green-600'
-    if (sig >= 80) return 'text-yellow-600'
-    return 'text-red-600'
-  }
+function getSignificanceColor(sig: number) {
+  if (sig >= 95) return 'text-green-600';
+  if (sig >= 80) return 'text-yellow-600';
+  return 'text-red-600';
+}
 </script>
 lift: -1.1, confidence: 87, result: 'No Effect' },

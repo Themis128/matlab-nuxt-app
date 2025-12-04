@@ -5,6 +5,7 @@
 When accessing the deployed Render URL `https://matlab-nuxt-app-2.onrender.com/`, users see the **Python API backend** (JSON response) instead of the **Nuxt frontend** (web interface).
 
 Example of what was showing:
+
 ```json
 {
   "message": "Mobile Phone Prediction API",
@@ -21,6 +22,7 @@ Example of what was showing:
 The application architecture consists of **two separate services**:
 
 1. **Python API Backend** (FastAPI)
+
    - Serves prediction endpoints at `/api/*`
    - Returns JSON responses
    - Meant for internal API calls only
@@ -39,11 +41,13 @@ The application architecture consists of **two separate services**:
 ### 1. Documentation Created
 
 #### RENDER_QUICKFIX.md
+
 - Quick resolution guide for the immediate problem
 - Clear explanation of which URL to use
 - Step-by-step instructions for both Blueprint and manual deployment
 
 #### RENDER_DEPLOYMENT_GUIDE.md
+
 - Comprehensive deployment guide
 - Two deployment options explained:
   - **Option 1**: Two-Service Deployment (Recommended) - Uses render.yaml blueprint
@@ -54,12 +58,14 @@ The application architecture consists of **two separate services**:
 ### 2. Configuration Files Enhanced
 
 #### render.yaml
+
 - Added comprehensive header comments explaining the architecture
 - Clearly marked which service is the main user-facing URL
 - Indicated that `matlab-nuxt-frontend` is the service users should access
 - Warned that `matlab-python-api` is for internal use only
 
 **Key Addition**:
+
 ```yaml
 # ============================================================================
 # 1. matlab-python-api - Backend API service (FastAPI)
@@ -73,6 +79,7 @@ The application architecture consists of **two separate services**:
 ```
 
 #### render-single.yaml (New)
+
 - Alternative configuration for single-service deployment
 - Runs Python API in background, Nuxt as main process
 - Simpler for users who prefer one service
@@ -81,6 +88,7 @@ The application architecture consists of **two separate services**:
 ### 3. Scripts Created
 
 #### start_nuxt_only.sh (New)
+
 - Standalone script to run only Nuxt frontend
 - Useful for manual service configuration
 - Properly sets environment variables
@@ -95,7 +103,8 @@ Added prominent warning section at the top of README:
 
 If your Render deployment shows **JSON** instead of the **web interface**:
 
-**Quick Fix**: 
+**Quick Fix**:
+
 - ✅ Access `https://matlab-nuxt-frontend.onrender.com` (Frontend)
 - ❌ NOT `https://matlab-python-api.onrender.com` (API only)
 
@@ -111,6 +120,7 @@ If your Render deployment shows **JSON** instead of the **web interface**:
 The user likely deployed using the render.yaml blueprint, which creates TWO services:
 
 **Current Situation**:
+
 - ❌ Accessing: `https://matlab-nuxt-app-2.onrender.com` (might be Python API)
 - ✅ Should access: `https://matlab-nuxt-frontend.onrender.com` (Nuxt web UI)
 
@@ -121,17 +131,20 @@ The user likely deployed using the render.yaml blueprint, which creates TWO serv
 If the user manually created a service called `matlab-nuxt-app-2` that runs Python:
 
 **Option A - Reconfigure Existing Service**:
+
 1. Go to Render Dashboard → Service Settings
 2. Change Start Command to: `bash start_nuxt_only.sh`
 3. Update Build Command to include: `npm ci && npm run build`
 4. Redeploy
 
 **Option B - Delete and Redeploy with Blueprint**:
+
 1. Delete the incorrectly configured service
 2. Use Render Blueprint deployment with render.yaml
 3. Access the `matlab-nuxt-frontend` service URL
 
 **Option C - Single Service Deployment**:
+
 1. Use the new `render-single.yaml` configuration
 2. Deploy as a Blueprint
 3. Access the single service URL (will show Nuxt frontend)
@@ -143,6 +156,7 @@ If the user manually created a service called `matlab-nuxt-app-2` that runs Pyth
 ### Service Architecture Clarity
 
 The application has a **clear separation of concerns**:
+
 - **Frontend Service**: User-facing web interface
 - **Backend Service**: API endpoints for predictions
 
@@ -151,6 +165,7 @@ This was not immediately clear to users, leading to confusion about which URL to
 ### Documentation Improvements
 
 Previous documentation assumed users would understand the two-service architecture. The new documentation:
+
 - Explicitly states which URL is for users
 - Provides visual indicators (✅ and ❌)
 - Offers multiple deployment options
@@ -159,6 +174,7 @@ Previous documentation assumed users would understand the two-service architectu
 ### Configuration Clarity
 
 The render.yaml now has:
+
 - Header comments explaining the architecture
 - Inline comments identifying each service's purpose
 - Clear visual markers (⭐, ✅, ❌) to indicate importance
@@ -168,16 +184,19 @@ The render.yaml now has:
 ## Testing & Validation
 
 ### Build Verification ✅
+
 - Nuxt build completes successfully
 - No breaking changes to existing functionality
 - All configuration files are valid YAML
 
 ### Documentation Review ✅
+
 - All guides reviewed for clarity
 - Links between documents verified
 - Code examples tested
 
 ### Files Changed
+
 1. `README.md` - Added deployment warning section
 2. `render.yaml` - Enhanced with comprehensive comments
 3. `RENDER_DEPLOYMENT_GUIDE.md` - New comprehensive guide
@@ -239,4 +258,3 @@ The issue was not a bug in the code, but rather a **deployment configuration and
 4. **Prevention**: Clear warnings and guides to prevent future confusion
 
 The user should now be able to access the correct Nuxt frontend URL and see the web interface as expected.
-

@@ -304,198 +304,196 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed } from 'vue'
+import { ref, computed } from 'vue';
 
-  const categories = ref([
-    { id: 'all', name: 'All Models', icon: 'i-heroicons-squares-2x2' },
-    { id: 'classification', name: 'Classification', icon: 'i-heroicons-tag' },
-    { id: 'regression', name: 'Regression', icon: 'i-heroicons-chart-line' },
-    { id: 'clustering', name: 'Clustering', icon: 'i-heroicons-squares-2x2' },
-    { id: 'nlp', name: 'NLP', icon: 'i-heroicons-chat-bubble-left-right' },
-    { id: 'computer-vision', name: 'Computer Vision', icon: 'i-heroicons-eye' },
-  ])
+const categories = ref([
+  { id: 'all', name: 'All Models', icon: 'i-heroicons-squares-2x2' },
+  { id: 'classification', name: 'Classification', icon: 'i-heroicons-tag' },
+  { id: 'regression', name: 'Regression', icon: 'i-heroicons-chart-line' },
+  { id: 'clustering', name: 'Clustering', icon: 'i-heroicons-squares-2x2' },
+  { id: 'nlp', name: 'NLP', icon: 'i-heroicons-chat-bubble-left-right' },
+  { id: 'computer-vision', name: 'Computer Vision', icon: 'i-heroicons-eye' },
+]);
 
-  const selectedCategory = ref('all')
+const selectedCategory = ref('all');
 
-  const models = ref([
-    {
-      id: 1,
-      name: 'MobileNet CNN',
-      category: 'Computer Vision',
-      categoryId: 'computer-vision',
-      description: 'Optimized CNN for mobile device classification and feature recognition',
-      longDescription:
-        'MobileNet CNN is specifically designed for efficient inference on mobile devices while maintaining high accuracy for mobile classification tasks.',
-      accuracy: 94.7,
-      inferenceTime: 45,
-      color: '#8B5CF6',
-      icon: 'i-heroicons-cpu-chip',
-      previewImage: '/api/placeholder/400/250',
-      useCases: ['Device Classification', 'Feature Recognition', 'Image Processing'],
-      metrics: [
-        { name: 'Parameters', value: '4.2M' },
-        { name: 'FLOPs', value: '567M' },
-        { name: 'Input Size', value: '224x224' },
-        { name: 'Classes', value: '10' },
+const models = ref([
+  {
+    id: 1,
+    name: 'MobileNet CNN',
+    category: 'Computer Vision',
+    categoryId: 'computer-vision',
+    description: 'Optimized CNN for mobile device classification and feature recognition',
+    longDescription:
+      'MobileNet CNN is specifically designed for efficient inference on mobile devices while maintaining high accuracy for mobile classification tasks.',
+    accuracy: 94.7,
+    inferenceTime: 45,
+    color: '#8B5CF6',
+    icon: 'i-heroicons-cpu-chip',
+    previewImage: '/api/placeholder/400/250',
+    useCases: ['Device Classification', 'Feature Recognition', 'Image Processing'],
+    metrics: [
+      { name: 'Parameters', value: '4.2M' },
+      { name: 'FLOPs', value: '567M' },
+      { name: 'Input Size', value: '224x224' },
+      { name: 'Classes', value: '10' },
+    ],
+  },
+  {
+    id: 2,
+    name: 'LSTM Sentiment Analyzer',
+    category: 'NLP',
+    categoryId: 'nlp',
+    description: 'LSTM-based model for analyzing user reviews and feedback from mobile app stores',
+    longDescription:
+      'Long Short-Term Memory network trained on mobile app reviews to classify sentiment and extract insights.',
+    accuracy: 91.2,
+    inferenceTime: 67,
+    color: '#3B82F6',
+    icon: 'i-heroicons-chat-bubble-left-right',
+    previewImage: '/api/placeholder/400/250',
+    useCases: ['Sentiment Analysis', 'Review Classification', 'User Feedback'],
+    metrics: [
+      { name: 'Hidden Units', value: '256' },
+      { name: 'Embedding Dim', value: '128' },
+      { name: 'Vocab Size', value: '50K' },
+      { name: 'Classes', value: '3' },
+    ],
+  },
+  {
+    id: 3,
+    name: 'Random Forest Regressor',
+    category: 'Regression',
+    categoryId: 'regression',
+    description: 'Ensemble model for predicting mobile device prices based on specifications',
+    longDescription:
+      'Random Forest ensemble method for robust price prediction with interpretable feature importance.',
+    accuracy: 89.5,
+    inferenceTime: 12,
+    color: '#10B981',
+    icon: 'i-heroicons-chart-bar',
+    previewImage: '/api/placeholder/400/250',
+    useCases: ['Price Prediction', 'Market Analysis', 'Feature Importance'],
+    metrics: [
+      { name: 'Trees', value: '100' },
+      { name: 'Max Depth', value: '15' },
+      { name: 'Features', value: '24' },
+      { name: 'R² Score', value: '0.89' },
+    ],
+  },
+  {
+    id: 4,
+    name: 'K-Means Clustering',
+    category: 'Clustering',
+    categoryId: 'clustering',
+    description: 'Unsupervised learning to discover patterns and group similar mobile devices',
+    longDescription:
+      'K-Means clustering algorithm to discover natural groupings in mobile device characteristics.',
+    accuracy: 87.3,
+    inferenceTime: 23,
+    color: '#F59E0B',
+    icon: 'i-heroicons-squares-2x2',
+    previewImage: '/api/placeholder/400/250',
+    useCases: ['Market Segmentation', 'Pattern Discovery', 'Device Grouping'],
+    metrics: [
+      { name: 'Clusters', value: '8' },
+      { name: 'Features', value: '15' },
+      { name: 'Silhouette Score', value: '0.73' },
+      { name: 'Iterations', value: '50' },
+    ],
+  },
+  {
+    id: 5,
+    name: 'Transformer Classifier',
+    category: 'Classification',
+    categoryId: 'classification',
+    description: 'State-of-the-art transformer for multi-class mobile app category classification',
+    longDescription:
+      'Transformer-based encoder for sophisticated mobile app category classification with attention mechanisms.',
+    accuracy: 96.8,
+    inferenceTime: 78,
+    color: '#EF4444',
+    icon: 'i-heroicons-sparkles',
+    previewImage: '/api/placeholder/400/250',
+    useCases: ['App Classification', 'Category Prediction', 'Content Analysis'],
+    metrics: [
+      { name: 'Layers', value: '12' },
+      { name: 'Attention Heads', value: '12' },
+      { name: 'Embedding Dim', value: '768' },
+    ],
+  },
+]);
+
+const filteredModels = computed(() => {
+  if (selectedCategory.value === 'all') return models.value;
+  return models.value.filter((model) => model.categoryId === selectedCategory.value);
+});
+
+const selectedModel = ref<any>(null);
+
+function selectModel(model: any) {
+  selectedModel.value = model;
+  showModelDetails.value = true;
+}
+
+const demoInput = ref('');
+
+const isRunning = ref(false);
+
+const demoResult = ref<any>(null);
+
+async function runDemo() {
+  isRunning.value = true;
+  // Simulate API call
+  setTimeout(() => {
+    demoResult.value = {
+      prediction: 'Premium Smartphone',
+      confidence: 92.5,
+      processingTime: 45,
+      probabilities: [
+        { class: 'Budget', probability: 0.02 },
+        { class: 'Mid-range', probability: 0.15 },
+        { class: 'Premium', probability: 0.83 },
       ],
-    },
-    {
-      id: 2,
-      name: 'LSTM Sentiment Analyzer',
-      category: 'NLP',
-      categoryId: 'nlp',
-      description:
-        'LSTM-based model for analyzing user reviews and feedback from mobile app stores',
-      longDescription:
-        'Long Short-Term Memory network trained on mobile app reviews to classify sentiment and extract insights.',
-      accuracy: 91.2,
-      inferenceTime: 67,
-      color: '#3B82F6',
-      icon: 'i-heroicons-chat-bubble-left-right',
-      previewImage: '/api/placeholder/400/250',
-      useCases: ['Sentiment Analysis', 'Review Classification', 'User Feedback'],
-      metrics: [
-        { name: 'Hidden Units', value: '256' },
-        { name: 'Embedding Dim', value: '128' },
-        { name: 'Vocab Size', value: '50K' },
-        { name: 'Classes', value: '3' },
-      ],
-    },
-    {
-      id: 3,
-      name: 'Random Forest Regressor',
-      category: 'Regression',
-      categoryId: 'regression',
-      description: 'Ensemble model for predicting mobile device prices based on specifications',
-      longDescription:
-        'Random Forest ensemble method for robust price prediction with interpretable feature importance.',
-      accuracy: 89.5,
-      inferenceTime: 12,
-      color: '#10B981',
-      icon: 'i-heroicons-chart-bar',
-      previewImage: '/api/placeholder/400/250',
-      useCases: ['Price Prediction', 'Market Analysis', 'Feature Importance'],
-      metrics: [
-        { name: 'Trees', value: '100' },
-        { name: 'Max Depth', value: '15' },
-        { name: 'Features', value: '24' },
-        { name: 'R² Score', value: '0.89' },
-      ],
-    },
-    {
-      id: 4,
-      name: 'K-Means Clustering',
-      category: 'Clustering',
-      categoryId: 'clustering',
-      description: 'Unsupervised learning to discover patterns and group similar mobile devices',
-      longDescription:
-        'K-Means clustering algorithm to discover natural groupings in mobile device characteristics.',
-      accuracy: 87.3,
-      inferenceTime: 23,
-      color: '#F59E0B',
-      icon: 'i-heroicons-squares-2x2',
-      previewImage: '/api/placeholder/400/250',
-      useCases: ['Market Segmentation', 'Pattern Discovery', 'Device Grouping'],
-      metrics: [
-        { name: 'Clusters', value: '8' },
-        { name: 'Features', value: '15' },
-        { name: 'Silhouette Score', value: '0.73' },
-        { name: 'Iterations', value: '50' },
-      ],
-    },
-    {
-      id: 5,
-      name: 'Transformer Classifier',
-      category: 'Classification',
-      categoryId: 'classification',
-      description:
-        'State-of-the-art transformer for multi-class mobile app category classification',
-      longDescription:
-        'Transformer-based encoder for sophisticated mobile app category classification with attention mechanisms.',
-      accuracy: 96.8,
-      inferenceTime: 78,
-      color: '#EF4444',
-      icon: 'i-heroicons-sparkles',
-      previewImage: '/api/placeholder/400/250',
-      useCases: ['App Classification', 'Category Prediction', 'Content Analysis'],
-      metrics: [
-        { name: 'Layers', value: '12' },
-        { name: 'Attention Heads', value: '12' },
-        { name: 'Embedding Dim', value: '768' },
-      ],
-    },
-  ])
+    };
+    isRunning.value = false;
+  }, 1000);
+}
 
-  const filteredModels = computed(() => {
-    if (selectedCategory.value === 'all') return models.value
-    return models.value.filter(model => model.categoryId === selectedCategory.value)
-  })
+const performanceStats = ref([
+  {
+    id: 'accuracy',
+    title: 'Highest Accuracy',
+    value: '96.8%',
+    description: 'Transformer Classifier',
+    color: '#EF4444',
+    icon: 'i-heroicons-sparkles',
+  },
+  {
+    id: 'speed',
+    title: 'Fastest Inference',
+    value: '12ms',
+    description: 'Random Forest',
+    color: '#10B981',
+    icon: 'i-heroicons-zap',
+  },
+  {
+    id: 'models',
+    title: 'Total Models',
+    value: '5',
+    description: 'Across all categories',
+    color: '#8B5CF6',
+    icon: 'i-heroicons-squares-2x2',
+  },
+  {
+    id: 'categories',
+    title: 'Categories',
+    value: '6',
+    description: 'ML techniques covered',
+    color: '#3B82F6',
+    icon: 'i-heroicons-tag',
+  },
+]);
 
-  const selectedModel = ref<any>(null)
-
-  function selectModel(model: any) {
-    selectedModel.value = model
-    showModelDetails.value = true
-  }
-
-  const demoInput = ref('')
-
-  const isRunning = ref(false)
-
-  const demoResult = ref<any>(null)
-
-  async function runDemo() {
-    isRunning.value = true
-    // Simulate API call
-    setTimeout(() => {
-      demoResult.value = {
-        prediction: 'Premium Smartphone',
-        confidence: 92.5,
-        processingTime: 45,
-        probabilities: [
-          { class: 'Budget', probability: 0.02 },
-          { class: 'Mid-range', probability: 0.15 },
-          { class: 'Premium', probability: 0.83 },
-        ],
-      }
-      isRunning.value = false
-    }, 1000)
-  }
-
-  const performanceStats = ref([
-    {
-      id: 'accuracy',
-      title: 'Highest Accuracy',
-      value: '96.8%',
-      description: 'Transformer Classifier',
-      color: '#EF4444',
-      icon: 'i-heroicons-sparkles',
-    },
-    {
-      id: 'speed',
-      title: 'Fastest Inference',
-      value: '12ms',
-      description: 'Random Forest',
-      color: '#10B981',
-      icon: 'i-heroicons-zap',
-    },
-    {
-      id: 'models',
-      title: 'Total Models',
-      value: '5',
-      description: 'Across all categories',
-      color: '#8B5CF6',
-      icon: 'i-heroicons-squares-2x2',
-    },
-    {
-      id: 'categories',
-      title: 'Categories',
-      value: '6',
-      description: 'ML techniques covered',
-      color: '#3B82F6',
-      icon: 'i-heroicons-tag',
-    },
-  ])
-
-  const showModelDetails = ref(false)
+const showModelDetails = ref(false);
 </script>

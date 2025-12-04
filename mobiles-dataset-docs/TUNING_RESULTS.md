@@ -11,6 +11,7 @@ This document summarizes the results of model tuning efforts to improve model pe
 ### Results
 
 - **Original Performance:**
+
   - R² = 0.6381
   - RMSE = 1.64 GB
 
@@ -21,10 +22,12 @@ This document summarizes the results of model tuning efforts to improve model pe
 ### Improvements Made
 
 1. **Feature Engineering:**
+
    - Added interaction features: `price_per_year` and `battery_screen_ratio`
    - Total features increased from 5+N to 5+N+2 (where N = number of companies)
 
 2. **Architecture:**
+
    - Wider network: 256→128→64 (vs original 128→64→32)
    - Better capacity for learning complex relationships
 
@@ -99,15 +102,18 @@ Some classes struggle:
 ### Recommendations for Future Improvement
 
 1. **Feature Engineering:**
+
    - Add more features if available (camera specs, processor, OS type)
    - Create brand-specific features (price-to-spec ratios)
    - Add interaction features
 
 2. **Data Augmentation:**
+
    - Add slight noise to features to increase training data
    - Use SMOTE-like techniques for minority classes
 
 3. **Alternative Approaches:**
+
    - **Ensemble Methods:** Train multiple models and average predictions
    - **Hierarchical Classification:** First classify premium/budget, then brand
    - **Reduce Classes:** Group similar brands (e.g., group POCO with Xiaomi)

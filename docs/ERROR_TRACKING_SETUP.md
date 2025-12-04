@@ -82,6 +82,7 @@ npm run dev
 2. **Visit the test page**: Navigate to `http://localhost:3000/sentry-example-page`
 
 3. **Trigger a test error**: Click one of the error buttons:
+
    - 🚨 Trigger Test Error - Throws an unhandled error
    - ⏱️ Trigger Async Error - Throws an async error
    - 🔍 Trigger Handled Error - Manually captures an error
@@ -133,10 +134,10 @@ echo "sentry-sdk[fastapi]>=1.40.0" >> requirements.txt
 Create `plugins/sentry.client.ts`:
 
 ```typescript
-import * as Sentry from '@sentry/vue'
+import * as Sentry from '@sentry/vue';
 
-export default defineNuxtPlugin(nuxtApp => {
-  const config = useRuntimeConfig()
+export default defineNuxtPlugin((nuxtApp) => {
+  const config = useRuntimeConfig();
 
   if (process.env.NODE_ENV === 'production') {
     Sentry.init({
@@ -162,13 +163,13 @@ export default defineNuxtPlugin(nuxtApp => {
       beforeSend(event, hint) {
         // Filter out development errors
         if (event.request?.url?.includes('localhost')) {
-          return null
+          return null;
         }
-        return event
+        return event;
       },
-    })
+    });
   }
-})
+});
 ```
 
 Update `nuxt.config.ts`:
@@ -181,7 +182,7 @@ export default defineNuxtConfig({
       environment: process.env.NODE_ENV || 'development',
     },
   },
-})
+});
 ```
 
 Add to `.env.example`:
@@ -239,8 +240,8 @@ Add a test button in your app (remove in production):
 
 <script setup lang="ts">
 const testSentry = () => {
-  throw new Error('Test Sentry Error - Frontend')
-}
+  throw new Error('Test Sentry Error - Frontend');
+};
 </script>
 ```
 
@@ -282,13 +283,13 @@ npm install logrocket logrocket-vue
 
 ```typescript
 // plugins/logrocket.client.ts
-import LogRocket from 'logrocket'
+import LogRocket from 'logrocket';
 
 export default defineNuxtPlugin(() => {
   if (process.env.NODE_ENV === 'production') {
-    LogRocket.init('your-app-id/your-project')
+    LogRocket.init('your-app-id/your-project');
   }
-})
+});
 ```
 
 ### 2. Custom Error Tracking (Free)
@@ -296,8 +297,8 @@ export default defineNuxtPlugin(() => {
 Create `server/api/log-error.post.ts`:
 
 ```typescript
-export default defineEventHandler(async event => {
-  const body = await readBody(event)
+export default defineEventHandler(async (event) => {
+  const body = await readBody(event);
 
   // Log to console/file/database
   console.error('[Frontend Error]', {
@@ -305,7 +306,7 @@ export default defineEventHandler(async event => {
     stack: body.stack,
     url: body.url,
     timestamp: new Date().toISOString(),
-  })
+  });
 
   // Optional: Send to email, Slack, Discord webhook
   // await $fetch('https://hooks.slack.com/services/YOUR/WEBHOOK/URL', {
@@ -313,15 +314,15 @@ export default defineEventHandler(async event => {
   //   body: { text: `Error: ${body.message}` }
   // })
 
-  return { success: true }
-})
+  return { success: true };
+});
 ```
 
 Frontend error handler:
 
 ```typescript
 // plugins/error-handler.client.ts
-export default defineNuxtPlugin(nuxtApp => {
+export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.config.errorHandler = (error, instance, info) => {
     $fetch('/api/log-error', {
       method: 'POST',
@@ -332,9 +333,9 @@ export default defineNuxtPlugin(nuxtApp => {
         component: instance?.$options.name,
         info,
       },
-    }).catch(console.error)
-  }
-})
+    }).catch(console.error);
+  };
+});
 ```
 
 ---
@@ -348,12 +349,12 @@ Create `composables/usePerformance.ts`:
 ```typescript
 export const usePerformance = () => {
   const trackPageLoad = () => {
-    if (typeof window === 'undefined') return
+    if (typeof window === 'undefined') return;
 
     window.addEventListener('load', () => {
       const navigation = performance.getEntriesByType(
         'navigation'
-      )[0] as PerformanceNavigationTiming
+      )[0] as PerformanceNavigationTiming;
 
       const metrics = {
         dns: navigation.domainLookupEnd - navigation.domainLookupStart,
@@ -363,25 +364,25 @@ export const usePerformance = () => {
         domInteractive: navigation.domInteractive - navigation.fetchStart,
         domComplete: navigation.domComplete - navigation.fetchStart,
         loadComplete: navigation.loadEventEnd - navigation.fetchStart,
-      }
+      };
 
       // Send to your monitoring service or API
-      console.log('Performance Metrics:', metrics)
+      console.log('Performance Metrics:', metrics);
 
       // Optional: Send to Sentry
       // Sentry.setMeasurement('page.load', loadComplete, 'millisecond')
-    })
-  }
+    });
+  };
 
-  return { trackPageLoad }
-}
+  return { trackPageLoad };
+};
 ```
 
 Use in `app.vue`:
 
 ```typescript
-const { trackPageLoad } = usePerformance()
-onMounted(() => trackPageLoad())
+const { trackPageLoad } = usePerformance();
+onMounted(() => trackPageLoad());
 ```
 
 ---
@@ -391,14 +392,14 @@ onMounted(() => trackPageLoad())
 ### 1. Environment-Based Configuration
 
 ```typescript
-const isDev = process.env.NODE_ENV === 'development'
-const isProduction = process.env.NODE_ENV === 'production'
+const isDev = process.env.NODE_ENV === 'development';
+const isProduction = process.env.NODE_ENV === 'production';
 
 // Only initialize in production
 if (isProduction) {
   Sentry.init({
     /* config */
-  })
+  });
 }
 ```
 
@@ -427,18 +428,18 @@ Sentry.setUser({
   id: user.id,
   email: user.email,
   username: user.username,
-})
+});
 
 // Add custom tags
-Sentry.setTag('page', 'dashboard')
-Sentry.setTag('feature', 'predictions')
+Sentry.setTag('page', 'dashboard');
+Sentry.setTag('feature', 'predictions');
 
 // Add breadcrumbs
 Sentry.addBreadcrumb({
   message: 'User clicked predict button',
   category: 'ui.click',
   level: 'info',
-})
+});
 ```
 
 ### 4. Rate Limiting
@@ -450,11 +451,11 @@ Sentry.init({
   // ... other config
   beforeSend(event) {
     // Track error frequency
-    const errorKey = event.exception?.values?.[0]?.type || 'unknown'
+    const errorKey = event.exception?.values?.[0]?.type || 'unknown';
     // Implement your rate limiting logic
-    return event
+    return event;
   },
-})
+});
 ```
 
 ---

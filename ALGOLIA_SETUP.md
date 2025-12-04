@@ -9,6 +9,7 @@ Algolia is a powerful search-as-a-service platform used in this application for 
 1. **Visit Algolia**: Go to [https://www.algolia.com/](https://www.algolia.com/)
 
 2. **Sign Up**:
+
    - Click "Get Started Free" or "Sign Up"
    - Choose your preferred sign-up method:
      - Email and password
@@ -22,10 +23,12 @@ Algolia is a powerful search-as-a-service platform used in this application for 
 ## Step 2: Create Your First Application
 
 1. **Dashboard Access**:
+
    - After verification, you'll be taken to your Algolia dashboard
    - Click "Create your first application" or "New Application"
 
 2. **Application Setup**:
+
    - **Application Name**: Choose a descriptive name (e.g., "Mobile Finder Search")
    - **Data Center**: Select the closest region to your users:
      - US-West (Oregon) - Recommended for global apps
@@ -34,6 +37,7 @@ Algolia is a powerful search-as-a-service platform used in this application for 
      - AP-South (Mumbai) - Good for Asian users
 
 3. **Choose Plan**:
+
    - Select "Free" plan to get started (1M records, 10k searches/month)
    - You can upgrade later as your needs grow
 
@@ -162,6 +166,7 @@ curl -X POST http://localhost:3000/api/algolia/index \
 ## Step 8: Monitoring & Billing
 
 1. **Dashboard Monitoring**:
+
    - Visit your Algolia dashboard regularly
    - Monitor search performance and usage
    - Set up alerts for quota limits
@@ -176,14 +181,17 @@ curl -X POST http://localhost:3000/api/algolia/index \
 ### Common Issues:
 
 1. **"Invalid Application ID"**:
+
    - Double-check your Application ID
    - Ensure it's copied correctly (no extra spaces)
 
 2. **"Invalid API Key"**:
+
    - Verify you're using the correct key type (Search vs Admin)
    - Check for typos in the API key
 
 3. **"Index not found"**:
+
    - The index is created automatically on first use
    - Check your index name in environment variables
 

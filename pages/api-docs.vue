@@ -118,98 +118,98 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed } from 'vue'
+import { ref, computed } from 'vue';
 
-  const apiCategories = ref([
-    { id: 'core', name: 'Core', icon: 'i-heroicons-cube-transparent' },
-    { id: 'ml', name: 'ML', icon: 'i-heroicons-cog-6-tooth' },
-    { id: 'data', name: 'Data', icon: 'i-heroicons-table-cells' },
-    { id: 'utils', name: 'Utils', icon: 'i-heroicons-wrench-screwdriver' },
-  ])
+const apiCategories = ref([
+  { id: 'core', name: 'Core', icon: 'i-heroicons-cube-transparent' },
+  { id: 'ml', name: 'ML', icon: 'i-heroicons-cog-6-tooth' },
+  { id: 'data', name: 'Data', icon: 'i-heroicons-table-cells' },
+  { id: 'utils', name: 'Utils', icon: 'i-heroicons-wrench-screwdriver' },
+]);
 
-  const selectedCategory = ref(apiCategories.value[0]?.id || 'core')
+const selectedCategory = ref(apiCategories.value[0]?.id || 'core');
 
-  const apis = ref([
-    {
-      id: 'predict',
-      name: 'Predict',
-      description: 'Run predictions on mobile dataset.',
-      method: 'POST',
-      methodColor: 'emerald',
-      endpoint: '/api/predict',
-      category: 'core',
-      parameters: [
-        { name: 'ram', type: 'number', required: true, description: 'RAM in GB' },
-        { name: 'battery', type: 'number', required: true, description: 'Battery in mAh' },
-      ],
-      responses: [{ code: '200', description: 'Success' }],
-      examples: ['POST /api/predict\n{\n  "ram": 8,\n  "battery": 4000\n}'],
-    },
-    {
-      id: 'train',
-      name: 'Train Model',
-      description: 'Train a new deep learning model.',
-      method: 'POST',
-      methodColor: 'teal',
-      endpoint: '/api/train',
-      category: 'ml',
-      parameters: [
-        { name: 'epochs', type: 'number', required: true, description: 'Number of epochs' },
-      ],
-      responses: [{ code: '200', description: 'Training started' }],
-      examples: ['POST /api/train\n{\n  "epochs": 100\n}'],
-    },
-  ])
+const apis = ref([
+  {
+    id: 'predict',
+    name: 'Predict',
+    description: 'Run predictions on mobile dataset.',
+    method: 'POST',
+    methodColor: 'emerald',
+    endpoint: '/api/predict',
+    category: 'core',
+    parameters: [
+      { name: 'ram', type: 'number', required: true, description: 'RAM in GB' },
+      { name: 'battery', type: 'number', required: true, description: 'Battery in mAh' },
+    ],
+    responses: [{ code: '200', description: 'Success' }],
+    examples: ['POST /api/predict\n{\n  "ram": 8,\n  "battery": 4000\n}'],
+  },
+  {
+    id: 'train',
+    name: 'Train Model',
+    description: 'Train a new deep learning model.',
+    method: 'POST',
+    methodColor: 'teal',
+    endpoint: '/api/train',
+    category: 'ml',
+    parameters: [
+      { name: 'epochs', type: 'number', required: true, description: 'Number of epochs' },
+    ],
+    responses: [{ code: '200', description: 'Training started' }],
+    examples: ['POST /api/train\n{\n  "epochs": 100\n}'],
+  },
+]);
 
-  const filteredAPIs = computed(() =>
-    apis.value.filter(api => api.category === selectedCategory.value)
-  )
+const filteredAPIs = computed(() =>
+  apis.value.filter((api) => api.category === selectedCategory.value)
+);
 
-  const expandedAPIs = ref(new Set<string>())
+const expandedAPIs = ref(new Set<string>());
 
-  function toggleExpanded(id: string) {
-    if (expandedAPIs.value.has(id)) {
-      expandedAPIs.value.delete(id)
-    } else {
-      expandedAPIs.value.add(id)
-    }
+function toggleExpanded(id: string) {
+  if (expandedAPIs.value.has(id)) {
+    expandedAPIs.value.delete(id);
+  } else {
+    expandedAPIs.value.add(id);
   }
+}
 
-  function getTypeColor(type: string) {
-    switch (type) {
-      case 'string':
-        return 'blue'
-      case 'number':
-        return 'green'
-      case 'boolean':
-        return 'yellow'
-      default:
-        return 'gray'
-    }
+function getTypeColor(type: string) {
+  switch (type) {
+    case 'string':
+      return 'blue';
+    case 'number':
+      return 'green';
+    case 'boolean':
+      return 'yellow';
+    default:
+      return 'gray';
   }
+}
 
-  function copyToClipboard(text: string) {
-    navigator.clipboard.writeText(text)
-  }
+function copyToClipboard(text: string) {
+  navigator.clipboard.writeText(text);
+}
 
-  const sdks = ref([
-    {
-      language: 'Python',
-      icon: 'i-heroicons-code-bracket',
-      color: '#3776AB',
-      installCommand: 'pip install matlab-dl-sdk',
-    },
-    {
-      language: 'JavaScript',
-      icon: 'i-heroicons-code-bracket-square',
-      color: '#F7DF1E',
-      installCommand: 'npm install matlab-dl-sdk',
-    },
-    {
-      language: 'MATLAB',
-      icon: 'i-heroicons-cpu-chip',
-      color: '#0076A8',
-      installCommand: "addpath(genpath('matlab-dl-sdk'))",
-    },
-  ])
+const sdks = ref([
+  {
+    language: 'Python',
+    icon: 'i-heroicons-code-bracket',
+    color: '#3776AB',
+    installCommand: 'pip install matlab-dl-sdk',
+  },
+  {
+    language: 'JavaScript',
+    icon: 'i-heroicons-code-bracket-square',
+    color: '#F7DF1E',
+    installCommand: 'npm install matlab-dl-sdk',
+  },
+  {
+    language: 'MATLAB',
+    icon: 'i-heroicons-cpu-chip',
+    color: '#0076A8',
+    installCommand: "addpath(genpath('matlab-dl-sdk'))",
+  },
+]);
 </script>

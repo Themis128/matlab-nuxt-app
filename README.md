@@ -31,6 +31,7 @@ If your Render deployment shows **JSON** instead of the **web interface**:
 **Problem**: You're accessing the Python API service instead of the Nuxt frontend.
 
 **Quick Fix**:
+
 - ✅ Access `https://matlab-nuxt-frontend.onrender.com` (Frontend - Web Interface)
 - ❌ NOT `https://matlab-python-api.onrender.com` (API - JSON only)
 
@@ -130,9 +131,9 @@ Visit the interactive web application to:
 - ✅ **API Documentation** - Interactive Swagger/ReDoc for Python API
 - ✅ **E2E Testing** - Comprehensive Playwright test suite
 - ✅ **Type Safety** - Full TypeScript coverage
- - ⚡ **TypeScript Nightly (optional)** - We recommend the "JavaScript & TypeScript Nightly" extension for early access to TypeScript features and language server improvements; see `docs/WORKSPACE_SETUP.md` for details and guidance on choosing the workspace version.
- - ✅ **Local typecheck helper** - Use `tsconfig.local.json` for IDE/Local developer typechecking (mirrors `tsconfig.ci.json`). Run `npm run typecheck:local` or see `DEV_TYPECHECK.md` for details on configuring your editor to use the local config.
- - 🧪 **Devcontainer (optional)** - A `.devcontainer` is included for consistent dev environments with Node + Python; see `.devcontainer/README.md` for details and quick start commands.
+- ⚡ **TypeScript Nightly (optional)** - We recommend the "JavaScript & TypeScript Nightly" extension for early access to TypeScript features and language server improvements; see `docs/WORKSPACE_SETUP.md` for details and guidance on choosing the workspace version.
+- ✅ **Local typecheck helper** - Use `tsconfig.local.json` for IDE/Local developer typechecking (mirrors `tsconfig.ci.json`). Run `npm run typecheck:local` or see `DEV_TYPECHECK.md` for details on configuring your editor to use the local config.
+- 🧪 **Devcontainer (optional)** - A `.devcontainer` is included for consistent dev environments with Node + Python; see `.devcontainer/README.md` for details and quick start commands.
 - ✅ **Code Quality** - ESLint + Prettier + Type checking
 - ✅ **CI/CD** - GitHub Actions for testing and deployment
 - Optional: **Docker Support** - Containerization is available but not required for deployment
@@ -515,7 +516,6 @@ npm run test:report
 
 ## 📦 Deployment
 
-
 ### 🚀 Production Deployment (via GitHub Actions)
 
 This project uses a **single secure GitHub Actions workflow** (`.github/workflows/deploy.yml`) for automated production deployment via SSH. Manual SSH or Docker deployment is optional, but the recommended and supported method is via the provided workflow.
@@ -523,10 +523,11 @@ This project uses a **single secure GitHub Actions workflow** (`.github/workflow
 **How it works:**
 
 1. **On push to a tag** (e.g., `v1.0.1`) or manual dispatch, the workflow:
-  - Builds the Nuxt frontend and Python API
-  - Packages build artifacts
-  - Uploads artifacts to your production server via SSH (using secure secrets)
-  - Runs a remote deploy script to install dependencies and restart services
+
+- Builds the Nuxt frontend and Python API
+- Packages build artifacts
+- Uploads artifacts to your production server via SSH (using secure secrets)
+- Runs a remote deploy script to install dependencies and restart services
 
 2. **All secrets are managed securely** at the step level in GitHub Actions. No secrets are exposed in logs or job context.
 
@@ -552,7 +553,6 @@ ssh user@server 'cd /var/www/matlab/python_api && python -m pip install -r requi
 ssh user@server 'cd /var/www/matlab/nuxt && npm ci && pm2 restart nuxt-app || pm2 start --name nuxt-app npm -- start'
 ```
 
-
 ### Production Deployment Checklist
 
 - [ ] **Set environment variables** (see `.env.production.template`)
@@ -566,16 +566,17 @@ ssh user@server 'cd /var/www/matlab/nuxt && npm ci && pm2 restart nuxt-app || pm
 - [ ] **Monitor health endpoints** (`/health`)
 - [ ] **Set up automated backups** (models and data)
 
-
 ### GitHub Actions CI/CD: Secure Deployment Workflow
 
 **Workflow file:** `.github/workflows/deploy.yml`
 
 **Triggers:**
+
 - On every push: Build, test, lint, and typecheck (no deploy)
 - On tag push (`v*`) or manual dispatch: Build, upload artifacts, deploy to server via SSH, restart services
 
 **What happens on deploy:**
+
 1. Build Nuxt and Python artifacts
 2. Upload artifacts to your server using SSH (via secure secrets)
 3. Run a remote deploy script to install dependencies and restart services (see `scripts/remote-deploy.sh`)
@@ -583,11 +584,11 @@ ssh user@server 'cd /var/www/matlab/nuxt && npm ci && pm2 restart nuxt-app || pm
 **Required GitHub Actions Secrets:**
 
 | Secret Name      | Description                        |
-|------------------|------------------------------------|
-| `SERVER_HOST`    | Your production server hostname/IP  |
-| `SERVER_USER`    | SSH user for deployment             |
-| `SERVER_SSH_KEY` | Private SSH key (no passphrase)     |
-| `DEPLOY_PATH`    | Path to deploy on server            |
+| ---------------- | ---------------------------------- |
+| `SERVER_HOST`    | Your production server hostname/IP |
+| `SERVER_USER`    | SSH user for deployment            |
+| `SERVER_SSH_KEY` | Private SSH key (no passphrase)    |
+| `DEPLOY_PATH`    | Path to deploy on server           |
 
 Set these in your repository's **Settings > Secrets and variables > Actions**.
 
@@ -629,16 +630,16 @@ The application automatically detects the Python API URL across different enviro
 ```typescript
 export function getPythonApiUrl(event: H3Event): string {
   // 1. Check environment variable override
-  if (process.env.PYTHON_API_URL) return process.env.PYTHON_API_URL
+  if (process.env.PYTHON_API_URL) return process.env.PYTHON_API_URL;
 
   // 2. Detect from request host (Replit, production)
-  const host = getRequestHost(event)
+  const host = getRequestHost(event);
   if (host.includes('replit.dev') || host.includes('repl.co')) {
-    return `${getRequestProtocol(event)}://${host}`
+    return `${getRequestProtocol(event)}://${host}`;
   }
 
   // 3. Fallback to localhost for development
-  return 'http://localhost:8000'
+  return 'http://localhost:8000';
 }
 ```
 
@@ -648,21 +649,21 @@ export function getPythonApiUrl(event: H3Event): string {
 export function useApiConfig() {
   const getPythonApiUrl = () => {
     // Environment variable override
-    const config = useRuntimeConfig()
-    if (config.public.apiBase) return config.public.apiBase
+    const config = useRuntimeConfig();
+    if (config.public.apiBase) return config.public.apiBase;
 
     // Browser-based detection
     if (import.meta.client) {
-      const host = window.location.host
+      const host = window.location.host;
       if (host.includes('replit')) {
-        return `${window.location.protocol}//${host}`
+        return `${window.location.protocol}//${host}`;
       }
     }
 
-    return 'http://localhost:8000'
-  }
+    return 'http://localhost:8000';
+  };
 
-  return { getPythonApiUrl }
+  return { getPythonApiUrl };
 }
 ```
 
@@ -927,15 +928,18 @@ During ML improvement, we discovered **severe data leakage** from price-derived 
 The dramatic improvements come from intelligent feature engineering:
 
 1. **Price-to-Feature Ratios**
+
    - `ram_to_price`: RAM capacity per dollar
    - `battery_to_price`: Battery capacity per dollar
    - `screen_to_price`: Screen size per dollar
 
 2. **Brand Segmentation**
+
    - `brand_segment`: Premium/Mid-range/Budget classification
    - Based on average pricing and market positioning
 
 3. **Temporal Features**
+
    - `months_since_launch`: Age of device
    - `technology_generation`: Tech era classification
 
@@ -2103,6 +2107,7 @@ To add screenshots to this README:
    ```
 
    This creates:
+
    - Enhanced models comparison
    - Before/after improvement charts
    - Performance dashboard
@@ -2115,6 +2120,7 @@ To add screenshots to this README:
    ```
 
    This creates visualizations using your actual trained models:
+
    - Model performance comparisons
    - Price prediction results
    - Dataset analysis charts
@@ -2122,6 +2128,7 @@ To add screenshots to this README:
    - Training progress plots
 
 3. **Capture web interface screenshots manually:**
+
    - Start dev server: `npm run dev`
    - Open `http://localhost:3000`
    - Take screenshots of the interface and capabilities results

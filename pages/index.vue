@@ -266,24 +266,24 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted } from 'vue'
+import { onMounted } from 'vue';
 
-  // Page meta fallback
-  onMounted(() => {
-    document.title = 'Home - MATLAB Deep Learning & Mobile Dataset Analysis'
-    const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
-    const content =
-      'Explore deep learning models, analyze mobile phone datasets, and discover insights with MATLAB and modern web technologies'
-    if (existing) existing.content = content
-    else {
-      const m = document.createElement('meta')
-      m.name = 'description'
-      m.content = content
-      document.head.appendChild(m)
-    }
-  })
+// Page meta fallback
+onMounted(() => {
+  document.title = 'Home - MATLAB Deep Learning & Mobile Dataset Analysis';
+  const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+  const content =
+    'Explore deep learning models, analyze mobile phone datasets, and discover insights with MATLAB and modern web technologies';
+  if (existing) existing.content = content;
+  else {
+    const m = document.createElement('meta');
+    m.name = 'description';
+    m.content = content;
+    document.head.appendChild(m);
+  }
+});
 </script>
 
 <style scoped>
-  /* Additional styles can be added here if needed */
+/* Additional styles can be added here if needed */
 </style>

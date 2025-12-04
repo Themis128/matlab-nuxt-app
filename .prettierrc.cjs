@@ -4,9 +4,9 @@ module.exports = {
     {
       files: '*.vue',
       options: {
-        parser: 'vue'
-      }
-    }
+        parser: 'vue',
+      },
+    },
   ],
   // Use single quotes for consistency
   singleQuote: true,
@@ -19,5 +19,5 @@ module.exports = {
   // Print width
   printWidth: 100,
   // Trailing commas
-  trailingComma: 'es5'
-}
+  trailingComma: 'es5',
+};

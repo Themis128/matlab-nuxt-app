@@ -17,10 +17,27 @@ if [ -f "package.json" ]; then
   fi
 fi
 
+# Install Playwright browsers
+echo "Installing Playwright browsers..."
+npx playwright install --with-deps || true
+
 # Install Python dev/test deps if present
 if [ -f "requirements.txt" ]; then
   python -m pip install -r requirements.txt || true
 fi
+
+# Install additional system packages
+echo "Installing additional system packages..."
+sudo apt-get update || true
+sudo apt-get install -y awscli tmux || true
+
+# Install Sentry CLI globally
+echo "Installing Sentry CLI..."
+npm install -g @sentry/cli || true
+
+# Make scripts executable
+echo "Making scripts executable..."
+chmod +x .devcontainer/health-check.sh .devcontainer/start-dev.sh .devcontainer/start-servers-tmux.sh scripts/shell/start.sh || true
 
 echo "Note: The API service is built from Dockerfile.api and has its Python dependencies pre-installed during image build."
 

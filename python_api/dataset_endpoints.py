@@ -662,7 +662,7 @@ async def search_models(
         if offset >= total_count and total_count > 0:
             offset = max(0, total_count - limit)
 
-        paginated_df = filtered_df.iloc[offset : offset + limit] if total_count > 0 else pd.DataFrame()
+            paginated_df = filtered_df.iloc[slice(offset, offset + limit)] if total_count > 0 else pd.DataFrame()
 
         # Convert to response format
         models = []

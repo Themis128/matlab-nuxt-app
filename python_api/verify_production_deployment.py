@@ -93,7 +93,7 @@ def benchmark_latency(model, num_iterations=1000):
     latencies = []
     for i in range(num_iterations):
         start = time.perf_counter()
-        _ = model.predict(test_data.iloc[i : i + 1])
+        _ = model.predict(test_data.iloc[i: i + 1])
         latencies.append((time.perf_counter() - start) * 1000)  # ms
 
     latencies = np.array(latencies)

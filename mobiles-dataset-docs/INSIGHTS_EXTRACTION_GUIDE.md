@@ -171,16 +171,19 @@ topBrands = insights_uniqueCompanies(topValueIdx(1:5));
 ## Next Steps
 
 1. **Visualization**: Create plots using the extracted data
+
    - Plot correlations
    - Time series of technology trends
    - Brand comparison charts
 
 2. **Model Building**: Use insights to build predictive models
+
    - Price prediction models
    - Brand classification models
    - Feature prediction models
 
 3. **Application Integration**: Implement recommendation systems
+
    - Similar phone finder API
    - Budget recommendation engine
    - Value analysis tool

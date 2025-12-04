@@ -1,14 +1,14 @@
 <script setup lang="ts">
-  interface Props {
-    src: string // base filename with extension (e.g. 'network-visualization.png')
-    alt?: string
-    class?: string
-    lazy?: boolean
-  }
-  const props = defineProps<Props>()
+interface Props {
+  src: string; // base filename with extension (e.g. 'network-visualization.png')
+  alt?: string;
+  class?: string;
+  lazy?: boolean;
+}
+const props = defineProps<Props>();
 
-  // Derive webp variant (assumes optimize_images.py produced .webp next to original)
-  const webpSrc = computed(() => props.src.replace(/\.(png|jpg|jpeg)$/i, '.webp'))
+// Derive webp variant (assumes optimize_images.py produced .webp next to original)
+const webpSrc = computed(() => props.src.replace(/\.(png|jpg|jpeg)$/i, '.webp'));
 </script>
 
 <template>
@@ -25,9 +25,9 @@
 </template>
 
 <style scoped>
-  img {
-    display: block;
-    max-width: 100%;
-    height: auto;
-  }
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
 </style>

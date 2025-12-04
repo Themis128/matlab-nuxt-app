@@ -38,21 +38,21 @@ The structured logs feature (`Sentry.logger`) requires SDK version `9.41.0`+, bu
 
 ```typescript
 // In any Vue component or composable
-const { info, error, warn, logApiRequest } = useSentryLogger()
+const { info, error, warn, logApiRequest } = useSentryLogger();
 ```
 
 ### Log Levels
 
 ```typescript
-const logger = useSentryLogger()
+const logger = useSentryLogger();
 
 // Different log levels
-logger.trace('Detailed trace information', { component: 'auth' })
-logger.debug('Debug information for development', { userId: '123' })
-logger.info('General information', { action: 'login' })
-logger.warn('Warning about potential issues', { threshold: 80 })
-logger.error('Error occurred', new Error('Database connection failed'), { userId: '456' })
-logger.fatal('Critical system failure', error, { system: 'payment' })
+logger.trace('Detailed trace information', { component: 'auth' });
+logger.debug('Debug information for development', { userId: '123' });
+logger.info('General information', { action: 'login' });
+logger.warn('Warning about potential issues', { threshold: 80 });
+logger.error('Error occurred', new Error('Database connection failed'), { userId: '456' });
+logger.fatal('Critical system failure', error, { system: 'payment' });
 ```
 
 ### Context and Attributes
@@ -66,7 +66,7 @@ logger.info('User logged in', {
   ipAddress: '192.168.1.1',
   userAgent: 'Chrome/91.0',
   component: 'AuthService',
-})
+});
 ```
 
 ## Specialized Logging Methods
@@ -76,25 +76,25 @@ logger.info('User logged in', {
 Automatically logs API calls with appropriate levels based on response status and performance:
 
 ```typescript
-const logger = useSentryLogger()
+const logger = useSentryLogger();
 
 // Successful API call
 logger.logApiRequest('GET', '/api/users', 200, 150, {
   userId: '123',
   cached: false,
-})
+});
 
 // Failed API call (automatically logged as error)
 logger.logApiRequest('POST', '/api/payment', 500, 2000, {
   amount: 99.99,
   error: 'Payment gateway timeout',
-})
+});
 
 // Slow API call (automatically logged as warning)
 logger.logApiRequest('GET', '/api/reports', 200, 8000, {
   reportType: 'monthly',
   size: 'large',
-})
+});
 ```
 
 ### User Action Logging
@@ -106,12 +106,12 @@ logger.logUserAction('button_click', {
   button: 'checkout',
   page: '/cart',
   value: 129.99,
-})
+});
 
 logger.logUserAction('form_submit', {
   form: 'contact',
   fields: ['name', 'email', 'message'],
-})
+});
 ```
 
 ### Performance Logging
@@ -122,12 +122,12 @@ Monitor application performance metrics:
 logger.logPerformance('page_load', 1250, 'ms', {
   page: '/dashboard',
   device: 'mobile',
-})
+});
 
 logger.logPerformance('api_response_size', 2048576, 'bytes', {
   endpoint: '/api/data',
   compressed: true,
-})
+});
 ```
 
 ### Business Event Logging
@@ -140,13 +140,13 @@ logger.logBusinessEvent('purchase', {
   amount: 29.99,
   currency: 'USD',
   userId: '789',
-})
+});
 
 logger.logBusinessEvent('subscription_upgrade', {
   from: 'basic',
   to: 'premium',
   revenue: 19.99,
-})
+});
 ```
 
 ## Advanced Usage
@@ -156,24 +156,24 @@ logger.logBusinessEvent('subscription_upgrade', {
 Track user sessions for better context:
 
 ```typescript
-const logger = useSentryLogger()
+const logger = useSentryLogger();
 
 // Start a session
 logger.startSession('session_12345', {
   userId: '999',
   source: 'web',
   device: 'desktop',
-})
+});
 
 // Log activities within the session
-logger.info('User viewed dashboard', { page: '/dashboard' })
-logger.logUserAction('export_data', { format: 'csv' })
+logger.info('User viewed dashboard', { page: '/dashboard' });
+logger.logUserAction('export_data', { format: 'csv' });
 
 // End the session
 logger.endSession('session_12345', {
   duration: 1800, // 30 minutes
   pagesViewed: 5,
-})
+});
 ```
 
 ### Message Formatting
@@ -181,17 +181,17 @@ logger.endSession('session_12345', {
 Use template formatting for dynamic messages:
 
 ```typescript
-const logger = useSentryLogger()
+const logger = useSentryLogger();
 
 // Template literals with fmt
-const user = 'John'
-const action = 'login'
-const message = logger.fmt('${0} performed ${1} action', user, action)
-logger.info(message, { userId: '123' })
+const user = 'John';
+const action = 'login';
+const message = logger.fmt('${0} performed ${1} action', user, action);
+logger.info(message, { userId: '123' });
 
 // Printf-style formatting (server-side)
-const printfMessage = logger.printf('User %s has %d items in cart', 'Alice', 3)
-logger.info(printfMessage, { cartId: 'cart_456' })
+const printfMessage = logger.printf('User %s has %d items in cart', 'Alice', 3);
+logger.info(printfMessage, { cartId: 'cart_456' });
 ```
 
 ### Error Handling with Context
@@ -200,19 +200,19 @@ Properly capture errors with rich context:
 
 ```typescript
 try {
-  await processPayment(paymentData)
+  await processPayment(paymentData);
   logger.info('Payment processed successfully', {
     orderId: paymentData.orderId,
     amount: paymentData.amount,
-  })
+  });
 } catch (error) {
   logger.error('Payment processing failed', error, {
     orderId: paymentData.orderId,
     amount: paymentData.amount,
     paymentMethod: paymentData.method,
     userId: paymentData.userId,
-  })
-  throw error
+  });
+  throw error;
 }
 ```
 
@@ -240,7 +240,7 @@ Your setup includes console integration that captures console logs as Sentry bre
 integrations: [
   // ... other integrations
   Sentry.consoleIntegration(), // Captures console.log/warn/error
-]
+];
 ```
 
 This means console logs are automatically captured and can be viewed in Sentry alongside errors.
@@ -257,35 +257,35 @@ This means console logs are automatically captured and can be viewed in Sentry a
 </template>
 
 <script setup>
-const { logBusinessEvent, logUserAction, error } = useSentryLogger()
-const loading = ref(false)
+const { logBusinessEvent, logUserAction, error } = useSentryLogger();
+const loading = ref(false);
 
 const handlePurchase = async () => {
-  loading.value = true
+  loading.value = true;
 
   try {
     logUserAction('purchase_initiated', {
       product: 'premium_plan',
       amount: 29.99,
-    })
+    });
 
-    await processPurchase()
+    await processPurchase();
 
     logBusinessEvent('purchase_completed', {
       product: 'premium_plan',
       amount: 29.99,
       revenue: 29.99,
-    })
+    });
   } catch (err) {
     error('Purchase failed', err, {
       product: 'premium_plan',
       amount: 29.99,
       errorType: 'payment_failed',
-    })
+    });
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 </script>
 ```
 
@@ -293,35 +293,35 @@ const handlePurchase = async () => {
 
 ```typescript
 // In server/api/users.get.ts
-export default defineEventHandler(async event => {
-  const { logApiRequest, error } = useSentryLogger()
-  const startTime = Date.now()
+export default defineEventHandler(async (event) => {
+  const { logApiRequest, error } = useSentryLogger();
+  const startTime = Date.now();
 
   try {
-    const userId = getRouterParam(event, 'id')
-    const user = await getUserById(userId)
+    const userId = getRouterParam(event, 'id');
+    const user = await getUserById(userId);
 
-    const duration = Date.now() - startTime
+    const duration = Date.now() - startTime;
     logApiRequest('GET', `/api/users/${userId}`, 200, duration, {
       userId,
       found: !!user,
-    })
+    });
 
-    return user
+    return user;
   } catch (err) {
-    const duration = Date.now() - startTime
+    const duration = Date.now() - startTime;
     logApiRequest('GET', `/api/users/${getRouterParam(event, 'id')}`, 500, duration, {
       error: err.message,
-    })
+    });
 
     error('Failed to fetch user', err, {
       userId: getRouterParam(event, 'id'),
       endpoint: '/api/users/[id]',
-    })
+    });
 
-    throw createError({ statusCode: 500, statusMessage: 'Internal Server Error' })
+    throw createError({ statusCode: 500, statusMessage: 'Internal Server Error' });
   }
-})
+});
 ```
 
 ### Global Error Handler
@@ -329,29 +329,29 @@ export default defineEventHandler(async event => {
 ```typescript
 // In plugins/error-handler.client.ts
 export default defineNuxtPlugin(() => {
-  const { error } = useSentryLogger()
+  const { error } = useSentryLogger();
 
   // Global error handler
-  window.addEventListener('error', event => {
+  window.addEventListener('error', (event) => {
     error('JavaScript error occurred', event.error, {
       filename: event.filename,
       lineno: event.lineno,
       colno: event.colno,
       message: event.message,
       component: 'global_error_handler',
-    })
-  })
+    });
+  });
 
   // Vue error handler
-  const app = useNuxtApp()
+  const app = useNuxtApp();
   app.vueApp.config.errorHandler = (err, instance, info) => {
     error('Vue error occurred', err, {
       component: instance?.$?.type?.name || 'unknown',
       lifecycleHook: info,
       route: app.$router?.currentRoute?.value?.path,
-    })
-  }
-})
+    });
+  };
+});
 ```
 
 ## Best Practices
@@ -375,10 +375,10 @@ logger.info('User updated profile', {
   userId: '123',
   fields: ['name', 'email'],
   ipAddress: '192.168.1.1',
-})
+});
 
 // Avoid - missing context
-logger.info('Profile updated')
+logger.info('Profile updated');
 ```
 
 ### Sensitive Data
@@ -390,14 +390,14 @@ Never log sensitive information:
 logger.info('Payment processed', {
   cardNumber: '4111111111111111', // Never log this!
   password: 'secret123',
-})
+});
 
 // Good - sanitized data
 logger.info('Payment processed', {
   lastFour: '1111',
   paymentMethod: 'credit_card',
   amount: 99.99,
-})
+});
 ```
 
 ### Performance Considerations
@@ -445,13 +445,13 @@ Replace console statements with structured logging:
 
 ```typescript
 // Before
-console.log('User logged in:', userId)
-console.error('Payment failed:', error)
+console.log('User logged in:', userId);
+console.error('Payment failed:', error);
 
 // After
-const logger = useSentryLogger()
-logger.info('User logged in', { userId })
-logger.error('Payment failed', error, { userId, amount })
+const logger = useSentryLogger();
+logger.info('User logged in', { userId });
+logger.error('Payment failed', error, { userId, amount });
 ```
 
 ## Available Methods

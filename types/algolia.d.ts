@@ -1,1 +1,1 @@
-export type AlgoliaRecord = Record<string, any>
+export type AlgoliaRecord = Record<string, any>;

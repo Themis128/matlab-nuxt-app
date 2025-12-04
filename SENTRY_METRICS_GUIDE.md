@@ -27,7 +27,7 @@ The Sentry Metrics functionality has been integrated into your Nuxt application 
 
 ```typescript
 // In any Vue component or composable
-const { count, gauge, distribution, set } = useSentryMetrics()
+const { count, gauge, distribution, set } = useSentryMetrics();
 ```
 
 ### Counter Metrics
@@ -36,7 +36,7 @@ Use counters to track incrementing values like button clicks, function calls, or
 
 ```typescript
 // Basic counter
-count('button_click', 1)
+count('button_click', 1);
 
 // Counter with attributes
 count('purchase', 1, {
@@ -45,11 +45,11 @@ count('purchase', 1, {
     currency: 'USD',
     amount: 29.99,
   },
-})
+});
 
 // Convenience increment/decrement
-increment('active_users')
-decrement('available_slots')
+increment('active_users');
+decrement('available_slots');
 ```
 
 ### Gauge Metrics
@@ -61,12 +61,12 @@ Use gauges for values that can go up and down, like memory usage or queue depth:
 gauge('memory_usage', 85.5, {
   unit: 'percentage',
   attributes: { component: 'frontend' },
-})
+});
 
 // Queue size
 gauge('queue_depth', 42, {
   attributes: { queue_type: 'processing' },
-})
+});
 ```
 
 ### Distribution Metrics
@@ -78,13 +78,13 @@ Use distributions to track the distribution of values, such as response times:
 distribution('api_response_time', 245.7, {
   unit: 'millisecond',
   attributes: { endpoint: '/api/users' },
-})
+});
 
 // File upload size
 distribution('upload_size', 2048576, {
   unit: 'byte',
   attributes: { file_type: 'image' },
-})
+});
 ```
 
 ### Set Metrics
@@ -98,7 +98,7 @@ set('unique_visitors', userId, {
     date: new Date().toISOString().split('T')[0], // YYYY-MM-DD format
     source: 'web',
   },
-})
+});
 ```
 
 ## Convenience Methods
@@ -108,16 +108,16 @@ The composable provides several helper methods for common tracking scenarios:
 ### Page Views
 
 ```typescript
-const metrics = useSentryMetrics()
+const metrics = useSentryMetrics();
 
 // Track current page
-metrics.trackPageView()
+metrics.trackPageView();
 
 // Track specific page with attributes
 metrics.trackPageView('/dashboard', {
   referrer: 'google.com',
   user_type: 'premium',
-})
+});
 ```
 
 ### User Interactions
@@ -127,13 +127,13 @@ metrics.trackPageView('/dashboard', {
 metrics.trackInteraction('click', 'submit-button', {
   form: 'contact',
   page: '/contact',
-})
+});
 
 // Track form submissions
 metrics.trackInteraction('submit', 'contact-form', {
   fields_filled: 5,
   validation_errors: 0,
-})
+});
 ```
 
 ### API Calls
@@ -143,13 +143,13 @@ metrics.trackInteraction('submit', 'contact-form', {
 metrics.trackApiCall('/api/users', 'GET', 200, 125.5, {
   cached: false,
   user_id: '123',
-})
+});
 
 // Track failed API call
 metrics.trackApiCall('/api/payment', 'POST', 500, 2340.8, {
   error_type: 'server_error',
   retry_count: 2,
-})
+});
 ```
 
 ### Error Tracking
@@ -160,13 +160,13 @@ metrics.trackError('ValidationError', {
   component: 'UserForm',
   field: 'email',
   severity: 'medium',
-})
+});
 
 // Track custom error types
 metrics.trackError('NetworkTimeout', {
   endpoint: '/api/external',
   timeout_ms: 30000,
-})
+});
 ```
 
 ### Performance Metrics
@@ -176,12 +176,12 @@ metrics.trackError('NetworkTimeout', {
 metrics.trackPerformance('render_time', 45.2, 'millisecond', {
   component: 'DataTable',
   rows: 1000,
-})
+});
 
 // Track memory usage
 metrics.trackPerformance('heap_used', 52428800, 'byte', {
   component: 'ImageProcessor',
-})
+});
 ```
 
 ## Advanced Usage
@@ -194,7 +194,7 @@ The `timing` utility automatically measures operation duration:
 const result = await metrics.timing(
   'database_query',
   async () => {
-    return await fetchUserData(userId)
+    return await fetchUserData(userId);
   },
   {
     attributes: {
@@ -202,7 +202,7 @@ const result = await metrics.timing(
       query_type: 'select',
     },
   }
-)
+);
 ```
 
 ### Batch Metrics
@@ -214,25 +214,25 @@ const batchMetrics = {
   buttonClicks: new Map(),
 
   addButtonClick(buttonName) {
-    const current = this.buttonClicks.get(buttonName) || 0
-    this.buttonClicks.set(buttonName, current + 1)
+    const current = this.buttonClicks.get(buttonName) || 0;
+    this.buttonClicks.set(buttonName, current + 1);
   },
 
   flush() {
     this.buttonClicks.forEach((count, buttonName) => {
       metrics.count('button_click_batch', count, {
         attributes: { button: buttonName },
-      })
-    })
-    this.buttonClicks.clear()
+      });
+    });
+    this.buttonClicks.clear();
   },
-}
+};
 
 // Use throughout your app
-batchMetrics.addButtonClick('save-button')
+batchMetrics.addButtonClick('save-button');
 
 // Flush periodically (e.g., every 30 seconds)
-setInterval(() => batchMetrics.flush(), 30000)
+setInterval(() => batchMetrics.flush(), 30000);
 ```
 
 ## Configuration Options
@@ -254,12 +254,12 @@ Metrics can be filtered before sending to Sentry. While the current implementati
 
 ```typescript
 // Example: Only send metrics in production
-const shouldSendMetrics = process.env.NODE_ENV === 'production'
+const shouldSendMetrics = process.env.NODE_ENV === 'production';
 
 if (shouldSendMetrics) {
   metrics.count('production_event', 1, {
     attributes: { environment: 'prod' },
-  })
+  });
 }
 
 // Example: Filter sensitive data
@@ -268,9 +268,9 @@ const safeAttributes = {
   // Remove sensitive fields
   password: undefined,
   api_key: undefined,
-}
+};
 
-metrics.count('user_action', 1, { attributes: safeAttributes })
+metrics.count('user_action', 1, { attributes: safeAttributes });
 ```
 
 ## Best Practices
@@ -314,17 +314,17 @@ Specify units for gauge and distribution metrics:
 </template>
 
 <script setup>
-const { trackInteraction } = useSentryMetrics()
+const { trackInteraction } = useSentryMetrics();
 
 const handleClick = () => {
   trackInteraction('click', 'analytics-button', {
     component: 'AnalyticsDashboard',
     action: 'export_data',
-  })
+  });
 
   // Your button logic here
-  exportData()
-}
+  exportData();
+};
 </script>
 ```
 
@@ -332,16 +332,16 @@ const handleClick = () => {
 
 ```typescript
 // In a Nuxt API route or server middleware
-export default defineEventHandler(async event => {
-  const { trackApiCall, timing } = useSentryMetrics()
-  const startTime = Date.now()
+export default defineEventHandler(async (event) => {
+  const { trackApiCall, timing } = useSentryMetrics();
+  const startTime = Date.now();
 
   try {
     const result = await timing(
       'api_processing',
       async () => {
         // Your API logic here
-        return await processRequest(event)
+        return await processRequest(event);
       },
       {
         attributes: {
@@ -349,22 +349,22 @@ export default defineEventHandler(async event => {
           method: event.method,
         },
       }
-    )
+    );
 
     trackApiCall(event.path, event.method, 200, Date.now() - startTime, {
       success: true,
-    })
+    });
 
-    return result
+    return result;
   } catch (error) {
     trackApiCall(event.path, event.method, 500, Date.now() - startTime, {
       success: false,
       error_type: error.name,
-    })
+    });
 
-    throw error
+    throw error;
   }
-})
+});
 ```
 
 ### Business Logic Monitoring
@@ -372,16 +372,16 @@ export default defineEventHandler(async event => {
 ```typescript
 // In your business logic composables
 export const usePredictionService = () => {
-  const { trackBusinessMetrics, timing } = useSentryMetrics()
+  const { trackBusinessMetrics, timing } = useSentryMetrics();
 
   const makePrediction = async (data: PredictionInput) => {
-    trackBusinessMetrics.predictionRequested(data.modelType)
+    trackBusinessMetrics.predictionRequested(data.modelType);
 
     try {
       const result = await timing(
         'prediction_processing',
         async () => {
-          return await runPrediction(data)
+          return await runPrediction(data);
         },
         {
           attributes: {
@@ -389,19 +389,19 @@ export const usePredictionService = () => {
             input_size: JSON.stringify(data).length,
           },
         }
-      )
+      );
 
-      trackBusinessMetrics.predictionCompleted(data.modelType, result.accuracy)
+      trackBusinessMetrics.predictionCompleted(data.modelType, result.accuracy);
 
-      return result
+      return result;
     } catch (error) {
-      trackBusinessMetrics.predictionCompleted(data.modelType, undefined)
-      throw error
+      trackBusinessMetrics.predictionCompleted(data.modelType, undefined);
+      throw error;
     }
-  }
+  };
 
-  return { makePrediction }
-}
+  return { makePrediction };
+};
 ```
 
 ## Testing
@@ -435,7 +435,7 @@ This will test all core metrics functionality with mocked Sentry methods.
 Make sure you're importing the composable correctly:
 
 ```typescript
-import { useSentryMetrics } from '~/composables/useSentryMetrics'
+import { useSentryMetrics } from '~/composables/useSentryMetrics';
 ```
 
 ## Migration from Other Monitoring Solutions

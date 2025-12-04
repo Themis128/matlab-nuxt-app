@@ -138,7 +138,7 @@ export default defineNuxtConfig({
       },
     },
   },
-})
+});
 ```
 
 ### Python API Updates (`api.py`)
@@ -375,16 +375,16 @@ jobs:
 
 ```javascript
 // In your Nuxt plugins
-export default defineNuxtPlugin(nuxtApp => {
+export default defineNuxtPlugin((nuxtApp) => {
   // Enable security headers
-  nuxtApp.$security.enableHeaders()
+  nuxtApp.$security.enableHeaders();
 
   // Configure rate limiting
   nuxtApp.$api.configureRateLimiting({
     requests: 100,
     window: 60,
-  })
-})
+  });
+});
 ```
 
 ### Testing Security Configuration

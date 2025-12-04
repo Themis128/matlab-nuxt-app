@@ -71,7 +71,7 @@ jobs:
           source: "deploy_artifacts/*"
           target: /var/www/matlab-mobile-dataset
 
-      - name: Remote deploy: extract artifacts, venv, install deps, restart
+      - name: "Remote deploy: extract artifacts, venv, install deps, restart"
         uses: appleboy/ssh-action@v0.1.9
         with:
           host: ${{ secrets.SERVER_HOST }}

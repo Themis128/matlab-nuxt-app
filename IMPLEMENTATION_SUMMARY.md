@@ -222,6 +222,7 @@ Returns phones priced between $350-$650 (500 ± 30%)
 ### Python Scripts
 
 1. **`fix_dataset_issues.py`** - Advanced data cleaning
+
    - Fixes RAM outliers (cap at 24GB)
    - Extracts main camera from concatenated values
    - Corrects price errors

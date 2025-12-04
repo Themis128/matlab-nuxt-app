@@ -1,5 +1,5 @@
 // Test MCP client to interact with the MCP server and generate real events
-import * as Sentry from '@sentry/nuxt'
+import * as Sentry from '@sentry/nuxt';
 
 // Initialize Sentry for client-side MCP monitoring (aligned with Sentry best practices)
 Sentry.init({
@@ -19,31 +19,31 @@ Sentry.init({
 
   // Release version (can be dynamic in production)
   release: process.env.npm_package_version || 'mcp-client@1.0.0',
-})
+});
 
 // Simple MCP client implementation for testing
 class SimpleMcpClient {
   constructor(serverUrl) {
-    this.serverUrl = serverUrl
+    this.serverUrl = serverUrl;
   }
 
   async callTool(name /** @type {string} */, args /** @type {any} */) {
-    const startTime = Date.now()
+    const startTime = Date.now();
     const transaction = Sentry.startTransaction({
       name: `mcp_tool_call_${name}`,
       op: 'mcp.tool',
-    })
+    });
 
     try {
       // Track tool usage with metrics
       Sentry.metrics.count('mcp_tool_call', 1, {
         tags: { tool_name: name },
-      })
+      });
 
       // In a real implementation, this would make HTTP calls to the MCP server
       // For now, we'll simulate the calls and log them for Sentry monitoring
 
-      console.warn(`🔧 Calling MCP tool: ${name}`)
+      console.warn(`🔧 Calling MCP tool: ${name}`);
 
       // Capture the operation start as a breadcrumb
       Sentry.addBreadcrumb({
@@ -54,24 +54,24 @@ class SimpleMcpClient {
           tool: name,
           args: args,
         },
-      })
+      });
 
-      let result
+      let result;
       switch (name) {
         case 'git_status':
-          result = await this.simulateGitStatus(args)
-          break
+          result = await this.simulateGitStatus(args);
+          break;
         case 'list_directory':
-          result = await this.simulateListDirectory(args)
-          break
+          result = await this.simulateListDirectory(args);
+          break;
         case 'get_today_date':
-          result = await this.simulateGetDate(args)
-          break
+          result = await this.simulateGetDate(args);
+          break;
         default:
-          throw new Error(`Unknown tool: ${name}`)
+          throw new Error(`Unknown tool: ${name}`);
       }
 
-      transaction.setStatus('ok')
+      transaction.setStatus('ok');
 
       // Capture successful operation as a message
       Sentry.captureMessage(`MCP tool ${name} completed successfully`, 'info', {
@@ -87,26 +87,26 @@ class SimpleMcpClient {
               ? JSON.stringify(result).slice(0, 500)
               : String(result).slice(0, 500),
         },
-      })
+      });
 
-      const responseTime = Date.now() - startTime
+      const responseTime = Date.now() - startTime;
 
       // Track response time with metrics
       Sentry.metrics.distribution('mcp_response_time', responseTime, {
         tags: { tool_name: name, outcome: 'success' },
-      })
+      });
 
-      console.warn(`✅ MCP tool ${name} completed successfully (${responseTime}ms)`)
-      return result
+      console.warn(`✅ MCP tool ${name} completed successfully (${responseTime}ms)`);
+      return result;
     } catch (error) {
-      const responseTime = Date.now() - startTime
+      const responseTime = Date.now() - startTime;
 
       // Track failed response time
       Sentry.metrics.distribution('mcp_response_time', responseTime, {
         tags: { tool_name: name, outcome: 'error' },
-      })
+      });
 
-      transaction.setStatus('error')
+      transaction.setStatus('error');
 
       // Capture the error with full context
       Sentry.captureException(error, {
@@ -121,22 +121,22 @@ class SimpleMcpClient {
           error_stack: error.stack,
           timestamp: new Date().toISOString(),
         },
-      })
+      });
 
-      console.error(`❌ MCP tool ${name} failed:`, error.message)
-      throw error
+      console.error(`❌ MCP tool ${name} failed:`, error.message);
+      throw error;
     } finally {
-      transaction.finish()
+      transaction.finish();
     }
   }
 
   async simulateGitStatus(args) {
     // Simulate calling git status
-    const { execSync } = await import('child_process')
+    const { execSync } = await import('child_process');
     const status = execSync('git status --porcelain', {
       cwd: args.repo_path || process.cwd(),
       encoding: 'utf8',
-    })
+    });
 
     return {
       content: [
@@ -145,20 +145,20 @@ class SimpleMcpClient {
           text: `Git status: ${status || 'Working directory clean'}`,
         },
       ],
-    }
+    };
   }
 
   async simulateListDirectory(args) {
     // Simulate listing directory contents
-    const fs = await import('fs')
-    const path = await import('path')
-    const items = fs.readdirSync(args.path || '.')
+    const fs = await import('fs');
+    const path = await import('path');
+    const items = fs.readdirSync(args.path || '.');
 
-    const detailed = items.map(item => {
-      const fullPath = path.join(args.path || '.', item)
-      const stats = fs.statSync(fullPath)
-      return `${stats.isDirectory() ? '[DIR]' : '[FILE]'} ${item}`
-    })
+    const detailed = items.map((item) => {
+      const fullPath = path.join(args.path || '.', item);
+      const stats = fs.statSync(fullPath);
+      return `${stats.isDirectory() ? '[DIR]' : '[FILE]'} ${item}`;
+    });
 
     return {
       content: [
@@ -167,12 +167,12 @@ class SimpleMcpClient {
           text: `Directory contents:\n${detailed.join('\n')}`,
         },
       ],
-    }
+    };
   }
 
   async simulateGetDate(args) {
     // Simulate getting current date
-    const today = new Date().toISOString().split('T')[0]
+    const today = new Date().toISOString().split('T')[0];
 
     return {
       content: [
@@ -181,51 +181,51 @@ class SimpleMcpClient {
           text: `Current date (UTC): ${today}`,
         },
       ],
-    }
+    };
   }
 }
 
 async function testMcpClient() {
-  console.warn('🚀 Starting MCP Client Test for Sentry monitoring...')
-  console.warn('📊 This will generate real MCP events tracked by Sentry')
+  console.warn('🚀 Starting MCP Client Test for Sentry monitoring...');
+  console.warn('📊 This will generate real MCP events tracked by Sentry');
 
   // Send test metric to verify metrics are working
-  Sentry.metrics.count('test_metric', 1)
-  console.warn('📈 Test metric sent to Sentry')
+  Sentry.metrics.count('test_metric', 1);
+  console.warn('📈 Test metric sent to Sentry');
 
-  const client = new SimpleMcpClient('http://localhost:3001') // Assuming server runs on port 3001
+  const client = new SimpleMcpClient('http://localhost:3001'); // Assuming server runs on port 3001
 
   const operations = [
     { name: 'get_today_date', args: {} },
     { name: 'list_directory', args: { path: '.' } },
     { name: 'git_status', args: { repo_path: '.' } },
-  ]
+  ];
 
-  console.warn('🔄 Executing MCP operations...')
+  console.warn('🔄 Executing MCP operations...');
 
   for (const op of operations) {
     try {
-      const result = await client.callTool(op.name, op.args)
-      console.warn(`📋 Result: ${result.content[0].text.slice(0, 100)}...`)
+      const result = await client.callTool(op.name, op.args);
+      console.warn(`📋 Result: ${result.content[0].text.slice(0, 100)}...`);
     } catch (error) {
       // Error already logged by the client
     }
 
     // Small delay between operations
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    await new Promise((resolve) => setTimeout(resolve, 1000));
   }
 
-  console.warn('✅ MCP Client Test completed!')
-  console.warn('📊 Check your Sentry dashboard for detailed MCP operation traces')
-  console.warn('🔗 Dashboard: https://sentry.io/organizations/baltzakisthemiscom/issues/')
+  console.warn('✅ MCP Client Test completed!');
+  console.warn('📊 Check your Sentry dashboard for detailed MCP operation traces');
+  console.warn('🔗 Dashboard: https://sentry.io/organizations/baltzakisthemiscom/issues/');
 }
 
 // Run the test
 if (import.meta.url === `file://${process.argv[1]}`) {
-  testMcpClient().catch(error => {
-    console.error('❌ MCP Client test failed:', error.message)
-    process.exit(1)
-  })
+  testMcpClient().catch((error) => {
+    console.error('❌ MCP Client test failed:', error.message);
+    process.exit(1);
+  });
 }
 
-export { SimpleMcpClient, testMcpClient }
+export { SimpleMcpClient, testMcpClient };

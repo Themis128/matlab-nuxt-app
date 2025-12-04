@@ -194,186 +194,186 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed, onMounted } from 'vue'
-  // Page meta (fallback)
-  onMounted(() => {
-    document.title = 'ML Model Comparison - MATLAB Deep Learning Platform'
-    const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
-    const content =
-      'Compare machine learning models for mobile dataset analysis with performance metrics and recommendations'
-    if (existing) existing.content = content
-    else {
-      const m = document.createElement('meta')
-      m.name = 'description'
-      m.content = content
-      document.head.appendChild(m)
-    }
-  })
-
-  // Model interface
-  interface Model {
-    id: string
-    name: string
-    type: string
-    description: string
-    accuracy: number
-    trainingTime: string
-    trainingTimeMinutes: number
-    color: string
-    icon: string
-    precision: number
-    recall: number
-    f1Score: number
-    loss: number
-    inferenceTime: string
+import { ref, computed, onMounted } from 'vue';
+// Page meta (fallback)
+onMounted(() => {
+  document.title = 'ML Model Comparison - MATLAB Deep Learning Platform';
+  const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+  const content =
+    'Compare machine learning models for mobile dataset analysis with performance metrics and recommendations';
+  if (existing) existing.content = content;
+  else {
+    const m = document.createElement('meta');
+    m.name = 'description';
+    m.content = content;
+    document.head.appendChild(m);
   }
+});
 
-  // Available models
-  const models = ref<Model[]>([
-    {
-      id: 'cnn',
-      name: 'CNN',
-      type: 'Convolutional Neural Network',
-      description: 'Best for image recognition and spatial data',
-      accuracy: 94.7,
-      trainingTime: '2.3 hrs',
-      trainingTimeMinutes: 138,
-      color: 'bg-purple-500',
-      icon: 'i-heroicons-cpu-chip',
-      precision: 0.947,
-      recall: 0.932,
-      f1Score: 0.939,
-      loss: 0.156,
-      inferenceTime: '45ms',
-    },
-    {
-      id: 'lstm',
-      name: 'LSTM',
-      type: 'Long Short-Term Memory',
-      description: 'Excellent for sequential data and time series',
-      accuracy: 91.2,
-      trainingTime: '3.1 hrs',
-      trainingTimeMinutes: 186,
-      color: 'bg-blue-500',
-      icon: 'i-heroicons-chart-bar',
-      precision: 0.912,
-      recall: 0.908,
-      f1Score: 0.91,
-      loss: 0.234,
-      inferenceTime: '67ms',
-    },
-    {
-      id: 'transformer',
-      name: 'Transformer',
-      type: 'Attention-based Model',
-      description: 'State-of-the-art for complex patterns',
-      accuracy: 96.8,
-      trainingTime: '4.7 hrs',
-      trainingTimeMinutes: 282,
-      color: 'bg-green-500',
-      icon: 'i-heroicons-sparkles',
-      precision: 0.968,
-      recall: 0.961,
-      f1Score: 0.964,
-      loss: 0.089,
-      inferenceTime: '78ms',
-    },
-    {
-      id: 'ensemble',
-      name: 'Ensemble',
-      type: 'Combined Models',
-      description: 'Combination of multiple algorithms',
-      accuracy: 97.3,
-      trainingTime: '6.2 hrs',
-      trainingTimeMinutes: 372,
-      color: 'bg-orange-500',
-      icon: 'i-heroicons-squares-plus',
-      precision: 0.973,
-      recall: 0.969,
-      f1Score: 0.971,
-      loss: 0.067,
-      inferenceTime: '123ms',
-    },
-  ])
+// Model interface
+interface Model {
+  id: string;
+  name: string;
+  type: string;
+  description: string;
+  accuracy: number;
+  trainingTime: string;
+  trainingTimeMinutes: number;
+  color: string;
+  icon: string;
+  precision: number;
+  recall: number;
+  f1Score: number;
+  loss: number;
+  inferenceTime: string;
+}
 
-  // Selected models for comparison
-  const selectedModel = ref('cnn')
-  const selectedModels = computed(() => models.value.filter(m => selectedModel.value === m.id))
+// Available models
+const models = ref<Model[]>([
+  {
+    id: 'cnn',
+    name: 'CNN',
+    type: 'Convolutional Neural Network',
+    description: 'Best for image recognition and spatial data',
+    accuracy: 94.7,
+    trainingTime: '2.3 hrs',
+    trainingTimeMinutes: 138,
+    color: 'bg-purple-500',
+    icon: 'i-heroicons-cpu-chip',
+    precision: 0.947,
+    recall: 0.932,
+    f1Score: 0.939,
+    loss: 0.156,
+    inferenceTime: '45ms',
+  },
+  {
+    id: 'lstm',
+    name: 'LSTM',
+    type: 'Long Short-Term Memory',
+    description: 'Excellent for sequential data and time series',
+    accuracy: 91.2,
+    trainingTime: '3.1 hrs',
+    trainingTimeMinutes: 186,
+    color: 'bg-blue-500',
+    icon: 'i-heroicons-chart-bar',
+    precision: 0.912,
+    recall: 0.908,
+    f1Score: 0.91,
+    loss: 0.234,
+    inferenceTime: '67ms',
+  },
+  {
+    id: 'transformer',
+    name: 'Transformer',
+    type: 'Attention-based Model',
+    description: 'State-of-the-art for complex patterns',
+    accuracy: 96.8,
+    trainingTime: '4.7 hrs',
+    trainingTimeMinutes: 282,
+    color: 'bg-green-500',
+    icon: 'i-heroicons-sparkles',
+    precision: 0.968,
+    recall: 0.961,
+    f1Score: 0.964,
+    loss: 0.089,
+    inferenceTime: '78ms',
+  },
+  {
+    id: 'ensemble',
+    name: 'Ensemble',
+    type: 'Combined Models',
+    description: 'Combination of multiple algorithms',
+    accuracy: 97.3,
+    trainingTime: '6.2 hrs',
+    trainingTimeMinutes: 372,
+    color: 'bg-orange-500',
+    icon: 'i-heroicons-squares-plus',
+    precision: 0.973,
+    recall: 0.969,
+    f1Score: 0.971,
+    loss: 0.067,
+    inferenceTime: '123ms',
+  },
+]);
 
-  // Comparison metrics
-  const comparisonMetrics = [
-    { key: 'accuracy', label: 'Accuracy (%)', type: 'percentage' },
-    { key: 'precision', label: 'Precision', type: 'decimal' },
-    { key: 'recall', label: 'Recall', type: 'decimal' },
-    { key: 'f1Score', label: 'F1 Score', type: 'decimal' },
-    { key: 'loss', label: 'Loss', type: 'decimal' },
-    { key: 'inferenceTime', label: 'Inference Time', type: 'time' },
-  ]
+// Selected models for comparison
+const selectedModel = ref('cnn');
+const selectedModels = computed(() => models.value.filter((m) => selectedModel.value === m.id));
 
-  // Recommendations
-  const recommendations = ref([
-    {
-      id: 'beginner',
-      title: 'Best for Beginners',
-      description: 'Easy to implement and understand',
-      bestFor: 'Starting out with ML',
-      accuracy: 91.2,
-      icon: 'i-heroicons-academic-cap',
-      badgeColor: 'bg-blue-500',
-    },
-    {
-      id: 'performance',
-      title: 'Highest Performance',
-      description: 'Maximum accuracy and reliability',
-      bestFor: 'Production systems',
-      accuracy: 97.3,
-      icon: 'i-heroicons-trophy',
-      badgeColor: 'bg-yellow-500',
-    },
-    {
-      id: 'balance',
-      title: 'Best Balance',
-      description: 'Good performance with reasonable speed',
-      bestFor: 'Real-time applications',
-      accuracy: 94.7,
-      icon: 'i-heroicons-scale',
-      badgeColor: 'bg-green-500',
-    },
-  ])
+// Comparison metrics
+const comparisonMetrics = [
+  { key: 'accuracy', label: 'Accuracy (%)', type: 'percentage' },
+  { key: 'precision', label: 'Precision', type: 'decimal' },
+  { key: 'recall', label: 'Recall', type: 'decimal' },
+  { key: 'f1Score', label: 'F1 Score', type: 'decimal' },
+  { key: 'loss', label: 'Loss', type: 'decimal' },
+  { key: 'inferenceTime', label: 'Inference Time', type: 'time' },
+];
 
-  // Computed values
-  const maxTrainingTime = computed(() => Math.max(...models.value.map(m => m.trainingTimeMinutes)))
+// Recommendations
+const recommendations = ref([
+  {
+    id: 'beginner',
+    title: 'Best for Beginners',
+    description: 'Easy to implement and understand',
+    bestFor: 'Starting out with ML',
+    accuracy: 91.2,
+    icon: 'i-heroicons-academic-cap',
+    badgeColor: 'bg-blue-500',
+  },
+  {
+    id: 'performance',
+    title: 'Highest Performance',
+    description: 'Maximum accuracy and reliability',
+    bestFor: 'Production systems',
+    accuracy: 97.3,
+    icon: 'i-heroicons-trophy',
+    badgeColor: 'bg-yellow-500',
+  },
+  {
+    id: 'balance',
+    title: 'Best Balance',
+    description: 'Good performance with reasonable speed',
+    bestFor: 'Real-time applications',
+    accuracy: 94.7,
+    icon: 'i-heroicons-scale',
+    badgeColor: 'bg-green-500',
+  },
+]);
 
-  // Methods
-  const selectModel = (modelId: string) => {
-    selectedModel.value = modelId
+// Computed values
+const maxTrainingTime = computed(() => Math.max(...models.value.map((m) => m.trainingTimeMinutes)));
+
+// Methods
+const selectModel = (modelId: string) => {
+  selectedModel.value = modelId;
+};
+
+const getMetricClass = (value: number | string, type: string) => {
+  if (type === 'time') return 'text-gray-900 dark:text-white font-semibold';
+  if (type === 'percentage') {
+    const num = typeof value === 'string' ? parseFloat(value) : value;
+    return num > 95
+      ? 'text-green-600 font-semibold'
+      : num > 90
+        ? 'text-blue-600 font-semibold'
+        : 'text-yellow-600 font-semibold';
   }
+  return 'text-gray-900 dark:text-white font-semibold';
+};
 
-  const getMetricClass = (value: number | string, type: string) => {
-    if (type === 'time') return 'text-gray-900 dark:text-white font-semibold'
-    if (type === 'percentage') {
-      const num = typeof value === 'string' ? parseFloat(value) : value
-      return num > 95
-        ? 'text-green-600 font-semibold'
-        : num > 90
-          ? 'text-blue-600 font-semibold'
-          : 'text-yellow-600 font-semibold'
-    }
-    return 'text-gray-900 dark:text-white font-semibold'
-  }
+const formatMetric = (value: number | string, type: string) => {
+  if (type === 'percentage') return `${value}%`;
+  if (type === 'decimal') return typeof value === 'number' ? value.toFixed(3) : value;
+  if (type === 'time') return value;
+  return value.toString();
+};
 
-  const formatMetric = (value: number | string, type: string) => {
-    if (type === 'percentage') return `${value}%`
-    if (type === 'decimal') return typeof value === 'number' ? value.toFixed(3) : value
-    if (type === 'time') return value
-    return value.toString()
-  }
-
-  const getMetricValue = (model: Model, metricKey: string): number | string => {
-    return (model as any)[metricKey]
-  }
+const getMetricValue = (model: Model, metricKey: string): number | string => {
+  return (model as any)[metricKey];
+};
 </script>
 
 <style scoped>
-  /* Additional styles can be added here if needed */
+/* Additional styles can be added here if needed */
 </style>

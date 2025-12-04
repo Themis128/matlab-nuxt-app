@@ -36,41 +36,41 @@ pages/sentry-example-page.vue    # Test page for error tracking
 ### In Vue Components
 
 ```typescript
-import * as Sentry from '@sentry/nuxt'
+import * as Sentry from '@sentry/nuxt';
 
 // Capture exception
 try {
   // risky code
 } catch (error) {
-  Sentry.captureException(error)
+  Sentry.captureException(error);
 }
 
 // Capture message
-Sentry.captureMessage('Something went wrong', 'warning')
+Sentry.captureMessage('Something went wrong', 'warning');
 
 // Add context
-Sentry.setUser({ id: '123', email: 'user@example.com' })
-Sentry.setTag('page', 'dashboard')
-Sentry.setContext('device', { type: 'mobile', brand: 'Samsung' })
+Sentry.setUser({ id: '123', email: 'user@example.com' });
+Sentry.setTag('page', 'dashboard');
+Sentry.setContext('device', { type: 'mobile', brand: 'Samsung' });
 ```
 
 ### In API Routes
 
 ```typescript
 // server/api/example.ts
-import * as Sentry from '@sentry/nuxt'
+import * as Sentry from '@sentry/nuxt';
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event) => {
   try {
     // Your API logic
   } catch (error) {
     Sentry.captureException(error, {
       tags: { api: 'example' },
       level: 'error',
-    })
-    throw error
+    });
+    throw error;
   }
-})
+});
 ```
 
 ## Environment Variables

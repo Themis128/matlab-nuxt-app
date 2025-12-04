@@ -356,9 +356,9 @@ done
 ```javascript
 // From browser console on your domain
 fetch('https://api.your-domain.com/health')
-  .then(r => r.json())
+  .then((r) => r.json())
   .then(console.log)
-  .catch(console.error)
+  .catch(console.error);
 ```
 
 ### 4. Test Deployment:

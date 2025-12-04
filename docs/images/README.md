@@ -81,16 +81,19 @@ Add the following screenshots to showcase your project:
 ## Screenshot Tips
 
 1. **Use consistent styling:**
+
    - Same browser/theme for web screenshots
    - Clean MATLAB figures (remove unnecessary toolbars)
    - Consistent color scheme
 
 2. **Optimize file sizes:**
+
    - Use PNG for screenshots (better quality)
    - Compress if needed (aim for < 500KB per image)
    - Use GIF only for animations
 
 3. **Naming convention:**
+
    - Use lowercase with hyphens: `feature-name.png`
    - Be descriptive: `web-interface-screenshot.png` not `img1.png`
 

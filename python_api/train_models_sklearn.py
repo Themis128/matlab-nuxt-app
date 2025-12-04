@@ -145,7 +145,7 @@ def load_and_preprocess_data(csv_path: str = None):
             if storage_match:
                 storage = float(storage_match.group(1))
                 # Convert TB to GB
-                if "TB" in model_str[storage_match.start() : storage_match.end()]:
+                if "TB" in model_str[storage_match.start():storage_match.end()]:
                     storage *= 1024
                 return storage
             return np.nan
@@ -865,7 +865,8 @@ def train_brand_model(data, max_iter=1000):
             )
         else:
             print(
-                "WARNING: Cannot use stratification for val/test split (some classes have < 2 samples in validation set)"
+                "WARNING: Cannot use stratification for val/test split "
+                "(some classes have < 2 samples in validation set)"
             )
             X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
     else:

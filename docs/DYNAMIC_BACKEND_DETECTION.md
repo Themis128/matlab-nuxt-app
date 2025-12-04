@@ -55,31 +55,31 @@ The client-side composable uses browser APIs to detect the current location:
 ### In Server API Routes
 
 ```typescript
-import { getPythonApiUrl } from '~/server/utils/get-python-api-url'
+import { getPythonApiUrl } from '~/server/utils/get-python-api-url';
 
-export default defineEventHandler(async event => {
-  const apiUrl = getPythonApiUrl(event)
-  const response = await fetch(`${apiUrl}/api/endpoint`)
+export default defineEventHandler(async (event) => {
+  const apiUrl = getPythonApiUrl(event);
+  const response = await fetch(`${apiUrl}/api/endpoint`);
   // ...
-})
+});
 ```
 
 ### In Python API Utility
 
 ```typescript
-import { callPythonAPI } from '~/server/utils/python-api'
+import { callPythonAPI } from '~/server/utils/python-api';
 
-export default defineEventHandler(async event => {
-  const result = await callPythonAPI('/api/predict/price', body, event)
+export default defineEventHandler(async (event) => {
+  const result = await callPythonAPI('/api/predict/price', body, event);
   // ...
-})
+});
 ```
 
 ### In Vue Components
 
 ```typescript
-const { pythonApiUrl } = useApiConfig()
-const data = await $fetch(`${pythonApiUrl}/api/endpoint`)
+const { pythonApiUrl } = useApiConfig();
+const data = await $fetch(`${pythonApiUrl}/api/endpoint`);
 ```
 
 ## Environment Configuration
@@ -108,7 +108,7 @@ export PYTHON_API_URL=https://api.yourdomain.com
 
 ```javascript
 // Should show the detected Python API URL
-console.log(window.__NUXT__.config.public.apiBase)
+console.log(window.__NUXT__.config.public.apiBase);
 ```
 
 ### Check Server-Side URL
@@ -116,7 +116,7 @@ console.log(window.__NUXT__.config.public.apiBase)
 Add temporary logging in any API route:
 
 ```typescript
-console.log('Python API URL:', getPythonApiUrl(event))
+console.log('Python API URL:', getPythonApiUrl(event));
 ```
 
 ### Test Health Endpoint

@@ -1,12 +1,14 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from '@playwright/test';
 
 test.describe('Prediction API Integration', () => {
   test('should verify Python API health endpoint', async ({ request }) => {
-    const response = await request.get(process.env.PYTHON_API_URL || 'http://localhost:8000/health')
-    expect(response.ok()).toBeTruthy()
-    const data = await response.json()
-    expect(data.status).toBe('healthy')
-  })
+    const response = await request.get(
+      process.env.PYTHON_API_URL || 'http://localhost:8000/health'
+    );
+    expect(response.ok()).toBeTruthy();
+    const data = await response.json();
+    expect(data.status).toBe('healthy');
+  });
 
   test('should test price prediction endpoint directly', async ({ request }) => {
     const response = await request.post(
@@ -25,14 +27,14 @@ test.describe('Prediction API Integration', () => {
           storage: 128,
         },
       }
-    )
+    );
 
-    expect(response.ok()).toBeTruthy()
-    const data = await response.json()
-    expect(data).toHaveProperty('price')
-    expect(typeof data.price).toBe('number')
-    expect(data.price).toBeGreaterThan(0)
-  })
+    expect(response.ok()).toBeTruthy();
+    const data = await response.json();
+    expect(data).toHaveProperty('price');
+    expect(typeof data.price).toBe('number');
+    expect(data.price).toBeGreaterThan(0);
+  });
 
   test('should test RAM prediction endpoint', async ({ request }) => {
     const response = await request.post(
@@ -51,14 +53,14 @@ test.describe('Prediction API Integration', () => {
           storage: 128,
         },
       }
-    )
+    );
 
     if (response.ok()) {
-      const data = await response.json()
-      expect(data).toHaveProperty('ram')
-      expect(typeof data.ram).toBe('number')
+      const data = await response.json();
+      expect(data).toHaveProperty('ram');
+      expect(typeof data.ram).toBe('number');
     }
-  })
+  });
 
   test('should test battery prediction endpoint', async ({ request }) => {
     const response = await request.post(
@@ -77,14 +79,14 @@ test.describe('Prediction API Integration', () => {
           storage: 128,
         },
       }
-    )
+    );
 
     if (response.ok()) {
-      const data = await response.json()
-      expect(data).toHaveProperty('battery')
-      expect(typeof data.battery).toBe('number')
+      const data = await response.json();
+      expect(data).toHaveProperty('battery');
+      expect(typeof data.battery).toBe('number');
     }
-  })
+  });
 
   test('should test brand prediction endpoint', async ({ request }) => {
     const response = await request.post(
@@ -103,13 +105,13 @@ test.describe('Prediction API Integration', () => {
           storage: 128,
         },
       }
-    )
+    );
 
     if (response.ok()) {
-      const data = await response.json()
-      expect(data).toHaveProperty('brand')
+      const data = await response.json();
+      expect(data).toHaveProperty('brand');
     }
-  })
+  });
 
   test('should handle invalid prediction input gracefully', async ({ request }) => {
     const response = await request.post(
@@ -120,11 +122,11 @@ test.describe('Prediction API Integration', () => {
           ram: 8,
         },
       }
-    )
+    );
 
     // Should either return error or handle gracefully
-    expect([400, 422, 500]).toContain(response.status())
-  })
+    expect([400, 422, 500]).toContain(response.status());
+  });
 
   test('should test dataset find-closest-model endpoint', async ({ request }) => {
     const response = await request.post(
@@ -136,11 +138,11 @@ test.describe('Prediction API Integration', () => {
           battery: 4000,
         },
       }
-    )
+    );
 
     if (response.ok()) {
-      const data = await response.json()
-      expect(data).toHaveProperty('closest_model')
+      const data = await response.json();
+      expect(data).toHaveProperty('closest_model');
     }
-  })
-})
+  });
+});

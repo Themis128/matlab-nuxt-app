@@ -28,6 +28,7 @@ unzip mobiles-dataset-2025.zip
 #### Recommended Networks:
 
 1. **Convolutional Neural Network (CNN)** ✅
+
    - **Use for**: Classifying phone brand, model, or category
    - **Architecture**: Conv layers → Pooling → Fully Connected → Classification
    - **Example**: `examples/mobiles_cnn_classification.m`
@@ -35,6 +36,7 @@ unzip mobiles-dataset-2025.zip
    - **Best for**: Brand/model recognition from photos
 
 2. **Transfer Learning (Pretrained Networks)** ⭐ RECOMMENDED
+
    - **Use for**: Quick training with limited data
    - **Models**: ResNet50, MobileNetV2, EfficientNet
    - **Advantages**:
@@ -55,6 +57,7 @@ unzip mobiles-dataset-2025.zip
 #### Recommended Networks:
 
 1. **Fully Connected Neural Network (FCN/DNN)** ✅
+
    - **Use for**: Price prediction, feature prediction
    - **Architecture**: Input → Hidden layers → Output
    - **Example**: `examples/mobiles_tabular_regression.m`
@@ -152,6 +155,7 @@ Do you have images?
    ```
 
 3. **Choose your network** based on data type:
+
    - Images only → `examples/mobiles_cnn_classification.m`
    - Tabular only → `examples/mobiles_tabular_regression.m`
    - Both → `examples/mobiles_hybrid_network.m`

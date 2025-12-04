@@ -65,18 +65,21 @@ scripts/ml_pipeline/
 ### 3. ✅ Documentation Created
 
 1. **`scripts/ml_pipeline/README.md`** (200+ lines)
+
    - Comprehensive module documentation
    - Usage examples for each category
    - Data flow diagrams
    - Output file descriptions
 
 2. **`PYTHON_SCRIPTS_MIGRATION.md`** (150+ lines)
+
    - Complete mapping of old → new paths
    - Command-line update instructions
    - Benefits explanation
    - Migration checklist
 
 3. **Updated `README.md`**
+
    - Added Python Scripts Organization section
    - Quick reference commands
    - Links to detailed documentation

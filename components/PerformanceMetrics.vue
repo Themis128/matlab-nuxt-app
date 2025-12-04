@@ -69,66 +69,66 @@
 </template>
 
 <script setup lang="ts">
-  // Import optimized Heroicons directly
-  import {
-    ChartBarIcon,
-    CubeTransparentIcon,
-    PhotoIcon,
-    Cog6ToothIcon,
-    DevicePhoneMobileIcon,
-    SparklesIcon,
-  } from '@heroicons/vue/24/outline'
+// Import optimized Heroicons directly
+import {
+  ChartBarIcon,
+  CubeTransparentIcon,
+  PhotoIcon,
+  Cog6ToothIcon,
+  DevicePhoneMobileIcon,
+  SparklesIcon,
+} from '@heroicons/vue/24/outline';
 
-  // Performance composables and utilities
-  import { useResponsive } from '~/composables/useResponsive'
-  import { useUserPreferencesStore } from '~/stores/userPreferencesStore'
+// Performance composables and utilities
+import { useResponsive } from '~/composables/useResponsive';
+import { useUserPreferencesStore } from '~/stores/userPreferencesStore';
 
-  // Reactive data
-  const { isMobile, currentBreakpoint, getGridCols } = useResponsive()
-  const userPreferencesStore = useUserPreferencesStore()
+// Reactive data
+const { isMobile, currentBreakpoint, getGridCols } = useResponsive();
+const userPreferencesStore = useUserPreferencesStore();
 
-  // Computed properties
-  const deviceType = computed(() => {
-    if (isMobile.value) return 'mobile'
-    return 'desktop'
-  })
+// Computed properties
+const deviceType = computed(() => {
+  if (isMobile.value) return 'mobile';
+  return 'desktop';
+});
 
-  const gridConfig = computed(() => getGridCols())
+const gridConfig = computed(() => getGridCols());
 
-  const performanceScore = computed(() => {
-    // Calculate performance score based on various metrics
-    let score = 85 // Base score
+const performanceScore = computed(() => {
+  // Calculate performance score based on various metrics
+  let score = 85; // Base score
 
-    // Add points for responsive design
-    if (!isMobile.value) score += 10
+  // Add points for responsive design
+  if (!isMobile.value) score += 10;
 
-    // Add points for persistent settings
-    if (Object.keys(userPreferencesStore.$state.searchFilters).length > 1) score += 5
+  // Add points for persistent settings
+  if (Object.keys(userPreferencesStore.$state.searchFilters).length > 1) score += 5;
 
-    return Math.min(score, 100)
-  })
+  return Math.min(score, 100);
+});
 
-  // Get real data
-  const bundleSize = computed(() => {
-    // Calculate based on page load performance
-    return '387 KB' // Updated with actual size
-  })
+// Get real data
+const bundleSize = computed(() => {
+  // Calculate based on page load performance
+  return '387 KB'; // Updated with actual size
+});
 
-  const bundleTrend = computed(() => {
-    // Calculate performance improvement
-    return '+12.3% improvement'
-  })
+const bundleTrend = computed(() => {
+  // Calculate performance improvement
+  return '+12.3% improvement';
+});
 
-  const imageCount = computed(() => {
-    // Count actual optimized images in the demo
-    return '10' // Real count of demo images
-  })
+const imageCount = computed(() => {
+  // Count actual optimized images in the demo
+  return '10'; // Real count of demo images
+});
 
-  const settingsCount = computed(() => {
-    const settings = Object.keys(userPreferencesStore.$state)
-    return settings.length || '5'
-  })
+const settingsCount = computed(() => {
+  const settings = Object.keys(userPreferencesStore.$state);
+  return settings.length || '5';
+});
 
-  // Optimization note: Using Heroicons directly provides better tree-shaking
-  // and smaller bundle size compared to generic icon components
+// Optimization note: Using Heroicons directly provides better tree-shaking
+// and smaller bundle size compared to generic icon components
 </script>

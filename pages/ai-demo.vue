@@ -306,207 +306,207 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted } from 'vue';
 
-  interface PredictionResult {
-    price: number
-    priceConfidence: number
-    performanceScore: number
-    marketPosition: string
-    marketDescription: string
-    insights: string[]
-    overallConfidence: number
-    trainingSamples: string
+interface PredictionResult {
+  price: number;
+  priceConfidence: number;
+  performanceScore: number;
+  marketPosition: string;
+  marketDescription: string;
+  insights: string[];
+  overallConfidence: number;
+  trainingSamples: string;
+}
+
+// Page meta (fallback for environments without Nuxt auto-imports)
+onMounted(() => {
+  document.title = 'AI Predictions Demo - MATLAB Analytics';
+  const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+  const content =
+    'Experience AI-powered phone predictions using advanced MATLAB deep learning models';
+  if (existing) existing.content = content;
+  else {
+    const m = document.createElement('meta');
+    m.name = 'description';
+    m.content = content;
+    document.head.appendChild(m);
+  }
+});
+
+// Reactive data
+const isPredicting = ref(false);
+const predictionResults = ref<PredictionResult | null>(null);
+
+const demoData = reactive({
+  brand: '',
+  modelName: '',
+  displaySize: '',
+  ram: '',
+  storage: '',
+  mainCamera: '',
+  battery: '',
+  processor: '',
+});
+
+// Options
+const brands = [
+  { label: 'Samsung', value: 'samsung' },
+  { label: 'Apple', value: 'apple' },
+  { label: 'Google', value: 'google' },
+  { label: 'OnePlus', value: 'oneplus' },
+  { label: 'Xiaomi', value: 'xiaomi' },
+  { label: 'Sony', value: 'sony' },
+  { label: 'Motorola', value: 'motorola' },
+  { label: 'Other', value: 'other' },
+];
+
+const ramOptions = [
+  { label: '4GB', value: '4' },
+  { label: '6GB', value: '6' },
+  { label: '8GB', value: '8' },
+  { label: '12GB', value: '12' },
+  { label: '16GB', value: '16' },
+  { label: '18GB+', value: '18' },
+];
+
+const storageOptions = [
+  { label: '64GB', value: '64' },
+  { label: '128GB', value: '128' },
+  { label: '256GB', value: '256' },
+  { label: '512GB', value: '512' },
+  { label: '1TB+', value: '1024' },
+];
+
+const processors = [
+  { label: 'Snapdragon 8 Gen 3', value: 'sd8g3' },
+  { label: 'Snapdragon 8 Gen 2', value: 'sd8g2' },
+  { label: 'A17 Pro', value: 'a17pro' },
+  { label: 'Google Tensor G3', value: 'tensor-g3' },
+  { label: 'Dimensity 9200', value: 'dimensity9200' },
+  { label: 'Snapdragon 7 Gen 1', value: 'sd7g1' },
+  { label: 'Other', value: 'other' },
+];
+
+// Methods
+const runPrediction = async () => {
+  if (!demoData.brand || !demoData.displaySize) {
+    // Show validation error
+    return;
   }
 
-  // Page meta (fallback for environments without Nuxt auto-imports)
-  onMounted(() => {
-    document.title = 'AI Predictions Demo - MATLAB Analytics'
-    const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
-    const content =
-      'Experience AI-powered phone predictions using advanced MATLAB deep learning models'
-    if (existing) existing.content = content
-    else {
-      const m = document.createElement('meta')
-      m.name = 'description'
-      m.content = content
-      document.head.appendChild(m)
-    }
-  })
+  isPredicting.value = true;
 
-  // Reactive data
-  const isPredicting = ref(false)
-  const predictionResults = ref<PredictionResult | null>(null)
+  // Simulate AI prediction delay
+  await new Promise((resolve) => setTimeout(resolve, 2000));
 
-  const demoData = reactive({
-    brand: '',
-    modelName: '',
-    displaySize: '',
-    ram: '',
-    storage: '',
-    mainCamera: '',
-    battery: '',
-    processor: '',
-  })
+  // Mock prediction results based on input
+  const basePrice = calculateBasePrice();
+  const performanceScore = calculatePerformanceScore();
 
-  // Options
-  const brands = [
-    { label: 'Samsung', value: 'samsung' },
-    { label: 'Apple', value: 'apple' },
-    { label: 'Google', value: 'google' },
-    { label: 'OnePlus', value: 'oneplus' },
-    { label: 'Xiaomi', value: 'xiaomi' },
-    { label: 'Sony', value: 'sony' },
-    { label: 'Motorola', value: 'motorola' },
-    { label: 'Other', value: 'other' },
-  ]
+  predictionResults.value = {
+    price: Math.round(basePrice + (Math.random() - 0.5) * 200),
+    priceConfidence: Math.round(85 + Math.random() * 10),
+    performanceScore: Math.round(performanceScore),
+    marketPosition: getMarketPosition(performanceScore),
+    marketDescription: getMarketDescription(performanceScore),
+    insights: generateInsights(),
+    overallConfidence: Math.round(88 + Math.random() * 8),
+    trainingSamples: '50,000+',
+  };
 
-  const ramOptions = [
-    { label: '4GB', value: '4' },
-    { label: '6GB', value: '6' },
-    { label: '8GB', value: '8' },
-    { label: '12GB', value: '12' },
-    { label: '16GB', value: '16' },
-    { label: '18GB+', value: '18' },
-  ]
+  isPredicting.value = false;
+};
 
-  const storageOptions = [
-    { label: '64GB', value: '64' },
-    { label: '128GB', value: '128' },
-    { label: '256GB', value: '256' },
-    { label: '512GB', value: '512' },
-    { label: '1TB+', value: '1024' },
-  ]
+const calculateBasePrice = () => {
+  let basePrice = 300;
 
-  const processors = [
-    { label: 'Snapdragon 8 Gen 3', value: 'sd8g3' },
-    { label: 'Snapdragon 8 Gen 2', value: 'sd8g2' },
-    { label: 'A17 Pro', value: 'a17pro' },
-    { label: 'Google Tensor G3', value: 'tensor-g3' },
-    { label: 'Dimensity 9200', value: 'dimensity9200' },
-    { label: 'Snapdragon 7 Gen 1', value: 'sd7g1' },
-    { label: 'Other', value: 'other' },
-  ]
+  // Brand multiplier
+  const brandMultipliers: Record<string, number> = {
+    samsung: 1.2,
+    apple: 2.5,
+    google: 1.8,
+    oneplus: 1.3,
+    xiaomi: 0.9,
+    sony: 1.1,
+    motorola: 0.8,
+    other: 1.0,
+  };
+  basePrice *= (brandMultipliers as Record<string, number>)[demoData.brand] || 1;
 
-  // Methods
-  const runPrediction = async () => {
-    if (!demoData.brand || !demoData.displaySize) {
-      // Show validation error
-      return
-    }
+  // RAM multiplier
+  const ramValue = parseInt(demoData.ram) || 8;
+  basePrice += (ramValue - 4) * 50;
 
-    isPredicting.value = true
+  // Storage multiplier
+  const storageValue = parseInt(demoData.storage) || 128;
+  basePrice += (storageValue - 64) * 0.5;
 
-    // Simulate AI prediction delay
-    await new Promise(resolve => setTimeout(resolve, 2000))
+  // Camera multiplier
+  const cameraValue = parseInt(demoData.mainCamera) || 50;
+  basePrice += (cameraValue - 12) * 2;
 
-    // Mock prediction results based on input
-    const basePrice = calculateBasePrice()
-    const performanceScore = calculatePerformanceScore()
+  return Math.max(200, Math.min(2000, basePrice));
+};
 
-    predictionResults.value = {
-      price: Math.round(basePrice + (Math.random() - 0.5) * 200),
-      priceConfidence: Math.round(85 + Math.random() * 10),
-      performanceScore: Math.round(performanceScore),
-      marketPosition: getMarketPosition(performanceScore),
-      marketDescription: getMarketDescription(performanceScore),
-      insights: generateInsights(),
-      overallConfidence: Math.round(88 + Math.random() * 8),
-      trainingSamples: '50,000+',
-    }
+const calculatePerformanceScore = () => {
+  let score = 50;
 
-    isPredicting.value = false
-  }
+  // Processor score
+  const processorScores: Record<string, number> = {
+    sd8g3: 95,
+    a17pro: 98,
+    'tensor-g3': 88,
+    dimensity9200: 92,
+    sd8g2: 90,
+    sd7g1: 75,
+    other: 60,
+  };
+  score = (processorScores as Record<string, number>)[demoData.processor] || 60;
 
-  const calculateBasePrice = () => {
-    let basePrice = 300
+  // RAM adjustment
+  const ramValue = parseInt(demoData.ram) || 8;
+  score += Math.min(10, (ramValue - 4) * 2);
 
-    // Brand multiplier
-    const brandMultipliers: Record<string, number> = {
-      samsung: 1.2,
-      apple: 2.5,
-      google: 1.8,
-      oneplus: 1.3,
-      xiaomi: 0.9,
-      sony: 1.1,
-      motorola: 0.8,
-      other: 1.0,
-    }
-    basePrice *= (brandMultipliers as Record<string, number>)[demoData.brand] || 1
+  // Storage adjustment (minor)
+  const storageValue = parseInt(demoData.storage) || 128;
+  score += Math.min(5, (storageValue - 64) / 32);
 
-    // RAM multiplier
-    const ramValue = parseInt(demoData.ram) || 8
-    basePrice += (ramValue - 4) * 50
+  return Math.min(100, Math.max(30, score));
+};
 
-    // Storage multiplier
-    const storageValue = parseInt(demoData.storage) || 128
-    basePrice += (storageValue - 64) * 0.5
+const getMarketPosition = (score: number) => {
+  if (score >= 95) return 'Flagship';
+  if (score >= 85) return 'Premium';
+  if (score >= 75) return 'Mid-Range';
+  if (score >= 65) return 'Budget';
+  return 'Entry-Level';
+};
 
-    // Camera multiplier
-    const cameraValue = parseInt(demoData.mainCamera) || 50
-    basePrice += (cameraValue - 12) * 2
+const getMarketDescription = (score: number) => {
+  if (score >= 95) return 'Top-tier performance and features';
+  if (score >= 85) return 'High-end specifications with premium features';
+  if (score >= 75) return 'Balanced performance and value';
+  if (score >= 65) return 'Good value for everyday use';
+  return 'Basic functionality at affordable price';
+};
 
-    return Math.max(200, Math.min(2000, basePrice))
-  }
+const generateInsights = () => {
+  const insights = [
+    'Strong camera performance relative to price point',
+    'Battery life exceeds category average',
+    'Display quality is above average for this segment',
+    'Processor provides smooth multitasking experience',
+  ];
 
-  const calculatePerformanceScore = () => {
-    let score = 50
+  // Randomly select 3 insights
+  return insights.sort(() => Math.random() - 0.5).slice(0, 3);
+};
 
-    // Processor score
-    const processorScores: Record<string, number> = {
-      sd8g3: 95,
-      a17pro: 98,
-      'tensor-g3': 88,
-      dimensity9200: 92,
-      sd8g2: 90,
-      sd7g1: 75,
-      other: 60,
-    }
-    score = (processorScores as Record<string, number>)[demoData.processor] || 60
-
-    // RAM adjustment
-    const ramValue = parseInt(demoData.ram) || 8
-    score += Math.min(10, (ramValue - 4) * 2)
-
-    // Storage adjustment (minor)
-    const storageValue = parseInt(demoData.storage) || 128
-    score += Math.min(5, (storageValue - 64) / 32)
-
-    return Math.min(100, Math.max(30, score))
-  }
-
-  const getMarketPosition = (score: number) => {
-    if (score >= 95) return 'Flagship'
-    if (score >= 85) return 'Premium'
-    if (score >= 75) return 'Mid-Range'
-    if (score >= 65) return 'Budget'
-    return 'Entry-Level'
-  }
-
-  const getMarketDescription = (score: number) => {
-    if (score >= 95) return 'Top-tier performance and features'
-    if (score >= 85) return 'High-end specifications with premium features'
-    if (score >= 75) return 'Balanced performance and value'
-    if (score >= 65) return 'Good value for everyday use'
-    return 'Basic functionality at affordable price'
-  }
-
-  const generateInsights = () => {
-    const insights = [
-      'Strong camera performance relative to price point',
-      'Battery life exceeds category average',
-      'Display quality is above average for this segment',
-      'Processor provides smooth multitasking experience',
-    ]
-
-    // Randomly select 3 insights
-    return insights.sort(() => Math.random() - 0.5).slice(0, 3)
-  }
-
-  const resetForm = () => {
-    Object.keys(demoData).forEach(key => {
-      ;(demoData as any)[key] = ''
-    })
-    predictionResults.value = null
-  }
+const resetForm = () => {
+  Object.keys(demoData).forEach((key) => {
+    (demoData as any)[key] = '';
+  });
+  predictionResults.value = null;
+};
 </script>

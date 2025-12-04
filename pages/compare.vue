@@ -190,52 +190,52 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue'
+import { ref, onMounted } from 'vue';
 
-  // Page meta fallback
-  onMounted(() => {
-    document.title = 'Compare Phones - MATLAB Analytics'
-    const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
-    const content = 'Compare mobile phones side by side with detailed specifications'
-    if (existing) existing.content = content
-    else {
-      const m = document.createElement('meta')
-      m.name = 'description'
-      m.content = content
-      document.head.appendChild(m)
-    }
-  })
-
-  const selectedPhones = ref(['', '', '', ''])
-  const comparisonData = ref<any[]>([])
-
-  const availablePhones = [
-    { label: 'Samsung Galaxy S24 Ultra', value: 'samsung-s24-ultra' },
-    { label: 'iPhone 15 Pro Max', value: 'iphone-15-pro-max' },
-    { label: 'Google Pixel 8 Pro', value: 'pixel-8-pro' },
-    { label: 'OnePlus 12', value: 'oneplus-12' },
-  ]
-
-  const phoneDatabase = {
-    'samsung-s24-ultra': {
-      id: 'samsung-s24-ultra',
-      name: 'Galaxy S24 Ultra',
-      brand: 'Samsung',
-      price: 1199,
-      image: '/api/placeholder/200/150',
-      display: 6.8,
-      displayType: 'Dynamic AMOLED 2X',
-      processor: 'Snapdragon 8 Gen 3',
-    },
-    'iphone-15-pro-max': {
-      id: 'iphone-15-pro-max',
-      name: 'iPhone 15 Pro Max',
-      brand: 'Apple',
-      price: 1199,
-      image: '/api/placeholder/200/150',
-      display: 6.7,
-      displayType: 'Super Retina XDR OLED',
-      processor: 'A17 Pro',
-    },
+// Page meta fallback
+onMounted(() => {
+  document.title = 'Compare Phones - MATLAB Analytics';
+  const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+  const content = 'Compare mobile phones side by side with detailed specifications';
+  if (existing) existing.content = content;
+  else {
+    const m = document.createElement('meta');
+    m.name = 'description';
+    m.content = content;
+    document.head.appendChild(m);
   }
+});
+
+const selectedPhones = ref(['', '', '', '']);
+const comparisonData = ref<any[]>([]);
+
+const availablePhones = [
+  { label: 'Samsung Galaxy S24 Ultra', value: 'samsung-s24-ultra' },
+  { label: 'iPhone 15 Pro Max', value: 'iphone-15-pro-max' },
+  { label: 'Google Pixel 8 Pro', value: 'pixel-8-pro' },
+  { label: 'OnePlus 12', value: 'oneplus-12' },
+];
+
+const phoneDatabase = {
+  'samsung-s24-ultra': {
+    id: 'samsung-s24-ultra',
+    name: 'Galaxy S24 Ultra',
+    brand: 'Samsung',
+    price: 1199,
+    image: '/api/placeholder/200/150',
+    display: 6.8,
+    displayType: 'Dynamic AMOLED 2X',
+    processor: 'Snapdragon 8 Gen 3',
+  },
+  'iphone-15-pro-max': {
+    id: 'iphone-15-pro-max',
+    name: 'iPhone 15 Pro Max',
+    brand: 'Apple',
+    price: 1199,
+    image: '/api/placeholder/200/150',
+    display: 6.7,
+    displayType: 'Super Retina XDR OLED',
+    processor: 'A17 Pro',
+  },
+};
 </script>

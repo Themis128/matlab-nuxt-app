@@ -1,10 +1,11 @@
 # 🚀 Quick Fix: Render Shows Python API Instead of Web Interface
 
 ## Problem
+
 When you access your Render deployment URL (e.g., `https://matlab-nuxt-app-2.onrender.com`), you see:
 
 ```json
-{"message": "Mobile Phone Prediction API", "status": "running"}
+{ "message": "Mobile Phone Prediction API", "status": "running" }
 ```
 
 **Instead of** the Nuxt web interface with forms and visualizations.
@@ -45,6 +46,7 @@ Or **Delete and Redeploy Correctly**:
 ## How to Deploy Correctly (Blueprint Method)
 
 ### Step 1: Go to Render Dashboard
+
 Visit: https://dashboard.render.com
 
 ### Step 2: Create Blueprint Deployment
@@ -57,6 +59,7 @@ Visit: https://dashboard.render.com
 ### Step 3: Wait for Deployment (5-10 minutes)
 
 Two services will be created:
+
 - `matlab-python-api` - Backend
 - `matlab-nuxt-frontend` - Frontend ⭐
 
@@ -99,16 +102,20 @@ If you want just ONE service that runs both:
 ## Verification
 
 ### ✅ Correct (Frontend Working)
+
 When you visit your URL, you should see:
+
 - Navigation menu
 - "Price Prediction", "Explore Dataset" pages
 - Forms to input phone specs
 - Charts and visualizations
 
 ### ❌ Wrong (API Instead of Frontend)
+
 If you see JSON like this, you're on the API service:
+
 ```json
-{"message": "Mobile Phone Prediction API", "status": "running"}
+{ "message": "Mobile Phone Prediction API", "status": "running" }
 ```
 
 **Fix**: Use the frontend service URL instead (see above)
@@ -120,6 +127,7 @@ If you see JSON like this, you're on the API service:
 Read the comprehensive guide: [RENDER_DEPLOYMENT_GUIDE.md](./RENDER_DEPLOYMENT_GUIDE.md)
 
 Or check:
+
 - Render Dashboard logs for errors
 - Ensure service names match render.yaml
 - Verify you're accessing the frontend URL

@@ -1,20 +1,20 @@
 // Background service worker for the extension (MV3)
 // Listens for installation and simple messaging
 
-self.addEventListener('install', event => {
-  console.log('Matlab Nuxt App extension installed')
-  self.skipWaiting()
-})
+self.addEventListener('install', (event) => {
+  console.log('Matlab Nuxt App extension installed');
+  self.skipWaiting();
+});
 
-self.addEventListener('activate', event => {
-  console.log('Matlab Nuxt App extension activated')
-})
+self.addEventListener('activate', (event) => {
+  console.log('Matlab Nuxt App extension activated');
+});
 
 // Simple message listener
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message && message.type === 'PING') {
-    sendResponse({ type: 'PONG', msg: 'Hello from background' })
+    sendResponse({ type: 'PONG', msg: 'Hello from background' });
   }
   // Return true if will use sendResponse asynchronously
-  return false
-})
+  return false;
+});

@@ -21,76 +21,76 @@
 </template>
 
 <script setup lang="ts">
-  // Completely isolate theme state from store during SSR
-  const currentTheme = ref('system')
-  const isDarkMode = ref(false)
+// Completely isolate theme state from store during SSR
+const currentTheme = ref('system');
+const isDarkMode = ref(false);
 
-  // Helper functions
-  const applyThemeToDocument = (theme: string) => {
-    if (typeof window === 'undefined') return // Skip on server
+// Helper functions
+const applyThemeToDocument = (theme: string) => {
+  if (typeof window === 'undefined') return; // Skip on server
 
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-
-    // Optional: Update custom CSS variables
-    document.documentElement.style.setProperty(
-      '--theme-color',
-      theme === 'dark' ? '#8b5cf6' : '#fbbf24'
-    )
+  if (theme === 'dark') {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
   }
 
-  // Initialize theme on client-side only
-  const initializeTheme = async () => {
-    if (typeof window === 'undefined') return
+  // Optional: Update custom CSS variables
+  document.documentElement.style.setProperty(
+    '--theme-color',
+    theme === 'dark' ? '#8b5cf6' : '#fbbf24'
+  );
+};
 
-    // Import store only on client side to avoid SSR issues
-    const { useUserPreferencesStore } = await import('~/stores/userPreferencesStore')
-    const userPreferencesStore = useUserPreferencesStore()
+// Initialize theme on client-side only
+const initializeTheme = async () => {
+  if (typeof window === 'undefined') return;
 
-    const storeTheme = userPreferencesStore.theme
-    const resolvedTheme = userPreferencesStore.getResolvedTheme
+  // Import store only on client side to avoid SSR issues
+  const { useUserPreferencesStore } = await import('~/stores/userPreferencesStore');
+  const userPreferencesStore = useUserPreferencesStore();
 
-    currentTheme.value = storeTheme
-    isDarkMode.value = resolvedTheme === 'dark'
-    applyThemeToDocument(resolvedTheme)
+  const storeTheme = userPreferencesStore.theme;
+  const resolvedTheme = userPreferencesStore.getResolvedTheme;
 
-    // Watch for theme changes
-    watchEffect(() => {
-      const newStoreTheme = userPreferencesStore.theme
-      const newResolvedTheme = userPreferencesStore.getResolvedTheme
+  currentTheme.value = storeTheme;
+  isDarkMode.value = resolvedTheme === 'dark';
+  applyThemeToDocument(resolvedTheme);
 
-      currentTheme.value = newStoreTheme
-      isDarkMode.value = newResolvedTheme === 'dark'
-      applyThemeToDocument(newResolvedTheme)
-    })
+  // Watch for theme changes
+  watchEffect(() => {
+    const newStoreTheme = userPreferencesStore.theme;
+    const newResolvedTheme = userPreferencesStore.getResolvedTheme;
+
+    currentTheme.value = newStoreTheme;
+    isDarkMode.value = newResolvedTheme === 'dark';
+    applyThemeToDocument(newResolvedTheme);
+  });
+};
+
+// Methods
+const toggleTheme = async (_enabled: boolean) => {
+  // Import store dynamically to avoid SSR issues
+  const { useUserPreferencesStore } = await import('~/stores/userPreferencesStore');
+  const userPreferencesStore = useUserPreferencesStore();
+
+  // Cycle through: light -> dark -> system -> light...
+  const themes = ['light', 'dark', 'system'] as const;
+  const currentThemeValue = currentTheme.value || 'system';
+
+  // Ensure currentThemeValue is one of the valid themes
+  let currentIndex = themes.indexOf(currentThemeValue as any);
+  if (currentIndex === -1) {
+    currentIndex = 2; // Default to system if not found
   }
 
-  // Methods
-  const toggleTheme = async (_enabled: boolean) => {
-    // Import store dynamically to avoid SSR issues
-    const { useUserPreferencesStore } = await import('~/stores/userPreferencesStore')
-    const userPreferencesStore = useUserPreferencesStore()
+  const nextIndex = (currentIndex + 1) % themes.length;
 
-    // Cycle through: light -> dark -> system -> light...
-    const themes = ['light', 'dark', 'system'] as const
-    const currentThemeValue = currentTheme.value || 'system'
+  userPreferencesStore.setTheme(themes[nextIndex]!);
+};
 
-    // Ensure currentThemeValue is one of the valid themes
-    let currentIndex = themes.indexOf(currentThemeValue as any)
-    if (currentIndex === -1) {
-      currentIndex = 2 // Default to system if not found
-    }
-
-    const nextIndex = (currentIndex + 1) % themes.length
-
-    userPreferencesStore.setTheme(themes[nextIndex]!)
-  }
-
-  // Initialize on client-side only
-  onMounted(() => {
-    initializeTheme()
-  })
+// Initialize on client-side only
+onMounted(() => {
+  initializeTheme();
+});
 </script>

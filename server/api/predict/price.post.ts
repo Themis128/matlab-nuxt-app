@@ -1,41 +1,41 @@
-import { callPythonAPI } from '../../utils/python-api'
-import { readBody, createError, defineEventHandler, setHeader, getMethod } from 'h3'
-import type { H3Event } from 'h3'
+import { callPythonAPI } from '../../utils/python-api';
+import { readBody, createError, defineEventHandler, setHeader, getMethod } from 'h3';
+import type { H3Event } from 'h3';
 
 export default defineEventHandler(async (event: H3Event) => {
   // Set CORS headers
-  setHeader(event, 'Access-Control-Allow-Origin', '*')
-  setHeader(event, 'Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-  setHeader(event, 'Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  setHeader(event, 'Access-Control-Allow-Origin', '*');
+  setHeader(event, 'Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  setHeader(event, 'Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
   // Handle preflight requests
   if (getMethod(event) === 'OPTIONS') {
-    return { ok: true }
+    return { ok: true };
   }
 
   try {
-    const body = await readBody(event)
+    const body = await readBody(event);
 
     // Validate required fields
-    const requiredFields = ['ram', 'battery', 'screen', 'weight', 'year', 'company']
-    const missingFields = requiredFields.filter(field => !body[field] && body[field] !== 0)
+    const requiredFields = ['ram', 'battery', 'screen', 'weight', 'year', 'company'];
+    const missingFields = requiredFields.filter((field) => !body[field] && body[field] !== 0);
 
     if (missingFields.length > 0) {
       throw createError({
         statusCode: 400,
         statusMessage: `Missing required fields: ${missingFields.join(', ')}`,
-      })
+      });
     }
 
-    const result = await callPythonAPI<{ price: number }>('/api/predict/price', body, event)
+    const result = await callPythonAPI<{ price: number }>('/api/predict/price', body, event);
 
     if (!result) {
-      throw new Error('Python API is not available')
+      throw new Error('Python API is not available');
     }
 
-    return result
+    return result;
   } catch (error: unknown) {
-    console.error('Error in price prediction:', error)
-    throw error
+    console.error('Error in price prediction:', error);
+    throw error;
   }
-})
+});

@@ -29,7 +29,7 @@ webServer: [
     timeout: 120 * 1000,
     reuseExistingServer: !isCI,
   },
-]
+];
 ```
 
 **After:**
@@ -46,7 +46,7 @@ webServer: [
     timeout: 180 * 1000, // ✅ Increased to 3 minutes
     reuseExistingServer: true, // ✅ Always allow manual pre-starting
   },
-]
+];
 ```
 
 **Benefits:**

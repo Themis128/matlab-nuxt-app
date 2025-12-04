@@ -176,6 +176,7 @@ Expected output:
 Comprehensive guides are available:
 
 1. **[docs/deployment/README.md](README.md)** (300+ lines)
+
    - 3 deployment methods (Docker, traditional, cloud)
    - SSL/TLS setup with Let's Encrypt
    - Monitoring & maintenance
@@ -184,6 +185,7 @@ Comprehensive guides are available:
    - Performance optimization
 
 2. **[docs/deployment/QUICK_REFERENCE.md](QUICK_REFERENCE.md)**
+
    - Docker Compose commands
    - Systemd service commands
    - Health check commands

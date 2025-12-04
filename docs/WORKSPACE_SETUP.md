@@ -16,7 +16,7 @@ This document explains how we configure Visual Studio Code for this repository t
 - We recommend the "JavaScript & TypeScript Nightly" extension to get early access to TypeScript features and the latest language server improvements. The extension ID is `ms-vscode.vscode-typescript-next` and is included in the tracked `.vscode/extensions.json` recommendations.
 - If you install this extension, you may want to pick the workspace TypeScript version (the project uses the `typescript` package in `node_modules`). When prompted by VS Code, choose **Use Workspace Version** so the TypeScript server matches the version installed in the repo.
 - If you prefer to control this behavior manually, set the workspace setting `typescript.tsdk` to `node_modules/typescript/lib` and `typescript.enablePromptUseWorkspaceTsdk` to `true` (this repo's `settings-controls` templates include these settings already.)
- - If you want the nightly TypeScript language server, open the Command Palette (Ctrl+Shift+P / Cmd+Shift+P) and run **TypeScript: Select TypeScript Version** → **Use Workspace Version**. If the extension is installed and you prefer to always use the nightly build, select the `Use VS Code's Nightly` option from that same command.
+- If you want the nightly TypeScript language server, open the Command Palette (Ctrl+Shift+P / Cmd+Shift+P) and run **TypeScript: Select TypeScript Version** → **Use Workspace Version**. If the extension is installed and you prefer to always use the nightly build, select the `Use VS Code's Nightly` option from that same command.
 
 ### Add to devcontainer (optional)
 
@@ -24,11 +24,9 @@ If you use a VS Code **devcontainer** for development and want the Nightly exten
 
 ```jsonc
 {
-	"name": "matlab-nuxt-app devcontainer",
-	"image": "mcr.microsoft.com/devcontainers/dotnet:latest",
-	"extensions": [
-		"ms-vscode.vscode-typescript-next"
-	]
+  "name": "matlab-nuxt-app devcontainer",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:latest",
+  "extensions": ["ms-vscode.vscode-typescript-next"],
 }
 ```
 
@@ -54,20 +52,19 @@ If you're using the VS Code Devcontainer for consistent dev environments:
 - Open the repo in VS Code and choose: `Remote-Containers: Reopen in Container` or use GitHub Codespaces.
 - The container's `postCreateCommand` runs `npm ci` and `pip install` so dependencies are preinstalled.
 - To run health checks in the container:
-	```bash
-	bash ./.devcontainer/health-check.sh
-	```
+  ```bash
+  bash ./.devcontainer/health-check.sh
+  ```
 - To start both the frontend and the API inside the container:
-	```bash
-	./scripts/shell/start.sh
-	# or
-	make dev
-	```
+  ```bash
+  ./scripts/shell/start.sh
+  # or
+  make dev
+  ```
 - Or use the VS Code task `Dev: Fullstack (Shell)` (it calls `./scripts/shell/start.sh`).
 
 - Auto-start (tmux-based): the `devcontainer` includes a `postStartCommand` that runs the health-check and then starts the frontend and API in a `tmux` session (separate panes). This is enabled by default by setting `DEVCONTAINER_AUTO_START_SERVERS=true` in the container (`containerEnv` in `devcontainer.json`).
 - To disable auto-start, set `DEVCONTAINER_AUTO_START_SERVERS=false` in your container environment or change the `devcontainer.json` setting before creating the container.
-
 
 3. Reload VS Code: `Developer: Reload Window`.
 
@@ -118,23 +115,27 @@ Get-Content .\.vscode\settings.json
 If you try the Microsoft "JavaScript & TypeScript Nightly" extension (`ms-vscode.vscode-typescript-next`) and run into issues, here are quick fixes you can try:
 
 - Nightly server gives incorrect diagnostics or crashes:
-	1. Open Command Palette (Ctrl+Shift+P / Cmd+Shift+P).
-	2. Run `TypeScript: Select TypeScript Version`.
-	3. Choose `Use VS Code's Version` to revert to the built-in stable language service, or `Use Workspace Version` to use the repository `node_modules/typescript` version.
-	4. Reload Window (Developer: Reload Window).
+
+  1.  Open Command Palette (Ctrl+Shift+P / Cmd+Shift+P).
+  2.  Run `TypeScript: Select TypeScript Version`.
+  3.  Choose `Use VS Code's Version` to revert to the built-in stable language service, or `Use Workspace Version` to use the repository `node_modules/typescript` version.
+  4.  Reload Window (Developer: Reload Window).
 
 - Want to disable Nightly entirely (workspace-level): Open the Extensions view, search for `JavaScript & TypeScript Nightly`, and click **Disable (Workspace)** or **Disable (Always)** (uninstall if you prefer).
 
 - Using Volar (Vue) and experiencing duplicate diagnostics or conflicting completions:
-	- If you use Volar with TypeScript, prefer `Volar: Use Take Over Mode` (search from Command Palette) or disable the built-in TypeScript/JavaScript extension for the workspace in rare cases.
-	- See `Volar` docs if you need to set `volar.takeOverMode`.
+
+  - If you use Volar with TypeScript, prefer `Volar: Use Take Over Mode` (search from Command Palette) or disable the built-in TypeScript/JavaScript extension for the workspace in rare cases.
+  - See `Volar` docs if you need to set `volar.takeOverMode`.
 
 - Type checking errors after switching TypeScript versions:
-	- Ensure the project `node_modules` are installed (`npm install`).
-	- If you see TypeScript runtime mismatch errors (e.g., new types missing or different behavior), switch to `Use Workspace Version` and run `npm ci`.
+
+  - Ensure the project `node_modules` are installed (`npm install`).
+  - If you see TypeScript runtime mismatch errors (e.g., new types missing or different behavior), switch to `Use Workspace Version` and run `npm ci`.
 
 - Nightly vs Workspace mismatch:
-	- If the Nightly extension reports features your `typescript` version doesn't yet support, use `TypeScript: Select TypeScript Version` and pick `Use VS Code's Version` (the built-in server) or `Use Workspace Version` if you upgraded `typescript` locally.
+
+  - If the Nightly extension reports features your `typescript` version doesn't yet support, use `TypeScript: Select TypeScript Version` and pick `Use VS Code's Version` (the built-in server) or `Use Workspace Version` if you upgraded `typescript` locally.
 
 - If performance regressions occur while using the Nightly server, revert to the standard server temporarily, and consider toggling `.vscode/settings-controls` to `hide` (which disables indexing of large folders), then reload the window.
 

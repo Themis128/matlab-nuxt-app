@@ -191,11 +191,11 @@ const {
   announceLoadingState, // Announce loading states
   scrollToElement, // Accessible smooth scroll
   isTouchDevice, // Detect touch support
-} = useAccessibility()
+} = useAccessibility();
 
 // Example usage
-announceToScreenReader('Search results loaded', 'polite')
-const duration = getAnimationDuration(300) // Returns 0 if user prefers reduced motion
+announceToScreenReader('Search results loaded', 'polite');
+const duration = getAnimationDuration(300); // Returns 0 if user prefers reduced motion
 ```
 
 ### Global CSS Classes
@@ -399,14 +399,14 @@ min-w-[44px]  /* Android minimum touch target */
 
 ```vue
 <script setup>
-const { announceToScreenReader, prefersReducedMotion } = useAccessibility()
+const { announceToScreenReader, prefersReducedMotion } = useAccessibility();
 
 const handleSubmit = async () => {
-  announceToScreenReader('Form submitted successfully', 'polite')
+  announceToScreenReader('Form submitted successfully', 'polite');
 
-  const duration = prefersReducedMotion() ? 0 : 300
+  const duration = prefersReducedMotion() ? 0 : 300;
   // Animate with appropriate duration
-}
+};
 </script>
 ```
 

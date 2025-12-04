@@ -333,111 +333,111 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue'
-  // Page meta (fallback)
-  onMounted(() => {
-    document.title = 'Data Mining & Exploration - MATLAB Deep Learning Platform'
-    const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
-    const content =
-      'Discover hidden patterns and insights in mobile datasets with advanced data mining techniques'
-    if (existing) existing.content = content
-    else {
-      const m = document.createElement('meta')
-      m.name = 'description'
-      m.content = content
-      document.head.appendChild(m)
-    }
-  })
+import { ref, onMounted } from 'vue';
+// Page meta (fallback)
+onMounted(() => {
+  document.title = 'Data Mining & Exploration - MATLAB Deep Learning Platform';
+  const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+  const content =
+    'Discover hidden patterns and insights in mobile datasets with advanced data mining techniques';
+  if (existing) existing.content = content;
+  else {
+    const m = document.createElement('meta');
+    m.name = 'description';
+    m.content = content;
+    document.head.appendChild(m);
+  }
+});
 
-  // Selected dataset
-  const selectedDataset = ref('mobile-devices')
+// Selected dataset
+const selectedDataset = ref('mobile-devices');
 
-  // Dataset options
-  const datasetOptions = [
-    { label: 'Mobile Devices Dataset', value: 'mobile-devices' },
-    { label: 'User Behavior Data', value: 'user-behavior' },
-    { label: 'App Usage Statistics', value: 'app-usage' },
-    { label: 'Market Research Data', value: 'market-research' },
-  ]
+// Dataset options
+const datasetOptions = [
+  { label: 'Mobile Devices Dataset', value: 'mobile-devices' },
+  { label: 'User Behavior Data', value: 'user-behavior' },
+  { label: 'App Usage Statistics', value: 'app-usage' },
+  { label: 'Market Research Data', value: 'market-research' },
+];
 
-  // Data mining tools
-  const dataMiningTools = ref([
-    {
-      id: 'association-rule',
-      name: 'Association Rules',
-      description: 'Discover relationships between different attributes',
-      color: '#8B5CF6',
-      icon: 'i-heroicons-link',
-      status: 'Active',
-      lastRun: '5 min ago',
-    },
-    {
-      id: 'clustering',
-      name: 'Clustering Analysis',
-      description: 'Group similar data points together',
-      color: '#3B82F6',
-      icon: 'i-heroicons-squares-2x2',
-      status: 'Active',
-      lastRun: '12 min ago',
-    },
-    {
-      id: 'outlier-detection',
-      name: 'Outlier Detection',
-      description: 'Identify unusual patterns and anomalies',
-      color: '#EF4444',
-      icon: 'i-heroicons-exclamation-triangle',
-      status: 'Active',
-      lastRun: '12 min ago',
-    },
-  ])
+// Data mining tools
+const dataMiningTools = ref([
+  {
+    id: 'association-rule',
+    name: 'Association Rules',
+    description: 'Discover relationships between different attributes',
+    color: '#8B5CF6',
+    icon: 'i-heroicons-link',
+    status: 'Active',
+    lastRun: '5 min ago',
+  },
+  {
+    id: 'clustering',
+    name: 'Clustering Analysis',
+    description: 'Group similar data points together',
+    color: '#3B82F6',
+    icon: 'i-heroicons-squares-2x2',
+    status: 'Active',
+    lastRun: '12 min ago',
+  },
+  {
+    id: 'outlier-detection',
+    name: 'Outlier Detection',
+    description: 'Identify unusual patterns and anomalies',
+    color: '#EF4444',
+    icon: 'i-heroicons-exclamation-triangle',
+    status: 'Active',
+    lastRun: '12 min ago',
+  },
+]);
 
-  // Frequent patterns (placeholder data)
-  const frequentPatterns = ref([
-    {
-      id: 'p1',
-      name: 'High RAM & Battery',
-      frequency: 72,
-      support: 320,
-      color: '#3B82F6',
-      icon: 'i-heroicons-sparkles',
-    },
-    {
-      id: 'p2',
-      name: 'Budget Flagship',
-      frequency: 45,
-      support: 210,
-      color: '#10B981',
-      icon: 'i-heroicons-flag',
-    },
-  ])
+// Frequent patterns (placeholder data)
+const frequentPatterns = ref([
+  {
+    id: 'p1',
+    name: 'High RAM & Battery',
+    frequency: 72,
+    support: 320,
+    color: '#3B82F6',
+    icon: 'i-heroicons-sparkles',
+  },
+  {
+    id: 'p2',
+    name: 'Budget Flagship',
+    frequency: 45,
+    support: 210,
+    color: '#10B981',
+    icon: 'i-heroicons-flag',
+  },
+]);
 
-  // Association rules (placeholder data)
-  const associationRules = ref([
-    { id: 'r1', antecedent: 'high_ram', consequent: 'high_price', confidence: 92, lift: 1.4 },
-    { id: 'r2', antecedent: 'large_battery', consequent: 'long_life', confidence: 88, lift: 1.2 },
-  ])
+// Association rules (placeholder data)
+const associationRules = ref([
+  { id: 'r1', antecedent: 'high_ram', consequent: 'high_price', confidence: 92, lift: 1.4 },
+  { id: 'r2', antecedent: 'large_battery', consequent: 'long_life', confidence: 88, lift: 1.2 },
+]);
 
-  // Clusters (placeholder data)
-  const clusters = ref([
-    {
-      id: 'c1',
-      name: 'Flagship',
-      description: 'Premium devices',
-      color: '#8B5CF6',
-      icon: 'i-heroicons-star',
-      size: 1200,
-      density: 0.82,
-      silhouette: 0.61,
-    },
-    {
-      id: 'c2',
-      name: 'Budget',
-      description: 'Value devices',
-      color: '#F59E0B',
-      icon: 'i-heroicons-currency-dollar',
-      size: 5400,
-      density: 0.64,
-      silhouette: 0.48,
-    },
-  ])
+// Clusters (placeholder data)
+const clusters = ref([
+  {
+    id: 'c1',
+    name: 'Flagship',
+    description: 'Premium devices',
+    color: '#8B5CF6',
+    icon: 'i-heroicons-star',
+    size: 1200,
+    density: 0.82,
+    silhouette: 0.61,
+  },
+  {
+    id: 'c2',
+    name: 'Budget',
+    description: 'Value devices',
+    color: '#F59E0B',
+    icon: 'i-heroicons-currency-dollar',
+    size: 5400,
+    density: 0.64,
+    silhouette: 0.48,
+  },
+]);
 </script>

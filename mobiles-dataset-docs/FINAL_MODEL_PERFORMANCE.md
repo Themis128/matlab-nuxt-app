@@ -79,13 +79,16 @@
 ### For Production Use:
 
 1. **Price Prediction:**
+
    - **Primary:** Lightweight model (R² = 0.8138, fastest)
    - **Alternative:** Wide model (MAPE = 25.82%, best error rate)
 
 2. **Brand Classification:**
+
    - **Primary:** Standard model (55.65% accuracy, best available)
 
 3. **RAM Prediction:**
+
    - **Primary:** Tuned model (R² = 0.6629, automatically used)
 
 4. **Battery Prediction:**

@@ -162,12 +162,14 @@ mobiles-dataset-docs/
 ## Priority Order
 
 1. **High Priority:**
+
    - ✅ Extract insights (understand data)
    - ✅ Build price prediction model
    - ✅ Train and evaluate
    - ✅ Create visualizations
 
 2. **Medium Priority:**
+
    - ✅ Build brand classification model
    - ✅ Save and deploy models
    - ✅ Create prediction functions

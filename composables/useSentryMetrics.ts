@@ -6,17 +6,17 @@
  */
 
 export interface MetricAttributes {
-  [key: string]: string | number | boolean | undefined
+  [key: string]: string | number | boolean | undefined;
 }
 
 export interface MetricOptions {
-  attributes?: MetricAttributes
-  unit?: string
+  attributes?: MetricAttributes;
+  unit?: string;
 }
 
 export interface MetricFilterOptions {
-  enableMetrics?: boolean
-  beforeSendMetric?: (metric: any) => any | null
+  enableMetrics?: boolean;
+  beforeSendMetric?: (metric: any) => any | null;
 }
 
 /**
@@ -27,71 +27,71 @@ export const useSentryMetrics = () => {
   const isSentryAvailable = () => {
     if (typeof window === 'undefined') {
       // Server-side check
-      return typeof globalThis !== 'undefined' && 'Sentry' in globalThis
+      return typeof globalThis !== 'undefined' && 'Sentry' in globalThis;
     }
     // Client-side check
-    return typeof window !== 'undefined' && 'Sentry' in window
-  }
+    return typeof window !== 'undefined' && 'Sentry' in window;
+  };
 
   /**
    * Track an incrementing value (counter)
    * Use for counting events like button clicks, function calls, etc.
    */
   const count = (name: string, value: number = 1, options?: MetricOptions) => {
-    if (!isSentryAvailable()) return
+    if (!isSentryAvailable()) return;
 
     try {
-      const Sentry = (globalThis as any).Sentry || (window as any).Sentry
-      Sentry.metrics.count(name, value, options)
+      const Sentry = (globalThis as any).Sentry || (window as any).Sentry;
+      Sentry.metrics.count(name, value, options);
     } catch (error) {
-      console.warn('[Sentry Metrics] Failed to send counter metric:', error)
+      console.warn('[Sentry Metrics] Failed to send counter metric:', error);
     }
-  }
+  };
 
   /**
    * Track a value that can go up and down (gauge)
    * Use for values like memory usage, queue depth, active connections, etc.
    */
   const gauge = (name: string, value: number, options?: MetricOptions) => {
-    if (!isSentryAvailable()) return
+    if (!isSentryAvailable()) return;
 
     try {
-      const Sentry = (globalThis as any).Sentry || (window as any).Sentry
-      Sentry.metrics.gauge(name, value, options)
+      const Sentry = (globalThis as any).Sentry || (window as any).Sentry;
+      Sentry.metrics.gauge(name, value, options);
     } catch (error) {
-      console.warn('[Sentry Metrics] Failed to send gauge metric:', error)
+      console.warn('[Sentry Metrics] Failed to send gauge metric:', error);
     }
-  }
+  };
 
   /**
    * Track the distribution of a value (distribution)
    * Use for timing data, response sizes, etc.
    */
   const distribution = (name: string, value: number, options?: MetricOptions) => {
-    if (!isSentryAvailable()) return
+    if (!isSentryAvailable()) return;
 
     try {
-      const Sentry = (globalThis as any).Sentry || (window as any).Sentry
-      Sentry.metrics.distribution(name, value, options)
+      const Sentry = (globalThis as any).Sentry || (window as any).Sentry;
+      Sentry.metrics.distribution(name, value, options);
     } catch (error) {
-      console.warn('[Sentry Metrics] Failed to send distribution metric:', error)
+      console.warn('[Sentry Metrics] Failed to send distribution metric:', error);
     }
-  }
+  };
 
   /**
    * Track unique occurrences (set)
    * Use for counting unique users, IP addresses, etc.
    */
   const set = (name: string, value: string | number, options?: MetricOptions) => {
-    if (!isSentryAvailable()) return
+    if (!isSentryAvailable()) return;
 
     try {
-      const Sentry = (globalThis as any).Sentry || (window as any).Sentry
-      Sentry.metrics.set(name, value, options)
+      const Sentry = (globalThis as any).Sentry || (window as any).Sentry;
+      Sentry.metrics.set(name, value, options);
     } catch (error) {
-      console.warn('[Sentry Metrics] Failed to send set metric:', error)
+      console.warn('[Sentry Metrics] Failed to send set metric:', error);
     }
-  }
+  };
 
   /**
    * Timing utility for measuring operation duration
@@ -101,17 +101,17 @@ export const useSentryMetrics = () => {
     operation: () => Promise<T>,
     options?: MetricOptions
   ): Promise<T> => {
-    const startTime = performance.now()
+    const startTime = performance.now();
     try {
-      const result = await operation()
-      const duration = performance.now() - startTime
+      const result = await operation();
+      const duration = performance.now() - startTime;
       distribution(`${name}_duration`, duration, {
         ...options,
         unit: 'millisecond',
-      })
-      return result
+      });
+      return result;
     } catch (error) {
-      const duration = performance.now() - startTime
+      const duration = performance.now() - startTime;
       distribution(`${name}_error_duration`, duration, {
         ...options,
         unit: 'millisecond',
@@ -120,39 +120,39 @@ export const useSentryMetrics = () => {
           error: true,
           error_type: error instanceof Error ? error.name : 'Unknown',
         },
-      })
-      throw error
+      });
+      throw error;
     }
-  }
+  };
 
   /**
    * Increment a counter by name
    * Convenience method for simple counting
    */
   const increment = (name: string, options?: MetricOptions) => {
-    count(name, 1, options)
-  }
+    count(name, 1, options);
+  };
 
   /**
    * Decrement a counter by name
    * Convenience method for simple counting
    */
   const decrement = (name: string, options?: MetricOptions) => {
-    count(name, -1, options)
-  }
+    count(name, -1, options);
+  };
 
   /**
    * Track page views
    */
   const trackPageView = (pageName?: string, attributes?: MetricAttributes) => {
-    const page = pageName || (typeof window !== 'undefined' ? window.location.pathname : 'unknown')
+    const page = pageName || (typeof window !== 'undefined' ? window.location.pathname : 'unknown');
     count('page_view', 1, {
       attributes: {
         page,
         ...attributes,
       },
-    })
-  }
+    });
+  };
 
   /**
    * Track user interactions
@@ -168,8 +168,8 @@ export const useSentryMetrics = () => {
         element: element || 'unknown',
         ...attributes,
       },
-    })
-  }
+    });
+  };
 
   /**
    * Track API calls
@@ -188,7 +188,7 @@ export const useSentryMetrics = () => {
         status_code: statusCode?.toString(),
         ...attributes,
       },
-    })
+    });
 
     if (duration !== undefined) {
       distribution('api_response_time', duration, {
@@ -198,9 +198,9 @@ export const useSentryMetrics = () => {
           method: method.toUpperCase(),
           ...attributes,
         },
-      })
+      });
     }
-  }
+  };
 
   /**
    * Track errors with metrics
@@ -211,8 +211,8 @@ export const useSentryMetrics = () => {
         type: errorType,
         ...attributes,
       },
-    })
-  }
+    });
+  };
 
   /**
    * Track performance metrics
@@ -226,8 +226,8 @@ export const useSentryMetrics = () => {
     gauge(`performance_${metricName}`, value, {
       unit: unit || 'none',
       attributes,
-    })
-  }
+    });
+  };
 
   return {
     // Core metrics
@@ -250,5 +250,5 @@ export const useSentryMetrics = () => {
 
     // Status
     isSentryAvailable,
-  }
-}
+  };
+};

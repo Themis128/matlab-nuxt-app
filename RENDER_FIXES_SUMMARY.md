@@ -3,6 +3,7 @@
 ## Issue 1: Python API Series Ambiguity Errors
 
 ### BEFORE (From Render Logs):
+
 ```
 Testing Price Prediction...
 2025-12-02 09:33:43,352 - predictions_sklearn - INFO - Loaded price_predictor model
@@ -30,6 +31,7 @@ INFO:     127.0.0.1:57408 - "POST /api/predict/brand HTTP/1.1" 200 OK
 ```
 
 ### AFTER (Current):
+
 ```
 Testing Price Prediction...
 2025-12-02 09:49:15,871 - predictions_sklearn - INFO - Loaded price_predictor model
@@ -61,6 +63,7 @@ INFO:     127.0.0.1:50726 - "POST /api/predict/brand HTTP/1.1" 200 OK
 ## Issue 2: Nuxt.js Startup Failure
 
 ### BEFORE (From Render Logs):
+
 ```
 ⚡ Starting Nuxt.js frontend...
 
@@ -73,6 +76,7 @@ sh: 1: nuxt: not found
 ```
 
 ### AFTER (Current):
+
 ```
 📦 Installing Node.js dependencies...
 (... npm install output ...)
@@ -83,8 +87,8 @@ sh: 1: nuxt: not found
 > nuxt dev --port 3000
 
 [log] [nuxi] Nuxt 4.2.1 (with Nitro 2.12.9, Vite 7.2.6 and Vue 3.5.25)
-[log] 
- 
+[log]
+
               █▀▀▀▀▀▀▀██▀██▀▀█▀▀█▀▀▀▀▀▀▀█
               █ █▀▀▀█ █ ▀▀  ▄█▄▀█ █▀▀▀█ █
               █ █   █ █▀▄▄▄█▀█▀▄█ █   █ █
@@ -99,7 +103,7 @@ sh: 1: nuxt: not found
               █ █   █ █▄▄█  ██▄█▄█▀ ▀ █▀█
               █ ▀▀▀▀▀ █     ▄▀█ ▄▄▀█▄█▀▀█
               ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
- 
+
   ➜ Local:    http://0.0.0.0:3000/
   ➜ Network:  http://10.1.0.129:3000/ [QR code]
 
@@ -116,21 +120,26 @@ sh: 1: nuxt: not found
 ## Root Causes and Fixes
 
 ### Issue 1: Python API Errors
+
 **Root Cause**: Using `pd.read_json(f)` to load JSON metadata files, which returns a pandas DataFrame/Series instead of a Python dictionary. When calling `.get()` on the result, it caused "Series is ambiguous" errors.
 
 **Fix**: Changed to `json.load(f)` which properly loads JSON as a Python dictionary.
 
 **Files Changed**:
+
 - `python_api/predictions_sklearn.py` (5 lines: 1 import + 4 function calls)
 
 ### Issue 2: Nuxt.js Startup
+
 **Root Cause**: The `start.sh` script was running `npm run dev` without first ensuring Node.js dependencies were installed (node_modules directory).
 
 **Fix**: Added dependency installation checks:
+
 - If `node_modules` doesn't exist, run `PUPPETEER_SKIP_DOWNLOAD=true npm install`
 - If `fastapi` module isn't available, run `pip install -r python_api/requirements.txt`
 
 **Files Changed**:
+
 - `start.sh` (added 10 lines for dependency checks)
 
 ---
@@ -138,9 +147,11 @@ sh: 1: nuxt: not found
 ## Deployment Recommendations
 
 ### ❌ DO NOT use `start.sh` for Render deployment
+
 The `start.sh` script is designed for local development and Replit only.
 
 ### ✅ DO use `render.yaml` or manual dashboard configuration
+
 See `RENDER_SETUP.md` for detailed instructions on proper Render deployment.
 
 ---
@@ -148,6 +159,7 @@ See `RENDER_SETUP.md` for detailed instructions on proper Render deployment.
 ## Testing Summary
 
 All tests pass successfully:
+
 ```
 ============================================================
 Test Results:
@@ -163,6 +175,7 @@ Test Results:
 ```
 
 Both services start and run correctly:
+
 ```
 🎉 Both services are running!
 🌐 Frontend: http://localhost:3000

@@ -84,14 +84,14 @@ Update your Sentry configuration to properly initialize MCP monitoring:
 
 ```javascript
 // Import with `import * as Sentry from "@sentry/nuxt"` if you are using ESM
-const Sentry = require('@sentry/nuxt')
+const Sentry = require('@sentry/nuxt');
 
 Sentry.init({
   dsn: 'https://8a69bd6fe87e03fbdbc5a69103bb14d3@o4509865549561856.ingest.de.sentry.io/4509865552445520',
   // Tracing must be enabled for MCP monitoring to work
   tracesSampleRate: 1.0,
   sendDefaultPii: true,
-})
+});
 ```
 
 ### 3. Create MCP Server with Sentry Monitoring
@@ -99,15 +99,15 @@ Sentry.init({
 Create a new file `mcp-server.js` for your MCP server setup:
 
 ```javascript
-const { McpServer } = require('@modelcontextprotocol/sdk')
-const Sentry = require('@sentry/nuxt')
+const { McpServer } = require('@modelcontextprotocol/sdk');
+const Sentry = require('@sentry/nuxt');
 
 // Initialize Sentry (if not already done in your main app)
 Sentry.init({
   dsn: 'https://8a69bd6fe87e03fbdbc5a69103bb14d3@o4509865549561856.ingest.de.sentry.io/4509865552445520',
   tracesSampleRate: 1.0,
   sendDefaultPii: true,
-})
+});
 
 // Wrap your MCP server with Sentry monitoring
 const server = Sentry.wrapMcpServerWithSentry(
@@ -115,7 +115,7 @@ const server = Sentry.wrapMcpServerWithSentry(
     name: 'matlab-mcp-server',
     version: '1.0.0',
   })
-)
+);
 
 // Your MCP server implementation here
 // All server interactions will now be automatically monitored by Sentry
@@ -126,8 +126,8 @@ const server = Sentry.wrapMcpServerWithSentry(
 If you prefer client-side monitoring, create `mcp-client.js`:
 
 ```javascript
-import { Client } from '@modelcontextprotocol/sdk/client/index.js'
-import { SSEClientTransport } from '@modelcontextprotocol/sdk/client/sse.js'
+import { Client } from '@modelcontextprotocol/sdk/client/index.js';
+import { SSEClientTransport } from '@modelcontextprotocol/sdk/client/sse.js';
 
 // MCP client setup code here
 // This would connect to your MCP servers and provide the use_mcp_tool function
@@ -139,8 +139,8 @@ In `test_mcp_events.js`, replace simulated calls with real MCP tool calls:
 
 ```javascript
 // Instead of simulation:
-console.warn('✅ Git status operation simulated')
-events.push({ type: 'git_status', simulated: true })
+console.warn('✅ Git status operation simulated');
+events.push({ type: 'git_status', simulated: true });
 
 // Use real MCP calls:
 const gitStatus = await use_mcp_tool({
@@ -149,8 +149,8 @@ const gitStatus = await use_mcp_tool({
   arguments: {
     repo_path: 'd:/Nuxt Projects/MatLab',
   },
-})
-events.push({ type: 'git_status', data: gitStatus })
+});
+events.push({ type: 'git_status', data: gitStatus });
 ```
 
 ### 4. Environment Setup
@@ -253,7 +253,7 @@ Sentry.captureException(error, {
     error_stack: error.stack,
     timestamp: new Date().toISOString(),
   },
-})
+});
 ```
 
 ### **Message Capturing**
@@ -270,7 +270,7 @@ Sentry.captureMessage(`MCP tool ${name} completed successfully`, 'info', {
     tool_args: args,
     result_summary: '...',
   },
-})
+});
 ```
 
 ### **Breadcrumb Tracking**
@@ -282,7 +282,7 @@ Sentry.addBreadcrumb({
   category: 'mcp',
   level: 'info',
   data: { tool: name, args: args },
-})
+});
 ```
 
 ## Metrics Tracking
@@ -295,12 +295,12 @@ Sentry metrics are automatically enabled and provide quantitative monitoring of 
 // Tool usage counting
 Sentry.metrics.count('mcp_tool_call', 1, {
   tags: { tool_name: name },
-})
+});
 
 // Response time distribution
 Sentry.metrics.distribution('mcp_response_time', responseTime, {
   tags: { tool_name: name, outcome: 'success' },
-})
+});
 ```
 
 ### **Server-Side Metrics**
@@ -309,7 +309,7 @@ Sentry.metrics.distribution('mcp_response_time', responseTime, {
 // Server tool call counting
 Sentry.metrics.count('mcp_server_tool_call', 1, {
   tags: { tool_name: name },
-})
+});
 ```
 
 ### **Metrics Available in Sentry**
@@ -366,7 +366,7 @@ export default defineNuxtConfig({
     client: true,
   },
   // ... other config
-})
+});
 ```
 
 ### **Source Map Benefits for MCP Monitoring**

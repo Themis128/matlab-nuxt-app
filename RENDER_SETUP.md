@@ -9,6 +9,7 @@ The `start.sh` script is designed for **local development** and **Replit** only.
 ### 1. Python API - Pandas Series Ambiguity Errors ✅
 
 **Problem**: The predictions were failing with errors like:
+
 ```
 The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
 ```
@@ -18,6 +19,7 @@ The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any
 **Solution**: Changed to use `json.load(f)` which properly loads the JSON as a Python dictionary.
 
 **Files Changed**:
+
 - `python_api/predictions_sklearn.py`:
   - Added `import json` to imports
   - Changed all `pd.read_json(f)` calls to `json.load(f)` in:
@@ -29,6 +31,7 @@ The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any
 ### 2. Nuxt.js - Command Not Found Error ✅
 
 **Problem**: When using `start.sh`, the script failed with:
+
 ```
 sh: 1: nuxt: not found
 ❌ Nuxt.js failed to start
@@ -37,10 +40,12 @@ sh: 1: nuxt: not found
 **Root Cause**: The script was running `npm run dev` without first installing Node.js dependencies (node_modules).
 
 **Solution**: Added dependency installation checks to `start.sh`:
+
 - Checks if `node_modules` directory exists, and runs `PUPPETEER_SKIP_DOWNLOAD=true npm install` if missing
 - Checks if Python dependencies are installed, and runs `pip install -r python_api/requirements.txt` if missing
 
 **Files Changed**:
+
 - `start.sh`:
   - Added Node.js dependency installation before starting Nuxt
   - Added Python dependency installation before starting API
@@ -53,6 +58,7 @@ sh: 1: nuxt: not found
 The repository includes a `render.yaml` file with proper configuration for two services:
 
 1. **Python API Service**:
+
    - Runtime: Python
    - Build Command: Installs dependencies and trains models
    - Start Command: `cd python_api && python api.py`
@@ -65,6 +71,7 @@ The repository includes a `render.yaml` file with proper configuration for two s
    - Health Check: `/`
 
 To use this configuration:
+
 1. Go to Render Dashboard
 2. Click "New" → "Blueprint"
 3. Connect your repository
@@ -75,12 +82,13 @@ To use this configuration:
 If you prefer manual configuration:
 
 #### Python API Service
+
 - **Environment**: Docker or Python
-- **Build Command**: 
+- **Build Command**:
   ```bash
   pip install --upgrade pip setuptools wheel && pip install -r requirements.txt
   ```
-- **Start Command**: 
+- **Start Command**:
   ```bash
   cd python_api && python api.py
   ```
@@ -90,12 +98,13 @@ If you prefer manual configuration:
   - `PYTHONUNBUFFERED=1`
 
 #### Nuxt.js Frontend Service
+
 - **Environment**: Node
-- **Build Command**: 
+- **Build Command**:
   ```bash
   npm ci && npm run build
   ```
-- **Start Command**: 
+- **Start Command**:
   ```bash
   npm run preview
   ```
@@ -129,9 +138,11 @@ npm run dev
 After deployment, verify:
 
 1. **Python API Health**: Visit `https://your-api.onrender.com/health`
+
    - Should return: `{"status": "healthy", "timestamp": "...", "version": "1.0.0"}`
 
 2. **No More Errors in Logs**:
+
    - ✅ No "Series is ambiguous" errors
    - ✅ No "nuxt: not found" errors
    - ✅ All prediction endpoints working
@@ -146,14 +157,17 @@ After deployment, verify:
 ## Troubleshooting
 
 ### If you still see "nuxt: not found"
+
 - Make sure you're NOT using `start.sh` as the start command in Render
 - Use the proper build and start commands from render.yaml
 
 ### If you still see "Series is ambiguous"
+
 - Verify that `python_api/predictions_sklearn.py` has the latest changes
 - Check that the deployment is pulling the latest code from the repository
 
 ### If predictions are returning fallback values
+
 - This is expected if the model files are missing or have feature count mismatches
 - The fallback functions ensure the API continues to work even with model issues
 - Check logs for "ERROR - [Model] prediction failed: ..." messages

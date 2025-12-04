@@ -119,10 +119,12 @@
 ### For Other Models:
 
 1. **RAM Prediction:**
+
    - Add enhanced features
    - Expected: R² from 0.6629 to 0.75-0.80
 
 2. **Battery Prediction:**
+
    - Already excellent (R² = 0.7489)
    - Minor improvements possible
 
@@ -136,11 +138,13 @@
 ## 💡 Key Learnings
 
 1. **Feature Engineering is Critical:**
+
    - Adding interaction features improved R² by 20.7%!
    - Price-to-feature ratios are very informative
    - Brand segments help capture pricing patterns
 
 2. **Enhanced Features Work:**
+
    - 11 additional features made huge difference
    - Model can learn complex relationships
    - Better feature representation = better predictions

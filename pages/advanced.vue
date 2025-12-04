@@ -226,66 +226,66 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, reactive, onMounted, onUnmounted } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue';
 
-  // Page meta (fallback)
-  onMounted(() => {
-    document.title = 'Advanced Analytics - MATLAB Deep Learning Platform'
-    const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
-    const content =
-      'Advanced analytics dashboard with deep learning model configuration and real-time monitoring'
-    if (existing) existing.content = content
-    else {
-      const m = document.createElement('meta')
-      m.name = 'description'
-      m.content = content
-      document.head.appendChild(m)
-    }
-  })
+// Page meta (fallback)
+onMounted(() => {
+  document.title = 'Advanced Analytics - MATLAB Deep Learning Platform';
+  const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+  const content =
+    'Advanced analytics dashboard with deep learning model configuration and real-time monitoring';
+  if (existing) existing.content = content;
+  else {
+    const m = document.createElement('meta');
+    m.name = 'description';
+    m.content = content;
+    document.head.appendChild(m);
+  }
+});
 
-  // Reactive configuration
-  const config = reactive({
-    learningRate: 0.01,
-    batchSize: 32,
-    epochs: 100,
-    dataAugmentation: true,
-    normalization: true,
-    crossValidation: false,
-  })
+// Reactive configuration
+const config = reactive({
+  learningRate: 0.01,
+  batchSize: 32,
+  epochs: 100,
+  dataAugmentation: true,
+  normalization: true,
+  crossValidation: false,
+});
 
-  // Monitoring data
-  const currentEpoch = ref(127)
-  const totalEpochs = ref(200)
-  const currentLoss = ref(0.234)
-  const currentAccuracy = ref(94.7)
-  const cpuUsage = ref(67)
-  const memoryUsage = ref(82)
-  const gpuUsage = ref(45)
+// Monitoring data
+const currentEpoch = ref(127);
+const totalEpochs = ref(200);
+const currentLoss = ref(0.234);
+const currentAccuracy = ref(94.7);
+const cpuUsage = ref(67);
+const memoryUsage = ref(82);
+const gpuUsage = ref(45);
 
-  const batchSizeOptions = [
-    { label: '16', value: 16 },
-    { label: '32', value: 32 },
-    { label: '64', value: 64 },
-    { label: '128', value: 128 },
-  ]
+const batchSizeOptions = [
+  { label: '16', value: 16 },
+  { label: '32', value: 32 },
+  { label: '64', value: 64 },
+  { label: '128', value: 128 },
+];
 
-  // Simulate real-time updates
-  onMounted(() => {
-    const interval = setInterval(() => {
-      currentEpoch.value = Math.min(currentEpoch.value + 1, totalEpochs.value)
-      currentLoss.value = Math.max(0.1, currentLoss.value + (Math.random() - 0.5) * 0.01)
-      currentAccuracy.value = Math.min(99.9, currentAccuracy.value + (Math.random() - 0.5) * 0.1)
-      cpuUsage.value = Math.max(20, Math.min(90, cpuUsage.value + (Math.random() - 0.5) * 5))
-      memoryUsage.value = Math.max(30, Math.min(95, memoryUsage.value + (Math.random() - 0.5) * 3))
-      gpuUsage.value = Math.max(10, Math.min(85, gpuUsage.value + (Math.random() - 0.5) * 4))
-    }, 2000)
+// Simulate real-time updates
+onMounted(() => {
+  const interval = setInterval(() => {
+    currentEpoch.value = Math.min(currentEpoch.value + 1, totalEpochs.value);
+    currentLoss.value = Math.max(0.1, currentLoss.value + (Math.random() - 0.5) * 0.01);
+    currentAccuracy.value = Math.min(99.9, currentAccuracy.value + (Math.random() - 0.5) * 0.1);
+    cpuUsage.value = Math.max(20, Math.min(90, cpuUsage.value + (Math.random() - 0.5) * 5));
+    memoryUsage.value = Math.max(30, Math.min(95, memoryUsage.value + (Math.random() - 0.5) * 3));
+    gpuUsage.value = Math.max(10, Math.min(85, gpuUsage.value + (Math.random() - 0.5) * 4));
+  }, 2000);
 
-    onUnmounted(() => {
-      clearInterval(interval)
-    })
-  })
+  onUnmounted(() => {
+    clearInterval(interval);
+  });
+});
 </script>
 
 <style scoped>
-  /* Additional styles can be added here if needed */
+/* Additional styles can be added here if needed */
 </style>

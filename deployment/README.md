@@ -139,6 +139,7 @@ The project includes automated GitHub Actions workflows for building, testing, a
 ### Available Workflows
 
 1. **Build and Test** (`.github/workflows/build-and-test.yml`)
+
    - Runs on every push and PR
    - Tests frontend build, backend validation, Docker builds, E2E tests
    - **Note:** Includes npm cleanup to fix oxc-parser optional dependencies issue

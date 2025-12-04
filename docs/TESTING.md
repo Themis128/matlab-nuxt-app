@@ -83,7 +83,7 @@ export default defineConfig({
     port: 3000,
     reuseExistingServer: !process.env.CI,
   },
-})
+});
 ```
 
 ## Writing Tests
@@ -91,22 +91,22 @@ export default defineConfig({
 ### Basic Test Pattern
 
 ```typescript
-import { test, expect } from '@playwright/test'
+import { test, expect } from '@playwright/test';
 
 test.describe('Feature Name', () => {
   test('should do something', async ({ page }) => {
     // Navigate
-    await page.goto('/page-path')
+    await page.goto('/page-path');
 
     // Interact
-    await page.fill('input[name="field"]', 'value')
-    await page.click('button[type="submit"]')
+    await page.fill('input[name="field"]', 'value');
+    await page.click('button[type="submit"]');
 
     // Assert
-    await expect(page.locator('.result')).toBeVisible()
-    await expect(page.locator('.result')).toContainText('Expected')
-  })
-})
+    await expect(page.locator('.result')).toBeVisible();
+    await expect(page.locator('.result')).toContainText('Expected');
+  });
+});
 ```
 
 ### Page Object Pattern
@@ -117,35 +117,35 @@ export class PredictionPage {
   constructor(private page: Page) {}
 
   async fillForm(data: PredictionInput) {
-    await this.page.fill('[name="ram"]', data.ram.toString())
-    await this.page.fill('[name="battery"]', data.battery.toString())
+    await this.page.fill('[name="ram"]', data.ram.toString());
+    await this.page.fill('[name="battery"]', data.battery.toString());
     // ... more fields
   }
 
   async submitForm() {
-    await this.page.click('button[type="submit"]')
+    await this.page.click('button[type="submit"]');
   }
 
   async getResult() {
-    return await this.page.locator('.prediction-result').textContent()
+    return await this.page.locator('.prediction-result').textContent();
   }
 }
 
 // In test
 test('predict price', async ({ page }) => {
-  const predictionPage = new PredictionPage(page)
-  await page.goto('/predict/price')
+  const predictionPage = new PredictionPage(page);
+  await page.goto('/predict/price');
 
   await predictionPage.fillForm({
     ram: 8,
     battery: 5000,
     // ...
-  })
+  });
 
-  await predictionPage.submitForm()
-  const result = await predictionPage.getResult()
-  expect(result).toMatch(/\d+/)
-})
+  await predictionPage.submitForm();
+  const result = await predictionPage.getResult();
+  expect(result).toMatch(/\d+/);
+});
 ```
 
 ### API Testing
@@ -161,54 +161,54 @@ test('API returns valid prediction', async ({ request }) => {
       year: 2024,
       company: 'Samsung',
     },
-  })
+  });
 
-  expect(response.ok()).toBeTruthy()
-  const data = await response.json()
-  expect(data).toHaveProperty('price')
-  expect(data.price).toBeGreaterThan(0)
-})
+  expect(response.ok()).toBeTruthy();
+  const data = await response.json();
+  expect(data).toHaveProperty('price');
+  expect(data.price).toBeGreaterThan(0);
+});
 ```
 
 ### Common Assertions
 
 ```typescript
 // Visibility
-await expect(page.locator('.element')).toBeVisible()
-await expect(page.locator('.element')).toBeHidden()
+await expect(page.locator('.element')).toBeVisible();
+await expect(page.locator('.element')).toBeHidden();
 
 // Text content
-await expect(page.locator('.element')).toHaveText('Exact text')
-await expect(page.locator('.element')).toContainText('Partial')
+await expect(page.locator('.element')).toHaveText('Exact text');
+await expect(page.locator('.element')).toContainText('Partial');
 
 // Attributes
-await expect(page.locator('input')).toHaveAttribute('type', 'text')
-await expect(page.locator('button')).toBeDisabled()
-await expect(page.locator('button')).toBeEnabled()
+await expect(page.locator('input')).toHaveAttribute('type', 'text');
+await expect(page.locator('button')).toBeDisabled();
+await expect(page.locator('button')).toBeEnabled();
 
 // Count
-await expect(page.locator('.item')).toHaveCount(5)
+await expect(page.locator('.item')).toHaveCount(5);
 
 // URL
-await expect(page).toHaveURL('/expected-path')
-await expect(page).toHaveURL(/pattern/)
+await expect(page).toHaveURL('/expected-path');
+await expect(page).toHaveURL(/pattern/);
 ```
 
 ### Waiting Strategies
 
 ```typescript
 // Wait for element
-await page.waitForSelector('.element')
+await page.waitForSelector('.element');
 
 // Wait for network
-await page.waitForResponse(resp => resp.url().includes('/api/predict') && resp.status() === 200)
+await page.waitForResponse((resp) => resp.url().includes('/api/predict') && resp.status() === 200);
 
 // Wait for load state
-await page.waitForLoadState('networkidle')
-await page.waitForLoadState('domcontentloaded')
+await page.waitForLoadState('networkidle');
+await page.waitForLoadState('domcontentloaded');
 
 // Custom timeout
-await page.waitForSelector('.slow-element', { timeout: 60000 })
+await page.waitForSelector('.slow-element', { timeout: 60000 });
 ```
 
 ## Running Tests
@@ -292,20 +292,20 @@ Automatically captured on failure (configured in `playwright.config.ts`).
 
 ```typescript
 test('example', async ({ page }) => {
-  await page.screenshot({ path: 'screenshot.png' })
+  await page.screenshot({ path: 'screenshot.png' });
   // Or full page
-  await page.screenshot({ path: 'full.png', fullPage: true })
-})
+  await page.screenshot({ path: 'full.png', fullPage: true });
+});
 ```
 
 ### Console Logs
 
 ```typescript
 // Listen to console
-page.on('console', msg => console.log('PAGE LOG:', msg.text()))
+page.on('console', (msg) => console.log('PAGE LOG:', msg.text()));
 
 // Listen to errors
-page.on('pageerror', err => console.log('PAGE ERROR:', err))
+page.on('pageerror', (err) => console.log('PAGE ERROR:', err));
 ```
 
 ## Test Fixtures
@@ -314,35 +314,35 @@ page.on('pageerror', err => console.log('PAGE ERROR:', err))
 
 ```typescript
 // test-fixtures.ts
-import { test as base } from '@playwright/test'
+import { test as base } from '@playwright/test';
 
 type MyFixtures = {
-  authenticatedPage: Page
-}
+  authenticatedPage: Page;
+};
 
 export const test = base.extend<MyFixtures>({
   authenticatedPage: async ({ page }, use) => {
     // Setup: login
-    await page.goto('/login')
-    await page.fill('[name="username"]', 'test-user')
-    await page.fill('[name="password"]', 'test-pass')
-    await page.click('button[type="submit"]')
+    await page.goto('/login');
+    await page.fill('[name="username"]', 'test-user');
+    await page.fill('[name="password"]', 'test-pass');
+    await page.click('button[type="submit"]');
 
     // Use page
-    await use(page)
+    await use(page);
 
     // Teardown
-    await page.goto('/logout')
+    await page.goto('/logout');
   },
-})
+});
 
 // In test
-import { test } from './test-fixtures'
+import { test } from './test-fixtures';
 
 test('protected route', async ({ authenticatedPage }) => {
-  await authenticatedPage.goto('/dashboard')
+  await authenticatedPage.goto('/dashboard');
   // Already logged in
-})
+});
 ```
 
 ## Best Practices
@@ -356,7 +356,7 @@ test('protected route', async ({ authenticatedPage }) => {
 
 ```typescript
 // In test
-await page.click('[data-testid="submit-prediction"]')
+await page.click('[data-testid="submit-prediction"]');
 ```
 
 ### 2. Avoid Hardcoded Waits
@@ -364,25 +364,25 @@ await page.click('[data-testid="submit-prediction"]')
 ❌ **Bad**:
 
 ```typescript
-await page.waitForTimeout(3000) // Flaky!
+await page.waitForTimeout(3000); // Flaky!
 ```
 
 ✅ **Good**:
 
 ```typescript
-await page.waitForSelector('.result')
-await page.waitForLoadState('networkidle')
+await page.waitForSelector('.result');
+await page.waitForLoadState('networkidle');
 ```
 
 ### 3. Use Locators Over Selectors
 
 ```typescript
 // Locators are more resilient
-const button = page.locator('button').filter({ hasText: 'Submit' })
-await button.click()
+const button = page.locator('button').filter({ hasText: 'Submit' });
+await button.click();
 
 // Chaining
-await page.locator('.form').locator('input[name="price"]').fill('500')
+await page.locator('.form').locator('input[name="price"]').fill('500');
 ```
 
 ### 4. Test User Flows, Not Implementation
@@ -392,34 +392,34 @@ await page.locator('.form').locator('input[name="price"]').fill('500')
 ```typescript
 test('sets state correctly', async ({ page }) => {
   // Don't test internal state
-})
+});
 ```
 
 ✅ **Good** (testing user experience):
 
 ```typescript
 test('user can submit form and see result', async ({ page }) => {
-  await page.goto('/predict')
-  await page.fill('[name="ram"]', '8')
-  await page.click('button[type="submit"]')
-  await expect(page.locator('.result')).toBeVisible()
-})
+  await page.goto('/predict');
+  await page.fill('[name="ram"]', '8');
+  await page.click('button[type="submit"]');
+  await expect(page.locator('.result')).toBeVisible();
+});
 ```
 
 ### 5. Parallelize When Possible
 
 ```typescript
 // Allow tests in this file to run in parallel
-test.describe.configure({ mode: 'parallel' })
+test.describe.configure({ mode: 'parallel' });
 
 test.describe('Independent tests', () => {
   test('test 1', async ({ page }) => {
     /* ... */
-  })
+  });
   test('test 2', async ({ page }) => {
     /* ... */
-  })
-})
+  });
+});
 ```
 
 ## Troubleshooting
@@ -430,9 +430,9 @@ test.describe('Independent tests', () => {
 
 ```typescript
 test('slow test', async ({ page }) => {
-  test.setTimeout(60000) // 60 seconds
+  test.setTimeout(60000); // 60 seconds
   // ...
-})
+});
 ```
 
 ### Element Not Found
@@ -447,7 +447,7 @@ npx playwright test --debug
 **Add explicit wait**:
 
 ```typescript
-await page.waitForSelector('.element', { state: 'visible' })
+await page.waitForSelector('.element', { state: 'visible' });
 ```
 
 ### Port Already in Use

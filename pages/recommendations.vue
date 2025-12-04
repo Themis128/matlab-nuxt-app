@@ -109,42 +109,42 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue'
+import { ref, onMounted } from 'vue';
 
-  // Page meta fallback
-  onMounted(() => {
-    document.title = 'Price Recommendations - MATLAB Analytics'
-    const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
-    const content = 'Get AI-powered mobile phone recommendations based on your budget'
-    if (existing) existing.content = content
-    else {
-      const m = document.createElement('meta')
-      m.name = 'description'
-      m.content = content
-      document.head.appendChild(m)
-    }
-  })
+// Page meta fallback
+onMounted(() => {
+  document.title = 'Price Recommendations - MATLAB Analytics';
+  const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+  const content = 'Get AI-powered mobile phone recommendations based on your budget';
+  if (existing) existing.content = content;
+  else {
+    const m = document.createElement('meta');
+    m.name = 'description';
+    m.content = content;
+    document.head.appendChild(m);
+  }
+});
 
-  const budgetRange = ref<any>([300, 800])
+const budgetRange = ref<any>([300, 800]);
 
-  const recommendations = [
-    {
-      id: 1,
-      name: 'Samsung Galaxy A54',
-      brand: 'Samsung',
-      price: 349,
-      image: '/api/placeholder/300/200',
-      valueScore: 9,
-      recommendationReason: 'Excellent value for money with great camera and battery life.',
-    },
-    {
-      id: 2,
-      name: 'Google Pixel 7a',
-      brand: 'Google',
-      price: 499,
-      image: '/api/placeholder/300/200',
-      valueScore: 8,
-      recommendationReason: 'Outstanding camera performance and pure Android experience.',
-    },
-  ]
+const recommendations = [
+  {
+    id: 1,
+    name: 'Samsung Galaxy A54',
+    brand: 'Samsung',
+    price: 349,
+    image: '/api/placeholder/300/200',
+    valueScore: 9,
+    recommendationReason: 'Excellent value for money with great camera and battery life.',
+  },
+  {
+    id: 2,
+    name: 'Google Pixel 7a',
+    brand: 'Google',
+    price: 499,
+    image: '/api/placeholder/300/200',
+    valueScore: 8,
+    recommendationReason: 'Outstanding camera performance and pure Android experience.',
+  },
+];
 </script>

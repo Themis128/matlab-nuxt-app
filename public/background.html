@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Background Script</title>
     <script type="module">
-      import { experimental } from 'https://unpkg.com/@replit/extensions@1.10.0/dist/index.esm.js'
-      const { init, messages } = experimental
+      import { experimental } from 'https://unpkg.com/@replit/extensions@1.10.0/dist/index.esm.js';
+      const { init, messages } = experimental;
       async function run() {
-        await init()
+        await init();
         // Example periodic heartbeat; could be used for prefetch or cache warm.
         setInterval(() => {
           // Placeholder: could send telemetry or prefetch dataset slices.
-          console.debug('[Extension Background] Heartbeat')
-        }, 30000)
+          console.debug('[Extension Background] Heartbeat');
+        }, 30000);
       }
-      run()
+      run();
     </script>
   </head>
   <body>

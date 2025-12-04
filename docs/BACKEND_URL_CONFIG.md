@@ -58,17 +58,17 @@ ENV NUXT_PUBLIC_API_BASE=http://python-api:8000
 
 ```typescript
 // In your Vue component
-const { pythonApiUrl } = useApiConfig()
+const { pythonApiUrl } = useApiConfig();
 
 // Make API calls
-const data = await $fetch(`${pythonApiUrl}/api/endpoint`)
+const data = await $fetch(`${pythonApiUrl}/api/endpoint`);
 ```
 
 ### Using runtime config directly
 
 ```typescript
-const config = useRuntimeConfig()
-const apiUrl = config.public.apiBase
+const config = useRuntimeConfig();
+const apiUrl = config.public.apiBase;
 ```
 
 ## Deployment Scenarios
@@ -97,8 +97,8 @@ The configuration automatically works with Playwright tests:
 
 ```typescript
 // Tests use the same runtime config
-const config = useRuntimeConfig()
-await page.goto(`${config.public.apiBase}/health`)
+const config = useRuntimeConfig();
+await page.goto(`${config.public.apiBase}/health`);
 ```
 
 ## Troubleshooting

@@ -1,21 +1,21 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 
 /**
  * Pinia store for managing prediction history
  */
 export interface PredictionHistoryItem {
-  id: string
-  model: 'price' | 'brand' | 'ram' | 'battery'
-  input: Record<string, any>
-  result: number | string
-  timestamp: number
-  predictionTime: number
-  source: 'api' | 'fallback'
-  error?: string
+  id: string;
+  model: 'price' | 'brand' | 'ram' | 'battery';
+  input: Record<string, any>;
+  result: number | string;
+  timestamp: number;
+  predictionTime: number;
+  source: 'api' | 'fallback';
+  error?: string;
 }
 
-const STORAGE_KEY = 'mobile-prediction-history'
-const MAX_HISTORY = 50 // Keep last 50 predictions
+const STORAGE_KEY = 'mobile-prediction-history';
+const MAX_HISTORY = 50; // Keep last 50 predictions
 
 export const usePredictionHistoryStore = defineStore('predictionHistory', {
   state: () => ({
@@ -28,15 +28,15 @@ export const usePredictionHistoryStore = defineStore('predictionHistory', {
      * Call this when the app initializes
      */
     loadHistory() {
-      if (typeof window === 'undefined') return
+      if (typeof window === 'undefined') return;
 
       try {
-        const stored = localStorage.getItem(STORAGE_KEY)
+        const stored = localStorage.getItem(STORAGE_KEY);
         if (stored) {
-          this.history = JSON.parse(stored)
+          this.history = JSON.parse(stored);
         }
       } catch (error) {
-        console.error('Failed to load prediction history:', error)
+        console.error('Failed to load prediction history:', error);
       }
     },
 
@@ -44,24 +44,24 @@ export const usePredictionHistoryStore = defineStore('predictionHistory', {
      * Save a new prediction to history
      */
     savePrediction(item: Omit<PredictionHistoryItem, 'id' | 'timestamp'>) {
-      if (typeof window === 'undefined') return
+      if (typeof window === 'undefined') return;
 
       try {
         const newItem: PredictionHistoryItem = {
           ...item,
           id: `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
           timestamp: Date.now(),
-        }
+        };
 
         // Add to state
-        this.history.unshift(newItem)
+        this.history.unshift(newItem);
         // Keep only the last MAX_HISTORY items
-        this.history = this.history.slice(0, MAX_HISTORY)
+        this.history = this.history.slice(0, MAX_HISTORY);
 
         // Save to localStorage
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.history))
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.history));
       } catch (error) {
-        console.error('Failed to save prediction history:', error)
+        console.error('Failed to save prediction history:', error);
       }
     },
 
@@ -69,10 +69,10 @@ export const usePredictionHistoryStore = defineStore('predictionHistory', {
      * Clear all history
      */
     clearHistory() {
-      if (typeof window === 'undefined') return
+      if (typeof window === 'undefined') return;
 
-      this.history = []
-      localStorage.removeItem(STORAGE_KEY)
+      this.history = [];
+      localStorage.removeItem(STORAGE_KEY);
     },
   },
 
@@ -81,16 +81,16 @@ export const usePredictionHistoryStore = defineStore('predictionHistory', {
      * Get all history items
      */
     getAllHistory(): PredictionHistoryItem[] {
-      return this.history
+      return this.history;
     },
 
     /**
      * Get history items by model type
      */
     getHistoryByModel:
-      state =>
+      (state) =>
       (model: string): PredictionHistoryItem[] => {
-        return state.history.filter(item => item.model === model)
+        return state.history.filter((item) => item.model === model);
       },
   },
-})
+});

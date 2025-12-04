@@ -94,7 +94,7 @@ webServer: [
     timeout: 180 * 1000, // 3 minutes
     reuseExistingServer: true, // ✅ Allows manual pre-starting
   },
-]
+];
 ```
 
 **Key improvements:**
@@ -209,7 +209,7 @@ webServer: [
     timeout: 300 * 1000, // 5 minutes
     // ...
   },
-]
+];
 ```
 
 ### Issue: Background jobs stuck

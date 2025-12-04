@@ -114,58 +114,58 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue'
+import { ref, onMounted } from 'vue';
 
-  onMounted(() => {
-    document.title = 'Advanced Search - MATLAB Analytics'
-    const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
-    const content = 'Search and filter through comprehensive MATLAB deep learning models'
-    if (existing) existing.content = content
-    else {
-      const m = document.createElement('meta')
-      m.name = 'description'
-      m.content = content
-      document.head.appendChild(m)
-    }
-  })
+onMounted(() => {
+  document.title = 'Advanced Search - MATLAB Analytics';
+  const existing = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+  const content = 'Search and filter through comprehensive MATLAB deep learning models';
+  if (existing) existing.content = content;
+  else {
+    const m = document.createElement('meta');
+    m.name = 'description';
+    m.content = content;
+    document.head.appendChild(m);
+  }
+});
 
-  const searchQuery = ref('')
-  const selectedAlgorithm = ref('')
-  const selectedDataset = ref('')
-  const selectedAccuracy = ref('')
+const searchQuery = ref('');
+const selectedAlgorithm = ref('');
+const selectedDataset = ref('');
+const selectedAccuracy = ref('');
 
-  const algorithms = [
-    { label: 'CNN', value: 'cnn' },
-    { label: 'RNN/LSTM', value: 'rnn' },
-    { label: 'Transformer', value: 'transformer' },
-  ]
+const algorithms = [
+  { label: 'CNN', value: 'cnn' },
+  { label: 'RNN/LSTM', value: 'rnn' },
+  { label: 'Transformer', value: 'transformer' },
+];
 
-  const datasetTypes = [
-    { label: 'Image Classification', value: 'image' },
-    { label: 'Time Series', value: 'time-series' },
-    { label: 'Text/NLP', value: 'text' },
-  ]
+const datasetTypes = [
+  { label: 'Image Classification', value: 'image' },
+  { label: 'Time Series', value: 'time-series' },
+  { label: 'Text/NLP', value: 'text' },
+];
 
-  const accuracyRanges = [
-    { label: '90%+', value: '90' },
-    { label: '80-89%', value: '80' },
-    { label: 'Any', value: 'any' },
-  ]
+const accuracyRanges = [
+  { label: '90%+', value: '90' },
+  { label: '80-89%', value: '80' },
+  { label: 'Any', value: 'any' },
+];
 
-  const models = [
-    {
-      id: 1,
-      name: 'MobileNetV3-Large',
-      algorithm: 'CNN',
-      accuracy: 94.7,
-      description: 'Efficient convolutional neural network optimized for mobile devices.',
-    },
-    {
-      id: 2,
-      name: 'LSTM Time Series Predictor',
-      algorithm: 'RNN',
-      accuracy: 91.2,
-      description: 'Long Short-Term Memory network for time series forecasting.',
-    },
-  ]
+const models = [
+  {
+    id: 1,
+    name: 'MobileNetV3-Large',
+    algorithm: 'CNN',
+    accuracy: 94.7,
+    description: 'Efficient convolutional neural network optimized for mobile devices.',
+  },
+  {
+    id: 2,
+    name: 'LSTM Time Series Predictor',
+    algorithm: 'RNN',
+    accuracy: 91.2,
+    description: 'Long Short-Term Memory network for time series forecasting.',
+  },
+];
 </script>

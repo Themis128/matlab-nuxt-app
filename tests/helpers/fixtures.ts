@@ -3,17 +3,17 @@
  */
 
 export interface PhoneSpecsFixture {
-  ram: number
-  battery: number
-  screen: number
-  weight: number
-  year: number
-  price: number
-  company?: string
-  frontCamera?: number
-  backCamera?: number
-  processor?: string
-  storage?: number
+  ram: number;
+  battery: number;
+  screen: number;
+  weight: number;
+  year: number;
+  price: number;
+  company?: string;
+  frontCamera?: number;
+  backCamera?: number;
+  processor?: string;
+  storage?: number;
 }
 
 /**
@@ -31,7 +31,7 @@ export const validPhoneSpecs: PhoneSpecsFixture = {
   backCamera: 48,
   processor: 'Snapdragon 8 Gen 2',
   storage: 128,
-}
+};
 
 /**
  * Alternative valid specs for comparison tests
@@ -48,7 +48,7 @@ export const validPhoneSpecs2: PhoneSpecsFixture = {
   backCamera: 48,
   processor: 'A17 Pro',
   storage: 256,
-}
+};
 
 /**
  * Budget phone specs
@@ -64,7 +64,7 @@ export const budgetPhoneSpecs: PhoneSpecsFixture = {
   frontCamera: 8,
   backCamera: 13,
   storage: 64,
-}
+};
 
 /**
  * Flagship phone specs
@@ -81,7 +81,7 @@ export const flagshipPhoneSpecs: PhoneSpecsFixture = {
   backCamera: 200,
   processor: 'Snapdragon 8 Gen 3',
   storage: 512,
-}
+};
 
 /**
  * Invalid specs for negative testing
@@ -93,7 +93,7 @@ export const invalidPhoneSpecs: Partial<PhoneSpecsFixture>[] = [
   { ram: 8, battery: 4000, screen: 6.1, weight: 0, year: 2024, price: 999 }, // zero weight
   { ram: 8, battery: 4000, screen: 6.1, weight: 174, year: 1990, price: 999 }, // old year
   { ram: 8, battery: 4000, screen: 6.1, weight: 174, year: 2024, price: -100 }, // negative price
-]
+];
 
 /**
  * Search filter combinations for testing
@@ -117,35 +117,35 @@ export const searchFilters = {
   },
   brands: ['Samsung', 'Apple', 'Xiaomi'],
   years: [2023, 2024, 2025],
-}
+};
 
 /**
  * Expected API response shapes
  */
 export interface PredictionResponse {
-  price?: number
-  ram?: number
-  battery?: number
-  brand?: string
+  price?: number;
+  ram?: number;
+  battery?: number;
+  brand?: string;
 }
 
 export interface SearchResponse {
-  models: any[]
-  totalCount: number
-  offset: number
-  limit: number
+  models: any[];
+  totalCount: number;
+  offset: number;
+  limit: number;
 }
 
 export interface ModelsByPriceResponse {
-  models: any[]
-  totalCount: number
+  models: any[];
+  totalCount: number;
   priceRange: {
-    min: number
-    max: number
-    requested: number
-    tolerance: number
-  }
-  brands: string[]
+    min: number;
+    max: number;
+    requested: number;
+    tolerance: number;
+  };
+  brands: string[];
 }
 
 /**
@@ -157,7 +157,7 @@ export const timeouts = {
   long: 30000,
   api: 15000,
   matlab: 60000, // MATLAB predictions can be slow
-}
+};
 
 /**
  * Common test URLs
@@ -169,4 +169,4 @@ export const urls = {
   recommendations: '/recommendations',
   compare: '/compare',
   apiDocs: '/api-docs',
-}
+};

@@ -72,6 +72,7 @@ required for basic prediction endpoints and are intentionally optional so the AP
 in minimal environments (e.g., test or CI).
 
 What these enable:
+
 - `lancedb`: Persistent, search-friendly dataset and image storage with vector search/indexing
   features (used by `lancedb_utils.py` and `lancedb_endpoints.py`).
 - `python-multipart`: Required by FastAPI to parse `multipart/form-data` requests for file uploads
@@ -120,6 +121,7 @@ For development and testing, LanceDB runs locally without cloud dependencies:
 To migrate existing local LanceDB data to cloud:
 
 1. **Export local data** (if needed):
+
 ```python
 from lancedb_utils import get_db_manager
 db = get_db_manager()
@@ -148,6 +150,7 @@ Once configured, the following endpoints become available:
 Installation:
 
 Windows PowerShell (when venv activated):
+
 ```powershell
 # Activate your venv if not activated already
 & ".\\venv\\Scripts\\Activate.ps1"
@@ -160,12 +163,14 @@ pip install -r requirements-optional.txt
 ```
 
 Linux/macOS:
+
 ```bash
 source ./venv/bin/activate
 pip install lancedb python-multipart
 ```
 
 Notes:
+
 - If `lancedb` is not installed, the API now falls back to an in-memory lightweight store for
   development and testing. This fallback is not production-grade and does not persist data.
 - If `python-multipart` is not installed, the file upload endpoints are **disabled** and the
@@ -173,6 +178,7 @@ Notes:
 - After installing these packages, restart the API server to enable the full functionality.
 
 Troubleshooting:
+
 - If you see an error about missing shared libraries when installing `lancedb`, check your Python
   and system package manager docs (some components may require C/C++ compilers or platform
   packages like `libarrow`/`pyarrow`). You may also prefer to install `lancedb` using prebuilt

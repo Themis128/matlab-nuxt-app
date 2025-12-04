@@ -17,6 +17,7 @@ Error: Cannot find module '@oxc-parser/binding-...'
 ### ✨ New Workflows Created (2 files)
 
 1. **`.github/workflows/build-and-test.yml`**
+
    - Comprehensive testing workflow
    - 4 jobs: frontend, backend, docker, e2e-tests
    - All npm installs include cleanup steps
@@ -31,6 +32,7 @@ Error: Cannot find module '@oxc-parser/binding-...'
 ### 📖 Documentation Updated (2 files)
 
 1. **`docs/deployment/README.md`**
+
    - Added **CI/CD Workflows** section
    - Documented required secrets
    - Included NPM optional dependencies fix
@@ -127,14 +129,17 @@ git push origin v1.0.0
 **Jobs:**
 
 1. **test-frontend**
+
    - Node.js 22
    - npm cleanup → install → prepare → build → typecheck
 
 2. **test-backend**
+
    - Python 3.14
    - pip install → validate API module
 
 3. **test-docker**
+
    - Docker Buildx
    - Build Python API image
    - Build Nuxt App image
@@ -191,6 +196,7 @@ Configure in **GitHub Settings → Secrets and variables → Actions**:
 Complete guides available:
 
 1. **[.github/workflows/README.md](.github/workflows/README.md)**
+
    - All 5 workflows documented
    - NPM fix explained
    - Deployment guides

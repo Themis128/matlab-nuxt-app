@@ -212,10 +212,10 @@ model = joblib.load('trained_models/price_predictor_sklearn.joblib')
 
 ```typescript
 // Before
-const csvPath = join(projectRoot, 'data', 'Mobiles Dataset (2025).csv')
+const csvPath = join(projectRoot, 'data', 'Mobiles Dataset (2025).csv');
 
 // After (if using compressed version)
-const csvPath = join(projectRoot, 'data', 'Mobiles Dataset (2025).csv.gz')
+const csvPath = join(projectRoot, 'data', 'Mobiles Dataset (2025).csv.gz');
 // Note: Most CSV parsers auto-detect gzip
 ```
 

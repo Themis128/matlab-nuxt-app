@@ -3,19 +3,24 @@
 Quickly summarize the purpose of this pull request and the high-level changes.
 
 ## Changes
+
 - What changed? Provide a bullet list of the changes.
 - Any files added/removed/renamed.
 
 ## Testing
+
 - How did you test this? Commands to run for local checks.
 
 ## Checklist
+
 - [ ] Tests added/updated (if applicable)
 - [ ] Documentation updated (if applicable)
 - [ ] CI passes
 
 ## Notes for Reviewers
+
 - Anything in particular you want feedback on?
+
 ## 📝 Description
 
 Brief description of changes in this PR.

@@ -287,17 +287,21 @@ run('visualize_new_features.m')
 ### Generated Visualizations
 
 1. **Camera Prediction Performance** (`camera_prediction_performance.png`)
+
    - Scatter plots showing predicted vs actual for front and back cameras
    - Includes R² and RMSE metrics
 
 2. **Market Segmentation** (`market_segmentation.png`)
+
    - Price vs RAM colored by segment
    - Pie chart showing segment distribution
 
 3. **Segment Characteristics** (`segment_characteristics.png`)
+
    - Bar chart comparing normalized characteristics across segments
 
 4. **Dataset Overview** (`dataset_overview.png`)
+
    - 6-panel dashboard showing:
      - Price distribution
      - RAM distribution
@@ -307,6 +311,7 @@ run('visualize_new_features.m')
      - Top 10 brands
 
 5. **Model Performance Comparison** (`model_performance_comparison.png`)
+
    - R² scores for all models
    - Normalized RMSE comparison
 

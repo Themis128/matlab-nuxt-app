@@ -2,6 +2,7 @@
 
 module.exports = [
   {
+    files: ['**/*.{js,ts,vue}'],
     ignores: [
       'node_modules/**',
       '.nuxt/**',

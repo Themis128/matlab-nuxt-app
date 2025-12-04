@@ -50,6 +50,7 @@ npm run test:manual  # Runs with pre-started servers
 ### 1. API Integration Tests
 
 - **`prediction-api-integration.spec.ts`**: Tests the Python prediction API endpoints directly
+
   - Health endpoint verification
   - Price, RAM, battery, and brand prediction endpoints
   - Error handling for invalid inputs
@@ -131,20 +132,20 @@ Following project conventions from `copilot-instructions.md`:
 
 ```typescript
 // Pattern 1: Page navigation with loading state
-await page.goto('/dashboard')
-await expect(page.locator('text=AI Model Dashboard')).toBeVisible({ timeout: 10000 })
+await page.goto('/dashboard');
+await expect(page.locator('text=AI Model Dashboard')).toBeVisible({ timeout: 10000 });
 
 // Pattern 2: API endpoint testing (validates Python API)
-const response = await request.get('http://localhost:8000/health')
-expect(response.ok()).toBeTruthy()
+const response = await request.get('http://localhost:8000/health');
+expect(response.ok()).toBeTruthy();
 
 // Pattern 3: Error state handling
-await context.route('**/api/predict/**', route => route.abort())
-await expect(page.locator('text=/error|failed/i')).toBeVisible()
+await context.route('**/api/predict/**', (route) => route.abort());
+await expect(page.locator('text=/error|failed/i')).toBeVisible();
 
 // Pattern 4: Dark mode support verification
-const darkElements = page.locator('.dark\\:bg-gray-900')
-expect(await darkElements.count()).toBeGreaterThan(0)
+const darkElements = page.locator('.dark\\:bg-gray-900');
+expect(await darkElements.count()).toBeGreaterThan(0);
 ```
 
 ## Debugging Failed Tests
@@ -184,13 +185,13 @@ Example:
 ```typescript
 test.describe('Your Feature', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/your-page')
-  })
+    await page.goto('/your-page');
+  });
 
   test('should load data', async ({ page }) => {
-    await expect(page.locator('text=Expected Content')).toBeVisible({ timeout: 10000 })
-  })
-})
+    await expect(page.locator('text=Expected Content')).toBeVisible({ timeout: 10000 });
+  });
+});
 ```
 
 ## CI/CD Integration

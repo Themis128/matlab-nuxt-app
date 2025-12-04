@@ -12,11 +12,13 @@
 ### 🔴 CRITICAL (Fix Immediately)
 
 1. **Hardcoded Secrets** (6 instances)
+
    - Default API secrets in production configs
    - Development fallback secrets
    - Algolia API key handling
 
 2. **Insecure Deserialization** (6 instances)
+
    - Pickle file loading without validation
    - JSON loading from untrusted sources
 
@@ -27,6 +29,7 @@
 ### 🟡 HIGH (Fix Soon)
 
 4. **Arbitrary File Operations** (5 instances)
+
    - Path traversal vulnerabilities
    - Unsanitized file paths
 
