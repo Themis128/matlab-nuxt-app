@@ -176,8 +176,11 @@ const averageImportance = computed(() => {
   return values.reduce((sum, val) => sum + val, 0) / values.length;
 });
 
+// Bar data type
+type Bar = { x: number; y: number; width: number; height: number; value: number; label: string };
+
 // Bar data calculation
-const barData = computed(() => {
+const barData = computed<Bar[]>(() => {
   const features = Object.keys(importance.value);
   const values = Object.values(importance.value);
 
@@ -220,11 +223,13 @@ watch(
 
 // Selected bar helper to avoid indexing undefined in templates
 // Return a safe bar object to avoid undefined indexing in templates
-const selectedBar = computed(() => {
+const selectedBar = computed<Bar>(() => {
   if (hoveredBarIndex.value === null) {
     return { x: 0, y: 0, width: 0, height: 0, value: 0, label: '' };
   }
-  return barData.value[hoveredBarIndex.value] ?? { x: 0, y: 0, width: 0, height: 0, value: 0, label: '' };
+  return (
+    barData.value[hoveredBarIndex.value] ?? { x: 0, y: 0, width: 0, height: 0, value: 0, label: '' }
+  );
 });
 </script>
 

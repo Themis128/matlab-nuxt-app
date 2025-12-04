@@ -138,7 +138,7 @@ const props = defineProps<{
 const hoveredPoint = ref<{
   x: number;
   y: number;
-  label: string;
+  label?: string;
   value: number;
 } | null>(null);
 

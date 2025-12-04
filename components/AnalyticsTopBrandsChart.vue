@@ -217,8 +217,11 @@ const topBrand = computed(() => {
   return { name: maxEntry[0], count: maxEntry[1] };
 });
 
+// Bar data type
+type Brand = { x: number; y: number; width: number; height: number; count: number; name: string };
+
 // Bar data calculation
-const brandData = computed(() => {
+const brandData = computed<Brand[]>(() => {
   return brandEntries.value.map(([name, count], index) => {
     const barWidth = (chartWidth - padding.left - padding.right) / brandEntries.value.length - 10;
     const maxHeight = chartHeight - padding.top - padding.bottom;
@@ -241,7 +244,7 @@ const brandData = computed(() => {
 });
 
 // Safely expose the hovered brand data to avoid direct indexing of possibly undefined arrays
-const hoveredBrand = computed(() => {
+const hoveredBrand = computed<Brand | null>(() => {
   if (hoveredBarIndex.value === null) return null;
   const idx = hoveredBarIndex.value;
   return brandData.value && brandData.value[idx] ? brandData.value[idx] : null;
