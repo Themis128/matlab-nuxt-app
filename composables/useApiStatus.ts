@@ -2,8 +2,6 @@
  * Composable for checking API health status
  */
 
-import { ref, readonly, onMounted, onUnmounted } from 'vue';
-
 export const useApiStatus = () => {
   const status = ref({
     isOnline: false,
@@ -12,6 +10,8 @@ export const useApiStatus = () => {
     error: null as string | null,
     backoffMs: 30000,
   });
+
+  let timer: ReturnType<typeof setTimeout> | null = null;
 
   const checkApiHealth = async () => {
     status.value.isChecking = true;
@@ -40,33 +40,30 @@ export const useApiStatus = () => {
     }
   };
 
+  const scheduleNext = () => {
+    if (timer) clearTimeout(timer);
+    const delay = status.value.isOnline ? 30000 : Math.min(status.value.backoffMs, 10 * 60 * 1000);
+    timer = setTimeout(async () => {
+      await checkApiHealth();
+      // Increase backoff if still offline, reset when online
+      if (!status.value.isOnline) {
+        status.value.backoffMs = Math.min(status.value.backoffMs * 2, 10 * 60 * 1000);
+      } else {
+        status.value.backoffMs = 30000;
+      }
+      scheduleNext();
+    }, delay);
+  };
+
   // Auto-check on mount and periodically with exponential backoff when offline
   onMounted(() => {
-    let timer: ReturnType<typeof setTimeout> | null = null;
-
-    const scheduleNext = () => {
-      if (timer) clearTimeout(timer);
-      const delay = status.value.isOnline
-        ? 30000
-        : Math.min(status.value.backoffMs, 10 * 60 * 1000);
-      timer = setTimeout(async () => {
-        await checkApiHealth();
-        // Increase backoff if still offline, reset when online
-        if (!status.value.isOnline) {
-          status.value.backoffMs = Math.min(status.value.backoffMs * 2, 10 * 60 * 1000);
-        } else {
-          status.value.backoffMs = 30000;
-        }
-        scheduleNext();
-      }, delay);
-    };
-
     // Initial check then schedule
     checkApiHealth().finally(scheduleNext);
+  });
 
-    onUnmounted(() => {
-      if (timer) clearTimeout(timer);
-    });
+  // Cleanup timer on unmount
+  onUnmounted(() => {
+    if (timer) clearTimeout(timer);
   });
 
   return {

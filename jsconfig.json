@@ -11,11 +11,5 @@
     "allowJs": true,
     "checkJs": false
   },
-  "exclude": [
-    "node_modules",
-    ".nuxt",
-    "dist",
-    "python_api",
-    "mcp-servers"
-  ]
+  "exclude": ["node_modules", ".nuxt", "dist", "python_api", "mcp-servers"]
 }

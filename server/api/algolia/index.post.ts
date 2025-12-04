@@ -1,9 +1,7 @@
 import { algoliasearch } from 'algoliasearch';
-import { readBody, createError, defineEventHandler } from 'h3';
-import type { H3Event } from 'h3';
 import type { AlgoliaRecord } from '../../../types/algolia';
 
-export default defineEventHandler(async (event: H3Event) => {
+export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   // use typed runtime config; `types/runtime.d.ts` declares the runtime shape
   const config = useRuntimeConfig();

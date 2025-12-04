@@ -1,11 +1,11 @@
 <template>
-  <div class="min-h-screen bg-background">
+  <div class="bg-background min-h-screen">
     <!-- Header Section -->
-    <section class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-16">
+    <section class="bg-gradient-to-r from-blue-600 to-indigo-600 py-16 text-white">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
-          <h1 class="text-4xl sm:text-5xl font-bold mb-4">ML Model Comparison</h1>
-          <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+          <h1 class="mb-4 text-4xl font-bold sm:text-5xl">ML Model Comparison</h1>
+          <p class="mx-auto max-w-2xl text-xl text-blue-100">
             Compare and analyze different machine learning models for mobile dataset performance
           </p>
         </div>
@@ -16,29 +16,29 @@
     <section class="py-20">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Model Selection Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div class="mb-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           <UCard
             v-for="model in models"
             :key="model.id"
             :class="[
               'cursor-pointer transition-all duration-300 hover:shadow-xl',
               selectedModel === model.id
-                ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                ? 'bg-blue-50 ring-2 ring-blue-500 dark:bg-blue-900/20'
                 : 'hover:-translate-y-1',
             ]"
             @click="selectModel(model.id)"
           >
             <div class="text-center">
               <div
-                class="w-12 h-12 mx-auto mb-4 rounded-full flex items-center justify-center"
+                class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full"
                 :class="model.color"
               >
-                <UIcon :name="model.icon" class="w-6 h-6 text-white" />
+                <UIcon :name="model.icon" class="h-6 w-6 text-white" />
               </div>
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+              <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
                 {{ model.name }}
               </h3>
-              <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">{{ model.description }}</p>
+              <p class="mb-4 text-sm text-gray-600 dark:text-gray-300">{{ model.description }}</p>
               <div class="space-y-2">
                 <div class="flex justify-between text-sm">
                   <span class="text-gray-500">Accuracy</span>
@@ -59,8 +59,8 @@
         </div>
 
         <!-- Detailed Comparison Section -->
-        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg mb-16">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+        <div class="mb-16 rounded-2xl bg-white p-8 shadow-lg dark:bg-gray-800">
+          <h2 class="mb-8 text-center text-2xl font-bold text-gray-900 dark:text-white">
             Model Performance Comparison
           </h2>
 
@@ -68,10 +68,10 @@
             <table class="w-full text-sm">
               <thead>
                 <tr class="border-b border-gray-200 dark:border-gray-700">
-                  <th class="text-left py-3 px-4 font-semibold text-gray-900 dark:text-white">
+                  <th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">
                     Metric
                   </th>
-                  <th v-for="model in selectedModels" :key="model.id" class="text-center py-3 px-4">
+                  <th v-for="model in selectedModels" :key="model.id" class="px-4 py-3 text-center">
                     <div class="font-semibold text-gray-900 dark:text-white">{{ model.name }}</div>
                     <div class="text-xs text-gray-500">{{ model.type }}</div>
                   </th>
@@ -83,10 +83,10 @@
                   :key="metric.key"
                   class="border-b border-gray-100 dark:border-gray-700"
                 >
-                  <td class="py-3 px-4 font-medium text-gray-900 dark:text-white">
+                  <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">
                     {{ metric.label }}
                   </td>
-                  <td v-for="model in selectedModels" :key="model.id" class="text-center py-3 px-4">
+                  <td v-for="model in selectedModels" :key="model.id" class="px-4 py-3 text-center">
                     <span :class="getMetricClass(getMetricValue(model, metric.key), metric.type)">
                       {{ formatMetric(getMetricValue(model, metric.key), metric.type) }}
                     </span>
@@ -98,9 +98,9 @@
         </div>
 
         <!-- Visual Comparison Charts -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        <div class="mb-16 grid grid-cols-1 gap-8 lg:grid-cols-2">
           <UCard class="p-6">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
               Accuracy Comparison
             </h3>
             <div class="space-y-3">
@@ -108,14 +108,14 @@
                 <div class="w-20 text-sm font-medium text-gray-700 dark:text-gray-300">
                   {{ model.name }}
                 </div>
-                <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                <div class="h-2 flex-1 rounded-full bg-gray-200 dark:bg-gray-700">
                   <div
                     class="h-2 rounded-full transition-all duration-500"
                     :class="model.color.replace('bg-', 'bg-')"
                     :style="{ width: `${model.accuracy}%` }"
                   ></div>
                 </div>
-                <div class="w-12 text-sm font-semibold text-gray-900 dark:text-white text-right">
+                <div class="w-12 text-right text-sm font-semibold text-gray-900 dark:text-white">
                   {{ model.accuracy }}%
                 </div>
               </div>
@@ -123,7 +123,7 @@
           </UCard>
 
           <UCard class="p-6">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
               Training Time Comparison
             </h3>
             <div class="space-y-3">
@@ -131,14 +131,14 @@
                 <div class="w-20 text-sm font-medium text-gray-700 dark:text-gray-300">
                   {{ model.name }}
                 </div>
-                <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                <div class="h-2 flex-1 rounded-full bg-gray-200 dark:bg-gray-700">
                   <div
                     class="h-2 rounded-full transition-all duration-500"
                     :class="model.color.replace('bg-', 'bg-')"
                     :style="{ width: `${(model.trainingTimeMinutes / maxTrainingTime) * 100}%` }"
                   ></div>
                 </div>
-                <div class="w-16 text-sm font-semibold text-gray-900 dark:text-white text-right">
+                <div class="w-16 text-right text-sm font-semibold text-gray-900 dark:text-white">
                   {{ model.trainingTimeMinutes }}m
                 </div>
               </div>
@@ -148,37 +148,37 @@
 
         <!-- Model Recommendations -->
         <div
-          class="bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-2xl p-8"
+          class="rounded-2xl bg-gradient-to-br from-green-50 to-blue-50 p-8 dark:from-green-900/20 dark:to-blue-900/20"
         >
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+          <h2 class="mb-6 text-center text-2xl font-bold text-gray-900 dark:text-white">
             Recommended Models
           </h2>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
             <UCard v-for="recommendation in recommendations" :key="recommendation.id" class="p-6">
               <div class="text-center">
                 <div
-                  class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center"
+                  class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full"
                   :class="recommendation.badgeColor"
                 >
-                  <UIcon :name="recommendation.icon" class="w-8 h-8 text-white" />
+                  <UIcon :name="recommendation.icon" class="h-8 w-8 text-white" />
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
                   {{ recommendation.title }}
                 </h3>
-                <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                <p class="mb-4 text-sm text-gray-600 dark:text-gray-300">
                   {{ recommendation.description }}
                 </p>
                 <div class="space-y-2">
                   <div class="text-sm">
                     <span class="text-gray-500">Best for:</span>
-                    <span class="font-semibold text-gray-900 dark:text-white ml-1">{{
+                    <span class="ml-1 font-semibold text-gray-900 dark:text-white">{{
                       recommendation.bestFor
                     }}</span>
                   </div>
                   <div class="text-sm">
                     <span class="text-gray-500">Accuracy:</span>
-                    <span class="font-semibold text-green-600 ml-1"
+                    <span class="ml-1 font-semibold text-green-600"
                       >{{ recommendation.accuracy }}%</span
                     >
                   </div>

@@ -8,10 +8,7 @@
  * Usage: node create-github-project.js [--org ORGANIZATION] [--user]
  */
 
-/* eslint-disable no-console */
-
 import { execSync } from 'child_process';
-import { readFileSync } from 'fs';
 
 // Project configuration
 const PROJECT_CONFIG = {
@@ -38,20 +35,6 @@ This project tracks the development and improvement of deep learning models for 
 - Next: Improve brand classification to 70%+ accuracy
 `,
 };
-
-// GraphQL mutation to create a project
-const CREATE_PROJECT_MUTATION = `
-  mutation CreateProject($input: CreateProjectV2Input!) {
-    createProjectV2(input: $input) {
-      projectV2 {
-        id
-        number
-        title
-        url
-      }
-    }
-  }
-`;
 
 function getOwnerAndType() {
   const args = process.argv.slice(2);
@@ -99,20 +82,14 @@ function getOwnerAndType() {
         }
       }
     }
-  } catch (e) {
+  } catch {
     // Ignore git errors
   }
 
   return { owner: null, type: 'USER' };
 }
 
-function createProjectGraphQL(owner, ownerType) {
-  const input = {
-    ownerId: owner ? `ORG_${owner}` : null, // This is a placeholder - actual ID needed
-    title: PROJECT_CONFIG.name,
-    public: false,
-  };
-
+function createProjectGraphQL(owner, _ownerType) {
   // Note: We need the actual owner ID, not the login
   // This is complex with GraphQL, so we'll use a simpler approach
   console.log('Creating project using GitHub CLI...');
@@ -178,7 +155,7 @@ function main() {
   // Check if gh CLI supports project creation
   try {
     execSync('gh project --help', { encoding: 'utf-8', stdio: 'ignore' });
-  } catch (e) {
+  } catch {
     console.log('⚠️  GitHub CLI project commands may not be available in your version.');
     console.log('📝 Please use the manual guide: CREATE_PROJECT_MANUAL.md\n');
     return;

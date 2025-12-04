@@ -9,4 +9,19 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {},
+  overrides: [
+    {
+      files: ['**/mcp-servers/**/template/*.html'],
+      rules: {
+        'no-unused-expressions': 'off',
+        'no-undef': 'off',
+      },
+    },
+    {
+      files: ['.github/workflows/*.yml'],
+      rules: {
+        'no-undef': 'off',
+      },
+    },
+  ],
 };

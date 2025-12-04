@@ -1,0 +1,23 @@
+{
+  "name": "svgl-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for SVGL API integration",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "svgl-client": "^0.1.2"
+  },
+  "keywords": [
+    "mcp",
+    "svgl",
+    "svg",
+    "logos",
+    "api"
+  ],
+  "author": "SVGL MCP Server",
+  "license": "MIT"
+}

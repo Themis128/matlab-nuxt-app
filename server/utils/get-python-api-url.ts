@@ -8,10 +8,8 @@
  * 2. Current request host with port 8000 (dynamic detection)
  * 3. localhost:8000 (development fallback)
  */
-import { getRequestHost, getRequestProtocol } from 'h3';
-import type { H3Event } from 'h3';
 
-export function getPythonApiUrl(event?: H3Event): string {
+export function getPythonApiUrl(event?: any): string {
   // Check environment variables first (highest priority)
   const envUrl = process.env.PYTHON_API_URL || process.env.NUXT_PUBLIC_API_BASE;
   if (envUrl) {

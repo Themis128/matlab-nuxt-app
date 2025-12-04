@@ -1,32 +1,32 @@
 <template>
-  <div class="min-h-screen bg-background">
+  <div class="bg-background min-h-screen">
     <!-- Hero Section -->
     <section
-      class="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 py-16"
+      class="bg-gradient-to-br from-purple-50 to-pink-50 py-16 dark:from-purple-900/20 dark:to-pink-900/20"
     >
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
+        <div class="mb-12 text-center">
           <div
-            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-sm font-medium mb-6"
+            class="mb-6 inline-flex items-center gap-2 rounded-full bg-purple-100 px-3 py-1 text-sm font-medium text-purple-700 dark:bg-purple-900/30 dark:text-purple-300"
           >
-            <UIcon name="i-heroicons-sparkles" class="w-4 h-4" />
+            <UIcon name="i-heroicons-sparkles" class="h-4 w-4" />
             AI Predictions Demo
           </div>
-          <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+          <h1 class="mb-4 text-4xl font-bold text-gray-900 sm:text-5xl dark:text-white">
             Experience AI-Powered
             <span class="text-purple-600 dark:text-purple-400">Phone Predictions</span>
           </h1>
-          <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          <p class="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300">
             See our advanced MATLAB deep learning models in action. Upload phone specifications and
             get instant predictions on performance, pricing, and market trends.
           </p>
         </div>
 
         <!-- Demo Interface -->
-        <div class="max-w-6xl mx-auto">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="mx-auto max-w-6xl">
+          <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
             <!-- Input Panel -->
-            <UCard class="p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+            <UCard class="bg-white/80 p-6 backdrop-blur-sm dark:bg-gray-800/80">
               <template #header>
                 <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
                   Input Specifications
@@ -111,11 +111,11 @@
                     :loading="isPredicting"
                     @click="runPrediction"
                   >
-                    <UIcon name="i-heroicons-sparkles" class="w-5 h-5 mr-2" />
+                    <UIcon name="i-heroicons-sparkles" class="mr-2 h-5 w-5" />
                     {{ isPredicting ? 'Analyzing...' : 'Run AI Prediction' }}
                   </UButton>
                   <UButton variant="outline" @click="resetForm">
-                    <UIcon name="i-heroicons-arrow-path" class="w-5 h-5 mr-2" />
+                    <UIcon name="i-heroicons-arrow-path" class="mr-2 h-5 w-5" />
                     Reset
                   </UButton>
                 </div>
@@ -123,18 +123,18 @@
             </UCard>
 
             <!-- Results Panel -->
-            <UCard class="p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+            <UCard class="bg-white/80 p-6 backdrop-blur-sm dark:bg-gray-800/80">
               <template #header>
                 <h2 class="text-xl font-semibold text-gray-900 dark:text-white">AI Predictions</h2>
                 <p class="text-sm text-gray-600 dark:text-gray-400">Real-time analysis results</p>
               </template>
 
-              <div v-if="!predictionResults" class="text-center py-12">
+              <div v-if="!predictionResults" class="py-12 text-center">
                 <UIcon
                   name="i-heroicons-cpu-chip"
-                  class="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4"
+                  class="mx-auto mb-4 h-16 w-16 text-gray-300 dark:text-gray-600"
                 />
-                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                <h3 class="mb-2 text-lg font-medium text-gray-900 dark:text-white">
                   Ready for Analysis
                 </h3>
                 <p class="text-gray-600 dark:text-gray-400">
@@ -146,13 +146,13 @@
               <div v-else class="space-y-6">
                 <!-- Price Prediction -->
                 <div
-                  class="p-4 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg"
+                  class="rounded-lg bg-gradient-to-r from-green-50 to-emerald-50 p-4 dark:from-green-900/20 dark:to-emerald-900/20"
                 >
-                  <div class="flex items-center gap-3 mb-2">
-                    <UIcon name="i-heroicons-currency-dollar" class="w-5 h-5 text-green-600" />
+                  <div class="mb-2 flex items-center gap-3">
+                    <UIcon name="i-heroicons-currency-dollar" class="h-5 w-5 text-green-600" />
                     <h3 class="font-semibold text-gray-900 dark:text-white">Predicted Price</h3>
                   </div>
-                  <div class="text-3xl font-bold text-green-600 dark:text-green-400 mb-1">
+                  <div class="mb-1 text-3xl font-bold text-green-600 dark:text-green-400">
                     ${{ predictionResults.price }}
                   </div>
                   <div class="text-sm text-gray-600 dark:text-gray-400">
@@ -162,16 +162,16 @@
 
                 <!-- Performance Score -->
                 <div
-                  class="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg"
+                  class="rounded-lg bg-gradient-to-r from-blue-50 to-indigo-50 p-4 dark:from-blue-900/20 dark:to-indigo-900/20"
                 >
-                  <div class="flex items-center gap-3 mb-2">
-                    <UIcon name="i-heroicons-chart-bar" class="w-5 h-5 text-blue-600" />
+                  <div class="mb-2 flex items-center gap-3">
+                    <UIcon name="i-heroicons-chart-bar" class="h-5 w-5 text-blue-600" />
                     <h3 class="font-semibold text-gray-900 dark:text-white">Performance Score</h3>
                   </div>
                   <div class="flex items-center gap-4">
-                    <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                    <div class="h-3 flex-1 rounded-full bg-gray-200 dark:bg-gray-700">
                       <div
-                        class="bg-gradient-to-r from-blue-400 to-blue-600 h-3 rounded-full transition-all duration-1000"
+                        class="h-3 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-1000"
                         :style="{ width: predictionResults.performanceScore + '%' }"
                       ></div>
                     </div>
@@ -183,13 +183,13 @@
 
                 <!-- Market Position -->
                 <div
-                  class="p-4 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-lg"
+                  class="rounded-lg bg-gradient-to-r from-purple-50 to-pink-50 p-4 dark:from-purple-900/20 dark:to-pink-900/20"
                 >
-                  <div class="flex items-center gap-3 mb-2">
-                    <UIcon name="i-heroicons-trophy" class="w-5 h-5 text-purple-600" />
+                  <div class="mb-2 flex items-center gap-3">
+                    <UIcon name="i-heroicons-trophy" class="h-5 w-5 text-purple-600" />
                     <h3 class="font-semibold text-gray-900 dark:text-white">Market Position</h3>
                   </div>
-                  <div class="text-xl font-bold text-purple-600 dark:text-purple-400 mb-1">
+                  <div class="mb-1 text-xl font-bold text-purple-600 dark:text-purple-400">
                     {{ predictionResults.marketPosition }}
                   </div>
                   <div class="text-sm text-gray-600 dark:text-gray-400">
@@ -199,10 +199,10 @@
 
                 <!-- Key Insights -->
                 <div
-                  class="p-4 bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-900/20 dark:to-yellow-900/20 rounded-lg"
+                  class="rounded-lg bg-gradient-to-r from-orange-50 to-yellow-50 p-4 dark:from-orange-900/20 dark:to-yellow-900/20"
                 >
-                  <div class="flex items-center gap-3 mb-3">
-                    <UIcon name="i-heroicons-light-bulb" class="w-5 h-5 text-orange-600" />
+                  <div class="mb-3 flex items-center gap-3">
+                    <UIcon name="i-heroicons-light-bulb" class="h-5 w-5 text-orange-600" />
                     <h3 class="font-semibold text-gray-900 dark:text-white">AI Insights</h3>
                   </div>
                   <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
@@ -213,7 +213,7 @@
                     >
                       <UIcon
                         name="i-heroicons-check-circle"
-                        class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0"
+                        class="mt-0.5 h-4 w-4 flex-shrink-0 text-green-500"
                       />
                       {{ insight }}
                     </li>
@@ -221,12 +221,12 @@
                 </div>
 
                 <!-- Model Confidence -->
-                <div class="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                  <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">Model Confidence</div>
+                <div class="rounded-lg bg-gray-50 p-4 text-center dark:bg-gray-800">
+                  <div class="mb-2 text-sm text-gray-600 dark:text-gray-400">Model Confidence</div>
                   <div class="text-2xl font-bold text-gray-900 dark:text-white">
                     {{ predictionResults.overallConfidence }}%
                   </div>
-                  <div class="text-xs text-gray-500 mt-1">
+                  <div class="mt-1 text-xs text-gray-500">
                     Based on {{ predictionResults.trainingSamples }} training samples
                   </div>
                 </div>
@@ -238,28 +238,28 @@
     </section>
 
     <!-- How It Works -->
-    <section class="py-20 bg-gray-50 dark:bg-gray-900/50">
+    <section class="bg-gray-50 py-20 dark:bg-gray-900/50">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+        <div class="mb-16 text-center">
+          <h2 class="mb-4 text-3xl font-bold text-gray-900 dark:text-white">
             How Our AI Prediction Works
           </h2>
-          <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          <p class="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300">
             Our MATLAB-powered deep learning models analyze thousands of phone specifications to
             provide accurate predictions and market insights.
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
           <UCard
-            class="text-center group hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+            class="group text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
           >
             <div
-              class="p-4 bg-blue-100 dark:bg-blue-900/30 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center"
+              class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 p-4 dark:bg-blue-900/30"
             >
-              <UIcon name="i-heroicons-server-stack" class="w-8 h-8 text-blue-600" />
+              <UIcon name="i-heroicons-server-stack" class="h-8 w-8 text-blue-600" />
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+            <h3 class="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
               Data Processing
             </h3>
             <p class="text-gray-600 dark:text-gray-300">
@@ -269,14 +269,14 @@
           </UCard>
 
           <UCard
-            class="text-center group hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+            class="group text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
           >
             <div
-              class="p-4 bg-purple-100 dark:bg-purple-900/30 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center"
+              class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-purple-100 p-4 dark:bg-purple-900/30"
             >
-              <UIcon name="i-heroicons-cpu-chip" class="w-8 h-8 text-purple-600" />
+              <UIcon name="i-heroicons-cpu-chip" class="h-8 w-8 text-purple-600" />
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Deep Learning</h3>
+            <h3 class="mb-3 text-xl font-semibold text-gray-900 dark:text-white">Deep Learning</h3>
             <p class="text-gray-600 dark:text-gray-300">
               Ensemble of neural networks trained on comprehensive mobile phone datasets for
               accurate predictions.
@@ -284,14 +284,14 @@
           </UCard>
 
           <UCard
-            class="text-center group hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+            class="group text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
           >
             <div
-              class="p-4 bg-green-100 dark:bg-green-900/30 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center"
+              class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 p-4 dark:bg-green-900/30"
             >
-              <UIcon name="i-heroicons-chart-bar" class="w-8 h-8 text-green-600" />
+              <UIcon name="i-heroicons-chart-bar" class="h-8 w-8 text-green-600" />
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+            <h3 class="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
               Market Analysis
             </h3>
             <p class="text-gray-600 dark:text-gray-300">

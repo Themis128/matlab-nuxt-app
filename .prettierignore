@@ -4,7 +4,6 @@
 dist/
 
 # Test and report files
-playwright-report/
 test-results.json
 coverage/
 

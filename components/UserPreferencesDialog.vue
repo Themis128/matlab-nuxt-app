@@ -14,12 +14,12 @@
 
         <!-- Modal Card with glass morphism -->
         <div
-          class="relative w-full max-w-md mx-4 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 dark:border-slate-700/50 transform transition-all duration-300"
+          class="relative mx-4 w-full max-w-md transform rounded-2xl border border-white/20 bg-white/95 shadow-2xl backdrop-blur-xl transition-all duration-300 dark:border-slate-700/50 dark:bg-slate-900/95"
           :class="isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'"
         >
           <!-- Animated background pattern -->
-          <div class="absolute inset-0 opacity-5 rounded-2xl overflow-hidden">
-            <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <div class="absolute inset-0 overflow-hidden rounded-2xl opacity-5">
+            <svg class="absolute inset-0 h-full w-full" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <pattern id="modal-grid" width="20" height="20" patternUnits="userSpaceOnUse">
                   <path
@@ -37,13 +37,13 @@
 
           <!-- Header with enhanced design -->
           <div class="relative p-6 pb-4">
-            <div class="flex items-center gap-3 mb-2">
+            <div class="mb-2 flex items-center gap-3">
               <div class="relative">
-                <div class="absolute inset-0 bg-primary-400/20 rounded-xl blur-lg opacity-50"></div>
-                <Cog6ToothIcon class="relative w-6 h-6 text-primary-500 dark:text-primary-400" />
+                <div class="bg-primary-400/20 absolute inset-0 rounded-xl opacity-50 blur-lg"></div>
+                <Cog6ToothIcon class="text-primary-500 dark:text-primary-400 relative h-6 w-6" />
               </div>
               <h3
-                class="text-xl font-bold bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent"
+                class="from-primary-600 bg-gradient-to-r to-purple-600 bg-clip-text text-xl font-bold text-transparent"
               >
                 User Preferences
               </h3>
@@ -59,8 +59,8 @@
               <!-- Theme Selection with enhanced styling -->
               <div class="space-y-3">
                 <div class="flex items-center gap-2">
-                  <div class="p-1.5 bg-yellow-400/20 rounded-lg">
-                    <SwatchIcon class="w-4 h-4 text-yellow-600" />
+                  <div class="rounded-lg bg-yellow-400/20 p-1.5">
+                    <SwatchIcon class="h-4 w-4 text-yellow-600" />
                   </div>
                   <label class="font-semibold text-gray-800 dark:text-gray-200">Theme</label>
                 </div>
@@ -75,7 +75,7 @@
                     <template #leading>
                       <UIcon
                         :name="getThemeIcon(localPreferences.theme)"
-                        class="w-4 h-4 text-gray-500"
+                        class="h-4 w-4 text-gray-500"
                       />
                     </template>
                   </USelectMenu>
@@ -85,20 +85,20 @@
               <!-- Animation Toggle with modern switch -->
               <div class="space-y-3">
                 <div class="flex items-center gap-2">
-                  <div class="p-1.5 bg-blue-400/20 rounded-lg">
-                    <PlayPauseIcon class="w-4 h-4 text-blue-600" />
+                  <div class="rounded-lg bg-blue-400/20 p-1.5">
+                    <PlayPauseIcon class="h-4 w-4 text-blue-600" />
                   </div>
                   <label class="font-semibold text-gray-800 dark:text-gray-200">Animations</label>
                 </div>
                 <div
-                  class="flex items-center justify-between p-3 bg-gray-50 dark:bg-slate-800/50 rounded-xl border border-gray-200 dark:border-slate-700"
+                  class="flex items-center justify-between rounded-xl border border-gray-200 bg-gray-50 p-3 dark:border-slate-700 dark:bg-slate-800/50"
                 >
                   <span class="text-sm text-gray-600 dark:text-gray-400">
                     {{ localPreferences.animations ? 'Enabled' : 'Disabled' }}
                   </span>
                   <!-- Custom Toggle Switch -->
                   <div
-                    class="relative w-12 h-6 rounded-full cursor-pointer transition-all duration-300"
+                    class="relative h-6 w-12 cursor-pointer rounded-full transition-all duration-300"
                     :class="
                       localPreferences.animations
                         ? 'bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg shadow-blue-500/25'
@@ -111,7 +111,7 @@
                     @keydown="handleSwitchKeydown('animations', $event)"
                   >
                     <div
-                      class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow-lg transition-all duration-300 transform"
+                      class="absolute left-1 top-1 h-4 w-4 transform rounded-full bg-white shadow-lg transition-all duration-300"
                       :class="localPreferences.animations ? 'translate-x-6' : 'translate-x-0'"
                     >
                       <div
@@ -130,19 +130,19 @@
               <!-- Compact Mode Toggle -->
               <div class="space-y-3">
                 <div class="flex items-center gap-2">
-                  <div class="p-1.5 bg-green-400/20 rounded-lg">
-                    <Squares2x2Icon class="w-4 h-4 text-green-600" />
+                  <div class="rounded-lg bg-green-400/20 p-1.5">
+                    <Squares2X2Icon class="h-4 w-4 text-green-600" />
                   </div>
                   <label class="font-semibold text-gray-800 dark:text-gray-200">Compact Mode</label>
                 </div>
                 <div
-                  class="flex items-center justify-between p-3 bg-gray-50 dark:bg-slate-800/50 rounded-xl border border-gray-200 dark:border-slate-700"
+                  class="flex items-center justify-between rounded-xl border border-gray-200 bg-gray-50 p-3 dark:border-slate-700 dark:bg-slate-800/50"
                 >
                   <span class="text-sm text-gray-600 dark:text-gray-400">
                     {{ localPreferences.compactMode ? 'Enabled' : 'Disabled' }}
                   </span>
                   <div
-                    class="relative w-12 h-6 rounded-full cursor-pointer transition-all duration-300"
+                    class="relative h-6 w-12 cursor-pointer rounded-full transition-all duration-300"
                     :class="
                       localPreferences.compactMode
                         ? 'bg-gradient-to-r from-green-500 to-teal-600 shadow-lg shadow-green-500/25'
@@ -155,7 +155,7 @@
                     @keydown="handleSwitchKeydown('compactMode', $event)"
                   >
                     <div
-                      class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow-lg transition-all duration-300 transform"
+                      class="absolute left-1 top-1 h-4 w-4 transform rounded-full bg-white shadow-lg transition-all duration-300"
                       :class="localPreferences.compactMode ? 'translate-x-6' : 'translate-x-0'"
                     >
                       <div
@@ -174,19 +174,19 @@
               <!-- Auto Refresh Toggle -->
               <div class="space-y-3">
                 <div class="flex items-center gap-2">
-                  <div class="p-1.5 bg-purple-400/20 rounded-lg">
-                    <ArrowPathIcon class="w-4 h-4 text-purple-600" />
+                  <div class="rounded-lg bg-purple-400/20 p-1.5">
+                    <ArrowPathIcon class="h-4 w-4 text-purple-600" />
                   </div>
                   <label class="font-semibold text-gray-800 dark:text-gray-200">Auto Refresh</label>
                 </div>
                 <div
-                  class="flex items-center justify-between p-3 bg-gray-50 dark:bg-slate-800/50 rounded-xl border border-gray-200 dark:border-slate-700"
+                  class="flex items-center justify-between rounded-xl border border-gray-200 bg-gray-50 p-3 dark:border-slate-700 dark:bg-slate-800/50"
                 >
                   <span class="text-sm text-gray-600 dark:text-gray-400">
                     {{ localPreferences.autoRefresh ? 'Enabled' : 'Disabled' }}
                   </span>
                   <div
-                    class="relative w-12 h-6 rounded-full cursor-pointer transition-all duration-300"
+                    class="relative h-6 w-12 cursor-pointer rounded-full transition-all duration-300"
                     :class="
                       localPreferences.autoRefresh
                         ? 'bg-gradient-to-r from-purple-500 to-pink-600 shadow-lg shadow-purple-500/25'
@@ -199,7 +199,7 @@
                     @keydown="handleSwitchKeydown('autoRefresh', $event)"
                   >
                     <div
-                      class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow-lg transition-all duration-300 transform"
+                      class="absolute left-1 top-1 h-4 w-4 transform rounded-full bg-white shadow-lg transition-all duration-300"
                       :class="localPreferences.autoRefresh ? 'translate-x-6' : 'translate-x-0'"
                     >
                       <div
@@ -218,20 +218,20 @@
 
             <!-- Enhanced Footer -->
             <div
-              class="flex justify-between gap-3 mt-8 pt-6 border-t border-gray-200 dark:border-slate-700"
+              class="mt-8 flex justify-between gap-3 border-t border-gray-200 pt-6 dark:border-slate-700"
             >
               <UButton
                 variant="ghost"
                 color="gray"
-                class="hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors duration-200"
+                class="transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-slate-800"
                 @click="resetToDefaults"
               >
-                <ArrowPathIcon class="w-4 h-4 mr-2" />
+                <ArrowPathIcon class="mr-2 h-4 w-4" />
                 Reset to Defaults
               </UButton>
               <UButton
                 @click="closeDialog"
-                class="bg-gradient-to-r from-primary-500 to-purple-600 hover:from-primary-600 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+                class="from-primary-500 hover:from-primary-600 bg-gradient-to-r to-purple-600 text-white shadow-lg transition-all duration-200 hover:to-purple-700 hover:shadow-xl"
               >
                 Close
               </UButton>
@@ -241,11 +241,11 @@
           <!-- Close button with enhanced styling -->
           <button
             @click="closeDialog"
-            class="absolute top-4 right-4 p-2 rounded-full bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors duration-200 group"
+            class="group absolute right-4 top-4 rounded-full bg-gray-100 p-2 transition-colors duration-200 hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-700"
             aria-label="Close dialog"
           >
             <XMarkIcon
-              class="w-4 h-4 text-gray-500 group-hover:text-gray-700 dark:group-hover:text-gray-300"
+              class="h-4 w-4 text-gray-500 group-hover:text-gray-700 dark:group-hover:text-gray-300"
             />
           </button>
         </div>
@@ -255,18 +255,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue';
 import {
+  ArrowPathIcon,
   Cog6ToothIcon,
-  SwatchIcon,
   PlayPauseIcon,
   Squares2X2Icon,
-  ArrowPathIcon,
-  SunIcon,
-  MoonIcon,
-  ComputerDesktopIcon,
+  SwatchIcon,
   XMarkIcon,
 } from '@heroicons/vue/24/outline';
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 
 interface Props {
   modelValue: boolean;
@@ -303,7 +300,7 @@ const initializeStore = async () => {
     const storeModule = await import('~/stores/userPreferencesStore');
     preferencesStore.value = storeModule.useUserPreferencesStore();
     localPreferences.value = { ...preferencesStore.value.$state };
-  } catch (error) {
+  } catch {
     console.warn('User preferences store not available, using local state only');
     preferencesStore.value = null;
   }

@@ -1,7 +1,5 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import { readBody, createError, defineEventHandler } from 'h3';
-import type { H3Event } from 'h3';
 
 interface PhoneModel {
   modelName: string;
@@ -18,7 +16,7 @@ interface PhoneModel {
   processor?: string;
 }
 
-export default defineEventHandler(async (event: H3Event) => {
+export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event);
 

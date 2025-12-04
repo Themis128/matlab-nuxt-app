@@ -8,6 +8,8 @@ export function useAccessibility() {
    * Announce message to screen readers
    */
   const announceToScreenReader = (message: string, priority: 'polite' | 'assertive' = 'polite') => {
+    if (!import.meta.client) return;
+
     const announcement = document.createElement('div');
     announcement.setAttribute('role', 'status');
     announcement.setAttribute('aria-live', priority);
@@ -17,15 +19,28 @@ export function useAccessibility() {
 
     document.body.appendChild(announcement);
 
-    setTimeout(() => {
-      document.body.removeChild(announcement);
-    }, 1000);
+    // Store reference for cleanup
+    const cleanup = () => {
+      if (document.body.contains(announcement)) {
+        document.body.removeChild(announcement);
+      }
+    };
+
+    const timeoutId = setTimeout(cleanup, 1000);
+
+    // Return cleanup function for manual cleanup if needed
+    return () => {
+      clearTimeout(timeoutId);
+      cleanup();
+    };
   };
 
   /**
    * Trap focus within an element (for modals, dialogs)
    */
   const trapFocus = (element: HTMLElement) => {
+    if (!import.meta.client) return () => {};
+
     const focusableElements = element.querySelectorAll<HTMLElement>(
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
     );
@@ -59,7 +74,8 @@ export function useAccessibility() {
   /**
    * Check if user prefers reduced motion
    */
-  const prefersReducedMotion = () => {
+  const prefersReducedMotion = (): boolean => {
+    if (!import.meta.client) return false;
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   };
 
@@ -74,6 +90,12 @@ export function useAccessibility() {
    * Manage skip links for keyboard navigation
    */
   const setupSkipLinks = () => {
+    if (!import.meta.client) return;
+
+    // Check if skip link already exists
+    const existingSkipLink = document.querySelector('.skip-to-main');
+    if (existingSkipLink) return;
+
     const skipLink = document.createElement('a');
     skipLink.href = '#main-content';
     skipLink.className = 'skip-to-main';
@@ -115,6 +137,8 @@ export function useAccessibility() {
    * Check if element is visible on screen
    */
   const isElementVisible = (element: HTMLElement): boolean => {
+    if (!import.meta.client) return false;
+
     const rect = element.getBoundingClientRect();
     return (
       rect.top >= 0 &&
@@ -128,6 +152,8 @@ export function useAccessibility() {
    * Smooth scroll to element with focus management
    */
   const scrollToElement = (elementId: string, focusElement = true) => {
+    if (!import.meta.client) return;
+
     const element = document.getElementById(elementId);
     if (element) {
       const scrollBehavior = prefersReducedMotion() ? 'auto' : 'smooth';
@@ -141,17 +167,54 @@ export function useAccessibility() {
   };
 
   /**
-   * Get contrast ratio between two colors (basic implementation)
+   * Get luminance of a color for contrast calculation
    */
-  const getContrastRatio = (_color1: string, _color2: string): number => {
-    // Simplified implementation - in production, use a proper color contrast library
-    return 4.5; // Placeholder - should calculate actual contrast
+  const getLuminance = (r: number, g: number, b: number): number => {
+    const [rs, gs, bs] = [r, g, b].map((c) => {
+      const sRGB = c / 255;
+      return sRGB <= 0.03928 ? sRGB / 12.92 : Math.pow((sRGB + 0.055) / 1.055, 2.4);
+    }) as [number, number, number];
+    return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+  };
+
+  /**
+   * Parse hex color to RGB
+   */
+  const hexToRgb = (hex: string): { r: number; g: number; b: number } | null => {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result
+      ? {
+          r: parseInt(result[1]!, 16),
+          g: parseInt(result[2]!, 16),
+          b: parseInt(result[3]!, 16),
+        }
+      : null;
+  };
+
+  /**
+   * Get contrast ratio between two colors
+   * Returns a value between 1 and 21
+   */
+  const getContrastRatio = (color1: string, color2: string): number => {
+    const rgb1 = hexToRgb(color1);
+    const rgb2 = hexToRgb(color2);
+
+    if (!rgb1 || !rgb2) return 1;
+
+    const l1 = getLuminance(rgb1.r, rgb1.g, rgb1.b);
+    const l2 = getLuminance(rgb2.r, rgb2.g, rgb2.b);
+
+    const lighter = Math.max(l1, l2);
+    const darker = Math.min(l1, l2);
+
+    return (lighter + 0.05) / (darker + 0.05);
   };
 
   /**
    * Check if touch device
    */
-  const isTouchDevice = () => {
+  const isTouchDevice = (): boolean => {
+    if (!import.meta.client) return false;
     return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   };
 

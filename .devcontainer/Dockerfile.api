@@ -20,6 +20,8 @@ RUN if [ -f "/tmp/requirements.txt" ]; then $VENV_PATH/bin/pip install -r /tmp/r
 
 # Copy the rest of the workspace into the image
 COPY . /workspace
+# Copy the price database
+COPY python_api/price_database.db /workspace/python_api/price_database.db
 RUN chmod +x /workspace/.devcontainer/wrap-python-run.sh || true
 
 RUN useradd -m -u 1000 dev || true

@@ -25,13 +25,6 @@ updates:
           - 'nuxt*'
           - 'vue*'
           - '@nuxt/*'
-      # Group testing dependencies
-      testing:
-        patterns:
-          - 'playwright*'
-          - '@playwright/*'
-          - 'vitest*'
-          - 'jest*'
       # Group linting and formatting
       dev-tools:
         patterns:

@@ -4,53 +4,8 @@
     <meta charset="UTF-8" />
     <title>Dataset Insights</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <style>
-      body {
-        font-family: system-ui, sans-serif;
-        margin: 1rem;
-        max-width: 900px;
-      }
-      h1 {
-        margin-top: 0;
-      }
-      section {
-        margin-bottom: 2rem;
-      }
-      .grid {
-        display: grid;
-        gap: 1rem;
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      }
-      figure {
-        margin: 0;
-        background: #111;
-        padding: 0.5rem;
-        border-radius: 6px;
-      }
-      figcaption {
-        font-size: 0.75rem;
-        color: #ddd;
-        margin-top: 0.25rem;
-      }
-      img {
-        width: 100%;
-        height: auto;
-        display: block;
-        border-radius: 4px;
-      }
-    </style>
-    <script type="module">
-      import { experimental } from 'https://unpkg.com/@replit/extensions@1.10.0/dist/index.esm.js';
-      const { init, auth } = experimental;
-      async function bootstrap() {
-        await init();
-        const token = await auth.getAuthToken().catch(() => null);
-        if (token) {
-          document.getElementById('authStatus').textContent = 'Auth token acquired';
-        }
-      }
-      bootstrap();
-    </script>
+    <link rel="stylesheet" href="insights.css" />
+    <script type="module" src="insights-auth.js" nonce="static-nonce"></script>
   </head>
   <body>
     <h1>Dataset Insights</h1>
@@ -68,25 +23,6 @@
         <li>Review visual performance trends here.</li>
       </ol>
     </section>
-    <script>
-      const imageList = [
-        'images/enhanced-models-comparison.png',
-        'images/model-comparison.png',
-        'images/performance-dashboard.png',
-        'images/enhanced-price-prediction.png',
-      ];
-      const container = document.getElementById('images');
-      imageList.forEach((src) => {
-        const fig = document.createElement('figure');
-        const img = document.createElement('img');
-        img.src = src;
-        img.alt = src;
-        const cap = document.createElement('figcaption');
-        cap.textContent = src.replace('images/', '').replace('.png', '');
-        fig.appendChild(img);
-        fig.appendChild(cap);
-        container.appendChild(fig);
-      });
-    </script>
+    <script src="insights.js" nonce="static-nonce"></script>
   </body>
 </html>

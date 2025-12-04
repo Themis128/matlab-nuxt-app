@@ -5,9 +5,7 @@
  * for use in the Nuxt.js dashboard.
  */
 
-/* eslint-disable no-console */
-
-import { existsSync, mkdirSync, copyFileSync, readdirSync } from 'fs';
+import { copyFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
 import { join } from 'path';
 
 const sourceDir = 'docs/images';
@@ -55,7 +53,7 @@ console.log(`📂 Found ${sourceFiles.length} image(s) in source directory\n`);
 // Copy images
 let copied = 0;
 let skipped = 0;
-let missing = [];
+const missing = [];
 
 for (const image of requiredImages) {
   const sourcePath = join(sourceDir, image);
@@ -107,8 +105,8 @@ if (missing.length > 0) {
   console.log("   run('generate_enhanced_visualizations.m')");
 }
 
-console.log(`\n🎉 Dashboard images setup complete!`);
+console.log('\n🎉 Dashboard images setup complete!');
 console.log(`📁 Images are now in: ${targetDir}`);
-console.log(`\n🚀 Next steps:`);
-console.log(`   1. Start dev server: npm run dev`);
-console.log(`   2. Visit: http://localhost:3000/dashboard`);
+console.log('\n🚀 Next steps:');
+console.log('   1. Start dev server: npm run dev');
+console.log('   2. Visit: http://localhost:3000/dashboard');

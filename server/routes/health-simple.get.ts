@@ -1,7 +1,4 @@
-import { setHeader, getMethod, defineEventHandler } from 'h3';
-import type { H3Event } from 'h3';
-
-export default defineEventHandler(async (event: H3Event) => {
+export default defineEventHandler(async (event) => {
   // Set CORS headers
   setHeader(event, 'Access-Control-Allow-Origin', '*');
   setHeader(event, 'Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');

@@ -69,9 +69,9 @@ async function scanFiles(root, tags = DEFAULT_TAGS) {
   const results = [];
   const tagsRegex = tags.join('|');
   const re = new RegExp(
-    '(?:(?:\\/\\/|#|<!--|\\/\\*|\\*|%|;|--)\\s*)(?:' +
-      tagsRegex +
-      ')(?:\\([^)]*\\))?(?:\\s*@\\w+)?[:\\s-]*(.*)',
+    `(?:(?:\\/\\/|#|<!--|\\/\\*|\\*|%|;|--)\\s*)(?:${
+      tagsRegex
+    })(?:\\([^)]*\\))?(?:\\s*@\\w+)?[:\\s-]*(.*)`,
     'i'
   );
   for (const f of files) {
@@ -87,7 +87,7 @@ async function scanFiles(root, tags = DEFAULT_TAGS) {
           results.push({ file: f, line: i + 1, tag: tagMatch, message: msg.trim() });
         }
       }
-    } catch (err) {
+    } catch {
       // ignore
     }
   }
@@ -101,7 +101,7 @@ async function main() {
   const tags = filterTagsArg ? filterTagsArg.replace('--tags=', '').split(',') : DEFAULT_TAGS;
   const matches = await scanFiles(root, tags);
   if (matches.length === 0) {
-    console.warn('No TODOs found for tags: ' + tags.join(','));
+    console.warn(`No TODOs found for tags: ${tags.join(',')}`);
     return process.exit(0);
   }
   for (const m of matches) {

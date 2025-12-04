@@ -1,11 +1,11 @@
 <template>
-  <div class="min-h-screen bg-background">
+  <div class="bg-background min-h-screen">
     <!-- Header Section -->
-    <section class="bg-gradient-to-r from-purple-600 to-blue-600 text-white py-16">
+    <section class="bg-gradient-to-r from-purple-600 to-blue-600 py-16 text-white">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
-          <h1 class="text-4xl sm:text-5xl font-bold mb-4">Advanced Analytics</h1>
-          <p class="text-xl text-purple-100 max-w-2xl mx-auto">
+          <h1 class="mb-4 text-4xl font-bold sm:text-5xl">Advanced Analytics</h1>
+          <p class="mx-auto max-w-2xl text-xl text-purple-100">
             Deep dive into advanced analytics features with powerful data mining and machine
             learning tools
           </p>
@@ -17,11 +17,11 @@
     <section class="py-20">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Analytics Cards Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          <UCard class="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-            <div class="flex items-center gap-4 mb-6">
-              <div class="p-3 rounded-lg bg-purple-500 text-white">
-                <UIcon name="i-heroicons-chart-bar-square" class="w-6 h-6" />
+        <div class="mb-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <UCard class="group transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+            <div class="mb-6 flex items-center gap-4">
+              <div class="rounded-lg bg-purple-500 p-3 text-white">
+                <UIcon name="i-heroicons-chart-bar-square" class="h-6 w-6" />
               </div>
               <div>
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
@@ -47,10 +47,10 @@
             <UButton variant="outline" size="sm" class="mt-6 w-full"> View Details </UButton>
           </UCard>
 
-          <UCard class="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-            <div class="flex items-center gap-4 mb-6">
-              <div class="p-3 rounded-lg bg-blue-500 text-white">
-                <UIcon name="i-heroicons-cpu-chip" class="w-6 h-6" />
+          <UCard class="group transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+            <div class="mb-6 flex items-center gap-4">
+              <div class="rounded-lg bg-blue-500 p-3 text-white">
+                <UIcon name="i-heroicons-cpu-chip" class="h-6 w-6" />
               </div>
               <div>
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Neural Networks</h3>
@@ -74,10 +74,10 @@
             <UButton variant="outline" size="sm" class="mt-6 w-full"> Configure </UButton>
           </UCard>
 
-          <UCard class="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-            <div class="flex items-center gap-4 mb-6">
-              <div class="p-3 rounded-lg bg-green-500 text-white">
-                <UIcon name="i-heroicons-presentation-chart-bar" class="w-6 h-6" />
+          <UCard class="group transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+            <div class="mb-6 flex items-center gap-4">
+              <div class="rounded-lg bg-green-500 p-3 text-white">
+                <UIcon name="i-heroicons-presentation-chart-bar" class="h-6 w-6" />
               </div>
               <div>
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Performance</h3>
@@ -103,32 +103,32 @@
         </div>
 
         <!-- Advanced Configuration Section -->
-        <div class="bg-gray-50 dark:bg-gray-900/50 rounded-2xl p-8 mb-16">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+        <div class="mb-16 rounded-2xl bg-gray-50 p-8 dark:bg-gray-900/50">
+          <h2 class="mb-8 text-center text-2xl font-bold text-gray-900 dark:text-white">
             Advanced Configuration
           </h2>
 
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
             <div>
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
                 Model Parameters
               </h3>
               <div class="space-y-4">
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Learning Rate
                   </label>
                   <USlider v-model="config.learningRate" :min="0.001" :max="0.1" :step="0.001" />
                   <span class="text-sm text-gray-500">{{ config.learningRate }}</span>
                 </div>
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Batch Size
                   </label>
                   <USelect v-model="config.batchSize" :options="batchSizeOptions" />
                 </div>
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Epochs
                   </label>
                   <UInput v-model="config.epochs" type="number" />
@@ -137,7 +137,7 @@
             </div>
 
             <div>
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
                 Data Processing
               </h3>
               <div class="space-y-4">
@@ -157,20 +157,20 @@
             </div>
           </div>
 
-          <div class="flex justify-center mt-8">
+          <div class="mt-8 flex justify-center">
             <UButton size="lg" color="purple"> Apply Configuration </UButton>
           </div>
         </div>
 
         <!-- Real-time Monitoring -->
-        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+        <div class="rounded-2xl bg-white p-8 shadow-lg dark:bg-gray-800">
+          <h2 class="mb-8 text-center text-2xl font-bold text-gray-900 dark:text-white">
             Real-time Monitoring
           </h2>
 
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
             <div>
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
                 Training Progress
               </h3>
               <div class="space-y-4">
@@ -191,26 +191,26 @@
             </div>
 
             <div>
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
                 System Resources
               </h3>
               <div class="space-y-4">
                 <div>
-                  <div class="flex justify-between mb-1">
+                  <div class="mb-1 flex justify-between">
                     <span class="text-gray-600 dark:text-gray-300">CPU Usage</span>
                     <span class="font-semibold">{{ cpuUsage }}%</span>
                   </div>
                   <UProgress :value="cpuUsage" color="blue" />
                 </div>
                 <div>
-                  <div class="flex justify-between mb-1">
+                  <div class="mb-1 flex justify-between">
                     <span class="text-gray-600 dark:text-gray-300">Memory Usage</span>
                     <span class="font-semibold">{{ memoryUsage }}%</span>
                   </div>
                   <UProgress :value="memoryUsage" color="green" />
                 </div>
                 <div>
-                  <div class="flex justify-between mb-1">
+                  <div class="mb-1 flex justify-between">
                     <span class="text-gray-600 dark:text-gray-300">GPU Usage</span>
                     <span class="font-semibold">{{ gpuUsage }}%</span>
                   </div>

@@ -1,7 +1,5 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import { getQuery, createError, defineEventHandler } from 'h3';
-import type { H3Event } from 'h3';
 
 interface PhoneModel {
   modelName: string;
@@ -33,7 +31,7 @@ interface ModelsByPriceResponse {
   brands: string[];
 }
 
-export default defineEventHandler(async (event: H3Event): Promise<ModelsByPriceResponse> => {
+export default defineEventHandler(async (event): Promise<ModelsByPriceResponse> => {
   try {
     const query = getQuery(event);
     const price = parseFloat(query.price as string);
@@ -176,16 +174,12 @@ export default defineEventHandler(async (event: H3Event): Promise<ModelsByPriceR
     // Parse dataset and filter by price
     const models: PhoneModel[] = [];
     const brandsSet = new Set<string>();
-    let _processedCount = 0;
-    let _priceMatchCount = 0;
-    let _missingRequiredCount = 0;
 
     for (let i = 1; i < lines.length; i++) {
       const rawLine = lines[i] ?? '';
       const values = parseCSVLine(rawLine).map((v) => v.replace(/^"|"/g, '').trim());
 
       if (values.length < headers.length) continue;
-      _processedCount++;
 
       // Extract price
       const phonePrice = priceIdx !== -1 ? extractNumber(values[priceIdx]) : null;
@@ -193,7 +187,6 @@ export default defineEventHandler(async (event: H3Event): Promise<ModelsByPriceR
 
       // Check price range
       if (phonePrice < minPrice || phonePrice > maxPrice) continue;
-      _priceMatchCount++;
 
       // Extract required fields
       const phoneRam = ramIdx !== -1 ? extractNumber(values[ramIdx]) : null;
@@ -204,7 +197,6 @@ export default defineEventHandler(async (event: H3Event): Promise<ModelsByPriceR
 
       // Skip if required fields are missing
       if (!phoneRam || !phoneBattery || !phoneScreen || !phoneWeight || !phoneYear) {
-        _missingRequiredCount++;
         continue;
       }
 
@@ -222,15 +214,15 @@ export default defineEventHandler(async (event: H3Event): Promise<ModelsByPriceR
 
       // Extract optional fields
       const frontCamera =
-        frontCameraIdx !== -1 ? extractNumber(values[frontCameraIdx]) ?? undefined : undefined;
+        frontCameraIdx !== -1 ? (extractNumber(values[frontCameraIdx]) ?? undefined) : undefined;
       const backCamera =
-        backCameraIdx !== -1 ? extractNumber(values[backCameraIdx]) ?? undefined : undefined;
+        backCameraIdx !== -1 ? (extractNumber(values[backCameraIdx]) ?? undefined) : undefined;
       const storage =
-        storageIdx !== -1 ? extractNumber(values[storageIdx]) ?? undefined : undefined;
+        storageIdx !== -1 ? (extractNumber(values[storageIdx]) ?? undefined) : undefined;
       const processor = processorIdx !== -1 ? values[processorIdx] || undefined : undefined;
       const displayType = displayTypeIdx !== -1 ? values[displayTypeIdx] || undefined : undefined;
       const refreshRate =
-        refreshRateIdx !== -1 ? extractNumber(values[refreshRateIdx]) ?? undefined : undefined;
+        refreshRateIdx !== -1 ? (extractNumber(values[refreshRateIdx]) ?? undefined) : undefined;
       const resolution = resolutionIdx !== -1 ? values[resolutionIdx] || undefined : undefined;
 
       models.push({
@@ -269,7 +261,7 @@ export default defineEventHandler(async (event: H3Event): Promise<ModelsByPriceR
         min: minPrice,
         max: maxPrice,
         requested: price,
-        tolerance: tolerance,
+        tolerance,
       },
       brands: Array.from(brandsSet).sort(),
     };

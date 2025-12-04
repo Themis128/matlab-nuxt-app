@@ -159,23 +159,6 @@ export default defineEventHandler(async (event) => {
 
 **Insight extraction:** Run `extract_all_insights.m` for price drivers, market trends, competitive analysis, recommendations, and anomaly detection. Results saved to `data/dataset_analysis_results.json`.
 
-## Testing
-
-**E2E tests** use Playwright (`tests/` directory):
-
-- `prediction-api-integration.spec.ts` - Tests Python API integration
-- `compare.spec.ts`, `dashboard.spec.ts`, `explore.spec.ts`, etc. - Page-specific tests
-
-**Run pattern:**
-
-```powershell
-npm run dev  # Terminal 1
-cd python_api && python api.py  # Terminal 2
-npm test  # Terminal 3
-```
-
-**Test config:** `playwright.config.ts` - runs on `http://localhost:3000`, retries on CI, screenshots/videos on failure
-
 ## Important Files
 
 - `MOBILES_DATASET_GUIDE.md` - Network architecture selection guide (CNN vs FCN vs Hybrid based on data type)
@@ -183,7 +166,6 @@ npm test  # Terminal 3
 - `ENVIRONMENT_SETUP.md` - Python/MATLAB setup instructions
 - `mobiles-dataset-docs/TUNING_RESULTS.md` - Model hyperparameter tuning results
 - `python_api/TENSORFLOW_TRAINING_GUIDE.md` - TensorFlow model architectures
-- `tests/README.md` - E2E testing guide
 
 ## Common Pitfalls
 

@@ -1,12 +1,10 @@
 import { useApiStore } from '~/stores/apiStore';
 import { usePredictionHistoryStore } from '~/stores/predictionHistoryStore';
-import { usePredictionValidationStore } from '~/stores/predictionValidationStore';
 
 export const useDemo = () => {
   // Initialize stores
   const apiStore = useApiStore();
   const predictionHistoryStore = usePredictionHistoryStore();
-  const _predictionValidationStore = usePredictionValidationStore();
 
   // API status from store
   const apiStatus = computed(() => apiStore);
@@ -169,7 +167,7 @@ export const useDemo = () => {
 
         // Add error indicator to the UI
         const errorElement = document.createElement('div');
-        errorElement.textContent = 'Error: ' + priceError.value;
+        errorElement.textContent = `Error: ${priceError.value}`;
         errorElement.className = 'text-red-500 text-sm mt-2';
         document.querySelector('.prediction-result')?.appendChild(errorElement);
 

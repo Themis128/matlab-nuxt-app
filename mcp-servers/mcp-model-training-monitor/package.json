@@ -1,0 +1,23 @@
+{
+  "name": "mcp-model-training-monitor",
+  "version": "1.0.0",
+  "description": "MCP server for monitoring ML model training status and progress",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "github:modelcontextprotocol/typescript-sdk#608360047dc6899f1cf4f0226eb62fe7b11b3898",
+    "fs-extra": "^11.2.0",
+    "chokidar": "^3.6.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": ["mcp", "machine-learning", "training", "monitoring", "metrics"],
+  "author": "MatLab App Team",
+  "license": "MIT"
+}

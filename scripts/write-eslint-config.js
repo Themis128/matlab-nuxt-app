@@ -1,4 +1,5 @@
-const fs = require('fs');
+import fs from 'fs';
+
 const content = `/* ESLint Flat Config for Nuxt 4 + Vue 3 + TypeScript + Prettier */
 const vueParser = require('vue-eslint-parser')
 const tsParser = require('@typescript-eslint/parser')
@@ -44,5 +45,6 @@ module.exports = [
   }
 ]
 `;
+
 fs.writeFileSync('eslint.config.cjs', content, 'utf8');
 console.warn('eslint.config.cjs written');

@@ -1,0 +1,8 @@
+# Suppress GitHub Actions secret warnings
+linters:
+  - id: github-actions
+    ignore:
+      - secrets.SERVER_SSH_KEY
+      - secrets.SERVER_HOST
+      - secrets.SERVER_USER
+      - secrets.SERVER_PORT

@@ -5,6 +5,8 @@
  * Supports counters, gauges, distributions, and sets with attribute support.
  */
 
+import { isSentryAvailable } from './useSentryUtils';
+
 export interface MetricAttributes {
   [key: string]: string | number | boolean | undefined;
 }
@@ -14,25 +16,19 @@ export interface MetricOptions {
   unit?: string;
 }
 
-export interface MetricFilterOptions {
-  enableMetrics?: boolean;
-  beforeSendMetric?: (metric: any) => any | null;
-}
+type SentryMetricsLike = {
+  metrics?: {
+    count?: (name: string, value?: number, options?: MetricOptions) => void;
+    gauge?: (name: string, value?: number, options?: MetricOptions) => void;
+    distribution?: (name: string, value?: number, options?: MetricOptions) => void;
+    set?: (name: string, value: string | number, options?: MetricOptions) => void;
+  };
+};
 
 /**
  * Composable for Sentry metrics functionality
  */
 export const useSentryMetrics = () => {
-  // Check if Sentry is available
-  const isSentryAvailable = () => {
-    if (typeof window === 'undefined') {
-      // Server-side check
-      return typeof globalThis !== 'undefined' && 'Sentry' in globalThis;
-    }
-    // Client-side check
-    return typeof window !== 'undefined' && 'Sentry' in window;
-  };
-
   /**
    * Track an incrementing value (counter)
    * Use for counting events like button clicks, function calls, etc.
@@ -41,8 +37,10 @@ export const useSentryMetrics = () => {
     if (!isSentryAvailable()) return;
 
     try {
-      const Sentry = (globalThis as any).Sentry || (window as any).Sentry;
-      Sentry.metrics.count(name, value, options);
+      const Sentry =
+        (globalThis as unknown as { Sentry?: SentryMetricsLike })?.Sentry ||
+        (window as unknown as { Sentry?: SentryMetricsLike })?.Sentry;
+      Sentry?.metrics?.count?.(name, value, options);
     } catch (error) {
       console.warn('[Sentry Metrics] Failed to send counter metric:', error);
     }
@@ -56,8 +54,10 @@ export const useSentryMetrics = () => {
     if (!isSentryAvailable()) return;
 
     try {
-      const Sentry = (globalThis as any).Sentry || (window as any).Sentry;
-      Sentry.metrics.gauge(name, value, options);
+      const Sentry =
+        (globalThis as unknown as { Sentry?: SentryMetricsLike })?.Sentry ||
+        (window as unknown as { Sentry?: SentryMetricsLike })?.Sentry;
+      Sentry?.metrics?.gauge?.(name, value, options);
     } catch (error) {
       console.warn('[Sentry Metrics] Failed to send gauge metric:', error);
     }
@@ -71,8 +71,10 @@ export const useSentryMetrics = () => {
     if (!isSentryAvailable()) return;
 
     try {
-      const Sentry = (globalThis as any).Sentry || (window as any).Sentry;
-      Sentry.metrics.distribution(name, value, options);
+      const Sentry =
+        (globalThis as unknown as { Sentry?: SentryMetricsLike })?.Sentry ||
+        (window as unknown as { Sentry?: SentryMetricsLike })?.Sentry;
+      Sentry?.metrics?.distribution?.(name, value, options);
     } catch (error) {
       console.warn('[Sentry Metrics] Failed to send distribution metric:', error);
     }
@@ -86,8 +88,10 @@ export const useSentryMetrics = () => {
     if (!isSentryAvailable()) return;
 
     try {
-      const Sentry = (globalThis as any).Sentry || (window as any).Sentry;
-      Sentry.metrics.set(name, value, options);
+      const Sentry =
+        (globalThis as unknown as { Sentry?: SentryMetricsLike })?.Sentry ||
+        (window as unknown as { Sentry?: SentryMetricsLike })?.Sentry;
+      Sentry?.metrics?.set?.(name, value, options);
     } catch (error) {
       console.warn('[Sentry Metrics] Failed to send set metric:', error);
     }
@@ -101,17 +105,20 @@ export const useSentryMetrics = () => {
     operation: () => Promise<T>,
     options?: MetricOptions
   ): Promise<T> => {
-    const startTime = performance.now();
+    const startTime = import.meta.client ? performance.now() : Date.now();
+
     try {
       const result = await operation();
-      const duration = performance.now() - startTime;
+      const duration = import.meta.client ? performance.now() - startTime : Date.now() - startTime;
+
       distribution(`${name}_duration`, duration, {
         ...options,
         unit: 'millisecond',
       });
       return result;
     } catch (error) {
-      const duration = performance.now() - startTime;
+      const duration = import.meta.client ? performance.now() - startTime : Date.now() - startTime;
+
       distribution(`${name}_error_duration`, duration, {
         ...options,
         unit: 'millisecond',
@@ -145,7 +152,7 @@ export const useSentryMetrics = () => {
    * Track page views
    */
   const trackPageView = (pageName?: string, attributes?: MetricAttributes) => {
-    const page = pageName || (typeof window !== 'undefined' ? window.location.pathname : 'unknown');
+    const page = pageName || (import.meta.client ? window.location.pathname : 'server');
     count('page_view', 1, {
       attributes: {
         page,

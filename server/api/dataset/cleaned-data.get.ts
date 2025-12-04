@@ -1,7 +1,5 @@
-import { readFileSync, existsSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { join } from 'path';
-import { getQuery, createError, defineEventHandler } from 'h3';
-import type { H3Event } from 'h3';
 
 interface CleanedDataSample {
   columns: string[];
@@ -29,7 +27,7 @@ interface CleanedDataSample {
 }
 
 export default defineEventHandler(
-  async (event: H3Event): Promise<Array<Record<string, string | number | null>>> => {
+  async (event): Promise<Array<Record<string, string | number | null>>> => {
     const query = getQuery(event);
     const limit = Math.min(parseInt(query.limit as string) || 10, 100);
     const offset = parseInt(query.offset as string) || 0;
@@ -60,8 +58,6 @@ export default defineEventHandler(
 
       // Parse data rows
       const dataLines = lines.slice(1);
-      // Total rows available in the dataset (not used in current response)
-      const _totalRows = dataLines.length;
 
       // Get requested sample
       const sampleLines = dataLines.slice(offset, offset + limit);
@@ -90,7 +86,7 @@ export default defineEventHandler(
       }
 
       // Load statistics from summary if available
-      let statistics: CleanedDataSample['statistics'] = {
+      const statistics: CleanedDataSample['statistics'] = {
         numeric: {},
         categorical: {},
       };

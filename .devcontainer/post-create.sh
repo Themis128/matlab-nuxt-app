@@ -17,10 +17,6 @@ if [ -f "package.json" ]; then
   fi
 fi
 
-# Install Playwright browsers
-echo "Installing Playwright browsers..."
-npx playwright install --with-deps || true
-
 # Install Python dev/test deps if present
 if [ -f "requirements.txt" ]; then
   python -m pip install -r requirements.txt || true

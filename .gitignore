@@ -62,7 +62,7 @@ node_modules/
 kaggle.json
 data/kaggle.json
 
-# Test results (Playwright, etc.)
+# Test results
 test-results/
 
 # IDE and tool directories

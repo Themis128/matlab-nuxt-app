@@ -7,7 +7,6 @@ WORKDIR /workspace
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bash git curl ca-certificates build-essential python3 python3-pip && rm -rf /var/lib/apt/lists/*
 
-RUN groupadd -g 1000 node && useradd -m -u 1000 -g node node
 USER node
 
 ENV PATH=/home/node/.local/bin:/usr/local/bin:${PATH}

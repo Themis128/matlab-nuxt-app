@@ -31,10 +31,10 @@ export const useMetricsExamples = () => {
   /**
    * Example: Track API calls with response times
    */
-  const trackApiRequest = async (
+  const trackApiRequest = async <T = unknown>(
     endpoint: string,
     method: string,
-    requestFn: () => Promise<any>
+    requestFn: () => Promise<{ status: number; data?: T }>
   ) => {
     const startTime = performance.now();
 
@@ -48,13 +48,14 @@ export const useMetricsExamples = () => {
       });
 
       return response;
-    } catch (error: any) {
+    } catch (error: unknown) {
       const duration = performance.now() - startTime;
+      const errorObj = error as { response?: { status?: number }; name?: string; message?: string };
 
-      metrics.trackApiCall(endpoint, method, error.response?.status || 0, duration, {
+      metrics.trackApiCall(endpoint, method, errorObj.response?.status || 0, duration, {
         success: false,
-        error_type: error.name || 'Unknown',
-        error_message: error.message?.substring(0, 100), // Limit error message length
+        error_type: errorObj.name || 'Unknown',
+        error_message: errorObj.message?.substring(0, 100), // Limit error message length
       });
 
       throw error;
@@ -64,7 +65,10 @@ export const useMetricsExamples = () => {
   /**
    * Example: Track page views
    */
-  const trackPageView = (pageName?: string, additionalAttributes?: Record<string, any>) => {
+  const trackPageView = (
+    pageName?: string,
+    additionalAttributes?: Record<string, string | number | boolean>
+  ) => {
     metrics.trackPageView(pageName, {
       timestamp: new Date().toISOString(),
       ...additionalAttributes,
@@ -77,7 +81,11 @@ export const useMetricsExamples = () => {
   const trackPerformanceMetrics = () => {
     if (typeof window !== 'undefined') {
       // Memory usage (if available) - Chrome-specific API
-      const perfMemory = (performance as any).memory;
+      const perfMemory = (
+        performance as {
+          memory?: { usedJSHeapSize: number; totalJSHeapSize: number; jsHeapSizeLimit: number };
+        }
+      ).memory;
       if (perfMemory) {
         metrics.trackPerformance('memory_used', perfMemory.usedJSHeapSize, 'byte', {
           total_heap: perfMemory.totalJSHeapSize,
@@ -101,7 +109,10 @@ export const useMetricsExamples = () => {
   /**
    * Example: Track errors with context
    */
-  const trackApplicationError = (error: Error, context?: Record<string, any>) => {
+  const trackApplicationError = (
+    error: Error,
+    context?: Record<string, string | number | boolean>
+  ) => {
     metrics.trackError(error.name, {
       message: error.message?.substring(0, 200), // Limit message length
       stack_trace: error.stack?.substring(0, 500), // Limit stack trace

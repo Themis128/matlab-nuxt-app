@@ -43,10 +43,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Web**: Dark mode support
 - **Web**: Fully responsive design
 - **Backend**: Python FastAPI with scikit-learn models
-- **Backend**: Dynamic backend detection (localhost/Replit/production)
+- **Backend**: Dynamic backend detection (localhost/production)
 - **DevOps**: Docker setup with docker-compose
 - **DevOps**: GitHub Actions CI/CD workflows
-- **DevOps**: Comprehensive E2E testing with Playwright
 - **MATLAB**: Deep learning examples (CNN, LSTM, Autoencoder, ResNet)
 - **MATLAB**: Hybrid networks combining image and tabular data
 - **Documentation**: Comprehensive README with setup instructions

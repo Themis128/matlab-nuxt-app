@@ -1,19 +1,19 @@
 <template>
   <div
-    class="w-full h-[350px] p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700"
+    class="h-[350px] w-full rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
   >
-    <div class="flex items-center justify-between mb-6">
+    <div class="mb-6 flex items-center justify-between">
       <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Top Brands by Phone Count</h3>
       <div class="flex items-center gap-2">
-        <div class="w-3 h-3 bg-indigo-500 rounded-full"></div>
+        <div class="h-3 w-3 rounded-full bg-indigo-500"></div>
         <span class="text-sm text-gray-600 dark:text-gray-400">Phone Count</span>
       </div>
     </div>
 
     <!-- Enhanced Bar Chart for Brands -->
-    <div class="relative w-full h-[250px] overflow-x-auto">
+    <div class="relative h-[250px] w-full overflow-x-auto">
       <svg
-        class="w-full h-full min-w-[600px]"
+        class="h-full w-full min-w-[600px]"
         viewBox="0 0 700 200"
         preserveAspectRatio="xMidYMid meet"
       >
@@ -33,17 +33,17 @@
 
         <!-- Y-axis labels -->
         <g class="y-axis-labels">
-          <text x="5" y="15" class="text-xs fill-gray-500 dark:fill-gray-400">{{ maxCount }}</text>
-          <text x="5" y="65" class="text-xs fill-gray-500 dark:fill-gray-400">
+          <text x="5" y="15" class="fill-gray-500 text-xs dark:fill-gray-400">{{ maxCount }}</text>
+          <text x="5" y="65" class="fill-gray-500 text-xs dark:fill-gray-400">
             {{ Math.round(maxCount * 0.75) }}
           </text>
-          <text x="5" y="115" class="text-xs fill-gray-500 dark:fill-gray-400">
+          <text x="5" y="115" class="fill-gray-500 text-xs dark:fill-gray-400">
             {{ Math.round(maxCount * 0.5) }}
           </text>
-          <text x="5" y="165" class="text-xs fill-gray-500 dark:fill-gray-400">
+          <text x="5" y="165" class="fill-gray-500 text-xs dark:fill-gray-400">
             {{ Math.round(maxCount * 0.25) }}
           </text>
-          <text x="5" y="195" class="text-xs fill-gray-500 dark:fill-gray-400">0</text>
+          <text x="5" y="195" class="fill-gray-500 text-xs dark:fill-gray-400">0</text>
         </g>
 
         <!-- Bar Chart Bars -->
@@ -78,7 +78,7 @@
               :x="brand.x + brand.width / 2"
               :y="brand.y - 5"
               text-anchor="middle"
-              class="text-xs font-semibold fill-gray-700 dark:fill-gray-300"
+              class="fill-gray-700 text-xs font-semibold dark:fill-gray-300"
             >
               {{ brand.count }}
             </text>
@@ -88,7 +88,7 @@
               :x="brand.x + brand.width / 2"
               y="215"
               text-anchor="middle"
-              class="text-xs fill-gray-600 dark:fill-gray-400 transition-colors duration-200"
+              class="fill-gray-600 text-xs transition-colors duration-200 dark:fill-gray-400"
               :class="{
                 'font-semibold text-indigo-600 dark:text-indigo-400': brand.name === selectedBrand,
               }"
@@ -124,7 +124,7 @@
       <!-- Tooltip -->
       <div
         v-if="hoveredBrand !== null"
-        class="absolute z-10 px-3 py-2 text-sm bg-gray-900 text-white rounded-lg shadow-lg pointer-events-none transition-all duration-200"
+        class="pointer-events-none absolute z-10 rounded-lg bg-gray-900 px-3 py-2 text-sm text-white shadow-lg transition-all duration-200"
         :style="{
           left: hoveredBrand.x + hoveredBrand.width / 2 + 'px',
           top: hoveredBrand.y - 40 + 'px',
@@ -133,13 +133,13 @@
       >
         {{ hoveredBrand.name }}: {{ hoveredBrand.count }} phones
         <div
-          class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"
+          class="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"
         ></div>
       </div>
     </div>
 
     <!-- Brand Statistics -->
-    <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
+    <div class="mt-4 border-t border-gray-200 pt-4 dark:border-gray-600">
       <div class="grid grid-cols-4 gap-4 text-center">
         <div>
           <p class="text-sm text-gray-500 dark:text-gray-400">Top Brand</p>
@@ -171,7 +171,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 // Props
 const props = defineProps<{
@@ -270,14 +270,14 @@ const hideBarTooltip = () => {
 // Watchers
 watch(
   () => props.brands,
-  (newVal) => {
+  (_newVal) => {
     // Data is reactive through computed properties
   }
 );
 
 watch(
   () => props.selectedBrand,
-  (newVal) => {
+  (_newVal) => {
     // Color changes will be reactive through computed properties
   }
 );

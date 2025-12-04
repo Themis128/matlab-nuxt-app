@@ -4,9 +4,9 @@
  * and exits with non-zero code if any are found. Designed for CI and local checks.
  */
 
+import { execSync } from 'child_process';
 import fs from 'fs/promises';
 import path from 'path';
-import { execSync } from 'child_process';
 
 const DEFAULT_TAGS = ['FIXME', 'BUG'];
 
@@ -64,7 +64,6 @@ async function walkDir(dir) {
 }
 
 async function scanFiles(root, tags, files = null) {
-  const util = await import('util');
   const nodePathFilter = (p) => {
     // ignore binary or paths in EXCLUDE_DIRS
     return !EXCLUDE_DIRS.some((d) => p.includes(path.normalize(d)));
@@ -74,9 +73,9 @@ async function scanFiles(root, tags, files = null) {
   const tagsRegex = tags.join('|');
   // allow patterns like: FIXME, FIXME(@owner), FIXME(@owner): msg, FIXME @owner: msg
   const re = new RegExp(
-    '(?:(?:\\/\\/|#|<!--|\\/\\*|\\*|%|;|--)\\s*)(?:' +
-      tagsRegex +
-      ')(?:\\([^)]*\\))?(?:\\s*@\\w+)?[:\\s-]*(.*)',
+    `(?:(?:\\/\\/|#|<!--|\\/\\*|\\*|%|;|--)\\s*)(?:${
+      tagsRegex
+    })(?:\\([^)]*\\))?(?:\\s*@\\w+)?[:\\s-]*(.*)`,
     'i'
   );
   for (const f of fileList) {
@@ -111,10 +110,10 @@ async function scanFiles(root, tags, files = null) {
           // find which tag - case-insensitive
           const tag = (line.match(new RegExp(tagsRegex, 'i')) || [])[0];
           const msg = m[1] || '';
-          results.push({ file: f, line: i + 1, tag: tag, message: msg.trim() });
+          results.push({ file: f, line: i + 1, tag, message: msg.trim() });
         }
       }
-    } catch (err) {
+    } catch {
       // ignore read errors
     }
   }
@@ -132,7 +131,7 @@ async function main() {
     try {
       const out = execSync('git diff --staged --name-only', { encoding: 'utf8' });
       targetFiles = out.split(/\r?\n/).filter(Boolean);
-    } catch (e) {
+    } catch {
       // ignore
     }
   }
@@ -152,7 +151,7 @@ async function main() {
         { encoding: 'utf8' }
       );
       targetFiles = out.split(/\r?\n/).filter(Boolean);
-    } catch (e) {
+    } catch {
       // ignore
     }
   }

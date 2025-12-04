@@ -1,17 +1,138 @@
 """
 API-based Price Fetching Module
-Replaces web scraping with official APIs for production use
+Replaces web scraping with local database queries for production use
 
-Supported APIs:
-- Google Shopping API (Custom Search)
-- Amazon Product Advertising API (PA-API 5.0)
-- Price comparison APIs (Idealo, Geizhals via their APIs if available)
+Uses local SQLite database with real price data from mobiles dataset
 """
 
 import os
+import sqlite3
 from typing import Dict, Optional
+from pathlib import Path
 
-import requests
+
+class LocalPriceDatabase:
+    """Local SQLite database for price lookups"""
+
+    def __init__(self):
+        """Initialize database connection"""
+        db_path = Path(__file__).parent / "price_database.db"
+        self.conn = sqlite3.connect(str(db_path))
+        self.conn.row_factory = sqlite3.Row
+
+    def search_product(self, query: str, country: str = "usa") -> Optional[Dict]:
+        """
+        Search for product in local database
+
+        Args:
+            query: Product search query
+            country: Country code (usa, india, pakistan, china, dubai)
+
+        Returns:
+            Dict with price and product info, or None
+        """
+        try:
+            cursor = self.conn.cursor()
+
+            # Map country codes to database columns
+            country_map = {
+                "usa": "price_usa",
+                "india": "price_india",
+                "pakistan": "price_pakistan",
+                "china": "price_china",
+                "dubai": "price_dubai",
+                "de": "price_dubai",  # Default to Dubai for Germany
+                "fr": "price_dubai",  # Default to Dubai for France
+                "uk": "price_dubai",  # Default to Dubai for UK
+            }
+
+            price_column = country_map.get(country.lower(), "price_usa")
+
+            # Search for products matching the query
+            cursor.execute(f'''
+                SELECT company, model, {price_column}, launched_year
+                FROM mobile_prices
+                WHERE (company || ' ' || model) LIKE ?
+                ORDER BY {price_column} DESC
+                LIMIT 1
+            ''', (f'%{query}%',))
+
+            row = cursor.fetchone()
+
+            if row:
+                price = row[price_column]
+                if price:
+                    return {
+                        "price": float(price),
+                        "currency": "USD" if country.lower() == "usa" else "EUR",
+                        "source": f"Local Database ({country.title()})",
+                        "url": None,
+                        "title": f"{row['company']} {row['model']}",
+                    }
+
+            # If no exact match, try broader search
+            cursor.execute(f'''
+                SELECT company, model, {price_column}, launched_year
+                FROM mobile_prices
+                WHERE company LIKE ? OR model LIKE ?
+                ORDER BY {price_column} DESC
+                LIMIT 1
+            ''', (f'%{query}%', f'%{query}%'))
+
+            row = cursor.fetchone()
+
+            if row:
+                price = row[price_column]
+                if price:
+                    return {
+                        "price": float(price),
+                        "currency": "USD" if country.lower() == "usa" else "EUR",
+                        "source": f"Local Database ({country.title()})",
+                        "url": None,
+                        "title": f"{row['company']} {row['model']}",
+                    }
+
+            return None
+
+        except Exception as e:
+            print(f"    [!] Local database error: {e}")
+            return None
+
+    def get_product_details(self, company: str, model: str) -> Optional[Dict]:
+        """
+        Get detailed product information including image
+
+        Args:
+            company: Company name
+            model: Model name
+
+        Returns:
+            Dict with full product details, or None
+        """
+        try:
+            cursor = self.conn.cursor()
+
+            cursor.execute('''
+                SELECT * FROM mobile_prices
+                WHERE company = ? AND model = ?
+                LIMIT 1
+            ''', (company, model))
+
+            row = cursor.fetchone()
+
+            if row:
+                return dict(row)
+
+            return None
+
+        except Exception as e:
+            print(f"    [!] Local database error: {e}")
+            return None
+
+    def close(self):
+        """Close database connection"""
+        if self.conn:
+            self.conn.close()
 
 
 class GoogleShoppingAPI:
@@ -33,7 +154,7 @@ class GoogleShoppingAPI:
 
     def search_product(self, query: str, country: str = "de", language: str = "de") -> Optional[Dict]:
         """
-        Search for product using Google Custom Search API
+        Search for product using local database (fallback to Google if configured)
 
         Args:
             query: Product search query
@@ -43,6 +164,16 @@ class GoogleShoppingAPI:
         Returns:
             Dict with price and product info, or None
         """
+        # Try local database first
+        local_db = LocalPriceDatabase()
+        try:
+            result = local_db.search_product(query, country)
+            if result:
+                return result
+        finally:
+            local_db.close()
+
+        # Fallback to Google API if configured
         if not self.is_configured():
             return None
 
@@ -98,9 +229,6 @@ class GoogleShoppingAPI:
         except requests.exceptions.RequestException as e:
             print(f"    [!] Google Shopping API error: {e}")
             return None
-        except Exception as e:
-            print(f"    [!] Google Shopping API error: {e}")
-            return None
 
 
 class AmazonPAAPI:
@@ -136,7 +264,7 @@ class AmazonPAAPI:
 
     def search_product(self, query: str) -> Optional[Dict]:
         """
-        Search for product using Amazon PA-API 5.0
+        Search for product using local database (fallback to Amazon if configured)
 
         Args:
             query: Product search query
@@ -144,11 +272,30 @@ class AmazonPAAPI:
         Returns:
             Dict with price and product info, or None
         """
+        # Try local database first
+        local_db = LocalPriceDatabase()
+        try:
+            # Map region to country
+            region_map = {
+                "de": "dubai",  # Germany -> Dubai prices
+                "com": "usa",   # US
+                "co.uk": "dubai",  # UK -> Dubai
+                "fr": "dubai",  # France -> Dubai
+            }
+            country = region_map.get(self.region, "usa")
+
+            result = local_db.search_product(query, country)
+            if result:
+                result["source"] = f"Local Database (Amazon {self.region})"
+                return result
+        finally:
+            local_db.close()
+
+        # Fallback to Amazon API if configured
         if not self.is_configured():
             return None
 
         try:
-
             # PA-API 5.0 requires signed requests
             # This is a simplified version - full implementation requires proper AWS signing
             # Request signing omitted here; use official SDK or AWS Signature V4

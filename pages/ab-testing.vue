@@ -1,11 +1,11 @@
 <template>
-  <div class="min-h-screen bg-background">
+  <div class="bg-background min-h-screen">
     <!-- Header Section -->
-    <section class="bg-gradient-to-r from-green-600 to-teal-600 text-white py-16">
+    <section class="bg-gradient-to-r from-green-600 to-teal-600 py-16 text-white">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
-          <h1 class="text-4xl sm:text-5xl font-bold mb-4">A/B Testing Dashboard</h1>
-          <p class="text-xl text-green-100 max-w-2xl mx-auto">
+          <h1 class="mb-4 text-4xl font-bold sm:text-5xl">A/B Testing Dashboard</h1>
+          <p class="mx-auto max-w-2xl text-xl text-green-100">
             Design, monitor, and analyze A/B tests for model performance and user experience
             optimization
           </p>
@@ -17,11 +17,11 @@
     <section class="py-20">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Active Tests Overview -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          <UCard class="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-            <div class="flex items-center gap-4 mb-6">
-              <div class="p-3 rounded-lg bg-green-500 text-white">
-                <UIcon name="i-heroicons-play" class="w-6 h-6" />
+        <div class="mb-16 grid grid-cols-1 gap-8 md:grid-cols-3">
+          <UCard class="group transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+            <div class="mb-6 flex items-center gap-4">
+              <div class="rounded-lg bg-green-500 p-3 text-white">
+                <UIcon name="i-heroicons-play" class="h-6 w-6" />
               </div>
               <div>
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Active Tests</h3>
@@ -29,15 +29,15 @@
               </div>
             </div>
             <div class="text-center">
-              <div class="text-3xl font-bold text-gray-900 dark:text-white mb-2">8</div>
+              <div class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">8</div>
               <div class="text-sm text-green-600 dark:text-green-400">+2 this week</div>
             </div>
           </UCard>
 
-          <UCard class="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-            <div class="flex items-center gap-4 mb-6">
-              <div class="p-3 rounded-lg bg-blue-500 text-white">
-                <UIcon name="i-heroicons-chart-bar-square" class="w-6 h-6" />
+          <UCard class="group transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+            <div class="mb-6 flex items-center gap-4">
+              <div class="rounded-lg bg-blue-500 p-3 text-white">
+                <UIcon name="i-heroicons-chart-bar-square" class="h-6 w-6" />
               </div>
               <div>
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Total Tests</h3>
@@ -45,15 +45,15 @@
               </div>
             </div>
             <div class="text-center">
-              <div class="text-3xl font-bold text-gray-900 dark:text-white mb-2">47</div>
+              <div class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">47</div>
               <div class="text-sm text-blue-600 dark:text-blue-400">23 completed</div>
             </div>
           </UCard>
 
-          <UCard class="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-            <div class="flex items-center gap-4 mb-6">
-              <div class="p-3 rounded-lg bg-purple-500 text-white">
-                <UIcon name="i-heroicons-trophy" class="w-6 h-6" />
+          <UCard class="group transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+            <div class="mb-6 flex items-center gap-4">
+              <div class="rounded-lg bg-purple-500 p-3 text-white">
+                <UIcon name="i-heroicons-trophy" class="h-6 w-6" />
               </div>
               <div>
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Success Rate</h3>
@@ -61,25 +61,25 @@
               </div>
             </div>
             <div class="text-center">
-              <div class="text-3xl font-bold text-gray-900 dark:text-white mb-2">73%</div>
+              <div class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">73%</div>
               <div class="text-sm text-purple-600 dark:text-purple-400">Above target</div>
             </div>
           </UCard>
         </div>
 
         <!-- Current A/B Tests -->
-        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg mb-16">
-          <div class="flex justify-between items-center mb-8">
+        <div class="mb-16 rounded-2xl bg-white p-8 shadow-lg dark:bg-gray-800">
+          <div class="mb-8 flex items-center justify-between">
             <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Current Experiments</h2>
             <UButton color="green">
-              <UIcon name="i-heroicons-plus" class="w-4 h-4 mr-2" />
+              <UIcon name="i-heroicons-plus" class="mr-2 h-4 w-4" />
               New Test
             </UButton>
           </div>
 
           <div class="space-y-6">
             <UCard v-for="test in activeTests" :key="test.id" class="p-6">
-              <div class="flex items-center justify-between mb-4">
+              <div class="mb-4 flex items-center justify-between">
                 <div>
                   <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
                     {{ test.name }}
@@ -94,29 +94,29 @@
                 </div>
               </div>
 
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+              <div class="mb-4 grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div>
-                  <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <h4 class="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                     Variant A (Control)
                   </h4>
-                  <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                    <div class="flex justify-between items-center mb-2">
+                  <div class="rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
+                    <div class="mb-2 flex items-center justify-between">
                       <span class="text-sm text-gray-600 dark:text-gray-300">Current Model</span>
                       <span class="font-semibold">{{ test.variantA.conversion }}%</span>
                     </div>
                     <UProgress :value="test.variantA.conversion" color="blue" />
-                    <div class="text-xs text-gray-500 mt-1">
+                    <div class="mt-1 text-xs text-gray-500">
                       {{ test.variantA.samples }} samples
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <h4 class="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                     Variant B (Treatment)
                   </h4>
-                  <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
-                    <div class="flex justify-between items-center mb-2">
+                  <div class="rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20">
+                    <div class="mb-2 flex items-center justify-between">
                       <span class="text-sm text-gray-600 dark:text-gray-300">New Model</span>
                       <span
                         class="font-semibold"
@@ -128,7 +128,7 @@
                       </span>
                     </div>
                     <UProgress :value="test.variantB.conversion" color="green" />
-                    <div class="text-xs text-gray-500 mt-1">
+                    <div class="mt-1 text-xs text-gray-500">
                       {{ test.variantB.samples }} samples
                     </div>
                   </div>
@@ -140,7 +140,7 @@
                   <div class="text-sm">
                     <span class="text-gray-500">Statistical Significance:</span>
                     <span
-                      class="font-semibold ml-1"
+                      class="ml-1 font-semibold"
                       :class="getSignificanceColor(test.significance)"
                     >
                       {{ test.significance }}%
@@ -148,7 +148,7 @@
                   </div>
                   <div class="text-sm">
                     <span class="text-gray-500">Confidence Level:</span>
-                    <span class="font-semibold text-gray-900 dark:text-white ml-1"
+                    <span class="ml-1 font-semibold text-gray-900 dark:text-white"
                       >{{ test.confidence }}%</span
                     >
                   </div>
@@ -161,26 +161,26 @@
 
         <!-- Test Configuration -->
         <div
-          class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900/50 dark:to-gray-800/50 rounded-2xl p-8 mb-16"
+          class="mb-16 rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100 p-8 dark:from-gray-900/50 dark:to-gray-800/50"
         >
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+          <h2 class="mb-8 text-center text-2xl font-bold text-gray-900 dark:text-white">
             Create New A/B Test
           </h2>
 
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
             <div>
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
                 Test Configuration
               </h3>
               <div class="space-y-4">
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Test Name
                   </label>
                   <UInput v-model="newTest.name" placeholder="Enter test name..." />
                 </div>
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Description
                   </label>
                   <UTextarea
@@ -189,13 +189,13 @@
                   />
                 </div>
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Test Type
                   </label>
                   <USelect v-model="newTest.type" :options="testTypeOptions" />
                 </div>
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Traffic Split
                   </label>
                   <div class="flex items-center gap-4">
@@ -208,30 +208,30 @@
             </div>
 
             <div>
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
                 Success Metrics
               </h3>
               <div class="space-y-4">
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Primary Metric
                   </label>
                   <USelect v-model="newTest.primaryMetric" :options="metricOptions" />
                 </div>
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Minimum Detectable Effect
                   </label>
                   <UInput v-model="newTest.mde" type="number" placeholder="2.0" />
                 </div>
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Confidence Level
                   </label>
                   <USelect v-model="newTest.confidence" :options="confidenceOptions" />
                 </div>
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Test Duration (days)
                   </label>
                   <UInput v-model="newTest.duration" type="number" placeholder="7" />
@@ -240,14 +240,14 @@
             </div>
           </div>
 
-          <div class="flex justify-center mt-8">
+          <div class="mt-8 flex justify-center">
             <UButton size="lg" color="green"> Launch Test </UButton>
           </div>
         </div>
 
         <!-- Historical Results -->
-        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+        <div class="rounded-2xl bg-white p-8 shadow-lg dark:bg-gray-800">
+          <h2 class="mb-8 text-center text-2xl font-bold text-gray-900 dark:text-white">
             Test Results Summary
           </h2>
 
@@ -255,22 +255,22 @@
             <table class="w-full text-sm">
               <thead>
                 <tr class="border-b border-gray-200 dark:border-gray-700">
-                  <th class="text-left py-3 px-4 font-semibold text-gray-900 dark:text-white">
+                  <th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">
                     Test Name
                   </th>
-                  <th class="text-center py-3 px-4 font-semibold text-gray-900 dark:text-white">
+                  <th class="px-4 py-3 text-center font-semibold text-gray-900 dark:text-white">
                     Status
                   </th>
-                  <th class="text-center py-3 px-4 font-semibold text-gray-900 dark:text-white">
+                  <th class="px-4 py-3 text-center font-semibold text-gray-900 dark:text-white">
                     Duration
                   </th>
-                  <th class="text-center py-3 px-4 font-semibold text-gray-900 dark:text-white">
+                  <th class="px-4 py-3 text-center font-semibold text-gray-900 dark:text-white">
                     Lift
                   </th>
-                  <th class="text-center py-3 px-4 font-semibold text-gray-900 dark:text-white">
+                  <th class="px-4 py-3 text-center font-semibold text-gray-900 dark:text-white">
                     Confidence
                   </th>
-                  <th class="text-center py-3 px-4 font-semibold text-gray-900 dark:text-white">
+                  <th class="px-4 py-3 text-center font-semibold text-gray-900 dark:text-white">
                     Result
                   </th>
                 </tr>
@@ -281,27 +281,27 @@
                   :key="result.id"
                   class="border-b border-gray-100 dark:border-gray-700"
                 >
-                  <td class="py-3 px-4">
+                  <td class="px-4 py-3">
                     <div class="font-medium text-gray-900 dark:text-white">{{ result.name }}</div>
                     <div class="text-xs text-gray-500">{{ result.type }}</div>
                   </td>
-                  <td class="text-center py-3 px-4">
+                  <td class="px-4 py-3 text-center">
                     <span :class="getStatusColor(result.status)" class="text-sm font-medium">
                       {{ result.status }}
                     </span>
                   </td>
-                  <td class="text-center py-3 px-4 text-gray-600 dark:text-gray-300">
+                  <td class="px-4 py-3 text-center text-gray-600 dark:text-gray-300">
                     {{ result.duration }}
                   </td>
-                  <td class="text-center py-3 px-4">
+                  <td class="px-4 py-3 text-center">
                     <span :class="getLiftColor(result.lift)" class="font-semibold">
                       {{ result.lift > 0 ? '+' : '' }}{{ result.lift }}%
                     </span>
                   </td>
-                  <td class="text-center py-3 px-4 text-gray-600 dark:text-gray-300">
+                  <td class="px-4 py-3 text-center text-gray-600 dark:text-gray-300">
                     {{ result.confidence }}%
                   </td>
-                  <td class="text-center py-3 px-4">
+                  <td class="px-4 py-3 text-center">
                     <span :class="getResultColor(result.result)" class="text-sm font-semibold">
                       {{ result.result }}
                     </span>

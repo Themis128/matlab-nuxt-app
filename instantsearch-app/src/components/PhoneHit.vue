@@ -52,7 +52,7 @@ const ipRating = computed(
 );
 const displayType = computed(() => {
   const type = props.hit.gsmarena?.display?.type || 'Not specified';
-  return type.length > 50 ? type.substring(0, 50) + '...' : type;
+  return type.length > 50 ? `${type.substring(0, 50)}...` : type;
 });
 const chipset = computed(
   () => props.hit.gsmarena?.performance?.chipset || 'Not specified'

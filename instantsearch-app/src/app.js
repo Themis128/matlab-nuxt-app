@@ -31,7 +31,7 @@ search.addWidgets([
 
         // Create reliable inline SVG image (no external dependencies)
         const imageUrl = `data:image/svg+xml;base64,${btoa(
-          `<svg width="120" height="90" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="90" fill="#4f46e5"/><text x="60" y="50" font-family="Arial" font-size="24" fill="white" text-anchor="middle">📱</text></svg>`
+          '<svg width="120" height="90" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="90" fill="#4f46e5"/><text x="60" y="50" font-family="Arial" font-size="24" fill="white" text-anchor="middle">📱</text></svg>'
         )}`;
 
         return html`

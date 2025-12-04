@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 const nuxtTsPath = path.resolve(process.cwd(), '.nuxt', 'tsconfig.json');
 
@@ -16,7 +16,7 @@ try {
     fs.writeFileSync(nuxtTsPath, fixed, 'utf8');
     console.warn(`[patch-nuxt-tsconfig] Patched module option in ${nuxtTsPath}`);
   } else {
-    console.warn(`[patch-nuxt-tsconfig] No change required; module is not set to "preserve"`);
+    console.warn('[patch-nuxt-tsconfig] No change required; module is not set to "preserve"');
   }
 } catch (err) {
   console.error('[patch-nuxt-tsconfig] Error patching tsconfig:', err);

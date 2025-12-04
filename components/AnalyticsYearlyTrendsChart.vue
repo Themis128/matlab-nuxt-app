@@ -1,8 +1,8 @@
 <template>
   <div
-    class="w-full h-[350px] p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700"
+    class="h-[350px] w-full rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
   >
-    <div class="flex items-center justify-between mb-6">
+    <div class="mb-6 flex items-center justify-between">
       <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
         Yearly Trends: Price, RAM, Battery
       </h3>
@@ -10,7 +10,7 @@
         <!-- Legend -->
         <div class="flex items-center gap-4 text-sm">
           <div v-for="metric in visibleMetrics" :key="metric.name" class="flex items-center gap-2">
-            <div class="w-3 h-3 rounded-full" :style="{ backgroundColor: metric.color }"></div>
+            <div class="h-3 w-3 rounded-full" :style="{ backgroundColor: metric.color }"></div>
             <span class="text-gray-600 dark:text-gray-400">{{ metric.name }}</span>
           </div>
         </div>
@@ -19,7 +19,7 @@
           <label class="text-sm text-gray-600 dark:text-gray-400">Filter:</label>
           <select
             v-model="selectedFilter"
-            class="px-3 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            class="rounded-md border border-gray-300 bg-white px-3 py-1 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           >
             <option value="All">All Metrics</option>
             <option value="Price">Price Only</option>
@@ -31,8 +31,8 @@
     </div>
 
     <!-- Enhanced Multi-Line Chart -->
-    <div class="relative w-full h-[250px]">
-      <svg class="w-full h-full" viewBox="0 0 600 200" preserveAspectRatio="xMidYMid meet">
+    <div class="relative h-[250px] w-full">
+      <svg class="h-full w-full" viewBox="0 0 600 200" preserveAspectRatio="xMidYMid meet">
         <!-- Grid lines -->
         <defs>
           <pattern id="trendsGrid" width="60" height="25" patternUnits="userSpaceOnUse">
@@ -49,11 +49,11 @@
 
         <!-- Y-axis labels -->
         <g class="y-axis-labels">
-          <text x="5" y="15" class="text-xs fill-gray-500 dark:fill-gray-400">100</text>
-          <text x="5" y="65" class="text-xs fill-gray-500 dark:fill-gray-400">75</text>
-          <text x="5" y="115" class="text-xs fill-gray-500 dark:fill-gray-400">50</text>
-          <text x="5" y="165" class="text-xs fill-gray-500 dark:fill-gray-400">25</text>
-          <text x="5" y="195" class="text-xs fill-gray-500 dark:fill-gray-400">0</text>
+          <text x="5" y="15" class="fill-gray-500 text-xs dark:fill-gray-400">100</text>
+          <text x="5" y="65" class="fill-gray-500 text-xs dark:fill-gray-400">75</text>
+          <text x="5" y="115" class="fill-gray-500 text-xs dark:fill-gray-400">50</text>
+          <text x="5" y="165" class="fill-gray-500 text-xs dark:fill-gray-400">25</text>
+          <text x="5" y="195" class="fill-gray-500 text-xs dark:fill-gray-400">0</text>
         </g>
 
         <!-- X-axis labels -->
@@ -64,7 +64,7 @@
             :x="getXPosition(index)"
             y="210"
             text-anchor="middle"
-            class="text-xs fill-gray-500 dark:fill-gray-400"
+            class="fill-gray-500 text-xs dark:fill-gray-400"
           >
             {{ year }}
           </text>
@@ -93,7 +93,7 @@
               :fill="metric.color"
               stroke="white"
               stroke-width="2"
-              class="cursor-pointer transition-all duration-200 hover:r-7"
+              class="hover:r-7 cursor-pointer transition-all duration-200"
               @mouseenter="showTooltip(index, value, metric.name)"
               @mouseleave="hideTooltip"
             />
@@ -112,7 +112,7 @@
       <!-- Tooltip -->
       <div
         v-if="hoveredIndex !== -1"
-        class="absolute z-10 px-3 py-2 text-sm bg-gray-900 text-white rounded-lg shadow-lg pointer-events-none transition-all duration-200"
+        class="pointer-events-none absolute z-10 rounded-lg bg-gray-900 px-3 py-2 text-sm text-white shadow-lg transition-all duration-200"
         :style="{
           left: hoveredX + 'px',
           top: hoveredY - 40 + 'px',
@@ -123,19 +123,19 @@
         <div
           v-for="metric in visibleMetrics"
           :key="metric.name"
-          class="flex items-center gap-2 mt-1"
+          class="mt-1 flex items-center gap-2"
         >
-          <div class="w-2 h-2 rounded-full" :style="{ backgroundColor: metric.color }"></div>
+          <div class="h-2 w-2 rounded-full" :style="{ backgroundColor: metric.color }"></div>
           <span>{{ metric.name }}: {{ metric.data[hoveredIndex] ?? '-' }}</span>
         </div>
         <div
-          class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"
+          class="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"
         ></div>
       </div>
     </div>
 
     <!-- Trend Statistics -->
-    <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
+    <div class="mt-4 border-t border-gray-200 pt-4 dark:border-gray-600">
       <div class="grid grid-cols-4 gap-4 text-center">
         <div v-for="metric in visibleMetrics" :key="metric.name">
           <p class="text-sm text-gray-500 dark:text-gray-400">{{ metric.name }} Trend</p>
@@ -149,7 +149,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 // Props
 const props = defineProps<{
@@ -239,7 +239,6 @@ const getAreaPath = (data: number[]): string => {
   if (!data || data.length === 0) return '';
 
   const firstVal = data[0] ?? 0;
-  const lastVal = data[data.length - 1] ?? 0;
 
   let path = `M ${getXPosition(0)} ${chartHeight - padding.bottom}`;
   path += ` L ${getXPosition(0)} ${getYPosition(firstVal)}`;
@@ -254,7 +253,7 @@ const getAreaPath = (data: number[]): string => {
 };
 
 // Methods
-const showTooltip = (index: number, value: number, metricName: string) => {
+const showTooltip = (index: number, value: number, _metricName: string) => {
   hoveredPoint.value = {
     x: getXPosition(index),
     y: getYPosition(value),
@@ -281,7 +280,7 @@ const getTrendDirection = (data: number[]): string => {
 // Watchers
 watch(
   () => props.trends,
-  (newVal) => {
+  (_newVal) => {
     // Data is reactive through computed properties
   }
 );

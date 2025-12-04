@@ -6,11 +6,9 @@
  * Usage: node view_mat_file.js <file.mat> [output.json]
  */
 
-/* eslint-disable no-console */
-
+import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { spawnSync } from 'node:child_process';
 
 async function tryNodeReader(matPath, outputPath) {
   // Attempt dynamic import of a MAT reader if available
@@ -18,7 +16,7 @@ async function tryNodeReader(matPath, outputPath) {
     const mod = await import('mat-file-reader');
     const matFileReader = mod.default || mod;
     return viewMatFileWithNode(matFileReader, matPath, outputPath);
-  } catch (e) {
+  } catch {
     // Package not available; signal fallback
     return false;
   }

@@ -1,8 +1,6 @@
 import { callPythonAPI } from '../../utils/python-api';
-import { readBody, createError, defineEventHandler } from 'h3';
-import type { H3Event } from 'h3';
 
-export default defineEventHandler(async (event: H3Event) => {
+export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event);
 
@@ -18,7 +16,7 @@ export default defineEventHandler(async (event: H3Event) => {
     return result;
   } catch (error: unknown) {
     if (typeof error === 'object' && error !== null && 'statusCode' in error) {
-      throw error as any;
+      throw error as { statusCode: number; statusMessage?: string };
     }
     throw createError({
       statusCode: 500,

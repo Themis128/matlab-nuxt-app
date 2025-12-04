@@ -1,149 +1,100 @@
 <template>
-  <div class="space-y-6">
-    <div class="text-center">
-      <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Image Optimization Demo</h2>
-      <p class="text-gray-600 dark:text-gray-400 mb-4">
-        See @nuxt/image in action with automatic WebP conversion and responsive sizes
+  <div class="space-y-8 p-6">
+    <!-- Hero Section -->
+    <div class="space-y-4 text-center">
+      <div
+        class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 px-4 py-2 text-sm font-medium text-white"
+      >
+        <UIcon name="i-heroicons-sparkles" class="h-4 w-4" />
+        Magic UI Enhanced
+      </div>
+      <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Image Optimization Demo</h2>
+      <p class="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-400">
+        Experience @nuxt/image with automatic WebP conversion, responsive sizes, and performance
+        optimization
       </p>
-      <div class="flex flex-wrap justify-center gap-2 mb-6">
-        <UBadge color="green" variant="soft">WebP/AVIF</UBadge>
-        <UBadge color="blue" variant="soft">Responsive</UBadge>
-        <UBadge color="purple" variant="soft">Lazy Loading</UBadge>
-        <UBadge color="orange" variant="soft">Compression</UBadge>
+
+      <!-- Feature badges -->
+      <div class="mt-6 flex flex-wrap justify-center gap-3">
+        <div
+          class="flex items-center gap-2 rounded-full bg-green-100 px-4 py-2 text-green-700 dark:bg-green-900/20 dark:text-green-400"
+        >
+          <div class="h-2 w-2 animate-pulse rounded-full bg-green-500"></div>
+          <span class="text-sm font-medium">WebP/AVIF Support</span>
+        </div>
+        <div
+          class="flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400"
+        >
+          <UIcon name="i-heroicons-device-phone-mobile" class="h-4 w-4" />
+          <span class="text-sm font-medium">Responsive Images</span>
+        </div>
+        <div
+          class="flex items-center gap-2 rounded-full bg-purple-100 px-4 py-2 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400"
+        >
+          <UIcon name="i-heroicons-bolt" class="h-4 w-4" />
+          <span class="text-sm font-medium">Lazy Loading</span>
+        </div>
+        <div
+          class="flex items-center gap-2 rounded-full bg-orange-100 px-4 py-2 text-orange-700 dark:bg-orange-900/20 dark:text-orange-400"
+        >
+          <UIcon name="i-heroicons-chart-bar-square" class="h-4 w-4" />
+          <span class="text-sm font-medium">Smart Compression</span>
+        </div>
       </div>
     </div>
 
-    <!-- Basic Image Usage -->
-    <UCard>
-      <template #header>
-        <h3 class="text-lg font-semibold">Basic Image Usage</h3>
-      </template>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <!-- Original image -->
-        <div class="text-center">
-          <h4 class="font-medium mb-2">Original Image</h4>
-          <NuxtImg
-            :src="sampleImages[0]?.url || ''"
-            alt="Mobile phone example"
-            class="w-full h-32 object-cover rounded-lg shadow-sm"
-            :loading="'lazy'"
-          />
-          <p class="text-xs text-gray-500 mt-2">Auto-optimized format & size</p>
-        </div>
-
-        <!-- WebP conversion -->
-        <div class="text-center">
-          <h4 class="font-medium mb-2">WebP Format</h4>
-          <NuxtImg
-            :src="sampleImages[0]?.url || ''"
-            alt="Mobile phone example"
-            class="w-full h-32 object-cover rounded-lg shadow-sm"
-            format="webp"
-            quality="80"
-            :loading="'lazy'"
-          />
-          <p class="text-xs text-gray-500 mt-2">Explicit WebP conversion</p>
-        </div>
-
-        <!-- Responsive sizes -->
-        <div class="text-center">
-          <h4 class="font-medium mb-2">Responsive</h4>
-          <NuxtImg
-            :src="sampleImages[0]?.url || ''"
-            alt="Mobile phone example"
-            class="w-full h-32 object-cover rounded-lg shadow-sm"
-            sizes="320px sm:640px lg:1024px"
-            :loading="'lazy'"
-          />
-          <p class="text-xs text-gray-500 mt-2">Custom responsive sizes</p>
-        </div>
-      </div>
-    </UCard>
-
-    <!-- Performance Comparison -->
-    <UCard>
-      <template #header>
-        <h3 class="text-lg font-semibold">Performance Benefits</h3>
-      </template>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Enhanced Phone Gallery -->
+    <div
+      class="rounded-2xl border border-gray-200 bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-gray-800"
+    >
+      <div class="mb-6 flex items-center justify-between">
         <div>
-          <h4 class="font-medium mb-3">Before Optimization</h4>
-          <div class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-            <div class="flex justify-between">
-              <span>File Format:</span>
-              <span class="text-red-500">JPEG/PNG (large)</span>
-            </div>
-            <div class="flex justify-between">
-              <span>Load Time:</span>
-              <span class="text-red-500">~2-3 seconds</span>
-            </div>
-            <div class="flex justify-between">
-              <span>File Size:</span>
-              <span class="text-red-500">~500KB+</span>
-            </div>
-            <div class="flex justify-between">
-              <span>Mobile Speed:</span>
-              <span class="text-red-500">Slow</span>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Mobile Phone Gallery</h3>
+          <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+            Interactive showcase with quality controls
+          </p>
+        </div>
+        <div class="flex items-center gap-4">
+          <!-- Quality Control -->
+          <div class="flex items-center gap-2">
+            <span class="text-sm text-gray-600 dark:text-gray-400">Quality:</span>
+            <div class="flex items-center gap-1">
+              <button
+                v-for="preset in qualityPresets"
+                :key="preset.label"
+                @click="imageQualityValue = preset.value"
+                :class="[
+                  'rounded-full px-3 py-1 text-xs transition-all duration-200',
+                  imageQualityValue === preset.value
+                    ? 'bg-blue-500 text-white shadow-md'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600',
+                ]"
+              >
+                {{ preset.label }}
+              </button>
             </div>
           </div>
-        </div>
 
-        <div>
-          <h4 class="font-medium mb-3">After @nuxt/image</h4>
-          <div class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-            <div class="flex justify-between">
-              <span>File Format:</span>
-              <span class="text-green-500">WebP/AVIF</span>
-            </div>
-            <div class="flex justify-between">
-              <span>Load Time:</span>
-              <span class="text-green-500">~200-400ms</span>
-            </div>
-            <div class="flex justify-between">
-              <span>File Size:</span>
-              <span class="text-green-500">~50-100KB</span>
-            </div>
-            <div class="flex justify-between">
-              <span>Mobile Speed:</span>
-              <span class="text-green-500">10x faster</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-        <div class="flex items-start gap-3">
-          <UIcon name="i-heroicons-light-bulb" class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-          <div>
-            <h4 class="font-medium text-blue-800 dark:text-blue-200">Pro Tip</h4>
-            <p class="text-sm text-blue-700 dark:text-blue-300 mt-1">
-              @nuxt/image automatically serves the best format (WebP, AVIF) based on browser
-              support. Images are compressed and sized appropriately for each device.
-            </p>
+          <div class="flex items-center gap-2">
+            <div
+              :class="[
+                'h-2 w-2 animate-pulse rounded-full',
+                imageQuality === 'high'
+                  ? 'bg-green-500'
+                  : imageQuality === 'medium'
+                    ? 'bg-yellow-500'
+                    : 'bg-red-500',
+              ]"
+            ></div>
+            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+              {{ imageQuality.toUpperCase() }}
+            </span>
           </div>
         </div>
       </div>
-    </UCard>
 
-    <!-- Phone Gallery -->
-    <UCard>
-      <template #header>
-        <div class="flex justify-between items-center">
-          <h3 class="text-lg font-semibold">Mobile Phone Gallery</h3>
-          <UBadge
-            :color="
-              imageQuality === 'high' ? 'green' : imageQuality === 'medium' ? 'yellow' : 'red'
-            "
-            variant="soft"
-          >
-            Quality: {{ imageQuality.toUpperCase() }}
-          </UBadge>
-        </div>
-      </template>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <!-- Enhanced Grid -->
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <div
           v-for="(image, index) in paginatedImages"
           :key="index"
@@ -151,55 +102,120 @@
           @click="openModal(image)"
         >
           <div
-            class="relative overflow-hidden rounded-lg shadow-sm group-hover:shadow-md transition-shadow"
+            class="relative overflow-hidden rounded-xl shadow-md transition-all duration-300 group-hover:shadow-xl"
           >
+            <!-- Loading placeholder -->
+            <div
+              class="absolute inset-0 flex animate-pulse items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800"
+            >
+              <UIcon name="i-heroicons-photo" class="h-8 w-8 text-gray-400" />
+            </div>
+
+            <!-- Actual image -->
             <NuxtImg
               :src="image.url"
               :alt="image.alt"
-              class="w-full h-48 object-cover group-hover:scale-105 transition-transform"
+              class="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-110"
               :quality="imageQualityValue"
               format="webp"
               :loading="'lazy'"
-              placeholder-class="bg-gray-200 dark:bg-gray-700 animate-pulse"
+              @load="imageLoaded(index)"
+              :class="{ 'opacity-0': !imagesLoaded[index] }"
             />
+
+            <!-- Hover overlay -->
             <div
-              class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100"
+              class="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-colors group-hover:bg-black/30 group-hover:opacity-100"
             >
-              <UIcon name="i-heroicons-eye" class="w-8 h-8 text-white" />
+              <UIcon name="i-heroicons-eye" class="h-8 w-8 text-white" />
+            </div>
+
+            <!-- Quality indicator -->
+            <div class="absolute right-3 top-3">
+              <span
+                class="rounded-full px-2 py-1 text-xs font-medium"
+                :class="getQualityBadgeClass()"
+              >
+                {{ imageQuality.toUpperCase() }}
+              </span>
             </div>
           </div>
-          <h4 class="font-medium mt-2 text-sm">{{ image.name }}</h4>
-          <p class="text-xs text-gray-500">{{ image.brand }}</p>
+          <div class="mt-3">
+            <h4 class="text-sm font-medium text-gray-900 dark:text-white">{{ image.name }}</h4>
+            <p class="text-xs text-gray-500 dark:text-gray-400">{{ image.brand }}</p>
+          </div>
         </div>
       </div>
 
       <!-- Load More Button -->
-      <div class="mt-6 text-center">
-        <UButton @click="loadMoreImages" :disabled="currentPage >= totalPages" variant="outline">
+      <div class="mt-8 text-center">
+        <button
+          @click="loadMoreImages"
+          :disabled="currentPage >= totalPages"
+          :class="[
+            'rounded-xl px-6 py-3 font-medium transition-all duration-200',
+            currentPage >= totalPages
+              ? 'cursor-not-allowed bg-gray-100 text-gray-400 dark:bg-gray-700 dark:text-gray-500'
+              : 'bg-blue-500 text-white shadow-lg hover:bg-blue-600 hover:shadow-xl',
+          ]"
+        >
           {{ currentPage >= totalPages ? 'All Images Loaded' : 'Load More Phones' }}
-        </UButton>
+        </button>
       </div>
-    </UCard>
+    </div>
 
-    <!-- Image Modal -->
-    <UModal v-model="isModalOpen">
-      <div class="p-4">
-        <div v-if="selectedImage" class="text-center">
-          <NuxtImg
-            :src="selectedImage.url"
-            :alt="selectedImage.alt"
-            class="max-w-full h-auto max-h-96 object-contain rounded-lg shadow-lg"
-            format="webp"
-            quality="95"
-          />
-          <h3 class="mt-4 text-xl font-semibold">{{ selectedImage.name }}</h3>
-          <p class="text-gray-600 dark:text-gray-400">{{ selectedImage.brand }}</p>
-          <div class="mt-4">
-            <UButton @click="closeModal" variant="outline">Close</UButton>
+    <!-- Enhanced Image Modal -->
+    <div
+      v-if="isModalOpen"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
+    >
+      <div
+        class="max-h-[90vh] w-full max-w-4xl overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-gray-800"
+      >
+        <div
+          class="flex items-center justify-between border-b border-gray-200 p-6 dark:border-gray-700"
+        >
+          <div>
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+              {{ selectedImage?.name }}
+            </h3>
+            <p class="text-gray-600 dark:text-gray-400">{{ selectedImage?.brand }}</p>
+          </div>
+          <button
+            @click="closeModal"
+            class="rounded-full p-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            <UIcon name="i-heroicons-x-mark" class="h-6 w-6 text-gray-500" />
+          </button>
+        </div>
+
+        <div class="p-6">
+          <div v-if="selectedImage" class="text-center">
+            <NuxtImg
+              :src="selectedImage.url"
+              :alt="selectedImage.alt"
+              class="mx-auto h-auto max-h-96 max-w-full rounded-lg object-contain shadow-lg"
+              format="webp"
+              quality="95"
+            />
+            <div class="mt-4 flex justify-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+              <div class="flex items-center gap-1">
+                <UIcon name="i-heroicons-photo" class="h-4 w-4" />
+                <span>WebP Format</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <UIcon name="i-heroicons-bolt" class="h-4 w-4" />
+                <span>95% Quality</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <UIcon name="i-heroicons-device-phone-mobile" class="h-4 w-4" />
+                <span>Responsive</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </UModal>
+    </div>
   </div>
 </template>
 
@@ -212,7 +228,7 @@ interface PhoneImage {
   alt: string;
 }
 
-// Sample images for demonstration - using real phone images from the project
+// Sample images for demonstration
 const sampleImages: PhoneImage[] = [
   {
     name: 'iPhone 15 Pro 256GB',
@@ -281,6 +297,7 @@ const currentPage = ref(1);
 const itemsPerPage = 4;
 const isModalOpen = ref(false);
 const selectedImage = ref<PhoneImage | null>(null);
+const imagesLoaded = ref<boolean[]>(new Array(sampleImages.length).fill(false));
 
 // Image quality settings
 const qualityPresets = [
@@ -322,4 +339,62 @@ const closeModal = () => {
   isModalOpen.value = false;
   selectedImage.value = null;
 };
+
+const imageLoaded = (index: number) => {
+  imagesLoaded.value[index] = true;
+};
+
+const getQualityBadgeClass = () => {
+  switch (imageQuality.value) {
+    case 'high':
+      return 'bg-green-500 text-white';
+    case 'medium':
+      return 'bg-yellow-500 text-white';
+    case 'low':
+      return 'bg-red-500 text-white';
+    default:
+      return 'bg-gray-500 text-white';
+  }
+};
+
+// Close modal on escape key
+onMounted(() => {
+  const handleEscape = (event: KeyboardEvent) => {
+    if (event.key === 'Escape' && isModalOpen.value) {
+      closeModal();
+    }
+  };
+
+  document.addEventListener('keydown', handleEscape);
+
+  onUnmounted(() => {
+    document.removeEventListener('keydown', handleEscape);
+  });
+});
 </script>
+
+<style scoped>
+/* Smooth transitions for image loading */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Enhanced hover effects */
+.group:hover .group-hover\:scale-110 {
+  transform: scale(1.1);
+}
+
+/* Backdrop blur animation */
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+}
+</style>

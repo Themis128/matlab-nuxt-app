@@ -3,8 +3,6 @@
  * Provides global keyboard shortcuts for improved user experience
  */
 
-import { ref, readonly, onMounted, onUnmounted } from 'vue';
-
 interface ShortcutAction {
   key: string;
   ctrlKey?: boolean;
@@ -12,7 +10,7 @@ interface ShortcutAction {
   shiftKey?: boolean;
   metaKey?: boolean;
   description: string;
-  action: () => void;
+  action: () => void | Promise<void>;
   disabled?: boolean;
 }
 
@@ -47,12 +45,6 @@ export function useKeyboardShortcuts() {
       ctrlKey: true,
       description: 'Toggle dark mode',
       action: () => toggleTheme(),
-    },
-    {
-      key: 'r',
-      ctrlKey: true,
-      description: 'Refresh data',
-      action: () => refreshData(),
     },
   ]);
 
@@ -91,19 +83,16 @@ export function useKeyboardShortcuts() {
 
   // Shortcut actions
   const showShortcutsHelp = () => {
-    // This will be implemented when we add a shortcuts help dialog
-    alert(
-      'Keyboard Shortcuts:\n' +
-        'Ctrl+/ - Focus search\n' +
-        'Ctrl+, - Open preferences\n' +
-        'Ctrl+H - Go to home\n' +
-        'Ctrl+D - Toggle theme\n' +
-        'Ctrl+R - Refresh data\n' +
-        'Shift+? - Show this help'
-    );
+    // Dispatch event for a proper modal/dialog component to handle
+    const event = new CustomEvent('show-keyboard-shortcuts', {
+      detail: { shortcuts: shortcuts.value },
+    });
+    window.dispatchEvent(event);
   };
 
   const focusSearch = () => {
+    if (!import.meta.client) return;
+
     const searchInput = document.querySelector(
       'input[placeholder*="search" i], input[type="search"]'
     ) as HTMLInputElement;
@@ -118,7 +107,6 @@ export function useKeyboardShortcuts() {
 
   const openPreferences = () => {
     // Emit event to open preferences dialog
-    // This will be handled by the parent component
     const event = new CustomEvent('open-preferences');
     window.dispatchEvent(event);
   };
@@ -128,6 +116,8 @@ export function useKeyboardShortcuts() {
   };
 
   const toggleTheme = () => {
+    if (!import.meta.client) return;
+
     // Toggle theme via existing ThemeToggle component
     const themeToggle = document.querySelector('[data-theme-toggle]') as HTMLElement;
     if (themeToggle) {
@@ -138,21 +128,16 @@ export function useKeyboardShortcuts() {
     }
   };
 
-  const refreshData = () => {
-    // Refresh current page data
-    window.location.reload();
-  };
-
   // Add keyboard event listener
   onMounted(() => {
-    if (process.client) {
+    if (import.meta.client) {
       document.addEventListener('keydown', handleKeydown);
     }
   });
 
   // Remove keyboard event listener
   onUnmounted(() => {
-    if (process.client) {
+    if (import.meta.client) {
       document.removeEventListener('keydown', handleKeydown);
     }
   });
@@ -164,6 +149,5 @@ export function useKeyboardShortcuts() {
     openPreferences,
     navigateToHome,
     toggleTheme,
-    refreshData,
   };
 }

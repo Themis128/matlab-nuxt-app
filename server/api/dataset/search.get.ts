@@ -1,7 +1,5 @@
 import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
-import { getQuery, createError, defineEventHandler } from 'h3';
-import type { H3Event } from 'h3';
 
 interface PhoneModel {
   modelName: string;
@@ -43,7 +41,7 @@ interface SearchResponse {
   };
 }
 
-export default defineEventHandler(async (event: H3Event): Promise<SearchResponse> => {
+export default defineEventHandler(async (event): Promise<SearchResponse> => {
   try {
     const query = getQuery(event);
 
@@ -252,14 +250,14 @@ export default defineEventHandler(async (event: H3Event): Promise<SearchResponse
         weight: phoneWeight,
         year: phoneYear,
         frontCamera:
-          frontCameraIdx !== -1 ? extractNumber(values[frontCameraIdx]) ?? undefined : undefined,
+          frontCameraIdx !== -1 ? (extractNumber(values[frontCameraIdx]) ?? undefined) : undefined,
         backCamera:
-          backCameraIdx !== -1 ? extractNumber(values[backCameraIdx]) ?? undefined : undefined,
+          backCameraIdx !== -1 ? (extractNumber(values[backCameraIdx]) ?? undefined) : undefined,
         storage: phoneStorage ?? undefined,
         processor: processorIdx !== -1 ? values[processorIdx] || undefined : undefined,
         displayType: displayTypeIdx !== -1 ? values[displayTypeIdx] || undefined : undefined,
         refreshRate:
-          refreshRateIdx !== -1 ? extractNumber(values[refreshRateIdx]) ?? undefined : undefined,
+          refreshRateIdx !== -1 ? (extractNumber(values[refreshRateIdx]) ?? undefined) : undefined,
         resolution: resolutionIdx !== -1 ? values[resolutionIdx] || undefined : undefined,
         imageUrl,
       });
@@ -308,7 +306,7 @@ export default defineEventHandler(async (event: H3Event): Promise<SearchResponse
       totalCount,
       filteredCount: totalCount,
       filters: {
-        brands: brands,
+        brands,
         priceRange:
           minPrice !== undefined || maxPrice !== undefined
             ? { min: minPrice || 0, max: maxPrice || Infinity }
@@ -325,12 +323,12 @@ export default defineEventHandler(async (event: H3Event): Promise<SearchResponse
           minScreen !== undefined || maxScreen !== undefined
             ? { min: minScreen || 0, max: maxScreen || Infinity }
             : undefined,
-        years: years,
+        years,
         storageRange:
           minStorage !== undefined || maxStorage !== undefined
             ? { min: minStorage || 0, max: maxStorage || Infinity }
             : undefined,
-        processor: processor,
+        processor,
       },
       pagination: {
         limit,

@@ -74,7 +74,6 @@ All workflows now use this pattern:
 
 - ✅ `build-and-test.yml` (test-frontend job)
 - ✅ `build-and-test.yml` (e2e-tests job)
-- ✅ `replit-deploy.yml` (deploy job)
 - ✅ `deploy.yml` (deploy-server job)
 
 ## 🚀 Deployment Workflows

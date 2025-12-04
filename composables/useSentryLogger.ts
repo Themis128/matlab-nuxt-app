@@ -6,7 +6,12 @@
  * this uses console logging, breadcrumbs, and captureMessage for logging.
  */
 
-import type { SeverityLevel } from '@sentry/nuxt';
+import {
+  addBreadcrumb,
+  captureException,
+  captureMessage,
+  isSentryAvailable,
+} from './useSentryUtils';
 
 export interface LogAttributes {
   [key: string]: string | number | boolean | undefined;
@@ -17,95 +22,29 @@ export interface LogContext {
   sessionId?: string;
   component?: string;
   action?: string;
-  [key: string]: any;
+  [key: string]: string | number | boolean | undefined;
 }
 
 /**
  * Composable for Sentry logging functionality
  */
 export const useSentryLogger = () => {
-  // Check if Sentry is available
-  const isSentryAvailable = () => {
-    if (typeof window === 'undefined') {
-      // Server-side check
-      return typeof globalThis !== 'undefined' && 'Sentry' in globalThis;
-    }
-    // Client-side check
-    return typeof window !== 'undefined' && 'Sentry' in window;
-  };
-
-  /**
-   * Add a breadcrumb to Sentry (useful for debugging)
-   */
-  const addBreadcrumb = (message: string, category?: string, level?: SeverityLevel, data?: any) => {
-    if (!isSentryAvailable()) return;
-
-    try {
-      const Sentry = (globalThis as any).Sentry || (window as any).Sentry;
-      Sentry.addBreadcrumb({
-        message,
-        category: category || 'custom',
-        level: level || 'info',
-        data,
-        timestamp: Date.now() / 1000,
-      });
-    } catch (error) {
-      console.warn('[Sentry Logger] Failed to add breadcrumb:', error);
-    }
-  };
-
-  /**
-   * Capture a message with Sentry
-   */
-  const captureMessage = (message: string, level?: SeverityLevel, context?: LogContext) => {
-    if (!isSentryAvailable()) {
-      return;
-    }
-
-    try {
-      const Sentry = (globalThis as any).Sentry || (window as any).Sentry;
-
-      // Set user context if provided
-      if (context?.userId) {
-        Sentry.setUser({ id: context.userId });
-      }
-
-      // Set extra context
-      if (context) {
-        Sentry.setExtras(context);
-      }
-
-      Sentry.captureMessage(message, level || 'info');
-
-      // Add breadcrumb for debugging
-      addBreadcrumb(message, 'logger', level, context);
-    } catch (error) {
-      console.warn('[Sentry Logger] Failed to capture message:', error);
-    }
-  };
-
-  /**
-   * Log at trace level
-   */
-  const trace = (message: string, context?: LogContext) => {
-    // Note: console.debug not allowed by linter, logging handled by Sentry
-    captureMessage(message, 'debug', context);
-  };
-
   /**
    * Log at debug level
    */
   const debug = (message: string, context?: LogContext) => {
-    // Note: console.debug not allowed by linter, logging handled by Sentry
     captureMessage(message, 'debug', context);
+    // Add breadcrumb for debugging
+    addBreadcrumb(message, 'logger', 'debug', context);
   };
 
   /**
    * Log at info level
    */
   const info = (message: string, context?: LogContext) => {
-    // Note: console.info not allowed by linter, logging handled by Sentry
+    console.info(`[INFO] ${message}`, context);
     captureMessage(message, 'info', context);
+    addBreadcrumb(message, 'logger', 'info', context);
   };
 
   /**
@@ -114,51 +53,33 @@ export const useSentryLogger = () => {
   const warn = (message: string, context?: LogContext) => {
     console.warn(`[WARN] ${message}`, context);
     captureMessage(message, 'warning', context);
+    addBreadcrumb(message, 'logger', 'warning', context);
   };
 
   /**
    * Log at error level
    */
-  const error = (message: string, error?: Error, context?: LogContext) => {
+  const logError = (message: string, error?: Error, context?: LogContext) => {
     console.error(`[ERROR] ${message}`, error, context);
 
-    if (!isSentryAvailable()) return;
-
-    try {
-      const Sentry = (globalThis as any).Sentry || (window as any).Sentry;
-
-      // Set user context if provided
-      if (context?.userId) {
-        Sentry.setUser({ id: context.userId });
-      }
-
-      // Set extra context
-      if (context) {
-        Sentry.setExtras(context);
-      }
-
-      // If we have an actual error object, capture it as an exception
-      if (error && error instanceof Error) {
-        Sentry.captureException(error, {
-          tags: {
-            logger: 'true',
-            level: 'error',
-          },
-          extra: {
-            message,
-            ...context,
-          },
-        });
-      } else {
-        // Otherwise capture as message
-        Sentry.captureMessage(message, 'error');
-      }
-
-      // Add breadcrumb
-      addBreadcrumb(message, 'logger', 'error', { ...context, error: error?.message });
-    } catch (err) {
-      console.warn('[Sentry Logger] Failed to capture error:', err);
+    if (error && error instanceof Error) {
+      captureException(
+        error,
+        'error',
+        {
+          message,
+          ...context,
+        },
+        {
+          logger: 'true',
+          level: 'error',
+        }
+      );
+    } else {
+      captureMessage(message, 'error', context);
     }
+
+    addBreadcrumb(message, 'logger', 'error', { ...context, error: error?.message });
   };
 
   /**
@@ -166,15 +87,32 @@ export const useSentryLogger = () => {
    */
   const fatal = (message: string, errorObj?: Error, context?: LogContext) => {
     console.error(`[FATAL] ${message}`, errorObj, context);
-    // Call the error function (not the parameter) - using different parameter name to avoid shadowing
-    error(message, errorObj, { ...context, level: 'fatal' });
+
+    if (errorObj && errorObj instanceof Error) {
+      captureException(errorObj, 'fatal', {
+        message,
+        ...context,
+        level: 'fatal',
+      });
+    } else {
+      captureMessage(message, 'fatal', context);
+    }
+
+    addBreadcrumb(message, 'logger', 'fatal', { ...context, error: errorObj?.message });
+  };
+
+  /**
+   * Log at trace level
+   */
+  const trace = (message: string, context?: LogContext) => {
+    debug(message, context);
   };
 
   /**
    * Create a formatted message using template literals
    * Note: This is a simplified version since structured logs may not be available
    */
-  const fmt = (template: string, ...values: any[]) => {
+  const fmt = (template: string, ...values: unknown[]) => {
     let result = template;
     values.forEach((value, index) => {
       result = result.replace(new RegExp(`\\$\\{${index}\\}`, 'g'), String(value));
@@ -185,11 +123,13 @@ export const useSentryLogger = () => {
   /**
    * Log with printf-style formatting (server-side only)
    */
-  const printf = (template: string, ...args: any[]) => {
+  const printf = (template: string, ...args: unknown[]) => {
     try {
       // Use Node.js util.format if available (server-side)
-      const utilFormat = (globalThis as any)?.util?.format;
-      if (typeof utilFormat === 'function') {
+      const utilFormat = (
+        globalThis as unknown as { util?: { format?: (...a: unknown[]) => string } }
+      )?.util?.format;
+      if (utilFormat) {
         return utilFormat(template, ...args);
       }
       // Fallback to simple replacement
@@ -198,7 +138,8 @@ export const useSentryLogger = () => {
         result = result.replace(/%s|%d|%j|%o/, String(arg));
       });
       return result;
-    } catch {
+    } catch (error) {
+      console.warn('[Sentry Logger] Printf formatting failed:', error);
       return template;
     }
   };
@@ -223,7 +164,7 @@ export const useSentryLogger = () => {
     };
 
     if (statusCode && statusCode >= 400) {
-      error(message, undefined, logContext);
+      logError(message, undefined, logContext);
     } else if (duration && duration > 5000) {
       warn(`${message} - Slow response`, logContext);
     } else {
@@ -234,9 +175,13 @@ export const useSentryLogger = () => {
   /**
    * Log user actions
    */
-  const logUserAction = (action: string, details?: any, context?: LogContext) => {
+  const logUserAction = (action: string, details?: unknown, context?: LogContext) => {
     const message = `User action: ${action}`;
-    info(message, { ...context, action, details });
+    const logContext: LogContext = { ...context, action };
+    if (details !== undefined) {
+      (logContext as any).details = details;
+    }
+    info(message, logContext);
   };
 
   /**
@@ -250,9 +195,13 @@ export const useSentryLogger = () => {
   /**
    * Log business events
    */
-  const logBusinessEvent = (event: string, properties?: any, context?: LogContext) => {
+  const logBusinessEvent = (event: string, properties?: unknown, context?: LogContext) => {
     const message = `Business event: ${event}`;
-    info(message, { ...context, event, properties });
+    const logContext: LogContext = { ...context, event };
+    if (properties !== undefined) {
+      (logContext as any).properties = properties;
+    }
+    info(message, logContext);
   };
 
   /**
@@ -284,9 +233,13 @@ export const useSentryLogger = () => {
     // Clear session context
     if (isSentryAvailable()) {
       try {
-        const Sentry = (globalThis as any).Sentry || (window as any).Sentry;
-        Sentry.setTag('session_id', undefined);
-        Sentry.setExtras({ session_context: undefined });
+        const Sentry =
+          (globalThis as unknown as { Sentry?: unknown })?.Sentry ||
+          (window as unknown as { Sentry?: unknown })?.Sentry;
+        if (Sentry && typeof Sentry === 'object') {
+          (Sentry as any).setTag?.('session_id', undefined);
+          (Sentry as any).setExtras?.({ session_context: undefined });
+        }
       } catch (error) {
         console.warn('[Sentry Logger] Failed to clear session context:', error);
       }
@@ -299,7 +252,7 @@ export const useSentryLogger = () => {
     debug,
     info,
     warn,
-    error,
+    logError,
     fatal,
 
     // Utilities

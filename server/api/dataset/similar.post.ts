@@ -1,7 +1,5 @@
 import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
-import { readBody, createError, defineEventHandler } from 'h3';
-import type { H3Event } from 'h3';
 
 interface PhoneModel {
   modelName: string;
@@ -49,7 +47,7 @@ interface SimilarRequest {
   limit?: number;
 }
 
-export default defineEventHandler(async (event: H3Event): Promise<SimilarResponse> => {
+export default defineEventHandler(async (event): Promise<SimilarResponse> => {
   try {
     const body = await readBody<SimilarRequest>(event);
 
@@ -256,19 +254,21 @@ export default defineEventHandler(async (event: H3Event): Promise<SimilarRespons
             year: phoneYear,
             frontCamera:
               frontCameraIdx !== -1
-                ? extractNumber(values[frontCameraIdx] ?? '') ?? undefined
+                ? (extractNumber(values[frontCameraIdx] ?? '') ?? undefined)
                 : undefined,
             backCamera:
               backCameraIdx !== -1
-                ? extractNumber(values[backCameraIdx] ?? '') ?? undefined
+                ? (extractNumber(values[backCameraIdx] ?? '') ?? undefined)
                 : undefined,
             storage:
-              storageIdx !== -1 ? extractNumber(values[storageIdx] ?? '') ?? undefined : undefined,
+              storageIdx !== -1
+                ? (extractNumber(values[storageIdx] ?? '') ?? undefined)
+                : undefined,
             processor: processorIdx !== -1 ? values[processorIdx] || undefined : undefined,
             displayType: displayTypeIdx !== -1 ? values[displayTypeIdx] || undefined : undefined,
             refreshRate:
               refreshRateIdx !== -1
-                ? extractNumber(values[refreshRateIdx] ?? '') ?? undefined
+                ? (extractNumber(values[refreshRateIdx] ?? '') ?? undefined)
                 : undefined,
             resolution: resolutionIdx !== -1 ? values[resolutionIdx] || undefined : undefined,
             imageUrl,

@@ -1,0 +1,30 @@
+{
+  "name": "mcp-prediction-analysis",
+  "version": "1.0.0",
+  "description": "MCP server for analyzing ML prediction results and generating performance reports",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.23.0",
+    "fs-extra": "^11.2.0",
+    "csv-parser": "^3.0.0",
+    "papaparse": "^5.4.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "mcp",
+    "machine-learning",
+    "predictions",
+    "analysis",
+    "performance"
+  ],
+  "author": "MatLab App Team",
+  "license": "MIT"
+}

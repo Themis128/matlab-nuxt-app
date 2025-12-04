@@ -37,7 +37,6 @@ Desktop.ini
 # Testing
 coverage/
 .nyc_output/
-playwright-report/
 test-results/
 screenshots/
 
@@ -89,7 +88,6 @@ infrastructure/legacy/
 tests/
 
 # Config files not needed in container
-playwright.config.ts
 eslint.config.cjs
 cspell.json
 tsconfig.json

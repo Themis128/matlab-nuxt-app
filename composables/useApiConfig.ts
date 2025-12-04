@@ -9,7 +9,7 @@ export const useApiConfig = () => {
    * Dynamically determine Python API URL
    * Priority:
    * 1. Environment variable (NUXT_PUBLIC_API_BASE)
-   * 2. Current browser location with port 8000 (for Replit/cloud platforms)
+   * 2. Current browser location with port 8000 (for cloud platforms)
    * 3. Fallback to localhost:8000
    */
   const getPythonApiUrl = (): string => {
@@ -23,18 +23,10 @@ export const useApiConfig = () => {
       const currentHost = window.location.hostname;
       const currentProtocol = window.location.protocol;
 
-      // Check for Replit or cloud platforms
-      if (currentHost.includes('replit.dev') || currentHost.includes('repl.co')) {
+      // Check for cloud platforms
+      if (currentHost !== 'localhost' && currentHost !== '127.0.0.1') {
         return `${currentProtocol}//${currentHost}:8000`;
       }
-
-      // For localhost, use port 8000
-      if (currentHost === 'localhost' || currentHost === '127.0.0.1') {
-        return `${currentProtocol}//${currentHost}:8000`;
-      }
-
-      // For other domains, assume API is on port 8000
-      return `${currentProtocol}//${currentHost}:8000`;
     }
 
     // Server-side or fallback

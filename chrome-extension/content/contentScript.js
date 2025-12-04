@@ -1,3 +1,5 @@
+/* global chrome, alert */
+
 // Content script injected in pages. It demonstrates messaging with the background script
 
 (function () {
@@ -24,7 +26,7 @@
       // Send a message to background
       chrome.runtime.sendMessage({ type: 'PING' }, (resp) => {
         if (resp) {
-          alert('Background message: ' + JSON.stringify(resp));
+          alert(`Background message: ${JSON.stringify(resp)}`);
         } else {
           alert('No response from background');
         }

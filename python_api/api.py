@@ -401,6 +401,110 @@ async def predict_brand_endpoint(request: BrandRequest):
         raise HTTPException(status_code=500, detail=error_msg)
 
 
+@app.get("/api/product/image/{company}/{model}")
+async def get_product_image(company: str, model: str):
+    """Get product image URL"""
+    try:
+        from price_apis import LocalPriceDatabase
+
+        db = LocalPriceDatabase()
+        try:
+            product = db.get_product_details(company, model)
+            if product and product.get('image_url'):
+                return {"image_url": product['image_url']}
+            else:
+                # Return placeholder image
+                return {"image_url": f"https://via.placeholder.com/300x200?text={company}+{model}"}
+        finally:
+            db.close()
+    except Exception as e:
+        # Ensure error message is ASCII-safe for Windows compatibility
+        error_msg = str(e).encode("ascii", "ignore").decode("ascii")
+        if not error_msg:
+            error_msg = "Image retrieval failed"
+        raise HTTPException(status_code=500, detail=error_msg)
+
+
+@app.get("/api/products")
+async def get_products(
+    search: str = "",
+    brand: str = "",
+    ramMin: int = None,
+    ramMax: int = None,
+    page: int = 1,
+    limit: int = 12
+):
+    """Get paginated list of products from database"""
+    try:
+        from price_apis import LocalPriceDatabase
+
+        db = LocalPriceDatabase()
+        try:
+            # Build query conditions
+            conditions = []
+            params = []
+
+            if search:
+                conditions.append("(company LIKE ? OR model LIKE ?)")
+                params.extend([f'%{search}%', f'%{search}%'])
+
+            if brand:
+                conditions.append("company = ?")
+                params.append(brand)
+
+            if ramMin is not None:
+                conditions.append("CAST(ram AS INTEGER) >= ?")
+                params.append(ramMin)
+
+            if ramMax is not None:
+                conditions.append("CAST(ram AS INTEGER) <= ?")
+                params.append(ramMax)
+
+            where_clause = " AND ".join(conditions) if conditions else "1=1"
+
+            # Get total count
+            count_query = f"SELECT COUNT(*) FROM mobile_prices WHERE {where_clause}"
+            cursor = db.conn.cursor()
+            cursor.execute(count_query, params)
+            total = cursor.fetchone()[0]
+
+            # Get paginated results
+            offset = (page - 1) * limit
+            query = f"""
+                SELECT * FROM mobile_prices
+                WHERE {where_clause}
+                ORDER BY company, model
+                LIMIT ? OFFSET ?
+            """
+            cursor.execute(query, params + [limit, offset])
+            rows = cursor.fetchall()
+
+            # Convert to dict format
+            products = []
+            for row in rows:
+                product = dict(row)
+                # Add image URL if not present
+                if not product.get('image_url'):
+                    product['image_url'] = f"https://via.placeholder.com/300x200?text={product['company']}+{product['model']}"
+                products.append(product)
+
+            return {
+                "products": products,
+                "total": total,
+                "page": page,
+                "limit": limit
+            }
+
+        finally:
+            db.close()
+    except Exception as e:
+        # Ensure error message is ASCII-safe for Windows compatibility
+        error_msg = str(e).encode("ascii", "ignore").decode("ascii")
+        if not error_msg:
+            error_msg = "Products retrieval failed"
+        raise HTTPException(status_code=500, detail=error_msg)
+
+
 if __name__ == "__main__":
     # Run on specified port with verbose logging
     port = int(os.getenv("PORT", "8000"))

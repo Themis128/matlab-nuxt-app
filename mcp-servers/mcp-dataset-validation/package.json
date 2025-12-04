@@ -1,0 +1,39 @@
+{
+  "name": "mcp-dataset-validation",
+  "version": "1.0.0",
+  "description": "MCP server for validating ML datasets and checking data quality",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.23.0",
+    "csv-parser": "^3.0.0",
+    "papaparse": "^5.4.1",
+    "fs-extra": "^11.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "mcp",
+    "machine-learning",
+    "dataset",
+    "validation",
+    "data-quality"
+  ],
+  "author": "MatLab App Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Themis128/matlab-nuxt-app.git",
+    "directory": "mcp-servers/mcp-dataset-validation"
+  },
+  "bugs": {
+    "url": "https://github.com/Themis128/matlab-nuxt-app/issues"
+  },
+  "homepage": "https://github.com/Themis128/matlab-nuxt-app#readme"
+}

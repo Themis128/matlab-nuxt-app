@@ -1,18 +1,13 @@
 #!/usr/bin/env node
-/* eslint-disable no-console */
 import { algoliasearch } from 'algoliasearch';
-
-console.log('Script started');
 import fs from 'fs/promises';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+console.log('Script started');
 
 function usage() {
   console.log(
-    `Usage: node index_records.js [--file <path/to/file.json>] [--index <index_name>] [--appId <ALGOLIA_APP_ID>] [--apiKey <ALGOLIA_ADMIN_API_KEY>] [--dry-run]\n`
+    'Usage: node index_records.js [--file <path/to/file.json>] [--index <index_name>] [--appId <ALGOLIA_APP_ID>] [--apiKey <ALGOLIA_ADMIN_API_KEY>] [--dry-run]\n'
   );
   console.log('Options:');
   console.log(
@@ -154,8 +149,9 @@ async function main() {
     const hasModelName = obj.model_name && typeof obj.model_name === 'string';
     if (!hasTitle && !hasModelName) return false;
     // Price is optional - only validate if present
-    if (obj.price !== undefined && (typeof obj.price !== 'number' || Number.isNaN(obj.price)))
+    if (obj.price !== undefined && (typeof obj.price !== 'number' || Number.isNaN(obj.price))) {
       return false;
+    }
     return true;
   }
 

@@ -131,7 +131,7 @@ export default defineEventHandler(async (): Promise<string[]> => {
         .map((v) => {
           if (!v) return '';
           const str = String(v);
-          return str.length > 50 ? str.substring(0, 50) + '...' : str;
+          return str.length > 50 ? `${str.substring(0, 50)}...` : str;
         });
 
       // Determine data type
@@ -219,19 +219,6 @@ export default defineEventHandler(async (): Promise<string[]> => {
         missingFeatures.push(featureName);
       }
     });
-
-    // Generate recommendations
-    const _recommendations = {
-      cameraAvailable: 'Front Camera' in foundFeatures && 'Back Camera' in foundFeatures,
-      storageAvailable: 'Storage' in foundFeatures || 'Model Name' in foundFeatures,
-      processorAvailable: 'Processor' in foundFeatures,
-      regionalPricesAvailable: [
-        'Price (Pakistan)',
-        'Price (India)',
-        'Price (China)',
-        'Price (Dubai)',
-      ].some((p) => p in foundFeatures),
-    };
 
     return columns.map((c) => c.name);
   } catch (error: unknown) {

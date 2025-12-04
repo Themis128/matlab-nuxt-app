@@ -1,0 +1,93 @@
+extends: default
+
+rules:
+  # Allow longer lines for readability in YAML files
+  line-length:
+    max: 120
+    level: warning
+
+  # Allow empty values in mappings
+  empty-values:
+    forbid-in-block-mappings: false
+    forbid-in-flow-mappings: false
+
+  # Allow trailing spaces in empty lines and comments
+  empty-lines:
+    max-start: 2
+    max-end: 1
+    max: 2
+
+  # Allow comments to start anywhere
+  comments:
+    require-starting-space: false
+    ignore-shebangs: true
+
+  # Allow indentation with spaces
+  indentation:
+    spaces: 2
+    indent-sequences: true
+    check-multi-line-strings: false
+
+  # Allow truthy values
+  truthy:
+    allowed-values: ['true', 'false', 'yes', 'no', 'on', 'off']
+    check-keys: false
+
+  # Allow brackets in flow style
+  brackets:
+    forbid: false
+
+  # Allow colons in flow style
+  colons:
+    max-spaces-after: 1
+    max-spaces-before: 0
+
+  # Allow commas in flow style
+  commas:
+    max-spaces-after: 1
+    max-spaces-before: 0
+
+  # Allow dashes in sequences
+  dashes:
+    max-spaces-after: 1
+
+  # Allow document start markers
+  document-start:
+    present: false
+
+  # Allow empty lines
+  empty-lines:
+    max-start: 2
+    max-end: 1
+    max: 2
+
+  # Allow hyphens in names
+  hyphens:
+    max-spaces-after: 1
+
+  # Allow key duplicates
+  key-duplicates: enable
+
+  # Allow key ordering
+  key-ordering: disable
+
+  # Allow new lines
+  new-lines:
+    type: unix
+
+  # Allow octal values
+  octal-values:
+    forbid-implicit-octal: false
+    forbid-explicit-octal: false
+
+  # Allow quoted strings
+  quoted-strings:
+    quote-type: single
+    required: only-when-needed
+
+  # Allow trailing spaces
+  trailing-spaces: enable
+
+  # Allow document end markers
+  document-end:
+    present: false

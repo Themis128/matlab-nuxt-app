@@ -1,12 +1,14 @@
+/* global self, chrome */
+
 // Background service worker for the extension (MV3)
 // Listens for installation and simple messaging
 
-self.addEventListener('install', (event) => {
+self.addEventListener('install', (_event) => {
   console.log('Matlab Nuxt App extension installed');
   self.skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', (_event) => {
   console.log('Matlab Nuxt App extension activated');
 });
 

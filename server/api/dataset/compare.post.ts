@@ -1,7 +1,5 @@
 import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
-import { readBody, createError, defineEventHandler } from 'h3';
-import type { H3Event } from 'h3';
 
 interface PhoneModel {
   modelName: string;
@@ -44,7 +42,7 @@ interface CompareRequest {
   modelNames: string[];
 }
 
-export default defineEventHandler(async (event: H3Event): Promise<ComparisonResponse> => {
+export default defineEventHandler(async (event): Promise<ComparisonResponse> => {
   try {
     const body = await readBody<CompareRequest>(event);
 
