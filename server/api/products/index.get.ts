@@ -54,12 +54,7 @@ export default defineEventHandler(async (event) => {
       total: number;
       page: number;
       limit: number;
-    }>(
-      `/api/products?${params.toString()}`,
-      null,
-      event,
-      'GET'
-    );
+    }>(`/api/products?${params.toString()}`, null, event, 'GET');
 
     if (!result) {
       throw new Error('Python API is not available');

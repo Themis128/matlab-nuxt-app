@@ -1,3 +1,5 @@
+import { getRequestHost, getRequestProtocol } from 'h3';
+
 /**
  * Dynamically determines the Python API URL based on the current host
  * This allows the frontend to connect to the Python API on platforms like Replit

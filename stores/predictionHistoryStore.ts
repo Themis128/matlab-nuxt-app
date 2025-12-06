@@ -36,7 +36,15 @@ export const usePredictionHistoryStore = defineStore('predictionHistory', {
           this.history = JSON.parse(stored);
         }
       } catch (error) {
-        console.error('Failed to load prediction history:', error);
+        const logger = useSentryLogger();
+        logger.logError(
+          'Failed to load prediction history',
+          error instanceof Error ? error : new Error(String(error)),
+          {
+            component: 'predictionHistoryStore',
+            action: 'loadHistory',
+          }
+        );
       }
     },
 
@@ -61,7 +69,15 @@ export const usePredictionHistoryStore = defineStore('predictionHistory', {
         // Save to localStorage
         localStorage.setItem(STORAGE_KEY, JSON.stringify(this.history));
       } catch (error) {
-        console.error('Failed to save prediction history:', error);
+        const logger = useSentryLogger();
+        logger.logError(
+          'Failed to save prediction history',
+          error instanceof Error ? error : new Error(String(error)),
+          {
+            component: 'predictionHistoryStore',
+            action: 'savePrediction',
+          }
+        );
       }
     },
 

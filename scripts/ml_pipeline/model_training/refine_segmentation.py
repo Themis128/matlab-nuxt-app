@@ -155,7 +155,7 @@ def find_optimal_k(X_scaled, k_range=K_RANGE):
 
     # Pick k with highest silhouette score (or lowest DB if tied)
     best_k = max(results.keys(), key=lambda k: results[k]['silhouette_score'])
-    print(f"\n✓ Best K={best_k} (Silhouette={results[best_k]['silhouette_score']:.4f})")
+    print(f"\n[OK] Best K={best_k} (Silhouette={results[best_k]['silhouette_score']:.4f})")
 
     return best_k, results[best_k], results
 
@@ -259,7 +259,7 @@ def save_segment_models(segment_models, k_val):
     for seg, model in segment_models.items():
         path = MODELS_DIR / f"price_refined_segment_k{k_val}_s{seg}_model.pkl"
         dump(model, path)
-        print(f"✓ Saved: {path.name}")
+        print(f"[OK] Saved: {path.name}")
 
 
 def train_global_baseline(df: pd.DataFrame, price_col: str, pred_features: list[str]):
@@ -310,7 +310,7 @@ def main():
     # 1. Prepare sanitized clustering features
     print("\n[1/5] Preparing sanitized clustering features...")
     X_scaled, cluster_features, scaler = prepare_clustering_features(df)
-    print(f"✓ Using {len(cluster_features)} features: {cluster_features}")
+    print(f"[OK] Using {len(cluster_features)} features: {cluster_features}")
 
     # 2. Find optimal K
     print("\n[2/5] Testing K values with silhouette & Davies-Bouldin scores...")
@@ -320,7 +320,7 @@ def main():
     print("\n[3/5] Enforcing minimum segment size...")
     labels = enforce_min_segment_size(best_result['labels'], X_scaled, MIN_SEGMENT_SIZE)
     unique, counts = np.unique(labels, return_counts=True)
-    print(f"✓ Final segments: {dict(zip(unique, counts))}")
+    print(f"[OK] Final segments: {dict(zip(unique, counts))}")
 
     # 4. Train global baseline
     print("\n[4/5] Training global baseline...")
@@ -366,12 +366,12 @@ def main():
     print("\n" + "=" * 80)
     print("RESULTS")
     print("=" * 80)
-    print(f"✓ Assignments saved: {ASSIGNMENTS_PATH}")
-    print(f"✓ Metrics saved: {METRICS_PATH}")
+    print(f"[OK] Assignments saved: {ASSIGNMENTS_PATH}")
+    print(f"[OK] Metrics saved: {METRICS_PATH}")
     print(f"\nBaseline CV RMSE: ${baseline_metrics['rmse_cv_mean']:.2f}")
     print(f"Avg Segment CV RMSE: ${avg_segment_rmse:.2f}" if avg_segment_rmse else "N/A")
     if improvement:
-        status = "✓ IMPROVEMENT" if improvement > 0 else "✗ WORSE"
+        status = "[IMPROVEMENT]" if improvement > 0 else "[WORSE]"
         print(f"{status}: Δ RMSE = ${improvement:.2f} ({improvement_pct:+.2f}%)")
 
 if __name__ == '__main__':

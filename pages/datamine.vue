@@ -391,33 +391,44 @@ const dataMiningTools = ref([
   },
 ]);
 
-// Frequent patterns (placeholder data)
-const frequentPatterns = ref([
-  {
-    id: 'p1',
-    name: 'High RAM & Battery',
-    frequency: 72,
-    support: 320,
-    color: '#3B82F6',
-    icon: 'i-heroicons-sparkles',
-  },
-  {
-    id: 'p2',
-    name: 'Budget Flagship',
-    frequency: 45,
-    support: 210,
-    color: '#10B981',
-    icon: 'i-heroicons-flag',
-  },
-]);
+// Frequent patterns - fetch from API or calculate from dataset
+const frequentPatterns = ref<
+  Array<{
+    id: string;
+    name: string;
+    frequency: number;
+    support: number;
+    color: string;
+    icon: string;
+  }>
+>([]);
 
-// Association rules (placeholder data)
-const associationRules = ref([
-  { id: 'r1', antecedent: 'high_ram', consequent: 'high_price', confidence: 92, lift: 1.4 },
-  { id: 'r2', antecedent: 'large_battery', consequent: 'long_life', confidence: 88, lift: 1.2 },
-]);
+// Association rules - fetch from API or calculate from dataset
+const associationRules = ref<
+  Array<{
+    id: string;
+    antecedent: string;
+    consequent: string;
+    confidence: number;
+    lift: number;
+  }>
+>([]);
 
-// Clusters (placeholder data)
+// Fetch data mining results from API (for future use)
+// const fetchDataMiningResults = async () => {
+//   try {
+//     // Try to fetch from dataset statistics API
+//     const stats = await $fetch('/api/dataset/statistics').catch(() => null);
+//     if (stats) {
+//       // Process statistics to generate patterns
+//       // This would be enhanced when data mining API endpoints are available
+//     }
+//   } catch (error) {
+//     console.debug('Data mining results not available:', error);
+//   }
+// };
+
+// Clusters - fetch from API or calculate from dataset
 const clusters = ref([
   {
     id: 'c1',

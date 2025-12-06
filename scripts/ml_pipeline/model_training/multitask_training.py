@@ -226,7 +226,7 @@ def main():
             'winner': 'multitask' if mt_rmse < st_rmse else 'singletask'
         }
 
-        status = "✓" if improvement > 0 else "✗"
+        status = "[OK]" if improvement > 0 else "[NO]"
         print(f"{task:12s} {status} Multi-task RMSE: {mt_rmse:8.2f} vs Single-task: {st_rmse:8.2f} ({improvement:+.2f}%)")
 
     # Save model
@@ -236,7 +236,7 @@ def main():
         'feature_names': feature_names,
         'target_names': list(y.columns)
     }, MODEL_PATH)
-    print(f"\n✓ Multi-task model saved: {MODEL_PATH}")
+    print(f"\n[OK] Multi-task model saved: {MODEL_PATH}")
 
     # Save metrics
     metrics_output = {
@@ -258,7 +258,7 @@ def main():
     }
 
     METRICS_PATH.write_text(json.dumps(metrics_output, indent=2), encoding='utf-8')
-    print(f"✓ Metrics saved: {METRICS_PATH}")
+    print(f"[OK] Metrics saved: {METRICS_PATH}")
 
     print("\n" + "=" * 80)
     print("MULTI-TASK TRAINING COMPLETE")

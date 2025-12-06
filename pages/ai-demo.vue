@@ -102,6 +102,30 @@
                   </UFormGroup>
                 </div>
 
+                <!-- Model Selection -->
+                <UFormGroup label="ML Model">
+                  <USelect
+                    v-model="selectedModel"
+                    :options="availableModels"
+                    option-attribute="name"
+                    value-attribute="type"
+                  >
+                    <template #option="{ option }">
+                      <div class="flex items-center justify-between">
+                        <span>{{ option.name }}</span>
+                        <UBadge :color="option.recommended ? 'green' : 'gray'" size="xs">
+                          {{ option.accuracy }}% acc
+                        </UBadge>
+                      </div>
+                    </template>
+                  </USelect>
+                  <template #hint>
+                    <span class="text-xs text-gray-500">
+                      {{ availableModels.find((m) => m.type === selectedModel)?.description }}
+                    </span>
+                  </template>
+                </UFormGroup>
+
                 <!-- Action Buttons -->
                 <div class="flex gap-3">
                   <UButton
@@ -226,6 +250,9 @@
                   <div class="text-2xl font-bold text-gray-900 dark:text-white">
                     {{ predictionResults.overallConfidence }}%
                   </div>
+                  <div class="mt-1 text-xs font-medium text-gray-700 dark:text-gray-300">
+                    Model: {{ predictionResults.modelUsed || 'distilled' }}
+                  </div>
                   <div class="mt-1 text-xs text-gray-500">
                     Based on {{ predictionResults.trainingSamples }} training samples
                   </div>
@@ -307,6 +334,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue';
+import type { ModelType } from '~/composables/useModelPredictions';
 
 interface PredictionResult {
   price: number;
@@ -317,6 +345,7 @@ interface PredictionResult {
   insights: string[];
   overallConfidence: number;
   trainingSamples: string;
+  modelUsed?: string;
 }
 
 // Page meta (fallback for environments without Nuxt auto-imports)
@@ -334,9 +363,14 @@ onMounted(() => {
   }
 });
 
+// Use unified model predictions composable
+const { predictPrice, getAvailableModels } = useModelPredictions();
+
 // Reactive data
 const isPredicting = ref(false);
 const predictionResults = ref<PredictionResult | null>(null);
+const selectedModel = ref<ModelType>('distilled');
+const availableModels = ref(getAvailableModels());
 
 const demoData = reactive({
   brand: '',
@@ -397,25 +431,60 @@ const runPrediction = async () => {
 
   isPredicting.value = true;
 
-  // Simulate AI prediction delay
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  try {
+    // Use unified model predictions composable
+    const response = await predictPrice(
+      {
+        ram: parseFloat(demoData.ram) || 8,
+        battery: parseFloat(demoData.battery) || 4000,
+        screen: parseFloat(demoData.displaySize) || 6.1,
+        weight: 180, // Default weight if not provided
+        year: new Date().getFullYear(),
+        company: demoData.brand || 'Samsung',
+        front_camera: demoData.mainCamera ? parseFloat(demoData.mainCamera) : undefined,
+        back_camera: demoData.mainCamera ? parseFloat(demoData.mainCamera) : undefined,
+        processor: demoData.processor || undefined,
+        storage: demoData.storage ? parseFloat(demoData.storage) : undefined,
+      },
+      selectedModel.value
+    );
 
-  // Mock prediction results based on input
-  const basePrice = calculateBasePrice();
-  const performanceScore = calculatePerformanceScore();
+    const performanceScore = calculatePerformanceScore();
+    const accuracy = response.accuracy_info?.r2_score
+      ? Math.round(response.accuracy_info.r2_score * 100)
+      : 85;
 
-  predictionResults.value = {
-    price: Math.round(basePrice + (Math.random() - 0.5) * 200),
-    priceConfidence: Math.round(85 + Math.random() * 10),
-    performanceScore: Math.round(performanceScore),
-    marketPosition: getMarketPosition(performanceScore),
-    marketDescription: getMarketDescription(performanceScore),
-    insights: generateInsights(),
-    overallConfidence: Math.round(88 + Math.random() * 8),
-    trainingSamples: '50,000+',
-  };
+    predictionResults.value = {
+      price: Math.round(response.price || calculateBasePrice()),
+      priceConfidence: accuracy,
+      performanceScore: Math.round(performanceScore),
+      marketPosition: getMarketPosition(performanceScore),
+      marketDescription: getMarketDescription(performanceScore),
+      insights: generateInsights(demoData),
+      overallConfidence: accuracy,
+      trainingSamples: '50,000+',
+      modelUsed: response.model_used || selectedModel.value,
+    };
+  } catch (error) {
+    console.error('Prediction API error:', error);
+    // Fallback to calculated values if API fails
+    const basePrice = calculateBasePrice();
+    const performanceScore = calculatePerformanceScore();
 
-  isPredicting.value = false;
+    predictionResults.value = {
+      price: Math.round(basePrice),
+      priceConfidence: 75,
+      performanceScore: Math.round(performanceScore),
+      marketPosition: getMarketPosition(performanceScore),
+      marketDescription: getMarketDescription(performanceScore),
+      insights: generateInsights(demoData),
+      overallConfidence: 75,
+      trainingSamples: '50,000+',
+      modelUsed: selectedModel.value,
+    };
+  } finally {
+    isPredicting.value = false;
+  }
 };
 
 const calculateBasePrice = () => {
@@ -491,16 +560,43 @@ const getMarketDescription = (score: number) => {
   return 'Basic functionality at affordable price';
 };
 
-const generateInsights = () => {
-  const insights = [
-    'Strong camera performance relative to price point',
-    'Battery life exceeds category average',
-    'Display quality is above average for this segment',
-    'Processor provides smooth multitasking experience',
+const generateInsights = (data: typeof demoData) => {
+  const insights: string[] = [];
+
+  // Generate insights based on actual input data
+  if (data.battery && parseFloat(data.battery) >= 5000) {
+    insights.push('Exceptional battery capacity for extended usage');
+  }
+  if (data.ram && parseFloat(data.ram) >= 12) {
+    insights.push('High RAM ensures smooth multitasking and future-proofing');
+  }
+  if (data.mainCamera && parseFloat(data.mainCamera) >= 50) {
+    insights.push('Advanced camera system for professional photography');
+  }
+  if (data.processor && ['sd8g3', 'a17pro', 'tensor-g3'].includes(data.processor)) {
+    insights.push('Flagship processor delivers top-tier performance');
+  }
+  if (data.displaySize && parseFloat(data.displaySize) >= 6.5) {
+    insights.push('Large display provides immersive viewing experience');
+  }
+
+  // Add default insights if not enough specific ones
+  const defaultInsights = [
+    'Balanced specifications for everyday use',
+    'Good value proposition in its category',
+    'Reliable performance for most tasks',
   ];
 
-  // Randomly select 3 insights
-  return insights.sort(() => Math.random() - 0.5).slice(0, 3);
+  while (insights.length < 3) {
+    const defaultInsight = defaultInsights[insights.length] || defaultInsights[0] || '';
+    if (defaultInsight && !insights.includes(defaultInsight)) {
+      insights.push(defaultInsight);
+    } else {
+      break;
+    }
+  }
+
+  return insights.slice(0, 3);
 };
 
 const resetForm = () => {

@@ -36,7 +36,12 @@ export function useUserPreferences() {
         }
       }
     } catch (error) {
-      console.warn('Failed to load user preferences:', error);
+      const logger = useSentryLogger();
+      logger.warn('Failed to load user preferences', {
+        component: 'useUserPreferences',
+        action: 'loadPreferences',
+        error: error instanceof Error ? error.message : String(error),
+      });
       // Clear corrupted data
       localStorage.removeItem('mobile-finder-preferences');
     }
@@ -49,7 +54,12 @@ export function useUserPreferences() {
     try {
       localStorage.setItem('mobile-finder-preferences', JSON.stringify(preferences.value));
     } catch (error) {
-      console.warn('Failed to save user preferences:', error);
+      const logger = useSentryLogger();
+      logger.warn('Failed to save user preferences', {
+        component: 'useUserPreferences',
+        action: 'savePreferences',
+        error: error instanceof Error ? error.message : String(error),
+      });
     }
   };
 

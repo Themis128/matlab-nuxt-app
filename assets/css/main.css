@@ -1,37 +1,117 @@
 /* Main CSS file for Nuxt application */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Note: @nuxt/ui handles Tailwind CSS automatically */
+/* Custom utility classes using standard CSS to avoid @apply conflicts */
 
 /* Custom styles */
 .container-responsive {
-  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-responsive {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-responsive {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }
 
 .section-spacing {
-  @apply py-12 sm:py-16 lg:py-20;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 640px) {
+  .section-spacing {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-spacing {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
 }
 
 .gradient-text {
-  @apply bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent;
+  background: linear-gradient(to right, #2563eb, #9333ea);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .card-hover {
-  @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-1;
+  transition: all 0.2s;
+}
+
+.card-hover:hover {
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transform: translateY(-0.25rem);
 }
 
 .card-responsive {
-  @apply p-4 sm:p-6;
+  padding: 1rem;
+}
+
+@media (min-width: 640px) {
+  .card-responsive {
+    padding: 1.5rem;
+  }
 }
 
 .touch-target {
-  @apply min-h-[44px] min-w-[44px];
+  min-height: 44px;
+  min-width: 44px;
 }
 
 .responsive-xl {
-  @apply text-2xl sm:text-3xl lg:text-4xl;
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+@media (min-width: 640px) {
+  .responsive-xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
 }
 
 .responsive-lg {
-  @apply text-xl sm:text-2xl lg:text-3xl;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+@media (min-width: 640px) {
+  .responsive-lg {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-lg {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
 }

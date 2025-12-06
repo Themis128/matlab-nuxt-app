@@ -2,11 +2,11 @@
   "teacher_rmse": 25108.1354668458,
   "student_rmse": 32365.901527832662,
   "accuracy_retention_pct": 71.09396645334168,
-  "speedup_factor": 11.188049689831907,
-  "teacher_latency_ms": 0.004518382513639461,
-  "student_latency_ms": 0.000403857923311328,
-  "teacher_size_kb": 605.46484375,
-  "student_size_kb": 14.529296875,
-  "size_reduction_pct": 97.60030709875548,
+  "speedup_factor": 20.321778153892847,
+  "teacher_latency_ms": 0.006884196721881888,
+  "student_latency_ms": 0.00033875956472653203,
+  "teacher_size_kb": 605.9638671875,
+  "student_size_kb": 14.5478515625,
+  "size_reduction_pct": 97.5992212819517,
   "production_ready": true
 }

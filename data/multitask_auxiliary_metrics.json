@@ -17,11 +17,19 @@
   },
   "improvement_percent": 0.0,
   "architecture": {
-    "shared_layers": [256, 128, 64],
+    "shared_layers": [
+      256,
+      128,
+      64
+    ],
     "activation": "relu",
     "solver": "adam",
     "max_iter": 500
   },
-  "auxiliary_tasks": ["price_residual", "brand_tier", "market_segment"],
+  "auxiliary_tasks": [
+    "price_residual",
+    "brand_tier",
+    "market_segment"
+  ],
   "note": "Multi-task learning with auxiliary classification tasks (brand tier, market segment) + residual regression"
 }

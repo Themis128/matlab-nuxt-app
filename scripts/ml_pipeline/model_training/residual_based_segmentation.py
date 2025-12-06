@@ -308,15 +308,15 @@ def main():
     print(f"Improvement vs Baseline: {improvement_vs_baseline:+.2f}%")
 
     if improvement_vs_baseline > 0:
-        print("\n✓ SUCCESS: Residual-based segmentation improves over baseline!")
+        print("\n[SUCCESS] Residual-based segmentation improves over baseline!")
     else:
-        print(f"\n✗ CAUTION: Segmentation underperforms baseline by {abs(improvement_vs_baseline):.2f}%")
+        print(f"\n[CAUTION] Segmentation underperforms baseline by {abs(improvement_vs_baseline):.2f}%")
 
     # Save models
     for seg, model in segment_models.items():
         model_path = MODELS_DIR / f"price_residual_segment_{seg}_model.pkl"
         dump(model, model_path)
-        print(f"✓ Saved: {model_path}")
+        print(f"[OK] Saved: {model_path}")
 
     # Save baseline
     baseline_path = MODELS_DIR / "price_residual_baseline.pkl"
@@ -345,7 +345,7 @@ def main():
     }
 
     RESULTS_PATH.write_text(json.dumps(results, indent=2), encoding='utf-8')
-    print(f"\n✓ Results saved: {RESULTS_PATH}")
+    print(f"\n[OK] Results saved: {RESULTS_PATH}")
 
     print("\n" + "=" * 80)
     print("RESIDUAL-BASED SEGMENTATION COMPLETE")

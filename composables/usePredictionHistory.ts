@@ -40,14 +40,25 @@ export const usePredictionHistory = () => {
 
       // Log any invalid items for debugging
       if (validItems.length !== parsed.length) {
-        console.warn(
-          `Filtered out ${parsed.length - validItems.length} invalid history items from localStorage`
+        const logger = useSentryLogger();
+        logger.warn(
+          `Filtered out ${parsed.length - validItems.length} invalid history items from localStorage`,
+          {
+            component: 'usePredictionHistory',
+            action: 'getHistory',
+            filteredCount: parsed.length - validItems.length,
+          }
         );
       }
 
       return validItems;
     } catch (error) {
-      console.warn('Failed to load prediction history:', error);
+      const logger = useSentryLogger();
+      logger.warn('Failed to load prediction history', {
+        component: 'usePredictionHistory',
+        action: 'getHistory',
+        error: error instanceof Error ? error.message : String(error),
+      });
       return [];
     }
   };
@@ -68,7 +79,15 @@ export const usePredictionHistory = () => {
       const trimmed = history.slice(0, MAX_HISTORY);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(trimmed));
     } catch (error) {
-      console.error('Failed to save prediction history:', error);
+      const logger = useSentryLogger();
+      logger.logError(
+        'Failed to save prediction history',
+        error instanceof Error ? error : new Error(String(error)),
+        {
+          component: 'usePredictionHistory',
+          action: 'savePrediction',
+        }
+      );
     }
   };
 

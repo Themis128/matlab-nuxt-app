@@ -92,7 +92,15 @@ export const useAdvancedModelsStore = defineStore('advancedModels', () => {
         }
       }
     } catch (error) {
-      console.error('Failed to fetch available models:', error);
+      const logger = useSentryLogger();
+      logger.logError(
+        'Failed to fetch available models',
+        error instanceof Error ? error : new Error(String(error)),
+        {
+          component: 'advancedModelsStore',
+          action: 'fetchAvailableModels',
+        }
+      );
       // Fallback to hardcoded models
       availableModels.value = [
         {
@@ -158,7 +166,15 @@ export const useAdvancedModelsStore = defineStore('advancedModels', () => {
 
       return response;
     } catch (error) {
-      console.error('Advanced prediction failed:', error);
+      const logger = useSentryLogger();
+      logger.logError(
+        'Advanced prediction failed',
+        error instanceof Error ? error : new Error(String(error)),
+        {
+          component: 'advancedModelsStore',
+          action: 'predictPrice',
+        }
+      );
       throw error;
     } finally {
       isLoadingPrediction.value = false;
@@ -187,7 +203,15 @@ export const useAdvancedModelsStore = defineStore('advancedModels', () => {
 
       return response;
     } catch (error) {
-      console.error('Model comparison failed:', error);
+      const logger = useSentryLogger();
+      logger.logError(
+        'Model comparison failed',
+        error instanceof Error ? error : new Error(String(error)),
+        {
+          component: 'advancedModelsStore',
+          action: 'compareModels',
+        }
+      );
       throw error;
     } finally {
       isLoadingPrediction.value = false;

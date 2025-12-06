@@ -73,7 +73,7 @@ def load_and_clean_data():
     for path in possible_paths:
         if path.exists():
             df = pd.read_csv(path)
-            print(f"   ✓ Loaded: {path.name} ({len(df)} samples)")
+            print(f"   [OK] Loaded: {path.name} ({len(df)} samples)")
             break
 
     if df is None:
@@ -83,7 +83,7 @@ def load_and_clean_data():
     found_leakage = [f for f in LEAKAGE_FEATURES if f in df.columns]
     print("\n[2/6] Checking for leakage features...")
     if found_leakage:
-        print(f"   ⚠️  Found {len(found_leakage)} leakage features:")
+        print(f"   [WARNING] Found {len(found_leakage)} leakage features:")
         for feat in found_leakage:
             if 'Price' in df.columns:
                 corr = df[feat].corr(df['Price'])
@@ -93,14 +93,14 @@ def load_and_clean_data():
 
         # Remove leakage features
         df = df.drop(columns=found_leakage)
-        print(f"   ✓ Removed {len(found_leakage)} leakage features")
+        print(f"   [OK] Removed {len(found_leakage)} leakage features")
     else:
-        print("   ✓ No leakage features found (already clean)")
+        print("   [OK] No leakage features found (already clean)")
 
     # Save clean dataset
     clean_path = OUTPUT_DIR / 'Mobiles_Dataset_Clean.csv'
     df.to_csv(clean_path, index=False)
-    print(f"   ✓ Saved clean dataset: {clean_path.name}")
+    print(f"   [OK] Saved clean dataset: {clean_path.name}")
 
     return df
 
@@ -180,9 +180,9 @@ def prepare_features(df):
 
     X = df[feature_cols].values
 
-    print(f"   ✓ Feature matrix: {X.shape[0]} samples × {X.shape[1]} features")
-    print(f"   ✓ Features: {', '.join(feature_cols[:5])}... (+ {len(feature_cols)-5} more)")
-    print(f"   ✓ Target range: ${y.min():.0f} - ${y.max():.0f}")
+    print(f"   [OK] Feature matrix: {X.shape[0]} samples x {X.shape[1]} features")
+    print(f"   [OK] Features: {', '.join(feature_cols[:5])}... (+ {len(feature_cols)-5} more)")
+    print(f"   [OK] Target range: ${y.min():.0f} - ${y.max():.0f}")
 
     # Save feature metadata
     metadata = {
@@ -196,7 +196,7 @@ def prepare_features(df):
     metadata_path = OUTPUT_DIR / 'clean_model_metadata.json'
     with open(metadata_path, 'w') as f:
         json.dump(metadata, f, indent=2)
-    print(f"   ✓ Saved metadata: {metadata_path.name}")
+    print(f"   [OK] Saved metadata: {metadata_path.name}")
 
     return X, y, feature_cols, label_encoders
 
@@ -229,16 +229,16 @@ def train_baseline_gbm(X_train, y_train, X_test, y_test):
     mae_test = mean_absolute_error(y_test, y_pred_test)
     r2_test = r2_score(y_test, y_pred_test)
 
-    print(f"   ✓ Training time: {train_time:.2f}s")
-    print(f"   ✓ Train RMSE: ${rmse_train:,.0f}")
-    print(f"   ✓ Test RMSE: ${rmse_test:,.0f} (realistic baseline)")
-    print(f"   ✓ Test MAE: ${mae_test:,.0f}")
-    print(f"   ✓ Test R²: {r2_test:.4f}")
+    print(f"   [OK] Training time: {train_time:.2f}s")
+    print(f"   [OK] Train RMSE: ${rmse_train:,.0f}")
+    print(f"   [OK] Test RMSE: ${rmse_test:,.0f} (realistic baseline)")
+    print(f"   [OK] Test MAE: ${mae_test:,.0f}")
+    print(f"   [OK] Test R²: {r2_test:.4f}")
 
     # Save model
     model_path = MODELS_DIR / 'clean_gbm_model.pkl'
     joblib.dump(model, model_path)
-    print(f"   ✓ Saved: {model_path.name}")
+    print(f"   [OK] Saved: {model_path.name}")
 
     return model, {
         'rmse_train': rmse_train,
@@ -271,7 +271,7 @@ def train_ensemble_stacking(X_train, y_train, X_test, y_test):
         model.fit(X_train, y_train)
         meta_train[:, i] = model.predict(X_train)
         meta_test[:, i] = model.predict(X_test)
-        print("✓")
+        print("[OK]")
 
     # Train meta-learner (Ridge with positive weights)
     print("   Training meta-learner (Ridge)...")
@@ -284,10 +284,10 @@ def train_ensemble_stacking(X_train, y_train, X_test, y_test):
     mae_test = mean_absolute_error(y_test, y_pred_test)
     r2_test = r2_score(y_test, y_pred_test)
 
-    print(f"   ✓ Test RMSE: ${rmse_test:,.0f}")
-    print(f"   ✓ Test MAE: ${mae_test:,.0f}")
-    print(f"   ✓ Test R²: {r2_test:.4f}")
-    print(f"   ✓ Meta-learner weights: {dict(zip(base_models.keys(), meta_model.coef_.round(3)))}")
+    print(f"   [OK] Test RMSE: ${rmse_test:,.0f}")
+    print(f"   [OK] Test MAE: ${mae_test:,.0f}")
+    print(f"   [OK] Test R²: {r2_test:.4f}")
+    print(f"   [OK] Meta-learner weights: {dict(zip(base_models.keys(), meta_model.coef_.round(3)))}")
 
     # Save ensemble
     ensemble_path = MODELS_DIR / 'clean_ensemble_model.pkl'
@@ -295,7 +295,7 @@ def train_ensemble_stacking(X_train, y_train, X_test, y_test):
         'base_models': base_models,
         'meta_model': meta_model
     }, ensemble_path)
-    print(f"   ✓ Saved: {ensemble_path.name}")
+    print(f"   [OK] Saved: {ensemble_path.name}")
 
     return {
         'rmse_test': rmse_test,
@@ -358,11 +358,11 @@ def distill_model(teacher_model, X_train, y_train, X_test, y_test, feature_names
 
     accuracy_retention = (1 - abs(student_rmse - teacher_rmse) / teacher_rmse) * 100
 
-    print(f"   ✓ Teacher RMSE: ${teacher_rmse:,.0f}")
-    print(f"   ✓ Student RMSE: ${student_rmse:,.0f}")
-    print(f"   ✓ Accuracy retention: {accuracy_retention:.1f}%")
-    print(f"   ✓ Speedup: {speedup:.1f}× ({student_latency:.3f}ms vs {teacher_latency:.3f}ms)")
-    print(f"   ✓ Size reduction: {(1 - student_size/teacher_size)*100:.1f}% ({student_size:.1f} KB vs {teacher_size:.1f} KB)")
+    print(f"   [OK] Teacher RMSE: ${teacher_rmse:,.0f}")
+    print(f"   [OK] Student RMSE: ${student_rmse:,.0f}")
+    print(f"   [OK] Accuracy retention: {accuracy_retention:.1f}%")
+    print(f"   [OK] Speedup: {speedup:.1f}x ({student_latency:.3f}ms vs {teacher_latency:.3f}ms)")
+    print(f"   [OK] Size reduction: {(1 - student_size/teacher_size)*100:.1f}% ({student_size:.1f} KB vs {teacher_size:.1f} KB)")
 
     # Save distilled model (PRODUCTION) with metadata
     distilled_path = MODELS_DIR / 'distilled_price_model.pkl'
@@ -378,7 +378,7 @@ def distill_model(teacher_model, X_train, y_train, X_test, y_test, feature_names
         }
     }
     joblib.dump(model_package, distilled_path)
-    print(f"   ✓ Saved production model: {distilled_path.name}")
+    print(f"   [OK] Saved production model: {distilled_path.name}")
 
     # Save benchmark
     benchmark = {
@@ -397,7 +397,7 @@ def distill_model(teacher_model, X_train, y_train, X_test, y_test, feature_names
     benchmark_path = OUTPUT_DIR / 'clean_distillation_benchmark.json'
     with open(benchmark_path, 'w') as f:
         json.dump(benchmark, f, indent=2)
-    print(f"   ✓ Saved benchmark: {benchmark_path.name}")
+    print(f"   [OK] Saved benchmark: {benchmark_path.name}")
 
     return benchmark
 
@@ -428,22 +428,22 @@ def main():
     print("\n" + "=" * 80)
     print("CLEAN MODEL TRAINING COMPLETE")
     print("=" * 80)
-    print("\n📊 Baseline GBM (Teacher):")
+    print("\n[Baseline GBM (Teacher)]")
     print(f"   RMSE: ${gbm_metrics['rmse_test']:,.0f} (realistic, no leakage)")
     print(f"   R²: {gbm_metrics['r2_test']:.4f}")
 
-    print("\n📊 Ensemble Stacking:")
+    print("\n[Ensemble Stacking]")
     print(f"   RMSE: ${ensemble_metrics['rmse_test']:,.0f}")
     print(f"   Improvement: {((gbm_metrics['rmse_test'] - ensemble_metrics['rmse_test']) / gbm_metrics['rmse_test'] * 100):.2f}%")
 
-    print("\n⭐ Distilled Model (Production):")
+    print("\n[Distilled Model (Production)]")
     print(f"   RMSE: ${distill_metrics['student_rmse']:,.0f}")
-    print(f"   Speedup: {distill_metrics['speedup_factor']:.1f}×")
+    print(f"   Speedup: {distill_metrics['speedup_factor']:.1f}x")
     print(f"   Size: {distill_metrics['student_size_kb']:.1f} KB ({distill_metrics['size_reduction_pct']:.1f}% smaller)")
     print(f"   Accuracy: {distill_metrics['accuracy_retention_pct']:.1f}% retention")
 
-    print(f"\n✅ Models saved to: {MODELS_DIR}")
-    print("✅ Production model: distilled_price_model.pkl")
+    print(f"\n[OK] Models saved to: {MODELS_DIR}")
+    print("[OK] Production model: distilled_price_model.pkl")
     print("\n" + "=" * 80)
 
 

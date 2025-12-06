@@ -55,12 +55,6 @@ rules:
   document-start:
     present: false
 
-  # Allow empty lines
-  empty-lines:
-    max-start: 2
-    max-end: 1
-    max: 2
-
   # Allow hyphens in names
   hyphens:
     max-spaces-after: 1

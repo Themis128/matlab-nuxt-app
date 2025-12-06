@@ -6,14 +6,14 @@
  * Designed for integration with Cursor AI and development workflows
  */
 
-const fs = require('fs')
-const path = require('path')
-const { execSync } = require('child_process')
+const fs = require('fs');
+const path = require('path');
+const { execSync } = require('child_process');
 
 // Simple file watcher implementation
 class FileWatcher {
-  constructor () {
-    this.watchedDirs = new Set()
+  constructor() {
+    this.watchedDirs = new Set();
     this.fileTypes = {
       js: ['js', 'jsx', 'ts', 'tsx', 'vue'],
       py: ['py', 'pyi'],
@@ -22,18 +22,20 @@ class FileWatcher {
       json: ['json'],
       yaml: ['yml', 'yaml'],
       html: ['html', 'htm'],
-      sh: ['sh', 'bash', 'zsh', 'fish']
-    }
-    this.debounceTimers = new Map()
-    this.logs = []
+      sh: ['sh', 'bash', 'zsh', 'fish'],
+    };
+    this.debounceTimers = new Map();
+    this.logs = [];
   }
 
-  log (message, color = 'reset') {
-    console.log(`\x1b[${this.getColorCode(color)}m${new Date().toLocaleTimeString()} - ${message}\x1b[0m`)
-    this.logs.push({ message, timestamp: new Date().toISOString() })
+  log(message, color = 'reset') {
+    console.log(
+      `\x1b[${this.getColorCode(color)}m${new Date().toLocaleTimeString()} - ${message}\x1b[0m`
+    );
+    this.logs.push({ message, timestamp: new Date().toISOString() });
   }
 
-  getColorCode (color) {
+  getColorCode(color) {
     const colors = {
       reset: '0',
       red: '31',
@@ -41,13 +43,13 @@ class FileWatcher {
       yellow: '33',
       blue: '34',
       magenta: '35',
-      cyan: '36'
-    }
-    return colors[color] || '0'
+      cyan: '36',
+    };
+    return colors[color] || '0';
   }
 
-  shouldWatchFile (filePath) {
-    const ext = path.extname(filePath).slice(1).toLowerCase()
+  shouldWatchFile(filePath) {
+    const ext = path.extname(filePath).slice(1).toLowerCase();
 
     // Skip files in these directories
     const skipDirs = [
@@ -59,173 +61,182 @@ class FileWatcher {
       '__pycache__',
       '.git',
       'coverage',
-      'test-results'
-    ]
+      'test-results',
+    ];
 
-    const relativePath = path.relative(process.cwd(), filePath)
-    if (skipDirs.some(dir => relativePath.includes(dir))) {
-      return false
+    const relativePath = path.relative(process.cwd(), filePath);
+    if (skipDirs.some((dir) => relativePath.includes(dir))) {
+      return false;
     }
 
     // Check if file has a watched extension
-    return Object.values(this.fileTypes).flat().includes(ext)
+    return Object.values(this.fileTypes).flat().includes(ext);
   }
 
-  getFileType (filePath) {
-    const ext = path.extname(filePath).slice(1).toLowerCase()
+  getFileType(filePath) {
+    const ext = path.extname(filePath).slice(1).toLowerCase();
 
     for (const [type, extensions] of Object.entries(this.fileTypes)) {
       if (extensions.includes(ext)) {
-        return type
+        return type;
       }
     }
-    return null
+    return null;
   }
 
-  debounce (key, fn, delay = 1000) {
+  debounce(key, fn, delay = 1000) {
     if (this.debounceTimers.has(key)) {
-      clearTimeout(this.debounceTimers.get(key))
+      clearTimeout(this.debounceTimers.get(key));
     }
 
     const timer = setTimeout(() => {
-      fn()
-      this.debounceTimers.delete(key)
-    }, delay)
+      fn();
+      this.debounceTimers.delete(key);
+    }, delay);
 
-    this.debounceTimers.set(key, timer)
+    this.debounceTimers.set(key, timer);
   }
 
-  runAutoFix (filePath) {
-    const fileType = this.getFileType(filePath)
-    const relativePath = path.relative(process.cwd(), filePath)
+  runAutoFix(filePath) {
+    const fileType = this.getFileType(filePath);
+    const relativePath = path.relative(process.cwd(), filePath);
 
-    this.log(`🔍 File changed: ${relativePath}`, 'blue')
-    this.log(`📝 File type: ${fileType}`, 'cyan')
+    this.log(`🔍 File changed: ${relativePath}`, 'blue');
+    this.log(`📝 File type: ${fileType}`, 'cyan');
 
     // Debounce to avoid too many rapid fixes
-    this.debounce(`fix-${filePath}`, () => {
-      try {
-        this.executeFix(fileType, filePath)
-      } catch (error) {
-        this.log(`❌ Auto-fix failed: ${error.message}`, 'red')
-      }
-    }, 1500) // 1.5 second delay
+    this.debounce(
+      `fix-${filePath}`,
+      () => {
+        try {
+          this.executeFix(fileType, filePath);
+        } catch (error) {
+          this.log(`❌ Auto-fix failed: ${error.message}`, 'red');
+        }
+      },
+      1500
+    ); // 1.5 second delay
   }
 
-  executeFix (fileType, filePath) {
-    const relativePath = path.relative(process.cwd(), filePath)
+  executeFix(fileType, filePath) {
+    const relativePath = path.relative(process.cwd(), filePath);
 
     switch (fileType) {
       case 'js':
-        this.log(`🔧 Running ESLint fix for ${relativePath}...`, 'yellow')
-        execSync(`npx eslint --fix "${filePath}"`, { stdio: 'pipe' })
-        execSync(`npx prettier --write "${filePath}"`, { stdio: 'pipe' })
-        this.log(`✅ ${relativePath} fixed`, 'green')
-        break
+        this.log(`🔧 Running ESLint fix for ${relativePath}...`, 'yellow');
+        execSync(`npx eslint --fix "${filePath}"`, { stdio: 'pipe' });
+        execSync(`npx prettier --write "${filePath}"`, { stdio: 'pipe' });
+        this.log(`✅ ${relativePath} fixed`, 'green');
+        break;
 
       case 'py':
-        this.log(`🔧 Running Python format for ${relativePath}...`, 'yellow')
-        const pythonDir = path.dirname(filePath)
-        execSync(`cd "${pythonDir}" && ..\\venv\\Scripts\\black "${filePath}"`, { stdio: 'pipe' })
-        execSync(`cd "${pythonDir}" && ..\\venv\\Scripts\\isort --profile black "${filePath}"`, { stdio: 'pipe' })
-        this.log(`✅ ${relativePath} fixed`, 'green')
-        break
+        this.log(`🔧 Running Python format for ${relativePath}...`, 'yellow');
+        const pythonDir = path.dirname(filePath);
+        execSync(`cd "${pythonDir}" && ..\\venv\\Scripts\\black "${filePath}"`, { stdio: 'pipe' });
+        execSync(`cd "${pythonDir}" && ..\\venv\\Scripts\\isort --profile black "${filePath}"`, {
+          stdio: 'pipe',
+        });
+        this.log(`✅ ${relativePath} fixed`, 'green');
+        break;
 
       case 'css':
-        this.log(`🔧 Running CSS format for ${relativePath}...`, 'yellow')
-        execSync(`npx prettier --parser ${fileType === 'scss' ? 'scss' : 'css'} --write "${filePath}"`, { stdio: 'pipe' })
-        this.log(`✅ ${relativePath} fixed`, 'green')
-        break
+        this.log(`🔧 Running CSS format for ${relativePath}...`, 'yellow');
+        execSync(
+          `npx prettier --parser ${fileType === 'scss' ? 'scss' : 'css'} --write "${filePath}"`,
+          { stdio: 'pipe' }
+        );
+        this.log(`✅ ${relativePath} fixed`, 'green');
+        break;
 
       case 'md':
-        this.log(`🔧 Running Markdown format for ${relativePath}...`, 'yellow')
-        execSync(`npx prettier --parser markdown --write "${filePath}"`, { stdio: 'pipe' })
-        this.log(`✅ ${relativePath} fixed`, 'green')
-        break
+        this.log(`🔧 Running Markdown format for ${relativePath}...`, 'yellow');
+        execSync(`npx prettier --parser markdown --write "${filePath}"`, { stdio: 'pipe' });
+        this.log(`✅ ${relativePath} fixed`, 'green');
+        break;
 
       case 'json':
-        this.log(`🔧 Running JSON format for ${relativePath}...`, 'yellow')
-        execSync(`npx prettier --parser json --write "${filePath}"`, { stdio: 'pipe' })
-        this.log(`✅ ${relativePath} fixed`, 'green')
-        break
+        this.log(`🔧 Running JSON format for ${relativePath}...`, 'yellow');
+        execSync(`npx prettier --parser json --write "${filePath}"`, { stdio: 'pipe' });
+        this.log(`✅ ${relativePath} fixed`, 'green');
+        break;
 
       case 'yaml':
-        this.log(`🔧 Running YAML format for ${relativePath}...`, 'yellow')
-        execSync(`npx prettier --parser yaml --write "${filePath}"`, { stdio: 'pipe' })
-        this.log(`✅ ${relativePath} fixed`, 'green')
-        break
+        this.log(`🔧 Running YAML format for ${relativePath}...`, 'yellow');
+        execSync(`npx prettier --parser yaml --write "${filePath}"`, { stdio: 'pipe' });
+        this.log(`✅ ${relativePath} fixed`, 'green');
+        break;
 
       case 'html':
-        this.log(`🔧 Running HTML format for ${relativePath}...`, 'yellow')
-        execSync(`npx prettier --parser html --write "${filePath}"`, { stdio: 'pipe' })
-        this.log(`✅ ${relativePath} fixed`, 'green')
-        break
+        this.log(`🔧 Running HTML format for ${relativePath}...`, 'yellow');
+        execSync(`npx prettier --parser html --write "${filePath}"`, { stdio: 'pipe' });
+        this.log(`✅ ${relativePath} fixed`, 'green');
+        break;
 
       case 'sh':
-        this.log(`🔧 Running Shell format for ${relativePath}...`, 'yellow')
-        execSync(`npx shfmt -i 2 -ci -w "${filePath}"`, { stdio: 'pipe' })
-        this.log(`✅ ${relativePath} fixed`, 'green')
-        break
+        this.log(`🔧 Running Shell format for ${relativePath}...`, 'yellow');
+        execSync(`npx shfmt -i 2 -ci -w "${filePath}"`, { stdio: 'pipe' });
+        this.log(`✅ ${relativePath} fixed`, 'green');
+        break;
 
       default:
-        this.log(`⚠️ Unknown file type for ${relativePath}`, 'yellow')
+        this.log(`⚠️ Unknown file type for ${relativePath}`, 'yellow');
     }
   }
 
-  watchDirectory (dirPath) {
+  watchDirectory(dirPath) {
     if (!fs.existsSync(dirPath)) {
-      return
+      return;
     }
 
     try {
       fs.watch(dirPath, { persistent: true }, (eventType, filename) => {
-        if (!filename) return
+        if (!filename) return;
 
-        const filePath = path.join(dirPath, filename)
-        const stats = fs.statSync(filePath)
+        const filePath = path.join(dirPath, filename);
+        const stats = fs.statSync(filePath);
 
         if (stats.isFile() && this.shouldWatchFile(filePath)) {
-          this.runAutoFix(filePath)
+          this.runAutoFix(filePath);
         } else if (stats.isDirectory() && !this.watchedDirs.has(filePath)) {
           // Watch new subdirectories
-          this.watchedDirs.add(filePath)
-          this.watchDirectory(filePath)
+          this.watchedDirs.add(filePath);
+          this.watchDirectory(filePath);
         }
-      })
+      });
 
-      this.watchedDirs.add(dirPath)
-      this.log(`👀 Watching directory: ${dirPath}`, 'green')
+      this.watchedDirs.add(dirPath);
+      this.log(`👀 Watching directory: ${dirPath}`, 'green');
     } catch (error) {
-      this.log(`❌ Error watching directory ${dirPath}: ${error.message}`, 'red')
+      this.log(`❌ Error watching directory ${dirPath}: ${error.message}`, 'red');
     }
   }
 
-  startWatching (directories = ['.']) {
-    this.log('🚀 Starting file watcher...', 'bright')
-    this.log('📁 Monitoring for file changes...', 'cyan')
+  startWatching(directories = ['.']) {
+    this.log('🚀 Starting file watcher...', 'bright');
+    this.log('📁 Monitoring for file changes...', 'cyan');
 
-    directories.forEach(dir => {
-      const fullPath = path.resolve(dir)
-      this.watchDirectory(fullPath)
-    })
+    directories.forEach((dir) => {
+      const fullPath = path.resolve(dir);
+      this.watchDirectory(fullPath);
+    });
 
-    this.log('✅ File watcher is active! Press Ctrl+C to stop.', 'green')
+    this.log('✅ File watcher is active! Press Ctrl+C to stop.', 'green');
 
     // Handle graceful shutdown
     process.on('SIGINT', () => {
-      this.log('🛑 Shutting down file watcher...', 'yellow')
-      process.exit(0)
-    })
+      this.log('🛑 Shutting down file watcher...', 'yellow');
+      process.exit(0);
+    });
 
     process.on('SIGTERM', () => {
-      this.log('🛑 Shutting down file watcher...', 'yellow')
-      process.exit(0)
-    })
+      this.log('🛑 Shutting down file watcher...', 'yellow');
+      process.exit(0);
+    });
   }
 
   // Cursor AI integration method
-  integrateWithCursorAI () {
-    this.log('🤖 Integrating with Cursor AI...', 'magenta')
+  integrateWithCursorAI() {
+    this.log('🤖 Integrating with Cursor AI...', 'magenta');
 
     // Create a simple API endpoint that Cursor AI can call
     const apiScript = `
@@ -265,17 +276,17 @@ const server = http.createServer((req, res) => {
 const port = 3456;
 server.listen(port, () => {
   console.log(\`Auto-fix API server running on port \${port}\`);
-});`
+});`;
 
-    fs.writeFileSync('scripts/cursor-ai-api.js', apiScript)
-    this.log('📡 Cursor AI API server created at scripts/cursor-ai-api.js', 'green')
+    fs.writeFileSync('scripts/cursor-ai-api.js', apiScript);
+    this.log('📡 Cursor AI API server created at scripts/cursor-ai-api.js', 'green');
   }
 }
 
 // CLI interface
 if (require.main === module) {
-  const watcher = new FileWatcher()
-  const args = process.argv.slice(2)
+  const watcher = new FileWatcher();
+  const args = process.argv.slice(2);
 
   if (args.includes('--help') || args.includes('-h')) {
     console.log(`
@@ -298,20 +309,20 @@ The watcher will automatically:
   - Run appropriate auto-fix tools
   - Provide real-time feedback
   - Integrate with Cursor AI if requested
-    `)
-    process.exit(0)
+    `);
+    process.exit(0);
   }
 
   if (args.includes('--cursor-ai')) {
-    watcher.integrateWithCursorAI()
-    process.exit(0)
+    watcher.integrateWithCursorAI();
+    process.exit(0);
   }
 
   // Parse directories
-  const dirsIndex = args.indexOf('--dirs')
-  const directories = dirsIndex !== -1 ? args[dirsIndex + 1].split(',') : ['.']
+  const dirsIndex = args.indexOf('--dirs');
+  const directories = dirsIndex !== -1 ? args[dirsIndex + 1].split(',') : ['.'];
 
-  watcher.startWatching(directories)
+  watcher.startWatching(directories);
 }
 
-module.exports = FileWatcher
+module.exports = FileWatcher;

@@ -118,7 +118,14 @@
                   <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Learning Rate
                   </label>
-                  <USlider v-model="config.learningRate" :min="0.001" :max="0.1" :step="0.001" />
+                  <input
+                    v-model.number="config.learningRate"
+                    type="range"
+                    min="0.001"
+                    max="0.1"
+                    step="0.001"
+                    class="w-full"
+                  />
                   <span class="text-sm text-gray-500">{{ config.learningRate }}</span>
                 </div>
                 <div>
@@ -269,16 +276,48 @@ const batchSizeOptions = [
   { label: '128', value: 128 },
 ];
 
-// Simulate real-time updates
+// Real-time updates - fetch actual training metrics if available
+const fetchTrainingMetrics = async () => {
+  try {
+    // Try to fetch real training status from API if available
+    const status = await $fetch('/api/dataset/preprocessing-status').catch(() => null);
+    if (status && typeof status === 'object' && 'training' in status) {
+      // Update with real training data if available
+      const training = (status as any).training;
+      if (training) {
+        currentEpoch.value = training.currentEpoch || currentEpoch.value;
+        currentLoss.value = training.currentLoss || currentLoss.value;
+        currentAccuracy.value = training.currentAccuracy || currentAccuracy.value;
+      }
+    }
+  } catch {
+    // Silently fail - use static values
+    console.debug('Training metrics not available');
+  }
+};
+
+// System resource monitoring (if available)
+const updateSystemMetrics = async () => {
+  try {
+    // Try to get real system metrics if API provides them
+    // For now, we'll use static values as system metrics require backend support
+    // This can be enhanced when system monitoring API is available
+  } catch {
+    // Use default values
+  }
+};
+
 onMounted(() => {
+  // Fetch initial metrics
+  fetchTrainingMetrics();
+  updateSystemMetrics();
+
+  // Only update epoch if training is active (not random simulation)
+  // Remove random updates - use real data or static display
   const interval = setInterval(() => {
-    currentEpoch.value = Math.min(currentEpoch.value + 1, totalEpochs.value);
-    currentLoss.value = Math.max(0.1, currentLoss.value + (Math.random() - 0.5) * 0.01);
-    currentAccuracy.value = Math.min(99.9, currentAccuracy.value + (Math.random() - 0.5) * 0.1);
-    cpuUsage.value = Math.max(20, Math.min(90, cpuUsage.value + (Math.random() - 0.5) * 5));
-    memoryUsage.value = Math.max(30, Math.min(95, memoryUsage.value + (Math.random() - 0.5) * 3));
-    gpuUsage.value = Math.max(10, Math.min(85, gpuUsage.value + (Math.random() - 0.5) * 4));
-  }, 2000);
+    fetchTrainingMetrics();
+    updateSystemMetrics();
+  }, 5000); // Check every 5 seconds instead of simulating
 
   onUnmounted(() => {
     clearInterval(interval);

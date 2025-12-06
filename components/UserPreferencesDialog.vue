@@ -301,7 +301,10 @@ const initializeStore = async () => {
     preferencesStore.value = storeModule.useUserPreferencesStore();
     localPreferences.value = { ...preferencesStore.value.$state };
   } catch {
-    console.warn('User preferences store not available, using local state only');
+    const logger = useSentryLogger();
+    logger.warn('User preferences store not available, using local state only', {
+      component: 'UserPreferencesDialog',
+    });
     preferencesStore.value = null;
   }
 };

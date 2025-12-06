@@ -1,5 +1,4 @@
 import { defineNuxtPlugin } from 'nuxt/app';
-import { onMounted } from 'vue';
 import { useApiStore } from '../stores/apiStore';
 import { usePredictionHistoryStore } from '../stores/predictionHistoryStore';
 
@@ -13,26 +12,24 @@ export default defineNuxtPlugin({
 
   setup() {
     // Only run certain initializations on client-side
-    if (process.client) {
-      // Initialize stores when app is mounted
-      onMounted(() => {
-        // Initialize API store and start health checks
-        const apiStore = useApiStore();
-        const intervalId = apiStore.startPeriodicHealthCheck();
+    if (import.meta.client) {
+      // Initialize stores immediately (plugins run after app is ready)
+      // Initialize API store and start health checks
+      const apiStore = useApiStore();
+      const intervalId = apiStore.startPeriodicHealthCheck();
 
-        // Load prediction history from localStorage
-        const predictionHistoryStore = usePredictionHistoryStore();
-        predictionHistoryStore.loadHistory();
+      // Load prediction history from localStorage
+      const predictionHistoryStore = usePredictionHistoryStore();
+      predictionHistoryStore.loadHistory();
 
-        // Clean up when page unloads
-        if (typeof window !== 'undefined') {
-          window.addEventListener('beforeunload', () => {
-            if (intervalId) {
-              apiStore.stopPeriodicHealthCheck(intervalId);
-            }
-          });
-        }
-      });
+      // Clean up when page unloads
+      if (typeof window !== 'undefined') {
+        window.addEventListener('beforeunload', () => {
+          if (intervalId) {
+            apiStore.stopPeriodicHealthCheck(intervalId);
+          }
+        });
+      }
     }
 
     // Return empty object (no exposed functionality)

@@ -371,7 +371,8 @@ const openPreferences = () => {
 
 const openHelp = () => {
   // Navigate to help page or open help modal
-  console.log('Opening help');
+  const logger = useSentryLogger();
+  logger.logUserAction('open_help', undefined, { component: 'EnhancedNavigation' });
   mobileMenuOpen.value = false;
 };
 
@@ -438,20 +439,69 @@ onUnmounted(() => {
 <style scoped>
 /* Navigation button styles */
 .nav-button {
-  @apply relative px-3 py-2 rounded-lg transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:outline-none;
+  position: relative;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+}
+
+.nav-button:hover {
+  background-color: rgb(243 244 246);
+}
+
+.dark .nav-button:hover {
+  background-color: rgb(31 41 55);
+}
+
+.nav-button:focus {
+  outline: none;
+  box-shadow:
+    0 0 0 2px rgba(147, 51, 234, 0.5),
+    0 0 0 4px rgba(147, 51, 234, 0.2);
 }
 
 .nav-button-active {
-  @apply bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300;
+  background-color: rgb(243 232 255);
+  color: rgb(126 34 206);
+}
+
+.dark .nav-button-active {
+  background-color: rgba(147, 51, 234, 0.3);
+  color: rgb(196 181 253);
 }
 
 .nav-dropdown :deep(.dropdown-menu) {
-  @apply bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 rounded-xl shadow-lg;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(229, 231, 235, 0.5);
+  border-radius: 0.75rem;
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.dark .nav-dropdown :deep(.dropdown-menu) {
+  background-color: rgba(17, 24, 39, 0.95);
+  border-color: rgba(55, 65, 81, 0.5);
 }
 
 /* Mobile navigation items */
 .mobile-nav-item {
-  @apply px-3 py-3 text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200 rounded-lg;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.mobile-nav-item:hover {
+  background-color: rgb(243 244 246);
+}
+
+.dark .mobile-nav-item:hover {
+  background-color: rgb(31 41 55);
 }
 
 /* Search input focus styles */
@@ -479,11 +529,12 @@ input:focus {
 /* Touch target improvements */
 @media (pointer: coarse) {
   .nav-button {
-    @apply min-h-[44px] min-w-[44px];
+    min-height: 44px;
+    min-width: 44px;
   }
 
   .mobile-nav-item {
-    @apply min-h-[48px];
+    min-height: 48px;
   }
 }
 </style>

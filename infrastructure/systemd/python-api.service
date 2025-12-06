@@ -9,16 +9,23 @@ Group=www-data
 WorkingDirectory=/var/www/matlab-mobile-dataset/python_api
 Environment="PATH=/var/www/matlab-mobile-dataset/venv/bin"
 Environment="PYTHONUNBUFFERED=1"
-ExecStart=/var/www/matlab-mobile-dataset/venv/bin/uvicorn api:app --host 0.0.0.0 --port 8000 --workers 2
+Environment="PYTHONPATH=/var/www/matlab-mobile-dataset/python_api"
+Environment="NODE_ENV=production"
+ExecStart=/var/www/matlab-mobile-dataset/venv/bin/uvicorn api:app --host 0.0.0.0 --port 8000 --workers 2 --proxy-headers --forwarded-allow-ips='*'
 Restart=always
 RestartSec=10
+
+# Resource limits
+LimitNOFILE=65536
+MemoryMax=2G
+CPUQuota=200%
 
 # Security hardening
 NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=true
-ReadWritePaths=/var/www/matlab-mobile-dataset/python_api/trained_models
+ReadWritePaths=/var/www/matlab-mobile-dataset/python_api/trained_models /var/www/matlab-mobile-dataset/python_api/logs
 ReadOnlyPaths=/var/www/matlab-mobile-dataset/data
 
 [Install]

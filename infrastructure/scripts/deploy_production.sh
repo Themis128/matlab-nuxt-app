@@ -68,7 +68,9 @@ fi
 # 4. Clone/update repository
 if [ ! -d "$PROJECT_DIR" ]; then
     log_info "Cloning repository..."
-    git clone <YOUR_REPO_URL> "$PROJECT_DIR"
+    # Repository URL - update this with your actual repository URL
+    REPO_URL="${GIT_REPO_URL:-https://github.com/Themis128/matlab-nuxt-app.git}"
+    git clone "$REPO_URL" "$PROJECT_DIR"
 else
     log_info "Updating repository..."
     cd "$PROJECT_DIR"

@@ -174,19 +174,16 @@
 
 <script setup lang="ts">
 import {
-  BanknotesIcon,
   BellIcon,
-  ClockIcon,
   CubeIcon,
   CurrencyDollarIcon,
   MoonIcon,
-  ShieldCheckIcon,
   ShoppingCartIcon,
   SunIcon,
   UserIcon,
   UsersIcon,
 } from '@heroicons/vue/24/outline';
-import { computed } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 
 interface Props {
   isDark: boolean;
@@ -199,49 +196,43 @@ const props = defineProps<Props>();
 const isDark = computed(() => props.isDark);
 const toggleTheme = computed(() => props.toggleTheme);
 
-// Mock data
-const activities = [
-  {
-    id: 1,
-    icon: BanknotesIcon,
-    title: 'New sale recorded',
-    desc: 'Order #1234 completed',
-    time: '2 min ago',
-    color: 'green',
-  },
-  {
-    id: 2,
-    icon: UsersIcon,
-    title: 'New user registered',
-    desc: 'john.doe@example.com joined',
-    time: '5 min ago',
-    color: 'blue',
-  },
-  {
-    id: 3,
-    icon: CubeIcon,
-    title: 'Product updated',
-    desc: 'iPhone 15 Pro stock updated',
-    time: '10 min ago',
-    color: 'purple',
-  },
-  {
-    id: 4,
-    icon: ClockIcon,
-    title: 'System maintenance',
-    desc: 'Scheduled backup completed',
-    time: '1 hour ago',
-    color: 'orange',
-  },
-  {
-    id: 5,
-    icon: ShieldCheckIcon,
-    title: 'New notification',
-    desc: 'Marketing campaign results',
-    time: '2 hours ago',
-    color: 'red',
-  },
-];
+// Real activity data - fetch from API or use empty array
+const activities = ref<
+  Array<{
+    id: number;
+    icon: any;
+    title: string;
+    desc: string;
+    time: string;
+    color: string;
+  }>
+>([]);
+
+// Fetch activities from API if available
+const fetchActivities = async () => {
+  try {
+    // Try to fetch real activities from API
+    // This would be enhanced when activity tracking API is available
+    const response = await $fetch('/api/activities').catch(() => null);
+    if (response && Array.isArray(response)) {
+      activities.value = response;
+    }
+  } catch (error) {
+    // Use empty array if API unavailable
+    const logger = useSentryLogger();
+    logger.debug('Activities API not available', {
+      component: 'DashboardContent',
+      action: 'fetchActivities',
+      error: error instanceof Error ? error.message : String(error),
+    });
+    activities.value = [];
+  }
+};
+
+// Initialize activities on mount
+onMounted(() => {
+  fetchActivities();
+});
 
 const quickStats = [
   { label: 'Conversion Rate', value: '3.2%', percentage: 32, color: 'bg-blue-500' },

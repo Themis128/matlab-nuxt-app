@@ -66,14 +66,7 @@
                 <div
                   v-for="i in 64"
                   :key="i"
-                  :class="[
-                    'h-3 w-3 rounded-sm',
-                    Math.random() > 0.6
-                      ? Math.random() > 0.5
-                        ? 'bg-purple-500'
-                        : 'bg-yellow-400'
-                      : 'bg-gray-700',
-                  ]"
+                  :class="['h-3 w-3 rounded-sm', getCellColor(i)]"
                 ></div>
               </div>
 
@@ -267,6 +260,18 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
+
+// Deterministic color function to avoid hydration mismatches
+// Uses a simple hash function based on the index to ensure
+// the same color is generated on both server and client
+const getCellColor = (index: number): string => {
+  // Simple deterministic hash function
+  const hash = (index * 17 + 23) % 100;
+  if (hash > 60) {
+    return hash % 2 === 0 ? 'bg-purple-500' : 'bg-yellow-400';
+  }
+  return 'bg-gray-700';
+};
 
 // Page meta fallback
 onMounted(() => {

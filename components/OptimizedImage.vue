@@ -197,7 +197,11 @@ const handleImageLoad = (event: Event) => {
 };
 
 const handleImageError = (event: Event) => {
-  console.error('Image failed to load:', props.src);
+  const logger = useSentryLogger();
+  logger.logError('Image failed to load', new Error('Image load failed'), {
+    component: 'OptimizedImage',
+    imageSrc: props.src,
+  });
   isLoading.value = false;
   hasError.value = true;
   emit('error', event);

@@ -11,15 +11,23 @@ WorkingDirectory=/var/www/matlab-mobile-dataset
 Environment="NODE_ENV=production"
 Environment="NUXT_PUBLIC_API_BASE=http://localhost:8000"
 Environment="PORT=3000"
+Environment="HOST=127.0.0.1"
+Environment="NITRO_PRESET=node-server"
 ExecStart=/usr/bin/node /var/www/matlab-mobile-dataset/.output/server/index.mjs
 Restart=always
 RestartSec=10
+
+# Resource limits
+LimitNOFILE=65536
+MemoryMax=1G
+CPUQuota=150%
 
 # Security hardening
 NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=true
+ReadWritePaths=/var/www/matlab-mobile-dataset/.output
 
 [Install]
 WantedBy=multi-user.target

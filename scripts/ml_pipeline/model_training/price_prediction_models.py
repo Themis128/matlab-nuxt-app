@@ -33,24 +33,74 @@ class PricePredictionModels:
         print("LOADING AND PREPARING DATA")
         print("="*80)
 
-        self.df = pd.read_csv(self.data_path)
-        print(f"✓ Loaded {len(self.df)} phones")
+        # Try multiple encodings
+        encodings = ['utf-8', 'latin-1', 'iso-8859-1', 'cp1252', 'utf-8-sig']
+        for encoding in encodings:
+            try:
+                self.df = pd.read_csv(self.data_path, encoding=encoding)
+                break
+            except UnicodeDecodeError:
+                continue
+        else:
+            raise ValueError(f"Could not read CSV with any encoding: {self.data_path}")
+        print(f"Loaded {len(self.df)} phones")
+
+        # Map column names to standard format
+        column_mapping = {
+            'Company Name': 'company',
+            'company': 'company',
+            'Launched Year': 'year',
+            'year': 'year',
+            'RAM': 'ram',
+            'ram': 'ram',
+            'Battery Capacity': 'battery',
+            'battery': 'battery',
+            'Screen Size': 'screen',
+            'screen': 'screen',
+            'Mobile Weight': 'weight',
+            'weight': 'weight',
+            'Front Camera': 'front_camera',
+            'front_camera': 'front_camera',
+            'Back Camera': 'back_camera',
+            'back_camera': 'back_camera',
+            'Storage': 'storage',
+            'storage': 'storage',
+        }
+
+        # Rename columns if needed
+        for old_name, new_name in column_mapping.items():
+            if old_name in self.df.columns and new_name not in self.df.columns:
+                self.df.rename(columns={old_name: new_name}, inplace=True)
 
         # Fill missing values
         numeric_cols = ['storage', 'ram', 'battery', 'screen', 'weight', 'front_camera', 'back_camera']
         for col in numeric_cols:
             if col in self.df.columns:
+                self.df[col] = pd.to_numeric(self.df[col], errors='coerce')
                 self.df[col] = self.df[col].fillna(self.df[col].median())
 
-        print("✓ Filled missing values")
+        # Ensure year column exists
+        if 'year' not in self.df.columns:
+            if 'Launched Year' in self.df.columns:
+                self.df['year'] = pd.to_numeric(self.df['Launched Year'], errors='coerce')
+            else:
+                self.df['year'] = 2025  # Default year
+
+        print("Filled missing values")
 
         # Feature engineering
-        self.df['phone_age'] = 2025 - self.df['year']
-        self.df['ram_battery_ratio'] = self.df['ram'] / (self.df['battery'] / 1000)
-        self.df['screen_weight_ratio'] = self.df['screen'] / (self.df['weight'] / 100)
-        self.df['total_camera'] = self.df['front_camera'] + self.df['back_camera']
+        self.df['phone_age'] = 2025 - pd.to_numeric(self.df['year'], errors='coerce').fillna(2025)
+        if 'ram' in self.df.columns and 'battery' in self.df.columns:
+            self.df['ram_battery_ratio'] = self.df['ram'] / (self.df['battery'] / 1000 + 1)
+        if 'screen' in self.df.columns and 'weight' in self.df.columns:
+            self.df['screen_weight_ratio'] = self.df['screen'] / (self.df['weight'] / 100 + 0.1)
+        if 'front_camera' in self.df.columns and 'back_camera' in self.df.columns:
+            # Handle camera columns that might be strings like "12MP"
+            front_cam = pd.to_numeric(self.df['front_camera'].astype(str).str.replace('MP', '').str.replace('mp', ''), errors='coerce').fillna(0)
+            back_cam = pd.to_numeric(self.df['back_camera'].astype(str).str.replace('MP', '').str.replace('mp', ''), errors='coerce').fillna(0)
+            self.df['total_camera'] = front_cam + back_cam
 
-        print("✓ Created derived features")
+        print("Created derived features")
 
         return self
 
@@ -85,8 +135,8 @@ class PricePredictionModels:
         X = X[mask]
         y = y[mask]
 
-        print(f"✓ Features shape: {X.shape}")
-        print(f"✓ Target ({target}) shape: {y.shape}")
+        print(f"Features shape: {X.shape}")
+        print(f"Target ({target}) shape: {y.shape}")
 
         return X, y
 

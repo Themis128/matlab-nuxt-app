@@ -184,8 +184,8 @@ def main():
     with open(METRICS_PATH, 'w') as f:
         json.dump(all_metrics, f, indent=2)
 
-    print(f"\n✓ Saved {len(models)} models + scaler")
-    print(f"✓ Metrics saved: {METRICS_PATH}")
+    print(f"\n[OK] Saved {len(models)} models + scaler")
+    print(f"[OK] Metrics saved: {METRICS_PATH}")
 
     # Sanity check
     if ensemble_rmse < 50:
@@ -193,7 +193,7 @@ def main():
     elif ensemble_rmse > y.std():
         print("\n⚠ WARNING: RMSE higher than target std - model not learning")
     else:
-        print(f"\n✓ Model RMSE reasonable (${ensemble_rmse:.2f})")
+        print(f"\n[OK] Model RMSE reasonable (${ensemble_rmse:.2f})")
 
     print("=" * 80)
     print("XGBOOST ENSEMBLE COMPLETE")

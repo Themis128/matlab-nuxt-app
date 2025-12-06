@@ -6,82 +6,85 @@
  * Includes rollback mechanism for safety
  */
 
-const fs = require('fs')
-const path = require('path')
-const { execSync } = require('child_process')
+const fs = require('fs');
+const path = require('path');
+const { execSync } = require('child_process');
 
 class BatchAutoFixer {
-  constructor () {
-    this.backupDir = '.auto-fix-backups'
-    this.processedFiles = []
-    this.failedFiles = []
-    this.backupMap = new Map()
+  constructor() {
+    this.backupDir = '.auto-fix-backups';
+    this.processedFiles = [];
+    this.failedFiles = [];
+    this.backupMap = new Map();
   }
 
-  log (message, color = 'reset') {
+  log(message, color = 'reset') {
     const colors = {
       reset: '\x1b[0m',
       green: '\x1b[32m',
       yellow: '\x1b[33m',
       red: '\x1b[31m',
       blue: '\x1b[34m',
-      cyan: '\x1b[36m'
-    }
-    console.log(`${colors[color] || colors.reset}${message}${colors.reset}`)
+      cyan: '\x1b[36m',
+    };
+    console.log(`${colors[color] || colors.reset}${message}${colors.reset}`);
   }
 
-  ensureBackupDir () {
+  ensureBackupDir() {
     if (!fs.existsSync(this.backupDir)) {
-      fs.mkdirSync(this.backupDir, { recursive: true })
+      fs.mkdirSync(this.backupDir, { recursive: true });
     }
   }
 
-  createBackup (filePath) {
-    const relativePath = path.relative(process.cwd(), filePath)
-    const backupPath = path.join(this.backupDir, relativePath)
+  createBackup(filePath) {
+    const relativePath = path.relative(process.cwd(), filePath);
+    const backupPath = path.join(this.backupDir, relativePath);
 
     // Create directory structure
-    const backupDir = path.dirname(backupPath)
+    const backupDir = path.dirname(backupPath);
     if (!fs.existsSync(backupDir)) {
-      fs.mkdirSync(backupDir, { recursive: true })
+      fs.mkdirSync(backupDir, { recursive: true });
     }
 
     // Copy file
-    fs.copyFileSync(filePath, backupPath)
-    this.backupMap.set(filePath, backupPath)
-    this.log(`💾 Created backup: ${relativePath}`, 'cyan')
+    fs.copyFileSync(filePath, backupPath);
+    this.backupMap.set(filePath, backupPath);
+    this.log(`💾 Created backup: ${relativePath}`, 'cyan');
   }
 
-  restoreFromBackup () {
-    this.log('🔄 Restoring files from backup...', 'yellow')
+  restoreFromBackup() {
+    this.log('🔄 Restoring files from backup...', 'yellow');
 
     for (const [originalPath, backupPath] of this.backupMap.entries()) {
       if (fs.existsSync(backupPath)) {
-        fs.copyFileSync(backupPath, originalPath)
-        const relativePath = path.relative(process.cwd(), originalPath)
-        this.log(`🔄 Restored: ${relativePath}`, 'blue')
+        fs.copyFileSync(backupPath, originalPath);
+        const relativePath = path.relative(process.cwd(), originalPath);
+        this.log(`🔄 Restored: ${relativePath}`, 'blue');
       }
     }
 
     // Clean up backup directory
     if (fs.existsSync(this.backupDir)) {
-      fs.rmSync(this.backupDir, { recursive: true, force: true })
+      fs.rmSync(this.backupDir, { recursive: true, force: true });
     }
 
-    this.log('✅ Rollback completed', 'green')
+    this.log('✅ Rollback completed', 'green');
   }
 
-  getFilesByType (pattern) {
+  getFilesByType(pattern) {
     try {
-      const output = execSync(`find . -name "${pattern}" -type f`, { encoding: 'utf8' })
-      return output.split('\n').filter(line => line.trim()).map(line => line.trim())
+      const output = execSync(`find . -name "${pattern}" -type f`, { encoding: 'utf8' });
+      return output
+        .split('\n')
+        .filter((line) => line.trim())
+        .map((line) => line.trim());
     } catch (error) {
-      return []
+      return [];
     }
   }
 
-  async batchFixJavaScript () {
-    this.log('📝 Processing JavaScript/TypeScript files...', 'blue')
+  async batchFixJavaScript() {
+    this.log('📝 Processing JavaScript/TypeScript files...', 'blue');
 
     const patterns = [
       'components/**/*.js',
@@ -95,94 +98,98 @@ class BatchAutoFixer {
       'plugins/**/*.js',
       'plugins/**/*.ts',
       'server/**/*.js',
-      'server/**/*.ts'
-    ]
+      'server/**/*.ts',
+    ];
 
     for (const pattern of patterns) {
       try {
-        const files = this.getFilesByType(pattern.replace('**/*', '*.{js,ts,vue,jsx,tsx}'))
+        const files = this.getFilesByType(pattern.replace('**/*', '*.{js,ts,vue,jsx,tsx}'));
 
-        if (files.length === 0) continue
+        if (files.length === 0) continue;
 
-        this.log(`🔧 Processing ${files.length} ${pattern} files...`, 'cyan')
+        this.log(`🔧 Processing ${files.length} ${pattern} files...`, 'cyan');
 
         // Create backups
-        files.forEach(file => {
+        files.forEach((file) => {
           if (this.shouldProcessFile(file)) {
-            this.createBackup(file)
+            this.createBackup(file);
           }
-        })
+        });
 
         // Run ESLint fix
         try {
-          execSync(`npx eslint --fix ${pattern}`, { stdio: 'inherit' })
-          this.processedFiles.push(...files)
-          this.log(`✅ ESLint fixed ${files.length} files`, 'green')
+          execSync(`npx eslint --fix ${pattern}`, { stdio: 'inherit' });
+          this.processedFiles.push(...files);
+          this.log(`✅ ESLint fixed ${files.length} files`, 'green');
         } catch (error) {
-          this.failedFiles.push(...files)
-          this.log(`❌ ESLint failed for ${pattern}`, 'red')
-          this.restoreFromBackup()
-          return false
+          this.failedFiles.push(...files);
+          this.log(`❌ ESLint failed for ${pattern}`, 'red');
+          this.restoreFromBackup();
+          return false;
         }
 
         // Run Prettier
         try {
-          execSync(`npx prettier --write ${pattern}`, { stdio: 'inherit' })
-          this.log(`✅ Prettier formatted ${files.length} files`, 'green')
+          execSync(`npx prettier --write ${pattern}`, { stdio: 'inherit' });
+          this.log(`✅ Prettier formatted ${files.length} files`, 'green');
         } catch (error) {
-          this.log(`❌ Prettier failed for ${pattern}`, 'red')
-          this.restoreFromBackup()
-          return false
+          this.log(`❌ Prettier failed for ${pattern}`, 'red');
+          this.restoreFromBackup();
+          return false;
         }
       } catch (error) {
-        this.log(`❌ Error processing ${pattern}: ${error.message}`, 'red')
-        return false
+        this.log(`❌ Error processing ${pattern}: ${error.message}`, 'red');
+        return false;
       }
     }
 
-    return true
+    return true;
   }
 
-  async batchFixPython () {
-    this.log('🐍 Processing Python files...', 'blue')
+  async batchFixPython() {
+    this.log('🐍 Processing Python files...', 'blue');
 
-    const patterns = ['python_api/**/*.py', 'scripts/**/*.py']
+    const patterns = ['python_api/**/*.py', 'scripts/**/*.py'];
 
     for (const pattern of patterns) {
-      const files = this.getFilesByType(pattern.replace('**/*', '*.py'))
+      const files = this.getFilesByType(pattern.replace('**/*', '*.py'));
 
-      if (files.length === 0) continue
+      if (files.length === 0) continue;
 
-      this.log(`🔧 Processing ${files.length} ${pattern} files...`, 'cyan')
+      this.log(`🔧 Processing ${files.length} ${pattern} files...`, 'cyan');
 
       // Create backups
-      files.forEach(file => this.createBackup(file))
+      files.forEach((file) => this.createBackup(file));
 
       // Black formatting
       try {
-        execSync('cd python_api && ..\\venv\\Scripts\\black --line-length=88 .', { stdio: 'inherit' })
-        this.log(`✅ Black formatted ${files.length} files`, 'green')
+        execSync('cd python_api && ..\\venv\\Scripts\\black --line-length=88 .', {
+          stdio: 'inherit',
+        });
+        this.log(`✅ Black formatted ${files.length} files`, 'green');
       } catch (error) {
-        this.log(`❌ Black failed for ${pattern}`, 'red')
-        this.restoreFromBackup()
-        return false
+        this.log(`❌ Black failed for ${pattern}`, 'red');
+        this.restoreFromBackup();
+        return false;
       }
 
       // isort
       try {
-        execSync('cd python_api && ..\\venv\\Scripts\\isort --profile black .', { stdio: 'inherit' })
-        this.log(`✅ isort sorted ${files.length} files`, 'green')
+        execSync('cd python_api && ..\\venv\\Scripts\\isort --profile black .', {
+          stdio: 'inherit',
+        });
+        this.log(`✅ isort sorted ${files.length} files`, 'green');
       } catch (error) {
-        this.log(`❌ isort failed for ${pattern}`, 'red')
-        this.restoreFromBackup()
-        return false
+        this.log(`❌ isort failed for ${pattern}`, 'red');
+        this.restoreFromBackup();
+        return false;
       }
     }
 
-    return true
+    return true;
   }
 
-  shouldProcessFile (filePath) {
+  shouldProcessFile(filePath) {
     // Skip files in these directories
     const skipDirs = [
       'node_modules',
@@ -194,75 +201,75 @@ class BatchAutoFixer {
       '.git',
       'coverage',
       'test-results',
-      this.backupDir
-    ]
+      this.backupDir,
+    ];
 
-    const relativePath = path.relative(process.cwd(), filePath)
-    return !skipDirs.some(dir => relativePath.includes(dir))
+    const relativePath = path.relative(process.cwd(), filePath);
+    return !skipDirs.some((dir) => relativePath.includes(dir));
   }
 
-  async runBatchFix (type = 'all') {
-    this.ensureBackupDir()
-    this.log(`🚀 Starting batch auto-fix for: ${type}`, 'blue')
+  async runBatchFix(type = 'all') {
+    this.ensureBackupDir();
+    this.log(`🚀 Starting batch auto-fix for: ${type}`, 'blue');
 
-    const startTime = Date.now()
-    let success = true
+    const startTime = Date.now();
+    let success = true;
 
     try {
       if (type === 'all' || type === 'js' || type === 'typescript') {
-        success = await this.batchFixJavaScript() && success
+        success = (await this.batchFixJavaScript()) && success;
       }
 
       if (type === 'all' || type === 'python') {
-        success = await this.batchFixPython() && success
+        success = (await this.batchFixPython()) && success;
       }
 
       // Process other file types...
     } catch (error) {
-      this.log(`❌ Batch fix failed: ${error.message}`, 'red')
-      this.restoreFromBackup()
-      success = false
+      this.log(`❌ Batch fix failed: ${error.message}`, 'red');
+      this.restoreFromBackup();
+      success = false;
     }
 
-    const endTime = Date.now()
-    const duration = ((endTime - startTime) / 1000).toFixed(2)
+    const endTime = Date.now();
+    const duration = ((endTime - startTime) / 1000).toFixed(2);
 
     if (success) {
-      this.log(`🎉 Batch fix completed successfully in ${duration}s`, 'green')
-      this.log(`📊 Processed ${this.processedFiles.length} files`, 'cyan')
+      this.log(`🎉 Batch fix completed successfully in ${duration}s`, 'green');
+      this.log(`📊 Processed ${this.processedFiles.length} files`, 'cyan');
 
       // Clean up backups on success
       if (fs.existsSync(this.backupDir)) {
-        fs.rmSync(this.backupDir, { recursive: true, force: true })
-        this.log('🗑️ Cleaned up backup directory', 'yellow')
+        fs.rmSync(this.backupDir, { recursive: true, force: true });
+        this.log('🗑️ Cleaned up backup directory', 'yellow');
       }
     } else {
-      this.log('💥 Batch fix failed. Files restored from backup.', 'red')
-      this.log(`📊 Failed files: ${this.failedFiles.length}`, 'red')
+      this.log('💥 Batch fix failed. Files restored from backup.', 'red');
+      this.log(`📊 Failed files: ${this.failedFiles.length}`, 'red');
     }
 
-    return success
+    return success;
   }
 
-  generateReport () {
+  generateReport() {
     const report = {
       timestamp: new Date().toISOString(),
       processedFiles: this.processedFiles,
       failedFiles: this.failedFiles,
       totalProcessed: this.processedFiles.length,
-      totalFailed: this.failedFiles.length
-    }
+      totalFailed: this.failedFiles.length,
+    };
 
-    const reportPath = 'batch-auto-fix-report.json'
-    fs.writeFileSync(reportPath, JSON.stringify(report, null, 2))
-    this.log(`📄 Report saved to: ${reportPath}`, 'cyan')
+    const reportPath = 'batch-auto-fix-report.json';
+    fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
+    this.log(`📄 Report saved to: ${reportPath}`, 'cyan');
   }
 }
 
 // CLI interface
 if (require.main === module) {
-  const batchFixer = new BatchAutoFixer()
-  const args = process.argv.slice(2)
+  const batchFixer = new BatchAutoFixer();
+  const args = process.argv.slice(2);
 
   if (args.includes('--help') || args.includes('-h')) {
     console.log(`
@@ -290,16 +297,16 @@ Features:
   - Rollback on failure
   - Batch processing for performance
   - Detailed reporting
-    `)
-    process.exit(0)
+    `);
+    process.exit(0);
   }
 
-  const type = args[0] || 'all'
+  const type = args[0] || 'all';
 
-  batchFixer.runBatchFix(type).then(success => {
-    batchFixer.generateReport()
-    process.exit(success ? 0 : 1)
-  })
+  batchFixer.runBatchFix(type).then((success) => {
+    batchFixer.generateReport();
+    process.exit(success ? 0 : 1);
+  });
 }
 
-module.exports = BatchAutoFixer
+module.exports = BatchAutoFixer;

@@ -124,16 +124,21 @@ export const useDemo = () => {
       if (body.storage === null) delete body.storage;
 
       // Try to get prediction from API
-      let response;
+      let response: { price?: number; error?: string } | { ok: boolean };
       try {
-        response = await $fetch('/api/predict/price', {
+        response = (await $fetch('/api/predict/price', {
           method: 'POST',
           body,
-        });
+        })) as { price?: number; error?: string } | { ok: boolean };
 
         // Check if the response contains an error
-        if (response.error) {
+        if ('error' in response && response.error) {
           throw new Error(response.error);
+        }
+
+        // Check if response has price
+        if (!('price' in response) || typeof response.price !== 'number') {
+          throw new Error('Invalid response format');
         }
 
         const endTime = performance.now();
@@ -220,13 +225,18 @@ export const useDemo = () => {
     priceClosestModel.value = null;
 
     try {
-      const response = await $fetch('/api/predict/price/closest', {
+      const response = (await $fetch('/api/predict/price/closest', {
         method: 'POST',
         body: {
           ...priceInput.value,
           predictedPrice,
         },
-      });
+      })) as {
+        modelName: string;
+        company: string;
+        similarityScore: number;
+        price: number;
+      } | null;
       priceClosestModel.value = response;
     } catch (err: any) {
       console.error('Error finding closest model:', err);
@@ -346,7 +356,7 @@ export const useDemo = () => {
     brandClosestModel.value = null;
 
     try {
-      const response = await $fetch('/api/predict/brand/closest', {
+      const response = (await $fetch('/api/predict/brand/closest', {
         method: 'POST',
         body: {
           ram: brandInput.value.ram,
@@ -358,7 +368,11 @@ export const useDemo = () => {
           predictedPrice: brandInput.value.price,
           predictedBrand,
         },
-      });
+      })) as {
+        modelName: string;
+        company: string;
+        similarityScore: number;
+      } | null;
       brandClosestModel.value = response;
     } catch (err: any) {
       console.error('Error finding closest model:', err);

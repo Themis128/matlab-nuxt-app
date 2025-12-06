@@ -13,7 +13,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
   ],
 
-  // css: ['assets/css/main.css'],
+  css: ['assets/css/main.css'],
 
   // Server-side configuration
   nitro: {
@@ -63,11 +63,57 @@ export default defineNuxtConfig({
     server: true, // Enable server-side source maps for proper error tracing
   },
 
-  // Vite configuration for source maps
+  // Vite configuration for source maps and optimization
   vite: {
     build: {
       cssCodeSplit: true,
       sourcemap: 'hidden', // Generate source maps for production builds
+      rollupOptions: {
+        output: {
+          // Manual chunk splitting for better code splitting
+          manualChunks: (id) => {
+            // Vendor chunks
+            if (id.includes('node_modules')) {
+              // Chart libraries in separate chunk
+              if (id.includes('chart.js') || id.includes('apexcharts') || id.includes('vue-chartjs')) {
+                return 'charts';
+              }
+              // UI libraries
+              if (id.includes('@nuxt/ui') || id.includes('@heroicons')) {
+                return 'ui';
+              }
+              // State management
+              if (id.includes('pinia')) {
+                return 'state';
+              }
+              // Large dependencies
+              if (id.includes('algoliasearch') || id.includes('@algolia')) {
+                return 'search';
+              }
+              // Default vendor chunk
+              return 'vendor';
+            }
+          },
+        },
+      },
     },
+  },
+
+  // Experimental features for better performance
+  experimental: {
+    payloadExtraction: true, // Extract payload for better caching
+  },
+
+  // Route rules for code splitting
+  routeRules: {
+    // Lazy load heavy pages
+    '/advanced': { prerender: false },
+    '/datamine': { prerender: false },
+    '/ml-comparison': { prerender: false },
+    '/ab-testing': { prerender: false },
+    '/model-showcase': { prerender: false },
+    // Pre-render static pages
+    '/': { prerender: true },
+    '/api-docs': { prerender: true },
   },
 })

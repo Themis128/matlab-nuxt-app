@@ -1,43 +1,61 @@
 {
-  "ensemble": {
-    "train_rmse": 1364.9274197723912,
-    "test_rmse": 656.2450293202684,
-    "r2": -1.2337861937555608
+  "dataset": {
+    "n_samples": 915,
+    "n_features": 13,
+    "feature_columns": [
+      "RAM",
+      "Battery Capacity",
+      "Screen Size",
+      "Mobile Weight",
+      "Launched Year",
+      "spec_density",
+      "temporal_decay",
+      "battery_weight_ratio",
+      "screen_weight_ratio",
+      "ram_weight_ratio",
+      "ram_battery_interaction_v2",
+      "ram_percentile_global",
+      "battery_percentile_global"
+    ],
+    "target_column": "Launched Price (USA)"
   },
   "base_models": {
-    "gradient_boosting": {
-      "cv_rmse": 1402.3001682956965,
-      "test_rmse": 289.2798102616687,
-      "r2": 0.5659439674292552
-    },
-    "xgboost": {
-      "cv_rmse": 1412.0063277432637,
-      "test_rmse": 276.843899017536,
-      "r2": 0.6024612545267061
-    },
     "random_forest": {
-      "cv_rmse": 1455.2959860297856,
-      "test_rmse": 366.5288262039991,
-      "r2": 0.3031716349703173
+      "rmse": 1389.733987339774,
+      "mae": 195.16905683924014,
+      "r2": -0.04893266829442289
     },
-    "extra_trees": {
-      "cv_rmse": 1465.530967529783,
-      "test_rmse": 280.24761529240544,
-      "r2": 0.5926259130460005
+    "elasticnet": {
+      "rmse": 1380.259113649094,
+      "mae": 387.5452710219938,
+      "r2": -0.03467868089861725
     },
-    "ridge": {
-      "cv_rmse": 1446.8551970434582,
-      "test_rmse": 263.7452992573037,
-      "r2": 0.6391896354761597
+    "gradient_boosting": {
+      "rmse": 1341.2694304658482,
+      "mae": 161.03957791755525,
+      "r2": 0.02295108479553498
+    },
+    "lightgbm": {
+      "rmse": 1331.3753215962122,
+      "mae": 195.5882042476656,
+      "r2": 0.037312663245611555
     }
   },
-  "best_base_model": "ridge",
-  "improvement_pct": -148.81771586763,
-  "meta_learner_weights": {
-    "gradient_boosting": 2.468928486503369,
-    "xgboost": -0.16182786592325524,
-    "random_forest": -2.588719761657327,
-    "extra_trees": 0.678972887352567,
-    "ridge": 0.4838766799216483
+  "meta_learner": {
+    "rmse": 1321.672816446516,
+    "mae": 207.84910696986216,
+    "r2": 0.05129285943010731,
+    "weights": {
+      "elasticnet": 0.0,
+      "gradient_boosting": 0.3075834013965788,
+      "lightgbm": 0.4422470096240357,
+      "random_forest": 0.0
+    }
+  },
+  "improvement": {
+    "best_base_rmse": 1331.3753215962122,
+    "ensemble_rmse": 1321.672816446516,
+    "delta_rmse": 9.702505149696208,
+    "improvement_percent": 0.7287580738738406
   }
 }

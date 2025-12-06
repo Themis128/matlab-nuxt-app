@@ -25,14 +25,12 @@ Thank you for your interest in contributing! This document provides guidelines a
    ```
 
 2. **Make your changes:**
-
    - Write clean, readable code
    - Follow existing code style
    - Add comments where necessary
    - Update documentation if needed
 
 3. **Test your changes:**
-
    - Test MATLAB scripts in MATLAB
    - Test Node.js scripts: `npm run check`
    - Test Python scripts if applicable

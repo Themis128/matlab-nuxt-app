@@ -14,7 +14,11 @@
     "ram_weight_ratio",
     "ram_battery_interaction_v2"
   ],
-  "targets": ["price", "ram", "battery"],
+  "targets": [
+    "price",
+    "ram",
+    "battery"
+  ],
   "multitask_metrics": {
     "price": {
       "rmse": 445.7398148470805,
@@ -22,13 +26,13 @@
       "r2": -0.030557920003134953
     },
     "ram": {
-      "rmse": 0.1425116040060437,
-      "mae": 0.09316991318531019,
+      "rmse": 0.14251160400604368,
+      "mae": 0.09316991318531018,
       "r2": 0.9979378994044589
     },
     "battery": {
-      "rmse": 100.78268637054948,
-      "mae": 51.525497356806525,
+      "rmse": 100.78268637054947,
+      "mae": 51.52549735680653,
       "r2": 0.9984918055164823
     }
   },
@@ -39,13 +43,13 @@
       "r2": -0.030557920003134953
     },
     "ram": {
-      "rmse": 0.1425116040060437,
-      "mae": 0.09316991318531019,
+      "rmse": 0.14251160400604368,
+      "mae": 0.09316991318531018,
       "r2": 0.9979378994044589
     },
     "battery": {
-      "rmse": 100.78268637054948,
-      "mae": 51.525497356806525,
+      "rmse": 100.78268637054947,
+      "mae": 51.52549735680653,
       "r2": 0.9984918055164823
     }
   },
@@ -57,20 +61,24 @@
       "winner": "singletask"
     },
     "ram": {
-      "multitask_rmse": 0.1425116040060437,
-      "singletask_rmse": 0.1425116040060437,
+      "multitask_rmse": 0.14251160400604368,
+      "singletask_rmse": 0.14251160400604368,
       "improvement_percent": 0.0,
       "winner": "singletask"
     },
     "battery": {
-      "multitask_rmse": 100.78268637054948,
-      "singletask_rmse": 100.78268637054948,
+      "multitask_rmse": 100.78268637054947,
+      "singletask_rmse": 100.78268637054947,
       "improvement_percent": 0.0,
       "winner": "singletask"
     }
   },
   "architecture": {
-    "hidden_layers": [128, 64, 32],
+    "hidden_layers": [
+      128,
+      64,
+      32
+    ],
     "activation": "relu",
     "solver": "adam",
     "max_iter": 500

@@ -187,7 +187,7 @@ const fetchRecommendations = async () => {
 
     recommendations.value = filtered.map((phone: Phone) => ({
       ...phone,
-      valueScore: Math.floor(Math.random() * 3) + 8, // Mock value score 8-10
+      valueScore: calculateValueScore(phone),
       recommendationReason: getRecommendationReason(phone),
     }));
   } catch (error) {
@@ -198,16 +198,73 @@ const fetchRecommendations = async () => {
   }
 };
 
-const getRecommendationReason = (_phone: Phone): string => {
-  const reasons = [
-    'Excellent value for money with great camera and battery life.',
-    'Outstanding camera performance and pure Android experience.',
-    'Premium build quality with flagship features at a competitive price.',
-    'Great balance of performance and battery life for everyday use.',
-    'Superior display quality and processing power for demanding tasks.',
-    'Reliable performance with excellent software support and updates.',
-  ];
-  return reasons[Math.floor(Math.random() * reasons.length)] || 'Great choice for your needs.';
+const calculateValueScore = (phone: Phone): number => {
+  // Calculate value score based on phone specifications
+  // Score range: 1-10, where 10 is best value
+  let score = 5; // Base score
+
+  // Price-to-specs ratio (lower price with good specs = higher score)
+  const pricePerGB = phone.price / (phone.ram || 1);
+  if (pricePerGB < 50)
+    score += 2; // Excellent value
+  else if (pricePerGB < 80)
+    score += 1; // Good value
+  else if (pricePerGB > 150) score -= 1; // Lower value
+
+  // Battery life consideration
+  if (phone.battery >= 5000)
+    score += 1; // Excellent battery
+  else if (phone.battery >= 4000)
+    score += 0.5; // Good battery
+  else if (phone.battery < 3000) score -= 0.5; // Lower battery
+
+  // RAM consideration
+  if (phone.ram >= 12)
+    score += 1; // High RAM
+  else if (phone.ram >= 8)
+    score += 0.5; // Good RAM
+  else if (phone.ram < 4) score -= 0.5; // Low RAM
+
+  // Year consideration (newer = better, but older can be better value)
+  if (phone.year) {
+    const age = 2025 - phone.year;
+    if (age <= 1)
+      score += 0.5; // Very recent
+    else if (age <= 2)
+      score += 0.25; // Recent
+    else if (age > 5) score -= 0.5; // Older model
+  }
+
+  // Clamp to 1-10 range
+  return Math.max(1, Math.min(10, Math.round(score * 10) / 10));
+};
+
+const getRecommendationReason = (phone: Phone): string => {
+  const reasons: string[] = [];
+
+  // Build recommendation based on actual phone specs
+  if (phone.battery && phone.battery >= 5000) {
+    reasons.push('Exceptional battery life');
+  }
+  if (phone.ram && phone.ram >= 12) {
+    reasons.push('High-performance RAM');
+  }
+  if (phone.price && phone.price < 500) {
+    reasons.push('Excellent value for money');
+  }
+  if (phone.year && phone.year >= 2023) {
+    reasons.push('Recent model with modern features');
+  }
+  if (phone.screen && parseFloat(phone.screen) >= 6.5) {
+    reasons.push('Large, immersive display');
+  }
+
+  // Default recommendation if no specific features stand out
+  if (reasons.length === 0) {
+    return 'Great choice for your needs with balanced specifications.';
+  }
+
+  return `${reasons.join(', ')}.`;
 };
 
 // Watch for budget changes
@@ -227,6 +284,11 @@ onMounted(() => {
 // Handle image loading errors
 const handleImageError = (event: Event) => {
   const img = event.target as HTMLImageElement;
-  img.src = `https://via.placeholder.com/300x200?text=${encodeURIComponent(img.alt || 'Phone')}`;
+  // Use a local fallback image instead of placeholder service
+  img.src = '/mobile_images/default-phone.png';
+  img.onerror = () => {
+    // If default image also fails, hide the image
+    img.style.display = 'none';
+  };
 };
 </script>

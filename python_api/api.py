@@ -26,6 +26,7 @@ import asyncio
 import logging
 from collections import defaultdict
 from datetime import datetime, timedelta
+from pathlib import Path
 from typing import Optional
 
 import uvicorn
@@ -286,9 +287,9 @@ async def root():
 
 @app.get("/health")
 async def health():
-    from datetime import UTC, datetime
+    from datetime import datetime, timezone
 
-    return {"status": "healthy", "timestamp": datetime.now(UTC).isoformat(), "version": "1.0.0"}
+    return {"status": "healthy", "timestamp": datetime.now(timezone.utc).isoformat(), "version": "1.0.0"}
 
 
 # Prediction endpoints
@@ -503,6 +504,102 @@ async def get_products(
         if not error_msg:
             error_msg = "Products retrieval failed"
         raise HTTPException(status_code=500, detail=error_msg)
+
+
+# Pipeline endpoints
+try:
+    from enhanced_data_pipeline import EnhancedDataPipeline
+    from model_versioning import ModelVersionManager
+
+    PIPELINE_AVAILABLE = True
+except ImportError:
+    PIPELINE_AVAILABLE = False
+    logging.getLogger("python_api").warning("Pipeline endpoints not available")
+
+
+if PIPELINE_AVAILABLE:
+
+    @app.post("/api/pipeline/load-and-train")
+    async def load_data_and_train(
+        csv_path: str = None,
+        image_dir: str = "../public/mobile_images",
+        auto_train: bool = True,
+    ):
+        """
+        Load CSV data and images, then automatically train all models
+
+        Args:
+            csv_path: Path to CSV file (defaults to standard dataset)
+            image_dir: Directory containing images
+            auto_train: Whether to automatically train models
+
+        Returns:
+            Pipeline results with notifications
+        """
+        try:
+            # Use default CSV if not provided
+            if not csv_path:
+                possible_paths = [
+                    "../data/Mobiles Dataset (2025).csv",
+                    "data/Mobiles Dataset (2025).csv",
+                    "../Mobiles Dataset (2025).csv",
+                ]
+                for path in possible_paths:
+                    if Path(path).exists():
+                        csv_path = path
+                        break
+
+            if not csv_path or not Path(csv_path).exists():
+                raise HTTPException(status_code=404, detail=f"CSV file not found: {csv_path}")
+
+            pipeline = EnhancedDataPipeline()
+            results = await pipeline.load_data_and_train(
+                csv_path=csv_path, image_base_dir=image_dir, auto_train=auto_train
+            )
+
+            return results
+
+        except Exception as e:
+            error_msg = str(e).encode("ascii", "ignore").decode("ascii")
+            if not error_msg:
+                error_msg = "Pipeline execution failed"
+            raise HTTPException(status_code=500, detail=error_msg)
+
+    @app.get("/api/pipeline/notifications")
+    async def get_pipeline_notifications():
+        """Get recent pipeline notifications"""
+        try:
+            pipeline = EnhancedDataPipeline()
+            notifications = pipeline.get_notifications()
+            return {"notifications": notifications, "count": len(notifications)}
+
+    @app.get("/api/models/versions")
+    async def get_model_versions():
+        """Get version information for all models"""
+        try:
+            version_manager = ModelVersionManager()
+            models = version_manager.list_all_models()
+            model_info = {}
+            for model_name in models:
+                model_info[model_name] = version_manager.get_model_info(model_name)
+            return {"models": model_info}
+        except Exception as e:
+            error_msg = str(e).encode("ascii", "ignore").decode("ascii")
+            raise HTTPException(status_code=500, detail=error_msg or "Failed to get model versions")
+
+    @app.post("/api/models/{model_name}/rollback")
+    async def rollback_model(model_name: str):
+        """Manually rollback a model to previous version"""
+        try:
+            version_manager = ModelVersionManager()
+            success, error = version_manager.rollback_model(model_name)
+            if success:
+                return {"success": True, "message": f"Rolled back {model_name} to previous version"}
+            else:
+                raise HTTPException(status_code=400, detail=error or f"Failed to rollback {model_name}")
+        except Exception as e:
+            error_msg = str(e).encode("ascii", "ignore").decode("ascii")
+            raise HTTPException(status_code=500, detail=error_msg or "Rollback failed")
 
 
 if __name__ == "__main__":

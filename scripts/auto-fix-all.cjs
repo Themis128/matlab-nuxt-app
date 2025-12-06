@@ -6,9 +6,9 @@
  * Supports integration with Cursor AI and file watchers
  */
 
-const { execSync } = require('child_process')
-const fs = require('fs')
-const path = require('path')
+const { execSync } = require('child_process');
+const fs = require('fs');
+const path = require('path');
 
 // Color codes for terminal output
 const colors = {
@@ -19,194 +19,212 @@ const colors = {
   yellow: '\x1b[33m',
   blue: '\x1b[34m',
   magenta: '\x1b[35m',
-  cyan: '\x1b[36m'
-}
+  cyan: '\x1b[36m',
+};
 
 class AutoFixer {
-  constructor () {
-    this.logs = []
-    this.fixedFiles = []
-    this.failedFiles = []
+  constructor() {
+    this.logs = [];
+    this.fixedFiles = [];
+    this.failedFiles = [];
   }
 
-  log (message, color = 'reset') {
-    console.log(`${colors[color]}${message}${colors.reset}`)
-    this.logs.push({ message, color, timestamp: new Date().toISOString() })
+  log(message, color = 'reset') {
+    console.log(`${colors[color]}${message}${colors.reset}`);
+    this.logs.push({ message, color, timestamp: new Date().toISOString() });
   }
 
-  executeCommand (command, description) {
+  executeCommand(command, description) {
     try {
-      this.log(`🔧 ${description}...`, 'cyan')
-      execSync(command, { stdio: 'inherit' })
-      this.log(`✅ ${description} completed`, 'green')
-      return true
+      this.log(`🔧 ${description}...`, 'cyan');
+      execSync(command, { stdio: 'inherit' });
+      this.log(`✅ ${description} completed`, 'green');
+      return true;
     } catch (error) {
-      this.log(`❌ ${description} failed`, 'red')
-      this.log(error.message, 'red')
-      return false
+      this.log(`❌ ${description} failed`, 'red');
+      this.log(error.message, 'red');
+      return false;
     }
   }
 
-  fixJavaScriptTypeScript () {
-    this.log('📝 Fixing JavaScript/TypeScript files...', 'blue')
+  fixJavaScriptTypeScript() {
+    this.log('📝 Fixing JavaScript/TypeScript files...', 'blue');
 
-    const jsTsFiles = 'components/**/*.{js,ts,vue,jsx,tsx} composables/**/*.{js,ts,vue,jsx,tsx} pages/**/*.{js,ts,vue,jsx,tsx} plugins/**/*.{js,ts,vue,jsx,tsx} server/**/*.{js,ts,vue,jsx,tsx}'
+    const jsTsFiles =
+      'components/**/*.{js,ts,vue,jsx,tsx} composables/**/*.{js,ts,vue,jsx,tsx} pages/**/*.{js,ts,vue,jsx,tsx} plugins/**/*.{js,ts,vue,jsx,tsx} server/**/*.{js,ts,vue,jsx,tsx}';
 
     const commands = [
       { cmd: `npx eslint --fix ${jsTsFiles}`, desc: 'ESLint auto-fix' },
       { cmd: `npx prettier --write ${jsTsFiles}`, desc: 'Prettier formatting' },
-      { cmd: 'npx tsc --noEmit --skipLibCheck', desc: 'TypeScript check' }
-    ]
+      { cmd: 'npx tsc --noEmit --skipLibCheck', desc: 'TypeScript check' },
+    ];
 
-    commands.forEach(cmd => this.executeCommand(cmd.cmd, cmd.desc))
+    commands.forEach((cmd) => this.executeCommand(cmd.cmd, cmd.desc));
   }
 
-  fixPython () {
-    this.log('🐍 Fixing Python files...', 'blue')
+  fixPython() {
+    this.log('🐍 Fixing Python files...', 'blue');
 
-    const pyFiles = 'python_api/**/*.py scripts/**/*.py'
+    const pyFiles = 'python_api/**/*.py scripts/**/*.py';
 
     const commands = [
-      { cmd: 'cd python_api && ..\\venv\\Scripts\\black --line-length=88 .', desc: 'Black formatting' },
-      { cmd: 'cd python_api && ..\\venv\\Scripts\\isort --profile black .', desc: 'Import sorting' },
-      { cmd: 'cd python_api && ..\\venv\\Scripts\\autopep8 --max-line-length=88 --in-place --recursive .', desc: 'AutoPEP8 formatting' }
-    ]
+      {
+        cmd: 'cd python_api && ..\\venv\\Scripts\\black --line-length=88 .',
+        desc: 'Black formatting',
+      },
+      {
+        cmd: 'cd python_api && ..\\venv\\Scripts\\isort --profile black .',
+        desc: 'Import sorting',
+      },
+      {
+        cmd: 'cd python_api && ..\\venv\\Scripts\\autopep8 --max-line-length=88 --in-place --recursive .',
+        desc: 'AutoPEP8 formatting',
+      },
+    ];
 
-    commands.forEach(cmd => this.executeCommand(cmd.cmd, cmd.desc))
+    commands.forEach((cmd) => this.executeCommand(cmd.cmd, cmd.desc));
   }
 
-  fixJSONHTML () {
-    this.log('📄 Fixing JSON/HTML files...', 'blue')
+  fixJSONHTML() {
+    this.log('📄 Fixing JSON/HTML files...', 'blue');
 
-    const jsonHtmlFiles = '*.{json,html,htm} components/**/*.{json,html,htm} pages/**/*.{json,html,htm}'
+    const jsonHtmlFiles =
+      '*.{json,html,htm} components/**/*.{json,html,htm} pages/**/*.{json,html,htm}';
 
     const commands = [
       { cmd: 'npx prettier --parser json --write **/*.{json}', desc: 'JSON formatting' },
-      { cmd: 'npx prettier --parser html --write **/*.{html,htm}', desc: 'HTML formatting' }
-    ]
+      { cmd: 'npx prettier --parser html --write **/*.{html,htm}', desc: 'HTML formatting' },
+    ];
 
-    commands.forEach(cmd => this.executeCommand(cmd.cmd, cmd.desc))
+    commands.forEach((cmd) => this.executeCommand(cmd.cmd, cmd.desc));
   }
 
-  fixYAML () {
-    this.log('📋 Fixing YAML files...', 'blue')
+  fixYAML() {
+    this.log('📋 Fixing YAML files...', 'blue');
 
-    const yamlFiles = '*.{yml,yaml} .github/**/*.{yml,yaml} deployment/**/*.{yml,yaml}'
+    const yamlFiles = '*.{yml,yaml} .github/**/*.{yml,yaml} deployment/**/*.{yml,yaml}';
 
     const commands = [
       { cmd: 'npx prettier --parser yaml --write **/*.{yml,yaml}', desc: 'YAML formatting' },
-      { cmd: 'yamllint --fix **/*.{yml,yaml}', desc: 'YAML linting' }
-    ]
+      { cmd: 'yamllint --fix **/*.{yml,yaml}', desc: 'YAML linting' },
+    ];
 
-    commands.forEach(cmd => this.executeCommand(cmd.cmd, cmd.desc))
+    commands.forEach((cmd) => this.executeCommand(cmd.cmd, cmd.desc));
   }
 
-  fixCSSStyles () {
-    this.log('🎨 Fixing CSS/Styles files...', 'blue')
+  fixCSSStyles() {
+    this.log('🎨 Fixing CSS/Styles files...', 'blue');
 
-    const cssFiles = '*.{css,scss,sass,less,styl} assets/**/*.{css,scss,sass,less,styl} components/**/*.{css,scss,sass,less,styl}'
+    const cssFiles =
+      '*.{css,scss,sass,less,styl} assets/**/*.{css,scss,sass,less,styl} components/**/*.{css,scss,sass,less,styl}';
 
     const commands = [
-      { cmd: 'npx prettier --parser css --write **/*.{css,scss,sass,less,styl}', desc: 'CSS formatting' }
-    ]
+      {
+        cmd: 'npx prettier --parser css --write **/*.{css,scss,sass,less,styl}',
+        desc: 'CSS formatting',
+      },
+    ];
 
-    commands.forEach(cmd => this.executeCommand(cmd.cmd, cmd.desc))
+    commands.forEach((cmd) => this.executeCommand(cmd.cmd, cmd.desc));
   }
 
-  fixMarkdown () {
-    this.log('📖 Fixing Markdown files...', 'blue')
+  fixMarkdown() {
+    this.log('📖 Fixing Markdown files...', 'blue');
 
-    const mdFiles = '*.md docs/**/*.md pages/**/*.md'
+    const mdFiles = '*.md docs/**/*.md pages/**/*.md';
 
     const commands = [
-      { cmd: 'npx prettier --parser markdown --write **/*.md', desc: 'Markdown formatting' }
-    ]
+      { cmd: 'npx prettier --parser markdown --write **/*.md', desc: 'Markdown formatting' },
+    ];
 
-    commands.forEach(cmd => this.executeCommand(cmd.cmd, cmd.desc))
+    commands.forEach((cmd) => this.executeCommand(cmd.cmd, cmd.desc));
   }
 
-  fixShellScripts () {
-    this.log('🐚 Fixing Shell scripts...', 'blue')
+  fixShellScripts() {
+    this.log('🐚 Fixing Shell scripts...', 'blue');
 
-    const shellFiles = '*.{sh,bash,zsh,fish} scripts/**/*.{sh,bash,zsh,fish}'
+    const shellFiles = '*.{sh,bash,zsh,fish} scripts/**/*.{sh,bash,zsh,fish}';
 
     const commands = [
-      { cmd: 'npx shfmt -i 2 -ci -w **/*.{sh,bash,zsh,fish}', desc: 'Shell script formatting' }
-    ]
+      { cmd: 'npx shfmt -i 2 -ci -w **/*.{sh,bash,zsh,fish}', desc: 'Shell script formatting' },
+    ];
 
-    commands.forEach(cmd => this.executeCommand(cmd.cmd, cmd.desc))
+    commands.forEach((cmd) => this.executeCommand(cmd.cmd, cmd.desc));
   }
 
-  fixConfigFiles () {
-    this.log('⚙️ Fixing Configuration files...', 'blue')
+  fixConfigFiles() {
+    this.log('⚙️ Fixing Configuration files...', 'blue');
 
-    const configFiles = '*.{toml,ini,cfg,conf,properties}'
+    const configFiles = '*.{toml,ini,cfg,conf,properties}';
 
     const commands = [
-      { cmd: 'npx prettier --parser ini --write **/*.{toml,ini,cfg,conf,properties}', desc: 'Config file formatting' }
-    ]
+      {
+        cmd: 'npx prettier --parser ini --write **/*.{toml,ini,cfg,conf,properties}',
+        desc: 'Config file formatting',
+      },
+    ];
 
-    commands.forEach(cmd => this.executeCommand(cmd.cmd, cmd.desc))
+    commands.forEach((cmd) => this.executeCommand(cmd.cmd, cmd.desc));
   }
 
-  runTypeScriptCheck () {
-    this.log('🔍 Running TypeScript checks...', 'blue')
+  runTypeScriptCheck() {
+    this.log('🔍 Running TypeScript checks...', 'blue');
 
     const commands = [
       { cmd: 'npx vue-tsc --project tsconfig.ci.json --noEmit', desc: 'Vue TypeScript check' },
-      { cmd: 'npx tsc -p tsconfig.ci.json --noEmit', desc: 'General TypeScript check' }
-    ]
+      { cmd: 'npx tsc -p tsconfig.ci.json --noEmit', desc: 'General TypeScript check' },
+    ];
 
-    commands.forEach(cmd => this.executeCommand(cmd.cmd, cmd.desc))
+    commands.forEach((cmd) => this.executeCommand(cmd.cmd, cmd.desc));
   }
 
-  generateReport () {
-    this.log('📊 Generating auto-fix report...', 'yellow')
+  generateReport() {
+    this.log('📊 Generating auto-fix report...', 'yellow');
 
     const report = {
       timestamp: new Date().toISOString(),
       fixedFiles: this.fixedFiles,
       failedFiles: this.failedFiles,
-      logs: this.logs
-    }
+      logs: this.logs,
+    };
 
-    const reportPath = 'auto-fix-report.json'
-    fs.writeFileSync(reportPath, JSON.stringify(report, null, 2))
+    const reportPath = 'auto-fix-report.json';
+    fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
 
-    this.log(`📄 Report saved to: ${reportPath}`, 'green')
-    this.log(`📊 Total logs: ${this.logs.length}`, 'cyan')
+    this.log(`📄 Report saved to: ${reportPath}`, 'green');
+    this.log(`📊 Total logs: ${this.logs.length}`, 'cyan');
   }
 
-  async runAll () {
-    this.log('🚀 Starting comprehensive auto-fix process...', 'bright')
+  async runAll() {
+    this.log('🚀 Starting comprehensive auto-fix process...', 'bright');
 
-    const startTime = Date.now()
+    const startTime = Date.now();
 
     // Fix all file types
-    this.fixJavaScriptTypeScript()
-    this.fixPython()
-    this.fixJSONHTML()
-    this.fixYAML()
-    this.fixCSSStyles()
-    this.fixMarkdown()
-    this.fixShellScripts()
-    this.fixConfigFiles()
+    this.fixJavaScriptTypeScript();
+    this.fixPython();
+    this.fixJSONHTML();
+    this.fixYAML();
+    this.fixCSSStyles();
+    this.fixMarkdown();
+    this.fixShellScripts();
+    this.fixConfigFiles();
 
     // Run type checking
-    this.runTypeScriptCheck()
+    this.runTypeScriptCheck();
 
-    const endTime = Date.now()
-    const duration = ((endTime - startTime) / 1000).toFixed(2)
+    const endTime = Date.now();
+    const duration = ((endTime - startTime) / 1000).toFixed(2);
 
-    this.log(`🎉 Auto-fix process completed in ${duration}s`, 'green')
-    this.generateReport()
+    this.log(`🎉 Auto-fix process completed in ${duration}s`, 'green');
+    this.generateReport();
   }
 }
 
 // CLI interface
 if (require.main === module) {
-  const fixer = new AutoFixer()
-  const args = process.argv.slice(2)
+  const fixer = new AutoFixer();
+  const args = process.argv.slice(2);
 
   if (args.includes('--help') || args.includes('-h')) {
     console.log(`
@@ -229,32 +247,32 @@ Options:
 
 Integration:
   Can be called from file watchers, pre-commit hooks, or Cursor AI extensions
-    `)
-    process.exit(0)
+    `);
+    process.exit(0);
   }
 
   if (args.includes('--js') || args.includes('--typescript')) {
-    fixer.fixJavaScriptTypeScript()
+    fixer.fixJavaScriptTypeScript();
   } else if (args.includes('--python')) {
-    fixer.fixPython()
+    fixer.fixPython();
   } else if (args.includes('--json') || args.includes('--html')) {
-    fixer.fixJSONHTML()
+    fixer.fixJSONHTML();
   } else if (args.includes('--yaml')) {
-    fixer.fixYAML()
+    fixer.fixYAML();
   } else if (args.includes('--css')) {
-    fixer.fixCSSStyles()
+    fixer.fixCSSStyles();
   } else if (args.includes('--md') || args.includes('--markdown')) {
-    fixer.fixMarkdown()
+    fixer.fixMarkdown();
   } else if (args.includes('--shell')) {
-    fixer.fixShellScripts()
+    fixer.fixShellScripts();
   } else if (args.includes('--config')) {
-    fixer.fixConfigFiles()
+    fixer.fixConfigFiles();
   } else if (args.includes('--check')) {
-    fixer.runTypeScriptCheck()
+    fixer.runTypeScriptCheck();
   } else {
     // Default: fix everything
-    fixer.runAll()
+    fixer.runAll();
   }
 }
 
-module.exports = AutoFixer
+module.exports = AutoFixer;

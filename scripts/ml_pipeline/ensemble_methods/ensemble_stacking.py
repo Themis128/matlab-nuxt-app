@@ -229,7 +229,7 @@ def train_final_models(X, y, models):
         model = clone(model_template)
         model.fit(X, y)
         final_models[name] = model
-        print(f"  ✓ {name}")
+        print(f"  [OK] {name}")
 
     return final_models
 
@@ -239,11 +239,11 @@ def save_models(final_models, meta_model):
     for name, model in final_models.items():
         path = MODELS_DIR / f"ensemble_base_{name}.pkl"
         dump(model, path)
-        print(f"✓ Saved: {path.name}")
+        print(f"[OK] Saved: {path.name}")
 
     meta_path = MODELS_DIR / "ensemble_meta_learner.pkl"
     dump(meta_model, meta_path)
-    print(f"✓ Saved: {meta_path.name}")
+    print(f"[OK] Saved: {meta_path.name}")
 
 
 def main():
@@ -311,7 +311,7 @@ def main():
     oof_df['actual'] = y.values
     oof_df['blended'] = blended_preds
     oof_df.to_csv(OOF_PATH, index=False)
-    print(f"✓ Saved OOF predictions: {OOF_PATH}")
+    print(f"[OK] Saved OOF predictions: {OOF_PATH}")
 
     # Save metrics
     metrics = {
@@ -332,7 +332,7 @@ def main():
     }
 
     METRICS_PATH.write_text(json.dumps(metrics, indent=2), encoding='utf-8')
-    print(f"✓ Saved metrics: {METRICS_PATH}")
+    print(f"[OK] Saved metrics: {METRICS_PATH}")
 
     print("\n" + "=" * 80)
     print("ENSEMBLE STACKING COMPLETE")

@@ -125,6 +125,8 @@ def load_dataset() -> Optional[pd.DataFrame]:
 class ModelResponse(BaseModel):
     """Response model for a mobile phone model"""
 
+    model_config = ConfigDict(protected_namespaces=(), from_attributes=True)
+
     model_name: Optional[str] = Field(None, description="Model name")
     company: Optional[str] = Field(None, description="Company/brand")
     price: Optional[float] = Field(None, description="Price")
@@ -137,9 +139,6 @@ class ModelResponse(BaseModel):
     image_path: Optional[str] = Field(None, description="Path to model image")
     weight: Optional[float] = Field(None, description="Weight in grams")
     year: Optional[int] = Field(None, description="Launch year")
-
-
-ConfigDict(from_attributes=True)
 
 
 class DatasetStatsResponse(BaseModel):

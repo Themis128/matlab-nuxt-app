@@ -31,11 +31,7 @@
         "editor.codeActionsOnSave": {
           "source.fixAll.eslint": "explicit"
         },
-        "eslint.validate": [
-          "javascript",
-          "typescript",
-          "vue"
-        ],
+        "eslint.validate": ["javascript", "typescript", "vue"],
         "vue.server.hybridMode": "auto",
         "files.exclude": {
           "**/node_modules": true,
@@ -50,11 +46,7 @@
   "containerEnv": {
     "DEVCONTAINER_AUTO_START_SERVERS": "true"
   },
-  "forwardPorts": [
-    3000,
-    8000,
-    9229
-  ],
+  "forwardPorts": [3000, 8000, 9229],
   "remoteUser": "vscode",
   "overrideCommand": false,
   "shutdownAction": "stopContainer"

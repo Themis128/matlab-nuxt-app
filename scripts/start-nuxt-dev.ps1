@@ -1,4 +1,6 @@
 param(
+  [int]$Port = 3000,
+  [string]$HostName = "localhost",
   [int]$StartPort = 24678,
   [int]$MaxPort = 24750,
   [int]$PortIncrement = 1
@@ -43,7 +45,7 @@ $env:NUXT_DEVTOOLS_PORT = $free
 # Print child config for debugging
 Write-Log "NUXT_DEVTOOLS_PORT set to $env:NUXT_DEVTOOLS_PORT"
 
-Write-Log "Starting Nuxt dev with NUXT_DEVTOOLS_PORT=$free"
-npm run dev -- --port 3000 --hostname localhost
+Write-Log "Starting Nuxt dev with NUXT_DEVTOOLS_PORT=$free on port $Port, hostname $HostName"
+npm run dev -- --port $Port --hostname $HostName
 
 exit $LASTEXITCODE

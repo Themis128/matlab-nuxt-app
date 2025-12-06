@@ -78,8 +78,20 @@ class DataPipeline:
         try:
             logger.info(f"Loading dataset with images from: {csv_path}")
 
-            # Read CSV file
-            df = pd.read_csv(csv_path)
+            # Read CSV file - try multiple encodings
+            encodings = ['utf-8', 'latin-1', 'iso-8859-1', 'cp1252', 'utf-8-sig']
+            df = None
+            for encoding in encodings:
+                try:
+                    df = pd.read_csv(csv_path, encoding=encoding)
+                    logger.info(f"Successfully loaded CSV with {encoding} encoding")
+                    break
+                except (UnicodeDecodeError, UnicodeError):
+                    continue
+
+            if df is None:
+                raise ValueError(f"Could not read CSV file with any encoding. Tried: {encodings}")
+
             filename = Path(csv_path).name
 
             # Check if CSV has image path column
@@ -148,7 +160,19 @@ class DataPipeline:
     def _load_csv_dataset(self, csv_path: str) -> str:
         """Load a CSV dataset into LanceDB"""
         try:
-            df = pd.read_csv(csv_path)
+            # Try multiple encodings to handle different CSV formats
+            encodings = ['utf-8', 'latin-1', 'iso-8859-1', 'cp1252', 'utf-8-sig']
+            df = None
+            for encoding in encodings:
+                try:
+                    df = pd.read_csv(csv_path, encoding=encoding)
+                    logger.info(f"Successfully loaded CSV with {encoding} encoding")
+                    break
+                except UnicodeDecodeError:
+                    continue
+
+            if df is None:
+                raise ValueError(f"Could not read CSV file with any encoding. Tried: {encodings}")
             filename = Path(csv_path).name
 
             # Apply preprocessing if enabled

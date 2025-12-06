@@ -292,6 +292,10 @@ const brands = computed(() => {
 // Handle image loading errors
 const handleImageError = (event: Event) => {
   const img = event.target as HTMLImageElement;
-  img.src = `https://via.placeholder.com/300x200?text=${encodeURIComponent(img.alt || 'Phone')}`;
+  // Use local fallback image instead of placeholder service
+  img.src = '/mobile_images/default-phone.png';
+  img.onerror = () => {
+    img.style.display = 'none';
+  };
 };
 </script>

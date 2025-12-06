@@ -9,7 +9,7 @@ from typing import Optional
 
 import pandas as pd
 from fastapi import APIRouter
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from sklearn.preprocessing import LabelEncoder
 
 logger = logging.getLogger(__name__)
@@ -40,6 +40,8 @@ CURRENCY_SYMBOLS = {"USD": "$", "EUR": "€", "INR": "₹"}
 
 
 class AdvancedPredictionRequest(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
     ram: float = Field(..., description="RAM in GB", ge=1, le=24)
     battery: float = Field(..., description="Battery capacity in mAh", ge=2000, le=7000)
     screen: float = Field(..., description="Screen size in inches", ge=4, le=8)
@@ -55,6 +57,8 @@ class AdvancedPredictionRequest(BaseModel):
 
 
 class AdvancedPredictionResponse(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
     price: float
     model_used: str
     accuracy_info: Optional[dict] = None

@@ -70,14 +70,12 @@ Use this checklist to set up your GitHub Projects for the MATLAB Deep Learning p
 ### High Priority
 
 1. **Improve Brand Classification Model**
-
    - Current: 65.22% accuracy
    - Target: 70%+ accuracy
    - Model Type: Brand Classification
    - Priority: High
 
 2. **Model Versioning System**
-
    - Track model versions
    - Compare performance across versions
    - Priority: High
@@ -90,13 +88,11 @@ Use this checklist to set up your GitHub Projects for the MATLAB Deep Learning p
 ### Medium Priority
 
 1. **Camera Prediction Models**
-
    - Front camera prediction
    - Back camera prediction
    - Model Type: New Model
 
 2. **Model Comparison Dashboard**
-
    - Visual comparison of models
    - Performance metrics
    - Feature Category: Visualization
@@ -108,7 +104,6 @@ Use this checklist to set up your GitHub Projects for the MATLAB Deep Learning p
 ### Low Priority
 
 1. **Video Tutorials**
-
    - Model training tutorial
    - API usage tutorial
    - Feature Category: Documentation

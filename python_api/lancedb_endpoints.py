@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from fastapi import APIRouter, File, Form, HTTPException, Query, UploadFile
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 try:
     # Prefer top-level import when API is started using e.g. `python python_api/api.py`
@@ -59,8 +59,10 @@ class VectorSearchRequest(BaseModel):
 
 
 class CreateTableRequest(BaseModel):
+    model_config = ConfigDict(protected_namespaces=(), populate_by_name=True)
+
     name: str = Field(..., description="Table name")
-    schema: Optional[Dict[str, Any]] = Field(None, description="Table schema (optional)")
+    table_schema: Optional[Dict[str, Any]] = Field(None, serialization_alias="schema", description="Table schema (optional)")
     data: Optional[List[Dict[str, Any]]] = Field(None, description="Initial data (optional)")
     mode: str = Field("create", description="Creation mode (create, overwrite)")
 
@@ -398,7 +400,7 @@ async def delete_image(image_id: str):
 async def create_table(request: CreateTableRequest):
     """Create a new LanceDB table"""
     try:
-        db_manager.db.create_table(request.name, data=request.data, schema=request.schema, mode=request.mode)
+        db_manager.db.create_table(request.name, data=request.data, schema=request.table_schema, mode=request.mode)
         return {"table_name": request.name, "message": "Table created successfully"}
     except Exception as e:
         logger.error(f"Failed to create table {request.name}: {e}")

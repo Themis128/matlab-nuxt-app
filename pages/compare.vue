@@ -208,11 +208,32 @@ onMounted(() => {
 
 const selectedPhones = ref(['', '', '', '']);
 const comparisonData = ref<any[]>([]);
+const availablePhones = ref<Array<{ label: string; value: string }>>([]);
+const isLoadingPhones = ref(false);
 
-const availablePhones = [
-  { label: 'Samsung Galaxy S24 Ultra', value: 'samsung-s24-ultra' },
-  { label: 'iPhone 15 Pro Max', value: 'iphone-15-pro-max' },
-  { label: 'Google Pixel 8 Pro', value: 'pixel-8-pro' },
-  { label: 'OnePlus 12', value: 'oneplus-12' },
-];
+// Fetch available phones from API
+const fetchAvailablePhones = async () => {
+  isLoadingPhones.value = true;
+  try {
+    const response = (await $fetch('/api/products?limit=100')) as { products: any[] };
+    availablePhones.value = response.products
+      .filter((p: any) => p.model && p.company)
+      .map((p: any) => ({
+        label: `${p.company} ${p.model}`,
+        value: `${p.company}-${p.model}`.toLowerCase().replace(/\s+/g, '-'),
+        data: p, // Store full data for comparison
+      }));
+  } catch (error) {
+    console.error('Error fetching phones:', error);
+    // Fallback to empty list
+    availablePhones.value = [];
+  } finally {
+    isLoadingPhones.value = false;
+  }
+};
+
+// Load phones on mount
+onMounted(() => {
+  fetchAvailablePhones();
+});
 </script>

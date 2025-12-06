@@ -132,7 +132,7 @@ def save_segment_models(segment_models):
     for seg, model in segment_models.items():
         path = MODELS_DIR / f"price_segment_{seg}_model.pkl"
         dump(model, path)
-        print(f"✓ Saved segment model: {path}")
+        print(f"[OK] Saved segment model: {path}")
 
 
 def main():
@@ -168,8 +168,8 @@ def main():
     }
 
     METRICS_PATH.write_text(json.dumps(metrics, indent=2), encoding='utf-8')
-    print(f"✓ Segment assignments saved: {ASSIGNMENTS_PATH}")
-    print(f"✓ Metrics saved: {METRICS_PATH}")
+    print(f"[OK] Segment assignments saved: {ASSIGNMENTS_PATH}")
+    print(f"[OK] Metrics saved: {METRICS_PATH}")
     if metrics['segment_improvement_vs_baseline'] is not None:
         print(f"Δ RMSE (baseline - avg_segment): {metrics['segment_improvement_vs_baseline']:.4f}")
 

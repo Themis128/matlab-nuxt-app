@@ -1,3 +1,0 @@
-### LEGACY/DEPRECATED ONE-OFF DOCKER-ORCHESTRATION FILE
-### This docker-compose.yml was retained in `deployment/legacy` solely for archival/reference.
-### The project uses SSH artifact deployment; Docker compose no longer used by default.

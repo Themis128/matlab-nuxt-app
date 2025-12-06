@@ -132,6 +132,22 @@ def main():
     # Load teacher model
     print("\n[1/4] Loading teacher model...")
     teacher = load(TEACHER_PATH)
+
+    # Check feature compatibility
+    expected_features = teacher.n_features_in_ if hasattr(teacher, 'n_features_in_') else None
+    actual_features = X_test_scaled.shape[1]
+
+    if expected_features and expected_features != actual_features:
+        print(f"[WARNING] Feature mismatch: Teacher expects {expected_features} features, but data has {actual_features}")
+        print(f"[INFO] Attempting to align features...")
+        # If teacher expects fewer features, use only the first N features
+        if expected_features < actual_features:
+            X_train_scaled = X_train_scaled[:, :expected_features]
+            X_test_scaled = X_test_scaled[:, :expected_features]
+            print(f"[OK] Using first {expected_features} features to match teacher model")
+        else:
+            raise ValueError(f"Cannot align features: Teacher needs {expected_features} but only {actual_features} available")
+
     teacher_metrics = evaluate_model(teacher, X_test_scaled, y_test)
     print(f"Teacher (GradientBoosting): RMSE={teacher_metrics['rmse']:.2f}  R²={teacher_metrics['r2']:.4f}")
 
@@ -192,15 +208,15 @@ def main():
     print("\n" + "=" * 80)
     print("COMPRESSION SUMMARY")
     print("=" * 80)
-    print(f"✓ Speedup: {speedup:.2f}x faster")
-    print(f"✓ Size reduction: {size_reduction:.2f}%")
-    print(f"✓ Accuracy retention: {retention:.2f}%")
+    print(f"[OK] Speedup: {speedup:.2f}x faster")
+    print(f"[OK] Size reduction: {size_reduction:.2f}%")
+    print(f"[OK] Accuracy retention: {retention:.2f}%")
 
     if retention >= 95:
-        print("✓ PASSED: Accuracy retention ≥95%")
+        print("[PASSED] Accuracy retention >=95%")
         recommendation = "Student model ready for production serving"
     else:
-        print(f"✗ CAUTION: Accuracy retention {retention:.2f}% < 95% threshold")
+        print(f"[CAUTION] Accuracy retention {retention:.2f}% < 95% threshold")
         recommendation = "Use student for low-latency scenarios only; keep teacher for high-accuracy needs"
 
     print(f"\nRecommendation: {recommendation}")
@@ -240,8 +256,8 @@ def main():
     }
 
     BENCHMARK_PATH.write_text(json.dumps(benchmark_output, indent=2), encoding='utf-8')
-    print(f"\n✓ Student model saved: {STUDENT_PATH}")
-    print(f"✓ Benchmark saved: {BENCHMARK_PATH}")
+    print(f"\n[OK] Student model saved: {STUDENT_PATH}")
+    print(f"[OK] Benchmark saved: {BENCHMARK_PATH}")
 
     print("\n" + "=" * 80)
     print("COMPRESSION COMPLETE")

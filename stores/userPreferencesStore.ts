@@ -58,7 +58,12 @@ export const useUserPreferencesStore = defineStore('userPreferences', {
           return { ...defaultPreferences, ...parsed };
         }
       } catch (error) {
-        console.warn('Failed to load persisted preferences:', error);
+        const logger = useSentryLogger();
+        logger.warn('Failed to load persisted preferences', {
+          component: 'userPreferencesStore',
+          action: 'loadPreferences',
+          error: error instanceof Error ? error.message : String(error),
+        });
       }
     }
     return { ...defaultPreferences };
@@ -73,7 +78,12 @@ export const useUserPreferencesStore = defineStore('userPreferences', {
         try {
           localStorage.setItem('mobile-finder-preferences', JSON.stringify(this.$state));
         } catch (error) {
-          console.warn('Failed to save preferences to localStorage:', error);
+          const logger = useSentryLogger();
+          logger.warn('Failed to save preferences to localStorage', {
+            component: 'userPreferencesStore',
+            action: 'saveToStorage',
+            error: error instanceof Error ? error.message : String(error),
+          });
         }
       }
     },

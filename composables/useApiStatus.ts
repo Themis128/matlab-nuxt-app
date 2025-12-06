@@ -19,6 +19,9 @@ export const useApiStatus = () => {
 
     try {
       // Check Python API health through Nuxt API endpoint
+      // Using type assertion to bypass Nuxt route type inference (excessive stack depth issue)
+      // This is a known issue with complex route type inference in Nuxt 4 when there are many routes
+      // @ts-expect-error - Excessive stack depth in route type inference (non-blocking)
       const response = (await $fetch('/api/health', {
         method: 'GET',
         timeout: 3000, // 3 second timeout

@@ -182,7 +182,10 @@ const initializeTheme = async () => {
       applyThemeToDocument(newResolvedTheme);
     });
   } catch {
-    console.warn('Theme store not available, using fallback theme detection');
+    const logger = useSentryLogger();
+    logger.warn('Theme store not available, using fallback theme detection', {
+      component: 'ThemeToggle',
+    });
     // Fallback to system preference
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     currentTheme.value = 'system';
@@ -212,7 +215,10 @@ const toggleTheme = async () => {
 
     userPreferencesStore.setTheme(themes[nextIndex]!);
   } catch {
-    console.warn('Theme store not available, using fallback toggle');
+    const logger = useSentryLogger();
+    logger.warn('Theme store not available, using fallback toggle', {
+      component: 'ThemeToggle',
+    });
     // Fallback toggle logic
     const themes = ['light', 'dark', 'system'] as const;
     let currentIndex = themes.indexOf(currentTheme.value as any);

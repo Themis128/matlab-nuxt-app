@@ -280,11 +280,11 @@ def main():
     print(f"Improvement:            {improvement:+.2f}%")
 
     if improvement > 3:
-        print(f"\n✓ SUCCESS: Auxiliary tasks improve price prediction by {improvement:.2f}%!")
+        print(f"\n[SUCCESS] Auxiliary tasks improve price prediction by {improvement:.2f}%!")
     elif improvement > 0:
-        print(f"\n✓ MODEST GAIN: Auxiliary tasks help by {improvement:.2f}%")
+        print(f"\n[MODEST GAIN] Auxiliary tasks help by {improvement:.2f}%")
     else:
-        print(f"\n✗ NO GAIN: Multi-task underperforms single-task by {abs(improvement):.2f}%")
+        print(f"\n[NO GAIN] Multi-task underperforms single-task by {abs(improvement):.2f}%")
 
     # Save models
     dump({
@@ -296,7 +296,7 @@ def main():
         'feature_names': feature_names
     }, MODEL_PATH)
 
-    print(f"\n✓ Multi-task model saved: {MODEL_PATH}")
+    print(f"\n[OK] Multi-task model saved: {MODEL_PATH}")
 
     # Save metrics
     metrics_output = {
@@ -328,7 +328,7 @@ def main():
     }
 
     METRICS_PATH.write_text(json.dumps(metrics_output, indent=2), encoding='utf-8')
-    print(f"✓ Metrics saved: {METRICS_PATH}")
+    print(f"[OK] Metrics saved: {METRICS_PATH}")
 
     print("\n" + "=" * 80)
     print("MULTI-TASK AUXILIARY TRAINING COMPLETE")

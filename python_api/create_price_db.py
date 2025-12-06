@@ -1,11 +1,17 @@
 """
 Script to create and populate a local price database from the mobiles dataset
+Automatically triggers model training after data loading
 """
 
+import asyncio
 import sqlite3
 import csv
 import os
+import sys
 from pathlib import Path
+
+# Add parent directory to path for imports
+sys.path.append(str(Path(__file__).parent))
 
 def create_price_database():
     """Create SQLite database with price data from CSV"""
@@ -90,6 +96,49 @@ def create_price_database():
     conn.close()
     print(f"Database created at: {db_path}")
     print(f"Records inserted: {records_inserted}")
+
+    # Automatically trigger model training after data loading
+    print("\n" + "=" * 60)
+    print("Starting automatic model training...")
+    print("=" * 60)
+
+    try:
+        from enhanced_data_pipeline import EnhancedDataPipeline
+
+        async def train_models():
+            # Train ALL 41 models automatically (no manual intervention)
+            # Set TRAIN_ALL_41_MODELS=false to train only basic 4 models
+            pipeline = EnhancedDataPipeline()
+            results = await pipeline.load_data_and_train(
+                csv_path=str(csv_path),
+                image_base_dir=str(Path(__file__).parent.parent / "public" / "mobile_images"),
+                auto_train=True  # This will train ALL 41 models by default
+            )
+
+            # Print notifications
+            print("\n=== Training Notifications ===")
+            for notification in results.get("notifications", []):
+                status = notification.get("status", "info").upper()
+                model = notification.get("model_name", "unknown")
+                message = notification.get("message", "")
+                print(f"[{status}] {model}: {message}")
+
+            if results.get("success"):
+                print("\n✓ All models trained successfully!")
+            else:
+                print(f"\n⚠ Training completed with {results.get('training', {}).get('failure_count', 0)} failures")
+
+            return results
+
+        # Run training
+        training_results = asyncio.run(train_models())
+
+    except ImportError as e:
+        print(f"\n⚠ Could not import training pipeline: {e}")
+        print("Models will not be automatically trained.")
+    except Exception as e:
+        print(f"\n⚠ Error during automatic training: {e}")
+        print("Database was created successfully, but model training failed.")
 
 def parse_price(price_str):
     """Parse price string to float, handling different currencies"""

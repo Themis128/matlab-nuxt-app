@@ -296,11 +296,11 @@ def main():
     print(f"  Improvement: {improvement:+.2f}%")
 
     if improvement > 5:
-        print(f"\n✓ SUCCESS: Neural ensemble delivers {improvement:.2f}% improvement!")
+        print(f"\n[SUCCESS] Neural ensemble delivers {improvement:.2f}% improvement!")
     elif improvement > 0:
-        print(f"\n✓ MODEST GAIN: Neural ensemble improves by {improvement:.2f}%")
+        print(f"\n[MODEST GAIN] Neural ensemble improves by {improvement:.2f}%")
     else:
-        print(f"\n✗ NO IMPROVEMENT: Ensemble underperforms best base by {abs(improvement):.2f}%")
+        print(f"\n[NO IMPROVEMENT] Ensemble underperforms best base by {abs(improvement):.2f}%")
 
     # Save models
     for name, model in trained_models.items():
@@ -310,7 +310,7 @@ def main():
     dump(meta_model, MODELS_DIR / "ensemble_neural_meta_learner.pkl")
     dump(scaler, MODELS_DIR / "ensemble_neural_scaler.pkl")
 
-    print(f"\n✓ Saved {len(trained_models)} base models + meta-learner + scaler")
+    print(f"\n[OK] Saved {len(trained_models)} base models + meta-learner + scaler")
 
     # Save metrics
     metrics_output = {
@@ -338,7 +338,7 @@ def main():
     }
 
     METRICS_PATH.write_text(json.dumps(metrics_output, indent=2), encoding='utf-8')
-    print(f"✓ Metrics saved: {METRICS_PATH}")
+    print(f"[OK] Metrics saved: {METRICS_PATH}")
 
     print("\n" + "=" * 80)
     print("NEURAL ENSEMBLE COMPLETE")

@@ -7,7 +7,7 @@ from typing import Optional
 
 from fastapi import APIRouter, HTTPException
 from predictions_distilled import get_distilled_predictor, predict_price_distilled
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 router = APIRouter(prefix="/api/distilled", tags=["Distilled Model (Production)"])
 
@@ -30,6 +30,8 @@ class DistilledPriceRequest(BaseModel):
 class DistilledPriceResponse(BaseModel):
     """Response model for distilled price prediction"""
 
+    model_config = ConfigDict(protected_namespaces=())
+
     predicted_price: float = Field(..., description="Predicted price in USD")
     model: str = Field(..., description="Model name used")
     speedup: str = Field(..., description="Speed improvement vs teacher")
@@ -42,6 +44,8 @@ class DistilledPriceResponse(BaseModel):
 
 class DistilledModelInfoResponse(BaseModel):
     """Response model for distilled model information"""
+
+    model_config = ConfigDict(protected_namespaces=())
 
     available: bool = Field(..., description="Whether distilled model is available")
     model_path: Optional[str] = Field(None, description="Path to model file")

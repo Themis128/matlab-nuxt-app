@@ -2,32 +2,32 @@
   "teacher": {
     "model_path": "python_api\\trained_models\\ensemble_base_gradient_boosting.pkl",
     "model_type": "GradientBoostingRegressor",
-    "size_kb": 446.0234375,
-    "latency_ms_mean": 0.6940789999885055,
-    "latency_ms_std": 0.12814325132164658,
+    "size_kb": 766.01171875,
+    "latency_ms_mean": 0.8678050001617521,
+    "latency_ms_std": 0.04574238138293164,
     "metrics": {
-      "rmse": 18378.7633406546,
-      "mae": 8966.134186227251,
-      "r2": -1751.0323448729032
+      "rmse": 7344.2326879975635,
+      "mae": 3817.2269589626626,
+      "r2": -278.77081307651673
     }
   },
   "student": {
     "model_path": "python_api\\trained_models\\distilled_price_model.pkl",
     "model_type": "DecisionTreeRegressor",
     "max_depth": 8,
-    "size_kb": 7.7880859375,
-    "latency_ms_mean": 0.06938100000525083,
-    "latency_ms_std": 0.02043732221039589,
+    "size_kb": 10.4912109375,
+    "latency_ms_mean": 0.057771999927354045,
+    "latency_ms_std": 0.011131612672584104,
     "metrics": {
-      "rmse": 18378.735290639397,
-      "mae": 8963.557944361282,
-      "r2": -1751.026996907373
+      "rmse": 7353.376199204545,
+      "mae": 3830.7156269236293,
+      "r2": -279.4678715910863
     }
   },
   "comparison": {
-    "speedup": 10.0038771412343,
-    "size_reduction_percent": 98.253884149866,
-    "accuracy_retention_percent": 99.99984737811415,
+    "speedup": 15.021204065169664,
+    "size_reduction_percent": 98.63041116986828,
+    "accuracy_retention_percent": 99.87550079640145,
     "recommendation": "Student model ready for production serving"
   },
   "benchmark_config": {

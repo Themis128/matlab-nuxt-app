@@ -309,7 +309,7 @@ import { ref, computed } from 'vue';
 const categories = ref([
   { id: 'all', name: 'All Models', icon: 'i-heroicons-squares-2x2' },
   { id: 'classification', name: 'Classification', icon: 'i-heroicons-tag' },
-  { id: 'regression', name: 'Regression', icon: 'i-heroicons-chart-line' },
+  { id: 'regression', name: 'Regression', icon: 'i-heroicons-chart-bar' },
   { id: 'clustering', name: 'Clustering', icon: 'i-heroicons-squares-2x2' },
   { id: 'nlp', name: 'NLP', icon: 'i-heroicons-chat-bubble-left-right' },
   { id: 'computer-vision', name: 'Computer Vision', icon: 'i-heroicons-eye' },
@@ -330,7 +330,7 @@ const models = ref([
     inferenceTime: 45,
     color: '#8B5CF6',
     icon: 'i-heroicons-cpu-chip',
-    previewImage: '/api/placeholder/400/250',
+    previewImage: '/mobile_images/default-phone.png',
     useCases: ['Device Classification', 'Feature Recognition', 'Image Processing'],
     metrics: [
       { name: 'Parameters', value: '4.2M' },
@@ -351,7 +351,7 @@ const models = ref([
     inferenceTime: 67,
     color: '#3B82F6',
     icon: 'i-heroicons-chat-bubble-left-right',
-    previewImage: '/api/placeholder/400/250',
+    previewImage: '/mobile_images/default-phone.png',
     useCases: ['Sentiment Analysis', 'Review Classification', 'User Feedback'],
     metrics: [
       { name: 'Hidden Units', value: '256' },
@@ -372,7 +372,7 @@ const models = ref([
     inferenceTime: 12,
     color: '#10B981',
     icon: 'i-heroicons-chart-bar',
-    previewImage: '/api/placeholder/400/250',
+    previewImage: '/mobile_images/default-phone.png',
     useCases: ['Price Prediction', 'Market Analysis', 'Feature Importance'],
     metrics: [
       { name: 'Trees', value: '100' },
@@ -393,7 +393,7 @@ const models = ref([
     inferenceTime: 23,
     color: '#F59E0B',
     icon: 'i-heroicons-squares-2x2',
-    previewImage: '/api/placeholder/400/250',
+    previewImage: '/mobile_images/default-phone.png',
     useCases: ['Market Segmentation', 'Pattern Discovery', 'Device Grouping'],
     metrics: [
       { name: 'Clusters', value: '8' },
@@ -414,7 +414,7 @@ const models = ref([
     inferenceTime: 78,
     color: '#EF4444',
     icon: 'i-heroicons-sparkles',
-    previewImage: '/api/placeholder/400/250',
+    previewImage: '/mobile_images/default-phone.png',
     useCases: ['App Classification', 'Category Prediction', 'Content Analysis'],
     metrics: [
       { name: 'Layers', value: '12' },
@@ -475,7 +475,7 @@ const performanceStats = ref([
     value: '12ms',
     description: 'Random Forest',
     color: '#10B981',
-    icon: 'i-heroicons-zap',
+    icon: 'i-heroicons-bolt',
   },
   {
     id: 'models',
