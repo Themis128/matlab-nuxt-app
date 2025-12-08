@@ -57,7 +57,7 @@ export class TestHelpers {
    * Wait for API response
    */
   async waitForApiResponse(urlPattern: string | RegExp, timeout = 15000) {
-    const pattern = typeof urlPattern === 'string' ? urlPattern : urlPattern.source;
+    const _pattern = typeof urlPattern === 'string' ? urlPattern : urlPattern.source;
     return await this.page
       .waitForResponse(
         (response) => {

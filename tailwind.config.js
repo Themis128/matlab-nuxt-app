@@ -13,6 +13,7 @@ export default {
     extend: {},
   },
   plugins: [
+     
     require('daisyui'),
   ],
   daisyui: {
@@ -20,6 +21,7 @@ export default {
     themes: [
       {
         light: {
+          // eslint-disable-next-line @typescript-eslint/no-var-requires
           ...require('daisyui/theme/object.js')['light'],
           primary: '#a855f7', // Purple to match your brand
           secondary: '#3b82f6', // Blue accent
@@ -34,6 +36,7 @@ export default {
           error: '#ef4444',
         },
         dark: {
+          // eslint-disable-next-line @typescript-eslint/no-var-requires
           ...require('daisyui/theme/object.js')['dark'],
           primary: '#c084fc', // Lighter purple for dark mode
           secondary: '#60a5fa', // Lighter blue

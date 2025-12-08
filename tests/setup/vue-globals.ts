@@ -22,7 +22,7 @@ try {
     writable: true,
     configurable: true,
   });
-} catch (e) {
+} catch (_e) {
   // If we can't modify import.meta.client, that's okay
   // Some tests may need to handle this differently
 }

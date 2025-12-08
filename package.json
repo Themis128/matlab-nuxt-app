@@ -214,15 +214,15 @@
       "prettier --write"
     ],
     "*.{py,pyi}": [
-      "node scripts/hooks/run-if-available.js black --line-length=88",
-      "node scripts/hooks/run-if-available.js isort --profile black"
+      "node scripts/hooks/run-if-available.cjs black --line-length=88",
+      "node scripts/hooks/run-if-available.cjs isort --profile black"
     ],
     "*.{json,html,htm}": [
       "prettier --write"
     ],
     "*.{yml,yaml}": [
       "prettier --write",
-      "node scripts/hooks/run-if-available.js yamllint"
+      "node scripts/hooks/run-if-available.cjs yamllint"
     ],
     "*.{css,scss,sass,less,styl}": [
       "prettier --write"
@@ -231,10 +231,10 @@
       "prettier --write"
     ],
     "*.{sh,bash,zsh,fish}": [
-      "node scripts/hooks/run-if-available.js shfmt -i 2 -ci -w"
+      "node scripts/hooks/run-if-available.cjs shfmt -i 2 -ci -w"
     ],
     "Dockerfile": [
-      "node scripts/hooks/run-if-available.js hadolint"
+      "node scripts/hooks/run-if-available.cjs hadolint"
     ],
     "*.{sql,psql,mysql}": [
       "prettier --write"

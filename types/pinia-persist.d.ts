@@ -1,7 +1,7 @@
 import 'pinia';
 
 declare module 'pinia' {
-  export interface DefineStoreOptionsBase<S, Store> {
+  export interface DefineStoreOptionsBase<_S, _Store> {
     persist?:
       | boolean
       | {

@@ -143,7 +143,7 @@ test.describe('Component Tests - Mobile Menu', () => {
 
 test.describe('Component Tests - Forms', () => {
   test('should display AI demo form', async ({ page }) => {
-    const helpers = createTestHelpers(page);
+    const _helpers = createTestHelpers(page);
     // Navigate with longer timeout and wait for page to be ready
     await page.goto('/ai-demo', { waitUntil: 'domcontentloaded', timeout: 60000 });
     await page.waitForLoadState('domcontentloaded');

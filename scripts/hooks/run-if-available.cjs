@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Runs a command only if it's available in PATH
- * Usage: node run-if-available.js <command> [args...] [files...]
+ * Usage: node run-if-available.cjs <command> [args...] [files...]
  *
  * lint-staged will append file paths as additional arguments
  */
@@ -13,7 +13,7 @@ const command = process.argv[2];
 const args = process.argv.slice(3);
 
 if (!command) {
-  console.error('Usage: node run-if-available.js <command> [args...]');
+  console.error('Usage: node run-if-available.cjs <command> [args...]');
   process.exit(1);
 }
 

@@ -146,7 +146,7 @@ test.describe('Phone Images Test Suite', () => {
 
     // Check if images are displayed
     const images = page.locator('img[src*="mobile_images"]');
-    const count = await images.count();
+    const _count = await images.count();
 
     // At least verify the page loads and has content
     expect(await page.locator('body').isVisible()).toBeTruthy();
@@ -237,7 +237,7 @@ test.describe('Phone Images Test Suite', () => {
 
     // Check that images are actually loaded
     const images = page.locator('img[src*="mobile_images"]');
-    const loadedImages = await images.count();
+    const _loadedImages = await images.count();
 
     // At least verify page loaded
     expect(await page.locator('body').isVisible()).toBeTruthy();

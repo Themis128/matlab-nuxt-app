@@ -50,7 +50,7 @@ test.describe('Frontend Pages - All Pages Navigation', () => {
 });
 
 test.describe('Frontend Buttons - Homepage', () => {
-  test.beforeEach(async ({ page, baseURL }) => {
+  test.beforeEach(async ({ page, baseURL: _baseURL }) => {
     // Wait for server to be ready
     await page.goto('/', { waitUntil: 'domcontentloaded', timeout: 60000 });
     await page.waitForLoadState('domcontentloaded');
@@ -155,7 +155,7 @@ test.describe('Frontend Buttons - Search Page', () => {
           try {
             await button.click({ timeout: 2000 });
             await page.waitForTimeout(300);
-          } catch (e) {
+          } catch (_e) {
             // Ignore errors from buttons that might navigate away
           }
         }
@@ -175,8 +175,8 @@ test.describe('Frontend Buttons - Compare Page', () => {
 
     // Find all interactive elements
     const buttons = page.locator('button');
-    const selects = page.locator('select');
-    const inputs = page.locator('input');
+    const _selects = page.locator('select');
+    const _inputs = page.locator('input');
 
     // Test buttons
     const buttonCount = await buttons.count();
@@ -186,7 +186,7 @@ test.describe('Frontend Buttons - Compare Page', () => {
         try {
           await button.click({ timeout: 2000 });
           await page.waitForTimeout(300);
-        } catch (e) {
+        } catch (_e) {
           // Continue if button causes navigation
         }
       }
@@ -217,7 +217,7 @@ test.describe('Frontend Buttons - AI Demo Page', () => {
         try {
           await input.fill('10');
           await page.waitForTimeout(200);
-        } catch (e) {
+        } catch (_e) {
           // Continue
         }
       }
@@ -231,7 +231,7 @@ test.describe('Frontend Buttons - AI Demo Page', () => {
         try {
           await button.click({ timeout: 3000 });
           await page.waitForTimeout(1000);
-        } catch (e) {
+        } catch (_e) {
           // Continue
         }
       }

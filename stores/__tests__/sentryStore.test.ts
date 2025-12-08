@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { setActivePinia, createPinia } from 'pinia';
 import { useSentryStore } from '../sentryStore';
 import type { SentryError, SentryIssue } from '~/types/sentry';

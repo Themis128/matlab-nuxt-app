@@ -546,7 +546,7 @@ test.describe('Full App Coverage - Theme & UI', () => {
 
       // If theme didn't change, trigger it directly
       if (newTheme === initialTheme) {
-        await page.evaluate((initial) => {
+        await page.evaluate((_initial) => {
           // Get current theme
           const currentIsDark = document.documentElement.classList.contains('dark');
           const newIsDark = !currentIsDark;
@@ -596,7 +596,7 @@ test.describe('Full App Coverage - Theme & UI', () => {
 
       // Check menu is open
       const mobileMenu = page.locator('[class*="mobile"], [class*="menu"], [aria-expanded="true"]');
-      const menuVisible = await mobileMenu
+      const _menuVisible = await mobileMenu
         .first()
         .isVisible()
         .catch(() => false);
@@ -799,7 +799,7 @@ test.describe('Full App Coverage - Accessibility', () => {
 });
 
 test.describe('Full App Coverage - Data Persistence', () => {
-  test('should persist theme preference', async ({ page, context }) => {
+  test('should persist theme preference', async ({ page, context: _context }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
 

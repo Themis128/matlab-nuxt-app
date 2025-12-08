@@ -5,13 +5,14 @@ This server provides tools to search, list, filter, and manage TODO comments
 in your codebase, similar to the todo-tree VS Code extension.
 """
 
+import json
 import os
 import re
-import json
 import subprocess
+from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import List, Optional, Dict, Any, Union
-from dataclasses import dataclass, asdict
+from typing import Any, Dict, List, Optional, Union
+
 from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("todo-tree")
@@ -20,6 +21,7 @@ mcp = FastMCP("todo-tree")
 @dataclass
 class TodoItem:
     """Represents a single TODO item found in the codebase."""
+
     file: str
     line: int
     column: int
@@ -43,10 +45,7 @@ def find_ripgrep() -> Optional[str]:
     for path in possible_paths:
         try:
             result = subprocess.run(
-                [path, "--version"],
-                capture_output=True,
-                text=True,
-                timeout=2
+                [path, "--version"], capture_output=True, text=True, timeout=2
             )
             if result.returncode == 0:
                 return path
@@ -74,8 +73,8 @@ def parse_todo_line(line: str, file_path: str) -> Optional[TodoItem]:
         content = parts[3].strip()
 
         # Extract tag and text from content
-        # Common patterns: // TODO: text, # FIXME text, <!-- TODO text -->
-        tag_pattern = r'\b(TODO|FIXME|BUG|HACK|XXX|NOTE|OPTIMIZE|REFACTOR|REVIEW|WARNING|DEPRECATED)\b'
+        # Common patterns: // TAG: text, # TAG text, <!-- TAG text -->
+        tag_pattern = r"\b(TODO|FIXME|BUG|HACK|XXX|NOTE|OPTIMIZE|REFACTOR|REVIEW|WARNING|DEPRECATED)\b"
         match = re.search(tag_pattern, content, re.IGNORECASE)
 
         if not match:
@@ -89,7 +88,7 @@ def parse_todo_line(line: str, file_path: str) -> Optional[TodoItem]:
         after = content[tag_end:].strip()
 
         # Remove comment markers from 'after'
-        after = re.sub(r'^[:\-\s]*', '', after)
+        after = re.sub(r"^[:\-\s]*", "", after)
 
         return TodoItem(
             file=file,
@@ -98,7 +97,7 @@ def parse_todo_line(line: str, file_path: str) -> Optional[TodoItem]:
             tag=tag,
             text=content,
             before=before,
-            after=after
+            after=after,
         )
     except (ValueError, IndexError):
         return None
@@ -108,7 +107,7 @@ def search_todos(
     workspace_path: str,
     tags: Optional[List[str]] = None,
     exclude_patterns: Optional[List[str]] = None,
-    include_patterns: Optional[List[str]] = None
+    include_patterns: Optional[List[str]] = None,
 ) -> List[TodoItem]:
     """
     Search for TODOs in the workspace using ripgrep.
@@ -128,7 +127,9 @@ def search_todos(
     rg_path = find_ripgrep()
     if not rg_path:
         # Fallback to Python-based search if ripgrep not available
-        return search_todos_python(workspace_path, tags, exclude_patterns, include_patterns)
+        return search_todos_python(
+            workspace_path, tags, exclude_patterns, include_patterns
+        )
 
     # Build ripgrep command
     cmd = [rg_path, "--line-number", "--column", "--no-heading", "--color=never"]
@@ -136,7 +137,9 @@ def search_todos(
     # Add exclude patterns - sanitize to prevent injection
     if exclude_patterns:
         for pattern in exclude_patterns:
-            if isinstance(pattern, str) and re.match(r'^[A-Za-z0-9_*?/.\-\[\]]+$', pattern):
+            if isinstance(pattern, str) and re.match(
+                r"^[A-Za-z0-9_*?/.\-\[\]]+$", pattern
+            ):
                 cmd.extend(["--glob", f"!{pattern}"])
             else:
                 print(f"Warning: Invalid exclude pattern '{pattern}' ignored")
@@ -144,7 +147,9 @@ def search_todos(
     # Add include patterns - sanitize to prevent injection
     if include_patterns:
         for pattern in include_patterns:
-            if isinstance(pattern, str) and re.match(r'^[A-Za-z0-9_*?/.\-\[\]]+$', pattern):
+            if isinstance(pattern, str) and re.match(
+                r"^[A-Za-z0-9_*?/.\-\[\]]+$", pattern
+            ):
                 cmd.extend(["--glob", pattern])
             else:
                 print(f"Warning: Invalid include pattern '{pattern}' ignored")
@@ -171,10 +176,12 @@ def search_todos(
         if not isinstance(tag, str):
             continue
         # Only allow alphanumeric and common tag characters
-        if re.match(r'^[A-Za-z0-9_]+$', tag):
+        if re.match(r"^[A-Za-z0-9_]+$", tag):
             sanitized_tags.append(tag)
         else:
-            print(f"Warning: Invalid tag '{tag}' ignored (only alphanumeric and underscore allowed)")
+            print(
+                f"Warning: Invalid tag '{tag}' ignored (only alphanumeric and underscore allowed)"
+            )
 
     if not sanitized_tags:
         return []
@@ -191,11 +198,7 @@ def search_todos(
 
     try:
         result = subprocess.run(
-            cmd,
-            capture_output=True,
-            text=True,
-            timeout=30,
-            cwd=workspace_path
+            cmd, capture_output=True, text=True, timeout=30, cwd=workspace_path
         )
 
         todos = []
@@ -209,14 +212,16 @@ def search_todos(
         return []
     except Exception as e:
         print(f"Error running ripgrep: {e}")
-        return search_todos_python(workspace_path, tags, exclude_patterns, include_patterns)
+        return search_todos_python(
+            workspace_path, tags, exclude_patterns, include_patterns
+        )
 
 
 def search_todos_python(
     workspace_path: str,
     tags: Optional[List[str]] = None,
     exclude_patterns: Optional[List[str]] = None,
-    include_patterns: Optional[List[str]] = None
+    include_patterns: Optional[List[str]] = None,
 ) -> List[TodoItem]:
     """
     Fallback Python-based TODO search if ripgrep is not available.
@@ -229,8 +234,16 @@ def search_todos_python(
 
     # Default exclude patterns
     default_excludes = {
-        "node_modules", "venv", ".venv", "__pycache__", ".git",
-        ".nuxt", ".output", "dist", "build", ".cache"
+        "node_modules",
+        "venv",
+        ".venv",
+        "__pycache__",
+        ".git",
+        ".nuxt",
+        ".output",
+        "dist",
+        "build",
+        ".cache",
     }
 
     if exclude_patterns:
@@ -238,15 +251,43 @@ def search_todos_python(
 
     # File extensions to search
     code_extensions = {
-        ".py", ".js", ".ts", ".jsx", ".tsx", ".vue", ".java", ".cpp", ".c",
-        ".h", ".hpp", ".cs", ".go", ".rs", ".rb", ".php", ".swift", ".kt",
-        ".md", ".html", ".css", ".scss", ".sass", ".less", ".json", ".yaml",
-        ".yml", ".xml", ".sh", ".bash", ".ps1", ".m", ".r"
+        ".py",
+        ".js",
+        ".ts",
+        ".jsx",
+        ".tsx",
+        ".vue",
+        ".java",
+        ".cpp",
+        ".c",
+        ".h",
+        ".hpp",
+        ".cs",
+        ".go",
+        ".rs",
+        ".rb",
+        ".php",
+        ".swift",
+        ".kt",
+        ".md",
+        ".html",
+        ".css",
+        ".scss",
+        ".sass",
+        ".less",
+        ".json",
+        ".yaml",
+        ".yml",
+        ".xml",
+        ".sh",
+        ".bash",
+        ".ps1",
+        ".m",
+        ".r",
     }
 
     tag_pattern = re.compile(
-        r'\b(' + '|'.join(re.escape(tag) for tag in tags) + r')\b',
-        re.IGNORECASE
+        r"\b(" + "|".join(re.escape(tag) for tag in tags) + r")\b", re.IGNORECASE
     )
 
     for file_path in workspace.rglob("*"):
@@ -269,19 +310,21 @@ def search_todos_python(
                             tag = match.group(1).upper()
                             col_num = match.start() + 1
 
-                            before = line[:match.start()].strip()
-                            after = line[match.end():].strip()
-                            after = re.sub(r'^[:\-\s]*', '', after)
+                            before = line[: match.start()].strip()
+                            after = line[match.end() :].strip()
+                            after = re.sub(r"^[:\-\s]*", "", after)
 
-                            todos.append(TodoItem(
-                                file=str(file_path.relative_to(workspace)),
-                                line=line_num,
-                                column=col_num,
-                                tag=tag,
-                                text=line.strip(),
-                                before=before,
-                                after=after
-                            ))
+                            todos.append(
+                                TodoItem(
+                                    file=str(file_path.relative_to(workspace)),
+                                    line=line_num,
+                                    column=col_num,
+                                    tag=tag,
+                                    text=line.strip(),
+                                    before=before,
+                                    after=after,
+                                )
+                            )
             except Exception:
                 continue
 
@@ -295,7 +338,7 @@ def search_todos_tool(
     exclude_patterns: Optional[List[str]] = None,
     include_patterns: Optional[List[str]] = None,
     file_filter: Optional[str] = None,
-    tag_filter: Optional[str] = None
+    tag_filter: Optional[str] = None,
 ) -> str:
     """
     Search for TODO comments in the codebase.
@@ -324,18 +367,14 @@ def search_todos_tool(
         todos = [t for t in todos if t.tag.upper() == tag_filter.upper()]
 
     # Convert to dict for JSON serialization
-    result = {
-        "count": len(todos),
-        "todos": [asdict(todo) for todo in todos]
-    }
+    result = {"count": len(todos), "todos": [asdict(todo) for todo in todos]}
 
     return json.dumps(result, indent=2)
 
 
 @mcp.tool()
 def list_todos_by_tag(
-    workspace_path: Optional[str] = None,
-    tags: Optional[List[str]] = None
+    workspace_path: Optional[str] = None, tags: Optional[List[str]] = None
 ) -> str:
     """
     List all TODOs grouped by tag.
@@ -359,18 +398,14 @@ def list_todos_by_tag(
             grouped[todo.tag] = []
         grouped[todo.tag].append(asdict(todo))
 
-    result = {
-        "total": len(todos),
-        "by_tag": grouped
-    }
+    result = {"total": len(todos), "by_tag": grouped}
 
     return json.dumps(result, indent=2)
 
 
 @mcp.tool()
 def get_todo_statistics(
-    workspace_path: Optional[str] = None,
-    tags: Optional[List[str]] = None
+    workspace_path: Optional[str] = None, tags: Optional[List[str]] = None
 ) -> str:
     """
     Get statistics about TODOs in the codebase.
@@ -402,7 +437,7 @@ def get_todo_statistics(
         "total": len(todos),
         "by_tag": tag_counts,
         "files_with_todos": len(file_counts),
-        "top_files": [{"file": f, "count": c} for f, c in top_files]
+        "top_files": [{"file": f, "count": c} for f, c in top_files],
     }
 
     return json.dumps(result, indent=2)
@@ -413,7 +448,7 @@ def export_todos(
     workspace_path: Optional[str] = None,
     output_file: Optional[str] = None,
     format: str = "json",
-    tags: Optional[List[str]] = None
+    tags: Optional[List[str]] = None,
 ) -> str:
     """
     Export TODOs to a file.
@@ -454,7 +489,7 @@ def export_todos(
         raise ValueError(f"Invalid output path: {output_file} - {e}")
 
     # Prevent writing to sensitive locations
-    sensitive_paths = ['/etc', '/usr', '/bin', '/sbin', '/var', '/sys', '/proc']
+    sensitive_paths = ["/etc", "/usr", "/bin", "/sbin", "/var", "/sys", "/proc"]
     output_str = str(output_resolved)
     if any(output_str.startswith(sp) for sp in sensitive_paths):
         raise ValueError(f"Output path in restricted location: {output_file}")
@@ -476,16 +511,15 @@ def export_todos(
             for tag, items in sorted(grouped.items()):
                 f.write(f"## {tag} ({len(items)})\n\n")
                 for todo in items:
-                    f.write(f"- **{todo.file}:{todo.line}** - {todo.after or '(no description)'}\n")
+                    f.write(
+                        f"- **{todo.file}:{todo.line}** - {todo.after or '(no description)'}\n"
+                    )
                 f.write("\n")
 
         return f"Exported {len(todos)} TODOs to {output_file} in Markdown format"
     else:
         # JSON format
-        data = {
-            "total": len(todos),
-            "todos": [asdict(todo) for todo in todos]
-        }
+        data = {"total": len(todos), "todos": [asdict(todo) for todo in todos]}
 
         with open(output_path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2)
