@@ -59,7 +59,7 @@
     "@sentry/cli": "^2.58.2",
     "@sentry/nuxt": "^8.55.0",
     "@sentry/tracing": "^7.120.4",
-    "@sentry/vue": "^10.27.0",
+    "@sentry/vue": "^10.29.0",
     "algoliasearch": "^5.45.0",
     "apexcharts": "^5.3.6",
     "chart.js": "^4.5.1",
