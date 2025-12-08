@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "todo-tree": {
+      "command": "python",
+      "args": ["todo_mcp.py"],
+      "cwd": "D:\\Nuxt Projects\\MatLab\\todo-mcp-server"
+    }
+  }
+}

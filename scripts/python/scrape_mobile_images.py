@@ -38,7 +38,28 @@ class MobileImageScraper:
             output_dir: Directory to save images
             delay: Delay between requests (seconds)
         """
-        self.output_dir = Path(output_dir)
+        # SECURITY: Validate and sanitize output_dir BEFORE creating Path object
+        # First check for path traversal sequences in the input string
+        if '..' in output_dir:
+            raise ValueError(f"Output directory contains path traversal: {output_dir}")
+
+        # Validate path would be within working directory before creating Path
+        import os
+        try:
+            cwd = os.getcwd()
+            # Resolve path without creating Path object first
+            abs_output = os.path.abspath(os.path.join(cwd, output_dir))
+            if not abs_output.startswith(os.path.abspath(cwd)):
+                raise ValueError(f"Output directory must be within current working directory: {output_dir}")
+        except Exception as e:
+            raise ValueError(f"Invalid output directory: {output_dir} - {e}")
+
+        # Now safe to create Path object after validation
+        output_path = Path(output_dir)
+        resolved = output_path.resolve()
+
+        # Use resolved path for all operations
+        self.output_dir = resolved
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.delay = delay
         self.session = requests.Session()
@@ -247,9 +268,57 @@ class MobileImageScraper:
         # This is a placeholder - Pixabay requires API key
         return []
 
+    def _validate_url(self, url: str) -> bool:
+        """
+        Validate URL to prevent SSRF attacks
+        Returns True if URL is safe, False otherwise
+        """
+        try:
+            from urllib.parse import urlparse
+            parsed = urlparse(url)
+
+            # Only allow http and https schemes
+            if parsed.scheme not in ['http', 'https']:
+                return False
+
+            # Block localhost and private IP ranges
+            hostname = parsed.hostname
+            if not hostname:
+                return False
+
+            # Block localhost variations
+            localhost_variants = ['localhost', '127.0.0.1', '0.0.0.0', '::1']
+            if hostname.lower() in localhost_variants:
+                return False
+
+            # Block private IP ranges
+            if hostname.startswith('10.') or hostname.startswith('192.168.') or hostname.startswith('172.'):
+                # More specific check for 172.16-31.x.x
+                parts = hostname.split('.')
+                if len(parts) >= 2:
+                    try:
+                        second_octet = int(parts[1])
+                        if parts[0] == '172' and 16 <= second_octet <= 31:
+                            return False
+                    except ValueError:
+                        pass
+
+            # Block link-local addresses
+            if hostname.startswith('169.254.'):
+                return False
+
+            return True
+        except Exception:
+            return False
+
     def fetch_image(self, url: str, save_path: Path) -> bool:
         """Download and save an image from URL"""
         try:
+            # SECURITY: Validate URL to prevent SSRF attacks
+            if not self._validate_url(url):
+                print(f"    [!] Blocked potentially unsafe URL: {url}")
+                return False
+
             response = self.session.get(url, timeout=10, stream=True)
             response.raise_for_status()
 
@@ -258,13 +327,17 @@ class MobileImageScraper:
             if not content_type.startswith('image/'):
                 return False
 
+            # SECURITY: Use resolved path for file operations
+            save_path_resolved = save_path.resolve()
+            # Verify it's still within expected directory (already validated in caller)
+
             # Save image
-            with open(save_path, 'wb') as f:
+            with open(save_path_resolved, 'wb') as f:
                 for chunk in response.iter_content(chunk_size=8192):
                     f.write(chunk)
 
             # Verify file was created and has content
-            if save_path.exists() and save_path.stat().st_size > 0:
+            if save_path_resolved.exists() and save_path_resolved.stat().st_size > 0:
                 return True
             return False
 
@@ -276,11 +349,18 @@ class MobileImageScraper:
         """Load existing scraping progress from JSON file"""
         progress_file = self.output_dir / "scraping_progress.json"
 
-        if not progress_file.exists():
+        # SECURITY: Validate progress_file is within output_dir
+        progress_resolved = progress_file.resolve()
+        output_resolved = self.output_dir.resolve()
+        if not str(progress_resolved).startswith(str(output_resolved)):
+            print(f"[!] Security: Progress file outside output directory")
+            return {}
+
+        if not progress_resolved.exists():
             return {}
 
         try:
-            with open(progress_file, 'r', encoding='utf-8') as f:
+            with open(progress_resolved, 'r', encoding='utf-8') as f:
                 data = json.load(f)
                 return data.get('models', {})
         except Exception as e:
@@ -346,7 +426,41 @@ class MobileImageScraper:
 
         # Check existing files and determine how many we need
         sanitized_name = self.sanitize_filename(model_name)
+
+        # SECURITY: Additional validation to prevent path traversal
+        # Ensure sanitized_name doesn't contain path separators or traversal sequences
+        if '..' in sanitized_name or '/' in sanitized_name or '\\' in sanitized_name:
+            print(f"  [!] Security: Invalid model name detected: {model_name}")
+            return {
+                'model': model_name,
+                'image_urls': [],
+                'local_paths': [],
+                'success_count': 0
+            }
+
         model_dir = self.output_dir / sanitized_name
+
+        # SECURITY: Validate that model_dir is still within output_dir after path construction
+        try:
+            model_dir_resolved = model_dir.resolve()
+            output_dir_resolved = self.output_dir.resolve()
+            if not str(model_dir_resolved).startswith(str(output_dir_resolved)):
+                print(f"  [!] Security: Model directory outside output directory: {model_name}")
+                return {
+                    'model': model_name,
+                    'image_urls': [],
+                    'local_paths': [],
+                    'success_count': 0
+                }
+        except Exception as e:
+            print(f"  [!] Security: Error validating model directory: {e}")
+            return {
+                'model': model_name,
+                'image_urls': [],
+                'local_paths': [],
+                'success_count': 0
+            }
+
         model_dir.mkdir(exist_ok=True)
 
         # Verify existing files and count valid ones
@@ -405,7 +519,24 @@ class MobileImageScraper:
                 file_ext = 'jpg'
 
             filename = f"{sanitized_name}_{image_index}.{file_ext}"
+
+            # SECURITY: Validate filename to prevent path traversal
+            if '..' in filename or '/' in filename or '\\' in filename:
+                print(f"    [!] Security: Invalid filename detected: {filename}")
+                continue
+
             save_path = model_dir / filename
+
+            # SECURITY: Final validation that save_path is within model_dir
+            try:
+                save_path_resolved = save_path.resolve()
+                model_dir_resolved = model_dir.resolve()
+                if not str(save_path_resolved).startswith(str(model_dir_resolved)):
+                    print(f"    [!] Security: Save path outside model directory: {filename}")
+                    continue
+            except Exception as e:
+                print(f"    [!] Security: Error validating save path: {e}")
+                continue
 
             # Skip if already exists
             if save_path.exists():
@@ -420,7 +551,8 @@ class MobileImageScraper:
 
             print(f"    [↓] Downloading image {downloaded + 1}/{needed}...")
 
-            if self.fetch_image(url, save_path):
+            # Use resolved path for fetch_image
+            if self.fetch_image(url, save_path_resolved):
                 print(f"    [OK] Saved: {filename}")
                 results['image_urls'].append(url)
                 results['local_paths'].append(str(save_path.relative_to('public')))
@@ -577,11 +709,18 @@ class MobileImageScraper:
         """Save scraping progress to JSON file (merges with existing if present)"""
         progress_file = self.output_dir / "scraping_progress.json"
 
+        # SECURITY: Validate progress_file is within output_dir
+        progress_resolved = progress_file.resolve()
+        output_resolved = self.output_dir.resolve()
+        if not str(progress_resolved).startswith(str(output_resolved)):
+            print(f"[!] Security: Progress file outside output directory")
+            return
+
         # Load existing progress to merge
         existing_data = {}
-        if progress_file.exists():
+        if progress_resolved.exists():
             try:
-                with open(progress_file, 'r', encoding='utf-8') as f:
+                with open(progress_resolved, 'r', encoding='utf-8') as f:
                     existing = json.load(f)
                     existing_data = existing.get('models', {})
             except (FileNotFoundError, json.JSONDecodeError, IOError):
@@ -607,7 +746,8 @@ class MobileImageScraper:
                 'success_count': data.get('success_count', 0)
             }
 
-        with open(progress_file, 'w', encoding='utf-8') as f:
+        # Use validated resolved path (progress_resolved was validated earlier)
+        with open(progress_resolved, 'w', encoding='utf-8') as f:
             json.dump({
                 'total_scraped': total_scraped,
                 'models': json_data

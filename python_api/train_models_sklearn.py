@@ -954,6 +954,9 @@ def train_brand_model(data, max_iter=1000):
 
     print(f"\nTest Accuracy: {accuracy:.4f} ({accuracy*100:.2f}%)")
 
+    # SECURITY NOTE: pickle.dump() is used here for serialization (saving models).
+    # These files should ONLY be loaded using safe_load_pickle() from pickle_security module
+    # to prevent arbitrary code execution during deserialization.
     with open(MODELS_DIR / "brand_classifier_sklearn.pkl", "wb") as f:
         pickle.dump(best_model, f)
     with open(MODELS_DIR / "brand_classifier_scalers.pkl", "wb") as f:

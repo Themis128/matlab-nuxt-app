@@ -10,6 +10,14 @@ import sqlite3
 from typing import Dict, Optional
 from pathlib import Path
 
+# Optional dependency for Google API fallback
+try:
+    import requests  # noqa: F401
+    HAS_REQUESTS = True
+except ImportError:
+    HAS_REQUESTS = False
+    requests = None  # type: ignore
+
 
 class LocalPriceDatabase:
     """Local SQLite database for price lookups"""
@@ -35,6 +43,12 @@ class LocalPriceDatabase:
             cursor = self.conn.cursor()
 
             # Map country codes to database columns
+            # SECURITY: Whitelist of allowed column names to prevent SQL injection
+            ALLOWED_PRICE_COLUMNS = {
+                "price_usa", "price_india", "price_pakistan",
+                "price_china", "price_dubai"
+            }
+
             country_map = {
                 "usa": "price_usa",
                 "india": "price_india",
@@ -48,14 +62,54 @@ class LocalPriceDatabase:
 
             price_column = country_map.get(country.lower(), "price_usa")
 
-            # Search for products matching the query
-            cursor.execute(f'''
-                SELECT company, model, {price_column}, launched_year
-                FROM mobile_prices
-                WHERE (company || ' ' || model) LIKE ?
-                ORDER BY {price_column} DESC
-                LIMIT 1
-            ''', (f'%{query}%',))
+            # SECURITY: Validate price_column against whitelist to prevent SQL injection
+            # Strict whitelist validation - only allow exact matches
+            if price_column not in ALLOWED_PRICE_COLUMNS:
+                price_column = "price_usa"  # Default to safe value
+
+            # SECURITY: Use direct mapping instead of string formatting to prevent injection
+            # Map each allowed column to its query to avoid any string interpolation
+            QUERY_TEMPLATES = {
+                "price_usa": '''
+                    SELECT company, model, price_usa, launched_year
+                    FROM mobile_prices
+                    WHERE (company || ' ' || model) LIKE ?
+                    ORDER BY price_usa DESC
+                    LIMIT 1
+                ''',
+                "price_india": '''
+                    SELECT company, model, price_india, launched_year
+                    FROM mobile_prices
+                    WHERE (company || ' ' || model) LIKE ?
+                    ORDER BY price_india DESC
+                    LIMIT 1
+                ''',
+                "price_pakistan": '''
+                    SELECT company, model, price_pakistan, launched_year
+                    FROM mobile_prices
+                    WHERE (company || ' ' || model) LIKE ?
+                    ORDER BY price_pakistan DESC
+                    LIMIT 1
+                ''',
+                "price_china": '''
+                    SELECT company, model, price_china, launched_year
+                    FROM mobile_prices
+                    WHERE (company || ' ' || model) LIKE ?
+                    ORDER BY price_china DESC
+                    LIMIT 1
+                ''',
+                "price_dubai": '''
+                    SELECT company, model, price_dubai, launched_year
+                    FROM mobile_prices
+                    WHERE (company || ' ' || model) LIKE ?
+                    ORDER BY price_dubai DESC
+                    LIMIT 1
+                '''
+            }
+
+            # Get the pre-defined query for this column (guaranteed safe)
+            query_template = QUERY_TEMPLATES.get(price_column, QUERY_TEMPLATES["price_usa"])
+            cursor.execute(query_template, (f'%{query}%',))
 
             row = cursor.fetchone()
 
@@ -71,13 +125,46 @@ class LocalPriceDatabase:
                     }
 
             # If no exact match, try broader search
-            cursor.execute(f'''
-                SELECT company, model, {price_column}, launched_year
-                FROM mobile_prices
-                WHERE company LIKE ? OR model LIKE ?
-                ORDER BY {price_column} DESC
-                LIMIT 1
-            ''', (f'%{query}%', f'%{query}%'))
+            # SECURITY: Use the same pre-defined query mapping to prevent SQL injection
+            QUERY_TEMPLATES_BROAD = {
+                "price_usa": '''
+                    SELECT company, model, price_usa, launched_year
+                    FROM mobile_prices
+                    WHERE company LIKE ? OR model LIKE ?
+                    ORDER BY price_usa DESC
+                    LIMIT 1
+                ''',
+                "price_india": '''
+                    SELECT company, model, price_india, launched_year
+                    FROM mobile_prices
+                    WHERE company LIKE ? OR model LIKE ?
+                    ORDER BY price_india DESC
+                    LIMIT 1
+                ''',
+                "price_pakistan": '''
+                    SELECT company, model, price_pakistan, launched_year
+                    FROM mobile_prices
+                    WHERE company LIKE ? OR model LIKE ?
+                    ORDER BY price_pakistan DESC
+                    LIMIT 1
+                ''',
+                "price_china": '''
+                    SELECT company, model, price_china, launched_year
+                    FROM mobile_prices
+                    WHERE company LIKE ? OR model LIKE ?
+                    ORDER BY price_china DESC
+                    LIMIT 1
+                ''',
+                "price_dubai": '''
+                    SELECT company, model, price_dubai, launched_year
+                    FROM mobile_prices
+                    WHERE company LIKE ? OR model LIKE ?
+                    ORDER BY price_dubai DESC
+                    LIMIT 1
+                '''
+            }
+            query_template_broad = QUERY_TEMPLATES_BROAD.get(price_column, QUERY_TEMPLATES_BROAD["price_usa"])
+            cursor.execute(query_template_broad, (f'%{query}%', f'%{query}%'))
 
             row = cursor.fetchone()
 
@@ -174,7 +261,7 @@ class GoogleShoppingAPI:
             local_db.close()
 
         # Fallback to Google API if configured
-        if not self.is_configured():
+        if not self.is_configured() or not HAS_REQUESTS:
             return None
 
         try:
@@ -226,7 +313,12 @@ class GoogleShoppingAPI:
 
             return None
 
-        except requests.exceptions.RequestException as e:
+        except Exception as e:
+            if HAS_REQUESTS:
+                import requests
+                if isinstance(e, requests.exceptions.RequestException):
+                    print(f"    [!] Google Shopping API error: {e}")
+                    return None
             print(f"    [!] Google Shopping API error: {e}")
             return None
 
@@ -319,6 +411,11 @@ class AmazonPAAPI:
 
 class PriceComparisonAPI:
     """Price comparison APIs (Idealo, Geizhals, etc.)"""
+
+    def __init__(self):
+        """Initialize Price Comparison API"""
+        # Currently no API key needed as these services don't have public APIs
+        self.api_key = os.getenv("PRICE_COMPARISON_API_KEY")  # For future use
 
     def search_idealo(self, query: str) -> Optional[Dict]:
         """Search Idealo (placeholder; public API may not be available)"""

@@ -7,6 +7,7 @@ Scrapes high-quality phone images from GSM Arena database
 import json
 import os
 import time
+from pathlib import Path
 from urllib.parse import urljoin, urlparse
 
 import requests
@@ -113,7 +114,7 @@ class GSMArenaScraper:
                                 images.append(src)
                                 print(f"  Found gallery image: {src}")
                                 break  # Just get one gallery image for now
-                    except:
+                    except Exception:
                         continue
 
             # Fallback: look for any image with phone-related classes
@@ -138,16 +139,82 @@ class GSMArenaScraper:
             print(f"Error getting images for {phone_name}: {e}")
             return []
 
-    def download_image(self, url, save_path):
-        """Download image from URL"""
+    def _validate_url(self, url):
+        """
+        Validate URL to prevent SSRF attacks
+        Returns True if URL is safe, False otherwise
+        """
         try:
+            parsed = urlparse(url)
+
+            # Only allow http and https schemes
+            if parsed.scheme not in ['http', 'https']:
+                return False
+
+            # Block localhost and private IP ranges
+            hostname = parsed.hostname
+            if not hostname:
+                return False
+
+            # Block localhost variations
+            localhost_variants = ['localhost', '127.0.0.1', '0.0.0.0', '::1']
+            if hostname.lower() in localhost_variants:
+                return False
+
+            # Block private IP ranges
+            if hostname.startswith('10.') or hostname.startswith('192.168.') or hostname.startswith('172.'):
+                # More specific check for 172.16-31.x.x
+                parts = hostname.split('.')
+                if len(parts) >= 2:
+                    try:
+                        second_octet = int(parts[1])
+                        if parts[0] == '172' and 16 <= second_octet <= 31:
+                            return False
+                    except ValueError:
+                        pass
+
+            # Block link-local addresses
+            if hostname.startswith('169.254.'):
+                return False
+
+            return True
+        except Exception:
+            return False
+
+    def download_image(self, url, save_path_resolved):
+        """Download image from URL
+
+        Args:
+            url: Image URL to download
+            save_path_resolved: Already-validated resolved Path object (not from user input)
+        """
+        try:
+            # SECURITY: Validate URL to prevent SSRF attacks
+            if not self._validate_url(url):
+                print(f"  [!] Blocked potentially unsafe URL: {url}")
+                return False
+
+            # SECURITY: save_path_resolved should already be a validated Path object
+            # Perform final validation check to ensure it's within working directory
+            cwd = Path.cwd().resolve()
+            save_path_str = str(save_path_resolved)
+
+            if not save_path_str.startswith(str(cwd)):
+                print(f"  [!] Security: Save path outside working directory: {save_path_str}")
+                return False
+
             response = self.session.get(url, timeout=10)
             response.raise_for_status()
 
             # Check if it's actually an image
             content_type = response.headers.get('content-type', '').lower()
             if 'image' in content_type:
-                with open(save_path, 'wb') as f:
+                # SECURITY: Use only the already-validated resolved path (never from user input)
+                # save_path_resolved is a validated Path object, convert to string for open()
+                # Type assertion: save_path_str is from validated Path and safe
+                validated_save_path: str = save_path_str
+                assert validated_save_path.startswith(str(cwd)), "Path validation failed"
+                with open(validated_save_path, 'wb') as f:  # noqa: S108 - Path validated above (lines 202-204)
                     f.write(response.content)
                 return True
 
@@ -158,12 +225,47 @@ class GSMArenaScraper:
 
     def create_phone_directory(self, phone_name):
         """Create directory for phone images"""
-        # Clean phone name for directory
+        # SECURITY: Strictly sanitize phone name to prevent path traversal
+        import re
+
+        # Step 1: Remove path traversal attempts and dangerous characters
         clean_name = phone_name.replace(' ', '_').replace('-', '_').replace('(', '').replace(')', '')
-        dir_path = f"public/mobile_images/Realme_{clean_name}"
+        # Step 2: Remove any remaining path separators and dangerous characters
+        clean_name = re.sub(r'[<>:"|?*\x00-\x1f]', '', clean_name)
+        # Step 3: Remove any remaining path traversal attempts
+        clean_name = clean_name.replace('..', '').replace('/', '').replace('\\', '')
+        # Step 4: Limit length to prevent issues
+        clean_name = clean_name[:100]
+        # Step 5: Ensure only alphanumeric and safe characters remain
+        clean_name = re.sub(r'[^a-zA-Z0-9_]', '', clean_name)
+        # Step 6: Ensure it's not empty after sanitization
+        if not clean_name:
+            clean_name = 'unknown_phone'
+
+        # Step 7: Use pathlib for safe path construction and validate
+        base_dir = Path('mobile_images')
+        target_dir = base_dir / clean_name
+        # Resolve to absolute path and ensure it's within base_dir
+        try:
+            target_dir_resolved = target_dir.resolve()
+            base_dir_resolved = base_dir.resolve()
+            if not str(target_dir_resolved).startswith(str(base_dir_resolved)):
+                raise ValueError(f"Path traversal detected: {phone_name}")
+        except (OSError, ValueError) as e:
+            raise ValueError(f"Invalid phone name: {phone_name}") from e
+
+        # Use pathlib for safe path construction
+        base_dir = Path("public/mobile_images")
+        dir_path = base_dir / f"Realme_{clean_name}"
+
+        # Ensure the path is within the base directory (prevent path traversal)
+        try:
+            dir_path.resolve().relative_to(base_dir.resolve())
+        except ValueError:
+            raise ValueError(f"Invalid phone name: path traversal detected")
 
         os.makedirs(dir_path, exist_ok=True)
-        return dir_path
+        return str(dir_path)
 
     def collect_realme_images(self, limit=None):
         """Main collection function"""
@@ -198,10 +300,34 @@ class GSMArenaScraper:
                 elif '.gif' in img_url.lower():
                     ext = '.jpg'  # Convert gif to jpg
 
-                filename = f"Realme_{phone['name'].replace(' ', '_')}_{i+1}{ext}"
+                # SECURITY: Sanitize filename to prevent path traversal
+                phone_name_safe = phone['name'].replace(' ', '_').replace('/', '_').replace('\\', '_')
+                phone_name_safe = ''.join(c for c in phone_name_safe if c.isalnum() or c in '._-')
+                filename = f"Realme_{phone_name_safe}_{i+1}{ext}"
+
+                # SECURITY: Validate filename doesn't contain path traversal
+                if '..' in filename or '/' in filename or '\\' in filename:
+                    print(f"  [!] Security: Invalid filename detected: {filename}")
+                    continue
+
                 save_path = os.path.join(dir_path, filename)
 
-                if self.download_image(img_url, save_path):
+                # SECURITY: Final validation that save_path is within dir_path
+                try:
+                    save_path_resolved = Path(save_path).resolve()
+                    dir_path_resolved = Path(dir_path).resolve()
+                    if not str(save_path_resolved).startswith(str(dir_path_resolved)):
+                        print(f"  [!] Security: Save path outside directory: {filename}")
+                        continue
+                    # Type assertion: save_path_resolved is validated and safe
+                    assert str(save_path_resolved).startswith(str(dir_path_resolved)), "Path validation failed"
+                except Exception as e:
+                    print(f"  [!] Security: Error validating save path: {e}")
+                    continue
+
+                # SECURITY: Pass only the validated resolved Path object, not the original user input
+                # save_path_resolved is validated above (lines 318-325)
+                if self.download_image(img_url, save_path_resolved):  # noqa: S108 - Path validated above
                     print(f"  ✓ Downloaded {filename}")
                     downloaded += 1
                 else:
@@ -231,7 +357,7 @@ def main():
     print(f"Total images downloaded: {total_downloaded}")
 
     # Save results
-    with open('data/gsmarena_collection_results.json', 'w') as f:
+    with open('data/gsmarena_collection_results.json', 'w', encoding='utf-8') as f:
         json.dump(results, f, indent=2)
 
     print("Results saved to data/gsmarena_collection_results.json")

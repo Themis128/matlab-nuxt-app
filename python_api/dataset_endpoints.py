@@ -144,6 +144,8 @@ class ModelResponse(BaseModel):
 class DatasetStatsResponse(BaseModel):
     """Response model for dataset statistics"""
 
+    model_config = ConfigDict(protected_namespaces=(), from_attributes=True)
+
     total_models: int
     total_companies: int
     price_range: Dict[str, float]
@@ -661,7 +663,8 @@ async def search_models(
         if offset >= total_count and total_count > 0:
             offset = max(0, total_count - limit)
 
-            paginated_df = filtered_df.iloc[slice(offset, offset + limit)] if total_count > 0 else pd.DataFrame()
+        # Apply pagination
+        paginated_df = filtered_df.iloc[slice(offset, offset + limit)] if total_count > 0 else pd.DataFrame()
 
         # Convert to response format
         models = []

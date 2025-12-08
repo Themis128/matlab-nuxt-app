@@ -67,8 +67,28 @@ function viewMatFileWithNode(matFileReader, matPath, outputPath) {
     const jsonOutput = JSON.stringify(result, null, 2);
 
     if (outputPath) {
-      fs.writeFileSync(outputPath, jsonOutput, 'utf-8');
-      console.log(`✓ Output saved to: ${outputPath}`);
+      // SECURITY: Validate outputPath to prevent arbitrary file write
+      const resolvedPath = path.resolve(outputPath);
+      const cwd = process.cwd();
+
+      // Ensure the resolved path is within the current working directory
+      if (!resolvedPath.startsWith(cwd)) {
+        throw new Error(`Invalid output path: path must be within current working directory`);
+      }
+
+      // Block path traversal attempts
+      if (outputPath.includes('..') || outputPath.includes('~')) {
+        throw new Error(`Invalid output path: path traversal not allowed`);
+      }
+
+      // Ensure parent directory exists
+      const parentDir = path.dirname(resolvedPath);
+      if (!fs.existsSync(parentDir)) {
+        fs.mkdirSync(parentDir, { recursive: true });
+      }
+
+      fs.writeFileSync(resolvedPath, jsonOutput, 'utf-8');
+      console.log(`✓ Output saved to: ${resolvedPath}`);
     } else {
       console.log('\n=== JSON Output ===\n');
       console.log(jsonOutput);

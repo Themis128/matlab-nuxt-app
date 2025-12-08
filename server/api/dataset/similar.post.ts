@@ -47,7 +47,7 @@ interface SimilarRequest {
   limit?: number;
 }
 
-export default defineEventHandler(async (event): Promise<SimilarResponse> => {
+export default defineEventHandler(async (event: any): Promise<SimilarResponse> => {
   try {
     const body = await readBody<SimilarRequest>(event);
 

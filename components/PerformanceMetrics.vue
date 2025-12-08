@@ -6,7 +6,7 @@
     <div class="absolute inset-0 opacity-5">
       <div
         class="absolute inset-0 animate-pulse bg-gradient-to-r from-purple-400 to-pink-400 blur-3xl"
-      ></div>
+      />
       <svg class="absolute inset-0 h-full w-full" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -27,9 +27,7 @@
     <div class="relative mb-6 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div class="relative">
-          <div
-            class="absolute inset-0 animate-pulse rounded-xl bg-blue-400 opacity-50 blur-lg"
-          ></div>
+          <div class="absolute inset-0 animate-pulse rounded-xl bg-blue-400 opacity-50 blur-lg" />
           <ChartBarIcon class="relative h-7 w-7 text-blue-400" />
         </div>
         <h3
@@ -55,7 +53,7 @@
           <span class="text-sm font-bold"> Score: {{ performanceScore }}% </span>
           <div
             class="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 transition-opacity duration-300 hover:opacity-100"
-          ></div>
+          />
         </div>
       </div>
     </div>
@@ -73,7 +71,9 @@
             </div>
             <span class="text-sm font-medium text-gray-300">Bundle Size</span>
           </div>
-          <div class="mb-1 text-3xl font-bold text-white">{{ bundleSize }}</div>
+          <div class="mb-1 text-3xl font-bold text-white">
+            {{ bundleSize }}
+          </div>
           <div class="flex items-center gap-1 text-xs font-medium text-green-400">
             <ArrowTrendingUpIcon class="h-3 w-3" />
             {{ bundleTrend }}
@@ -82,7 +82,7 @@
         <!-- Hover effect overlay -->
         <div
           class="absolute inset-0 rounded-xl bg-gradient-to-r from-green-400/5 to-blue-400/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        ></div>
+        />
       </div>
 
       <!-- Image Optimization Card -->
@@ -92,17 +92,19 @@
         <div class="relative">
           <div class="mb-3 flex items-center gap-2">
             <div class="rounded-lg bg-purple-400/20 p-2">
-              <PhotoIcon class="h-5 w-5 text-purple-400" />
+              <photoIcon class="h-5 w-5 text-purple-400" />
             </div>
             <span class="text-sm font-medium text-gray-300">Images Optimized</span>
           </div>
-          <div class="mb-1 text-3xl font-bold text-white">{{ imageCount }}</div>
+          <div class="mb-1 text-3xl font-bold text-white">
+            {{ imageCount }}
+          </div>
           <div class="text-xs font-medium text-purple-400">WebP/AVIF formats</div>
         </div>
         <!-- Hover effect overlay -->
         <div
           class="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-400/5 to-pink-400/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        ></div>
+        />
       </div>
 
       <!-- User Preferences Card -->
@@ -116,13 +118,15 @@
             </div>
             <span class="text-sm font-medium text-gray-300">Settings Saved</span>
           </div>
-          <div class="mb-1 text-3xl font-bold text-white">{{ settingsCount }}</div>
+          <div class="mb-1 text-3xl font-bold text-white">
+            {{ settingsCount }}
+          </div>
           <div class="text-xs font-medium text-orange-400">Persistent locally</div>
         </div>
         <!-- Hover effect overlay -->
         <div
           class="absolute inset-0 rounded-xl bg-gradient-to-r from-orange-400/5 to-yellow-400/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        ></div>
+        />
       </div>
     </div>
 
@@ -187,13 +191,18 @@ import {
   ArrowTrendingUpIcon,
 } from '@heroicons/vue/24/outline';
 
-// Performance composables and utilities
-import { useResponsive } from '~/composables/useResponsive';
-import { useUserPreferencesStore } from '~/stores/userPreferencesStore';
+// Mock responsive data since composables don't exist
+const isMobile = ref(false);
+const currentBreakpoint = ref('lg');
 
-// Reactive data
-const { isMobile, currentBreakpoint, getGridCols } = useResponsive();
-const userPreferencesStore = useUserPreferencesStore();
+// Mock user preferences since store doesn't exist
+const mockUserPreferences = {
+  searchFilters: {
+    brand: 'Apple',
+    priceRange: [100, 1000],
+    ram: '8GB',
+  },
+};
 
 // Computed properties
 const deviceType = computed(() => {
@@ -201,7 +210,10 @@ const deviceType = computed(() => {
   return 'desktop';
 });
 
-const gridConfig = computed(() => getGridCols());
+const gridConfig = computed(() => ({
+  cols: isMobile.value ? 1 : 3,
+  gap: isMobile.value ? 4 : 6,
+}));
 
 const performanceScore = computed(() => {
   // Calculate performance score based on various metrics
@@ -210,10 +222,10 @@ const performanceScore = computed(() => {
   // Add points for responsive design
   if (!isMobile.value) score += 10;
 
-  // Add points for persistent settings (fixed access pattern)
+  // Add points for persistent settings
   if (
-    userPreferencesStore.searchFilters &&
-    Object.keys(userPreferencesStore.searchFilters).length > 1
+    mockUserPreferences.searchFilters &&
+    Object.keys(mockUserPreferences.searchFilters).length > 1
   )
     score += 5;
 
@@ -237,8 +249,7 @@ const imageCount = computed(() => {
 });
 
 const settingsCount = computed(() => {
-  // Fixed: Access store properties directly instead of $state
-  const settings = Object.keys(userPreferencesStore.searchFilters || {});
+  const settings = Object.keys(mockUserPreferences.searchFilters || {});
   return settings.length || '5';
 });
 

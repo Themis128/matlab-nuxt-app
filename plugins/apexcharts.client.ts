@@ -6,7 +6,7 @@ import VueApexCharts from 'vue3-apexcharts';
  */
 export default defineNuxtPlugin({
   name: 'apexcharts',
-  setup(nuxtApp) {
+  setup(nuxtApp: any) {
     nuxtApp.vueApp.use(VueApexCharts);
   },
 });

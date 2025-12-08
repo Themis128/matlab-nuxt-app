@@ -70,6 +70,13 @@ if [ ! -d "$PROJECT_DIR" ]; then
     log_info "Cloning repository..."
     # Repository URL - update this with your actual repository URL
     REPO_URL="${GIT_REPO_URL:-https://github.com/Themis128/matlab-nuxt-app.git}"
+    # SECURITY: Validate REPO_URL to prevent command injection
+    # Only allow HTTPS/SSH GitHub URLs
+    if [[ ! "$REPO_URL" =~ ^https://github\.com/[a-zA-Z0-9\-_]+/[a-zA-Z0-9\-_]+\.git$ ]] && \
+       [[ ! "$REPO_URL" =~ ^git@github\.com:[a-zA-Z0-9\-_]+/[a-zA-Z0-9\-_]+\.git$ ]]; then
+        log_error "Invalid repository URL format. Only GitHub HTTPS/SSH URLs are allowed."
+        exit 1
+    fi
     git clone "$REPO_URL" "$PROJECT_DIR"
 else
     log_info "Updating repository..."

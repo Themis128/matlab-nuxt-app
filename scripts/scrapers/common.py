@@ -21,27 +21,27 @@ logger = logging.getLogger(__name__)
 
 class RateLimiter:
     """Rate limiter for API/scraping requests."""
-    
+
     def __init__(self, min_delay: float = 1.0, max_delay: float = 3.0):
         self.min_delay = min_delay
         self.max_delay = max_delay
         self.last_request_time = 0
-    
+
     def wait(self):
         """Wait before next request."""
         elapsed = time.time() - self.last_request_time
         delay = random.uniform(self.min_delay, self.max_delay)
-        
+
         if elapsed < delay:
             time.sleep(delay - elapsed)
-        
+
         self.last_request_time = time.time()
 
 
 def rate_limited(min_delay: float = 1.0, max_delay: float = 3.0):
     """Decorator to rate limit function calls."""
     limiter = RateLimiter(min_delay, max_delay)
-    
+
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -66,18 +66,18 @@ def get_user_agent() -> str:
 def fetch_url(url: str, headers: Optional[Dict[str, str]] = None, timeout: int = 30) -> Optional[requests.Response]:
     """
     Fetch URL with rate limiting and error handling.
-    
+
     Args:
         url: URL to fetch
         headers: Optional custom headers
         timeout: Request timeout in seconds
-    
+
     Returns:
         Response object or None on failure
     """
     if headers is None:
         headers = {'User-Agent': get_user_agent()}
-    
+
     try:
         logger.info(f"Fetching: {url}")
         response = requests.get(url, headers=headers, timeout=timeout)
@@ -91,10 +91,10 @@ def fetch_url(url: str, headers: Optional[Dict[str, str]] = None, timeout: int =
 def parse_html(html: str) -> Optional[BeautifulSoup]:
     """
     Parse HTML content.
-    
+
     Args:
         html: HTML string
-    
+
     Returns:
         BeautifulSoup object or None
     """
@@ -115,20 +115,20 @@ def clean_text(text: str) -> str:
 def extract_number(text: str) -> Optional[float]:
     """
     Extract first number from text.
-    
+
     Args:
         text: Text containing number
-    
+
     Returns:
         Extracted number or None
     """
     import re
     if not text:
         return None
-    
+
     # Remove commas and spaces
     text = text.replace(',', '').replace(' ', '')
-    
+
     # Find first number (int or float)
     match = re.search(r'-?\d+\.?\d*', text)
     if match:
@@ -142,24 +142,24 @@ def extract_number(text: str) -> Optional[float]:
 def normalize_phone_name(name: str) -> str:
     """
     Normalize phone model name for matching.
-    
+
     Args:
         name: Phone model name
-    
+
     Returns:
         Normalized name
     """
     # Convert to lowercase
     name = name.lower()
-    
+
     # Remove common suffixes
     suffixes = ['5g', '4g', 'lte', 'dual sim', 'global', 'cn', 'us', 'eu']
     for suffix in suffixes:
         name = name.replace(suffix, '')
-    
+
     # Remove extra spaces
     name = ' '.join(name.split())
-    
+
     return name.strip()
 
 
@@ -186,14 +186,31 @@ def save_json_cache(data: Dict[str, Any], filename: str):
     """Save data to JSON cache file."""
     import json
     import os
-    
-    cache_dir = os.path.join('data', 'scraper_cache')
-    os.makedirs(cache_dir, exist_ok=True)
-    
-    filepath = os.path.join(cache_dir, filename)
+    from pathlib import Path
+
+    # SECURITY: Validate filename to prevent path traversal and arbitrary file write
+    # Only allow alphanumeric, dash, underscore, and dot characters in filename
+    if not all(c.isalnum() or c in ('-', '_', '.') for c in filename):
+        raise ValueError(f"Invalid filename: {filename} - contains unsafe characters")
+
+    # Prevent path traversal attacks
+    if '..' in filename or '/' in filename or '\\' in filename:
+        raise ValueError(f"Invalid filename: {filename} - path traversal detected")
+
+    cache_dir = Path('data') / 'scraper_cache'
+    cache_dir.mkdir(parents=True, exist_ok=True)
+
+    # Resolve to absolute path and ensure it's within cache_dir
+    filepath = (cache_dir / filename).resolve()
+    cache_dir_resolved = cache_dir.resolve()
+
+    # SECURITY: Ensure the resolved path is within the cache directory
+    if not str(filepath).startswith(str(cache_dir_resolved)):
+        raise ValueError(f"Invalid filepath: {filepath} - outside cache directory")
+
     with open(filepath, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
-    
+
     logger.info(f"Saved cache to {filepath}")
 
 
@@ -201,12 +218,26 @@ def load_json_cache(filename: str) -> Optional[Dict[str, Any]]:
     """Load data from JSON cache file."""
     import json
     import os
-    
-    filepath = os.path.join('data', 'scraper_cache', filename)
-    
-    if not os.path.exists(filepath):
+    from pathlib import Path
+
+    # SECURITY: Validate filename to prevent path traversal
+    # Only allow alphanumeric, dash, underscore, and dot characters
+    if not filename or not all(c.isalnum() or c in '-_.' for c in filename):
+        raise ValueError(f"Invalid filename: {filename}")
+
+    # Use pathlib for safe path construction
+    cache_dir = Path('data') / 'scraper_cache'
+    filepath = cache_dir / filename
+
+    # SECURITY: Ensure resolved path is within cache directory (prevent path traversal)
+    try:
+        filepath.resolve().relative_to(cache_dir.resolve())
+    except ValueError:
+        raise ValueError(f"Path traversal detected: {filename}")
+
+    if not filepath.exists():
         return None
-    
+
     try:
         with open(filepath, 'r', encoding='utf-8') as f:
             data = json.load(f)

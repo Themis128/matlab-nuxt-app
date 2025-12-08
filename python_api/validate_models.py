@@ -22,6 +22,7 @@ from train_models_sklearn import (  # noqa: E402
     encode_processors,
     load_and_preprocess_data,
 )
+from pickle_security import safe_load_pickle  # noqa: E402
 
 warnings.filterwarnings("ignore")
 
@@ -45,44 +46,22 @@ def load_model(model_name):
     if not all([model_path.exists(), scaler_path.exists(), metadata_path.exists()]):
         return None, None, None
 
-    # Security: Comprehensive validation before loading
-    max_file_size = 500 * 1024 * 1024  # 500MB limit
-    for path in [model_path, scaler_path]:
-        try:
-            if path.stat().st_size > max_file_size:
-                print(f"[WARN] Model file too large: {path} (>500MB)")
-                return None, None, None
-            # Ensure files are in expected directory
-            if not str(path).startswith(str(MODELS_DIR)):
-                print(f"[WARN] Model file not in trusted directory: {path}")
-                return None, None, None
-        except Exception as e:
-            print(f"[WARN] Could not check file {path}: {e}")
-            return None, None, None
-
-    # Load model with validation
+    # Load model with security validation using centralized utility
     try:
-        with open(model_path, "rb") as f:
-            header = f.read(2)
-            # first byte 0x80 indicates a pickle; second byte is protocol version
-            if len(header) < 1 or header[0] != 0x80:
-                print(f"[WARN] Invalid pickle header for model {model_name}: {header!r} (file may be corrupted)")
-                return None, None, None
-            f.seek(0)
-            model = pickle.load(f)
+        model = safe_load_pickle(model_path, MODELS_DIR, max_size=500 * 1024 * 1024)  # 500MB limit
+    except ValueError as e:
+        print(f"[WARN] Security validation failed for model {model_name}: {e}")
+        return None, None, None
     except Exception as e:
         print(f"[WARN] Failed to load model {model_name}: {e}")
         return None, None, None
 
-    # Load scalers with validation
+    # Load scalers with security validation using centralized utility
     try:
-        with open(scaler_path, "rb") as f:
-            header = f.read(2)
-            if len(header) < 1 or header[0] != 0x80:
-                print(f"[WARN] Invalid pickle header for scalers {model_name}: {header!r} (file may be corrupted)")
-                return None, None, None
-            f.seek(0)
-            scalers = pickle.load(f)
+        scalers = safe_load_pickle(scaler_path, MODELS_DIR, max_size=500 * 1024 * 1024)  # 500MB limit
+    except ValueError as e:
+        print(f"[WARN] Security validation failed for scalers {model_name}: {e}")
+        return None, None, None
     except Exception as e:
         print(f"[WARN] Failed to load scalers for {model_name}: {e}")
         return None, None, None

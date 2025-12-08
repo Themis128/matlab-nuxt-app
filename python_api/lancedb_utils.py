@@ -28,6 +28,60 @@ from PIL import Image
 logger = logging.getLogger(__name__)
 
 
+def sanitize_filter_value(value: str) -> str:
+    """
+    Sanitize filter values to prevent injection attacks.
+    Escapes single quotes and removes dangerous characters.
+    """
+    if not isinstance(value, str):
+        return str(value)
+    # Escape single quotes and remove control characters
+    sanitized = value.replace("'", "''").replace("\\", "\\\\")
+    # Remove characters that could be used for injection
+    sanitized = ''.join(c for c in sanitized if c.isprintable() or c.isspace())
+    return sanitized.strip()
+
+
+def sanitize_identifier(identifier: str) -> str:
+    """
+    Sanitize identifiers (like dataset_id, image_id) to prevent injection.
+    Only allows alphanumeric, dash, underscore, and dot characters.
+    """
+    if not isinstance(identifier, str):
+        raise ValueError(f"Invalid identifier type: {type(identifier)}")
+    # Only allow safe characters for identifiers
+    if not all(c.isalnum() or c in ('-', '_', '.') for c in identifier):
+        raise ValueError(f"Invalid identifier format: {identifier}")
+    return identifier
+
+
+def sanitize_filter_value(value: str) -> str:
+    """
+    Sanitize filter values to prevent injection attacks.
+    Escapes single quotes and removes dangerous characters.
+    """
+    if not isinstance(value, str):
+        return str(value)
+    # Escape single quotes and remove control characters
+    sanitized = value.replace("'", "''").replace("\\", "\\\\")
+    # Remove characters that could be used for injection
+    sanitized = ''.join(c for c in sanitized if c.isprintable() or c.isspace())
+    return sanitized.strip()
+
+
+def sanitize_identifier(identifier: str) -> str:
+    """
+    Sanitize identifiers (like dataset_id, image_id) to prevent injection.
+    Only allows alphanumeric, dash, underscore, and dot characters.
+    """
+    if not isinstance(identifier, str):
+        raise ValueError(f"Invalid identifier type: {type(identifier)}")
+    # Only allow safe characters for identifiers
+    if not all(c.isalnum() or c in ('-', '_', '.') for c in identifier):
+        raise ValueError(f"Invalid identifier format: {identifier}")
+    return identifier
+
+
 class OllamaEmbeddings:
     """Ollama-based embeddings using local AI models"""
 
@@ -423,11 +477,14 @@ class LanceDBManager:
 
             if query:
                 # Simple text search in description and filename
-                # Note: LanceDB uses different syntax for string operations
-                conditions.append(f"description LIKE '%{query}%' OR filename LIKE '%{query}%'")
+                # Sanitize query to prevent injection
+                sanitized_query = sanitize_filter_value(query)
+                conditions.append(f"description LIKE '%{sanitized_query}%' OR filename LIKE '%{sanitized_query}%'")
 
             if tags:
-                tag_conditions = [f"'{tag}' in tags" for tag in tags]
+                # SECURITY: Sanitize each tag to prevent injection
+                sanitized_tags = [sanitize_filter_value(str(tag)) for tag in tags]
+                tag_conditions = [f"'{tag}' in tags" for tag in sanitized_tags]
                 conditions.append(f"({' | '.join(tag_conditions)})")
 
             filter_expr = " & ".join(conditions) if conditions else None
@@ -463,12 +520,16 @@ class LanceDBManager:
 
             if query:
                 # Simple text search in description and filename
+                # Sanitize query to prevent injection
+                sanitized_query = sanitize_filter_value(query)
                 conditions.append(
-                    f"description.str.contains('{query}', case=False) | filename.str.contains('{query}', case=False)"
+                    f"description.str.contains('{sanitized_query}', case=False) | filename.str.contains('{sanitized_query}', case=False)"
                 )
 
             if tags:
-                tag_conditions = [f"'{tag}' in tags" for tag in tags]
+                # SECURITY: Sanitize each tag to prevent injection
+                sanitized_tags = [sanitize_filter_value(str(tag)) for tag in tags]
+                tag_conditions = [f"'{tag}' in tags" for tag in sanitized_tags]
                 conditions.append(f"({' | '.join(tag_conditions)})")
 
             filter_expr = " & ".join(conditions) if conditions else None
@@ -487,8 +548,10 @@ class LanceDBManager:
     def get_dataset_by_id(self, dataset_id: str) -> Optional[Dict[str, Any]]:
         """Get dataset by ID"""
         try:
+            # Sanitize dataset_id to prevent injection
+            sanitized_id = sanitize_identifier(dataset_id)
             table = self.db.open_table("csv_datasets")
-            results = table.search().where(f"id == '{dataset_id}'").limit(1).to_list()
+            results = table.search().where(f"id == '{sanitized_id}'").limit(1).to_list()
             return results[0] if results else None
         except Exception as e:
             logger.error(f"Failed to get dataset {dataset_id}: {e}")
@@ -497,8 +560,10 @@ class LanceDBManager:
     def get_image_by_id(self, image_id: str) -> Optional[Dict[str, Any]]:
         """Get image by ID"""
         try:
+            # Sanitize image_id to prevent injection
+            sanitized_id = sanitize_identifier(image_id)
             table = self.db.open_table("images")
-            results = table.search().where(f"id == '{image_id}'").limit(1).to_list()
+            results = table.search().where(f"id == '{sanitized_id}'").limit(1).to_list()
             return results[0] if results else None
         except Exception as e:
             logger.error(f"Failed to get image {image_id}: {e}")
@@ -525,9 +590,11 @@ class LanceDBManager:
     def delete_dataset(self, dataset_id: str) -> bool:
         """Delete dataset by ID"""
         try:
+            # Sanitize dataset_id to prevent injection
+            sanitized_id = sanitize_identifier(dataset_id)
             table = self.db.open_table("csv_datasets")
             # LanceDB delete operation
-            table.delete(f"id == '{dataset_id}'")
+            table.delete(f"id == '{sanitized_id}'")
             logger.info(f"Deleted dataset: {dataset_id}")
             return True
         except Exception as e:
@@ -537,8 +604,10 @@ class LanceDBManager:
     def delete_image(self, image_id: str) -> bool:
         """Delete image by ID"""
         try:
+            # Sanitize image_id to prevent injection
+            sanitized_id = sanitize_identifier(image_id)
             table = self.db.open_table("images")
-            table.delete(f"id == '{image_id}'")
+            table.delete(f"id == '{sanitized_id}'")
             logger.info(f"Deleted image: {image_id}")
             return True
         except Exception as e:

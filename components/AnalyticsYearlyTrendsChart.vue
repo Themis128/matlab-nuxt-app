@@ -1,16 +1,18 @@
 <template>
-  <div
-    class="h-[350px] w-full rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+  <ChartWrapper
+    title="Yearly Trends: Price, RAM, Battery"
+    icon="i-heroicons-chart-bar"
+    :loading="loading"
+    :error="error"
+    chart-type="custom"
+    height="350"
   >
-    <div class="mb-6 flex items-center justify-between">
-      <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-        Yearly Trends: Price, RAM, Battery
-      </h3>
+    <template #header-actions>
       <div class="flex items-center gap-4">
         <!-- Legend -->
         <div class="flex items-center gap-4 text-sm">
           <div v-for="metric in visibleMetrics" :key="metric.name" class="flex items-center gap-2">
-            <div class="h-3 w-3 rounded-full" :style="{ backgroundColor: metric.color }"></div>
+            <div class="h-3 w-3 rounded-full" :style="{ backgroundColor: metric.color }" />
             <span class="text-gray-600 dark:text-gray-400">{{ metric.name }}</span>
           </div>
         </div>
@@ -22,13 +24,15 @@
             class="rounded-md border border-gray-300 bg-white px-3 py-1 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           >
             <option value="All">All Metrics</option>
-            <option value="Price">Price Only</option>
-            <option value="RAM">RAM Only</option>
-            <option value="Battery">Battery Only</option>
+            <option value="Price">
+              {{ t('analytics.priceOnly') }}
+            </option>
+            <option value="RAM">{{ t('analytics.labels.ram') }} Only</option>
+            <option value="Battery">{{ t('analytics.labels.battery') }} Only</option>
           </select>
         </div>
       </div>
-    </div>
+    </template>
 
     <!-- Enhanced Multi-Line Chart -->
     <div class="relative h-[250px] w-full">
@@ -119,18 +123,20 @@
           transform: 'translateX(-50%)',
         }"
       >
-        <div class="font-semibold">{{ years[hoveredIndex] ?? '' }}</div>
+        <div class="font-semibold">
+          {{ years[hoveredIndex] ?? '' }}
+        </div>
         <div
           v-for="metric in visibleMetrics"
           :key="metric.name"
           class="mt-1 flex items-center gap-2"
         >
-          <div class="h-2 w-2 rounded-full" :style="{ backgroundColor: metric.color }"></div>
+          <div class="h-2 w-2 rounded-full" :style="{ backgroundColor: metric.color }" />
           <span>{{ metric.name }}: {{ metric.data[hoveredIndex] ?? '-' }}</span>
         </div>
         <div
           class="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"
-        ></div>
+        />
       </div>
     </div>
 
@@ -145,22 +151,32 @@
         </div>
       </div>
     </div>
-  </div>
+  </ChartWrapper>
 </template>
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 
 // Props
-const props = defineProps<{
-  trends?: {
-    years: number[];
-    avg_price: number[];
-    avg_ram: number[];
-    avg_battery: number[];
-  };
-  selectedTarget?: string;
-}>();
+const props = withDefaults(
+  defineProps<{
+    trends?: {
+      years: number[];
+      avg_price: number[];
+      avg_ram: number[];
+      avg_battery: number[];
+    };
+    selectedTarget?: string;
+    loading?: boolean;
+    error?: string | null;
+  }>(),
+  {
+    trends: undefined,
+    selectedTarget: undefined,
+    loading: false,
+    error: null,
+  }
+);
 
 // Reactive state
 const selectedFilter = ref(props.selectedTarget || 'All');
@@ -191,11 +207,23 @@ const defaultTrends = computed(() => ({
 // Use provided trends or default
 const trends = computed(() => props.trends || defaultTrends.value);
 
+const { t } = useI18n();
+
 // All available metrics
 const allMetrics = computed(() => [
-  { name: 'Price', key: 'avg_price', color: '#6366f1', data: trends.value.avg_price },
-  { name: 'RAM', key: 'avg_ram', color: '#10b981', data: trends.value.avg_ram },
-  { name: 'Battery', key: 'avg_battery', color: '#f59e42', data: trends.value.avg_battery },
+  {
+    name: t('analytics.labels.price'),
+    key: 'avg_price',
+    color: '#6366f1',
+    data: trends.value.avg_price,
+  },
+  { name: t('analytics.labels.ram'), key: 'avg_ram', color: '#10b981', data: trends.value.avg_ram },
+  {
+    name: t('analytics.labels.battery'),
+    key: 'avg_battery',
+    color: '#f59e42',
+    data: trends.value.avg_battery,
+  },
 ]);
 
 // Filter visible metrics based on selected filter

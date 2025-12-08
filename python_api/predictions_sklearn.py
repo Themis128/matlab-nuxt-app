@@ -12,6 +12,8 @@ from typing import Optional
 
 import numpy as np
 
+from .pickle_security import safe_load_pickle, validate_pickle_path, validate_pickle_file
+
 logger = logging.getLogger(__name__)
 
 # Model directory
@@ -34,16 +36,12 @@ def load_model(model_name: str):
             logger.warning(f"Model file not found: {model_path}")
             return None, None
 
-        # Validate it's a pickle file before loading
-        with open(model_path, "rb") as f:
-            header = f.read(2)
-            if len(header) < 2 or header[0] != 0x80:
-                logger.error(
-                    f"Invalid pickle file format for {model_path}: {header!r} (expected pickle protocol header)"
-                )
-                return None, None
-            f.seek(0)
-            model = pickle.load(f)
+        # SECURITY: Use centralized security utility for safe pickle loading
+        try:
+            model = safe_load_pickle(model_path, MODELS_DIR, max_size=500 * 1024 * 1024)  # 500MB limit
+        except ValueError as e:
+            logger.error(f"Security validation failed for model {model_name}: {e}")
+            return None, None
 
         # Load scaler
         scaler_path = MODELS_DIR / f"{model_name}_scalers.pkl"
@@ -51,16 +49,12 @@ def load_model(model_name: str):
             logger.warning(f"Scaler file not found: {scaler_path}")
             return None, None
 
-        # Validate scaler is a pickle file before loading
-        with open(scaler_path, "rb") as f:
-            header = f.read(2)
-            if len(header) < 2 or header[0] != 0x80:
-                logger.error(
-                    f"Invalid pickle file format for {scaler_path}: {header!r} (expected pickle protocol header)"
-                )
-                return None, None
-            f.seek(0)
-            scaler = pickle.load(f)
+        # SECURITY: Use centralized security utility for safe pickle loading
+        try:
+            scaler = safe_load_pickle(scaler_path, MODELS_DIR, max_size=500 * 1024 * 1024)  # 500MB limit
+        except ValueError as e:
+            logger.error(f"Security validation failed for scaler {model_name}: {e}")
+            return None, None
 
         # Cache models
         _models_cache[model_name] = model

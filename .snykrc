@@ -1,0 +1,27 @@
+# Snyk Configuration File
+# This file configures Snyk CLI behavior
+
+# API endpoint (default: https://snyk.io/api)
+# api=https://snyk.io/api
+
+# Organization ID (set via environment variable or snyk config)
+# org=your-org-id
+
+# Project name (optional, auto-detected from package.json)
+# project-name=matlab-nuxt-app
+
+# Severity threshold (low, medium, high, critical)
+# Only report vulnerabilities at or above this severity
+severity-threshold=medium
+
+# Fail on any vulnerabilities (true/false)
+# fail-on=all
+
+# Include development dependencies in scan
+# dev=true
+
+# Exclude paths from scanning
+# exclude=node_modules,venv,.nuxt,.output
+
+# Policy file location (default: .snyk)
+# policy-path=.snyk

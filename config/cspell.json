@@ -18,6 +18,7 @@
     "isnan",
     "isnumeric",
     "istable",
+    "lancedb",
     "lgraph",
     "mfilename",
     "omitnan",

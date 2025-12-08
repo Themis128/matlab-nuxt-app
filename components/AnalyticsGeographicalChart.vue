@@ -7,7 +7,7 @@
         Geographical Price Analysis
       </h3>
       <div class="flex items-center gap-2">
-        <div class="h-3 w-3 rounded-full bg-purple-500"></div>
+        <div class="h-3 w-3 rounded-full bg-purple-500" />
         <span class="text-sm text-gray-600 dark:text-gray-400">Average Price</span>
       </div>
     </div>
@@ -134,7 +134,7 @@
         {{ selectedRegion }}: ${{ formatPrice(selectedPrice) }}
         <div
           class="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"
-        ></div>
+        />
       </div>
     </div>
 

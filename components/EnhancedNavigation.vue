@@ -1,8 +1,8 @@
 <template>
   <nav
-    class="sticky top-0 z-50 border-b border-gray-200/50 bg-white/95 backdrop-blur-xl transition-all duration-300 dark:border-gray-700/50 dark:bg-gray-900/95"
+    class="sticky top-0 z-50 border-b border-base-300/50 bg-base-100/95 backdrop-blur-xl transition-all duration-300"
     role="navigation"
-    aria-label="Main navigation"
+    :aria-label="t('common.navigation.home')"
     :class="{ 'shadow-lg': scrolled, 'shadow-sm': !scrolled }"
   >
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -11,47 +11,59 @@
         <NuxtLink
           to="/"
           class="group -m-2 flex items-center gap-3 rounded-lg p-2 transition-all duration-200 hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2"
-          aria-label="MATLAB Analytics Home"
-          @click="closeMobileMenu"
+          :aria-label="t('common.app.name')"
+          style="pointer-events: auto; z-index: 10; cursor: pointer"
+          @click="
+            () => {
+              closeMobileMenu();
+            }
+          "
         >
           <div class="relative">
-            <UIcon
-              name="i-heroicons-cpu-chip"
-              class="h-8 w-8 text-purple-600 transition-transform duration-200 group-hover:scale-110 dark:text-purple-400"
+            <Icon
+              name="heroicons:cpu-chip"
+              class="h-8 w-8 text-primary transition-transform duration-200 group-hover:scale-110"
               aria-hidden="true"
             />
-            <div
-              class="absolute -right-1 -top-1 h-3 w-3 animate-pulse rounded-full bg-green-400"
-            ></div>
+            <div class="absolute -right-1 -top-1 h-3 w-3 animate-pulse rounded-full bg-green-400" />
           </div>
           <div class="flex flex-col">
             <span
-              class="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-lg font-bold text-transparent sm:text-xl"
+              class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-lg font-bold text-transparent sm:text-xl"
             >
-              MATLAB Analytics
+              {{ t('common.app.name') }}
             </span>
-            <span class="-mt-1 text-xs text-gray-500 dark:text-gray-400">
-              Deep Learning Platform
+            <span class="-mt-1 text-xs text-base-content/60">
+              {{ t('common.app.tagline') }}
             </span>
           </div>
         </NuxtLink>
 
         <!-- Quick Search Bar (Desktop) -->
-        <div class="mx-8 hidden max-w-md flex-1 md:block">
-          <div class="relative">
-            <UIcon
-              name="i-heroicons-magnifying-glass"
-              class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-gray-400"
+        <div class="mx-8 hidden max-w-lg flex-1 lg:block">
+          <div class="group relative">
+            <Icon
+              name="heroicons:magnifying-glass"
+              class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-base-content/40 transition-colors duration-200 group-focus-within:text-primary"
               aria-hidden="true"
             />
             <input
               v-model="searchQuery"
               type="search"
-              placeholder="Search phones, models, brands..."
-              class="w-full rounded-lg border border-gray-200 bg-gray-50 py-2 pl-10 pr-4 text-sm transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-purple-500 dark:border-gray-700 dark:bg-gray-800"
+              :placeholder="t('common.labels.searchPlaceholder')"
+              class="input input-bordered w-full rounded-xl bg-base-200/50 py-2.5 pl-10 pr-16 text-sm transition-all duration-200 focus:border-primary focus:bg-base-100 focus:ring-2 focus:ring-primary/20"
+              :aria-label="t('common.actions.search')"
               @keyup.enter="performSearch"
-              aria-label="Quick search"
             />
+            <div
+              class="absolute right-3 top-1/2 hidden -translate-y-1/2 text-xs text-gray-400 sm:block"
+            >
+              <kbd
+                class="rounded border border-gray-200 bg-gray-100 px-1.5 py-0.5 text-xs font-semibold text-gray-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400"
+              >
+                ⏎
+              </kbd>
+            </div>
           </div>
         </div>
 
@@ -59,75 +71,70 @@
         <div class="hidden items-center gap-1 lg:flex xl:gap-2">
           <!-- Primary Navigation -->
           <div class="flex items-center gap-1">
-            <UButton
+            <NuxtLink
               to="/"
-              variant="ghost"
-              color="gray"
-              icon="i-heroicons-home"
               class="nav-button"
               :class="{ 'nav-button-active': route.path === '/' }"
-              aria-label="Go to home page"
+              aria-label="Navigation Home"
+              data-testid="nav-home-link"
             >
-              <span class="hidden xl:inline">Home</span>
-            </UButton>
+              <Icon name="heroicons:home" class="h-5 w-5" />
+              <span class="hidden xl:inline">{{ t('common.navigation.home') }}</span>
+            </NuxtLink>
 
-            <UButton
+            <NuxtLink
               to="/search"
-              variant="ghost"
-              color="gray"
-              icon="i-heroicons-funnel"
               class="nav-button"
               :class="{ 'nav-button-active': route.path === '/search' }"
-              aria-label="Advanced search"
+              :aria-label="t('common.navigation.search')"
             >
-              <span class="hidden xl:inline">Search</span>
-            </UButton>
+              <Icon name="heroicons:funnel" class="h-5 w-5" />
+              <span class="hidden xl:inline">{{ t('common.navigation.search') }}</span>
+            </NuxtLink>
 
-            <UButton
+            <NuxtLink
               to="/compare"
-              variant="ghost"
-              color="gray"
-              icon="i-heroicons-scale"
               class="nav-button"
               :class="{ 'nav-button-active': route.path === '/compare' }"
-              aria-label="Compare phones"
+              :aria-label="t('common.navigation.compare')"
             >
-              <span class="hidden xl:inline">Compare</span>
-            </UButton>
+              <Icon name="heroicons:scale" class="h-5 w-5" />
+              <span class="hidden xl:inline">{{ t('common.navigation.compare') }}</span>
+            </NuxtLink>
           </div>
 
           <!-- Secondary Navigation (More Tools) -->
-          <div class="flex items-center gap-1 border-l border-gray-200 pl-2 dark:border-gray-700">
-            <UDropdown
-              :items="secondaryNavItems"
-              :popper="{ placement: 'bottom-end' }"
-              class="nav-dropdown"
-            >
-              <UButton
-                variant="ghost"
-                color="gray"
-                icon="i-heroicons-chevron-down"
-                class="nav-button"
-                aria-label="More tools"
+          <div class="flex items-center gap-1 border-l border-base-300 pl-2">
+            <div class="dropdown dropdown-end">
+              <label tabindex="0" class="btn btn-ghost btn-sm nav-button">
+                <span class="hidden xl:inline">{{ t('common.navigation.tools') }}</span>
+                <Icon name="heroicons:chevron-down" class="ml-1 h-4 w-4" />
+              </label>
+              <ul
+                tabindex="0"
+                class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
               >
-                <span class="hidden xl:inline">Tools</span>
-                <UIcon name="i-heroicons-chevron-down" class="ml-1 h-4 w-4" />
-              </UButton>
-            </UDropdown>
+                <li v-for="item in secondaryNavItems" :key="item.label">
+                  <NuxtLink :to="item.to" class="nav-button">
+                    <Icon :name="item.icon" class="h-5 w-5" />
+                    {{ item.label }}
+                  </NuxtLink>
+                </li>
+              </ul>
+            </div>
           </div>
 
           <!-- User Actions -->
-          <div
-            class="ml-2 flex items-center gap-2 border-l border-gray-200 pl-3 dark:border-gray-700"
-          >
-            <UButton
-              variant="ghost"
-              color="gray"
-              icon="i-heroicons-cog-6-tooth"
-              class="nav-button"
-              aria-label="Open settings"
+          <div class="ml-2 flex items-center gap-2 border-l border-base-300 pl-3">
+            <NotificationDropdown />
+            <LanguageSwitcher />
+            <button
+              class="btn btn-ghost btn-sm nav-button"
+              :aria-label="t('common.navigation.settings')"
               @click="openPreferences"
-            />
+            >
+              <Icon name="heroicons:cog-6-tooth" class="h-5 w-5" />
+            </button>
             <ThemeToggle />
           </div>
         </div>
@@ -135,28 +142,36 @@
         <!-- Mobile Controls -->
         <div class="flex items-center gap-2 lg:hidden">
           <!-- Mobile Search Toggle -->
-          <UButton
-            @click="toggleMobileSearch"
+          <DButton
             variant="ghost"
-            color="gray"
             icon="i-heroicons-magnifying-glass"
             class="nav-button"
-            :aria-label="mobileSearchOpen ? 'Close search' : 'Open search'"
+            :aria-label="mobileSearchOpen ? t('common.actions.close') : t('common.actions.search')"
+            @click="toggleMobileSearch"
           />
+
+          <!-- Notifications (Mobile) -->
+          <NotificationDropdown />
+
+          <!-- Language Switcher (Mobile) -->
+          <LanguageSwitcher />
 
           <!-- Theme Toggle (Mobile) -->
           <ThemeToggle />
 
           <!-- Mobile Menu Toggle -->
-          <UButton
-            @click="toggleMobileMenu"
+          <DButton
             variant="ghost"
-            color="gray"
             icon="i-heroicons-bars-3"
             class="nav-button"
-            :aria-label="mobileMenuOpen ? 'Close mobile menu' : 'Open mobile menu'"
+            :aria-label="
+              mobileMenuOpen
+                ? t('common.actions.closeMobileMenu')
+                : t('common.actions.openMobileMenu')
+            "
             :aria-expanded="mobileMenuOpen"
             aria-controls="mobile-menu"
+            @click="toggleMobileMenu"
           />
         </div>
       </div>
@@ -172,19 +187,19 @@
       >
         <div v-if="mobileSearchOpen" class="pb-4 md:hidden">
           <div class="relative">
-            <UIcon
-              name="i-heroicons-magnifying-glass"
-              class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-gray-400"
+            <Icon
+              name="heroicons:magnifying-glass"
+              class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-base-content/40"
               aria-hidden="true"
             />
             <input
+              ref="mobileSearchInput"
               v-model="searchQuery"
               type="search"
-              placeholder="Search phones, models, brands..."
-              class="w-full rounded-lg border border-gray-200 bg-gray-50 py-3 pl-10 pr-4 text-base focus:border-transparent focus:ring-2 focus:ring-purple-500 dark:border-gray-700 dark:bg-gray-800"
+              :placeholder="t('common.labels.searchPlaceholder')"
+              class="input input-bordered w-full rounded-lg bg-base-200 py-3 pl-10 pr-4 text-base focus:border-primary focus:ring-2 focus:ring-primary/20"
+              :aria-label="t('common.actions.search')"
               @keyup.enter="performSearch"
-              ref="mobileSearchInput"
-              aria-label="Mobile search"
             />
           </div>
         </div>
@@ -207,95 +222,77 @@
           aria-label="Mobile navigation menu"
         >
           <!-- User Info Section -->
-          <div class="mb-4 border-b border-gray-200 pb-4 dark:border-gray-700">
+          <div class="mb-4 border-b border-base-300 pb-4">
             <div class="flex items-center gap-3 px-2">
               <div
                 class="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-blue-600"
               >
-                <UIcon name="i-heroicons-user" class="h-5 w-5 text-white" />
+                <Icon name="heroicons:user" class="h-5 w-5 text-white" />
               </div>
               <div>
-                <div class="font-medium text-gray-900 dark:text-white">MATLAB Analytics</div>
-                <div class="text-sm text-gray-500 dark:text-gray-400">Deep Learning Platform</div>
+                <div class="font-medium text-base-content">MATLAB Analytics</div>
+                <div class="text-sm text-base-content/60">Deep Learning Platform</div>
               </div>
             </div>
           </div>
 
           <!-- Primary Navigation -->
           <div class="mb-6 space-y-1">
-            <h3
-              class="px-2 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500"
-            >
-              Main
+            <h3 class="px-2 text-xs font-semibold uppercase tracking-wider text-base-content/50">
+              {{ t('common.navigation.main') }}
             </h3>
-            <UButton
+            <NuxtLink
               v-for="item in primaryNavItems"
               :key="item.to"
               :to="item.to"
-              variant="ghost"
-              color="gray"
-              block
-              :icon="item.icon"
-              class="mobile-nav-item justify-start"
-              @click="closeMobileMenu"
+              class="btn btn-ghost btn-block justify-start mobile-nav-item"
               role="menuitem"
+              @click="closeMobileMenu"
             >
+              <Icon :name="item.icon" class="h-5 w-5" />
               {{ item.label }}
-            </UButton>
+            </NuxtLink>
           </div>
 
           <!-- Secondary Navigation -->
           <div class="mb-6 space-y-1">
-            <h3
-              class="px-2 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500"
-            >
-              Tools & Features
+            <h3 class="px-2 text-xs font-semibold uppercase tracking-wider text-base-content/50">
+              {{ t('common.navigation.toolsAndFeatures') }}
             </h3>
-            <UButton
-              v-for="item in secondaryNavItems[0] || []"
+            <NuxtLink
+              v-for="item in secondaryNavItems"
               :key="item.label"
               :to="item.to"
-              variant="ghost"
-              color="gray"
-              block
-              :icon="item.icon"
-              class="mobile-nav-item justify-start"
-              @click="closeMobileMenu"
+              class="btn btn-ghost btn-block justify-start mobile-nav-item"
               role="menuitem"
+              @click="closeMobileMenu"
             >
+              <Icon :name="item.icon" class="h-5 w-5" />
               {{ item.label }}
-            </UButton>
+            </NuxtLink>
           </div>
 
           <!-- Quick Actions -->
           <div class="mb-4 space-y-1">
-            <h3
-              class="px-2 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500"
-            >
-              Quick Actions
+            <h3 class="px-2 text-xs font-semibold uppercase tracking-wider text-base-content/50">
+              {{ t('common.navigation.quickActions') }}
             </h3>
-            <UButton
-              variant="ghost"
-              color="gray"
-              block
-              icon="i-heroicons-cog-6-tooth"
-              class="mobile-nav-item justify-start"
+            <button
+              class="btn btn-ghost btn-block justify-start mobile-nav-item"
+              role="menuitem"
               @click="openPreferences"
-              role="menuitem"
             >
-              Settings & Preferences
-            </UButton>
-            <UButton
-              variant="ghost"
-              color="gray"
-              block
-              icon="i-heroicons-question-mark-circle"
-              class="mobile-nav-item justify-start"
+              <Icon name="heroicons:cog-6-tooth" class="h-5 w-5" />
+              {{ t('common.navigation.settings') }}
+            </button>
+            <button
+              class="btn btn-ghost btn-block justify-start mobile-nav-item"
+              role="menuitem"
               @click="openHelp"
-              role="menuitem"
             >
-              Help & Support
-            </UButton>
+              <Icon name="heroicons:question-mark-circle" class="h-5 w-5" />
+              {{ t('common.navigation.help') }}
+            </button>
           </div>
         </div>
       </Transition>
@@ -308,7 +305,10 @@
 
 <script setup lang="ts">
 import type { Ref } from 'vue';
-import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue';
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
+
+// Get i18n composable - ensure it's always available
+const { t } = useI18n();
 
 // Reactive state
 const mobileMenuOpen = ref(false);
@@ -323,24 +323,69 @@ const mobileSearchInput: Ref<HTMLInputElement | undefined> = ref();
 // Get current route
 const route = useRoute();
 
-// Computed navigation items
+// Computed navigation items with translations
 const primaryNavItems = computed(() => [
-  { label: 'Home', to: '/', icon: 'i-heroicons-home' },
-  { label: 'Search', to: '/search', icon: 'i-heroicons-funnel' },
-  { label: 'Compare', to: '/compare', icon: 'i-heroicons-scale' },
-  { label: 'AI Demo', to: '/ai-demo', icon: 'i-heroicons-sparkles' },
+  { label: t('common.navigation.home'), to: '/', icon: 'i-heroicons-home' },
+  { label: t('common.navigation.search'), to: '/search', icon: 'i-heroicons-funnel' },
+  { label: t('common.navigation.compare'), to: '/compare', icon: 'i-heroicons-scale' },
+  { label: t('common.navigation.aiDemo'), to: '/ai-demo', icon: 'i-heroicons-sparkles' },
 ]);
 
 const secondaryNavItems = computed(() => [
-  [
-    { label: 'Price Finder', to: '/recommendations', icon: 'i-heroicons-currency-dollar' },
-    { label: 'Advanced Models', to: '/advanced', icon: 'i-heroicons-cpu-chip' },
-    { label: 'ML Comparison', to: '/ml-comparison', icon: 'i-heroicons-beaker' },
-    { label: 'A/B Testing', to: '/ab-testing', icon: 'i-heroicons-chart-bar' },
-    { label: 'Model Showcase', to: '/model-showcase', icon: 'i-heroicons-trophy' },
-    { label: 'API Docs', to: '/api-docs', icon: 'i-heroicons-document-text' },
-    { label: 'Data Mining', to: '/datamine', icon: 'i-heroicons-magnifying-glass' },
-  ],
+  {
+    label: t('common.navigation.priceFinder'),
+    to: '/recommendations',
+    icon: 'heroicons:currency-dollar',
+    click: () => navigateTo('/recommendations'),
+  },
+  {
+    label: 'Integration Status',
+    to: '/integration-status',
+    icon: 'heroicons:chart-bar-square',
+    click: () => navigateTo('/integration-status'),
+  },
+  {
+    label: t('common.navigation.advancedModels'),
+    to: '/advanced',
+    icon: 'heroicons:cpu-chip',
+    click: () => navigateTo('/advanced'),
+  },
+  {
+    label: t('common.navigation.mlComparison'),
+    to: '/ml-comparison',
+    icon: 'heroicons:beaker',
+    click: () => navigateTo('/ml-comparison'),
+  },
+  {
+    label: t('common.navigation.abTesting'),
+    to: '/ab-testing',
+    icon: 'heroicons:chart-bar',
+    click: () => navigateTo('/ab-testing'),
+  },
+  {
+    label: 'Style Guide',
+    to: '/style-guide',
+    icon: 'heroicons:paint-brush',
+    click: () => navigateTo('/style-guide'),
+  },
+  {
+    label: t('common.navigation.modelShowcase'),
+    to: '/model-showcase',
+    icon: 'heroicons:trophy',
+    click: () => navigateTo('/model-showcase'),
+  },
+  {
+    label: t('common.navigation.apiDocs'),
+    to: '/api-docs',
+    icon: 'heroicons:document-text',
+    click: () => navigateTo('/api-docs'),
+  },
+  {
+    label: t('common.navigation.dataMining'),
+    to: '/datamine',
+    icon: 'heroicons:magnifying-glass',
+    click: () => navigateTo('/datamine'),
+  },
 ]);
 
 // Methods
@@ -371,8 +416,14 @@ const openPreferences = () => {
 
 const openHelp = () => {
   // Navigate to help page or open help modal
-  const logger = useSentryLogger();
-  logger.logUserAction('open_help', undefined, { component: 'EnhancedNavigation' });
+  try {
+    const logger = useSentryLogger?.();
+    if (logger && typeof logger.logUserAction === 'function') {
+      logger.logUserAction('open_help', undefined, { component: 'EnhancedNavigation' });
+    }
+  } catch {
+    // Silently handle if logger is not available
+  }
   mobileMenuOpen.value = false;
 };
 
@@ -420,6 +471,35 @@ watch(
   }
 );
 
+// Watch for locale changes to update navigation labels
+try {
+  const i18n = useI18n();
+  if (i18n && i18n.locale) {
+    watch(
+      () => i18n.locale.value,
+      () => {
+        // Navigation items will automatically update via computed properties
+      }
+    );
+  }
+} catch {
+  // i18n might not be available yet
+}
+
+// Nuxt 4: Use unified UI composable (auto-imported)
+// Watch for locale changes to update navigation labels
+try {
+  const { currentLocale } = useUI();
+  watch(
+    () => currentLocale.value,
+    () => {
+      // Navigation items will automatically update via computed properties
+    }
+  );
+} catch {
+  // UI composable might not be available yet
+}
+
 // Lifecycle
 onMounted(() => {
   if (process.client) {
@@ -440,17 +520,25 @@ onUnmounted(() => {
 /* Navigation button styles */
 .nav-button {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
   transition: all 0.2s;
+  cursor: pointer;
+  pointer-events: auto !important;
+  z-index: 10;
+  user-select: none;
+  -webkit-user-select: none;
+  text-decoration: none;
+  color: inherit;
+  background: transparent;
+  border: none;
 }
 
 .nav-button:hover {
-  background-color: rgb(243 244 246);
-}
-
-.dark .nav-button:hover {
-  background-color: rgb(31 41 55);
+  background-color: hsl(var(--b2));
 }
 
 .nav-button:focus {
@@ -461,13 +549,8 @@ onUnmounted(() => {
 }
 
 .nav-button-active {
-  background-color: rgb(243 232 255);
-  color: rgb(126 34 206);
-}
-
-.dark .nav-button-active {
-  background-color: rgba(147, 51, 234, 0.3);
-  color: rgb(196 181 253);
+  background-color: hsl(var(--p) / 0.2);
+  color: hsl(var(--p));
 }
 
 .nav-dropdown :deep(.dropdown-menu) {
@@ -494,14 +577,15 @@ onUnmounted(() => {
   transition:
     background-color 0.2s,
     color 0.2s;
+  cursor: pointer;
+  pointer-events: auto !important;
+  z-index: 10;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .mobile-nav-item:hover {
-  background-color: rgb(243 244 246);
-}
-
-.dark .mobile-nav-item:hover {
-  background-color: rgb(31 41 55);
+  background-color: hsl(var(--b2));
 }
 
 /* Search input focus styles */
@@ -510,8 +594,10 @@ input:focus {
   box-shadow: 0 0 0 2px rgba(147, 51, 234, 0.2);
 }
 
-/* Smooth transitions */
-* {
+/* Smooth transitions - only for navigation elements */
+.nav-button,
+.mobile-nav-item,
+input[type='search'] {
   transition-property: color, background-color, border-color, opacity, transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;

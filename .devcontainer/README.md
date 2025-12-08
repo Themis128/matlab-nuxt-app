@@ -1,91 +1,84 @@
-# Dev Container for Nuxt + Python API
+# Dev Container Configuration
 
-This repository includes a Dev Container using Docker Compose to run both the Nuxt frontend and the Python API as two separate services. The container environment attaches to the `frontend` service so you can use VS Code to inspect and edit both projects simultaneously.
+This directory contains the development container configuration for the MatLab Nuxt App project.
 
-Ports forwarded:
+## What is a Dev Container?
 
-- 3000 — Nuxt dev server
-- 8000 — Python API
-- 9229 — Node debugger (optional)
+A dev container allows you to use a Docker container as a full-featured development environment. It enables you to:
 
-Start/Run guidelines (Dev Container w/ Docker Compose):
+- Have a consistent development environment across different machines
+- Isolate project dependencies
+- Use VS Code features like IntelliSense, debugging, and extensions inside the container
 
-1. Open the repository in VS Code Remote - Containers: Reopen in Container.
-2. The post-create script will run automatically in the attached service (`frontend`) to install node deps; the API service installs its Python dependencies during image build.
-3. Both services (frontend & api) will be started automatically after the container is created via `runServices` in `devcontainer.json`. If you need to start them manually, run:
+## Setup
 
+1. **Install Prerequisites:**
+   - Docker Desktop (Windows/Mac) or Docker Engine (Linux)
+   - VS Code with the "Dev Containers" extension
+
+2. **Open in Container:**
+   - Open VS Code Command Palette (Ctrl+Shift+P / Cmd+Shift+P)
+   - Select "Dev Containers: Reopen in Container"
+   - VS Code will build and start the containers
+
+3. **Services:**
+   - **Frontend**: Nuxt.js app on port 3000
+   - **API**: Python FastAPI on port 8000
+
+## Configuration Files
+
+- `devcontainer.json`: Main dev container configuration
+- `../docker-compose.yml`: Docker Compose configuration for all services
+- `../Dockerfile.api`: Dockerfile for the Python API service
+
+## Manual Docker Commands
+
+If you prefer to use Docker directly:
+
+```bash
+# Start all services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop all services
+docker-compose down
+
+# Rebuild containers
+docker-compose build --no-cache
+
+# Access frontend container
+docker exec -it matlab-nuxt-frontend bash
+
+# Access API container
+docker exec -it matlab-nuxt-api bash
 ```
-# From inside the devcontainer terminal
-npm run dev            # Nuxt (frontend container handles this by default)
-cd python_api && python api.py  # Python API (this runs in the api service container)
+
+## Troubleshooting
+
+### Port Already in Use
+
+If ports 3000 or 8000 are already in use, modify the port mappings in `docker-compose.yml`:
+
+```yaml
+ports:
+  - '3001:3000' # Use 3001 instead of 3000
 ```
 
-Notes:
+### Container Build Fails
 
-- MATLAB is not included in the container image — use MATLAB on your host if needed.
-- If you use custom Python or Node versions, adjust the Dockerfile accordingly.
+- Ensure Docker is running
+- Check Docker has enough resources (memory/CPU)
+- Try rebuilding: `docker-compose build --no-cache`
 
-# Devcontainer for MATLAB Nuxt App
+### Extensions Not Working
 
-This repository includes a minimal VS Code Devcontainer (`.devcontainer/devcontainer.json`) to provide a consistent local development environment for contributors using Codespaces or Remote - Containers.
+- Ensure extensions are listed in `devcontainer.json` under `customizations.vscode.extensions`
+- Reload the window after container starts
 
-Key points
+## Notes
 
-- Node.js (22) is available via the base image.
-- Python 3.14 is installed via the `devcontainer` features (so the Python and Node tooling are available).
-- Recommended extensions are preinstalled in the container; this includes the `JavaScript & TypeScript Nightly` (`ms-vscode.vscode-typescript-next`) extension.
-- Ports forwarded:
-  - 3000 — Nuxt dev server
-  - 8000 — Python FastAPI server
-
-Health checks & start scripts
-
-- This devcontainer includes `.devcontainer/health-check.sh` which runs on container start and checks that Node, npm and Python are installed and the repo `node_modules/typescript` package is available.
-- To start both the frontend and the API from within the devcontainer, use the repo script (recommended):
-  ```bash
-  ./scripts/shell/start.sh
-  ```
-
-## Security & dependency maintenance
-
-This repository includes overrides in `package.json` to pin some nested dependencies to known safe versions (e.g., `micromatch` and `tar-fs`). After changing `package.json` you must regenerate the lockfile and ensure the changes are applied by running:
-
-```
-npm install
-npm audit fix
-```
-
-If vulnerabilities remain, review the output and run `npm audit fix --force` only after reviewing the changes as it can upgrade major versions.
-The script installs dependencies if they are missing, starts the Python API, trains models if necessary, and starts the Nuxt dev server.
-
-Notes
-
-- `start.sh` uses `bash` and is appropriate for the container environment — for Windows/PowerShell developers, continue to use `scripts/start-nuxt-dev.ps1` or `npm run dev:all` as needed.
-
-## Quick run
-
-- Run the repo fullstack start script (recommended):
-  ```bash
-  ./scripts/shell/start.sh
-  ```
-- Alternatively, use the `Makefile` if you prefer `make`:
-  ```bash
-  make dev
-  ```
-- From VS Code: run the task `Dev: Fullstack (Shell)` (uses `./scripts/shell/start.sh`).
-
-## Auto start servers on container start
-
-- This devcontainer optionally starts the frontend and API automatically using a tmux session. By default, the container sets `DEVCONTAINER_AUTO_START_SERVERS=true` to auto-start the servers on `postStartCommand`.
-- If you'd rather not start servers automatically, set `DEVCONTAINER_AUTO_START_SERVERS=false` in your Codespaces environment or change the container config.
-- To disable auto-start for an existing container's session, open a terminal and set `export DEVCONTAINER_AUTO_START_SERVERS=false` or update your devcontainer configuration.
-
-How to use
-
-1. Open the repo in VS Code and choose: `Remote-Containers: Reopen in Container` or use GitHub Codespaces.
-2. The container will run `npm ci` and then install Python requirements for `python_api` during `postCreateCommand`.
-
-Optional customizations
-
-- If you want additional extensions inside the devcontainer, add them to the `customizations.vscode.extensions` array in `devcontainer.json`.
-- If you need MATLAB support, note that it usually requires a local MATLAB installation — running MATLAB inside the container is not supported in generic images.
+- The `docker-compose.override.yml` file can be used for local overrides without committing changes
+- Volumes are used to persist `node_modules` and Python virtual environments
+- The dev container uses the `frontend` service as the primary workspace

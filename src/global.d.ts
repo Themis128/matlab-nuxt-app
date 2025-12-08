@@ -1,4 +1,4 @@
 declare module '#imports' {
-  export * from '@unhead/vue';
-  // Add other Nuxt composables as needed
+  // Nuxt auto-imports are handled by Nuxt itself
+  // No need to re-export from @unhead/vue as it may cause conflicts
 }

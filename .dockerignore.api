@@ -1,0 +1,71 @@
+# Python specific ignores
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv
+env
+ENV
+.venv
+*.egg-info
+.pytest_cache
+*.egg
+
+# Node.js (not needed in API container)
+node_modules
+npm-debug.log
+package-lock.json
+
+# Build outputs
+.nuxt
+.output
+dist
+build
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+
+# Git
+.git
+.gitignore
+
+# Environment
+.env
+.env.local
+
+# Test
+test-results
+playwright-report
+
+# Data (large files - keep structure but not all data)
+lancedb_data/*.lance
+lancedb_data/*.manifest
+lancedb_data/*.txn
+
+# Temporary
+tmp
+temp
+*.tmp
+
+# Documentation
+docs
+*.md
+!README.md
+
+# Frontend (not needed in API container)
+components
+pages
+layouts
+composables
+stores
+public
+assets

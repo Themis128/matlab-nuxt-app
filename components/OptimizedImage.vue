@@ -2,14 +2,14 @@
   <div class="optimized-image-container">
     <!-- Loading State -->
     <div v-if="isLoading" class="image-skeleton" :class="[{ 'animate-pulse': showAnimation }]">
-      <div class="skeleton-shimmer"></div>
+      <div class="skeleton-shimmer" />
     </div>
 
     <!-- Error State -->
     <div v-else-if="hasError" class="image-error" :class="errorClass">
       <div class="error-content">
-        <UIcon name="i-heroicons-photo-x-mark" class="h-12 w-12 text-gray-400" />
-        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+        <Icon name="heroicons:photo-x-mark" class="h-12 w-12 text-base-content/40" />
+        <p class="mt-2 text-sm text-base-content/60">
           {{ errorMessage }}
         </p>
       </div>
@@ -26,7 +26,7 @@
               backgroundColor: getPerformanceColor(),
               animation: isOptimized ? 'pulse 2s infinite' : 'none',
             }"
-          ></div>
+          />
           <span class="text-xs font-medium" :style="{ color: getPerformanceColor() }">
             {{ performanceLabel }}
           </span>
@@ -55,7 +55,7 @@
       <!-- Quality Indicator -->
       <div v-if="showQualityIndicator" class="quality-badge" :class="getQualityBadgeClass()">
         <div class="flex items-center gap-1">
-          <UIcon name="i-heroicons-star" class="h-3 w-3" />
+          <Icon name="heroicons:star" class="h-3 w-3" />
           <span class="text-xs font-medium">{{ qualityLabel }}</span>
         </div>
       </div>
@@ -65,7 +65,7 @@
     <div v-if="showImageInfo && !isLoading && !hasError" class="image-info-overlay">
       <div class="info-content">
         <div class="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
-          <UIcon name="i-heroicons-information-circle" class="h-4 w-4" />
+          <Icon name="heroicons:information-circle" class="h-4 w-4" />
           <span>{{ formatBytes(imageSize) }}</span>
           <span v-if="formatUsed">• {{ formatUsed }}</span>
           <span v-if="dimensions">• {{ dimensions }}</span>
@@ -76,7 +76,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
 interface Props {
   src: string; // base filename with extension (e.g. 'network-visualization.png')

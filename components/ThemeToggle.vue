@@ -9,7 +9,7 @@
             ? 'scale-110 bg-yellow-400/20 opacity-100'
             : 'scale-90 bg-yellow-400/0 opacity-0',
         ]"
-      ></div>
+      />
       <SunIcon
         :class="[
           'relative z-10 h-5 w-5 transition-all duration-300',
@@ -21,24 +21,26 @@
     <!-- Enhanced Toggle Switch -->
     <div class="relative">
       <!-- Background Track -->
-      <div
+      <button
+        type="button"
         :class="[
-          'relative h-7 w-14 cursor-pointer rounded-full transition-all duration-300 ease-in-out',
+          'relative h-7 w-14 cursor-pointer rounded-full border-0 bg-transparent p-0 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2',
           isDarkMode
             ? 'bg-gradient-to-r from-purple-500 to-indigo-600 shadow-lg shadow-purple-500/25'
             : 'bg-gradient-to-r from-yellow-400 to-orange-500 shadow-lg shadow-yellow-500/25',
         ]"
-        @click="toggleTheme"
         role="switch"
         :aria-checked="isDarkMode"
         aria-label="Toggle theme"
         tabindex="0"
+        style="pointer-events: auto !important; z-index: 10; position: relative"
+        @click="toggleTheme"
         @keydown="handleKeydown"
       >
         <!-- Animated Thumb -->
         <div
           :class="[
-            'absolute left-1 top-1 h-5 w-5 transform rounded-full bg-white shadow-lg transition-all duration-300 ease-in-out',
+            'pointer-events-none absolute left-1 top-1 h-5 w-5 transform rounded-full bg-white shadow-lg transition-all duration-300 ease-in-out',
             isDarkMode
               ? 'translate-x-7 bg-gray-100 shadow-purple-500/20'
               : 'translate-x-0 bg-white shadow-yellow-500/20',
@@ -50,34 +52,34 @@
               'absolute inset-0 rounded-full transition-opacity duration-300',
               isDarkMode ? 'bg-purple-400/10 opacity-100' : 'bg-yellow-400/10 opacity-100',
             ]"
-          ></div>
+          />
         </div>
 
         <!-- Moving particles/indicators -->
-        <div class="absolute inset-0 overflow-hidden rounded-full">
+        <div class="pointer-events-none absolute inset-0 overflow-hidden rounded-full">
           <div
             :class="[
               'absolute left-2 top-1 h-1 w-1 rounded-full transition-all duration-300',
               isDarkMode ? 'bg-white/40' : 'bg-white/80',
             ]"
             style="animation: particle1 3s infinite ease-in-out"
-          ></div>
+          />
           <div
             :class="[
               'absolute left-4 top-3 h-1 w-1 rounded-full transition-all duration-300',
               isDarkMode ? 'bg-white/20' : 'bg-white/60',
             ]"
             style="animation: particle2 2.5s infinite ease-in-out reverse"
-          ></div>
+          />
           <div
             :class="[
               'absolute bottom-1 right-2 h-1 w-1 rounded-full transition-all duration-300',
               isDarkMode ? 'bg-white/30' : 'bg-white/70',
             ]"
             style="animation: particle3 3.5s infinite ease-in-out"
-          ></div>
+          />
         </div>
-      </div>
+      </button>
 
       <!-- Toggle label -->
       <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 transform">
@@ -96,7 +98,7 @@
             ? 'scale-110 bg-purple-400/20 opacity-100'
             : 'scale-90 bg-purple-400/0 opacity-0',
         ]"
-      ></div>
+      />
       <MoonIcon
         :class="[
           'relative z-10 h-5 w-5 transition-all duration-300',
@@ -133,16 +135,20 @@
 
 <script setup lang="ts">
 import { ComputerDesktopIcon, MoonIcon, SunIcon } from '@heroicons/vue/24/outline';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watchEffect } from 'vue';
 
 // Theme state
 const currentTheme = ref('system');
 const isDarkMode = ref(false);
 
-// Helper functions
+// Helper functions - following DaisyUI migration guide
 const applyThemeToDocument = (theme: string) => {
   if (typeof window === 'undefined') return; // Skip on server
 
+  // Set data-theme attribute (DaisyUI way per migration guide)
+  document.documentElement.setAttribute('data-theme', theme);
+
+  // Also maintain dark class for compatibility
   if (theme === 'dark') {
     document.documentElement.classList.add('dark');
   } else {
@@ -156,17 +162,17 @@ const applyThemeToDocument = (theme: string) => {
   );
 };
 
+// Nuxt 4: Use unified UI composable (auto-imported)
+const { theme, preferences, setTheme } = useUI();
+
 // Initialize theme on client-side only
 const initializeTheme = async () => {
   if (typeof window === 'undefined') return;
 
   try {
-    // Dynamic import to avoid SSR issues
-    const { useUserPreferencesStore } = await import('~/stores/userPreferencesStore');
-    const userPreferencesStore = useUserPreferencesStore();
-
-    const storeTheme = userPreferencesStore.theme;
-    const resolvedTheme = userPreferencesStore.getResolvedTheme;
+    // Use unified UI composable
+    const storeTheme = preferences.value.theme;
+    const resolvedTheme = theme.value;
 
     currentTheme.value = storeTheme;
     isDarkMode.value = resolvedTheme === 'dark';
@@ -174,16 +180,21 @@ const initializeTheme = async () => {
 
     // Watch for theme changes
     watchEffect(() => {
-      const newStoreTheme = userPreferencesStore.theme;
-      const newResolvedTheme = userPreferencesStore.getResolvedTheme;
+      const newStoreTheme = preferences.value.theme;
+      const newResolvedTheme = theme.value;
 
       currentTheme.value = newStoreTheme;
       isDarkMode.value = newResolvedTheme === 'dark';
       applyThemeToDocument(newResolvedTheme);
     });
+
+    // Expose toggleTheme to window for testing
+    if (typeof window !== 'undefined') {
+      (window as any).__toggleTheme = toggleTheme;
+    }
   } catch {
     const logger = useSentryLogger();
-    logger.warn('Theme store not available, using fallback theme detection', {
+    logger.warn('Theme composable not available, using fallback theme detection', {
       component: 'ThemeToggle',
     });
     // Fallback to system preference
@@ -196,37 +207,57 @@ const initializeTheme = async () => {
 
 // Methods
 const toggleTheme = async () => {
+  if (typeof window === 'undefined') return;
+
   try {
-    // Dynamic import to avoid SSR issues
-    const { useUserPreferencesStore } = await import('~/stores/userPreferencesStore');
-    const userPreferencesStore = useUserPreferencesStore();
+    // Get current theme from composable
+    const currentStoreTheme = preferences.value.theme;
 
-    // Cycle through: light -> dark -> system -> light...
-    const themes = ['light', 'dark', 'system'] as const;
-    const currentThemeValue = currentTheme.value || 'system';
-
-    // Ensure currentThemeValue is one of the valid themes
-    let currentIndex = themes.indexOf(currentThemeValue as any);
-    if (currentIndex === -1) {
-      currentIndex = 2; // Default to system if not found
+    // Cycle through themes: light → dark → system → light
+    let newTheme: 'light' | 'dark' | 'system';
+    if (currentStoreTheme === 'light') {
+      newTheme = 'dark';
+    } else if (currentStoreTheme === 'dark') {
+      newTheme = 'system';
+    } else {
+      // currentStoreTheme === 'system'
+      newTheme = 'light';
     }
 
-    const nextIndex = (currentIndex + 1) % themes.length;
+    // Update composable
+    setTheme(newTheme);
 
-    userPreferencesStore.setTheme(themes[nextIndex]!);
+    // Get resolved theme (for 'system', this will be the actual preference)
+    const resolvedTheme = theme.value;
+
+    // Update DOM immediately based on resolved theme
+    applyThemeToDocument(resolvedTheme);
+
+    // Update local state
+    currentTheme.value = newTheme;
+    isDarkMode.value = resolvedTheme === 'dark';
   } catch {
-    const logger = useSentryLogger();
-    logger.warn('Theme store not available, using fallback toggle', {
-      component: 'ThemeToggle',
-    });
-    // Fallback toggle logic
-    const themes = ['light', 'dark', 'system'] as const;
-    let currentIndex = themes.indexOf(currentTheme.value as any);
-    if (currentIndex === -1) currentIndex = 2;
-    const nextIndex = (currentIndex + 1) % themes.length;
-    currentTheme.value = themes[nextIndex]!;
-    isDarkMode.value = currentTheme.value === 'dark';
-    applyThemeToDocument(currentTheme.value);
+    // Fallback: if composable not available, toggle between light/dark based on DOM
+    const currentIsDark = document.documentElement.classList.contains('dark');
+    const newIsDark = !currentIsDark;
+
+    // Update DOM immediately
+    if (newIsDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
+    // Update local state
+    isDarkMode.value = newIsDark;
+    const newTheme = newIsDark ? 'dark' : 'light';
+    currentTheme.value = newTheme;
+
+    // Update CSS variable
+    document.documentElement.style.setProperty(
+      '--theme-color',
+      newTheme === 'dark' ? '#8b5cf6' : '#fbbf24'
+    );
   }
 };
 
@@ -295,9 +326,18 @@ onMounted(() => {
 }
 
 /* Smooth focus states */
-[role='switch']:focus {
+[role='switch']:focus,
+button[role='switch']:focus {
   outline: 2px solid #3b82f6;
   outline-offset: 2px;
+}
+
+/* Ensure button is clickable */
+button[role='switch'] {
+  pointer-events: auto !important;
+  z-index: 10;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 /* Enhanced hover effects */

@@ -15,6 +15,8 @@ router = APIRouter(prefix="/api/distilled", tags=["Distilled Model (Production)"
 class DistilledPriceRequest(BaseModel):
     """Request model for distilled price prediction"""
 
+    model_config = ConfigDict(protected_namespaces=())
+
     ram: float = Field(..., description="RAM in GB", ge=1, le=32)
     battery: float = Field(..., description="Battery capacity in mAh", ge=1000, le=10000)
     screen: float = Field(..., description="Screen size in inches", ge=3.0, le=10.0)

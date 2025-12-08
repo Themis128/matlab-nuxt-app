@@ -1,0 +1,71 @@
+{
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "jsx": "preserve",
+
+    "typeRoots": ["./node_modules/@types", "./types"],
+    "paths": {
+      "~/*": ["./*"],
+      "@/*": ["./*"],
+      "~~/*": ["./*"],
+      "@@/*": ["./*"],
+      "@/domain/*": ["./app/domain/*"],
+      "@/application/*": ["./app/application/*"],
+      "@/infrastructure/*": ["./app/infrastructure/*"],
+      "@/presentation/*": ["./app/presentation/*"],
+      "@/shared/*": ["./shared/*"]
+    },
+    "maxNodeModuleJsDepth": 1
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.vue",
+    "**/*.js",
+    "**/*.jsx",
+    ".nuxt/**/*.ts",
+    ".nuxt/**/*.vue"
+  ],
+  "exclude": [
+    "node_modules",
+    ".nuxt",
+    "dist",
+    ".output",
+    ".nitro",
+    ".cache",
+    "venv",
+    ".venv",
+    "__pycache__",
+    "python_api/trained_models",
+    "lancedb_data",
+    "playwright-report",
+    "test-results",
+    "coverage",
+    "**/*.min.js",
+    "**/*.min.ts",
+    "**/__pycache__/**",
+    "**/*.egg-info/**",
+    "**/lancedb_data/**",
+    "**/.goosy/**"
+  ],
+  "vueCompilerOptions": {
+    "target": 3,
+    "experimentalCompatMode": 2,
+    "experimentalTemplateCompilerOptions": {
+      "isCustomElement": false
+    }
+  }
+}

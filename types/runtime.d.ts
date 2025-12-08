@@ -14,7 +14,12 @@ declare global {
     public?: {
       apiBase?: string;
       pyApiDisabled?: boolean;
-      // Add additional public runtime properties here
+      googleAnalyticsId?: string;
+      plausibleDomain?: string;
+      siteUrl?: string;
+      algoliaAppId?: string;
+      algoliaSearchApiKey?: string;
+      algoliaIndex?: string;
     };
     // Add additional runtime keys as needed here
   }

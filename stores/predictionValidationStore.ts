@@ -182,4 +182,7 @@ export const usePredictionValidationStore = defineStore('predictionValidation', 
       };
     },
   },
+
+  // Note: MODEL_METRICS is static configuration data, no need for persistence
+  // If metrics need to be updated dynamically in the future, add persist config
 });

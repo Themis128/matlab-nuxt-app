@@ -1,14 +1,18 @@
 <template>
-  <div
-    class="h-[350px] w-full rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+  <ChartWrapper
+    title="Model Accuracy Trends"
+    icon="i-heroicons-chart-bar"
+    :loading="loading"
+    :error="error"
+    chart-type="custom"
+    height="350"
   >
-    <div class="mb-6 flex items-center justify-between">
-      <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Model Accuracy Trends</h3>
+    <template #header-actions>
       <div class="flex items-center gap-2">
-        <div class="h-3 w-3 rounded-full bg-emerald-500"></div>
+        <div class="h-3 w-3 rounded-full bg-emerald-500" />
         <span class="text-sm text-gray-600 dark:text-gray-400">Accuracy</span>
       </div>
-    </div>
+    </template>
 
     <!-- Enhanced Line Chart -->
     <div class="relative h-[250px] w-full">
@@ -95,7 +99,7 @@
         {{ hoveredPoint.label }}: {{ hoveredPoint.value }}%
         <div
           class="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"
-        ></div>
+        />
       </div>
     </div>
 
@@ -122,17 +126,29 @@
         </div>
       </div>
     </div>
-  </div>
+  </ChartWrapper>
 </template>
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 
+const { t } = useI18n();
+
 // Props: pass analytics data from parent
-const props = defineProps<{
-  accuracyTrends?: number[];
-  labels?: string[];
-}>();
+const props = withDefaults(
+  defineProps<{
+    accuracyTrends?: number[];
+    labels?: string[];
+    loading?: boolean;
+    error?: string | null;
+  }>(),
+  {
+    accuracyTrends: undefined,
+    labels: undefined,
+    loading: false,
+    error: null,
+  }
+);
 
 // Reactive state
 const hoveredPoint = ref<{
@@ -149,7 +165,15 @@ const padding = { top: 20, right: 20, bottom: 40, left: 40 };
 
 // Computed data
 const accuracyTrends = computed(() => props.accuracyTrends || [98.24, 95.16, 94.77, 65.22]);
-const labels = computed(() => props.labels || ['Price', 'RAM', 'Battery', 'Brand']);
+const labels = computed(
+  () =>
+    props.labels || [
+      t('analytics.labels.price'),
+      t('analytics.labels.ram'),
+      t('analytics.labels.battery'),
+      t('analytics.labels.brand'),
+    ]
+);
 
 const maxAccuracy = computed(() => Math.max(...accuracyTrends.value));
 // const minAccuracy = computed(() => Math.min(...accuracyTrends.value)); // Removed unused

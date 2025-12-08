@@ -1,37 +1,18 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": ".output/public"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
-  ],
+  "framework": "nuxt",
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
   "functions": {
     "server/**/*.js": {
-      "runtime": "nodejs18.x"
+      "runtime": "nodejs20.x"
     },
     "server/**/*.ts": {
-      "runtime": "nodejs18.x"
+      "runtime": "nodejs20.x"
     }
   },
   "regions": ["fra1"],
   "env": {
     "NODE_ENV": "production"
-  },
-  "buildCommand": "npm run build",
-  "installCommand": "npm install",
-  "framework": "nuxt"
+  }
 }

@@ -1,8 +1,14 @@
 /**
  * Composable for validating predictions against model performance metrics
+ *
+ * @deprecated Use `usePredictions()` composable instead
+ * This composable is kept for backward compatibility but will be removed in a future version.
+ *
+ * Migration: Replace `usePredictionValidation()` with `usePredictions()` from
+ * `~/app/application/features/predictions/composables/usePredictions`
  */
 
-import type { PredictionValidation } from '~/stores/predictionValidationStore';
+import type { PredictionValidation } from '../application/features/predictions/store/predictions.store';
 
 const MODEL_METRICS = {
   price: {

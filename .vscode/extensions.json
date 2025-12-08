@@ -7,6 +7,8 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "Vue.volar",
+    "Vue.vscode-typescript-vue-plugin",
+    "loccy-ai.loccy-vscode",
     "jeffersonqin.better-matlab-syntax",
     "mathworks.matlab",
     "antfu.iconify",
@@ -19,6 +21,9 @@
     "stat.cline-context-menu",
     "liuguibin.deepseek-cline-admin-extension",
     "GitHub.vscode-pull-request-github",
-    "eamodio.gitlens"
+    "eamodio.gitlens",
+    // Nuxt-specific extensions
+    "nuxt.nuxt-vscode-extension",
+    "nuxt.nuxt3"
   ]
 }

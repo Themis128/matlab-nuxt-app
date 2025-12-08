@@ -17,9 +17,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Extract version from tag
+      - name: Extract version from tag or branch
         id: version
-        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+        run: |
+          if [[ "${{ github.ref }}" == refs/tags/* ]]; then
+            # Tag push: extract version from tag (e.g., refs/tags/v1.0.0 -> 1.0.0)
+            VERSION="${GITHUB_REF#refs/tags/v}"
+          elif [[ "${{ github.event_name }}" == 'workflow_dispatch' ]]; then
+            # Manual trigger: use branch name or default to timestamp
+            if [[ "${{ github.ref }}" == refs/heads/* ]]; then
+              BRANCH="${GITHUB_REF#refs/heads/}"
+              # Use branch name, sanitize for filename
+              VERSION="${BRANCH//\//-}-$(date +%Y%m%d-%H%M%S)"
+            else
+              # Fallback to timestamp
+              VERSION="manual-$(date +%Y%m%d-%H%M%S)"
+            fi
+          else
+            # Fallback: use timestamp
+            VERSION="unknown-$(date +%Y%m%d-%H%M%S)"
+          fi
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "Extracted version: $VERSION"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4

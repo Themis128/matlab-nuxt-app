@@ -52,7 +52,20 @@ def convert_numpy(obj):
 
 def view_mat_file(mat_path, output_format='json', output_path=None):
     """View contents of a .mat file"""
-    mat_path = Path(mat_path)
+    # SECURITY: Validate input path to prevent path traversal
+    input_path = Path(mat_path)
+    input_resolved = input_path.resolve()
+    cwd = Path.cwd().resolve()
+
+    if not str(input_resolved).startswith(str(cwd)):
+        print(f"Security: Input file path outside working directory: {mat_path}")
+        return False
+
+    if '..' in str(mat_path):
+        print(f"Security: Path traversal detected in input path: {mat_path}")
+        return False
+
+    mat_path = input_resolved
 
     if not mat_path.exists():
         print(f"Error: File not found: {mat_path}")
@@ -85,9 +98,57 @@ def view_mat_file(mat_path, output_format='json', output_path=None):
 
         # Write output
         if output_path:
-            output_file = Path(output_path)
-            output_file.write_text(output, encoding='utf-8')
-            print(f"✓ Output saved to: {output_file}")
+            # SECURITY: Comprehensive path validation to prevent arbitrary file write
+            import os
+            import tempfile
+
+            # Check for path traversal sequences and null bytes
+            if '..' in output_path or '\0' in output_path:
+                print(f"Security: Path traversal or null byte detected in output path: {output_path}")
+                return False
+
+            # Validate path characters (allow only safe characters)
+            import re
+            if not re.match(r'^[a-zA-Z0-9._/-]+$', output_path):
+                print(f"Security: Invalid characters in output path: {output_path}")
+                return False
+
+            try:
+                # Normalize and resolve path safely
+                normalized_path = os.path.normpath(output_path)
+
+                # Ensure it's a relative path within current directory
+                if os.path.isabs(normalized_path):
+                    print(f"Security: Absolute paths not allowed: {output_path}")
+                    return False
+
+                # Create full path and resolve
+                full_path = os.path.join(str(cwd), normalized_path)
+                resolved_path = os.path.realpath(full_path)
+
+                # Ensure resolved path is still within working directory
+                if not resolved_path.startswith(str(cwd) + os.sep) and resolved_path != str(cwd):
+                    print(f"Security: Output file path outside working directory: {output_path}")
+                    return False
+
+                # Additional check: ensure parent directory exists or can be created safely
+                parent_dir = os.path.dirname(resolved_path)
+                if not parent_dir.startswith(str(cwd)):
+                    print(f"Security: Parent directory outside working directory: {output_path}")
+                    return False
+
+                # Create parent directories if they don't exist (safely)
+                os.makedirs(parent_dir, exist_ok=True)
+
+                # Write file using the validated path
+                with open(resolved_path, 'w', encoding='utf-8') as f:
+                    f.write(output)
+
+                print(f"✓ Output saved to: {normalized_path}")
+
+            except (OSError, ValueError, TypeError) as e:
+                print(f"Security: Error writing output file: {e}")
+                return False
         else:
             print("\n" + "="*60)
             print("MAT File Contents:")

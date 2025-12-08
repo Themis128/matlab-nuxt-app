@@ -41,13 +41,13 @@ interface SearchResponse {
   };
 }
 
-export default defineEventHandler(async (event): Promise<SearchResponse> => {
+export default defineEventHandler(async (event: any): Promise<SearchResponse> => {
   try {
     const query = getQuery(event);
 
     // Parse query parameters
     const brands = query.brand
-      ? (Array.isArray(query.brand) ? query.brand : [query.brand]).map((b) => String(b))
+      ? (Array.isArray(query.brand) ? query.brand : [query.brand]).map((b: any) => String(b))
       : undefined;
     const minPrice = query.minPrice ? parseFloat(String(query.minPrice)) : undefined;
     const maxPrice = query.maxPrice ? parseFloat(String(query.maxPrice)) : undefined;
@@ -58,7 +58,7 @@ export default defineEventHandler(async (event): Promise<SearchResponse> => {
     const minScreen = query.minScreen ? parseFloat(String(query.minScreen)) : undefined;
     const maxScreen = query.maxScreen ? parseFloat(String(query.maxScreen)) : undefined;
     const years = query.year
-      ? (Array.isArray(query.year) ? query.year : [query.year]).map((y) => parseInt(String(y)))
+      ? (Array.isArray(query.year) ? query.year : [query.year]).map((y: any) => parseInt(String(y)))
       : undefined;
     const minStorage = query.minStorage ? parseFloat(String(query.minStorage)) : undefined;
     const maxStorage = query.maxStorage ? parseFloat(String(query.maxStorage)) : undefined;
@@ -203,7 +203,11 @@ export default defineEventHandler(async (event): Promise<SearchResponse> => {
         continue;
 
       // Apply filters
-      if (brands && brands.length > 0 && !brands.some((b) => company.includes(b.toLowerCase())))
+      if (
+        brands &&
+        brands.length > 0 &&
+        !brands.some((b: string) => company.includes(b.toLowerCase()))
+      )
         continue;
       if (minPrice !== undefined && phonePrice < minPrice) continue;
       if (maxPrice !== undefined && phonePrice > maxPrice) continue;

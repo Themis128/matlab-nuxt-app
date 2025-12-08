@@ -1,58 +1,283 @@
 # .goosyignore - Goosy Ignore Patterns
+# Optimized configuration for Nuxt.js + Python + MATLAB project
 # Patterns follow .gitignore syntax
 # Lines starting with # are comments
 
-# Goosy scan results (auto-generated)
+# ============================================
+# Goosy Extension Files
+# ============================================
 .goosy/
 
-# Dependencies
+# ============================================
+# Dependencies & Package Managers
+# ============================================
 node_modules/
 vendor/
 bower_components/
-
-# Build outputs
-dist/
-build/
-out/
-*.min.js
-*.min.css
-
-# Environment files
-.env
-.env.*
-!.env.example
-
-# Logs
-*.log
-logs/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# OS files
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# IDE files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# Lock files
+.npm/
+npm-cache/
+.yarn/
+.pnp.*
 package-lock.json
 yarn.lock
 pnpm-lock.yaml
 Gemfile.lock
 composer.lock
+poetry.lock
+Pipfile.lock
 
-# Test coverage
+# ============================================
+# Nuxt.js Build Outputs & Generated Files
+# ============================================
+.nuxt/
+.output/
+.nitro/
+dist/
+build/
+out/
+*.min.js
+*.min.css
+*.bundle.js
+*.chunk.js
+
+# Nuxt generated types
+.nuxt/types/
+
+# ============================================
+# Python Environment & Cache
+# ============================================
+venv/
+.venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+*.egg
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
+
+# ============================================
+# MATLAB Files & Outputs
+# ============================================
+*.asv
+*.autosave
+*.m~
+*.fig
+*.slx~
+*.prj
+*.mlappinstall
+*.mlpkginstall
+
+# ============================================
+# Test Results & Coverage Reports
+# ============================================
+test-results/
+playwright-report/
 coverage/
 .nyc_output/
+*.lcov
+junit.xml
+test-results.xml
+.pytest_cache/
 
-# Temporary files
+# Large test specification files (often contain embedded data >50MB)
+# These files cause "cannot open file" errors in Goosy
+tests/playwright/full-app-coverage.spec.ts
+tests/playwright/components.spec.ts
+**/*coverage*.spec.ts
+**/*full-app*.spec.ts
+**/*full*.spec.ts
+
+# ============================================
+# Large Data Files & Caches
+# ============================================
+# Data directories with large files
+data/*.csv
+data/*.json
+data/*.gz
+data/*.mat
+data/scraper_cache/
+data/*_cache.json
+lancedb_data/
+*.lance
+*.manifest
+*.txn
+
+# Preprocessed data
+preprocessed/
+trained_models/
+python_api/trained_models/
+
+# ============================================
+# Environment & Secrets
+# ============================================
+.env
+.env.*
+!.env.example
+!.env.template
+secrets.json
+credentials.json
+kaggle.json
+*.key
+*.pem
+*.p12
+*.pfx
+
+# ============================================
+# Logs & Temporary Files
+# ============================================
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+debug.log
 *.tmp
 *.temp
 .cache/
+.temp/
+tmp/
+temp/
+
+# ============================================
+# IDE & Editor Files
+# ============================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-*
+.cline/
+.continue/
+.cursor/
+.wakatime/
+.deno_lsp/
+
+# ============================================
+# OS Files
+# ============================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# ============================================
+# Documentation (usually doesn't need security scanning)
+# ============================================
+docs/
+wiki/
+*.md
+!README.md
+!CHANGELOG.md
+!CONTRIBUTING.md
+
+# ============================================
+# Build Artifacts & Compiled Files
+# ============================================
+*.tsbuildinfo
+tsconf-out.json
+*.map
+*.d.ts.map
+*.js.map
+*.css.map
+
+# ============================================
+# Large Binary & Archive Files
+# ============================================
+*.zip
+*.tar.gz
+*.tar
+*.gz
+*.7z
+*.rar
+*.bz2
+*.xz
+
+# ============================================
+# Generated & Bundled Files
+# ============================================
+# Large generated TypeScript declaration files
+src/global.d.ts
+.nuxt/types/tailwind.config.d.ts
+.nuxt/types/runtime-config.d.ts
+.nuxt/types/**/*.d.ts
+
+# Playwright trace files (large bundles)
+playwright-report/trace/
+playwright-report/trace/**/*.js
+playwright-report/trace/**/*.css
+playwright-report/trace/**/*.html
+playwright-report/trace/**/*.json
+playwright-report/trace/**/*.webmanifest
+
+# ============================================
+# Infrastructure & Deployment
+# ============================================
+infrastructure/legacy/
+deployment/
+*.service
+*.conf
+docker-compose.override.yml
+
+# ============================================
+# Public Assets (usually don't need security scanning)
+# ============================================
+public/images/
+public/mobile_images/
+public/**/*.png
+public/**/*.jpg
+public/**/*.jpeg
+public/**/*.webp
+public/**/*.gif
+public/**/*.svg
+public/**/*.ico
+
+# ============================================
+# Configuration Files (usually safe, but can be large)
+# ============================================
+# Uncomment if you want to exclude config files
+# *.config.js
+# *.config.ts
+# tsconfig*.json
+# nuxt.config.ts
+
+# ============================================
+# Examples & Templates
+# ============================================
+examples/
+templates/
+*.example
+*.template
+
+# ============================================
+# Sentry & Monitoring
+# ============================================
+.sentryclirc
+sentry.properties
+
+# ============================================
+# Other Tool Directories
+# ============================================
+.mozilla/
+.firefox/
+.chrome/
+.safari/

@@ -52,7 +52,20 @@ def convert_numpy(obj):
 
 def view_mat_file(mat_path, output_format='json', output_path=None):
     """View contents of a .mat file"""
-    mat_path = Path(mat_path)
+    # SECURITY: Validate input path to prevent path traversal
+    input_path = Path(mat_path)
+    input_resolved = input_path.resolve()
+    cwd = Path.cwd().resolve()
+
+    if not str(input_resolved).startswith(str(cwd)):
+        print(f"Security: Input file path outside working directory: {mat_path}")
+        return False
+
+    if '..' in str(mat_path):
+        print(f"Security: Path traversal detected in input path: {mat_path}")
+        return False
+
+    mat_path = input_resolved
 
     if not mat_path.exists():
         print(f"Error: File not found: {mat_path}")
@@ -85,7 +98,50 @@ def view_mat_file(mat_path, output_format='json', output_path=None):
 
         # Write output
         if output_path:
-            output_file = Path(output_path)
+            # SECURITY: Validate output path string BEFORE creating Path object
+            # Check for path traversal sequences first
+            if '..' in output_path or '~' in output_path:
+                print(f"Security: Path traversal detected in output path: {output_path}")
+                return False
+
+            # Validate path would be within working directory before creating Path
+            import os
+            try:
+                # Resolve path without creating Path object first
+                # Use os.path.join to safely combine paths
+                if os.path.isabs(output_path):
+                    # Absolute path - must be within cwd
+                    abs_output = os.path.abspath(output_path)
+                else:
+                    # Relative path - join with cwd
+                    abs_output = os.path.abspath(os.path.join(str(cwd), output_path))
+
+                # Normalize path to resolve any remaining issues
+                abs_output = os.path.normpath(abs_output)
+                cwd_normalized = os.path.normpath(str(cwd))
+
+                # Ensure output is within working directory
+                if not abs_output.startswith(cwd_normalized):
+                    print(f"Security: Output file path outside working directory: {output_path}")
+                    return False
+
+                # Prevent writing to sensitive system directories
+                sensitive_dirs = ['/etc', '/usr', '/bin', '/sbin', '/var', '/sys', '/proc', '/dev']
+                if any(abs_output.startswith(sd) for sd in sensitive_dirs):
+                    print(f"Security: Output path in restricted system directory: {output_path}")
+                    return False
+
+            except Exception as e:
+                print(f"Security: Invalid output path: {output_path} - {e}")
+                return False
+
+            # Now safe to create Path object after validation
+            output_file = Path(abs_output)
+
+            # Ensure parent directory exists and is writable
+            output_file.parent.mkdir(parents=True, exist_ok=True)
+
+            # Use resolved path for file operations
             output_file.write_text(output, encoding='utf-8')
             print(f"✓ Output saved to: {output_file}")
         else:

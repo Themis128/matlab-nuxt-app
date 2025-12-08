@@ -265,3 +265,34 @@ class ModelVersionManager:
     def list_all_models(self) -> List[str]:
         """List all models with versioning"""
         return list(self.metadata.keys())
+
+    def get_model_versions(self, model_name: str) -> List[Dict[str, Any]]:
+        """
+        Get all versions for a specific model
+
+        Args:
+            model_name: Name of the model
+
+        Returns:
+            List of version dictionaries, sorted by registration time (newest first)
+        """
+        if model_name not in self.metadata:
+            return []
+
+        versions = self.metadata[model_name].get("versions", [])
+        # Sort by registration_time or backup_time (newest first)
+        versions_sorted = sorted(
+            versions,
+            key=lambda x: x.get("registration_time") or x.get("backup_time", ""),
+            reverse=True
+        )
+        return versions_sorted
+
+    def get_all_models_info(self) -> Dict[str, Dict[str, Any]]:
+        """
+        Get information about all models with versioning
+
+        Returns:
+            Dictionary mapping model names to their version info
+        """
+        return self.metadata.copy()

@@ -97,7 +97,7 @@ foreach ($port in $Ports) {
 foreach ($port in $Ports) {
     $check = Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction SilentlyContinue
     if ($check) {
-        Write-Log "Port ${port} still in use by PID(s): $($check | Select-Object -ExpandProperty OwningProcess | Sort-Object -Unique -join ', ')"
+        Write-Log "Port ${port} still in use by PID(s): $(($check | Select-Object -ExpandProperty OwningProcess | Sort-Object -Unique) -join ', ')"
     } else {
         Write-Log "Port $port freed"
     }

@@ -6,6 +6,7 @@ Provides robust pickle loading with clear diagnostics for CI/CD environments
 import binascii
 import os
 import pickle
+from pathlib import Path
 
 
 def safe_load_model(path, head_bytes=64):
@@ -48,10 +49,29 @@ def safe_load_model(path, head_bytes=64):
             "Likely causes: wrong file/path, file overwritten with logs/JSON/HTML, or upload error."
         )
 
-    # Attempt to unpickle
+    # SECURITY: Strictly validate path is within expected model directory
+    # Only load pickle files from trusted locations
+    abs_path = os.path.abspath(path)
+    models_base = Path(__file__).parent / "trained_models"
+    models_base_abs = models_base.resolve()
+
+    # Resolve the path and ensure it's within the trusted directory
     try:
-        with open(path, "rb") as f:
-            return pickle.load(f)
+        path_resolved = Path(abs_path).resolve()
+        # Check that the resolved path is within the models directory
+        if not str(path_resolved).startswith(str(models_base_abs)):
+            raise RuntimeError(f"Model file path outside trusted directory: {path}")
+        # Additional check: ensure no path traversal
+        if '..' in path or path_resolved != Path(abs_path).resolve():
+            raise RuntimeError(f"Path traversal detected: {path}")
+    except (OSError, ValueError) as e:
+        raise RuntimeError(f"Invalid model file path: {path}") from e
+
+    # SECURITY: Use centralized safe_load_pickle utility for secure deserialization
+    try:
+        from .pickle_security import safe_load_pickle
+        # Use safe loading utility with 500MB limit
+        return safe_load_pickle(Path(path), models_base_abs, max_size=500 * 1024 * 1024)
     except pickle.UnpicklingError as e:
         head_hex = binascii.hexlify(head).decode("ascii")
         raise RuntimeError(

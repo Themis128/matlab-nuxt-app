@@ -190,6 +190,28 @@ if __name__ == '__main__':
         idx = sys.argv.index('--dir')
         directory = sys.argv[idx + 1]
 
+        # SECURITY: Validate directory path to prevent arbitrary file write
+        # Resolve to absolute path and ensure it's within expected directories
+        from pathlib import Path
+        dir_path = Path(directory).resolve()
+
+        # Only allow directories within the project root or data directory
+        project_root = Path(__file__).parent.parent.resolve()
+        data_dir = project_root / 'data'
+
+        # Check if directory is within allowed paths
+        if not (str(dir_path).startswith(str(project_root)) or
+                str(dir_path).startswith(str(data_dir))):
+            raise ValueError(f"Directory outside allowed paths: {directory}")
+
+        # Ensure directory exists and is actually a directory
+        if not dir_path.exists():
+            raise ValueError(f"Directory does not exist: {directory}")
+        if not dir_path.is_dir():
+            raise ValueError(f"Path is not a directory: {directory}")
+
+        directory = str(dir_path)
+
     if '--no-compress' in sys.argv:
         compress = False
 

@@ -11,6 +11,7 @@ import {
   captureException,
   captureMessage,
   isSentryAvailable,
+  getSentryInstance,
 } from './useSentryUtils';
 
 export interface LogAttributes {
@@ -213,10 +214,12 @@ export const useSentryLogger = () => {
     // Set session context for subsequent logs
     if (isSentryAvailable()) {
       try {
-        const Sentry = (globalThis as any).Sentry || (window as any).Sentry;
-        Sentry.setTag('session_id', sessionId);
-        if (context) {
-          Sentry.setExtras({ session_context: context });
+        const Sentry = getSentryInstance();
+        if (Sentry && 'setTag' in Sentry && typeof Sentry.setTag === 'function') {
+          Sentry.setTag('session_id', sessionId);
+          if (context && 'setExtras' in Sentry && typeof Sentry.setExtras === 'function') {
+            Sentry.setExtras({ session_context: context });
+          }
         }
       } catch (error) {
         console.warn('[Sentry Logger] Failed to set session context:', error);
@@ -233,12 +236,12 @@ export const useSentryLogger = () => {
     // Clear session context
     if (isSentryAvailable()) {
       try {
-        const Sentry =
-          (globalThis as unknown as { Sentry?: unknown })?.Sentry ||
-          (window as unknown as { Sentry?: unknown })?.Sentry;
-        if (Sentry && typeof Sentry === 'object') {
-          (Sentry as any).setTag?.('session_id', undefined);
-          (Sentry as any).setExtras?.({ session_context: undefined });
+        const Sentry = getSentryInstance();
+        if (Sentry && 'setTag' in Sentry && typeof Sentry.setTag === 'function') {
+          Sentry.setTag('session_id', undefined);
+          if ('setExtras' in Sentry && typeof Sentry.setExtras === 'function') {
+            Sentry.setExtras({ session_context: undefined });
+          }
         }
       } catch (error) {
         console.warn('[Sentry Logger] Failed to clear session context:', error);

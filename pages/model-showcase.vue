@@ -1,255 +1,320 @@
 <template>
-  <div class="bg-background min-h-screen">
-    <!-- Header Section -->
-    <section class="bg-gradient-to-r from-indigo-600 to-purple-600 py-16 text-white">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center">
-          <h1 class="mb-4 text-4xl font-bold sm:text-5xl">Model Showcase</h1>
-          <p class="mx-auto max-w-2xl text-xl text-indigo-100">
-            Explore and interact with our collection of machine learning models trained on mobile
-            datasets
-          </p>
-        </div>
+  <div class="min-h-screen">
+    <!-- Enhanced Header Section -->
+    <ModernHero
+      title="Model Showcase"
+      description="Explore and interact with our collection of machine learning models trained on mobile datasets"
+      badge="Machine Learning"
+      badge-icon="heroicons:cpu-chip"
+      variant="purple"
+    />
+
+    <!-- Enhanced Featured Models Section -->
+    <ModernSection
+      title="Featured Models"
+      description="Browse through our collection of advanced machine learning models"
+    >
+      <!-- Model Categories -->
+      <div class="mb-16 flex flex-wrap justify-center gap-4">
+        <DButton
+          v-for="category in categories"
+          :key="category.id"
+          :variant="selectedCategory === category.id ? 'primary' : 'outline'"
+          size="md"
+          class="font-semibold shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
+          @click="selectedCategory = category.id"
+        >
+          <Icon
+            :name="category.icon"
+            class="mr-2 h-4 w-4"
+          />
+          {{ category.name }}
+        </DButton>
       </div>
-    </section>
 
-    <!-- Featured Models -->
-    <section class="py-20">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Model Categories -->
-        <div class="mb-16 flex flex-wrap justify-center gap-4">
-          <UButton
-            v-for="category in categories"
-            :key="category.id"
-            :color="selectedCategory === category.id ? 'purple' : 'gray'"
-            variant="outline"
-            @click="selectedCategory = category.id"
-          >
-            <UIcon :name="category.icon" class="mr-2 h-4 w-4" />
-            {{ category.name }}
-          </UButton>
-        </div>
-
-        <!-- Models Grid -->
-        <div class="mb-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          <UCard
-            v-for="model in filteredModels"
-            :key="model.id"
-            class="group cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+      <!-- Enhanced Models Grid -->
+      <div class="mb-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <template
+          v-for="model in filteredModels"
+          :key="model.id"
+        >
+          <ModernCard
+            hover-color="purple"
+            class="group cursor-pointer"
             @click="selectModel(model)"
           >
             <div class="relative">
               <div
-                class="mb-4 aspect-video overflow-hidden rounded-lg bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800"
+                class="mb-4 aspect-video overflow-hidden rounded-lg bg-gradient-to-br from-base-200 to-base-300"
               >
                 <img
                   :src="model.previewImage"
                   :alt="model.name"
                   class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
+                >
                 <div
                   class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                 >
-                  <UButton color="white" variant="solid" size="sm">
-                    <UIcon name="i-heroicons-play" class="mr-2 h-4 w-4" />
+                  <DButton
+                    variant="neutral"
+                    size="sm"
+                  >
+                    <Icon
+                      name="heroicons:play"
+                      class="mr-2 h-4 w-4"
+                    />
                     Demo
-                  </UButton>
+                  </DButton>
                 </div>
               </div>
 
-              <div class="mb-3 flex items-center gap-3">
+              <div class="mb-4 flex items-center gap-4">
                 <div
-                  class="flex h-10 w-10 items-center justify-center rounded-lg"
+                  class="flex h-12 w-12 items-center justify-center rounded-xl shadow-lg"
                   :style="{ backgroundColor: model.color }"
                 >
-                  <UIcon :name="model.icon" class="h-5 w-5 text-white" />
+                  <Icon
+                    :name="model.icon"
+                    class="h-6 w-6 text-white"
+                  />
                 </div>
                 <div>
-                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                  <h3 class="text-xl font-bold text-base-content">
                     {{ model.name }}
                   </h3>
-                  <p class="text-sm text-gray-500 dark:text-gray-400">{{ model.category }}</p>
+                  <p class="text-sm font-medium text-base-content/60">
+                    {{ model.category }}
+                  </p>
                 </div>
               </div>
 
-              <p class="mb-4 line-clamp-2 text-sm text-gray-600 dark:text-gray-300">
+              <p
+                class="mb-6 line-clamp-2 text-base leading-relaxed text-base-content/70"
+              >
                 {{ model.description }}
               </p>
 
               <div class="mb-4 grid grid-cols-2 gap-4">
                 <div class="text-center">
-                  <div class="text-lg font-bold text-gray-900 dark:text-white">
+                  <div class="text-lg font-bold text-base-content">
                     {{ model.accuracy }}%
                   </div>
-                  <div class="text-xs text-gray-500">Accuracy</div>
+                  <div class="text-xs text-base-content/60">
+                    Accuracy
+                  </div>
                 </div>
                 <div class="text-center">
-                  <div class="text-lg font-bold text-gray-900 dark:text-white">
+                  <div class="text-lg font-bold text-base-content">
                     {{ model.inferenceTime }}ms
                   </div>
-                  <div class="text-xs text-gray-500">Inference</div>
+                  <div class="text-xs text-base-content/60">
+                    Inference
+                  </div>
                 </div>
               </div>
 
               <div class="flex gap-2">
-                <UButton
+                <DButton
                   size="sm"
-                  color="purple"
                   variant="outline"
                   class="flex-1"
                   @click="selectModel(model)"
-                  >Try Model</UButton
                 >
-                <UButton size="sm" variant="outline">
-                  <UIcon name="i-heroicons-code-bracket" class="h-4 w-4" />
-                </UButton>
+                  Try Model
+                </DButton>
+                <DButton
+                  size="sm"
+                  variant="outline"
+                >
+                  <Icon
+                    name="i-heroicons-code-bracket"
+                    class="h-4 w-4"
+                  />
+                </DButton>
               </div>
             </div>
-          </UCard>
+          </ModernCard>
+        </template>
+      </div>
+
+      <!-- Interactive Demo Section -->
+      <div
+        v-if="selectedModel"
+        class="mb-16 rounded-2xl bg-white p-8 shadow-lg dark:bg-gray-800"
+      >
+        <div class="mb-6 flex items-center gap-4">
+          <div
+            class="flex h-12 w-12 items-center justify-center rounded-lg"
+            :style="{ backgroundColor: selectedModel.color }"
+          >
+            <UIcon
+              :name="selectedModel.icon"
+              class="h-6 w-6 text-white"
+            />
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+              {{ selectedModel.name }} Demo
+            </h2>
+            <p class="text-gray-600 dark:text-gray-300">
+              {{ selectedModel.description }}
+            </p>
+          </div>
         </div>
 
-        <!-- Interactive Demo Section -->
-        <div v-if="selectedModel" class="mb-16 rounded-2xl bg-white p-8 shadow-lg dark:bg-gray-800">
-          <div class="mb-6 flex items-center gap-4">
-            <div
-              class="flex h-12 w-12 items-center justify-center rounded-lg"
-              :style="{ backgroundColor: selectedModel.color }"
+        <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+          <div>
+            <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+              Input Data
+            </h3>
+            <div class="mb-4 rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
+              <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">Mobile Dataset Sample</label>
+              <textarea
+                v-model="demoInput"
+                placeholder="Enter sample mobile dataset features..."
+                rows="6"
+                class="textarea textarea-bordered w-full"
+              />
+            </div>
+            <DButton
+              variant="primary"
+              :loading="isRunning"
+              @click="runDemo"
             >
-              <UIcon :name="selectedModel.icon" class="h-6 w-6 text-white" />
-            </div>
-            <div>
-              <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-                {{ selectedModel.name }} Demo
-              </h2>
-              <p class="text-gray-600 dark:text-gray-300">{{ selectedModel.description }}</p>
-            </div>
+              <Icon
+                name="i-heroicons-play"
+                class="mr-2 h-4 w-4"
+              />
+              Run Prediction
+            </DButton>
           </div>
 
-          <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            <div>
-              <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Input Data</h3>
-              <div class="mb-4 rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
-                <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
-                  >Mobile Dataset Sample</label
-                >
-                <UTextarea
-                  v-model="demoInput"
-                  placeholder="Enter sample mobile dataset features..."
-                  :rows="6"
-                />
-              </div>
-              <UButton color="purple" @click="runDemo" :loading="isRunning">
-                <UIcon name="i-heroicons-play" class="mr-2 h-4 w-4" />
-                Run Prediction
-              </UButton>
-            </div>
-
-            <div>
-              <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Results</h3>
-              <div class="rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
-                <div v-if="demoResult" class="space-y-4">
-                  <div class="flex items-center justify-between">
-                    <span class="text-gray-600 dark:text-gray-300">Prediction</span>
-                    <span class="font-semibold text-gray-900 dark:text-white">{{
-                      demoResult.prediction
-                    }}</span>
+          <div>
+            <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+              Results
+            </h3>
+            <div class="rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
+              <div
+                v-if="demoResult"
+                class="space-y-4"
+              >
+                <div class="flex items-center justify-between">
+                  <span class="text-gray-600 dark:text-gray-300">Prediction</span>
+                  <span class="font-semibold text-gray-900 dark:text-white">{{
+                    demoResult.prediction
+                  }}</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-gray-600 dark:text-gray-300">Confidence</span>
+                  <span class="font-semibold text-green-600">{{ demoResult.confidence }}%</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-gray-600 dark:text-gray-300">Processing Time</span>
+                  <span class="font-semibold text-blue-600">{{ demoResult.processingTime }}ms</span>
+                </div>
+                <div>
+                  <div class="mb-2 text-sm text-gray-600 dark:text-gray-300">
+                    Class Probabilities
                   </div>
-                  <div class="flex items-center justify-between">
-                    <span class="text-gray-600 dark:text-gray-300">Confidence</span>
-                    <span class="font-semibold text-green-600">{{ demoResult.confidence }}%</span>
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <span class="text-gray-600 dark:text-gray-300">Processing Time</span>
-                    <span class="font-semibold text-blue-600"
-                      >{{ demoResult.processingTime }}ms</span
+                  <div class="space-y-2">
+                    <div
+                      v-for="prob in demoResult.probabilities"
+                      :key="prob.class"
+                      class="flex items-center justify-between"
                     >
-                  </div>
-                  <div>
-                    <div class="mb-2 text-sm text-gray-600 dark:text-gray-300">
-                      Class Probabilities
-                    </div>
-                    <div class="space-y-2">
-                      <div
-                        v-for="prob in demoResult.probabilities"
-                        :key="prob.class"
-                        class="flex items-center justify-between"
-                      >
-                        <span class="text-sm text-gray-600 dark:text-gray-300">{{
-                          prob.class
-                        }}</span>
-                        <div class="flex items-center gap-2">
-                          <div class="h-2 w-20 rounded-full bg-gray-200 dark:bg-gray-600">
-                            <div
-                              class="h-2 rounded-full transition-all duration-500"
-                              :style="{
-                                width: `${prob.probability * 100}%`,
-                                backgroundColor: selectedModel.color,
-                              }"
-                            ></div>
-                          </div>
-                          <span class="w-12 text-sm font-semibold text-gray-900 dark:text-white"
-                            >{{ (prob.probability * 100).toFixed(1) }}%</span
-                          >
+                      <span class="text-sm text-gray-600 dark:text-gray-300">{{ prob.class }}</span>
+                      <div class="flex items-center gap-2">
+                        <div class="h-2 w-20 rounded-full bg-gray-200 dark:bg-gray-600">
+                          <div
+                            class="h-2 rounded-full transition-all duration-500"
+                            :style="{
+                              width: `${prob.probability * 100}%`,
+                              backgroundColor: selectedModel.color,
+                            }"
+                          />
                         </div>
+                        <span class="w-12 text-sm font-semibold text-gray-900 dark:text-white">{{ (prob.probability * 100).toFixed(1) }}%</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div v-else class="py-8 text-center text-gray-500 dark:text-gray-400">
-                  <UIcon
-                    name="i-heroicons-chart-bar-square"
-                    class="mx-auto mb-2 h-12 w-12 opacity-50"
-                  />
-                  <p>Run a prediction to see results</p>
-                </div>
+              </div>
+              <div
+                v-else
+                class="py-8 text-center text-gray-500 dark:text-gray-400"
+              >
+                <UIcon
+                  name="i-heroicons-chart-bar-square"
+                  class="mx-auto mb-2 h-12 w-12 opacity-50"
+                />
+                <p>Run a prediction to see results</p>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Model Performance Comparison -->
-        <div
-          class="mb-16 rounded-2xl bg-gradient-to-br from-purple-50 to-indigo-50 p-8 dark:from-purple-900/20 dark:to-indigo-900/20"
-        >
-          <h2 class="mb-8 text-center text-2xl font-bold text-gray-900 dark:text-white">
-            Model Performance Comparison
-          </h2>
+      <!-- Model Performance Comparison -->
+      <div
+        class="mb-16 rounded-2xl bg-gradient-to-br from-purple-50 to-indigo-50 p-8 dark:from-purple-900/20 dark:to-indigo-900/20"
+      >
+        <h2 class="mb-8 text-center text-2xl font-bold text-gray-900 dark:text-white">
+          Model Performance Comparison
+        </h2>
 
-          <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-            <UCard v-for="stat in performanceStats" :key="stat.id" class="p-6 text-center">
-              <div
-                class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full"
-                :style="{ backgroundColor: stat.color }"
-              >
-                <UIcon :name="stat.icon" class="h-6 w-6 text-white" />
-              </div>
-              <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-                {{ stat.title }}
-              </h3>
-              <div class="mb-1 text-2xl font-bold text-gray-900 dark:text-white">
-                {{ stat.value }}
-              </div>
-              <p class="text-sm text-gray-600 dark:text-gray-300">{{ stat.description }}</p>
-            </UCard>
-          </div>
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <template
+            v-for="stat in performanceStats"
+            :key="stat.id"
+          >
+            <div>
+              <DCard class="p-6 text-center">
+                <div
+                  class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full"
+                  :style="{ backgroundColor: stat.color }"
+                >
+                  <Icon
+                    :name="stat.icon"
+                    class="h-6 w-6 text-white"
+                  />
+                </div>
+                <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+                  {{ stat.title }}
+                </h3>
+                <div class="mb-1 text-2xl font-bold text-gray-900 dark:text-white">
+                  {{ stat.value }}
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-300">
+                  {{ stat.description }}
+                </p>
+              </DCard>
+            </div>
+          </template>
         </div>
+      </div>
 
-        <!-- Model Details Modal -->
-        <UModal v-model="showModelDetails" :ui="{ width: 'max-w-4xl' }">
-          <UCard>
+      <!-- Model Details Modal -->
+      <dialog :class="['modal', { 'modal-open': showModelDetails }]">
+        <div class="modal-box max-w-4xl">
+          <DCard>
             <template #header>
               <div class="flex items-center gap-4">
                 <div
                   class="flex h-12 w-12 items-center justify-center rounded-lg"
                   :style="{ backgroundColor: selectedModel?.color }"
                 >
-                  <UIcon :name="selectedModel?.icon" class="h-6 w-6 text-white" />
+                  <Icon
+                    :name="selectedModel?.icon"
+                    class="h-6 w-6 text-white"
+                  />
                 </div>
                 <div>
                   <h2 class="text-xl font-bold text-gray-900 dark:text-white">
                     {{ selectedModel?.name }}
                   </h2>
-                  <p class="text-gray-600 dark:text-gray-300">{{ selectedModel?.category }}</p>
+                  <p class="text-gray-600 dark:text-gray-300">
+                    {{ selectedModel?.category }}
+                  </p>
                 </div>
               </div>
             </template>
@@ -259,7 +324,9 @@
                 <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
                   Model Architecture
                 </h3>
-                <p class="text-gray-600 dark:text-gray-300">{{ selectedModel?.longDescription }}</p>
+                <p class="text-gray-600 dark:text-gray-300">
+                  {{ selectedModel?.longDescription }}
+                </p>
               </div>
 
               <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
@@ -271,53 +338,121 @@
                   <div class="text-lg font-bold text-gray-900 dark:text-white">
                     {{ metric.value }}
                   </div>
-                  <div class="text-sm text-gray-500">{{ metric.name }}</div>
+                  <div class="text-sm text-gray-500">
+                    {{ metric.name }}
+                  </div>
                 </div>
               </div>
 
               <div>
-                <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Use Cases</h3>
+                <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+                  Use Cases
+                </h3>
                 <div class="flex flex-wrap gap-2">
-                  <UBadge
+                  <span
                     v-for="useCase in selectedModel?.useCases"
                     :key="useCase"
-                    color="purple"
-                    variant="soft"
+                    class="badge badge-primary"
                   >
                     {{ useCase }}
-                  </UBadge>
+                  </span>
                 </div>
               </div>
             </div>
 
             <template #footer>
               <div class="flex gap-3">
-                <UButton color="purple" class="flex-1"> Deploy Model </UButton>
-                <UButton variant="outline"> Download </UButton>
+                <DButton
+                  variant="primary"
+                  class="flex-1"
+                  :disabled="!selectedModel"
+                  @click="selectedModel && deployModel(selectedModel)"
+                >
+                  Deploy Model
+                </DButton>
+                <DButton
+                  variant="outline"
+                  :disabled="!selectedModel"
+                  @click="selectedModel && downloadModel(selectedModel)"
+                >
+                  Download
+                </DButton>
               </div>
             </template>
-          </UCard>
-        </UModal>
-      </div>
-    </section>
+          </DCard>
+          <form
+            method="dialog"
+            class="modal-backdrop"
+          >
+            <button @click="showModelDetails = false">
+              close
+            </button>
+          </form>
+        </div>
+      </dialog>
+    </ModernSection>
+  </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { usePageSeo } from '../composables/usePageSeo';
+import { useAnalytics } from '../composables/useAnalytics';
 
-const categories = ref([
+// Define types
+interface Model {
+  id: number;
+  name: string;
+  category: string;
+  categoryId: string;
+  description: string;
+  longDescription: string;
+  accuracy: number;
+  inferenceTime: number;
+  color: string;
+  icon: string;
+  previewImage: string;
+  useCases: string[];
+  metrics: { name: string; value: string }[];
+}
+
+interface Category {
+  id: string;
+  name: string;
+  icon: string;
+}
+
+// Page SEO meta tags
+usePageSeo({
+  title: 'Model Showcase - Machine Learning Models for Mobile Datasets',
+  description:
+    'Explore and interact with our collection of machine learning models trained on mobile datasets. Test predictions, view performance metrics, and understand model capabilities.',
+  keywords: [
+    'machine learning models',
+    'ML models',
+    'deep learning',
+    'model showcase',
+    'AI models',
+    'predictive models',
+    'neural networks',
+  ],
+  type: 'website',
+  image: '/og-models.jpg',
+});
+
+const categories: Category[] = [
   { id: 'all', name: 'All Models', icon: 'i-heroicons-squares-2x2' },
   { id: 'classification', name: 'Classification', icon: 'i-heroicons-tag' },
   { id: 'regression', name: 'Regression', icon: 'i-heroicons-chart-bar' },
   { id: 'clustering', name: 'Clustering', icon: 'i-heroicons-squares-2x2' },
   { id: 'nlp', name: 'NLP', icon: 'i-heroicons-chat-bubble-left-right' },
   { id: 'computer-vision', name: 'Computer Vision', icon: 'i-heroicons-eye' },
-]);
+];
 
 const selectedCategory = ref('all');
 
-const models = ref([
+const models = ref<Model[]>([
   {
     id: 1,
     name: 'MobileNet CNN',
@@ -330,7 +465,7 @@ const models = ref([
     inferenceTime: 45,
     color: '#8B5CF6',
     icon: 'i-heroicons-cpu-chip',
-    previewImage: '/mobile_images/default-phone.png',
+    previewImage: '/mobile_images/default-phone.svg',
     useCases: ['Device Classification', 'Feature Recognition', 'Image Processing'],
     metrics: [
       { name: 'Parameters', value: '4.2M' },
@@ -351,7 +486,7 @@ const models = ref([
     inferenceTime: 67,
     color: '#3B82F6',
     icon: 'i-heroicons-chat-bubble-left-right',
-    previewImage: '/mobile_images/default-phone.png',
+    previewImage: '/mobile_images/default-phone.svg',
     useCases: ['Sentiment Analysis', 'Review Classification', 'User Feedback'],
     metrics: [
       { name: 'Hidden Units', value: '256' },
@@ -372,7 +507,7 @@ const models = ref([
     inferenceTime: 12,
     color: '#10B981',
     icon: 'i-heroicons-chart-bar',
-    previewImage: '/mobile_images/default-phone.png',
+    previewImage: '/mobile_images/default-phone.svg',
     useCases: ['Price Prediction', 'Market Analysis', 'Feature Importance'],
     metrics: [
       { name: 'Trees', value: '100' },
@@ -393,7 +528,7 @@ const models = ref([
     inferenceTime: 23,
     color: '#F59E0B',
     icon: 'i-heroicons-squares-2x2',
-    previewImage: '/mobile_images/default-phone.png',
+    previewImage: '/mobile_images/default-phone.svg',
     useCases: ['Market Segmentation', 'Pattern Discovery', 'Device Grouping'],
     metrics: [
       { name: 'Clusters', value: '8' },
@@ -414,7 +549,7 @@ const models = ref([
     inferenceTime: 78,
     color: '#EF4444',
     icon: 'i-heroicons-sparkles',
-    previewImage: '/mobile_images/default-phone.png',
+    previewImage: '/mobile_images/default-phone.svg',
     useCases: ['App Classification', 'Category Prediction', 'Content Analysis'],
     metrics: [
       { name: 'Layers', value: '12' },
@@ -426,12 +561,12 @@ const models = ref([
 
 const filteredModels = computed(() => {
   if (selectedCategory.value === 'all') return models.value;
-  return models.value.filter((model) => model.categoryId === selectedCategory.value);
+  return models.value.filter((model: Model) => model.categoryId === selectedCategory.value);
 });
 
-const selectedModel = ref<any>(null);
+const selectedModel = ref<Model | null>(null);
 
-function selectModel(model: any) {
+function selectModel(model: Model) {
   selectedModel.value = model;
   showModelDetails.value = true;
 }
@@ -459,6 +594,20 @@ async function runDemo() {
     isRunning.value = false;
   }, 1000);
 }
+
+const deployModel = (model: Model) => {
+  const analytics = useAnalytics();
+  analytics.trackEvent('model_deploy', { modelId: model.id, modelName: model.name });
+  // In a real app, this would trigger deployment API
+  console.log('Deploying model:', model.name);
+};
+
+const downloadModel = (model: Model) => {
+  const analytics = useAnalytics();
+  analytics.trackEvent('model_download', { modelId: model.id, modelName: model.name });
+  // In a real app, this would download the model file
+  console.log('Downloading model:', model.name);
+};
 
 const performanceStats = ref([
   {

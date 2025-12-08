@@ -1,0 +1,45 @@
+# Python API Dockerfile for development
+FROM python:3.11-slim
+
+LABEL maintainer="MatLab Nuxt App"
+LABEL description="Python FastAPI backend for MatLab Nuxt App"
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y \
+    build-essential \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONIOENCODING=utf-8 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+# Copy requirements first for better caching
+COPY requirements.txt /app/requirements.txt
+COPY python_api/requirements.txt /app/python_api/requirements.txt 2>/dev/null || true
+
+# Install Python dependencies
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r /app/requirements.txt && \
+    if [ -f /app/python_api/requirements.txt ]; then \
+        pip install --no-cache-dir -r /app/python_api/requirements.txt; \
+    fi
+
+# Copy application code
+COPY python_api /app/python_api
+COPY data /app/data 2>/dev/null || true
+
+# Set working directory to python_api
+WORKDIR /app/python_api
+
+# Expose port
+EXPOSE 8000
+
+# Default command (can be overridden in docker-compose)
+CMD ["python", "api.py"]

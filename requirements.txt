@@ -3,7 +3,9 @@
 # Or use the setup script: setup_python_env.bat (Windows) or setup_python_env.sh (Linux/Mac)
 
 # Core scientific computing libraries
-numpy>=1.24.0
+# Note: numpy>=2.0.0 required for models saved with newer numpy versions
+# If you get "No module named 'numpy._core'" error, reinstall: pip install --upgrade --force-reinstall numpy
+numpy>=2.0.0,<3.0.0
 scipy>=1.10.0
 
 # Data processing
@@ -22,15 +24,18 @@ ipython>=8.0.0  # Enhanced Python shell
 matplotlib>=3.7.0  # For plotting and visualization
 
 # Machine Learning (if needed for analysis)
-scikit-learn>=1.3.0  # Optional, for ML analysis
+# Note: Models may have been saved with newer versions. If you get version warnings,
+# upgrade: pip install --upgrade scikit-learn
+scikit-learn>=1.3.0,<2.0.0  # Optional, for ML analysis
 joblib>=1.3.0  # For model serialization
 lightgbm>=4.0.0  # Gradient boosting framework
 shap>=0.44.0  # Explainability (SHAP values for tree/linear models)
 xgboost>=3.1.2  # Extreme Gradient Boosting (ensemble diversity)
 
 # FastAPI and server dependencies
-fastapi>=0.104.0
-uvicorn[standard]>=0.24.0
+# Updated to FastAPI 0.115+ which supports anyio>=4.0.0 and starlette>=0.28.0
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
 pydantic>=2.0.0
 
 # HTTP client for API testing

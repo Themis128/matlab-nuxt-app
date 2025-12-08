@@ -1,6 +1,7 @@
 /**
  * Composable for checking API health status
  */
+import { ref, readonly, onMounted, onUnmounted } from 'vue';
 
 export const useApiStatus = () => {
   const status = ref({
@@ -21,11 +22,10 @@ export const useApiStatus = () => {
       // Check Python API health through Nuxt API endpoint
       // Using type assertion to bypass Nuxt route type inference (excessive stack depth issue)
       // This is a known issue with complex route type inference in Nuxt 4 when there are many routes
-      // @ts-expect-error - Excessive stack depth in route type inference (non-blocking)
-      const response = (await $fetch('/api/health', {
+      const response = await $fetch<{ status: string; error?: string }>('/api/health' as any, {
         method: 'GET',
         timeout: 3000, // 3 second timeout
-      })) as { status: string; error?: string };
+      });
 
       if (response?.status === 'healthy') {
         status.value.isOnline = true;

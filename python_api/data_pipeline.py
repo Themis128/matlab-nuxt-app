@@ -154,7 +154,14 @@ class DataPipeline:
             return results
 
         except Exception as e:
-            logger.error(f"Failed to load dataset with images: {e}")
+            logger.error(f"Failed to load dataset with images: {e}", exc_info=True)
+            # Clean up any partial state
+            try:
+                if hasattr(self, 'db_manager') and self.db_manager:
+                    # Close any open connections
+                    pass
+            except Exception as cleanup_error:
+                logger.warning(f"Error during cleanup: {cleanup_error}")
             raise
 
     def _load_csv_dataset(self, csv_path: str) -> str:

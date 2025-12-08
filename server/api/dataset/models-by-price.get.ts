@@ -31,7 +31,7 @@ interface ModelsByPriceResponse {
   brands: string[];
 }
 
-export default defineEventHandler(async (event): Promise<ModelsByPriceResponse> => {
+export default defineEventHandler(async (event: any): Promise<ModelsByPriceResponse> => {
   try {
     const query = getQuery(event);
     const price = parseFloat(query.price as string);

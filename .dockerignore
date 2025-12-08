@@ -1,30 +1,36 @@
-# Node.js
-node_modules/
+# Dependencies
+node_modules
 npm-debug.log
 yarn-error.log
-.npm/
-.yarn/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
 
-# Nuxt
-.nuxt/
-.output/
-dist/
+# Build outputs
+.nuxt
+.output
+dist
+build
+coverage
+.vercel
 
-# Environment
-.env
-.env.local
-.env.*.local
-.env.development
-.env.production
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv
+env
+ENV
+.venv
+*.egg-info
+.pytest_cache
+*.egg
 
-# Git
-.git/
-.gitignore
-.gitattributes
-
-# IDEs
-.vscode/
-.idea/
+# IDE
+.vscode
+.idea
 *.swp
 *.swo
 *~
@@ -32,67 +38,43 @@ dist/
 # OS
 .DS_Store
 Thumbs.db
-Desktop.ini
+*.log
 
-# Testing
-coverage/
-.nyc_output/
-test-results/
-screenshots/
+# Git
+.git
+.gitignore
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Test
+test-results
+playwright-report
+playwright/.cache
+
+# Data (large files)
+lancedb_data
+*.lance
+*.manifest
+*.txn
+
+# Temporary
+tmp
+temp
+*.tmp
 
 # Documentation
-docs/
-wiki/
+docs
 *.md
 !README.md
 
-# MATLAB
-*.asv
-*.m~
-matlab-capabilities-report.txt
+# Scripts (not needed in container)
+scripts
+tools
 
-# Python cache
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-*.so
-*.egg
-*.egg-info/
-dist/
-build/
-
-# Backups
-*.backup
-*.bak
-*.old
-
-# Logs
-logs/
-*.log
-
-# Data (exclude large datasets from container)
-data/*.csv
-data/*.json
-mobiles-dataset-docs/preprocessed/*.mat
-
-# Images (exclude from container, serve via CDN)
-public/images/mobiles/**/*.jpg
-public/images/mobiles/**/*.png
-public/images/mobiles/**/*.webp
-
-# Scripts not needed in production
-scripts/
-infrastructure/legacy/
-tests/
-
-# Config files not needed in container
-eslint.config.cjs
-cspell.json
-tsconfig.json
-
-# Temporary files
-temp/
-tmp/
-*.tmp
+# Config (keep only necessary)
+!nuxt.config.ts
+!package.json
+!requirements.txt

@@ -8,7 +8,7 @@
  * Usage: node create-github-project.js [--org ORGANIZATION] [--user]
  */
 
-import { execSync } from 'child_process';
+import { execFileSync } from 'child_process';
 
 // Project configuration
 const PROJECT_CONFIG = {
@@ -58,7 +58,10 @@ function getOwnerAndType() {
 
   // Try to detect from git remote
   try {
-    const remoteUrl = execSync('git config --get remote.origin.url', { encoding: 'utf-8' }).trim();
+    // SECURITY: Use execFileSync with array arguments instead of execSync to prevent command injection
+    const remoteUrl = execFileSync('git', ['config', '--get', 'remote.origin.url'], {
+      encoding: 'utf-8',
+    }).trim();
 
     // Validate the remote URL looks safe (GitHub URL pattern)
     if (
@@ -98,12 +101,27 @@ function createProjectGraphQL(owner, _ownerType) {
   try {
     // Build command safely - owner is already validated with regex
     const ownerArg = owner || '@me';
-    const titleArg = PROJECT_CONFIG.name.replace(/"/g, '\\"'); // Escape quotes in title
+    // SECURITY: Additional validation and sanitization
+    if (
+      ownerArg !== '@me' &&
+      !/^[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9]$|^[a-zA-Z0-9]$/.test(ownerArg)
+    ) {
+      throw new Error('Invalid owner name');
+    }
 
-    const command = `gh project create --owner "${ownerArg}" --title "${titleArg}"`;
+    // Sanitize title to prevent command injection
+    const titleArg = PROJECT_CONFIG.name.replace(/[;"`$\\]/g, '').trim();
+    if (!titleArg) {
+      throw new Error('Project name cannot be empty after sanitization');
+    }
 
-    console.log(`Executing: ${command}`);
-    const result = execSync(command, { encoding: 'utf-8', stdio: 'pipe' });
+    // SECURITY: Use execFileSync with array arguments to prevent command injection
+    // This is safer than execSync as it doesn't use shell interpretation
+    const command = ['gh', 'project', 'create', '--owner', ownerArg, '--title', titleArg];
+
+    console.log(`Executing: ${command.join(' ')}`);
+    // SECURITY: Use execFileSync instead of execSync to prevent shell injection
+    const result = execFileSync(command[0], command.slice(1), { encoding: 'utf-8', stdio: 'pipe' });
     console.log('✅ Project created successfully!');
     console.log(result);
 
@@ -154,7 +172,8 @@ function main() {
 
   // Check if gh CLI supports project creation
   try {
-    execSync('gh project --help', { encoding: 'utf-8', stdio: 'ignore' });
+    // SECURITY: Use execFileSync with array arguments instead of execSync
+    execFileSync('gh', ['project', '--help'], { encoding: 'utf-8', stdio: 'ignore' });
   } catch {
     console.log('⚠️  GitHub CLI project commands may not be available in your version.');
     console.log('📝 Please use the manual guide: CREATE_PROJECT_MANUAL.md\n');

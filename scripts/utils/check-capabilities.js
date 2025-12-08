@@ -1,14 +1,34 @@
-import { exec } from 'child_process';
+import { execFile } from 'child_process';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
-import { dirname, join } from 'path';
+import { dirname, join, resolve, normalize } from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Read MATLAB configuration
-const config = JSON.parse(readFileSync('config/matlab.config.json', 'utf8'));
-const matlabPath = config.matlab.installPath;
+// Validate and sanitize path to prevent directory traversal
+function validatePath(pathToCheck, baseDir) {
+  const resolved = resolve(baseDir, pathToCheck);
+  const normalized = normalize(resolved);
+  if (!normalized.startsWith(normalize(baseDir))) {
+    throw new Error(`Invalid path: ${pathToCheck} - path traversal detected`);
+  }
+  return normalized;
+}
+
+// Read MATLAB configuration with validation
+const configPath = join(process.cwd(), 'config', 'matlab.config.json');
+if (!existsSync(configPath)) {
+  throw new Error(`Configuration file not found: ${configPath}`);
+}
+const config = JSON.parse(readFileSync(configPath, 'utf8'));
+
+// Validate matlab path from config
+if (!config.matlab || !config.matlab.installPath || typeof config.matlab.installPath !== 'string') {
+  throw new Error('Invalid MATLAB configuration: installPath must be a string');
+}
+
+const matlabPath = validatePath(config.matlab.installPath, process.cwd());
 const matlabExe = join(matlabPath, 'matlab.exe');
 const scriptPath = join(__dirname, 'check_matlab_capabilities.m');
 
@@ -26,10 +46,15 @@ if (!existsSync(matlabExe)) {
 // MATLAB command to run the script and exit
 // -batch flag runs MATLAB in batch mode (non-interactive)
 // -r runs the specified command/script
-const matlabCommand = `"${matlabExe}" -batch "run('${scriptPath.replace(/\\/g, '/')}')"`;
+// Sanitize script path for MATLAB command
+const sanitizedScriptPath = scriptPath.replace(/\\/g, '/').replace(/'/g, "''");
 
-exec(
-  matlabCommand,
+// Use execFile with array of arguments to prevent command injection
+const matlabArgs = ['-batch', `run('${sanitizedScriptPath}')`];
+
+execFile(
+  matlabExe,
+  matlabArgs,
   {
     maxBuffer: 10 * 1024 * 1024, // 10MB buffer for large outputs
     timeout: 60000, // 60 second timeout

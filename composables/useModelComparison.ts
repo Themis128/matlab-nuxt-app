@@ -1,65 +1,111 @@
 /**
- * Nuxt 4 composable for model comparison functionality
- * Uses useState for shared state across components
+ * Model Comparison Composable
+ * Provides utilities for comparing different ML models
  */
-interface Model {
+
+interface ModelData {
   id: string;
   name: string;
   brand: string;
   price: number;
-  year: number;
   ram: number;
   battery: number;
-  screen: number;
+  year: number;
+  screen?: number;
+  processor?: string;
+  storage?: number;
 }
 
-export const useModelComparison = () => {
-  const modelsToCompare = useState<Model[]>('comparison-models', () => []);
+export function useModelComparison() {
+  // Reactive state
+  const models = ref<ModelData[]>([]);
+  const isLoading = ref(false);
+  const maxModels = 4;
 
-  const { data, pending, error, refresh } = useFetch<{
-    models: Model[];
-    differences: Record<string, any>;
-  }>('/api/dataset/compare', {
-    method: 'POST',
-    body: computed(() => ({ models: modelsToCompare.value })),
-    watch: [modelsToCompare], // Auto-refetch when models change
-    key: 'model-comparison',
-    lazy: true, // Non-blocking
-    default: () => ({ models: [], differences: {} }),
-  });
+  // Computed properties to match expected interface
+  const comparison = computed(() => ({
+    models: models.value,
+  }));
 
-  const addModel = (model: Model) => {
-    // Limit to 3 models for comparison
-    if (modelsToCompare.value.length < 3) {
-      // Check if model already exists
-      const exists = modelsToCompare.value.some((m) => m.id === model.id);
-      if (!exists) {
-        modelsToCompare.value.push(model);
-      }
+  const canAddMore = computed(() => models.value.length < maxModels);
+
+  /**
+   * Add a model to comparison
+   */
+  const addModel = (model: ModelData) => {
+    // Check if model already exists
+    const exists = models.value.some((m: ModelData) => m.id === model.id);
+    if (exists) return;
+
+    // Check max limit
+    if (models.value.length >= maxModels) {
+      // Remove first model if at limit
+      models.value.shift();
     }
+
+    models.value.push(model);
   };
 
+  /**
+   * Remove a model from comparison
+   */
   const removeModel = (index: number) => {
-    if (index >= 0 && index < modelsToCompare.value.length) {
-      modelsToCompare.value.splice(index, 1);
+    if (index >= 0 && index < models.value.length) {
+      models.value.splice(index, 1);
     }
   };
 
+  /**
+   * Clear all compared models
+   */
   const clearComparison = () => {
-    modelsToCompare.value = [];
+    models.value = [];
   };
 
-  const canAddMore = computed(() => modelsToCompare.value.length < 3);
+  /**
+   * Check if a model is in comparison
+   */
+  const isInComparison = (modelId: string): boolean => {
+    return models.value.some((m: ModelData) => m.id === modelId);
+  };
+
+  /**
+   * Get comparison data for charts
+   */
+  const getComparisonData = () => {
+    return {
+      models: models.value,
+      metrics: ['price', 'ram', 'battery', 'year'] as const,
+      data: models.value.map((model: ModelData) => ({
+        name: model.name,
+        price: model.price,
+        ram: model.ram,
+        battery: model.battery,
+        year: model.year,
+      })),
+    };
+  };
+
+  /**
+   * Navigate to comparison page
+   */
+  const navigateToComparison = () => {
+    if (models.value.length > 0) {
+      navigateTo('/compare');
+    }
+  };
 
   return {
-    comparison: data,
-    isLoading: pending,
-    error,
-    models: readonly(modelsToCompare),
+    models: readonly(models),
+    comparison: readonly(comparison),
+    isLoading: readonly(isLoading),
+    canAddMore,
+    maxModels,
     addModel,
     removeModel,
     clearComparison,
-    canAddMore,
-    refresh,
+    isInComparison,
+    getComparisonData,
+    navigateToComparison,
   };
-};
+}

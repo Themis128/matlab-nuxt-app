@@ -1,9 +1,14 @@
 /**
  * Composable for managing prediction history
- * Stores predictions in localStorage
+ *
+ * @deprecated Use `usePredictions()` composable instead
+ * This composable is kept for backward compatibility but will be removed in a future version.
+ *
+ * Migration: Replace `usePredictionHistory()` with `usePredictions()` from
+ * `~/app/application/features/predictions/composables/usePredictions`
  */
 
-import type { PredictionHistoryItem } from '~/stores/predictionHistoryStore';
+import type { PredictionHistoryItem } from '../application/features/predictions/store/predictions.store';
 
 const STORAGE_KEY = 'mobile-prediction-history';
 const MAX_HISTORY = 50; // Keep last 50 predictions

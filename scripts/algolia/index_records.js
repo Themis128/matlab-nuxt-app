@@ -53,9 +53,33 @@ async function main() {
   let records = null;
 
   if (opts.file) {
-    const filePath = path.isAbsolute(opts.file) ? opts.file : path.join(process.cwd(), opts.file);
-    console.log(`Reading local file ${filePath}`);
-    const data = await fs.readFile(filePath, 'utf8');
+    // SECURITY: Validate and sanitize file path to prevent path traversal
+    let filePath;
+    if (path.isAbsolute(opts.file)) {
+      filePath = opts.file;
+    } else {
+      filePath = path.join(process.cwd(), opts.file);
+    }
+
+    // Resolve to absolute path and validate it's within current working directory
+    const resolvedPath = path.resolve(filePath);
+    const cwd = process.cwd();
+    const resolvedCwd = path.resolve(cwd);
+
+    // Ensure the resolved path is within the current working directory
+    if (!resolvedPath.startsWith(resolvedCwd)) {
+      console.error(`Security: File path outside working directory: ${opts.file}`);
+      process.exit(5);
+    }
+
+    // Additional check: ensure no path traversal sequences
+    if (resolvedPath.includes('..')) {
+      console.error(`Security: Path traversal detected in file path: ${opts.file}`);
+      process.exit(5);
+    }
+
+    console.log(`Reading local file ${resolvedPath}`);
+    const data = await fs.readFile(resolvedPath, 'utf8');
     records = JSON.parse(data);
   } else {
     // fetch sample dataset from Algolia dashboard

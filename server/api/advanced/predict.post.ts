@@ -1,21 +1,22 @@
-import { getPythonApiUrl } from '../../utils/get-python-api-url';
+import { callPythonAPI } from '../../utils/python-api';
+import { handleAPIError, AppError, ErrorCodes } from '../../utils/error-handler';
+import { logger } from '../../utils/logger';
 
-export default defineEventHandler(async (event) => {
-  // Set CORS headers
-  setHeader(event, 'Access-Control-Allow-Origin', '*');
-  setHeader(event, 'Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  setHeader(event, 'Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
+export default defineEventHandler(async (event: any) => {
   // Handle preflight requests
   if (getMethod(event) === 'OPTIONS') {
     return { ok: true };
   }
 
+  const startTime = Date.now();
+
   try {
-    const pythonApiUrl = getPythonApiUrl(event);
     const body = await readBody(event);
 
-    console.warn('Advanced prediction request:', body);
+    logger.debug('Advanced prediction request', {
+      endpoint: '/api/advanced/predict',
+      hasBody: !!body,
+    });
 
     // Transform field names from camelCase to snake_case for Python API
     const transformedBody = {
@@ -33,29 +34,36 @@ export default defineEventHandler(async (event) => {
       storage: body.storage,
     };
 
-    const response = await fetch(`${pythonApiUrl}/api/advanced/predict`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(transformedBody),
-      signal: AbortSignal.timeout(30000), // 30 second timeout for ML predictions
-    });
+    // Use enhanced Python API utility with circuit breaker
+    const result = await callPythonAPI<unknown>(
+      '/api/advanced/predict',
+      transformedBody,
+      event,
+      'POST',
+      {
+        timeout: 30000, // 30 second timeout for ML predictions
+        useCache: false, // Don't cache predictions
+        skipCircuitBreaker: false,
+      }
+    );
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error(`Python API error ${response.status}:`, errorText);
-      throw new Error(`Python API returned ${response.status}: ${errorText}`);
+    if (!result) {
+      throw new AppError('Python API is not available', 503, ErrorCodes.EXTERNAL_API_ERROR);
     }
 
-    const result = await response.json();
-    console.warn('Advanced prediction result:', result);
+    const duration = Date.now() - startTime;
+    logger.info('Advanced prediction successful', {
+      endpoint: '/api/advanced/predict',
+      duration,
+    });
+
     return result;
   } catch (error: unknown) {
-    console.error('Error in advanced prediction:', error);
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'Failed to get advanced prediction',
+    const duration = Date.now() - startTime;
+    logger.logError('Advanced prediction failed', error as Error, {
+      endpoint: '/api/advanced/predict',
+      duration,
     });
+    return handleAPIError(event, error);
   }
 });

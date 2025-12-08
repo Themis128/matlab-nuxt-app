@@ -108,8 +108,15 @@ def load_advanced_model(model_type: str):
         file_hash = hashlib.sha256(file_content).hexdigest()
         logger.info(f"Model file hash: {file_hash}")
 
-        # Load model using safe pickle loading
-        model = pickle.loads(file_content)
+        # SECURITY: Validate model file path is within trusted directory
+        if not str(model_path).startswith(str(models_dir.resolve())):
+            logger.error(f"Model path outside trusted directory: {model_path}")
+            return None
+
+        # Load model using safe pickle loading utility
+        # SECURITY: Use centralized safe_load_pickle for validation
+        from .pickle_security import safe_load_pickle
+        model = safe_load_pickle(model_path, models_dir, max_size=100 * 1024 * 1024)
 
         _model_cache[model_type] = model
         logger.info(f"Loaded advanced model: {model_type}")
@@ -128,6 +135,12 @@ def get_scaler_for_model(model_type: str):
         import pickle
         from pathlib import Path
 
+        # SECURITY: Validate model_type to prevent path traversal
+        # Only allow model types from the predefined MODEL_TYPES dictionary
+        if model_type not in MODEL_TYPES:
+            logger.error(f"Invalid model_type: {model_type}. Must be one of: {list(MODEL_TYPES.keys())}")
+            return None
+
         models_dir = Path(__file__).parent / "trained_models"
 
         # Different models have different scaler naming conventions
@@ -138,6 +151,11 @@ def get_scaler_for_model(model_type: str):
         else:
             # For other models, try to find a matching scaler
             scaler_file = f"{model_type}_scaler.pkl"
+
+        # SECURITY: Additional validation - ensure scaler_file doesn't contain path traversal
+        if ".." in scaler_file or "/" in scaler_file or "\\" in scaler_file:
+            logger.error(f"Invalid scaler_file name: {scaler_file}")
+            return None
 
         scaler_path = models_dir / scaler_file
 
@@ -150,11 +168,18 @@ def get_scaler_for_model(model_type: str):
             with open(scaler_path, "rb") as f:
                 scaler_content = f.read()
 
+            # SECURITY: Validate scaler path is within trusted directory
+            if not str(scaler_path).startswith(str(models_dir.resolve())):
+                logger.error(f"Scaler path outside trusted directory: {scaler_path}")
+                return None
+
             # Verify file hash
             file_hash = hashlib.sha256(scaler_content).hexdigest()
             logger.info(f"Scaler file hash: {file_hash}")
 
-            return pickle.loads(scaler_content)
+            # SECURITY: Use centralized safe_load_pickle for validation
+            from .pickle_security import safe_load_pickle
+            return safe_load_pickle(scaler_path, models_dir, max_size=10 * 1024 * 1024)
         else:
             # Fallback to general scalers
             general_scaler = models_dir / "price_predictor_scalers.pkl"
@@ -167,10 +192,17 @@ def get_scaler_for_model(model_type: str):
                 with open(general_scaler, "rb") as f:
                     scaler_content = f.read()
 
+                # SECURITY: Validate general scaler path is within trusted directory
+                if not str(general_scaler).startswith(str(models_dir.resolve())):
+                    logger.error(f"General scaler path outside trusted directory: {general_scaler}")
+                    return None
+
                 file_hash = hashlib.sha256(scaler_content).hexdigest()
                 logger.info(f"General scaler file hash: {file_hash}")
 
-                return pickle.loads(scaler_content)
+                # SECURITY: Use centralized safe_load_pickle for validation
+                from .pickle_security import safe_load_pickle
+                return safe_load_pickle(general_scaler, models_dir, max_size=10 * 1024 * 1024)
 
         return None
 

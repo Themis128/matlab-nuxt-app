@@ -29,9 +29,16 @@ def check_model_file_size():
 
 def measure_loading_time():
     """Measure model loading time."""
+    # SECURITY: Validate model path is within trusted directory
+    # Only load pickle files from trusted locations
+    if 'trained_models' not in str(DISTILLED_MODEL_PATH) and 'models' not in str(DISTILLED_MODEL_PATH):
+        raise ValueError(f"Model path outside trusted directory: {DISTILLED_MODEL_PATH}")
+
     start = time.perf_counter()
-    with open(DISTILLED_MODEL_PATH, "rb") as f:
-        model = pickle.load(f)
+    # SECURITY: Use centralized safe_load_pickle for validation
+    from pickle_security import safe_load_pickle
+    models_dir = DISTILLED_MODEL_PATH.parent
+    model = safe_load_pickle(DISTILLED_MODEL_PATH, models_dir, max_size=100 * 1024 * 1024)
     load_time = (time.perf_counter() - start) * 1000  # ms
     print(f"✓ Model loading time: {load_time:.3f} ms")
     return model, load_time

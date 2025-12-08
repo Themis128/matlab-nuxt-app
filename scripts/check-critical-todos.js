@@ -4,7 +4,7 @@
  * and exits with non-zero code if any are found. Designed for CI and local checks.
  */
 
-import { execSync } from 'child_process';
+import { execFileSync } from 'child_process';
 import fs from 'fs/promises';
 import path from 'path';
 
@@ -63,6 +63,31 @@ async function walkDir(dir) {
   return files;
 }
 
+/**
+ * Validate and sanitize file path to prevent path traversal
+ * Returns the resolved path if valid, null otherwise
+ */
+function validateFilePath(filePath, rootDir) {
+  try {
+    const resolved = path.resolve(filePath);
+    const resolvedRoot = path.resolve(rootDir);
+
+    // Ensure the resolved path is within the root directory
+    if (!resolved.startsWith(resolvedRoot + path.sep) && resolved !== resolvedRoot) {
+      return null;
+    }
+
+    // Additional check: ensure no path traversal sequences in the original path
+    if (filePath.includes('..')) {
+      return null;
+    }
+
+    return resolved;
+  } catch {
+    return null;
+  }
+}
+
 async function scanFiles(root, tags, files = null) {
   const nodePathFilter = (p) => {
     // ignore binary or paths in EXCLUDE_DIRS
@@ -78,9 +103,16 @@ async function scanFiles(root, tags, files = null) {
     })(?:\\([^)]*\\))?(?:\\s*@\\w+)?[:\\s-]*(.*)`,
     'i'
   );
+  // SECURITY: Validate all file paths before reading to prevent path traversal
   for (const f of fileList) {
     try {
-      const content = await fs.readFile(f, 'utf8');
+      // SECURITY: Validate file path to prevent path traversal attacks
+      const validatedPath = validateFilePath(f, root);
+      if (!validatedPath) {
+        console.warn(`Security: Skipping invalid file path: ${f}`);
+        continue;
+      }
+      const content = await fs.readFile(validatedPath, 'utf8');
       const lines = content.split('\n');
       for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
@@ -110,7 +142,7 @@ async function scanFiles(root, tags, files = null) {
           // find which tag - case-insensitive
           const tag = (line.match(new RegExp(tagsRegex, 'i')) || [])[0];
           const msg = m[1] || '';
-          results.push({ file: f, line: i + 1, tag, message: msg.trim() });
+          results.push({ file: validatedPath, line: i + 1, tag, message: msg.trim() });
         }
       }
     } catch {
@@ -125,12 +157,29 @@ async function main() {
   const argv = process.argv.slice(2);
   const staged = argv.includes('--staged') || false;
   const filesArg = argv.find((a) => a.startsWith('--files='));
-  const baseArg = (argv.find((a) => a.startsWith('--base=')) || '').replace('--base=', '');
+  const baseArgRaw = (argv.find((a) => a.startsWith('--base=')) || '').replace('--base=', '');
+  // SECURITY: Sanitize baseArg to prevent command injection
+  // Only allow alphanumeric, dash, underscore, slash, and dot characters for git refs
+  const baseArg = baseArgRaw && /^[a-zA-Z0-9\-_./]+$/.test(baseArgRaw) ? baseArgRaw : '';
   let targetFiles = null;
   if (staged) {
     try {
-      const out = execSync('git diff --staged --name-only', { encoding: 'utf8' });
-      targetFiles = out.split(/\r?\n/).filter(Boolean);
+      // SECURITY: Use execFileSync with array arguments instead of execSync
+      const out = execFileSync('git', ['diff', '--staged', '--name-only'], { encoding: 'utf8' });
+      const rawFiles = out.split(/\r?\n/).filter(Boolean);
+      // SECURITY: Validate all file paths from git output to prevent path traversal
+      targetFiles = rawFiles
+        .map((p) => {
+          const resolved = path.resolve(root, p);
+          const resolvedRoot = path.resolve(root);
+          // Ensure the resolved path is within the root directory
+          if (!resolved.startsWith(resolvedRoot + path.sep) && resolved !== resolvedRoot) {
+            console.warn(`Security: Skipping file path outside working directory: ${p}`);
+            return null;
+          }
+          return resolved;
+        })
+        .filter(Boolean);
     } catch {
       // ignore
     }
@@ -140,17 +189,82 @@ async function main() {
     targetFiles = val
       .split(',')
       .map((p) => p.trim())
-      .filter(Boolean);
+      .filter(Boolean)
+      // SECURITY: Validate file paths BEFORE calling path.resolve() to prevent path traversal
+      .map((p) => {
+        // First validate the string input for path traversal sequences
+        if (p.includes('..')) {
+          console.error(`Security: Path traversal detected in file path: ${p}`);
+          return null;
+        }
+
+        // Now safe to resolve the path
+        const cwd = process.cwd();
+        const resolvedCwd = path.resolve(cwd);
+        const resolved = path.resolve(p);
+
+        // Ensure the resolved path is within the current working directory
+        if (!resolved.startsWith(resolvedCwd)) {
+          console.error(`Security: File path outside working directory: ${p}`);
+          return null;
+        }
+
+        return resolved;
+      })
+      .filter(Boolean); // Remove null values
   }
   if (baseArg) {
     try {
-      // Fetch base and diff
-      execSync(`git fetch origin ${baseArg}`, { stdio: 'ignore' });
-      const out = execSync(
-        `git diff --name-only origin/${baseArg}...HEAD || git diff --name-only HEAD~1..HEAD`,
-        { encoding: 'utf8' }
-      );
-      targetFiles = out.split(/\r?\n/).filter(Boolean);
+      // SECURITY: Sanitize baseArg to prevent command injection - only allow alphanumeric, dash, underscore, slash, and dot
+      if (!/^[a-zA-Z0-9._\/-]+$/.test(baseArg)) {
+        console.error(`Invalid base argument: ${baseArg}`);
+        process.exit(1);
+      }
+      // Additional sanitization: remove any remaining unsafe characters
+      const sanitizedBase = baseArg.replace(/[^a-zA-Z0-9._\/-]/g, '');
+      if (sanitizedBase !== baseArg) {
+        console.error(`Security: Invalid characters in base argument: ${baseArg}`);
+        process.exit(1);
+      }
+      // SECURITY: Fetch base and diff using execFileSync with array arguments
+      execFileSync('git', ['fetch', 'origin', sanitizedBase], { stdio: 'ignore' });
+      let out;
+      try {
+        // SECURITY: Use separate arguments instead of string interpolation for ref pattern
+        // Additional validation: ensure base ref is safe
+        if (!/^[a-zA-Z0-9._\/-]+$/.test(sanitizedBase)) {
+          throw new Error('Invalid base ref');
+        }
+        // SECURITY: Construct ref pattern safely after validation
+        // Use two-dot notation with separate arguments (safer than three-dot notation)
+        // This compares origin/branch to HEAD
+        const baseRef = `origin/${sanitizedBase}`;
+        // Additional validation: ensure constructed ref is safe
+        if (!/^origin\/[a-zA-Z0-9._\/-]+$/.test(baseRef)) {
+          throw new Error('Invalid constructed ref');
+        }
+        // SECURITY: Pass refs as separate arguments using two-dot notation
+        out = execFileSync('git', ['diff', '--name-only', baseRef, 'HEAD'], {
+          encoding: 'utf8',
+        });
+      } catch {
+        // Fallback to HEAD~1 if branch comparison fails
+        out = execFileSync('git', ['diff', '--name-only', 'HEAD~1..HEAD'], { encoding: 'utf8' });
+      }
+      const rawFiles = out.split(/\r?\n/).filter(Boolean);
+      // SECURITY: Validate all file paths from git output to prevent path traversal
+      targetFiles = rawFiles
+        .map((p) => {
+          const resolved = path.resolve(root, p);
+          const resolvedRoot = path.resolve(root);
+          // Ensure the resolved path is within the root directory
+          if (!resolved.startsWith(resolvedRoot + path.sep) && resolved !== resolvedRoot) {
+            console.warn(`Security: Skipping file path outside working directory: ${p}`);
+            return null;
+          }
+          return resolved;
+        })
+        .filter(Boolean);
     } catch {
       // ignore
     }

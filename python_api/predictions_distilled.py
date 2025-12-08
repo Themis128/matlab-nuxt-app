@@ -123,6 +123,15 @@ class DistilledPredictor:
                         result_queue.put(("success", model_package))
                     else:
                         result_queue.put(("error", f"Invalid pickle file format: {header!r}"))
+            except ModuleNotFoundError as e:
+                if "numpy._core" in str(e):
+                    error_msg = (
+                        f"NumPy version mismatch. The model was saved with a different NumPy version. "
+                        f"Please reinstall NumPy: pip install --upgrade --force-reinstall numpy>=2.0.0"
+                    )
+                    result_queue.put(("error", error_msg))
+                else:
+                    result_queue.put(("error", f"Module not found: {str(e)}"))
             except Exception as e:
                 result_queue.put(("error", str(e)))
 

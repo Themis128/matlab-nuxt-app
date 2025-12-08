@@ -9,7 +9,7 @@ LABEL fly_launch_runtime="Nuxt"
 # Nuxt app lives here
 WORKDIR /app
 
-# Set production environment
+# Set production environment (can be overridden)
 ENV NODE_ENV="production"
 
 

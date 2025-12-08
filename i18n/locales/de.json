@@ -1,0 +1,180 @@
+{
+  "$schema": "../loccy.config.json",
+  "common": {
+    "app": {
+      "name": "MATLAB Analytics",
+      "tagline": "Deep Learning Plattform",
+      "description": "Erkunde Deep-Learning-Modelle, analysiere Mobiltelefon-Datensätze und entdecke Erkenntnisse mit MATLAB und modernen Web-Technologien"
+    },
+    "navigation": {
+      "home": "Startseite",
+      "search": "Suchen",
+      "compare": "Vergleichen",
+      "aiDemo": "KI-Demo",
+      "settings": "Einstellungen & Präferenzen",
+      "help": "Hilfe & Support",
+      "tools": "Werkzeuge",
+      "priceFinder": "Preisfinder",
+      "advancedModels": "Erweiterte Modelle",
+      "mlComparison": "ML-Vergleich",
+      "abTesting": "A/B-Tests",
+      "modelShowcase": "Modell-Showcase",
+      "apiDocs": "API-Dokumentation",
+      "dataMining": "Datenanalyse",
+      "main": "Hauptmenü",
+      "toolsAndFeatures": "Werkzeuge & Funktionen",
+      "quickActions": "Schnellaktionen"
+    },
+    "actions": {
+      "search": "Suchen",
+      "filter": "Filtern",
+      "compare": "Vergleichen",
+      "view": "Anzeigen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "close": "Schließen",
+      "open": "Öffnen",
+      "submit": "Absenden",
+      "reset": "Zurücksetzen",
+      "export": "Exportieren",
+      "import": "Importieren",
+      "download": "Herunterladen",
+      "upload": "Hochladen",
+      "openMobileMenu": "Mobiles Menü öffnen",
+      "closeMobileMenu": "Mobiles Menü schließen"
+    },
+    "labels": {
+      "loading": "Lädt...",
+      "error": "Fehler",
+      "success": "Erfolg",
+      "warning": "Warnung",
+      "info": "Information",
+      "noData": "Keine Daten verfügbar",
+      "noResults": "Keine Ergebnisse gefunden",
+      "searchPlaceholder": "Telefone, Modelle, Marken suchen...",
+      "selectLanguage": "Sprache auswählen",
+      "selectTheme": "Design auswählen"
+    },
+    "themes": {
+      "light": "Hell",
+      "dark": "Dunkel",
+      "system": "System"
+    },
+    "languages": {
+      "en": "Englisch",
+      "es": "Spanisch",
+      "fr": "Französisch",
+      "de": "Deutsch",
+      "it": "Italienisch",
+      "pt": "Portugiesisch",
+      "el": "Griechisch"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Willkommen bei MATLAB Analytics",
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "viewSite": "Website Anzeigen",
+      "settings": "Einstellungen"
+    },
+    "metrics": {
+      "title": "Leistungsmetriken",
+      "accuracy": "Genauigkeit",
+      "precision": "Präzision",
+      "recall": "Abruf",
+      "f1Score": "F1-Score"
+    },
+    "charts": {
+      "title": "Analytik-Diagramme",
+      "accuracy": "Genauigkeitsdiagramm",
+      "topBrands": "Top-Marken",
+      "geographical": "Geografische Verteilung",
+      "featureImportance": "Feature-Wichtigkeit",
+      "yearlyTrends": "Jährliche Trends"
+    }
+  },
+  "search": {
+    "title": "Suchen",
+    "placeholder": "Telefone, Modelle, Marken suchen...",
+    "filters": {
+      "title": "Filter",
+      "brand": "Marke",
+      "price": "Preisspanne",
+      "year": "Jahr",
+      "features": "Funktionen"
+    },
+    "results": {
+      "title": "Suchergebnisse",
+      "noResults": "Keine Ergebnisse gefunden",
+      "resultsCount": "{count} Ergebnisse gefunden"
+    }
+  },
+  "compare": {
+    "title": "Vergleichen",
+    "selectPhones": "Telefone zum Vergleichen auswählen",
+    "features": "Funktionen",
+    "specifications": "Spezifikationen",
+    "price": "Preis",
+    "rating": "Bewertung"
+  },
+  "preferences": {
+    "title": "Benutzereinstellungen",
+    "theme": {
+      "title": "Design",
+      "description": "Wähle dein bevorzugtes Farbschema"
+    },
+    "animations": {
+      "title": "Animationen",
+      "description": "Animationen aktivieren oder deaktivieren"
+    },
+    "compactMode": {
+      "title": "Kompaktmodus",
+      "description": "Kompakteres Layout verwenden"
+    },
+    "autoRefresh": {
+      "title": "Auto-Aktualisierung",
+      "description": "Daten automatisch aktualisieren"
+    }
+  },
+  "errors": {
+    "generic": "Ein Fehler ist aufgetreten",
+    "network": "Netzwerkfehler. Bitte überprüfe deine Verbindung.",
+    "notFound": "Die angeforderte Ressource wurde nicht gefunden.",
+    "unauthorized": "Du bist nicht berechtigt, auf diese Ressource zuzugreifen.",
+    "serverError": "Ein Serverfehler ist aufgetreten. Bitte versuche es später erneut.",
+    "boundary": {
+      "title": "Etwas ist schief gelaufen",
+      "message": "Ein unerwarteter Fehler ist aufgetreten",
+      "details": "Fehlerdetails",
+      "tryAgain": "Erneut Versuchen",
+      "goHome": "Zur Startseite",
+      "fetchError": "Daten konnten nicht geladen werden. Bitte überprüfe deine Verbindung und versuche es erneut.",
+      "networkError": "Netzwerkfehler. Bitte überprüfe deine Internetverbindung.",
+      "unexpectedError": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut.",
+      "componentError": "Ein Fehler ist in dieser Komponente aufgetreten."
+    }
+  },
+  "sentry": {
+    "dashboard": {
+      "count": "Anzahl",
+      "users": "Benutzer",
+      "lastSeen": "Zuletzt gesehen",
+      "view": "Anzeigen"
+    },
+    "health": {
+      "allSystemsOperational": "Alle Systeme funktionsfähig"
+    }
+  },
+  "analytics": {
+    "labels": {
+      "price": "Preis",
+      "ram": "RAM",
+      "battery": "Batterie",
+      "brand": "Marke"
+    },
+    "priceOnly": "Nur Preis"
+  }
+}

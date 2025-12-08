@@ -5,7 +5,7 @@
  * Supports counters, gauges, distributions, and sets with attribute support.
  */
 
-import { isSentryAvailable } from './useSentryUtils';
+import { isSentryAvailable, getSentryInstance } from './useSentryUtils';
 
 export interface MetricAttributes {
   [key: string]: string | number | boolean | undefined;
@@ -37,10 +37,16 @@ export const useSentryMetrics = () => {
     if (!isSentryAvailable()) return;
 
     try {
-      const Sentry =
-        (globalThis as unknown as { Sentry?: SentryMetricsLike })?.Sentry ||
-        (window as unknown as { Sentry?: SentryMetricsLike })?.Sentry;
-      Sentry?.metrics?.count?.(name, value, options);
+      const Sentry = getSentryInstance() as SentryMetricsLike | null;
+      if (
+        Sentry &&
+        Sentry.metrics &&
+        typeof Sentry.metrics === 'object' &&
+        'count' in Sentry.metrics &&
+        typeof Sentry.metrics.count === 'function'
+      ) {
+        Sentry.metrics.count(name, value, options);
+      }
     } catch (error) {
       console.warn('[Sentry Metrics] Failed to send counter metric:', error);
     }
@@ -54,10 +60,16 @@ export const useSentryMetrics = () => {
     if (!isSentryAvailable()) return;
 
     try {
-      const Sentry =
-        (globalThis as unknown as { Sentry?: SentryMetricsLike })?.Sentry ||
-        (window as unknown as { Sentry?: SentryMetricsLike })?.Sentry;
-      Sentry?.metrics?.gauge?.(name, value, options);
+      const Sentry = getSentryInstance() as SentryMetricsLike | null;
+      if (
+        Sentry &&
+        Sentry.metrics &&
+        typeof Sentry.metrics === 'object' &&
+        'gauge' in Sentry.metrics &&
+        typeof Sentry.metrics.gauge === 'function'
+      ) {
+        Sentry.metrics.gauge(name, value, options);
+      }
     } catch (error) {
       console.warn('[Sentry Metrics] Failed to send gauge metric:', error);
     }
@@ -71,10 +83,16 @@ export const useSentryMetrics = () => {
     if (!isSentryAvailable()) return;
 
     try {
-      const Sentry =
-        (globalThis as unknown as { Sentry?: SentryMetricsLike })?.Sentry ||
-        (window as unknown as { Sentry?: SentryMetricsLike })?.Sentry;
-      Sentry?.metrics?.distribution?.(name, value, options);
+      const Sentry = getSentryInstance() as SentryMetricsLike | null;
+      if (
+        Sentry &&
+        Sentry.metrics &&
+        typeof Sentry.metrics === 'object' &&
+        'distribution' in Sentry.metrics &&
+        typeof Sentry.metrics.distribution === 'function'
+      ) {
+        Sentry.metrics.distribution(name, value, options);
+      }
     } catch (error) {
       console.warn('[Sentry Metrics] Failed to send distribution metric:', error);
     }
@@ -88,10 +106,16 @@ export const useSentryMetrics = () => {
     if (!isSentryAvailable()) return;
 
     try {
-      const Sentry =
-        (globalThis as unknown as { Sentry?: SentryMetricsLike })?.Sentry ||
-        (window as unknown as { Sentry?: SentryMetricsLike })?.Sentry;
-      Sentry?.metrics?.set?.(name, value, options);
+      const Sentry = getSentryInstance() as SentryMetricsLike | null;
+      if (
+        Sentry &&
+        Sentry.metrics &&
+        typeof Sentry.metrics === 'object' &&
+        'set' in Sentry.metrics &&
+        typeof Sentry.metrics.set === 'function'
+      ) {
+        Sentry.metrics.set(name, value, options);
+      }
     } catch (error) {
       console.warn('[Sentry Metrics] Failed to send set metric:', error);
     }

@@ -1,12 +1,32 @@
 <template>
-  <div
-    class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
-  >
+  <!--
+    DaisyUI best practice: Use semantic color classes that adapt to theme
+    bg-base-100 is the main background, bg-base-200 for secondary areas
+  -->
+  <div class="relative min-h-screen overflow-hidden bg-base-100">
+    <!-- Enhanced Background Pattern (subtle, theme-aware) -->
+    <div class="absolute inset-0 bg-grid-pattern opacity-5" />
+    <div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5" />
+
+    <!-- Enhanced Gradient Orbs with Better Animation (using DaisyUI theme colors) -->
+    <div
+      class="absolute left-0 top-0 h-96 w-96 animate-pulse rounded-full bg-gradient-to-r from-primary to-accent opacity-10 mix-blend-multiply blur-3xl filter"
+    />
+    <div
+      class="absolute right-0 top-0 h-96 w-96 animate-pulse rounded-full bg-gradient-to-r from-secondary to-info opacity-10 mix-blend-multiply blur-3xl filter"
+      style="animation-delay: 2s"
+    />
+    <div
+      class="absolute bottom-0 left-1/2 h-96 w-96 animate-pulse rounded-full bg-gradient-to-r from-primary to-secondary opacity-10 mix-blend-multiply blur-3xl filter"
+      style="animation-delay: 4s"
+    />
     <!-- Hidden status indicator to ensure first rounded-full element is green for demo tests -->
-    <span class="rounded-full bg-green-500" style="display: none"></span>
+    <span
+class="rounded-full bg-green-500" style="display: none" />
 
     <!-- Skip to main content link for accessibility -->
-    <a href="#main-content" class="skip-to-main sr-only">Skip to main content</a>
+    <a href="#main-content"
+class="skip-to-main sr-only">Skip to main content</a>
 
     <!-- Enhanced Navigation -->
     <EnhancedNavigation />
@@ -14,15 +34,15 @@
     <!-- Main Content -->
     <main
       id="main-content"
-      class="min-h-[calc(100vh-theme(spacing.16))] sm:min-h-[calc(100vh-theme(spacing.20))]"
+      class="relative z-10 min-h-[calc(100vh-theme(spacing.16))] sm:min-h-[calc(100vh-theme(spacing.20))]"
       role="main"
     >
       <slot />
     </main>
 
-    <!-- Modern Footer -->
+    <!-- Enhanced Modern Footer -->
     <footer
-      class="no-print mt-auto border-t border-gray-200/50 bg-white/90 backdrop-blur-md dark:border-gray-700/50 dark:bg-gray-900/90"
+      class="footer footer-center bg-base-200 text-base-content no-print relative mt-auto border-t-2"
       role="contentinfo"
       aria-label="Site footer"
     >
@@ -31,73 +51,81 @@
           <!-- Company Info -->
           <div class="md:col-span-2">
             <div class="mb-4 flex items-center gap-3">
-              <UIcon
-                name="i-heroicons-cpu-chip"
-                class="h-8 w-8 text-purple-600 dark:text-purple-400"
-              />
+              <Icon name="heroicons:cpu-chip" class="h-8 w-8 text-primary" />
               <div>
-                <div
-                  class="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-lg font-bold text-transparent"
-                >
-                  MATLAB Analytics
-                </div>
-                <div class="text-sm text-gray-500 dark:text-gray-400">Deep Learning Platform</div>
+                <div class="text-lg font-bold text-primary">
+MATLAB Analytics
+</div>
+                <div class="text-sm text-base-content opacity-70">Deep Learning Platform</div>
               </div>
             </div>
-            <p class="mb-4 max-w-md text-gray-600 dark:text-gray-300">
+            <p class="mb-4 max-w-md text-base-content opacity-70">
               Advanced AI analytics platform powered by MATLAB's deep learning capabilities.
               Transform mobile dataset analysis with cutting-edge machine learning models.
             </p>
             <div class="flex gap-4">
-              <UIcon name="i-heroicons-cpu-chip" class="h-6 w-6 text-purple-500" />
-              <UIcon name="i-heroicons-chart-bar" class="h-6 w-6 text-blue-500" />
-              <UIcon name="i-heroicons-cloud" class="h-6 w-6 text-green-500" />
+              <Icon name="heroicons:cpu-chip"
+class="h-6 w-6 text-primary" />
+              <Icon name="heroicons:chart-bar"
+class="h-6 w-6 text-info" />
+              <Icon name="heroicons:cloud"
+class="h-6 w-6 text-success" />
             </div>
           </div>
 
           <!-- Quick Links -->
           <div>
-            <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">Platform</h3>
-            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+            <h3 class="mb-4 font-semibold text-base-content">Platform</h3>
+            <ul class="space-y-2 text-sm">
               <li>
-                <a href="#" class="transition-colors hover:text-purple-600">Analytics Dashboard</a>
+                <NuxtLink
+to="/datamine" class="link link-hover"> Analytics Dashboard </NuxtLink>
               </li>
               <li>
-                <a href="#" class="transition-colors hover:text-purple-600">Model Performance</a>
+                <NuxtLink
+to="/ml-comparison" class="link link-hover"> Model Performance </NuxtLink>
               </li>
               <li>
-                <a href="#" class="transition-colors hover:text-purple-600">Data Visualization</a>
+                <NuxtLink
+to="/datamine" class="link link-hover"> Data Visualization </NuxtLink>
               </li>
               <li>
-                <a href="#" class="transition-colors hover:text-purple-600">API Documentation</a>
+                <NuxtLink
+to="/api-docs" class="link link-hover"> API Documentation </NuxtLink>
               </li>
             </ul>
           </div>
 
           <!-- Resources -->
           <div>
-            <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">Resources</h3>
-            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+            <h3 class="mb-4 font-semibold text-base-content">Resources</h3>
+            <ul class="space-y-2 text-sm">
               <li>
-                <a href="#" class="transition-colors hover:text-purple-600">MATLAB Integration</a>
+                <NuxtLink to="/integration-status"
+class="link link-hover">
+                  MATLAB Integration
+                </NuxtLink>
               </li>
               <li>
-                <a href="#" class="transition-colors hover:text-purple-600">Deep Learning Models</a>
+                <NuxtLink
+to="/advanced" class="link link-hover"> Deep Learning Models </NuxtLink>
               </li>
               <li>
-                <a href="#" class="transition-colors hover:text-purple-600">Dataset Analysis</a>
+                <NuxtLink
+to="/datamine" class="link link-hover"> Dataset Analysis </NuxtLink>
               </li>
               <li>
-                <a href="#" class="transition-colors hover:text-purple-600">Research Papers</a>
+                <NuxtLink
+to="/model-showcase" class="link link-hover"> Research Papers </NuxtLink>
               </li>
             </ul>
           </div>
         </div>
 
         <!-- Bottom Bar -->
-        <div class="border-t border-gray-200 pt-8 dark:border-gray-700">
+        <div class="border-t border-base-300 pt-8">
           <div class="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <div class="text-center text-gray-600 md:text-left dark:text-gray-400">
+            <div class="text-center md:text-left text-base-content opacity-70">
               <p class="text-sm">
                 © {{ currentYear }} MATLAB Analytics Platform. All rights reserved.
               </p>
@@ -105,9 +133,9 @@
                 Powered by MATLAB • Deep Learning • Modern Web Technologies
               </p>
             </div>
-            <div class="flex items-center gap-6 text-sm text-gray-500 dark:text-gray-400">
+            <div class="flex items-center gap-6 text-sm text-base-content opacity-70">
               <span class="flex items-center gap-1">
-                <div class="h-2 w-2 animate-pulse rounded-full bg-green-400"></div>
+                <div class="h-2 w-2 animate-pulse rounded-full bg-success" />
                 System Online
               </span>
               <span>v2.1.0</span>
@@ -122,8 +150,12 @@
 <script setup lang="ts">
 const currentYear = new Date().getFullYear();
 
-// Initialize keyboard shortcuts
-if (useKeyboardShortcuts) {
-  useKeyboardShortcuts();
+// Initialize keyboard shortcuts (if available)
+try {
+  if (typeof useKeyboardShortcuts === 'function') {
+    useKeyboardShortcuts();
+  }
+} catch {
+  // Silently handle if keyboard shortcuts are not available
 }
 </script>

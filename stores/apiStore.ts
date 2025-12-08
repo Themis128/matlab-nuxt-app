@@ -40,7 +40,7 @@ export interface ApiHealthResponse {
  * Enhanced Pinia store for API health management
  */
 export const useApiStore = defineStore('api', {
-  state: (): ApiStatus => ({
+  state: (): ApiStatus & { _healthCheckInterval: ReturnType<typeof setInterval> | null } => ({
     // Core status
     isOnline: false,
     isChecking: false,
@@ -60,6 +60,9 @@ export const useApiStore = defineStore('api', {
     retryCount: 0,
     isRetrying: false,
     nextRetryAt: null,
+
+    // Internal: health check interval reference
+    _healthCheckInterval: null,
   }),
 
   getters: {
@@ -158,7 +161,8 @@ export const useApiStore = defineStore('api', {
         const responseTime = Date.now() - startTime;
         this.responseTime = responseTime;
 
-        if (response?.status === 'healthy') {
+        const healthResponse = response as { status?: string; message?: string };
+        if (healthResponse?.status === 'healthy') {
           this.isOnline = true;
           this.error = null;
           this.errorType = null;
@@ -169,7 +173,7 @@ export const useApiStore = defineStore('api', {
           this.isRetrying = false;
           this.nextRetryAt = null;
         } else {
-          throw new Error(response?.message || 'API returned unhealthy status');
+          throw new Error(healthResponse?.message || 'API returned unhealthy status');
         }
       } catch (error: unknown) {
         this.isOnline = false;
@@ -249,27 +253,37 @@ export const useApiStore = defineStore('api', {
 
     /**
      * Start periodic health checks with improved error handling
+     * Returns interval ID for cleanup
      */
-    startPeriodicHealthCheck() {
+    startPeriodicHealthCheck(): ReturnType<typeof setInterval> {
+      // Clear any existing interval
+      if (this._healthCheckInterval) {
+        clearInterval(this._healthCheckInterval);
+      }
+
       // Initial check
       this.checkApiHealth();
 
       // Set up periodic checks
-      const interval = setInterval(() => {
+      this._healthCheckInterval = setInterval(() => {
         // Skip if currently retrying to avoid overlapping requests
         if (!this.isRetrying) {
           this.checkApiHealth();
         }
       }, 30000); // Check every 30 seconds
 
-      return interval;
+      return this._healthCheckInterval;
     },
 
     /**
      * Stop periodic health checks
      */
-    stopPeriodicHealthCheck(interval: ReturnType<typeof setInterval>) {
-      clearInterval(interval);
+    stopPeriodicHealthCheck(interval?: ReturnType<typeof setInterval>) {
+      const intervalToClear = interval || this._healthCheckInterval;
+      if (intervalToClear) {
+        clearInterval(intervalToClear);
+        this._healthCheckInterval = null;
+      }
     },
 
     /**
@@ -292,5 +306,18 @@ export const useApiStore = defineStore('api', {
       this.isRetrying = false;
       this.nextRetryAt = null;
     },
+
+    /**
+     * Cleanup: stop health checks and clear intervals
+     */
+    cleanup() {
+      this.stopPeriodicHealthCheck();
+    },
+  },
+
+  persist: {
+    key: 'api-store',
+    storage: typeof window !== 'undefined' ? localStorage : undefined,
+    paths: ['lastChecked', 'lastSuccessAt', 'lastFailureAt', 'consecutiveFailures'],
   },
 });

@@ -1,0 +1,324 @@
+{
+  "$schema": "./src/settings/loccy.config.schema.json",
+  "version": "1.0.0",
+  "projectName": "matlab-nuxt-app",
+  "framework": "vue",
+  "i18nFramework": "vue-i18n",
+
+  // Locale Configuration
+  "locales": {
+    "defaultLocale": "en",
+    "supportedLocales": ["en", "es", "fr", "de", "it", "pt", "el"],
+    "localePath": "./i18n/locales",
+    "localeFileFormat": "json",
+    "localeFileNaming": "locale",
+    "localeFileExtension": ".json",
+    "sourceLocale": "en"
+  },
+
+  // File Paths Configuration - Optimized
+  "paths": {
+    "source": [
+      "./components/**/*.vue",
+      "./pages/**/*.vue",
+      "./layouts/**/*.vue",
+      "./composables/**/*.ts",
+      "./plugins/**/*.ts",
+      "./server/**/*.ts"
+    ],
+    "ignore": [
+      "**/node_modules/**",
+      "**/.nuxt/**",
+      "**/.output/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/venv/**",
+      "**/__pycache__/**",
+      "**/test-results/**",
+      "**/playwright-report/**",
+      "**/.git/**",
+      "**/coverage/**",
+      "**/.vscode/**",
+      "**/python_api/**",
+      "**/matlab/**",
+      "**/scripts/**",
+      "**/*.spec.ts",
+      "**/*.test.ts"
+    ],
+    "localeFiles": "./i18n/locales",
+    "usageInclude": ["**/*.{vue,js,ts,jsx,tsx}"],
+    "usageExclude": [
+      "**/node_modules/**",
+      "**/.nuxt/**",
+      "**/.output/**",
+      "**/dist/**",
+      "**/test-results/**",
+      "**/playwright-report/**"
+    ],
+    "resourcesInclude": ["./i18n/locales"],
+    "resourcesExclude": []
+  },
+
+  // Translation Key Configuration
+  "translationKeys": {
+    "namespace": "t",
+    "defaultNamespace": "common",
+    "keySeparator": ".",
+    "namespaceSeparator": ":",
+    "keyNaming": "snake_case",
+    "keyPrefix": "",
+    "keySuffix": "",
+    "autoConsistency": true,
+    "customInstructions": "Use snake_case for keypath names. Follow existing structure patterns (e.g., common.app.name, common.actions.submit).",
+    "rules": {
+      "useSnakeCase": true,
+      "preserveNamespace": true,
+      "maxKeyLength": 100,
+      "avoidSpecialChars": true
+    }
+  },
+
+  // Vue-Specific Configuration
+  "vue": {
+    "useCompositionApi": true,
+    "useScriptSetup": true,
+    "templateInterpolation": true,
+    "componentProps": true,
+    "directiveSupport": true,
+    "customDirectives": ["v-t"],
+    "autoImport": true,
+    "composableName": "useI18n",
+    "composablePath": "vue-i18n"
+  },
+
+  // Nuxt-Specific Configuration - Optimized
+  "nuxt": {
+    "autoImport": true,
+    "composablesPath": "./composables",
+    "pluginsPath": "./plugins",
+    "serverPath": "./server",
+    "modules": ["@nuxtjs/i18n"],
+    "i18nModule": "@nuxtjs/i18n",
+    "i18nConfigPath": "./nuxt.config.ts",
+    "langDir": "locales",
+    "defaultLocale": "en",
+    "strategy": "no_prefix",
+    "detectServerRoutes": true
+  },
+
+  // AI Features Configuration - Optimized for Cost/Performance with Loccy Features
+  "ai": {
+    "enabled": true,
+    "provider": "openai",
+    "model": "gpt-3.5-turbo",
+    "autoTranslate": false,
+    "autoSuggest": true,
+    "contextAware": true,
+    "preserveFormatting": true,
+    "respectPlurals": true,
+    "respectGender": true,
+    "temperature": 0.3,
+    "maxTokens": 2000,
+    "terminologyConsistency": true,
+    "useSimilarMessagesAsContext": true,
+    "similarityThreshold": 0.7,
+    "maxContextMessages": 5,
+    "autoFinalizeDrafts": false,
+    "syncOnEdit": true,
+    "useCodeContext": true,
+    "translationsAutoConsistency": true,
+    "translationsCustomInstructions": "Prefer informal tone. Use sentence case for titles. Keep technical terms in English when they are industry standards.",
+    "translationsCustomInstructionsPerLocale": {
+      "en-US": "Use clear, concise English. Prefer active voice.",
+      "es-ES": "Use 'tú' (informal) instead of 'usted' (formal). Keep technical terms in English when standard.",
+      "fr-FR": "Use 'tu' (informal) instead of 'vous' (formal). Keep technical terms in English when commonly used.",
+      "de-DE": "Use informal 'du' instead of formal 'Sie'. Keep technical terms in English when commonly used.",
+      "it-IT": "Use 'tu' (informal) instead of 'Lei' (formal). Keep technical terms in English when standard.",
+      "pt-BR": "Use 'você' (informal). Keep technical terms in English when commonly used.",
+      "el-GR": "Use informal 'εσύ' (esy). Keep technical terms in English when commonly used."
+    },
+    "rules": {
+      "global": [
+        "Keep brand names untranslated and lowercased (e.g., 'matlab', 'samsung', 'iphone', 'android')",
+        "Keep technical terms in English when they are industry standards (e.g., 'AI', 'API', 'JSON', 'HTTP', 'REST')",
+        "Keep product names and model numbers untranslated (e.g., 'iPhone 15 Pro', 'Galaxy S24')",
+        "Keep code-related terms untranslated (e.g., 'JavaScript', 'TypeScript', 'Vue', 'Nuxt', 'Node.js')",
+        "Keep mathematical and scientific terms in English when they are universal (e.g., 'Deep Learning', 'Neural Network', 'Machine Learning')",
+        "Preserve acronyms and abbreviations (e.g., 'CPU', 'GPU', 'RAM', 'GB', 'MB', 'GHz', 'MHz')",
+        "Keep file extensions and formats untranslated (e.g., '.json', '.csv', '.png', '.webp')",
+        "Keep version numbers and technical specifications as-is (e.g., 'v3.0', '5G', 'Wi-Fi 6')",
+        "Use lowercase for brand names in translations (e.g., 'matlab analytics' not 'MATLAB Analytics')",
+        "Maintain consistent terminology across all locales for technical concepts"
+      ],
+      "locale": {
+        "de": [
+          "Use informal 'du' instead of formal 'Sie' throughout the application",
+          "Use 'Sie' only in error messages or critical system notifications",
+          "Keep technical terms in English when they are commonly used in German tech context",
+          "Use German technical terms when they are more commonly used (e.g., 'Smartphone' instead of 'Mobiltelefon')"
+        ],
+        "es": [
+          "Use 'tú' (informal) instead of 'usted' (formal) for user-facing text",
+          "Use 'usted' only in formal error messages or legal text",
+          "Keep brand names and technical terms in English when they are industry standard",
+          "Use Spanish technical terms when appropriate (e.g., 'teléfono inteligente' for 'smartphone')"
+        ],
+        "fr": [
+          "Use 'tu' (informal) instead of 'vous' (formal) for user interactions",
+          "Use 'vous' only in formal contexts or error messages",
+          "Keep technical terms in English when they are commonly used in French tech context",
+          "Use French technical terms when they are standard (e.g., 'téléphone intelligent' for 'smartphone')"
+        ],
+        "it": [
+          "Use 'tu' (informal) instead of 'Lei' (formal) for user-facing content",
+          "Use 'Lei' only in formal error messages",
+          "Keep technical terms in English when they are industry standard",
+          "Use Italian technical terms when appropriate"
+        ],
+        "pt": [
+          "Use 'você' (informal) instead of 'o senhor/a senhora' (formal) for user interactions",
+          "Use formal address only in error messages or legal text",
+          "Keep technical terms in English when they are commonly used",
+          "Use Portuguese technical terms when standard"
+        ],
+        "el": [
+          "Use informal 'εσύ' (esy) instead of formal 'εσείς' (eseis) for user interactions",
+          "Use formal address only in error messages or system notifications",
+          "Keep technical terms in English when they are commonly used in Greek tech context",
+          "Use Greek technical terms when appropriate"
+        ]
+      }
+    }
+  },
+
+  // Extraction Configuration - Optimized with Loccy Features
+  "extraction": {
+    "enabled": true,
+    "autoExtract": true,
+    "extractOnSave": true,
+    "extractOnChange": false,
+    "extractComments": true,
+    "extractDescriptions": true,
+    "extractContext": true,
+    "preserveWhitespace": false,
+    "preserveHtml": true,
+    "preserveMarkdown": true,
+    "batchExtraction": true,
+    "batchSize": 50,
+    "generateAllTranslations": true,
+    "useContextualSuggestions": true,
+    "suggestKeyPath": true,
+    "autoTranslate": true,
+    "detectKeysInStrings": true
+  },
+
+  // Validation Configuration - Optimized
+  "validation": {
+    "enabled": true,
+    "checkMissingKeys": true,
+    "checkUnusedKeys": true,
+    "checkDuplicateKeys": true,
+    "checkEmptyValues": true,
+    "checkPlaceholderMismatch": true,
+    "warnOnMissing": true,
+    "errorOnMissing": false,
+    "validateOnSave": true,
+    "validateOnChange": false
+  },
+
+  // Formatting Configuration
+  "formatting": {
+    "enabled": true,
+    "sortKeys": true,
+    "sortOrder": "alphabetical",
+    "indentSize": 2,
+    "useTabs": false,
+    "trailingComma": true,
+    "quoteStyle": "double",
+    "lineEnding": "lf",
+    "formatOnSave": true
+  },
+
+  // Inline Editing Configuration
+  "inlineEditing": {
+    "enabled": true,
+    "showInlineEditor": true,
+    "showTranslationHints": true,
+    "showMissingKeys": true,
+    "showUnusedKeys": false,
+    "highlightKeys": true,
+    "quickEdit": true
+  },
+
+  // Code Actions Configuration
+  "codeActions": {
+    "enabled": true,
+    "extractToKey": true,
+    "wrapWithTranslation": true,
+    "replaceWithKey": true,
+    "addMissingKey": true,
+    "removeUnusedKey": true,
+    "renameKey": true,
+    "duplicateKey": true
+  },
+
+  // Hover Information Configuration - Optimized
+  "hover": {
+    "enabled": true,
+    "showTranslation": true,
+    "showAllLocales": false,
+    "showKeyPath": true,
+    "showUsageCount": true,
+    "showLastModified": false,
+    "hoverDelay": 300
+  },
+
+  // Completion Configuration - Optimized
+  "completion": {
+    "enabled": true,
+    "autoCompleteKeys": true,
+    "suggestKeys": true,
+    "suggestValues": true,
+    "filterByNamespace": true,
+    "showKeyPath": true,
+    "maxSuggestions": 20
+  },
+
+  // Sync Configuration
+  "sync": {
+    "enabled": false,
+    "provider": "loccy",
+    "apiKey": "",
+    "projectId": "",
+    "autoSync": false,
+    "syncOnSave": false,
+    "syncInterval": 300000
+  },
+
+  // Performance Configuration - Optimized
+  "performance": {
+    "cacheEnabled": true,
+    "cacheTimeout": 600000,
+    "maxFileSize": 5242880,
+    "maxFiles": 5000,
+    "watchFiles": true,
+    "debounceDelay": 750,
+    "throttleDelay": 100,
+    "batchProcessing": true,
+    "parallelProcessing": true
+  },
+
+  // Debugging Configuration
+  "debug": {
+    "enabled": false,
+    "logLevel": "warn",
+    "traceServer": false,
+    "showNotifications": true
+  },
+
+  // Workspace Configuration
+  "workspace": {
+    "trustRequired": false,
+    "multiRoot": false
+  }
+}

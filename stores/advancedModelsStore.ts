@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { ref, computed } from 'vue';
 
 export interface AdvancedModel {
   type: string;
@@ -36,231 +35,258 @@ export interface AdvancedPredictionRequest {
   storage?: number;
 }
 
-export const useAdvancedModelsStore = defineStore('advancedModels', () => {
-  // State
-  const availableModels = ref<AdvancedModel[]>([]);
-  const selectedModel = ref<string>('distilled');
-  const selectedCurrency = ref<string>('USD');
-  const isLoadingModels = ref(false);
-  const isLoadingPrediction = ref(false);
-  const lastPrediction = ref<PredictionResult | null>(null);
-  const predictionHistory = ref<PredictionResult[]>([]);
-  const processingTime = ref<number>(0);
+interface ModelComparisonResult {
+  [key: string]: unknown;
+}
 
-  // Getters
-  const activeModels = computed(() => availableModels.value.filter((model) => model.available));
+export const useAdvancedModelsStore = defineStore('advancedModels', {
+  state: () => ({
+    availableModels: [] as AdvancedModel[],
+    selectedModel: 'distilled',
+    selectedCurrency: 'USD',
+    isLoadingModels: false,
+    isLoadingPrediction: false,
+    lastPrediction: null as PredictionResult | null,
+    predictionHistory: [] as PredictionResult[],
+    processingTime: 0,
+  }),
 
-  const modelCategories = computed(() => {
-    const categories: Record<string, AdvancedModel[]> = {};
-    availableModels.value.forEach((model) => {
-      if (!categories[model.category]) {
-        categories[model.category] = [];
-      }
-      categories[model.category]!.push(model);
-    });
-    return categories;
-  });
+  getters: {
+    /**
+     * Get only available models
+     */
+    activeModels: (state) => {
+      return state.availableModels.filter((model) => model.available);
+    },
 
-  const currentModel = computed(() =>
-    availableModels.value.find((model) => model.type === selectedModel.value)
-  );
-
-  const currencies = computed(() => [
-    { code: 'USD', symbol: '$', name: 'US Dollar' },
-    { code: 'EUR', symbol: '€', name: 'Euro' },
-    { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
-  ]);
-
-  const currentCurrency = computed(() =>
-    currencies.value.find((currency) => currency.code === selectedCurrency.value)
-  );
-
-  // Actions
-  async function fetchAvailableModels() {
-    if (isLoadingModels.value) return;
-
-    isLoadingModels.value = true;
-    try {
-      const response = await $fetch('/api/advanced/models');
-      availableModels.value = response.models || [];
-
-      // Set default model if current selection is not available
-      if (!availableModels.value.find((model) => model.type === selectedModel.value)) {
-        const firstAvailable = availableModels.value.find((model) => model.available);
-        if (firstAvailable) {
-          selectedModel.value = firstAvailable.type;
+    /**
+     * Group models by category
+     */
+    modelCategories: (state) => {
+      const categories: Record<string, AdvancedModel[]> = {};
+      state.availableModels.forEach((model) => {
+        if (!categories[model.category]) {
+          categories[model.category] = [];
         }
-      }
-    } catch (error) {
-      const logger = useSentryLogger();
-      logger.logError(
-        'Failed to fetch available models',
-        error instanceof Error ? error : new Error(String(error)),
-        {
-          component: 'advancedModelsStore',
-          action: 'fetchAvailableModels',
-        }
-      );
-      // Fallback to hardcoded models
-      availableModels.value = [
-        {
-          type: 'distilled',
-          name: 'Distilled Model',
-          description: 'Production-ready distilled model (10x faster)',
-          available: true,
-          category: 'distilled',
-          accuracy: 98.24,
-        },
-        {
-          type: 'ensemble_stacking',
-          name: 'Ensemble Stacking',
-          description: 'Ensemble stacking with multiple algorithms',
-          available: true,
-          category: 'ensemble',
-          accuracy: 98.76,
-        },
-        {
-          type: 'xgboost_conservative',
-          name: 'XGBoost Conservative',
-          description: 'Conservative XGBoost configuration',
-          available: true,
-          category: 'xgboost',
-          accuracy: 97.32,
-        },
-        {
-          type: 'xgboost_deep',
-          name: 'XGBoost Deep',
-          description: 'Deep XGBoost with complex features',
-          available: true,
-          category: 'xgboost',
-          accuracy: 97.32,
-        },
+        categories[model.category]!.push(model);
+      });
+      return categories;
+    },
+
+    /**
+     * Get current selected model details
+     */
+    currentModel: (state) => {
+      return state.availableModels.find((model) => model.type === state.selectedModel);
+    },
+
+    /**
+     * Available currencies
+     */
+    currencies: () => [
+      { code: 'USD', symbol: '$', name: 'US Dollar' },
+      { code: 'EUR', symbol: '€', name: 'Euro' },
+      { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
+    ],
+
+    /**
+     * Get current currency details
+     */
+    currentCurrency(state): { code: string; symbol: string; name: string } | undefined {
+      const currencies = [
+        { code: 'USD', symbol: '$', name: 'US Dollar' },
+        { code: 'EUR', symbol: '€', name: 'Euro' },
+        { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
       ];
-    } finally {
-      isLoadingModels.value = false;
-    }
-  }
+      return currencies.find((currency) => currency.code === state.selectedCurrency);
+    },
+  },
 
-  async function runPrediction(
-    request: AdvancedPredictionRequest
-  ): Promise<PredictionResult | null> {
-    if (isLoadingPrediction.value) return null;
+  actions: {
+    /**
+     * Fetch available models from API
+     */
+    async fetchAvailableModels() {
+      if (this.isLoadingModels) return;
 
-    isLoadingPrediction.value = true;
-    const startTime = Date.now();
+      this.isLoadingModels = true;
+      try {
+        const response = (await ($fetch as any)('/api/advanced/models')) as {
+          models?: AdvancedModel[];
+        };
+        this.availableModels = response.models || [];
 
-    try {
-      const response = await $fetch('/api/advanced/predict', {
-        method: 'POST',
-        body: request,
-      });
-
-      processingTime.value = Date.now() - startTime;
-      lastPrediction.value = response;
-      predictionHistory.value.unshift(response);
-
-      // Keep only last 10 predictions
-      if (predictionHistory.value.length > 10) {
-        predictionHistory.value = predictionHistory.value.slice(0, 10);
+        // Set default model if current selection is not available
+        if (!this.availableModels.find((model) => model.type === this.selectedModel)) {
+          const firstAvailable = this.availableModels.find((model) => model.available);
+          if (firstAvailable) {
+            this.selectedModel = firstAvailable.type;
+          }
+        }
+      } catch (error) {
+        const logger = useSentryLogger();
+        logger.logError(
+          'Failed to fetch available models',
+          error instanceof Error ? error : new Error(String(error)),
+          {
+            component: 'advancedModelsStore',
+            action: 'fetchAvailableModels',
+          }
+        );
+        // Fallback to hardcoded models
+        this.availableModels = [
+          {
+            type: 'distilled',
+            name: 'Distilled Model',
+            description: 'Production-ready distilled model (10x faster)',
+            available: true,
+            category: 'distilled',
+            accuracy: 98.24,
+          },
+          {
+            type: 'ensemble_stacking',
+            name: 'Ensemble Stacking',
+            description: 'Ensemble stacking with multiple algorithms',
+            available: true,
+            category: 'ensemble',
+            accuracy: 98.76,
+          },
+          {
+            type: 'xgboost_conservative',
+            name: 'XGBoost Conservative',
+            description: 'Conservative XGBoost configuration',
+            available: true,
+            category: 'xgboost',
+            accuracy: 97.32,
+          },
+          {
+            type: 'xgboost_deep',
+            name: 'XGBoost Deep',
+            description: 'Deep XGBoost with complex features',
+            available: true,
+            category: 'xgboost',
+            accuracy: 97.32,
+          },
+        ];
+      } finally {
+        this.isLoadingModels = false;
       }
+    },
 
-      return response;
-    } catch (error) {
-      const logger = useSentryLogger();
-      logger.logError(
-        'Advanced prediction failed',
-        error instanceof Error ? error : new Error(String(error)),
-        {
-          component: 'advancedModelsStore',
-          action: 'predictPrice',
+    /**
+     * Run prediction with selected model
+     */
+    async runPrediction(request: AdvancedPredictionRequest): Promise<PredictionResult | null> {
+      if (this.isLoadingPrediction) return null;
+
+      this.isLoadingPrediction = true;
+      const startTime = Date.now();
+
+      try {
+        const response = (await ($fetch as any)('/api/advanced/predict', {
+          method: 'POST',
+          body: request,
+        })) as PredictionResult;
+
+        this.processingTime = Date.now() - startTime;
+        this.lastPrediction = response;
+        this.predictionHistory.unshift(response);
+
+        // Keep only last 10 predictions
+        if (this.predictionHistory.length > 10) {
+          this.predictionHistory = this.predictionHistory.slice(0, 10);
         }
-      );
-      throw error;
-    } finally {
-      isLoadingPrediction.value = false;
-    }
-  }
 
-  async function compareModels(
-    models: string[],
-    request: Omit<AdvancedPredictionRequest, 'modelType'>
-  ): Promise<any> {
-    if (isLoadingPrediction.value || models.length === 0) return null;
+        return response;
+      } catch (error) {
+        const logger = useSentryLogger();
+        logger.logError(
+          'Advanced prediction failed',
+          error instanceof Error ? error : new Error(String(error)),
+          {
+            component: 'advancedModelsStore',
+            action: 'predictPrice',
+          }
+        );
+        throw error;
+      } finally {
+        this.isLoadingPrediction = false;
+      }
+    },
 
-    isLoadingPrediction.value = true;
-    const startTime = Date.now();
+    /**
+     * Compare multiple models
+     */
+    async compareModels(
+      models: string[],
+      request: Omit<AdvancedPredictionRequest, 'modelType'>
+    ): Promise<ModelComparisonResult | null> {
+      if (this.isLoadingPrediction || models.length === 0) return null;
 
-    try {
-      const response = await $fetch('/api/advanced/compare', {
-        method: 'POST',
-        body: {
-          models,
-          ...request,
-        },
-      });
+      this.isLoadingPrediction = true;
+      const startTime = Date.now();
 
-      processingTime.value = Date.now() - startTime;
+      try {
+        const response = (await ($fetch as any)('/api/advanced/compare', {
+          method: 'POST',
+          body: {
+            models,
+            ...request,
+          },
+        })) as ModelComparisonResult;
 
-      return response;
-    } catch (error) {
-      const logger = useSentryLogger();
-      logger.logError(
-        'Model comparison failed',
-        error instanceof Error ? error : new Error(String(error)),
-        {
-          component: 'advancedModelsStore',
-          action: 'compareModels',
-        }
-      );
-      throw error;
-    } finally {
-      isLoadingPrediction.value = false;
-    }
-  }
+        this.processingTime = Date.now() - startTime;
 
-  function setSelectedModel(modelType: string) {
-    selectedModel.value = modelType;
-  }
+        return response;
+      } catch (error) {
+        const logger = useSentryLogger();
+        logger.logError(
+          'Model comparison failed',
+          error instanceof Error ? error : new Error(String(error)),
+          {
+            component: 'advancedModelsStore',
+            action: 'compareModels',
+          }
+        );
+        throw error;
+      } finally {
+        this.isLoadingPrediction = false;
+      }
+    },
 
-  function setSelectedCurrency(currency: string) {
-    selectedCurrency.value = currency;
-  }
+    /**
+     * Set selected model type
+     */
+    setSelectedModel(modelType: string) {
+      this.selectedModel = modelType;
+    },
 
-  function clearHistory() {
-    predictionHistory.value = [];
-    lastPrediction.value = null;
-  }
+    /**
+     * Set selected currency
+     */
+    setSelectedCurrency(currency: string) {
+      this.selectedCurrency = currency;
+    },
 
-  // Initialize store
-  async function initialize() {
-    await fetchAvailableModels();
-  }
+    /**
+     * Clear prediction history
+     */
+    clearHistory() {
+      this.predictionHistory = [];
+      this.lastPrediction = null;
+    },
 
-  return {
-    // State
-    availableModels,
-    selectedModel,
-    selectedCurrency,
-    isLoadingModels,
-    isLoadingPrediction,
-    lastPrediction,
-    predictionHistory,
-    processingTime,
+    /**
+     * Initialize store
+     */
+    async initialize() {
+      await this.fetchAvailableModels();
+    },
+  },
 
-    // Getters
-    activeModels,
-    modelCategories,
-    currentModel,
-    currencies,
-    currentCurrency,
-
-    // Actions
-    fetchAvailableModels,
-    runPrediction,
-    compareModels,
-    setSelectedModel,
-    setSelectedCurrency,
-    clearHistory,
-    initialize,
-  };
+  persist: {
+    key: 'advanced-models-store',
+    storage: typeof window !== 'undefined' ? localStorage : undefined,
+    paths: ['selectedModel', 'selectedCurrency', 'predictionHistory', 'lastPrediction'],
+  },
 });

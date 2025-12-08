@@ -26,20 +26,48 @@ jobs:
       - name: Run check:todos (scan changed files for FIXME/BUG)
         run: |
           node --version
-          git fetch origin $GITHUB_BASE_REF || true
-          echo "PR base: $GITHUB_BASE_REF"
           INPUT_MODE="${{ inputs.mode }}"
-          if [ -n "$GITHUB_BASE_REF" ] || [ "$INPUT_MODE" = 'diff' ]; then
-            echo "Detecting changed files against $GITHUB_BASE_REF"
-            FILES=$(git diff --name-only origin/$GITHUB_BASE_REF...HEAD || git diff --name-only HEAD~1..HEAD)
-            echo "Files changed: $FILES"
+
+          # Determine the base reference based on event type
+          if [ "${{ github.event_name }}" = 'pull_request' ]; then
+            # PR context: use GITHUB_BASE_REF
+            BASE_REF="${{ github.base_ref }}"
+            if [ -n "$BASE_REF" ]; then
+              git fetch origin "$BASE_REF" || true
+              echo "PR base: $BASE_REF"
+              FILES=$(git diff --name-only origin/"$BASE_REF"...HEAD || echo "")
+            else
+              echo "Warning: GITHUB_BASE_REF not available, falling back to HEAD~1"
+              FILES=$(git diff --name-only HEAD~1..HEAD || echo "")
+            fi
+          elif [ "${{ github.event_name }}" = 'push' ]; then
+            # Push context: compare with previous commit
+            echo "Push event: comparing with previous commit"
+            FILES=$(git diff --name-only HEAD~1..HEAD || echo "")
+          else
+            # workflow_dispatch or other events
+            if [ "$INPUT_MODE" = 'diff' ]; then
+              echo "Manual trigger with diff mode: comparing with previous commit"
+              FILES=$(git diff --name-only HEAD~1..HEAD || echo "")
+            else
+              echo "Manual trigger with full mode: scanning entire repo"
+              FILES=""
+            fi
+          fi
+
+          # Handle based on mode
+          if [ "$INPUT_MODE" = 'full' ]; then
+            echo "Scanning entire repository (full mode)"
+            node ./scripts/check-critical-todos.js
+          else
+            # diff mode: scan only changed files
             if [ -z "$FILES" ]; then
               echo "No files changed — skipping TODO check"
               exit 0
             fi
-            node ./scripts/check-critical-todos.js --files="$FILES"
-          else
-            node ./scripts/check-critical-todos.js
+            echo "Files changed: $FILES"
+            # Properly quote FILES to prevent command injection
+            node ./scripts/check-critical-todos.js --files "$FILES"
           fi
         env:
           CI: true

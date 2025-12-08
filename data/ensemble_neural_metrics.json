@@ -23,7 +23,7 @@
       "cv_rmse": 1363.1808002463958
     },
     "xgboost": {
-      "cv_rmse": 1396.8132992116543
+      "cv_rmse": 1373.3145192246138
     },
     "mlp": {
       "cv_rmse": 1443.9157759343705
@@ -35,18 +35,18 @@
   "best_base_learner": "gradient_boosting",
   "best_base_cv_rmse": 1363.1808002463958,
   "best_base_test_rmse": 6.662366755981854,
-  "ensemble_rmse": 281.9939283815009,
-  "ensemble_r2": 0.5875331368662131,
-  "improvement_percent": -4132.638921120796,
+  "ensemble_rmse": 288.845607445007,
+  "ensemble_r2": 0.5672460071967416,
+  "improvement_percent": -4235.480438474284,
   "meta_learner_weights": {
-    "random_forest": 0.0,
+    "random_forest": 0.13969855753569194,
     "lightgbm": 0.0,
-    "gradient_boosting": 1.5459190757701815,
-    "xgboost": 0.07915497203689005,
-    "mlp": 0.0,
+    "gradient_boosting": 0.8831075449160043,
+    "xgboost": 0.5884534930271434,
+    "mlp": 0.038562678955069124,
     "mlp_deep": 0.0
   },
-  "meta_learner_intercept": -314.9665841368401,
+  "meta_learner_intercept": -334.29497868065914,
   "has_xgboost": true,
   "has_lightgbm": true,
   "note": "Diverse ensemble with trees (RF, GBM, LGBM, XGB) + neural (MLP variants)"

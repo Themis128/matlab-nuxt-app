@@ -1,5 +1,3 @@
-import * as Sentry from '@sentry/nuxt'
-
 // Suppress browser extension and development warnings
 if (typeof window !== 'undefined') {
   // Store original methods
@@ -51,12 +49,14 @@ if (typeof window !== 'undefined') {
 const rawClientDsn = process.env.SENTRY_DSN?.trim()
 const clientIsPlaceholder =
   rawClientDsn && (rawClientDsn.includes('your-dsn') || rawClientDsn.includes('your-project-id'))
-if (!rawClientDsn || clientIsPlaceholder) {
-  console.warn(
-    '[sentry] Client SENTRY_DSN not provided or placeholder; skipping Sentry initialization (dev/test)'
-  )
-} else {
-  Sentry.init({
+
+export default (sentry: any) => {
+  if (!rawClientDsn || clientIsPlaceholder) {
+    return // Skip initialization if DSN is not provided or is a placeholder
+  }
+
+  try {
+    sentry.init({
     dsn: rawClientDsn,
     tracesSampleRate: process.env.SENTRY_TRACES_SAMPLE_RATE
       ? parseFloat(process.env.SENTRY_TRACES_SAMPLE_RATE)
@@ -70,7 +70,7 @@ if (!rawClientDsn || clientIsPlaceholder) {
     sendDefaultPii: true, // Enable MCP monitoring
 
     integrations: [
-      Sentry.replayIntegration({
+      sentry.replayIntegration({
         // Privacy Configuration
         maskAllText: true,
         blockAllMedia: true,
@@ -78,7 +78,7 @@ if (!rawClientDsn || clientIsPlaceholder) {
 
         // Network Details - Capture API requests for debugging
         networkDetailAllowUrls: [
-          window.location.origin, // Allow capturing network details for same-origin requests
+          typeof window !== 'undefined' ? window.location.origin : '', // Allow capturing network details for same-origin requests
           /^https:\/\/api\./, // Allow API endpoints
         ],
         networkCaptureBodies: true,
@@ -92,14 +92,14 @@ if (!rawClientDsn || clientIsPlaceholder) {
         maxReplayDuration: 3600000, // 1 hour
 
         // Filtering - simplified to avoid type issues
-        beforeAddRecordingEvent: _event => {
+        beforeAddRecordingEvent: (_event: unknown) => {
           // Return null to filter out specific events, or return _event to keep
           // For now, keeping all events but this can be customized based on needs
           return _event
         },
 
         // Error sampling filter
-        beforeErrorSampling: _event => {
+        beforeErrorSampling: (_event: unknown) => {
           // Always sample errors for important user flows
           return true
         },
@@ -107,11 +107,27 @@ if (!rawClientDsn || clientIsPlaceholder) {
         // Ignore slow clicks on certain elements
         slowClickIgnoreSelectors: ['.loading', '[disabled]', '.sentry-ignore-click'],
       }),
-      Sentry.browserTracingIntegration(),
+      sentry.browserTracingIntegration(),
       // Enable console integration for capturing console logs as breadcrumbs
-      Sentry.consoleIntegration(),
+      sentry.consoleIntegration(),
     ],
-    debug: process.env.NODE_ENV === 'development',
+    debug: process.env.SENTRY_DEBUG === 'true',
     environment: process.env.SENTRY_ENVIRONMENT || process.env.NODE_ENV || 'development',
+
+    // Error filtering for client-side
+    beforeSend(event: any) {
+      // Filter out common development errors
+      if (process.env.NODE_ENV === 'development') {
+        const errorMessage = event.exception?.values?.[0]?.value || '';
+        if (errorMessage.includes('ResizeObserver loop limit exceeded') ||
+            errorMessage.includes('Non-Error promise rejection captured')) {
+          return null; // Don't send these errors
+        }
+      }
+      return event;
+    },
   })
+  } catch (error) {
+    console.warn('[sentry] Failed to initialize Sentry client:', error)
+  }
 }

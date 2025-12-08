@@ -36,16 +36,37 @@ def optimize_sklearn_model(model_path: str, output_path: str | None = None) -> d
     if not is_trusted:
         raise ValueError("Model file not in trusted directory")
 
-    # Load model with validation
-    with open(model_path, 'rb') as f:
-        # Check pickle header for basic validation
-        header = f.read(2)
-        if header != b'\x80\x03':  # Python 3 pickle protocol 3 header
-            raise ValueError("Invalid pickle file format")
+    # SECURITY: Use centralized safe_load_pickle utility for secure deserialization
+    from pathlib import Path
+    import sys
+    # Add python_api to path to import pickle_security
+    python_api_path = Path(__file__).parent.parent / 'python_api'
+    if str(python_api_path) not in sys.path:
+        sys.path.insert(0, str(python_api_path))
+    from pickle_security import safe_load_pickle
 
-        # Reset and load
-        f.seek(0)
-        model = pickle.load(f)
+    model_path_obj = Path(model_path).resolve()
+
+    # Determine trusted base directory
+    trusted_dirs = [Path('python_api/trained_models'), Path('scripts'), Path('data')]
+    trusted_base = None
+    for trusted_dir in trusted_dirs:
+        trusted_dir_abs = trusted_dir.resolve()
+        try:
+            if model_path_obj.resolve().is_relative_to(trusted_dir_abs):
+                trusted_base = trusted_dir_abs
+                break
+        except (AttributeError, ValueError):
+            # Python < 3.9 doesn't have is_relative_to, use string comparison
+            if str(model_path_obj.resolve()).startswith(str(trusted_dir_abs)):
+                trusted_base = trusted_dir_abs
+                break
+
+    if not trusted_base:
+        raise ValueError("Model file not in trusted directory")
+
+    # Use safe loading utility with 500MB limit
+    model = safe_load_pickle(model_path_obj, trusted_base, max_size=500 * 1024 * 1024)
 
     # Save with joblib compression (more efficient than pickle)
     joblib.dump(model, output_path, compress=9)

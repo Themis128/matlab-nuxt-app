@@ -5,6 +5,7 @@ Provides REST API for CSV datasets and image storage/retrieval
 
 import json
 import logging
+import re
 import tempfile
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -32,26 +33,123 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/lancedb", tags=["LanceDB"])
 
 
+# Security validation functions
+def validate_filter_condition(filter_condition: str) -> str:
+    """
+    Validate and sanitize filter condition to prevent SQL injection.
+
+    LanceDB uses SQL-like filter expressions, so we need very strict validation.
+    This function performs comprehensive security checks before allowing the
+    filter condition to be used in a query.
+
+    Args:
+        filter_condition: The filter condition string to validate
+
+    Returns:
+        The validated and sanitized filter condition
+
+    Raises:
+        HTTPException: If the filter condition is invalid or contains security risks
+    """
+    filter_condition = str(filter_condition).strip()
+
+    # Step 1: Block all dangerous SQL keywords (comprehensive list)
+    dangerous_keywords = [
+        'drop', 'delete', 'update', 'insert', 'alter', 'exec', 'execute',
+        'create', 'truncate', 'grant', 'revoke', 'union', 'select', 'from',
+        'where', 'having', 'group', 'order', 'limit', 'offset', 'join',
+        'script', 'javascript', 'vbscript', 'onload', 'onerror', 'table',
+        'database', 'schema', 'index', 'view', 'trigger', 'procedure', 'function'
+    ]
+
+    # Check for dangerous keywords (case-insensitive)
+    filter_lower = filter_condition.lower()
+    for keyword in dangerous_keywords:
+        # Use word boundaries to avoid false positives
+        if re.search(r'\b' + re.escape(keyword) + r'\b', filter_lower):
+            raise HTTPException(
+                status_code=400,
+                detail=f"Invalid filter condition: contains prohibited keyword '{keyword}'"
+            )
+
+    # Step 2: Block common injection patterns
+    injection_patterns = [
+        ';', '--', '/*', '*/', 'xp_', 'sp_', 'exec(', 'eval(',
+        'script>', '<script', 'javascript:', 'vbscript:', 'chr(', 'char(',
+        'cast(', 'convert(', 'benchmark(', 'sleep(', 'waitfor'
+    ]
+    for pattern in injection_patterns:
+        if pattern in filter_lower:
+            raise HTTPException(
+                status_code=400,
+                detail="Invalid filter condition: contains prohibited pattern"
+            )
+
+    # Step 3: Only allow safe characters for basic expressions
+    # Allow alphanumeric, spaces, operators, parentheses, quotes, dots, underscores
+    if not re.match(r'^[a-zA-Z0-9\s_().,\'":<>=!&|+\-*/]+$', filter_condition):
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid filter condition: contains prohibited characters"
+        )
+
+    # Step 4: Validate structure - must be a simple comparison expression
+    # Pattern: identifier operator value (with optional parentheses)
+    # Examples: "price > 100", "(ram >= 4) & (battery < 5000)"
+    # Block complex expressions that could hide injection
+    if filter_condition.count('(') != filter_condition.count(')'):
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid filter condition: mismatched parentheses"
+        )
+
+    # Step 5: Limit expression complexity to prevent obfuscation
+    # Count operators to limit complexity
+    operator_count = len(re.findall(r'[<>=!&|+\-*/]', filter_condition))
+    if operator_count > 10:  # Reasonable limit for filter expressions
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid filter condition: too complex"
+        )
+
+    # Step 6: Additional length limit to prevent extremely long injection attempts
+    if len(filter_condition) > 500:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid filter condition: too long"
+        )
+
+    return filter_condition
+
+
 # Request/Response models
 class DatasetUploadRequest(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
     description: str = Field("", description="Description of the dataset")
     tags: List[str] = Field(default_factory=list, description="Tags for categorization")
     metadata: Dict[str, Any] = Field(default_factory=dict, description="Additional metadata")
 
 
 class ImageUploadRequest(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
     description: str = Field("", description="Description of the image")
     tags: List[str] = Field(default_factory=list, description="Tags for categorization")
     metadata: Dict[str, Any] = Field(default_factory=dict, description="Additional metadata")
 
 
 class SearchRequest(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
     query: str = Field("", description="Search query")
     tags: List[str] = Field(default_factory=list, description="Filter by tags")
     limit: int = Field(10, description="Maximum results", ge=1, le=100)
 
 
 class VectorSearchRequest(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
     vector: List[float] = Field(..., description="Query vector for similarity search")
     limit: int = Field(10, description="Maximum results", ge=1, le=100)
     metric: str = Field("L2", description="Distance metric (L2, cosine, dot)")
@@ -68,6 +166,8 @@ class CreateTableRequest(BaseModel):
 
 
 class CreateIndexRequest(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
     table_name: str = Field(..., description="Table to create index on")
     metric: str = Field("L2", description="Distance metric (L2, cosine, dot)")
     vector_column_name: str = Field(..., description="Name of vector column")
@@ -76,6 +176,8 @@ class CreateIndexRequest(BaseModel):
 
 
 class FilteredSearchRequest(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
     vector: List[float] = Field(..., description="Query vector")
     filter_condition: Optional[str] = Field(None, description="SQL WHERE clause for filtering")
     select_columns: Optional[List[str]] = Field(None, description="Columns to return")
@@ -85,6 +187,8 @@ class FilteredSearchRequest(BaseModel):
 
 
 class AlterColumnsRequest(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
     table_name: str = Field(..., description="Table to alter")
     column_changes: Dict[str, Dict[str, Any]] = Field(
         ..., description="Column changes (column_name -> {data_type: ..., ...})"
@@ -92,6 +196,8 @@ class AlterColumnsRequest(BaseModel):
 
 
 class CompactTableRequest(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
     table_name: str = Field(..., description="Table to compact")
     target_rows_per_fragment: int = Field(100000, description="Target rows per fragment")
     max_fragments: Optional[int] = Field(100, description="Maximum number of fragments to keep")
@@ -99,12 +205,16 @@ class CompactTableRequest(BaseModel):
 
 
 class CleanupVersionsRequest(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
     table_name: str = Field(..., description="Table to clean up")
     older_than_seconds: int = Field(86400, description="Remove versions older than this many seconds")
     keep_min_versions: int = Field(1, description="Minimum number of versions to keep")
 
 
 class DatasetResponse(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
     id: str
     filename: str
     description: str
@@ -118,6 +228,8 @@ class DatasetResponse(BaseModel):
 
 
 class ImageResponse(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
     id: str
     filename: str
     description: str
@@ -132,6 +244,8 @@ class ImageResponse(BaseModel):
 
 
 class SearchResponse(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
     datasets: List[DatasetResponse] = []
     images: List[ImageResponse] = []
     total_datasets: int
@@ -473,7 +587,9 @@ async def search_with_filters(request: FilteredSearchRequest):
             query = table.search(request.vector).metric(request.metric).limit(request.limit)
 
             if request.filter_condition:
-                query = query.where(request.filter_condition)
+                # SECURITY: Validate filter condition to prevent SQL injection
+                validated_filter = validate_filter_condition(request.filter_condition)
+                query = query.where(validated_filter)
 
             if request.select_columns:
                 query = query.select(request.select_columns)

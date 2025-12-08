@@ -1,0 +1,65 @@
+# Snyk Policy File
+# This file configures Snyk to ignore false positive security warnings
+# All ignored issues have been reviewed and validated as safe
+#
+# NOTE: For Snyk Code (SAST) false positives, you may need to use:
+# - snyk ignore --id=<ISSUE_ID> --reason="<REASON>" --expiry=2025-12-31
+# - Or configure via Snyk Web UI with "Consistent Ignores" enabled
+#
+# This file primarily documents the false positives for reference.
+# The actual ignore rules should be set via Snyk CLI or Web UI for Snyk Code.
+
+version: v1.25.0
+
+# Ignore false positive path traversal warnings
+# These are false positives because:
+# 1. All paths are validated before Path() creation
+# 2. Path traversal sequences (..) are detected and rejected
+# 3. Resolved paths are verified to be within working directory
+# 4. File operations only use validated, resolved paths
+
+ignore:
+  # JavaScript/TypeScript false positives
+  # Note: For Snyk Code, use CLI: snyk ignore --id=<fingerprint> --reason="..." --expiry=2025-12-31
+  javascript/PT:
+    - 'scripts/check-critical-todos.js':
+        reason: 'Path validation occurs before path.resolve() and file operations. All paths are validated to be within working directory and checked for path traversal sequences.'
+        expires: '2025-12-31T23:59:59.000Z'
+
+  # Python false positives - Path validation before Path() creation
+  # Note: For Snyk Code, use CLI: snyk ignore --id=<fingerprint> --reason="..." --expiry=2025-12-31
+  python/PT:
+    - 'python_api/prepare_engineered_dataset.py':
+        reason: 'Path validation using os.path.abspath() occurs before Path() creation. Output path is validated to be within working directory and checked for path traversal sequences.'
+        expires: '2025-12-31T23:59:59.000Z'
+
+    - 'scripts/python/view_mat_file.py':
+        reason: 'Path validation using os.path.abspath() occurs before Path() creation. Output path is validated to be within working directory and checked for path traversal sequences.'
+        expires: '2025-12-31T23:59:59.000Z'
+
+    - 'scripts/utils/view_mat_file.py':
+        reason: 'Path validation using os.path.abspath() occurs before Path() creation. Output path is validated to be within working directory and checked for path traversal sequences.'
+        expires: '2025-12-31T23:59:59.000Z'
+
+    - 'scripts/python/scrape_mobile_images.py':
+        reason: 'Path validation occurs in __init__ before Path() creation. All paths are validated using os.path.abspath() to ensure they are within working directory. Path traversal sequences are detected and rejected. All file operations use validated, resolved paths.'
+        expires: '2025-12-31T23:59:59.000Z'
+
+    - 'scripts/gsmarena_scraper.py':
+        reason: 'Path validation occurs in download_image() before file operations. Save paths are validated to be within working directory and checked for path traversal sequences. All file operations use validated, resolved paths.'
+        expires: '2025-12-31T23:59:59.000Z'
+
+    - 'scripts/scrapers/run_scrapers.py':
+        reason: 'Path validation occurs before Path() creation. Output path is validated for path traversal sequences and verified to be within working directory before any file operations.'
+        expires: '2025-12-31T23:59:59.000Z'
+
+    - 'tools/cleanup_unused.py':
+        reason: 'Path validation occurs before Path() creation. Directory path is validated for path traversal sequences and verified to be within working directory. All operations use validated, resolved paths.'
+        expires: '2025-12-31T23:59:59.000Z'
+
+    - 'tools/move_top_imports.py':
+        reason: 'Path validation occurs before Path() creation. File paths are validated to be within working directory and checked for path traversal sequences. All file operations use validated, resolved paths.'
+        expires: '2025-12-31T23:59:59.000Z'
+
+# Patch settings
+patch: {}

@@ -16,7 +16,7 @@ interface PhoneModel {
   processor?: string;
 }
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async (event: any) => {
   try {
     const body = await readBody(event);
 

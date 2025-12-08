@@ -22,9 +22,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Extract version from tag
+      - name: Extract version from tag or branch
         id: version
-        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+        run: |
+          if [[ "${{ github.ref }}" == refs/tags/* ]]; then
+            # Tag push: extract version from tag (e.g., refs/tags/v1.0.0 -> 1.0.0)
+            VERSION="${GITHUB_REF#refs/tags/v}"
+          elif [[ "${{ github.event_name }}" == 'workflow_dispatch' ]]; then
+            # Manual trigger: use branch name or default to timestamp
+            if [[ "${{ github.ref }}" == refs/heads/* ]]; then
+              BRANCH="${GITHUB_REF#refs/heads/}"
+              # Use branch name, sanitize for filename
+              VERSION="${BRANCH//\//-}-$(date +%Y%m%d-%H%M%S)"
+            else
+              # Fallback to timestamp
+              VERSION="manual-$(date +%Y%m%d-%H%M%S)"
+            fi
+          else
+            # Fallback: use timestamp
+            VERSION="unknown-$(date +%Y%m%d-%H%M%S)"
+          fi
+          echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Extracted version: $VERSION"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -37,7 +56,9 @@ jobs:
           npm run build
           # bundle static output
           VERSION="${{ steps.version.outputs.VERSION }}"
-          tar -czf nuxt_output_${VERSION}.tar.gz .output || true
+          # Sanitize VERSION to prevent path traversal (only allow alphanumeric, dots, dashes)
+          SANITIZED_VERSION=$(echo "$VERSION" | sed 's/[^a-zA-Z0-9._-]//g')
+          tar -czf "nuxt_output_${SANITIZED_VERSION}.tar.gz" .output || true
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -48,17 +69,21 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           VERSION="${{ steps.version.outputs.VERSION }}"
+          # Sanitize VERSION to prevent path traversal (only allow alphanumeric, dots, dashes)
+          SANITIZED_VERSION=$(echo "$VERSION" | sed 's/[^a-zA-Z0-9._-]//g')
           python -m pip install --upgrade \
             -r python_api/requirements.txt || true
-          tar -czf python_api_${VERSION}.tar.gz python_api || true
+          tar -czf "python_api_${SANITIZED_VERSION}.tar.gz" python_api || true
 
       - name: Prepare deploy artifacts
         run: |
           mkdir -p deploy_artifacts
           VERSION="${{ steps.version.outputs.VERSION }}"
-          mv nuxt_output_${VERSION}.tar.gz \
+          # Sanitize VERSION to prevent path traversal (only allow alphanumeric, dots, dashes)
+          SANITIZED_VERSION=$(echo "$VERSION" | sed 's/[^a-zA-Z0-9._-]//g')
+          mv "nuxt_output_${SANITIZED_VERSION}.tar.gz" \
             deploy_artifacts/nuxt_output.tar.gz || true
-          mv python_api_${VERSION}.tar.gz \
+          mv "python_api_${SANITIZED_VERSION}.tar.gz" \
             deploy_artifacts/python_api.tar.gz || true
 
       - name: Upload build artifacts

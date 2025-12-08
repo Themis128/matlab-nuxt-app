@@ -42,7 +42,7 @@ interface CompareRequest {
   modelNames: string[];
 }
 
-export default defineEventHandler(async (event): Promise<ComparisonResponse> => {
+export default defineEventHandler(async (event: any): Promise<ComparisonResponse> => {
   try {
     const body = await readBody<CompareRequest>(event);
 

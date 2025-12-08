@@ -1,0 +1,265 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Loccy Configuration Schema",
+  "description": "Schema for Loccy i18n AI Helper configuration file",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "JSON Schema reference"
+    },
+    "version": {
+      "type": "string",
+      "description": "Configuration version"
+    },
+    "projectName": {
+      "type": "string",
+      "description": "Project name"
+    },
+    "framework": {
+      "type": "string",
+      "enum": ["vue", "react"],
+      "description": "Framework type"
+    },
+    "i18nFramework": {
+      "type": "string",
+      "enum": ["vue-i18n", "react-i18next", "next-intl"],
+      "description": "i18n framework"
+    },
+    "locales": {
+      "type": "object",
+      "properties": {
+        "defaultLocale": { "type": "string" },
+        "supportedLocales": { "type": "array", "items": { "type": "string" } },
+        "localePath": { "type": "string" },
+        "localeFileFormat": { "type": "string" },
+        "localeFileNaming": { "type": "string" },
+        "localeFileExtension": { "type": "string" },
+        "sourceLocale": { "type": "string" }
+      }
+    },
+    "paths": {
+      "type": "object",
+      "properties": {
+        "source": { "type": "array", "items": { "type": "string" } },
+        "ignore": { "type": "array", "items": { "type": "string" } },
+        "localeFiles": { "type": "string" },
+        "usageInclude": { "type": "array", "items": { "type": "string" } },
+        "usageExclude": { "type": "array", "items": { "type": "string" } },
+        "resourcesInclude": { "type": "array", "items": { "type": "string" } },
+        "resourcesExclude": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "translationKeys": {
+      "type": "object",
+      "properties": {
+        "namespace": { "type": "string" },
+        "defaultNamespace": { "type": "string" },
+        "keySeparator": { "type": "string" },
+        "namespaceSeparator": { "type": "string" },
+        "keyNaming": { "type": "string" },
+        "keyPrefix": { "type": "string" },
+        "keySuffix": { "type": "string" },
+        "autoConsistency": { "type": "boolean" },
+        "customInstructions": { "type": "string" },
+        "rules": { "type": "object" }
+      }
+    },
+    "vue": {
+      "type": "object",
+      "properties": {
+        "useCompositionApi": { "type": "boolean" },
+        "useScriptSetup": { "type": "boolean" },
+        "templateInterpolation": { "type": "boolean" },
+        "componentProps": { "type": "boolean" },
+        "directiveSupport": { "type": "boolean" },
+        "customDirectives": { "type": "array", "items": { "type": "string" } },
+        "autoImport": { "type": "boolean" },
+        "composableName": { "type": "string" },
+        "composablePath": { "type": "string" }
+      }
+    },
+    "nuxt": {
+      "type": "object",
+      "properties": {
+        "autoImport": { "type": "boolean" },
+        "composablesPath": { "type": "string" },
+        "pluginsPath": { "type": "string" },
+        "serverPath": { "type": "string" },
+        "modules": { "type": "array", "items": { "type": "string" } },
+        "i18nModule": { "type": "string" },
+        "detectServerRoutes": { "type": "boolean" }
+      }
+    },
+    "ai": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "provider": { "type": "string" },
+        "model": { "type": "string" },
+        "autoTranslate": { "type": "boolean" },
+        "autoSuggest": { "type": "boolean" },
+        "contextAware": { "type": "boolean" },
+        "preserveFormatting": { "type": "boolean" },
+        "respectPlurals": { "type": "boolean" },
+        "respectGender": { "type": "boolean" },
+        "temperature": { "type": "number" },
+        "maxTokens": { "type": "number" },
+        "terminologyConsistency": { "type": "boolean" },
+        "useSimilarMessagesAsContext": { "type": "boolean" },
+        "similarityThreshold": { "type": "number" },
+        "maxContextMessages": { "type": "number" },
+        "autoFinalizeDrafts": { "type": "boolean" },
+        "syncOnEdit": { "type": "boolean" },
+        "useCodeContext": { "type": "boolean" },
+        "translationsAutoConsistency": { "type": "boolean" },
+        "translationsCustomInstructions": { "type": "string" },
+        "translationsCustomInstructionsPerLocale": { "type": "object" },
+        "rules": { "type": "object" }
+      }
+    },
+    "extraction": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "autoExtract": { "type": "boolean" },
+        "extractOnSave": { "type": "boolean" },
+        "extractOnChange": { "type": "boolean" },
+        "extractComments": { "type": "boolean" },
+        "extractDescriptions": { "type": "boolean" },
+        "extractContext": { "type": "boolean" },
+        "preserveWhitespace": { "type": "boolean" },
+        "preserveHtml": { "type": "boolean" },
+        "preserveMarkdown": { "type": "boolean" },
+        "batchExtraction": { "type": "boolean" },
+        "batchSize": { "type": "number" },
+        "generateAllTranslations": { "type": "boolean" },
+        "useContextualSuggestions": { "type": "boolean" },
+        "suggestKeyPath": { "type": "boolean" },
+        "autoTranslate": { "type": "boolean" },
+        "detectKeysInStrings": { "type": "boolean" }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "checkMissingKeys": { "type": "boolean" },
+        "checkUnusedKeys": { "type": "boolean" },
+        "checkDuplicateKeys": { "type": "boolean" },
+        "checkEmptyValues": { "type": "boolean" },
+        "checkPlaceholderMismatch": { "type": "boolean" },
+        "warnOnMissing": { "type": "boolean" },
+        "errorOnMissing": { "type": "boolean" },
+        "validateOnSave": { "type": "boolean" },
+        "validateOnChange": { "type": "boolean" }
+      }
+    },
+    "formatting": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "sortKeys": { "type": "boolean" },
+        "sortOrder": { "type": "string" },
+        "indentSize": { "type": "number" },
+        "useTabs": { "type": "boolean" },
+        "trailingComma": { "type": "boolean" },
+        "quoteStyle": { "type": "string" },
+        "lineEnding": { "type": "string" },
+        "formatOnSave": { "type": "boolean" }
+      }
+    },
+    "inlineEditing": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "showInlineEditor": { "type": "boolean" },
+        "showTranslationHints": { "type": "boolean" },
+        "showMissingKeys": { "type": "boolean" },
+        "showUnusedKeys": { "type": "boolean" },
+        "highlightKeys": { "type": "boolean" },
+        "quickEdit": { "type": "boolean" }
+      }
+    },
+    "codeActions": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "extractToKey": { "type": "boolean" },
+        "wrapWithTranslation": { "type": "boolean" },
+        "replaceWithKey": { "type": "boolean" },
+        "addMissingKey": { "type": "boolean" },
+        "removeUnusedKey": { "type": "boolean" },
+        "renameKey": { "type": "boolean" },
+        "duplicateKey": { "type": "boolean" }
+      }
+    },
+    "hover": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "showTranslation": { "type": "boolean" },
+        "showAllLocales": { "type": "boolean" },
+        "showKeyPath": { "type": "boolean" },
+        "showUsageCount": { "type": "boolean" },
+        "showLastModified": { "type": "boolean" },
+        "hoverDelay": { "type": "number" }
+      }
+    },
+    "completion": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "autoCompleteKeys": { "type": "boolean" },
+        "suggestKeys": { "type": "boolean" },
+        "suggestValues": { "type": "boolean" },
+        "filterByNamespace": { "type": "boolean" },
+        "showKeyPath": { "type": "boolean" },
+        "maxSuggestions": { "type": "number" }
+      }
+    },
+    "sync": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "provider": { "type": "string" },
+        "apiKey": { "type": "string" },
+        "projectId": { "type": "string" },
+        "autoSync": { "type": "boolean" },
+        "syncOnSave": { "type": "boolean" },
+        "syncInterval": { "type": "number" }
+      }
+    },
+    "performance": {
+      "type": "object",
+      "properties": {
+        "cacheEnabled": { "type": "boolean" },
+        "cacheTimeout": { "type": "number" },
+        "maxFileSize": { "type": "number" },
+        "maxFiles": { "type": "number" },
+        "watchFiles": { "type": "boolean" },
+        "debounceDelay": { "type": "number" },
+        "throttleDelay": { "type": "number" },
+        "batchProcessing": { "type": "boolean" },
+        "parallelProcessing": { "type": "boolean" }
+      }
+    },
+    "debug": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "logLevel": { "type": "string" },
+        "traceServer": { "type": "boolean" },
+        "showNotifications": { "type": "boolean" }
+      }
+    },
+    "workspace": {
+      "type": "object",
+      "properties": {
+        "trustRequired": { "type": "boolean" },
+        "multiRoot": { "type": "boolean" }
+      }
+    }
+  },
+  "additionalProperties": true
+}

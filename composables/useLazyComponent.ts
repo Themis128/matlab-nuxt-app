@@ -45,13 +45,6 @@ export function useLazyComponent() {
   );
 
   /**
-   * Lazy load dashboard components
-   */
-  const PerformanceMetrics = lazyLoad(() => import('~/components/PerformanceMetrics.vue'));
-  const MagicUIDashboard = lazyLoad(() => import('~/components/MagicUIDashboard.vue'));
-  const DashboardContent = lazyLoad(() => import('~/components/DashboardContent.vue'));
-
-  /**
    * Lazy load utility components
    */
   const UserPreferencesDialog = lazyLoad(() => import('~/components/UserPreferencesDialog.vue'));
@@ -64,9 +57,6 @@ export function useLazyComponent() {
     AnalyticsGeographicalChart,
     AnalyticsFeatureImportanceChart,
     AnalyticsYearlyTrendsChart,
-    PerformanceMetrics,
-    MagicUIDashboard,
-    DashboardContent,
     UserPreferencesDialog,
   };
 }

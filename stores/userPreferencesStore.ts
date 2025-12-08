@@ -8,7 +8,7 @@ export interface UserPreferences {
   animations: boolean;
   compactMode: boolean;
   autoRefresh: boolean;
-  language: 'en' | 'el' | 'es' | 'fr';
+  language: 'en' | 'es' | 'fr' | 'de' | 'it' | 'pt' | 'el';
   preferredCurrency: 'USD' | 'EUR' | 'GBP' | 'JPY';
   searchFilters: {
     priceRange: [number, number];

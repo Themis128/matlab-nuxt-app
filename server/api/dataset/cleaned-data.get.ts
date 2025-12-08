@@ -27,7 +27,7 @@ interface CleanedDataSample {
 }
 
 export default defineEventHandler(
-  async (event): Promise<Array<Record<string, string | number | null>>> => {
+  async (event: any): Promise<Array<Record<string, string | number | null>>> => {
     const query = getQuery(event);
     const limit = Math.min(parseInt(query.limit as string) || 10, 100);
     const offset = parseInt(query.offset as string) || 0;

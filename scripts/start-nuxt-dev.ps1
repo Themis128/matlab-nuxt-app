@@ -33,11 +33,12 @@ function Find-FreePort($start, $max, $increment) {
 
 $free = Find-FreePort -start $StartPort -max $MaxPort -increment $PortIncrement
 if (-not $free) {
-  Write-Log "No free NUXT devtools port found between $StartPort and $MaxPort"
-  exit 1
+  Write-Log "⚠️  No free NUXT devtools port found between $StartPort and $MaxPort"
+  Write-Log "⚠️  Attempting to use port $StartPort anyway (may cause conflict)"
+  $free = $StartPort
 }
 
-Write-Log "Selected free NUXT devtools port: $free"
+Write-Log "✅ Selected NUXT devtools port: $free"
 
 # Ensure env var is set for child process
 $env:NUXT_DEVTOOLS_PORT = $free
@@ -46,6 +47,16 @@ $env:NUXT_DEVTOOLS_PORT = $free
 Write-Log "NUXT_DEVTOOLS_PORT set to $env:NUXT_DEVTOOLS_PORT"
 
 Write-Log "Starting Nuxt dev with NUXT_DEVTOOLS_PORT=$free on port $Port, hostname $HostName"
+
+# Start Chrome with remote debugging for Chrome DevTools MCP (optional)
+$chromeScript = Join-Path $PSScriptRoot "start-chrome-debug.ps1"
+if (Test-Path $chromeScript) {
+    $devUrl = "http://${HostName}:${Port}"
+    Write-Log "Starting Chrome with remote debugging for MCP connection..."
+    Start-Process powershell -ArgumentList "-NoProfile", "-File", "`"$chromeScript`"", "-Url", $devUrl -WindowStyle Minimized
+    Start-Sleep -Seconds 1
+}
+
 npm run dev -- --port $Port --hostname $HostName
 
 exit $LASTEXITCODE

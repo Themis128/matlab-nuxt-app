@@ -7,7 +7,7 @@ from typing import Optional
 
 from fastapi import APIRouter, HTTPException, Query
 from price_apis import PriceAPIManager
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 router = APIRouter(prefix="/api/price", tags=["Price APIs"])
 
@@ -17,6 +17,8 @@ price_manager = PriceAPIManager()
 
 class PriceSearchRequest(BaseModel):
     """Request model for price search"""
+
+    model_config = ConfigDict(protected_namespaces=())
 
     product_name: str = Field(..., description="Product name to search for", min_length=1)
     preferred_source: Optional[str] = Field(
@@ -28,6 +30,8 @@ class PriceSearchRequest(BaseModel):
 class PriceSearchResponse(BaseModel):
     """Response model for price search"""
 
+    model_config = ConfigDict(protected_namespaces=())
+
     price: float = Field(..., description="Product price")
     currency: str = Field(..., description="Currency code")
     source: str = Field(..., description="API source used")
@@ -38,6 +42,8 @@ class PriceSearchResponse(BaseModel):
 
 class PriceStatsResponse(BaseModel):
     """Response model for API statistics"""
+
+    model_config = ConfigDict(protected_namespaces=())
 
     google_shopping: dict
     amazon_paapi: dict

@@ -136,4 +136,56 @@ if __name__ == "__main__":
     input_csv = sys.argv[1]
     output_csv = sys.argv[2] if len(sys.argv) > 2 else None
 
-    prepare_engineered_dataset(input_csv, Path(output_csv) if output_csv else None)
+    # SECURITY: Validate file paths to prevent path traversal
+    input_path = Path(input_csv)
+    input_resolved = input_path.resolve()
+    cwd = Path.cwd().resolve()
+
+    if not str(input_resolved).startswith(str(cwd)):
+        print(f"Security: Input file path outside working directory: {input_csv}")
+        sys.exit(1)
+
+    if '..' in input_csv:
+        print(f"Security: Path traversal detected in input path: {input_csv}")
+        sys.exit(1)
+
+    output_path = None
+    if output_csv:
+        # SECURITY: Validate output path string BEFORE creating Path object
+        # Check for path traversal sequences first
+        if '..' in output_csv:
+            print(f"Security: Path traversal detected in output path: {output_csv}")
+            sys.exit(1)
+
+        # Validate path would be within working directory before creating Path
+        # Use os.path to check without creating Path object
+        import os
+        try:
+            # SECURITY: Resolve path without creating Path object from user input
+            # Use os.path.join to safely combine paths, then normalize
+            abs_output = os.path.abspath(os.path.join(cwd, output_csv))
+            abs_output_normalized = os.path.normpath(abs_output)
+
+            # Validate the normalized absolute path is within working directory
+            if not abs_output_normalized.startswith(str(cwd)):
+                print(f"Security: Output file path outside working directory: {output_csv}")
+                sys.exit(1)
+
+            # SECURITY: Create Path ONLY from validated absolute path string, never from user input
+            # abs_output_normalized is a validated absolute path string, safe to use
+            # Type assertion: abs_output_normalized is validated and safe
+            validated_path_str: str = abs_output_normalized
+            assert validated_path_str.startswith(str(cwd)), "Path validation failed"
+            output_path_obj = Path(validated_path_str)  # noqa: S108 - Path is validated above (lines 170-172)
+            output_resolved = output_path_obj.resolve()
+
+            # Final validation that resolved path is still within cwd
+            if not str(output_resolved).startswith(str(cwd)):
+                print(f"Security: Resolved output path outside working directory: {output_csv}")
+                sys.exit(1)
+            output_path = output_resolved
+        except Exception:
+            print(f"Security: Invalid output path: {output_csv}")
+            sys.exit(1)
+
+    prepare_engineered_dataset(str(input_resolved), output_path)

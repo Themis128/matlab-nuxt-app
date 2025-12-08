@@ -60,6 +60,8 @@ import {
 } from '@heroicons/vue/24/outline';
 import { computed } from 'vue';
 
+const { t } = useI18n();
+
 interface Props {
   isOpen: boolean;
   selected: string;
@@ -72,20 +74,20 @@ const props = defineProps<Props>();
 const open = computed(() => props.isOpen);
 
 // Menu items data
-const menuItems = [
-  { title: 'Dashboard', icon: HomeIcon, notifs: null },
+const menuItems = computed(() => [
+  { title: t('dashboard.sidebar.dashboard'), icon: HomeIcon, notifs: null },
   { title: 'Sales', icon: CurrencyDollarIcon, notifs: 3 },
-  { title: 'View Site', icon: ComputerDesktopIcon, notifs: null },
+  { title: t('dashboard.sidebar.viewSite'), icon: ComputerDesktopIcon, notifs: null },
   { title: 'Products', icon: ShoppingCartIcon, notifs: null },
   { title: 'Tags', icon: TagIcon, notifs: null },
   { title: 'Analytics', icon: ChartBarIcon, notifs: null },
   { title: 'Members', icon: UsersIcon, notifs: 12 },
-];
+]);
 
-const accountItems = [
-  { title: 'Settings', icon: Cog6ToothIcon },
-  { title: 'Help & Support', icon: QuestionMarkCircleIcon },
-];
+const accountItems = computed(() => [
+  { title: t('dashboard.sidebar.settings'), icon: Cog6ToothIcon },
+  { title: t('common.navigation.help'), icon: QuestionMarkCircleIcon },
+]);
 
 // Methods - removed unused handleSelect and handleToggle
 </script>

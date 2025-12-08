@@ -1,11 +1,6 @@
 import { getPythonApiUrl } from '../utils/get-python-api-url';
 
-export default defineEventHandler(async (event) => {
-  // Set CORS headers
-  setHeader(event, 'Access-Control-Allow-Origin', '*');
-  setHeader(event, 'Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  setHeader(event, 'Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
+export default defineEventHandler(async (event: any) => {
   // Handle preflight requests
   if (getMethod(event) === 'OPTIONS') {
     return { ok: true };
@@ -28,9 +23,17 @@ export default defineEventHandler(async (event) => {
         throw new Error(`Python API returned status ${response.status}`);
       }
     } catch (e) {
-      // Suppress error logs during test runs to reduce spam
-      if (!isTestEnv) {
-        console.error('Error fetching Python API health:', e);
+      // Suppress error logs during test runs or when API is intentionally disabled
+      const isApiDisabled = process.env.NUXT_PUBLIC_PY_API_DISABLED === '1';
+      if (!isTestEnv && !isApiDisabled) {
+        // Only log if not in test and API is not intentionally disabled
+        // Use debug level instead of error to reduce noise
+        if (process.env.NODE_ENV === 'development') {
+          console.debug(
+            'Python API health check failed (this is normal if API is not running):',
+            e instanceof Error ? e.message : 'Unknown error'
+          );
+        }
       }
 
       // Return actual error status instead of mock response
@@ -47,10 +50,17 @@ export default defineEventHandler(async (event) => {
     }
   } catch (error: unknown) {
     const isTestEnv = process.env.NODE_ENV === 'test' || process.env.PLAYWRIGHT_TEST === '1';
+    const isApiDisabled = process.env.NUXT_PUBLIC_PY_API_DISABLED === '1';
 
-    // Suppress error logs during test runs to reduce spam
-    if (!isTestEnv) {
-      console.error('Unexpected error in health check:', error);
+    // Suppress error logs during test runs or when API is intentionally disabled
+    if (!isTestEnv && !isApiDisabled) {
+      // Only log actual unexpected errors (not connection failures)
+      if (process.env.NODE_ENV === 'development') {
+        console.debug(
+          'Health check error:',
+          error instanceof Error ? error.message : 'Unknown error'
+        );
+      }
     }
 
     throw createError({

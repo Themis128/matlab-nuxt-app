@@ -1,51 +1,54 @@
 <template>
-  <div class="bg-background min-h-screen">
-    <!-- Header -->
-    <section class="bg-gradient-to-r from-emerald-600 to-teal-600 py-16 text-white">
-      <div class="container mx-auto px-4 text-center sm:px-6 lg:px-8">
-        <h1 class="mb-4 text-4xl font-bold sm:text-5xl">API Documentation</h1>
-        <p class="mx-auto max-w-2xl text-xl text-emerald-100">
-          Complete reference for MATLAB Deep Learning Platform APIs and integration endpoints
-        </p>
-      </div>
-    </section>
+  <DPageLayout
+    :show-hero="true"
+    title="API Documentation"
+    description="Complete reference for MATLAB Deep Learning Platform APIs and integration endpoints"
+    bg="base-100"
+  >
+    <template #hero-actions>
+      <span class="badge badge-success badge-lg mb-4">
+        <Icon name="heroicons:document-text" class="h-3 w-3" />
+        API Reference
+      </span>
+    </template>
 
     <!-- Category Filter -->
     <section class="py-12">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-8">
           <div class="flex flex-wrap justify-center gap-3">
-            <UButton
+            <DButton
               v-for="cat in apiCategories"
               :key="cat.id"
+              :variant="selectedCategory === cat.id ? 'success' : 'outline'"
               @click="selectedCategory = cat.id"
-              :color="selectedCategory === cat.id ? 'emerald' : 'gray'"
-              variant="outline"
             >
-              <UIcon :name="cat.icon" class="mr-2 h-4 w-4" />
+              <Icon :name="cat.icon" class="mr-2 h-4 w-4" />
               {{ cat.name }}
-            </UButton>
+            </DButton>
           </div>
         </div>
 
         <!-- API Cards -->
         <div class="space-y-8">
-          <UCard v-for="api in filteredAPIs" :key="api.id" class="overflow-hidden">
-            <div class="p-6">
+          <DCard v-for="api in filteredAPIs" :key="api.id" class="overflow-hidden">
+            <div class="card-body">
               <div class="mb-4 flex items-center justify-between">
                 <div class="flex items-center gap-4">
-                  <UBadge color="emerald" variant="solid" size="lg">
+                  <div class="badge badge-success badge-lg">
                     {{ api.method }}
-                  </UBadge>
+                  </div>
                   <div>
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
                       {{ api.name }}
                     </h3>
-                    <p class="text-gray-600 dark:text-gray-300">{{ api.description }}</p>
+                    <p class="text-gray-600 dark:text-gray-300">
+                      {{ api.description }}
+                    </p>
                   </div>
                 </div>
-                <UButton size="sm" variant="outline" @click="toggleExpanded(api.id)">
-                  <UIcon
+                <DButton size="sm" variant="outline" @click="toggleExpanded(api.id)">
+                  <Icon
                     :name="
                       expandedAPIs.has(api.id)
                         ? 'i-heroicons-chevron-up'
@@ -53,7 +56,7 @@
                     "
                     class="h-4 w-4"
                   />
-                </UButton>
+                </DButton>
               </div>
               <div v-if="expandedAPIs.has(api.id)" class="space-y-6">
                 <div class="mb-2">
@@ -89,14 +92,14 @@
                 </div>
               </div>
             </div>
-          </UCard>
+          </DCard>
         </div>
 
         <!-- SDKs -->
         <div class="mt-12">
           <h2 class="mb-4 text-center text-2xl font-bold text-gray-900 dark:text-white">SDKs</h2>
           <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-            <UCard v-for="sdk in sdks" :key="sdk.language" class="p-4 text-center">
+            <DCard v-for="sdk in sdks" :key="sdk.language" class="p-4 text-center">
               <div class="mb-3">
                 <div
                   :style="{ backgroundColor: sdk.color }"
@@ -104,17 +107,19 @@
                 >
                   <UIcon :name="sdk.icon" class="h-5 w-5 text-white" />
                 </div>
-                <div class="font-semibold">{{ sdk.language }}</div>
+                <div class="font-semibold">
+                  {{ sdk.language }}
+                </div>
               </div>
               <pre class="rounded bg-gray-900 p-2 text-xs text-green-400">{{
                 sdk.installCommand
               }}</pre>
-            </UCard>
+            </DCard>
           </div>
         </div>
       </div>
     </section>
-  </div>
+  </DPageLayout>
 </template>
 
 <script setup lang="ts">

@@ -1,0 +1,180 @@
+{
+  "$schema": "../loccy.config.json",
+  "common": {
+    "app": {
+      "name": "MATLAB Analytics",
+      "tagline": "Deep Learning Platform",
+      "description": "Explore deep learning models, analyze mobile phone datasets, and discover insights with MATLAB and modern web technologies"
+    },
+    "navigation": {
+      "home": "Home",
+      "search": "Search",
+      "compare": "Compare",
+      "aiDemo": "AI Demo",
+      "settings": "Settings & Preferences",
+      "help": "Help & Support",
+      "tools": "Tools",
+      "priceFinder": "Price Finder",
+      "advancedModels": "Advanced Models",
+      "mlComparison": "ML Comparison",
+      "abTesting": "A/B Testing",
+      "modelShowcase": "Model Showcase",
+      "apiDocs": "API Docs",
+      "dataMining": "Data Mining",
+      "main": "Main",
+      "toolsAndFeatures": "Tools & Features",
+      "quickActions": "Quick Actions"
+    },
+    "actions": {
+      "search": "Search",
+      "filter": "Filter",
+      "compare": "Compare",
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete",
+      "save": "Save",
+      "cancel": "Cancel",
+      "close": "Close",
+      "open": "Open",
+      "submit": "Submit",
+      "reset": "Reset",
+      "export": "Export",
+      "import": "Import",
+      "download": "Download",
+      "upload": "Upload",
+      "openMobileMenu": "Open mobile menu",
+      "closeMobileMenu": "Close mobile menu"
+    },
+    "labels": {
+      "loading": "Loading...",
+      "error": "Error",
+      "success": "Success",
+      "warning": "Warning",
+      "info": "Information",
+      "noData": "No data available",
+      "noResults": "No results found",
+      "searchPlaceholder": "Search phones, models, brands...",
+      "selectLanguage": "Select Language",
+      "selectTheme": "Select Theme"
+    },
+    "themes": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "languages": {
+      "en": "English",
+      "es": "Spanish",
+      "fr": "French",
+      "de": "German",
+      "it": "Italian",
+      "pt": "Portuguese",
+      "el": "Greek"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome to MATLAB Analytics",
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "viewSite": "View Site",
+      "settings": "Settings"
+    },
+    "metrics": {
+      "title": "Performance Metrics",
+      "accuracy": "Accuracy",
+      "precision": "Precision",
+      "recall": "Recall",
+      "f1Score": "F1 Score"
+    },
+    "charts": {
+      "title": "Analytics Charts",
+      "accuracy": "Accuracy Chart",
+      "topBrands": "Top Brands",
+      "geographical": "Geographical Distribution",
+      "featureImportance": "Feature Importance",
+      "yearlyTrends": "Yearly Trends"
+    }
+  },
+  "search": {
+    "title": "Search",
+    "placeholder": "Search phones, models, brands...",
+    "filters": {
+      "title": "Filters",
+      "brand": "Brand",
+      "price": "Price Range",
+      "year": "Year",
+      "features": "Features"
+    },
+    "results": {
+      "title": "Search Results",
+      "noResults": "No results found",
+      "resultsCount": "{count} results found"
+    }
+  },
+  "compare": {
+    "title": "Compare",
+    "selectPhones": "Select phones to compare",
+    "features": "Features",
+    "specifications": "Specifications",
+    "price": "Price",
+    "rating": "Rating"
+  },
+  "preferences": {
+    "title": "User Preferences",
+    "theme": {
+      "title": "Theme",
+      "description": "Choose your preferred color theme"
+    },
+    "animations": {
+      "title": "Animations",
+      "description": "Enable or disable animations"
+    },
+    "compactMode": {
+      "title": "Compact Mode",
+      "description": "Use a more compact layout"
+    },
+    "autoRefresh": {
+      "title": "Auto Refresh",
+      "description": "Automatically refresh data"
+    }
+  },
+  "errors": {
+    "generic": "An error occurred",
+    "network": "Network error. Please check your connection.",
+    "notFound": "The requested resource was not found.",
+    "unauthorized": "You are not authorized to access this resource.",
+    "serverError": "A server error occurred. Please try again later.",
+    "boundary": {
+      "title": "Something went wrong",
+      "message": "An unexpected error occurred",
+      "details": "Error Details",
+      "tryAgain": "Try Again",
+      "goHome": "Go Home",
+      "fetchError": "Failed to load data. Please check your connection and try again.",
+      "networkError": "Network error. Please check your internet connection.",
+      "unexpectedError": "An unexpected error occurred. Please try again.",
+      "componentError": "An error occurred in this component."
+    }
+  },
+  "sentry": {
+    "dashboard": {
+      "count": "Count",
+      "users": "Users",
+      "lastSeen": "Last seen",
+      "view": "View"
+    },
+    "health": {
+      "allSystemsOperational": "All systems operational"
+    }
+  },
+  "analytics": {
+    "labels": {
+      "price": "Price",
+      "ram": "RAM",
+      "battery": "Battery",
+      "brand": "Brand"
+    },
+    "priceOnly": "Price Only"
+  }
+}

@@ -3,6 +3,113 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "Docker: Compose Up (All Services)",
+      "type": "shell",
+      "command": "docker compose up -d --build",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "label": "Docker: Compose Down (All Services)",
+      "type": "shell",
+      "command": "docker compose down",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Docker: Compose Restart (All Services)",
+      "type": "shell",
+      "command": "docker compose restart",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Docker: Compose Logs (All Services)",
+      "type": "shell",
+      "command": "docker compose logs -f",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "isBackground": true
+    },
+    {
+      "label": "Docker: Compose Build (No Cache)",
+      "type": "shell",
+      "command": "docker compose build --no-cache",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "label": "Docker: Build Frontend Image",
+      "type": "shell",
+      "command": "docker build -f Dockerfile -t matlab-nuxt-frontend:latest .",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "label": "Docker: Build API Image",
+      "type": "shell",
+      "command": "docker build -f Dockerfile.api -t matlab-nuxt-api:latest .",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "label": "Docker: Compose Ps (Status)",
+      "type": "shell",
+      "command": "docker compose ps",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Docker: Compose Pull (All Images)",
+      "type": "shell",
+      "command": "docker compose pull",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
       "label": "Dev: Start Docker Compose Dev Container",
       "type": "shell",
       "command": "docker compose -f .devcontainer/docker-compose.yml -f docker-compose.override.yml up -d --build",
@@ -303,7 +410,7 @@
         "panel": "shared"
       },
       "problemMatcher": []
-    }
+    },
     {
       "label": "Dev: API (Container)",
       "type": "shell",
@@ -343,7 +450,7 @@
         "panel": "shared"
       },
       "problemMatcher": []
-    }
+    },
     {
       "label": "Dev: Fullstack (Terminals)",
       "dependsOn": [

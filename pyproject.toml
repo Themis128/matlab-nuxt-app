@@ -42,8 +42,9 @@ dependencies = [
     "xgboost>=3.1.2",
 
     # FastAPI and server dependencies
-    "fastapi>=0.104.0",
-    "uvicorn[standard]>=0.24.0",
+    # Updated to FastAPI 0.115+ which supports anyio>=4.0.0 and starlette>=0.28.0
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
     "pydantic>=2.0.0",
 
     # HTTP client

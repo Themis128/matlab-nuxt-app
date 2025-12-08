@@ -138,7 +138,7 @@ class EnhancedDataPipeline:
 
         except Exception as e:
             error_msg = f"Pipeline failed: {str(e)}"
-            logger.error(error_msg)
+            logger.error(error_msg, exc_info=True)
             results["success"] = False
             results["error"] = error_msg
             self.notifications.append(
@@ -151,6 +151,14 @@ class EnhancedDataPipeline:
                 }
             )
             results["notifications"] = self.notifications.copy()
+
+            # Clean up any partial state
+            try:
+                if hasattr(self, 'data_pipeline') and self.data_pipeline:
+                    # Reset pipeline state on error
+                    self.data_pipeline.stats["errors"] += 1
+            except Exception as cleanup_error:
+                logger.warning(f"Error during cleanup: {cleanup_error}")
 
         return results
 
@@ -167,8 +175,41 @@ class EnhancedDataPipeline:
 async def main():
     """Main function for testing"""
     import sys
+    import os
 
-    csv_path = sys.argv[1] if len(sys.argv) > 1 else "../data/Mobiles Dataset (2025).csv"
+    # SECURITY: Validate CSV path to prevent arbitrary file read
+    if len(sys.argv) > 1:
+        csv_path = sys.argv[1]
+
+        # Validate path to prevent directory traversal
+        if '..' in csv_path or '~' in csv_path:
+            raise ValueError(f"Invalid CSV path: {csv_path} (path traversal detected)")
+
+        # Resolve and validate path is within allowed directories
+        csv_path_resolved = Path(csv_path).resolve()
+        cwd = Path.cwd().resolve()
+
+        # Allow paths in current directory or data subdirectory
+        allowed_base = [cwd, cwd / 'data', cwd.parent / 'data']
+
+        # Check if path is within any allowed base
+        path_allowed = any(
+            str(csv_path_resolved).startswith(str(base)) for base in allowed_base
+        )
+
+        if not path_allowed:
+            raise ValueError(
+                f"CSV path must be within project directory: {csv_path}"
+            )
+
+        # Ensure file exists and is readable
+        if not csv_path_resolved.exists():
+            raise FileNotFoundError(f"CSV file not found: {csv_path}")
+
+        if not csv_path_resolved.is_file():
+            raise ValueError(f"Path is not a file: {csv_path}")
+    else:
+        csv_path = "../data/Mobiles Dataset (2025).csv"
 
     pipeline = EnhancedDataPipeline()
     results = await pipeline.load_data_and_train(csv_path=csv_path)

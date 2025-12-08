@@ -20,7 +20,6 @@ declare module '#imports' {
   export const useHeadMeta: any;
   export const useApiConfig: any;
   export const useApiStatus: any;
-  export const useMobileImage: any;
   export const useUserPreferences: any;
 }
 

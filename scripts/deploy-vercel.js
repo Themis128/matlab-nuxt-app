@@ -16,8 +16,14 @@ const __dirname = dirname(__filename);
 // Constants
 const DEPLOYMENT_CHECK_INTERVAL = 5000; // 5 seconds
 
-// Vercel token - replace with your actual token
-const VERCEL_TOKEN = 'ZjLaVLJq12yqcOGXXGkJQqKp';
+// Vercel token - must be provided via environment variable for security
+const VERCEL_TOKEN = process.env.VERCEL_TOKEN || process.env.VERCEL_API_TOKEN;
+
+if (!VERCEL_TOKEN) {
+  console.error('❌ Error: VERCEL_TOKEN or VERCEL_API_TOKEN environment variable is required');
+  console.error('   Please set one of these environment variables before running this script.');
+  process.exit(1);
+}
 
 const vercel = new Vercel({
   bearerToken: VERCEL_TOKEN,

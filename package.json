@@ -25,6 +25,7 @@
     "style:fix": "prettier --write . && eslint \"components/**/*.{js,ts,vue}\" \"composables/**/*.{js,ts,vue}\" \"pages/**/*.{js,ts,vue}\" \"plugins/**/*.{js,ts,vue}\" \"server/**/*.{js,ts,vue}\" --ext .js,.ts,.vue --fix",
     "check:js": "eslint \"scripts/**/*.{js,ts}\" --ext .js,.ts",
     "check:js:fix": "eslint \"scripts/**/*.{js,ts}\" --ext .js,.ts --fix",
+    "validate:og-images": "node scripts/validate-og-images.js",
     "check:all": "npm run typecheck && npm run lint && npm run format:check",
     "check:all:fix": "npm run lint:fix && npm run format && npm run typecheck",
     "precommit:check": "node scripts/hooks/check-no-vscode-settings.cjs",
@@ -40,9 +41,19 @@
     "optimize:csv": "set PYTHONIOENCODING=utf-8 && .\\venv\\Scripts\\python scripts/optimize_csv.py",
     "csv:validate": "set PYTHONIOENCODING=utf-8 && .\\venv\\Scripts\\python scripts/validate_csv_schema.py",
     "algolia:index": "node scripts/algolia/index_records.js",
+    "algolia:sync-phones": "node scripts/algolia/sync-phones-with-images.js",
+    "algolia:sync-phones:dry-run": "node scripts/algolia/sync-phones-with-images.js --dry-run",
     "vscode:show": "pwsh -NoProfile -File .\\.vscode\\settings-controls\\toggle-settings.ps1 -mode show -backup",
     "vscode:hide": "pwsh -NoProfile -File .\\.vscode\\settings-controls\\toggle-settings.ps1 -mode hide -backup",
-    "sentry:sourcemaps": "npx sentry-cli sourcemaps inject --org baltzakisthemiscom --project matlab .output/public && npx sentry-cli sourcemaps upload --org baltzakisthemiscom --project matlab .output/public",
+    "sentry:sourcemaps": "node scripts/sentry/upload-sourcemaps.js",
+    "sentry:check": "node scripts/sentry/check-config.js",
+    "sentry:release": "node scripts/sentry/create-release.js",
+    "sentry:release:version": "node scripts/sentry/create-release.js",
+    "sentry:issues": "node scripts/sentry/analyze-issues.js",
+    "sentry:issues:cli": "pwsh -NoProfile -File scripts/sentry/cli-issues.ps1 -Action list",
+    "sentry:issues:resolve": "pwsh -NoProfile -File scripts/sentry/cli-issues.ps1 -Action resolve",
+    "sentry:issues:details": "pwsh -NoProfile -File scripts/sentry/cli-issues.ps1 -Action details",
+    "sentry:fix-config": "node scripts/sentry/fix-404-error.js",
     "deploy:vercel": "node scripts/deploy-vercel.js",
     "cli:cline": "npx cline",
     "cli:cline:format": "npx cline --format compact",
@@ -56,56 +67,101 @@
     "extension:generate-popup": "nuxt generate --routes=/popup --dir=.output/popup",
     "audit:fix": "npm audit fix",
     "audit:fix:force": "npm audit fix --force",
+    "security:verify": "pwsh -NoProfile -File scripts/security/verify-fixes.ps1",
+    "security:verify:bash": "bash scripts/security/verify-fixes.sh",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest --watch",
+    "test:unit": "vitest run --dir composables utils stores",
+    "test:component": "vitest run --dir components",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:debug": "playwright test --debug",
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:install": "playwright install --with-deps",
-    "test:e2e:report": "playwright show-report"
+    "test:e2e:report": "playwright show-report",
+    "test:all": "npm run test:run && npm run test:e2e",
+    "clear:ts-cache": "pwsh -NoProfile -File scripts/clear-typescript-cache.ps1",
+    "snyk:test": "snyk test",
+    "snyk:test:code": "snyk code test",
+    "snyk:test:iac": "snyk iac test",
+    "snyk:test:container": "snyk container test",
+    "snyk:monitor": "snyk monitor",
+    "snyk:auth": "snyk auth",
+    "snyk:ignore:help": "node scripts/snyk/ignore-false-positives.js"
   },
   "dependencies": {
     "@algolia/client-search": "^5.45.0",
     "@algolia/transporter": "^4.25.3",
     "@heroicons/vue": "^2.2.0",
-    "@nuxt/ui": "^2.19.0",
+    "@modelcontextprotocol/sdk": "^1.24.0",
+    "@nuxt/ui": "^4.2.1",
+    "@nuxtjs/color-mode": "^4.0.0",
+    "@nuxtjs/i18n": "^10.2.1",
     "@pinia/nuxt": "^0.11.3",
-    "@sentry/cli": "^2.58.2",
     "@sentry/nuxt": "^10.27.0",
-    "@vercel/sdk": "^1.18.1",
+    "@vueuse/core": "^14.1.0",
+    "@vueuse/motion": "^3.0.3",
+    "@vueuse/nuxt": "^14.1.0",
     "algoliasearch": "^5.45.0",
     "apexcharts": "^5.3.6",
+    "better-sqlite3": "^12.5.0",
     "chart.js": "^4.5.1",
+    "dayjs": "^1.11.19",
+    "ioredis": "^5.8.2",
+    "lucide-vue-next": "^0.556.0",
     "nuxt": "^4.2.1",
     "pinia": "^3.0.4",
     "pinia-plugin-persistedstate": "^4.7.1",
-    "svgl-client": "^0.1.2",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.5.1",
     "vue-chartjs": "^5.3.3",
-    "vue-eslint-parser": "^10.2.0",
-    "vue3-apexcharts": "^1.10.0"
+    "vue3-apexcharts": "^1.10.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@formkit/auto-animate": "^0.9.0",
+    "@myuon/refactor-mcp": "^1.2.0",
     "@nuxt/devtools": "latest",
+    "@nuxt/icon": "^2.1.0",
+    "@nuxt/image": "^2.0.0",
+    "@pinia/testing": "^1.0.3",
     "@playwright/test": "^1.57.0",
-    "@types/node": "^24.10.0",
+    "@sentry/cli": "^2.58.2",
+    "@types/node": "^24.10.1",
     "@typescript-eslint/eslint-plugin": "^8.12.1",
     "@typescript-eslint/parser": "^8.12.1",
+    "@vercel/sdk": "^1.18.1",
+    "@vitejs/plugin-vue": "^6.0.2",
+    "@vitest/coverage-v8": "^4.0.15",
+    "@vitest/ui": "^4.0.15",
+    "@vue/test-utils": "^2.4.6",
+    "autoprefixer": "^10.4.20",
     "concurrently": "^9.0.1",
     "cross-env": "^10.1.0",
-    "eslint": "^9.14.0",
+    "daisyui": "^5.5.8",
+    "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-css": "^0.11.1",
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-tailwindcss": "^3.18.2",
     "eslint-plugin-vue": "^10.6.2",
+    "happy-dom": "^20.0.11",
+    "knip": "^5.72.0",
     "lint-staged": "^16.2.7",
+    "postcss": "^8.4.49",
     "prettier": "^3.2.5",
     "simple-git-hooks": "^2.11.1",
+    "tailwindcss": "^3.4.18",
     "typescript": "^5.9.3",
     "vitest": "^4.0.15",
+    "vue-eslint-parser": "^10.2.0",
     "vue-tsc": "^3.1.3"
   },
   "optionalDependencies": {
-    "cline": "^1.0.7"
+    "cline": "^1.0.8"
   },
   "overrides": {
     "glob": "10.1.0",
@@ -122,7 +178,8 @@
       "glob": "10.1.0"
     },
     "micromatch": "4.0.8",
-    "tar-fs": "2.1.4"
+    "tar-fs": "2.1.4",
+    "@modelcontextprotocol/sdk": "^1.24.0"
   },
   "keywords": [
     "matlab",
@@ -149,54 +206,41 @@
   },
   "homepage": "https://github.com/Themis128/matlab-nuxt-app#readme",
   "simple-git-hooks": {
-    "pre-commit": "npm run precommit:check && npm run check:todos:staged && npm run lint:yaml && npm run format && npx lint-staged && npm run lint && npm run typecheck"
+    "pre-commit": "npm run precommit:check && npm run check:todos:staged && npm run lint:yaml && npx lint-staged"
   },
   "lint-staged": {
     "*.{js,ts,vue,jsx,tsx}": [
       "eslint --fix",
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ],
     "*.{py,pyi}": [
-      "black --line-length=88",
-      "isort --profile black",
-      "autopep8 --max-line-length=88 --in-place",
-      "git add"
+      "node scripts/hooks/run-if-available.js black --line-length=88",
+      "node scripts/hooks/run-if-available.js isort --profile black"
     ],
     "*.{json,html,htm}": [
-      "prettier --parser json",
-      "prettier --parser html",
-      "git add"
+      "prettier --write"
     ],
     "*.{yml,yaml}": [
-      "prettier --parser yaml",
-      "yamllint --fix",
-      "git add"
+      "prettier --write",
+      "node scripts/hooks/run-if-available.js yamllint"
     ],
     "*.{css,scss,sass,less,styl}": [
-      "prettier --parser css",
-      "prettier --parser scss",
-      "git add"
+      "prettier --write"
     ],
     "*.md": [
-      "prettier --parser markdown",
-      "git add"
+      "prettier --write"
     ],
     "*.{sh,bash,zsh,fish}": [
-      "shfmt -i 2 -ci",
-      "git add"
+      "node scripts/hooks/run-if-available.js shfmt -i 2 -ci -w"
     ],
     "Dockerfile": [
-      "hadolint --fix",
-      "git add"
+      "node scripts/hooks/run-if-available.js hadolint"
     ],
     "*.{sql,psql,mysql}": [
-      "prettier --parser sql",
-      "git add"
+      "prettier --write"
     ],
-    "*.{toml,ini,cfg,conf}": [
-      "prettier --parser ini",
-      "git add"
+    "*.{toml,cfg,conf}": [
+      "prettier --write"
     ],
     "*.{js,ts,vue,py,md,json,html,yaml,yml,css,scss}": [
       "node ./scripts/hooks/cline-check.cjs"

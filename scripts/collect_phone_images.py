@@ -246,8 +246,14 @@ class PhoneImageCollector:
         """Backup search using stock photo APIs for Realme phones"""
         try:
             # Try Unsplash API for Realme phone images
+            unsplash_api_key = os.environ.get('UNSPLASH_API_KEY')
+            if not unsplash_api_key:
+                # Skip Unsplash if API key not configured
+                print(f"  Backup: Unsplash API key not configured, skipping stock photo search")
+                return None
+            
             unsplash_url = f"https://api.unsplash.com/search/photos?query=realme+{phone['model']}&per_page=3"
-            headers = {'Authorization': 'Client-ID YOUR_UNSPLASH_API_KEY'}  # Would need API key
+            headers = {'Authorization': f'Client-ID {unsplash_api_key}'}
 
             # For now, try a simple fallback approach
             print(f"  Backup: Would search stock photos for '{phone['company']} {phone['model']}'")

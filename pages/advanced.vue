@@ -1,121 +1,133 @@
 <template>
-  <div class="bg-background min-h-screen">
-    <!-- Header Section -->
-    <section class="bg-gradient-to-r from-purple-600 to-blue-600 py-16 text-white">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center">
-          <h1 class="mb-4 text-4xl font-bold sm:text-5xl">Advanced Analytics</h1>
-          <p class="mx-auto max-w-2xl text-xl text-purple-100">
-            Deep dive into advanced analytics features with powerful data mining and machine
-            learning tools
-          </p>
-        </div>
-      </div>
-    </section>
+  <DPageLayout
+    :show-hero="true"
+    title="Advanced Analytics"
+    description="Deep dive into advanced analytics features with powerful data mining and machine learning tools"
+    bg="base-200"
+  >
+    <template #hero-actions>
+      <span class="badge badge-primary badge-lg mb-4">
+        <Icon name="heroicons:chart-bar-square" class="h-3 w-3" />
+        Enterprise Analytics
+      </span>
+    </template>
 
     <!-- Advanced Features Dashboard -->
     <section class="py-20">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Analytics Cards Grid -->
-        <div class="mb-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          <UCard class="group transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+        <div class="animate-stagger mb-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div
+            class="card-modern group p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+          >
             <div class="mb-6 flex items-center gap-4">
               <div class="rounded-lg bg-purple-500 p-3 text-white">
-                <UIcon name="i-heroicons-chart-bar-square" class="h-6 w-6" />
+                <Icon name="heroicons:chart-bar-square" class="h-6 w-6" />
               </div>
               <div>
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                  Advanced Metrics
-                </h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Enterprise Analytics</p>
+                <h3 class="text-xl font-semibold text-base-content">Advanced Metrics</h3>
+                <p class="text-sm text-base-content/60">Enterprise Analytics</p>
               </div>
             </div>
             <div class="space-y-4">
               <div class="flex justify-between">
-                <span class="text-gray-600 dark:text-gray-300">Model Accuracy</span>
-                <span class="font-semibold text-green-600">97.8%</span>
+                <span class="text-base-content/70">Model Accuracy</span>
+                <span class="font-semibold text-success">97.8%</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-gray-600 dark:text-gray-300">Training Time</span>
-                <span class="font-semibold text-blue-600">2.3 hrs</span>
+                <span class="text-base-content/70">Training Time</span>
+                <span class="font-semibold text-info">2.3 hrs</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-gray-600 dark:text-gray-300">Data Points</span>
-                <span class="font-semibold text-purple-600">2.4M</span>
+                <span class="text-base-content/70">Data Points</span>
+                <span class="font-semibold text-primary">2.4M</span>
               </div>
             </div>
-            <UButton variant="outline" size="sm" class="mt-6 w-full"> View Details </UButton>
-          </UCard>
+            <DButton
+              variant="outline"
+              size="sm"
+              class="mt-6 w-full"
+              @click="navigateTo('/model-showcase')"
+            >
+              View Details
+            </DButton>
+          </div>
 
-          <UCard class="group transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+          <div
+            class="card-modern group p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+          >
             <div class="mb-6 flex items-center gap-4">
               <div class="rounded-lg bg-blue-500 p-3 text-white">
-                <UIcon name="i-heroicons-cpu-chip" class="h-6 w-6" />
+                <Icon name="heroicons:cpu-chip" class="h-6 w-6" />
               </div>
               <div>
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Neural Networks</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Deep Learning</p>
+                <h3 class="text-xl font-semibold text-base-content">Neural Networks</h3>
+                <p class="text-sm text-base-content/60">Deep Learning</p>
               </div>
             </div>
             <div class="space-y-4">
               <div class="flex justify-between">
-                <span class="text-gray-600 dark:text-gray-300">Active Networks</span>
-                <span class="font-semibold text-blue-600">12</span>
+                <span class="text-base-content/70">Active Networks</span>
+                <span class="font-semibold text-info">12</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-gray-600 dark:text-gray-300">Layers</span>
-                <span class="font-semibold text-green-600">256</span>
+                <span class="text-base-content/70">Layers</span>
+                <span class="font-semibold text-success">256</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-gray-600 dark:text-gray-300">Parameters</span>
-                <span class="font-semibold text-purple-600">45.2M</span>
+                <span class="text-base-content/70">Parameters</span>
+                <span class="font-semibold text-primary">45.2M</span>
               </div>
             </div>
-            <UButton variant="outline" size="sm" class="mt-6 w-full"> Configure </UButton>
-          </UCard>
+            <DButton variant="outline" size="sm" class="mt-6 w-full" @click="scrollToConfig">
+              Configure
+            </DButton>
+          </div>
 
-          <UCard class="group transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+          <div
+            class="card-modern group p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+          >
             <div class="mb-6 flex items-center gap-4">
               <div class="rounded-lg bg-green-500 p-3 text-white">
-                <UIcon name="i-heroicons-presentation-chart-bar" class="h-6 w-6" />
+                <Icon name="heroicons:presentation-chart-bar" class="h-6 w-6" />
               </div>
               <div>
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Performance</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Real-time</p>
+                <h3 class="text-xl font-semibold text-base-content">Performance</h3>
+                <p class="text-sm text-base-content/60">Real-time</p>
               </div>
             </div>
             <div class="space-y-4">
               <div class="flex justify-between">
-                <span class="text-gray-600 dark:text-gray-300">Throughput</span>
-                <span class="font-semibold text-green-600">1.2K/s</span>
+                <span class="text-base-content/70">Throughput</span>
+                <span class="font-semibold text-success">1.2K/s</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-gray-600 dark:text-gray-300">Latency</span>
-                <span class="font-semibold text-blue-600">23ms</span>
+                <span class="text-base-content/70">Latency</span>
+                <span class="font-semibold text-info">23ms</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-gray-600 dark:text-gray-300">Uptime</span>
-                <span class="font-semibold text-purple-600">99.9%</span>
+                <span class="text-base-content/70">Uptime</span>
+                <span class="font-semibold text-primary">99.9%</span>
               </div>
             </div>
-            <UButton variant="outline" size="sm" class="mt-6 w-full"> Monitor </UButton>
-          </UCard>
+            <DButton variant="outline" size="sm" class="mt-6 w-full" @click="scrollToMonitoring">
+              Monitor
+            </DButton>
+          </div>
         </div>
 
         <!-- Advanced Configuration Section -->
-        <div class="mb-16 rounded-2xl bg-gray-50 p-8 dark:bg-gray-900/50">
-          <h2 class="mb-8 text-center text-2xl font-bold text-gray-900 dark:text-white">
+        <div class="mb-16 rounded-2xl bg-base-200 p-8">
+          <h2 class="mb-8 text-center text-2xl font-bold text-base-content">
             Advanced Configuration
           </h2>
 
           <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
             <div>
-              <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
-                Model Parameters
-              </h3>
+              <h3 class="mb-4 text-lg font-semibold text-base-content">Model Parameters</h3>
               <div class="space-y-4">
                 <div>
-                  <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label class="mb-2 block text-sm font-medium text-base-content/70">
                     Learning Rate
                   </label>
                   <input
@@ -126,102 +138,118 @@
                     step="0.001"
                     class="w-full"
                   />
-                  <span class="text-sm text-gray-500">{{ config.learningRate }}</span>
+                  <span class="text-sm text-base-content/60">{{ config.learningRate }}</span>
                 </div>
                 <div>
-                  <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label class="mb-2 block text-sm font-medium text-base-content/70">
                     Batch Size
                   </label>
-                  <USelect v-model="config.batchSize" :options="batchSizeOptions" />
+                  <DSelect v-model="config.batchSize" :options="batchSizeOptions" />
                 </div>
                 <div>
-                  <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label class="mb-2 block text-sm font-medium text-base-content/70">
                     Epochs
                   </label>
-                  <UInput v-model="config.epochs" type="number" />
+                  <DInput v-model="config.epochs" type="number" />
                 </div>
               </div>
             </div>
 
             <div>
-              <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
-                Data Processing
-              </h3>
+              <h3 class="mb-4 text-lg font-semibold text-base-content">Data Processing</h3>
               <div class="space-y-4">
                 <div class="flex items-center justify-between">
-                  <span class="text-gray-700 dark:text-gray-300">Data Augmentation</span>
-                  <UToggle v-model="config.dataAugmentation" />
+                  <span class="text-base-content/70">Data Augmentation</span>
+                  <input
+                    v-model="config.dataAugmentation"
+                    type="checkbox"
+                    class="toggle toggle-primary"
+                  />
                 </div>
                 <div class="flex items-center justify-between">
-                  <span class="text-gray-700 dark:text-gray-300">Normalization</span>
-                  <UToggle v-model="config.normalization" />
+                  <span class="text-base-content/70">Normalization</span>
+                  <input
+                    v-model="config.normalization"
+                    type="checkbox"
+                    class="toggle toggle-primary"
+                  />
                 </div>
                 <div class="flex items-center justify-between">
-                  <span class="text-gray-700 dark:text-gray-300">Cross Validation</span>
-                  <UToggle v-model="config.crossValidation" />
+                  <span class="text-base-content/70">Cross Validation</span>
+                  <input
+                    v-model="config.crossValidation"
+                    type="checkbox"
+                    class="toggle toggle-primary"
+                  />
                 </div>
               </div>
             </div>
           </div>
 
           <div class="mt-8 flex justify-center">
-            <UButton size="lg" color="purple"> Apply Configuration </UButton>
+            <DButton size="lg" variant="primary" @click="applyConfiguration">
+              Apply Configuration
+            </DButton>
           </div>
         </div>
 
         <!-- Real-time Monitoring -->
-        <div class="rounded-2xl bg-white p-8 shadow-lg dark:bg-gray-800">
-          <h2 class="mb-8 text-center text-2xl font-bold text-gray-900 dark:text-white">
+        <div class="rounded-2xl bg-base-100 p-8 shadow-lg">
+          <h2 class="mb-8 text-center text-2xl font-bold text-base-content">
             Real-time Monitoring
           </h2>
 
           <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
             <div>
-              <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
-                Training Progress
-              </h3>
+              <h3 class="mb-4 text-lg font-semibold text-base-content">Training Progress</h3>
               <div class="space-y-4">
                 <div class="flex justify-between">
-                  <span class="text-gray-600 dark:text-gray-300">Current Epoch</span>
+                  <span class="text-base-content/70">Current Epoch</span>
                   <span class="font-semibold">{{ currentEpoch }}/{{ totalEpochs }}</span>
                 </div>
-                <UProgress :value="(currentEpoch / totalEpochs) * 100" />
+                <progress
+                  class="progress progress-primary w-full"
+                  :value="(currentEpoch / totalEpochs) * 100"
+                  max="100"
+                />
                 <div class="flex justify-between">
-                  <span class="text-gray-600 dark:text-gray-300">Loss</span>
-                  <span class="font-semibold text-red-600">{{ currentLoss }}</span>
+                  <span class="text-base-content/70">Loss</span>
+                  <span class="font-semibold text-error">{{ currentLoss }}</span>
                 </div>
                 <div class="flex justify-between">
-                  <span class="text-gray-600 dark:text-gray-300">Accuracy</span>
-                  <span class="font-semibold text-green-600">{{ currentAccuracy }}%</span>
+                  <span class="text-base-content/70">Accuracy</span>
+                  <span class="font-semibold text-success">{{ currentAccuracy }}%</span>
                 </div>
               </div>
             </div>
 
             <div>
-              <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
-                System Resources
-              </h3>
+              <h3 class="mb-4 text-lg font-semibold text-base-content">System Resources</h3>
               <div class="space-y-4">
                 <div>
                   <div class="mb-1 flex justify-between">
-                    <span class="text-gray-600 dark:text-gray-300">CPU Usage</span>
+                    <span class="text-base-content/70">CPU Usage</span>
                     <span class="font-semibold">{{ cpuUsage }}%</span>
                   </div>
-                  <UProgress :value="cpuUsage" color="blue" />
+                  <progress class="progress progress-info w-full" :value="cpuUsage" max="100" />
                 </div>
                 <div>
                   <div class="mb-1 flex justify-between">
-                    <span class="text-gray-600 dark:text-gray-300">Memory Usage</span>
+                    <span class="text-base-content/70">Memory Usage</span>
                     <span class="font-semibold">{{ memoryUsage }}%</span>
                   </div>
-                  <UProgress :value="memoryUsage" color="green" />
+                  <progress
+                    class="progress progress-success w-full"
+                    :value="memoryUsage"
+                    max="100"
+                  />
                 </div>
                 <div>
                   <div class="mb-1 flex justify-between">
-                    <span class="text-gray-600 dark:text-gray-300">GPU Usage</span>
+                    <span class="text-base-content/70">GPU Usage</span>
                     <span class="font-semibold">{{ gpuUsage }}%</span>
                   </div>
-                  <UProgress :value="gpuUsage" color="purple" />
+                  <progress class="progress progress-primary w-full" :value="gpuUsage" max="100" />
                 </div>
               </div>
             </div>
@@ -229,11 +257,12 @@
         </div>
       </div>
     </section>
-  </div>
+  </DPageLayout>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, onUnmounted } from 'vue';
+import { useUserActivity } from '~/composables/useUserActivity';
 
 // Page meta (fallback)
 onMounted(() => {
@@ -304,6 +333,42 @@ const updateSystemMetrics = async () => {
     // This can be enhanced when system monitoring API is available
   } catch {
     // Use default values
+  }
+};
+
+const scrollToConfig = () => {
+  const configSection = document.querySelector('.rounded-2xl.bg-gray-50');
+  if (configSection) {
+    configSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+};
+
+const scrollToMonitoring = () => {
+  const monitoringSection = document.querySelector('.rounded-2xl.bg-white');
+  if (monitoringSection) {
+    monitoringSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+};
+
+const applyConfiguration = async () => {
+  // Apply the configuration - in a real app, this would send to API
+  console.log('Applying configuration:', config);
+  // You could show a toast notification here
+  // Track configuration if analytics is available
+  try {
+    const { trackActivity } = useUserActivity?.() || { trackActivity: () => {} };
+    await trackActivity(
+      'view',
+      'Applied configuration',
+      `Learning rate: ${config.learningRate}, Batch size: ${config.batchSize}, Epochs: ${config.epochs}`,
+      {
+        learningRate: config.learningRate,
+        batchSize: config.batchSize,
+        epochs: config.epochs,
+      }
+    );
+  } catch {
+    console.debug('Analytics tracking not available');
   }
 };
 
