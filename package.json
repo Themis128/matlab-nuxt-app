@@ -131,7 +131,7 @@
     "@playwright/test": "^1.57.0",
     "@sentry/cli": "^2.58.2",
     "@types/node": "^24.10.1",
-    "@typescript-eslint/eslint-plugin": "^8.12.1",
+    "@typescript-eslint/eslint-plugin": "^8.49.0",
     "@typescript-eslint/parser": "^8.12.1",
     "@vercel/sdk": "^1.18.1",
     "@vitejs/plugin-vue": "^6.0.2",
