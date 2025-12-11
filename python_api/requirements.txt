@@ -21,3 +21,4 @@ shap>=0.44.0
 ipython>=8.0.0
 # TensorFlow is optional - install separately if Python 3.11/3.12
 # tensorflow>=2.15.0; python_version<"3.14"
+urllib3>=2.6.0 # not directly required, pinned by Snyk to avoid a vulnerability
