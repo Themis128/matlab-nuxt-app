@@ -18,6 +18,12 @@ logger = logging.getLogger(__name__)
 # Model directory
 MODELS_DIR = Path(__file__).parent / "trained_models"
 
+# Feature engineering placeholders (used when target variable is unknown during prediction)
+PLACEHOLDER_PRICE = 500.0  # Median smartphone price (USD) for feature engineering
+PLACEHOLDER_RAM_PRICE_RATIO = 100.0  # Approximate: $100 per GB RAM
+PLACEHOLDER_BATTERY_BASE = 3000.0  # Base battery capacity (mAh)
+PLACEHOLDER_BATTERY_SCREEN_MULTIPLIER = 500.0  # Additional mAh per inch of screen
+
 # Global model cache
 _models_cache = {}
 _scalers_cache = {}
@@ -112,38 +118,39 @@ def encode_processor(processor: Optional[str]) -> np.ndarray:
 
     return processor_encoded
 
-def create_features(ram: float, battery: float, screen: float, weight: float,
-                   year: int, company: str, front_camera: Optional[float] = None,
-                   back_camera: Optional[float] = None, processor: Optional[str] = None,
-                   storage: Optional[float] = None, unique_companies: Optional[list] = None) -> np.ndarray:
-    """Create feature vector matching training data"""
-
+def create_engineered_features_single(ram: float, battery: float, screen: float, weight: float,
+                                     year: int, price: float, company: str, 
+                                     front_camera: Optional[float] = None,
+                                     back_camera: Optional[float] = None, 
+                                     processor: Optional[str] = None,
+                                     storage: Optional[float] = None, 
+                                     unique_companies: Optional[list] = None) -> np.ndarray:
+    """
+    Create engineered features for a single prediction, matching the training feature engineering.
+    This mirrors the create_engineered_features function from train_models_sklearn.py
+    """
     # Handle missing values (fill with medians from training data)
     front_camera = front_camera if front_camera is not None else 16.0
     back_camera = back_camera if back_camera is not None else 50.0
     storage = storage if storage is not None else 128.0
-
-    # Base features (must match training order)
-    base_features = [
-        ram, battery, screen, weight, year,
-        front_camera, back_camera, storage
-    ]
-
+    
     # Company encoding
     if unique_companies:
         company_encoded = encode_company(company, unique_companies)
-        base_features.extend(company_encoded)
     else:
-        base_features.append(0.0)  # Default if no companies available
-
+        company_encoded = np.zeros(1)
+    
     # Processor encoding
     processor_encoded = encode_processor(processor)
-    base_features.extend(processor_encoded)
-
-    # Convert to numpy array
-    X = np.array(base_features)
-
-    # Create interaction features (must match training)
+    
+    # Base features (must match training: ram, battery, screen, weight, year, front_camera, back_camera, storage, company_encoded, processor_encoded)
+    base_features = np.concatenate([
+        np.array([ram, battery, screen, weight, year, front_camera, back_camera, storage]),
+        company_encoded,
+        processor_encoded
+    ])
+    
+    # Interaction features (must match training)
     interactions = np.array([
         ram * battery,           # RAM-Battery interaction
         ram * screen,            # RAM-Screen interaction
@@ -153,27 +160,28 @@ def create_features(ram: float, battery: float, screen: float, weight: float,
         screen * weight,         # Screen-Weight (form factor)
         front_camera * back_camera,  # Camera quality interaction
         ram * storage,           # RAM-Storage (premium indicator)
-        back_camera * 500,       # Camera-Price (premium phones) - using avg price
-        processor_encoded[1] * 500,  # High-end processor * price
+        back_camera * price,     # Camera-Price (premium phones)
+        processor_encoded[1] * price,  # High-end processor * price
     ])
-
-    # Ratio features
+    
+    # Ratio features (must match training)
     ratios = np.array([
-        500 / (ram + 1),         # Price per GB RAM
-        500 / (battery + 1),     # Price per mAh
-        500 / (screen + 0.1),    # Price per inch
-        500 / (storage + 1),     # Price per GB storage
-        ram / (battery + 1),    # RAM-Battery ratio
-        screen / (weight + 1),  # Screen-Weight ratio
-        battery / (weight + 1), # Battery-Weight ratio
-        back_camera / (500 + 1),  # Camera per dollar
+        price / (ram + 1),       # Price per GB RAM
+        price / (battery + 1),   # Price per mAh
+        price / (screen + 0.1),  # Price per inch
+        price / (storage + 1),   # Price per GB storage
+        ram / (battery + 1),     # RAM-Battery ratio
+        screen / (weight + 1),   # Screen-Weight ratio
+        battery / (weight + 1),  # Battery-Weight ratio
+        back_camera / (price + 1),  # Camera per dollar
     ])
-
-    # Regional price ratios (set to neutral since we don't have regional data)
+    
+    # Regional price ratios (set to 1.0 since we don't have regional data during prediction)
+    # Training includes these if regional prices are available
     regional_ratios = np.array([1.0, 1.0, 1.0])  # USA/India, USA/China, USA/Pakistan ratios
     ratios = np.concatenate([ratios, regional_ratios])
-
-    # Temporal features
+    
+    # Temporal features (must match training)
     years_since_2020 = year - 2020
     is_recent = 1.0 if year >= 2023 else 0.0
     temporal = np.array([
@@ -181,8 +189,8 @@ def create_features(ram: float, battery: float, screen: float, weight: float,
         is_recent,
         years_since_2020 ** 2,  # Quadratic trend
     ])
-
-    # Polynomial features
+    
+    # Polynomial features (must match training)
     polynomials = np.array([
         ram ** 2,
         battery ** 2,
@@ -191,8 +199,8 @@ def create_features(ram: float, battery: float, screen: float, weight: float,
         np.sqrt(battery),
         np.sqrt(back_camera + 1),  # Camera quality
     ])
-
-    # Combine all features in correct order
+    
+    # Combine all features in the same order as training
     features = np.concatenate([
         base_features,
         interactions,
@@ -200,7 +208,7 @@ def create_features(ram: float, battery: float, screen: float, weight: float,
         temporal,
         polynomials
     ])
-
+    
     return features.reshape(1, -1)  # Return as row vector
 
 def predict_price(ram: float, battery: float, screen: float, weight: float,
@@ -224,9 +232,15 @@ def predict_price(ram: float, battery: float, screen: float, weight: float,
             metadata = json.load(f)
             unique_companies = metadata.get('unique_companies', [])
 
-        # Create features
-        X = create_features(ram, battery, screen, weight, year, company,
-                          front_camera, back_camera, processor, storage, unique_companies)
+        # Use placeholder price for feature engineering (will be predicted)
+        # Use median price as placeholder
+        placeholder_price = PLACEHOLDER_PRICE
+        
+        # Create features using the engineered features function
+        X = create_engineered_features_single(
+            ram, battery, screen, weight, year, placeholder_price, company,
+            front_camera, back_camera, processor, storage, unique_companies
+        )
 
         # Scale features
         X_scaled = scaler['X_scaler'].transform(X)
@@ -260,36 +274,24 @@ def predict_ram(battery: float, screen: float, weight: float, year: int,
             logger.warning("RAM predictor model not available, using fallback")
             return _fallback_ram_prediction(battery, screen, weight, year, price, company)
 
-        # For RAM prediction, we need to create features but adjust for the different input order
-        # RAM is the target, so we don't include it in features
-        front_camera = front_camera if front_camera is not None else 16.0
-        back_camera = back_camera if back_camera is not None else 50.0
-        storage = storage if storage is not None else 128.0
-
         # Get unique companies
         metadata_path = MODELS_DIR / "ram_predictor_metadata.json"
         with open(metadata_path, 'r') as f:
             metadata = json.load(f)
             unique_companies = metadata.get('unique_companies', [])
 
-        # Create features (without RAM)
-        base_features = [
-            battery, screen, weight, year, price,  # Different order for RAM prediction
-            front_camera, back_camera, storage
-        ]
-
-        # Company encoding
-        company_encoded = encode_company(company, unique_companies)
-        base_features.extend(company_encoded)
-
-        # Processor encoding
-        processor_encoded = encode_processor(processor)
-        base_features.extend(processor_encoded)
-
-        X = np.array(base_features)
+        # Use placeholder RAM for feature engineering (will be predicted)
+        # Estimate based on price
+        placeholder_ram = max(4, price / PLACEHOLDER_RAM_PRICE_RATIO)
+        
+        # Create features using the engineered features function
+        X = create_engineered_features_single(
+            placeholder_ram, battery, screen, weight, year, price, company,
+            front_camera, back_camera, processor, storage, unique_companies
+        )
 
         # Scale and predict
-        X_scaled = scaler['X_scaler'].transform(X.reshape(1, -1))
+        X_scaled = scaler['X_scaler'].transform(X)
         y_pred_norm = model.predict(X_scaled)
         ram = scaler['y_scaler'].inverse_transform(y_pred_norm.reshape(-1, 1)).flatten()[0]
 
@@ -314,34 +316,24 @@ def predict_battery(ram: float, screen: float, weight: float, year: int,
             logger.warning("Battery predictor model not available, using fallback")
             return _fallback_battery_prediction(ram, screen, weight, year, price, company)
 
-        front_camera = front_camera if front_camera is not None else 16.0
-        back_camera = back_camera if back_camera is not None else 50.0
-        storage = storage if storage is not None else 128.0
-
         # Get unique companies
         metadata_path = MODELS_DIR / "battery_predictor_metadata.json"
         with open(metadata_path, 'r') as f:
             metadata = json.load(f)
             unique_companies = metadata.get('unique_companies', [])
 
-        # Create features (without battery)
-        base_features = [
-            ram, screen, weight, year, price,  # Different order for battery prediction
-            front_camera, back_camera, storage
-        ]
-
-        # Company encoding
-        company_encoded = encode_company(company, unique_companies)
-        base_features.extend(company_encoded)
-
-        # Processor encoding
-        processor_encoded = encode_processor(processor)
-        base_features.extend(processor_encoded)
-
-        X = np.array(base_features)
+        # Use placeholder battery for feature engineering (will be predicted)
+        # Estimate based on screen size
+        placeholder_battery = PLACEHOLDER_BATTERY_BASE + (screen * PLACEHOLDER_BATTERY_SCREEN_MULTIPLIER)
+        
+        # Create features using the engineered features function
+        X = create_engineered_features_single(
+            ram, placeholder_battery, screen, weight, year, price, company,
+            front_camera, back_camera, processor, storage, unique_companies
+        )
 
         # Scale and predict
-        X_scaled = scaler['X_scaler'].transform(X.reshape(1, -1))
+        X_scaled = scaler['X_scaler'].transform(X)
         y_pred_norm = model.predict(X_scaled)
         battery = scaler['y_scaler'].inverse_transform(y_pred_norm.reshape(-1, 1)).flatten()[0]
 
@@ -366,34 +358,32 @@ def predict_brand(ram: float, battery: float, screen: float, weight: float,
             logger.warning("Brand classifier model not available, using fallback")
             return _fallback_brand_prediction(ram, battery, screen, weight, year, price)
 
-        front_camera = front_camera if front_camera is not None else 16.0
-        back_camera = back_camera if back_camera is not None else 50.0
-        storage = storage if storage is not None else 128.0
-
         # Get unique brands from metadata
         metadata_path = MODELS_DIR / "brand_classifier_metadata.json"
         with open(metadata_path, 'r') as f:
             metadata = json.load(f)
             unique_brands = metadata.get('unique_brands', ['Apple', 'Samsung', 'Xiaomi'])
+        
+        # IMPORTANT: For feature engineering, we need to use the full company list (19 companies)
+        # that was used during training, not just the filtered brand list (17 brands)
+        # Load the full company list from another model's metadata
+        price_metadata_path = MODELS_DIR / "price_predictor_metadata.json"
+        with open(price_metadata_path, 'r') as f:
+            price_metadata = json.load(f)
+            unique_companies = price_metadata.get('unique_companies', unique_brands)
 
-        # Create features (without company)
-        base_features = [
-            ram, battery, screen, weight, year, price,
-            front_camera, back_camera, storage
-        ]
-
-        # Add dummy company encoding (will be ignored by the model)
-        dummy_company = np.zeros(len(unique_brands))
-        base_features.extend(dummy_company)
-
-        # Processor encoding
-        processor_encoded = encode_processor(processor)
-        base_features.extend(processor_encoded)
-
-        X = np.array(base_features)
+        # Use placeholder company for feature engineering (will be predicted)
+        # Use a generic brand as placeholder
+        placeholder_company = 'Samsung'  # Neutral/common brand
+        
+        # Create features using the engineered features function with full company list
+        X = create_engineered_features_single(
+            ram, battery, screen, weight, year, price, placeholder_company,
+            front_camera, back_camera, processor, storage, unique_companies
+        )
 
         # Scale and predict
-        X_scaled = scaler['X_scaler'].transform(X.reshape(1, -1))
+        X_scaled = scaler['X_scaler'].transform(X)
         y_pred = model.predict(X_scaled)
 
         # Convert prediction back to brand name
