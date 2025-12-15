@@ -90,7 +90,7 @@ jobs:
           ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
 
       - name: Upload artifacts to server
-        uses: appleboy/scp-action@v0.1.4
+        uses: appleboy/scp-action@v1.0.0
         with:
           # linter-ignore: secrets.SERVER_HOST
           host: ${{ secrets.SERVER_HOST }}
