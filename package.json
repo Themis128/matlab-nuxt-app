@@ -132,7 +132,7 @@
     "@sentry/cli": "^2.58.2",
     "@types/node": "^24.10.1",
     "@typescript-eslint/eslint-plugin": "^8.12.1",
-    "@typescript-eslint/parser": "^8.12.1",
+    "@typescript-eslint/parser": "^8.50.0",
     "@vercel/sdk": "^1.18.1",
     "@vitejs/plugin-vue": "^6.0.2",
     "@vitest/coverage-v8": "^4.0.15",
