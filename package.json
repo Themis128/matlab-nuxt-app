@@ -93,7 +93,7 @@
     "snyk:ignore:help": "node scripts/snyk/ignore-false-positives.js"
   },
   "dependencies": {
-    "@algolia/client-search": "^5.45.0",
+    "@algolia/client-search": "^5.46.1",
     "@algolia/transporter": "^4.25.3",
     "@heroicons/vue": "^2.2.0",
     "@modelcontextprotocol/sdk": "^1.24.0",
