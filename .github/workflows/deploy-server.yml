@@ -102,7 +102,7 @@ jobs:
           target: /var/www/matlab-mobile-dataset
 
       - name: 'Remote deploy: extract artifacts, venv, install deps, restart'
-        uses: appleboy/ssh-action@v0.1.9
+        uses: appleboy/ssh-action@v1.2.4
         with:
           # linter-ignore: secrets.SERVER_HOST
           host: ${{ secrets.SERVER_HOST }}
