@@ -1,7 +1,7 @@
 # Updated to FastAPI 0.115+ which supports anyio>=4.0.0 and starlette>=0.28.0
-fastapi>=0.115.0
-uvicorn[standard]>=0.30.0
-pydantic>=2.5.0
+fastapi>=0.143.2
+uvicorn[standard]>=0.54.0
+pydantic>=2.14.1
 numpy>=1.24.0
 scipy>=1.11.0
 scikit-learn>=1.3.0
