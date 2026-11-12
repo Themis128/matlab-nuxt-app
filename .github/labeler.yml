@@ -1,18 +1,28 @@
 frontend:
-  - 'app/**'
-  - 'components/**'
-  - 'nuxt.config.ts'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'app/**'
+          - 'components/**'
+          - 'nuxt.config.ts'
 
 python:
-  - 'python_api/**'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'python_api/**'
 
 docs:
-  - 'docs/**'
-  - 'README.md'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'docs/**'
+          - 'README.md'
 
 ml:
-  - 'scripts/**'
-  - 'scripts/**/*.py'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'scripts/**'
+          - 'scripts/**/*.py'
 
 ci:
-  - '.github/workflows/**'
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/workflows/**'
