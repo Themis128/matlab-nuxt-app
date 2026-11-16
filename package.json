@@ -138,7 +138,7 @@
     "@vitest/coverage-v8": "^4.0.15",
     "@vitest/ui": "^4.0.15",
     "@vue/test-utils": "^2.4.6",
-    "autoprefixer": "^10.4.20",
+    "autoprefixer": "^10.6.2",
     "concurrently": "^9.0.1",
     "cross-env": "^10.1.0",
     "daisyui": "^5.5.8",
