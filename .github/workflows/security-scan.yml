@@ -43,7 +43,7 @@ jobs:
         id: snyk-code
 
       - name: Upload Snyk Code results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
           sarif_file: snyk-code-results.sarif
@@ -81,7 +81,7 @@ jobs:
           args: --severity-threshold=high --fail-on=upgradable
 
       - name: Upload Snyk results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
           sarif_file: snyk-results.sarif
