@@ -178,8 +178,7 @@
       "glob": "10.1.0"
     },
     "micromatch": "4.0.8",
-    "tar-fs": "2.1.4",
-    "@modelcontextprotocol/sdk": "^1.24.0"
+    "tar-fs": "2.1.4"
   },
   "keywords": [
     "matlab",
