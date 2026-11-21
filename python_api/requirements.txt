@@ -20,6 +20,6 @@ lightgbm>=4.0.0
 h5py>=3.8.0
 matplotlib>=3.7.0
 shap>=0.44.0
-ipython>=8.0.0
+ipython>=9.18.1
 # TensorFlow is optional - install separately if Python 3.11/3.12
 # tensorflow>=2.15.0; python_version<"3.14"
