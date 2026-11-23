@@ -12,6 +12,14 @@ import { getRequestHost, getRequestProtocol } from 'h3';
  */
 
 export function getPythonApiUrl(event?: any): string {
+  // Client-side bundles have no PYTHON_API_URL and direct backend calls are
+  // CORS-blocked — return '' so `${baseUrl}/api/...` resolves same-origin
+  // through the Nitro proxy routes. Must be import.meta.client: process.client
+  // is undefined in Nuxt 4.
+  if (import.meta.client) {
+    return '';
+  }
+
   // Check environment variables first (highest priority)
   const envUrl = process.env.PYTHON_API_URL || process.env.NUXT_PUBLIC_API_BASE;
   if (envUrl) {
@@ -28,7 +36,11 @@ export function getPythonApiUrl(event?: any): string {
         // produces a URL that hangs until the fetch timeout on every call.
         // Fall through to the fast-fail localhost fallback instead.
         if (host.endsWith('.vercel.app') || host === 'vercel.app') {
-          return process.env.PYTHON_API_URL || process.env.NUXT_PUBLIC_API_BASE || 'http://localhost:8000';
+          return (
+            process.env.PYTHON_API_URL ||
+            process.env.NUXT_PUBLIC_API_BASE ||
+            'http://localhost:8000'
+          );
         }
 
         // Check if host contains replit.dev or other cloud platforms
