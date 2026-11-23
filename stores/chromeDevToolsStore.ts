@@ -293,9 +293,4 @@ export const useChromeDevToolsStore = defineStore('chromeDevTools', {
     },
   },
 
-  persist: {
-    key: 'chrome-devtools-store',
-    storage: typeof window !== 'undefined' ? localStorage : undefined,
-    paths: ['browserUrl', 'debugPort', 'lastConnectedAt'],
-  },
 });

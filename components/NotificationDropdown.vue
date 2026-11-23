@@ -155,7 +155,7 @@ onMounted(() => {
 });
 
 // Computed dropdown items
-const dropdownItems = computed<DropdownItem[][]>(() => {
+const dropdownItems = computed<DropdownItem[]>(() => {
   const items: DropdownItem[] = [{ type: 'header' }];
 
   if (notifications.value.length === 0) {
@@ -171,7 +171,7 @@ const dropdownItems = computed<DropdownItem[][]>(() => {
 
   items.push({ type: 'footer' });
 
-  return [items];
+  return items;
 });
 
 // Handle notification click
@@ -202,11 +202,19 @@ const handleActionClick = (notification: any) => {
 const handleMarkAllAsRead = async () => {
   try {
     await markAllAsRead();
-    const { success } = useToast();
-    success('All notifications marked as read');
+    const toast = useToast();
+    toast.add({
+      title: 'Success',
+      description: 'All notifications marked as read',
+      color: 'success',
+    });
   } catch {
-    const { error } = useToast();
-    error('Failed to mark notifications as read');
+    const toast = useToast();
+    toast.add({
+      title: 'Error',
+      description: 'Failed to mark notifications as read',
+      color: 'error',
+    });
   }
 };
 
