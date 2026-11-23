@@ -13,7 +13,7 @@ vi.mock('~/composables/useApiConfig', () => ({
 // Mock useFetch
 const mockUseFetch = vi.fn();
 
-vi.mock('#app', () => ({
+vi.mock('nuxt/app', () => ({
   useFetch: (...args: any[]) => mockUseFetch(...args),
 }));
 

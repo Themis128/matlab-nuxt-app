@@ -9,7 +9,8 @@
  * - Multi-currency (USD, EUR, INR)
  */
 
-import type { UseFetchOptions } from 'nuxt/app';
+import { useFetch, type UseFetchOptions } from 'nuxt/app';
+import { useApiConfig } from './useApiConfig';
 
 export interface PredictionRequest {
   ram: number;
