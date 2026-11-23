@@ -38,6 +38,15 @@ MODELS_DIR = Path(__file__).parent / "trained_models"
 DISTILLED_MODEL_PATH = MODELS_DIR / "distilled_price_model.pkl"
 METADATA_PATH = Path(__file__).parent.parent / "data" / "clean_model_metadata.json"
 
+# Target-derived features excluded from the distilled model's inputs.
+# Stale pickled metadata still lists them, which produced 14-vector
+# inputs against a 13-feature estimator (HTTP 500 on every predict).
+LEAKAGE_FEATURES = {
+    "price_percentile_global",
+    "price_elasticity_proxy",
+    "cross_brand_price_delta",
+}
+
 
 class DistilledPredictor:
     """Fast, production-ready distilled decision tree (clean features, no leakage)"""
@@ -99,6 +108,18 @@ class DistilledPredictor:
                     if not self.feature_names:
                         self.feature_names = clean_meta.get("features", [])
                     self.categorical_encoders = clean_meta.get("categorical_encoders", {})
+
+            # Reconcile feature list with the fitted estimator: drop leakage
+            # features recorded in stale metadata, then match n_features_in_.
+            if self.feature_names:
+                self.feature_names = [f for f in self.feature_names if f not in LEAKAGE_FEATURES]
+                expected = getattr(self.model, "n_features_in_", None)
+                if expected and len(self.feature_names) != expected:
+                    print(
+                        f"[WARN] Distilled feature count {len(self.feature_names)} "
+                        f"!= model expects {expected}; truncating to match"
+                    )
+                    self.feature_names = self.feature_names[:expected]
 
             print(f"[OK] Distilled model loaded: {len(self.feature_names)} clean features (no leakage)")
 
