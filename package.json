@@ -116,7 +116,7 @@
     "pinia": "^4.1.0",
     "pinia-plugin-persistedstate": "^4.7.1",
     "primeicons": "^8.0.2",
-    "primevue": "^4.5.1",
+    "primevue": "^5.0.5",
     "vue-chartjs": "^5.3.7",
     "vue3-apexcharts": "^1.11.3",
     "zod": "^3.23.8"
