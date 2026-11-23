@@ -487,8 +487,12 @@ async def advanced_predict(request: AdvancedPredictionRequest):
                         request.company, request.front_camera, request.back_camera,
                         request.processor, request.storage,
                     )
+            # ram/battery models predict GB/mAh, not currency — the models
+            # already apply their own floors (2 GB / 2000 mAh), so don't
+            # clamp them to the $50 price floor.
+            floor = 50.0 if request.model_type in ("sklearn_price", "distilled") else 0.0
             return AdvancedPredictionResponse(
-                price=round(max(50.0, float(value)), 2),
+                price=round(max(floor, float(value)), 2),
                 model_used=request.model_type,
                 accuracy_info=None,
                 currency=request.currency,
