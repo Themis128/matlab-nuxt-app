@@ -287,6 +287,6 @@ export const useAdvancedModelsStore = defineStore('advancedModels', {
   persist: {
     key: 'advanced-models-store',
     storage: typeof window !== 'undefined' ? localStorage : undefined,
-    paths: ['selectedModel', 'selectedCurrency', 'predictionHistory', 'lastPrediction'],
+    pick: ['selectedModel', 'selectedCurrency', 'predictionHistory', 'lastPrediction'],
   },
 });

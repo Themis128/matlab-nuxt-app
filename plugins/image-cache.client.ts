@@ -3,7 +3,8 @@
  * Initializes cache cleanup on app start
  */
 
-export default defineNuxtPlugin(() => {
+import type { Plugin } from 'nuxt/app';
+const imageCachePlugin: Plugin = defineNuxtPlugin(() => {
   const imageCache = useImageCacheStore();
 
   // Clear expired cache entries on app start
@@ -19,3 +20,5 @@ export default defineNuxtPlugin(() => {
     ); // 1 hour
   }
 });
+
+export default imageCachePlugin;

@@ -50,8 +50,16 @@ class="h-5 w-5" />
               <label tabindex="0"
 class="btn btn-ghost btn-circle avatar">
                 <div class="w-10 rounded-full">
-                  <img
-src="/avatar.png" alt="User" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    class="h-full w-full text-base-content/60"
+                  >
+                    <path
+                      d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm0 2.25c-3.75 0-7.5 1.88-7.5 5.625v.75h15v-.75c0-3.745-3.75-5.625-7.5-5.625Z"
+                    />
+                  </svg>
                 </div>
               </label>
               <ul

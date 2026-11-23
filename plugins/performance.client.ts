@@ -1,11 +1,12 @@
 import { usePerformanceStore } from '~/stores/performanceStore';
+import type { Plugin } from 'nuxt/app';
 
 /**
  * Nuxt 4 plugin for performance monitoring
  * Tracks Web Vitals and custom performance metrics
  * Integrates with Sentry for performance tracking
  */
-export default defineNuxtPlugin((nuxtApp: any) => {
+const performancePlugin: Plugin = defineNuxtPlugin((nuxtApp: any) => {
   if (typeof window === 'undefined' || !window.performance) return;
 
   // Initialize Web Vitals observers early (before any metrics are collected)
@@ -92,3 +93,5 @@ export default defineNuxtPlugin((nuxtApp: any) => {
     }) as EventListener);
   }
 });
+
+export default performancePlugin;

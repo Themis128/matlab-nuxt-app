@@ -344,6 +344,6 @@ export const useABTestingStore = defineStore('abTesting', {
   persist: {
     key: 'ab-testing-store',
     storage: typeof window !== 'undefined' ? localStorage : undefined,
-    paths: ['currentTest', 'testHistory', 'availableModels'],
+    pick: ['currentTest', 'testHistory', 'availableModels'],
   },
 });

@@ -351,6 +351,8 @@
 </template>
 
 <script setup lang="ts">
+import { $fetch } from 'ofetch';
+
 // Page metadata
 definePageMeta({
   title: 'Settings',
@@ -604,7 +606,7 @@ const resetSettings = () => {
 onMounted(async () => {
   try {
     // Load settings from API
-    const serverSettings = (await $fetch('/api/user/settings')) as
+    const serverSettings = (await $fetch('/api/user/settings' as string)) as
       | {
           general?: typeof settings.value;
           notifications?: typeof notifications.value;

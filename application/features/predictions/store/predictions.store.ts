@@ -535,6 +535,6 @@ export const usePredictionsStore = defineStore('predictions', {
   persist: {
     key: 'predictions-store',
     storage: typeof window !== 'undefined' ? localStorage : undefined,
-    paths: ['selectedModel', 'selectedCurrency', 'advancedPredictionHistory', 'lastPrediction'],
+    pick: ['selectedModel', 'selectedCurrency', 'advancedPredictionHistory', 'lastPrediction'],
   },
 });

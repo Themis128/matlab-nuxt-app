@@ -244,6 +244,6 @@ export const useImageCacheStore = defineStore('imageCache', {
   persist: {
     key: 'image-cache-store',
     storage: typeof window !== 'undefined' ? localStorage : undefined,
-    paths: ['cache', 'preloadedImages'],
+    pick: ['cache', 'preloadedImages'],
   },
 });

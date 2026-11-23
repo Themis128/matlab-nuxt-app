@@ -143,7 +143,7 @@ export const useStructuredData = (schemas: Record<string, any>[]) => {
   useHead({
     script: schemas.map((schema) => ({
       type: 'application/ld+json',
-      children: JSON.stringify(schema, null, 2),
+      innerHTML: JSON.stringify(schema, null, 2),
     })),
   });
 };

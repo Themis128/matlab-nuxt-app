@@ -1,4 +1,6 @@
 import { defineNuxtPlugin } from 'nuxt/app';
+import { getActivePinia } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 // Nuxt 4: Use unified composables (auto-imported)
 // Following Nuxt 4 best practices with feature-based composables
 import { usePerformanceStore } from '../stores/performanceStore';
@@ -9,17 +11,20 @@ import { useStoreSync } from '../composables/useStoreSync';
 import { useApi } from '../infrastructure/api/composables/useApi';
 import { usePredictions } from '../application/features/predictions/composables/usePredictions';
 import { useUI } from '../application/features/ui/composables/useUI';
+import type { ObjectPlugin } from 'nuxt/app';
 
 /**
  * Plugin to initialize stores and composables after Pinia is fully initialized by @pinia/nuxt
  * This plugin handles initialization logic following Nuxt 4 best practices
  * Uses unified composables instead of direct store access
  */
-export default defineNuxtPlugin({
+const piniaInitPlugin: ObjectPlugin = defineNuxtPlugin({
   name: 'pinia-init',
   enforce: 'post', // Run after other plugins (including @pinia/nuxt)
 
   setup() {
+    getActivePinia()?.use(piniaPluginPersistedstate);
+
     // Only run certain initializations on client-side
     if (import.meta.client) {
       // Nuxt 4: Use unified composables (auto-imported)
@@ -84,3 +89,5 @@ export default defineNuxtPlugin({
     return {};
   },
 });
+
+export default piniaInitPlugin;
