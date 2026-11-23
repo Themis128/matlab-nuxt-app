@@ -24,6 +24,13 @@ export function getPythonApiUrl(event?: any): string {
       const host = getRequestHost(event, { xForwardedHost: true });
 
       if (host) {
+        // Vercel (and any static host) cannot serve :8000 — deriving it
+        // produces a URL that hangs until the fetch timeout on every call.
+        // Fall through to the fast-fail localhost fallback instead.
+        if (host.endsWith('.vercel.app') || host === 'vercel.app') {
+          return process.env.PYTHON_API_URL || process.env.NUXT_PUBLIC_API_BASE || 'http://localhost:8000';
+        }
+
         // Check if host contains replit.dev or other cloud platforms
         if (host.includes('replit.dev') || host.includes('repl.co')) {
           // For Replit: replace frontend port (3000/5000) with backend port (8000)

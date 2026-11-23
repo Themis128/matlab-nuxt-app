@@ -25,6 +25,11 @@ export const useApiConfig = () => {
 
       // Check for cloud platforms
       if (currentHost !== 'localhost' && currentHost !== '127.0.0.1') {
+        // Vercel static hosting cannot serve :8000 — deriving it makes every
+        // client-side API call hang until timeout. Fall back to apiBase.
+        if (currentHost.endsWith('.vercel.app') || currentHost === 'vercel.app') {
+          return config.public?.apiBase as string;
+        }
         return `${currentProtocol}//${currentHost}:8000`;
       }
     }
