@@ -3,14 +3,6 @@
   "framework": "nuxtjs",
   "buildCommand": "npm run build",
   "installCommand": "npm install",
-  "functions": {
-    "server/**/*.js": {
-      "runtime": "nodejs20.x"
-    },
-    "server/**/*.ts": {
-      "runtime": "nodejs20.x"
-    }
-  },
   "regions": ["fra1"],
   "env": {
     "NODE_ENV": "production"
