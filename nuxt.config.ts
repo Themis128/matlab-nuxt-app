@@ -4,6 +4,14 @@ import { defineNuxtConfig } from 'nuxt/config'
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   pages: true,
+  components: [
+    // Default scan keeps directory prefixes (e.g. DaisyuiDButton).
+    { path: '~/components', pathPrefix: true },
+    // The daisyui/* components are named with a D prefix already
+    // (DButton.vue, DToastContainer.vue, ...) and are referenced in
+    // templates as <DButton> — without this entry they never resolve.
+    { path: '~/components/daisyui', pathPrefix: false },
+  ],
   devtools: {
     enabled: true,
     // Handle port conflicts gracefully - use port from environment if set
