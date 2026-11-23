@@ -27,6 +27,21 @@
  */
 const colorMode = useColorMode();
 
+// CSP nonce bridge: server/middleware/security-headers.ts generates a
+// per-request nonce and stores it on event.context.cspNonce, but Nuxt only
+// applies a nonce to its bootstrap/payload scripts when it finds one in the
+// rendered <head> (extractCspNonce). Injecting an empty nonced script tag
+// server-side is the documented way to propagate it — without this every
+// inline script is CSP-blocked and hydration breaks.
+if (import.meta.server) {
+  const nonce = useRequestEvent()?.context?.cspNonce as string | undefined;
+  if (nonce) {
+    useHead({
+      script: [{ innerHTML: '', nonce, tagPosition: 'head' as const }],
+    });
+  }
+}
+
 // Sync theme on mount (plugin handles it, but this ensures consistency)
 onMounted(() => {
   if (import.meta.client) {

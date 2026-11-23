@@ -59,23 +59,23 @@
           <div class="relative mt-8 lg:mt-0">
             <div class="card relative mx-auto max-w-md bg-base-300 shadow-2xl lg:max-w-none">
               <div class="mb-4 text-base-content">
-                <div class="text-base-content/60 mb-1 text-sm">Neural Network Status</div>
-                <div class="text-base-content/50 text-xs">MATLAB Deep Learning</div>
+                <div class="text-base-content/60 mb-1 text-sm">Live API Status</div>
+                <div class="text-base-content/50 text-xs">Self-hosted FastAPI · k3s</div>
               </div>
 
-              <!-- Neural Network Visualization -->
+              <!-- Model fleet visualization (decorative) -->
               <div class="mb-4 grid grid-cols-8 gap-1">
                 <div v-for="i in 64" :key="i" :class="['h-3 w-3 rounded-sm', getCellColor(i)]" />
               </div>
 
               <div class="flex items-center justify-between text-sm text-base-content">
                 <div>
-                  <div class="mb-1">Model: CNN-LSTM</div>
-                  <div class="text-base-content/60 text-xs">Status: Training</div>
+                  <div class="mb-1">Model fleet: {{ modelCount }} types</div>
+                  <div class="text-base-content/60 text-xs">Status: {{ apiStatus }}</div>
                 </div>
                 <div class="text-right">
-                  <div class="mb-1">Accuracy: 94.7%</div>
-                  <div class="text-base-content/60 text-xs">Epoch: 127/200</div>
+                  <div class="mb-1">Data quality: {{ qualityScore }}%</div>
+                  <div class="text-base-content/60 text-xs">Latency: {{ apiLatency }}ms</div>
                 </div>
               </div>
             </div>
@@ -128,42 +128,48 @@
           </p>
         </div>
 
-        <!-- Enhanced Stats Cards Grid -->
+        <!-- Stats Cards Grid — live data from the dataset + quality endpoints -->
         <div class="mb-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           <div class="card bg-base-100 shadow-lg">
             <div class="mb-4 flex items-center justify-between">
-              <h3 class="text-base-content/60 text-sm font-medium">Total Models</h3>
-              <Icon name="heroicons:cube" class="h-5 w-5 text-primary" />
-            </div>
-            <div class="mb-1 text-3xl font-bold text-base-content">24</div>
-            <div class="text-sm font-semibold text-success">+12% from last month</div>
-          </div>
-
-          <div class="card bg-base-100 shadow-lg">
-            <div class="mb-4 flex items-center justify-between">
-              <h3 class="text-base-content/60 text-sm font-medium">Dataset Size</h3>
+              <h3 class="text-base-content/60 text-sm font-medium">Dataset Records</h3>
               <Icon name="heroicons:server-stack" class="h-5 w-5 text-info" />
             </div>
-            <div class="mb-1 text-3xl font-bold text-base-content">2.4M</div>
-            <div class="text-sm font-semibold text-success">+8% new records</div>
+            <div class="mb-1 text-3xl font-bold text-base-content">
+              {{ datasetStats?.totalRecords ?? '—' }}
+            </div>
+            <div class="text-sm font-semibold text-success">mobile models analyzed</div>
           </div>
 
           <div class="card bg-base-100 shadow-lg">
             <div class="mb-4 flex items-center justify-between">
-              <h3 class="text-base-content/60 text-sm font-medium">Accuracy</h3>
+              <h3 class="text-base-content/60 text-sm font-medium">Brands Covered</h3>
+              <Icon name="heroicons:cube" class="h-5 w-5 text-primary" />
+            </div>
+            <div class="mb-1 text-3xl font-bold text-base-content">
+              {{ datasetStats?.companies?.length ?? '—' }}
+            </div>
+            <div class="text-sm font-semibold text-success">companies in dataset</div>
+          </div>
+
+          <div class="card bg-base-100 shadow-lg">
+            <div class="mb-4 flex items-center justify-between">
+              <h3 class="text-base-content/60 text-sm font-medium">Data Quality</h3>
               <Icon name="heroicons:chart-bar" class="h-5 w-5 text-success" />
             </div>
-            <div class="mb-1 text-3xl font-bold text-base-content">94.7%</div>
-            <div class="text-sm font-semibold text-success">+2.1% improvement</div>
+            <div class="mb-1 text-3xl font-bold text-base-content">{{ qualityScore }}%</div>
+            <div class="text-sm font-semibold text-success">
+              completeness {{ completenessScore }}%
+            </div>
           </div>
 
           <div class="card bg-base-100 shadow-lg">
             <div class="mb-4 flex items-center justify-between">
-              <h3 class="text-base-content/60 text-sm font-medium">Active Sessions</h3>
-              <Icon name="heroicons:users" class="h-5 w-5 text-warning" />
+              <h3 class="text-base-content/60 text-sm font-medium">ML Model Types</h3>
+              <Icon name="heroicons:cog-6-tooth" class="h-5 w-5 text-warning" />
             </div>
-            <div class="mb-1 text-3xl font-bold text-base-content">573</div>
-            <div class="text-sm font-semibold text-success">+15% this hour</div>
+            <div class="mb-1 text-3xl font-bold text-base-content">{{ modelCount }}</div>
+            <div class="text-sm font-semibold text-success">sklearn · XGBoost · distilled</div>
           </div>
         </div>
 
@@ -252,6 +258,35 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { usePageSeoWithStructuredData } from '../composables/usePageSeoWithStructuredData';
+import { AVAILABLE_MODELS } from '../composables/useModelPredictions';
+
+// Live data for the stats cards + hero status card — fetched server-side so
+// the values are real in the SSR HTML (no client-only placeholders).
+const { data: datasetStats } = await useFetch('/api/dataset/statistics');
+const { data: qualityReport } = await useFetch('/api/dataset/quality-report');
+const { data: health } = await useFetch('/api/v1/health');
+
+const modelCount = AVAILABLE_MODELS.length;
+
+const qualityScore = computed(() => {
+  const score = (qualityReport.value as any)?.qualityScores?.overall;
+  return typeof score === 'number' ? score.toFixed(1) : '—';
+});
+
+const completenessScore = computed(() => {
+  const score = (qualityReport.value as any)?.qualityScores?.completeness;
+  return typeof score === 'number' ? score.toFixed(1) : '—';
+});
+
+const apiStatus = computed(() => {
+  const status = (health.value as any)?.services?.api?.status;
+  return status === 'up' ? 'Online' : status ? String(status) : 'Unknown';
+});
+
+const apiLatency = computed(() => {
+  const ms = (health.value as any)?.services?.api?.responseTime;
+  return typeof ms === 'number' ? Math.round(ms) : '—';
+});
 
 // Deterministic color function to avoid hydration mismatches
 // Uses a simple hash function based on the index to ensure
