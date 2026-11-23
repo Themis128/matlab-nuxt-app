@@ -2,7 +2,8 @@
  * Nuxt 4 plugin for Christmas theme initialization
  * Runs only on client-side
  */
-export default defineNuxtPlugin({
+import type { ObjectPlugin } from 'nuxt/app';
+const christmasThemePlugin: ObjectPlugin = defineNuxtPlugin({
   name: 'christmas-theme',
   setup() {
     const christmasMode = useCookie<boolean>('christmas-theme', {
@@ -86,3 +87,5 @@ export default defineNuxtPlugin({
     }
   },
 });
+
+export default christmasThemePlugin;

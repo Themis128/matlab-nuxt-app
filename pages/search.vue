@@ -285,6 +285,7 @@ import { useAnalytics } from '../composables/useAnalytics';
 import { usePerformance } from '../composables/usePerformance';
 import { useImagePreloader } from '../composables/useImagePreloader';
 import { useAlgoliaSearch } from '../composables/useAlgoliaSearch';
+import { useAlgoliaImage } from '../composables/useAlgoliaImage';
 
 // Page SEO meta tags with structured data (set at top level for better SEO)
 usePageSeoWithStructuredData({
@@ -331,6 +332,7 @@ const algoliaPending = ref(false);
 
 // Image preloader for better performance
 const { preloadSearchResults } = useImagePreloader();
+const { normalizeImageUrl } = useAlgoliaImage();
 
 // Pagination
 const currentPage = ref(1);

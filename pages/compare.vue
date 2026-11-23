@@ -43,9 +43,9 @@
                   :model-value="model?.name || ''"
                   placeholder="Select phone"
                   :options="
-                    availablePhones.map((p) => ({ label: p.name || p, value: p.name || p }))
+                    availablePhones.map((p: any) => ({ label: p.name || p, value: p.name || p }))
                   "
-                  @update:model-value="(value) => handlePhoneSelect(String(value || ''), index)"
+                  @update:model-value="(value: any) => handlePhoneSelect(String(value || ''), index)"
                 />
                 <DButton v-if="model" size="xs" variant="error" @click="removeModel(index)">
                   <Icon name="heroicons:x-mark" class="h-4 w-4" />
