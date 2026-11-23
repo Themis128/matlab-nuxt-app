@@ -17,7 +17,8 @@ export const useApiConfig = () => {
   const getPythonApiUrl = (): string => {
     // Client-side: always go through the same-origin Nitro /api/* proxy.
     // Returning '' makes `${pythonApiUrl}/api/...` a relative URL.
-    if (process.client) {
+    // NB: must be import.meta.client — process.client is undefined in Nuxt 4.
+    if (import.meta.client) {
       return '';
     }
 

@@ -159,8 +159,13 @@ class AlgoliaSearchClient {
     // This would integrate with Algolia search
     // For now, delegate to existing search endpoint
     try {
-      // Use fetch instead of $fetch in server context
-      const baseUrl = process.env.NUXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+      // Use fetch instead of $fetch in server context.
+      // Client-side: NUXT_PUBLIC_BASE_URL is unset in the browser bundle and
+      // localhost:3000 is unreachable — use a same-origin relative URL so the
+      // request hits the Nitro /api/algolia/search route.
+      const baseUrl = import.meta.client
+        ? ''
+        : process.env.NUXT_PUBLIC_BASE_URL || 'http://localhost:3000';
       const response = await fetch(
         `${baseUrl}/api/algolia/search?q=${encodeURIComponent(_query)}`,
         {
