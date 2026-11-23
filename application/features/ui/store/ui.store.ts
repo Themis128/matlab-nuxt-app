@@ -615,9 +615,4 @@ export const useUIStore = defineStore('ui', {
     },
   },
 
-  persist: {
-    key: 'ui-store',
-    storage: typeof window !== 'undefined' ? localStorage : undefined,
-    paths: ['preferences', 'currentLocale', 'imageCache', 'preloadedImages'],
-  },
 });
