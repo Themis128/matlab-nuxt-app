@@ -45,7 +45,6 @@ export const usePageSeo = (options: PageSeoOptions) => {
     // Basic meta tags
     title: fullTitle,
     description: options.description,
-    keywords: keywordsString || undefined,
 
     // Open Graph tags (Facebook, LinkedIn, etc.)
     ogTitle: fullTitle,
@@ -72,6 +71,12 @@ export const usePageSeo = (options: PageSeoOptions) => {
     robots: 'index, follow',
     author: options.author || 'MATLAB Analytics',
   });
+
+  if (keywordsString) {
+    useHead({
+      meta: [{ name: 'keywords', content: keywordsString }],
+    });
+  }
 
   // Also set canonical URL
   useHead({

@@ -3,7 +3,8 @@
  *
  * Initializes i18n on client-side and syncs with locale store
  */
-export default defineNuxtPlugin(async (nuxtApp: any) => {
+import type { Plugin } from 'nuxt/app';
+const i18nPlugin: Plugin = defineNuxtPlugin(async (nuxtApp: any) => {
   // Initialize locale store
   const localeStore = useLocaleStore();
   await localeStore.initializeLocale();
@@ -36,3 +37,5 @@ export default defineNuxtPlugin(async (nuxtApp: any) => {
     );
   }
 });
+
+export default i18nPlugin;

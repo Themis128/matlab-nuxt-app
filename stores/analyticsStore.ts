@@ -277,9 +277,4 @@ export const useAnalyticsStore = defineStore('analytics', {
     },
   },
 
-  persist: {
-    key: 'analytics-store',
-    storage: typeof window !== 'undefined' ? localStorage : undefined,
-    paths: ['sessionId', 'sessionStartTime', 'userId', 'userProperties', 'trackingConsent'],
-  },
 });

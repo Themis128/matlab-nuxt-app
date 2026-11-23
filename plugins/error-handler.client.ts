@@ -5,7 +5,9 @@
  * capture errors and send them to Sentry with custom filtering.
  */
 
-export default defineNuxtPlugin({
+import type { ObjectPlugin } from 'nuxt/app';
+
+const errorHandlerPlugin: ObjectPlugin = defineNuxtPlugin({
   name: 'error-handler',
   setup(nuxtApp: any) {
     // Initialize error filtering
@@ -81,3 +83,5 @@ export default defineNuxtPlugin({
     }
   },
 });
+
+export default errorHandlerPlugin;
