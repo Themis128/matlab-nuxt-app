@@ -98,3 +98,6 @@ tsconf-out.json
 
 # Snyk Security Extension - AI Rules (auto-generated)
 .cursor/rules/snyk_rules.mdc
+
+# Vercel build output
+.vercel/
