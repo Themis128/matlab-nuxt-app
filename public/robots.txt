@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /profile
+Disallow: /settings
+Disallow: /notifications
+
+Sitemap: https://matlab-nuxt-app.vercel.app/sitemap.xml
