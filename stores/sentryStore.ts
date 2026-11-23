@@ -302,9 +302,4 @@ export const useSentryStore = defineStore('sentry', {
     },
   },
 
-  persist: {
-    key: 'sentry-store',
-    storage: typeof window !== 'undefined' ? localStorage : undefined,
-    paths: ['errors', 'tags', 'context', 'userContext', 'enabled'],
-  },
 });
