@@ -103,3 +103,20 @@ npx vue-tsc --noEmit     # optional; typecheck was historically broken, don't bl
 - **Backend:** `matlab-python-api` container on omv → `https://matlab-api.cloudless.gr` via the `omv-cloudless` Cloudflare Tunnel (host port 8010→8000). Image built from `Dockerfile.python-api` + `python_api/requirements-runtime.txt` — note the OMV build context uses a **root-level copy** of requirements-runtime.txt, keep both in sync. Git LFS models must be pulled before build (130-byte pointer stubs otherwise).
 - **Dataset endpoints on Vercel:** `data/**` is bundled via Nitro `serverAssets` (`nuxt.config.ts`) and read through `server/utils/dataset-files.ts` (`useStorage('assets:…')` fallback) — do NOT reintroduce `readFileSync` on dynamic candidate paths; @vercel/nft can't trace them.
 - **Portfolio listing:** the app is listed as an in-house build on cloudless.gr `/work` — AppFlowy `[Project] Mobile Price Intelligence` (Type=Internal) + `staticLabProjects` fallback in the cloudless.gr repo. Content-model doc: `docs/appflowy-content-model.md` there.
+
+## Client-side API routing (fixed 2026-11-23, PRs #139-#143)
+
+- **`process.client` is undefined in Nuxt 4** — silently falsy, so client guards written with it never fire. Always use `import.meta.client` / `import.meta.server` (compile-time constants, dead-branch eliminated).
+- **The server API gateway ships to the browser** via `useApiGateway()` (imports `~/server/gateway`). With no `PYTHON_API_URL` in the client bundle it resolved `localhost:8000` → CORS spam + "Gateway request failed". Fix pattern: `getPythonApiUrl()` and the gateway's Algolia base return `''` under `import.meta.client`, making `${base}/api/...` same-origin relative URLs that hit the Nitro proxy routes (all gateway endpoints map 1:1 onto `server/api/**`).
+- **Nitro proxy routes must match client payload casing** — `useModelPredictions` sends `model_type` (snake); the route read `body.modelType` → every advanced predict 422'd. Accept both.
+- **`useFetch`/`useApiConfig` need explicit imports** for isolated Vitest — Nuxt auto-imports don't exist there (`ReferenceError`). Import `useFetch` from `nuxt/app`, mock `nuxt/app` in tests (NOT `#app` — unresolvable in vitest config).
+- **`plugins/pinia-init.ts` CDP probe** (`127.0.0.1:9222`) must stay inside `if (import.meta.dev)` — it spammed prod consoles.
+
+## Python API model compatibility (fixed 2026-11-23, PRs #141-#144)
+
+- **sklearn pickles are version-locked**: all `*_sklearn.pkl` were fitted with **scikit-learn 1.7.2**. `>=1.9.1` broke every load (`ModuleNotFoundError: _loss` — `sklearn._loss` changed from package to module). Pinned `==1.7.2` in `python_api/requirements{,-runtime}.txt`.
+- **`libgomp1` required** in `Dockerfile.python-api` — LightGBM/XGBoost pickles fail `joblib.load` without `libgomp.so.1`.
+- **Distilled predictor leakage filter**: pickled `feature_names` includes target-derived `price_percentile_global` etc.; `predictions_distilled.py` now filters `LEAKAGE_FEATURES` and reconciles against `model.n_features_in_`.
+- **`/api/advanced/predict` sklearn_* types delegate** to `predictions_sklearn` (packaged-dict pkls + real feature pipeline). xgboost/ensemble/currency still return mock fallback — their 60-feature spec (one-hot company ×19 + regional price ratios) is not recoverable at inference.
+- **ram/battery sklearn models expect 60 features** (one-hot company + price_india/china/pakistan ratios unavailable at inference) → they stay on heuristic fallback. Known limitation, not a regression.
+- **Algolia `/api/algolia/search` 500s** — `ALGOLIA_*` credentials never configured on Vercel; UI gates on `algoliaAppId` so users don't hit it. Pre-existing.
