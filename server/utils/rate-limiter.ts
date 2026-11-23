@@ -64,14 +64,17 @@ class MemoryRateLimiter {
 
 const memoryLimiter = new MemoryRateLimiter();
 
-// Cleanup expired entries every 5 minutes
+// Cleanup expired entries every 5 minutes.
+// unref() so this module-level timer cannot keep the Nitro build process
+// (or any short-lived script) alive after work completes.
 if (typeof setInterval !== 'undefined') {
-  setInterval(
+  const cleanupTimer = setInterval(
     () => {
       memoryLimiter.cleanup();
     },
     5 * 60 * 1000
   );
+  (cleanupTimer as unknown as { unref?: () => void })?.unref?.();
 }
 
 /**
