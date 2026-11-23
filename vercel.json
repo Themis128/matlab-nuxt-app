@@ -1,9 +1,10 @@
 {
-  "version": 2,
   "framework": "nuxtjs",
   "buildCommand": "npm run build",
   "installCommand": "npm install",
-  "regions": ["fra1"],
+  "regions": [
+    "fra1"
+  ],
   "env": {
     "NODE_ENV": "production"
   }
