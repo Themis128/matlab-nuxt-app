@@ -106,7 +106,7 @@
     "@vueuse/motion": "^3.0.3",
     "@vueuse/nuxt": "^14.1.0",
     "algoliasearch": "^5.45.0",
-    "apexcharts": "^8.4.1",
+    "apexcharts": "^8.9.1",
     "better-sqlite3": "^13.0.3",
     "chart.js": "^4.6.1",
     "dayjs": "^1.11.19",
@@ -117,7 +117,7 @@
     "pinia-plugin-persistedstate": "^4.7.1",
     "primeicons": "^7.0.0",
     "primevue": "^4.5.1",
-    "vue-chartjs": "^5.3.4",
+    "vue-chartjs": "^5.3.7",
     "vue3-apexcharts": "^1.11.3",
     "zod": "^3.23.8"
   },
