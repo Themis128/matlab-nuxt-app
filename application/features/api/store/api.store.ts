@@ -158,15 +158,38 @@ export const useApiStore = defineStore('api', {
       this.errorType = null;
 
       try {
+        const responseTime = Date.now() - startTime;
+        this.responseTime = responseTime;
+
+        // Client-side: the server gateway resolves PYTHON_API_URL only in the
+        // Nitro bundle — in the browser it falls back to localhost:8000 and
+        // every check CORS-fails. Use the same-origin /api/v1/health proxy.
+        if (import.meta.client) {
+          const healthData = await $fetch<{ status?: string; message?: string } | null>(
+            '/api/v1/health'
+          );
+          if (healthData?.status === 'healthy' || healthData) {
+            this.isOnline = true;
+            this.error = null;
+            this.errorType = null;
+            this.consecutiveFailures = 0;
+            this.lastSuccessAt = Date.now();
+            this.lastFailureAt = null;
+            this.retryCount = 0;
+            this.isRetrying = false;
+            this.nextRetryAt = null;
+            return;
+          }
+          const unhealthyMsg = (healthData as { message?: string } | null)?.message;
+          throw new Error(unhealthyMsg || 'API returned unhealthy status');
+        }
+
         // Use API Gateway for health check
         const gateway = useApiGateway();
         const response = await gateway.health({
           skipCircuitBreaker: true,
           timeout: 5000,
         });
-
-        const responseTime = Date.now() - startTime;
-        this.responseTime = responseTime;
 
         const healthData = response.data as { status?: string; message?: string };
         if (healthData?.status === 'healthy' || response.data) {
@@ -320,5 +343,4 @@ export const useApiStore = defineStore('api', {
       this.stopPeriodicHealthCheck();
     },
   },
-
 });

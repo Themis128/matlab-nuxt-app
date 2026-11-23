@@ -9,32 +9,23 @@ export const useApiConfig = () => {
    * Dynamically determine Python API URL
    * Priority:
    * 1. Environment variable (NUXT_PUBLIC_API_BASE)
-   * 2. Current browser location with port 8000 (for cloud platforms)
-   * 3. Fallback to localhost:8000
+   * 2. Same-origin Nitro proxy (client-side — avoids CORS; PYTHON_API_URL is
+   *    not exposed to the browser bundle and direct calls to the backend are
+   *    CORS-blocked anyway)
+   * 3. Fallback to localhost:8000 (SSR/dev)
    */
   const getPythonApiUrl = (): string => {
+    // Client-side: always go through the same-origin Nitro /api/* proxy.
+    // Returning '' makes `${pythonApiUrl}/api/...` a relative URL.
+    if (process.client) {
+      return '';
+    }
+
     // Use environment variable if set
     if (config.public?.apiBase && config.public.apiBase !== 'http://localhost:8000') {
       return config.public.apiBase as string;
     }
 
-    // Client-side: detect from browser location
-    if (process.client) {
-      const currentHost = window.location.hostname;
-      const currentProtocol = window.location.protocol;
-
-      // Check for cloud platforms
-      if (currentHost !== 'localhost' && currentHost !== '127.0.0.1') {
-        // Vercel static hosting cannot serve :8000 — deriving it makes every
-        // client-side API call hang until timeout. Fall back to apiBase.
-        if (currentHost.endsWith('.vercel.app') || currentHost === 'vercel.app') {
-          return config.public?.apiBase as string;
-        }
-        return `${currentProtocol}//${currentHost}:8000`;
-      }
-    }
-
-    // Server-side or fallback
     return config.public?.apiBase as string;
   };
 

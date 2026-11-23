@@ -57,9 +57,12 @@ export default defineNuxtPlugin({
         sentryStore.initialize();
       }
 
-      // Initialize Chrome DevTools store
-      const chromeDevToolsStore = useChromeDevToolsStore();
-      chromeDevToolsStore.initialize('http://127.0.0.1:9222', 9222);
+      // Chrome DevTools store — dev only; probing 127.0.0.1:9222 in
+      // production just spams failed /json/version requests in the console.
+      if (import.meta.dev) {
+        const chromeDevToolsStore = useChromeDevToolsStore();
+        chromeDevToolsStore.initialize('http://127.0.0.1:9222', 9222);
+      }
 
       // Initialize store sync for automatic data flow between composables and stores
       const storeSync = useStoreSync();

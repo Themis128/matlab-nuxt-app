@@ -351,7 +351,7 @@ export function useModelPredictions() {
       return data.value;
     }
 
-    const { data, error } = await useFetch(`${pythonApiUrl}/api/advanced/info`);
+    const { data, error } = await useFetch(`${pythonApiUrl}/api/advanced/models`);
     if (error.value) throw error.value;
     return data.value;
   }

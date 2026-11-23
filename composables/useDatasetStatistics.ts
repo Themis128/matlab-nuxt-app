@@ -50,7 +50,7 @@ export function useDatasetStatistics() {
     error.value = null;
 
     try {
-      const response = await $fetch<DatasetStatistics>('/api/statistics' as any);
+      const response = await $fetch<DatasetStatistics>('/api/dataset/statistics' as any);
       statistics.value = response;
       return response;
     } catch (err) {
