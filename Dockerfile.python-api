@@ -6,6 +6,11 @@
 # Cloudflare Tunnel. Vercel reads it via the PYTHON_API_URL env var.
 FROM python:3.12-slim
 
+# libgomp1: OpenMP runtime required by LightGBM/XGBoost pickled models
+# (joblib.load fails with "libgomp.so.1: cannot open shared object file")
+RUN apt-get update && apt-get install -y --no-install-recommends libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
 ENV PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
