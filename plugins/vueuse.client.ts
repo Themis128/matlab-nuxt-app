@@ -2,7 +2,8 @@
  * Nuxt 4 plugin for VueUse integration
  * Provides global access to VueUse composables
  */
-export default defineNuxtPlugin((nuxtApp: any) => {
+import type { Plugin } from 'nuxt/app';
+const vueusePlugin: Plugin = defineNuxtPlugin((nuxtApp: any) => {
   // VueUse is auto-imported in Nuxt 4
   // This plugin can be used to configure VueUse globally or add custom utilities
 
@@ -16,3 +17,5 @@ export default defineNuxtPlugin((nuxtApp: any) => {
     });
   }
 });
+
+export default vueusePlugin;

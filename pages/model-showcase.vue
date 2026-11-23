@@ -304,7 +304,7 @@
                   :style="{ backgroundColor: selectedModel?.color }"
                 >
                   <Icon
-                    :name="selectedModel?.icon"
+                    :name="selectedModel?.icon || 'heroicons:cpu-chip'"
                     class="h-6 w-6 text-white"
                   />
                 </div>

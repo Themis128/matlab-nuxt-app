@@ -16,8 +16,9 @@ import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
 import ConfirmationService from 'primevue/confirmationservice';
 import ConfirmDialog from 'primevue/confirmdialog';
+import type { Plugin } from 'nuxt/app';
 
-export default defineNuxtPlugin((nuxtApp) => {
+const primevuePlugin: Plugin = defineNuxtPlugin((nuxtApp) => {
   // Register PrimeVue
   // PrimeVue v4 uses CSS variables for theming - no separate theme CSS files needed
   // Theme is applied via CSS variables that are included with the components
@@ -48,3 +49,5 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component('PrimeToast', Toast);
   nuxtApp.vueApp.component('ConfirmDialog', ConfirmDialog);
 });
+
+export default primevuePlugin;

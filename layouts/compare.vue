@@ -48,7 +48,7 @@ icon="heroicons:arrow-left" @click="navigateTo('/search')">
                 placeholder="Select device"
                 :options="availableDevices.map((d) => ({ label: d.name, value: d.name }))"
                 @update:model-value="
-                  (value) => {
+                  (value: any) => {
                     const device = availableDevices.find((d) => d.name === value);
                     handleDeviceSelect(device || null, index);
                   }
