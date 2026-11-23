@@ -89,3 +89,10 @@ npx vue-tsc --noEmit     # optional; typecheck was historically broken, don't bl
 - **Dependabot group bumps hide majors** — e.g. the "nuxt group" pulled `@nuxt/devtools` 3→4 (needs `vite@^8`, project on vite 7) and `@nuxt/ui` 4.13 (same). `npm install` ERESOLVE-fails on Vercel. Before merging a group PR, check `gh pr diff` for hidden major bumps and peer-dep conflicts (`npm install --dry-run`).
 - **`@nuxt/devtools` is tagged `"latest"`** in devDependencies — it floats to incompatible majors (v4 needs vite 8, project on vite 7). Should be pinned `~3.4.4` until a vite-8 toolchain upgrade.
 - **Tailwind reality check** — the app was already on Tailwind **4.3.3** via `@nuxt/ui` (`@tailwindcss/vite`); the root `tailwindcss` devDep only feeds eslint. `tailwind.config.js` + `daisyui` are **dead config** (no `@config`/`@import` references it) — daisyui classes like `card-body` in components were already unstyled before the v4 bump. Not a regression; a cleanup candidate.
+
+## Python API topology (verified 2026-11-23)
+
+- `PYTHON_API_URL=https://matlab-api.cloudless.gr` is set on the Vercel project (prod+preview). The API is **self-hosted** (not the dead `matlab` Vercel project — all its deploys ERROR'd Dec-2025).
+- Production `/api/health` returns 200 via that env var. Local `npm run dev`/preview 503s are **environmental**, not bugs: no local `.env` → falls back to `localhost:8000`, which on this host is **ComfyUI** (social-media-comfyui-gpu binds 127.0.0.1:8000) → 404.
+- Local fix: `.env` with `PYTHON_API_URL=https://matlab-api.cloudless.gr` (gitignored; created 2026-11-23).
+- Error-handling wart: `server/api/health.get.ts` outer catch re-wraps the inner 503 and masks the real upstream error — inner `data.error` is the useful field.
