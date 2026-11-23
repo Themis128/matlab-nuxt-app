@@ -1,12 +1,15 @@
 import VueApexCharts from 'vue3-apexcharts';
+import type { ObjectPlugin } from 'nuxt/app';
 
 /**
  * ApexCharts plugin for Nuxt 4
  * Registers VueApexCharts globally
  */
-export default defineNuxtPlugin({
+const apexchartsPlugin: ObjectPlugin = defineNuxtPlugin({
   name: 'apexcharts',
-  setup(nuxtApp: any) {
+  setup(nuxtApp: any): void {
     nuxtApp.vueApp.use(VueApexCharts);
   },
 });
+
+export default apexchartsPlugin;

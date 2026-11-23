@@ -151,6 +151,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
+import { $fetch } from 'ofetch';
 import { usePageSeo } from '../composables/usePageSeo';
 
 // Page SEO meta tags
@@ -213,7 +214,8 @@ const fetchRecommendations = async () => {
   try {
     // For now, fetch all products and filter client-side
     // In a real app, you'd pass budget filters to the API
-    const response = (await $fetch('/api/products?limit=50')) as { products: any[] };
+    const productsUrl: string = '/api/products?limit=50';
+    const response = (await $fetch(productsUrl)) as { products: any[] };
 
     const filtered = response.products
       .map((product: any) => ({
