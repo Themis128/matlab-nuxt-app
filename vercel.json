@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "framework": "nuxt",
+  "framework": "nuxtjs",
   "buildCommand": "npm run build",
   "installCommand": "npm install",
   "functions": {
