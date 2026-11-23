@@ -3,8 +3,9 @@
  * Provides access to Lucide icons alongside Heroicons
  */
 import { defineNuxtPlugin } from '#app';
+import type { ObjectPlugin } from 'nuxt/app';
 
-export default defineNuxtPlugin({
+const lucidePlugin: ObjectPlugin = defineNuxtPlugin({
   name: 'lucide-icons',
   setup() {
     // Lucide icons can be imported on-demand in components
@@ -12,3 +13,5 @@ export default defineNuxtPlugin({
     // This plugin just ensures the package is available
   },
 });
+
+export default lucidePlugin;

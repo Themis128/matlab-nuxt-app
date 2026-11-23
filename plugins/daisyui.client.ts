@@ -5,7 +5,8 @@
  * Follows DAISYUI_MIGRATION_GUIDE.md patterns
  * Ensures daisyUI themes are properly applied using data-theme attribute
  */
-export default defineNuxtPlugin(() => {
+import type { Plugin } from 'nuxt/app';
+const daisyuiPlugin: Plugin = defineNuxtPlugin(() => {
   if (import.meta.server) return;
 
   const colorMode = useColorMode();
@@ -55,3 +56,5 @@ export default defineNuxtPlugin(() => {
     }
   }
 });
+
+export default daisyuiPlugin;
