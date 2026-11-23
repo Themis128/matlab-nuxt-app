@@ -392,7 +392,6 @@
       </dialog>
     </ModernSection>
   </div>
-  </div>
 </template>
 
 <script setup lang="ts">
