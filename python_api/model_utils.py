@@ -69,7 +69,11 @@ def safe_load_model(path, head_bytes=64):
 
     # SECURITY: Use centralized safe_load_pickle utility for secure deserialization
     try:
-        from .pickle_security import safe_load_pickle
+        try:
+            from .pickle_security import safe_load_pickle
+        except ImportError:
+            # Top-level script mode (uvicorn api:app) — no package context
+            from pickle_security import safe_load_pickle
         # Use safe loading utility with 500MB limit
         return safe_load_pickle(Path(path), models_base_abs, max_size=500 * 1024 * 1024)
     except pickle.UnpicklingError as e:

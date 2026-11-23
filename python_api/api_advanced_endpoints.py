@@ -12,6 +12,12 @@ from fastapi import APIRouter
 from pydantic import BaseModel, ConfigDict, Field
 from sklearn.preprocessing import LabelEncoder
 
+try:
+    from .pickle_security import safe_load_pickle
+except ImportError:
+    # Top-level script mode (uvicorn api:app) — no package context
+    from pickle_security import safe_load_pickle
+
 logger = logging.getLogger(__name__)
 
 router = APIRouter()
@@ -115,7 +121,6 @@ def load_advanced_model(model_type: str):
 
         # Load model using safe pickle loading utility
         # SECURITY: Use centralized safe_load_pickle for validation
-        from .pickle_security import safe_load_pickle
         model = safe_load_pickle(model_path, models_dir, max_size=100 * 1024 * 1024)
 
         _model_cache[model_type] = model
@@ -178,7 +183,6 @@ def get_scaler_for_model(model_type: str):
             logger.info(f"Scaler file hash: {file_hash}")
 
             # SECURITY: Use centralized safe_load_pickle for validation
-            from .pickle_security import safe_load_pickle
             return safe_load_pickle(scaler_path, models_dir, max_size=10 * 1024 * 1024)
         else:
             # Fallback to general scalers
@@ -201,7 +205,6 @@ def get_scaler_for_model(model_type: str):
                 logger.info(f"General scaler file hash: {file_hash}")
 
                 # SECURITY: Use centralized safe_load_pickle for validation
-                from .pickle_security import safe_load_pickle
                 return safe_load_pickle(general_scaler, models_dir, max_size=10 * 1024 * 1024)
 
         return None
