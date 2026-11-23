@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'fs';
+import { readDatasetFile } from '../../utils/dataset-files';
 import { join } from 'path';
 
 interface CleanedDataSample {
@@ -34,9 +34,11 @@ export default defineEventHandler(
 
     const projectRoot = process.cwd();
     const cleanedPath = join(projectRoot, 'data', 'Mobiles_Dataset_Final.csv');
-    const summaryPath = join(projectRoot, 'data', 'Mobiles_Dataset_Final_fixes_report.json');
+    const summaryPath = join(projectRoot, 'data', 'Mobiles_Dataset_Cleaned_summary.json');
 
-    if (!existsSync(cleanedPath)) {
+    // Read cleaned CSV (filesystem or bundled server asset)
+    const csvContent = await readDatasetFile([cleanedPath]);
+    if (!csvContent) {
       throw createError({
         statusCode: 404,
         statusMessage: 'Cleaned dataset not found. Please run preprocessing first.',
@@ -44,8 +46,6 @@ export default defineEventHandler(
     }
 
     try {
-      // Read cleaned CSV
-      const csvContent = readFileSync(cleanedPath, 'utf-8');
       const lines = csvContent.split('\n').filter((line) => line.trim());
 
       if (lines.length < 2) {
@@ -91,8 +91,8 @@ export default defineEventHandler(
         categorical: {},
       };
 
-      if (existsSync(summaryPath)) {
-        const summaryContent = readFileSync(summaryPath, 'utf-8');
+      const summaryContent = await readDatasetFile([summaryPath]);
+      if (summaryContent) {
         const summary = JSON.parse(summaryContent);
 
         // Add numeric statistics

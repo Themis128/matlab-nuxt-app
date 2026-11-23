@@ -1,5 +1,5 @@
-import { readFileSync } from 'fs';
 import { join } from 'path';
+import { readDatasetFile } from '../../utils/dataset-files';
 
 interface ColumnInfo {
   name: string;
@@ -23,20 +23,9 @@ export default defineEventHandler(async (): Promise<string[]> => {
       join(projectRoot, 'mobiles-dataset-docs', 'preprocessed', 'preprocessed_data.csv'),
     ];
 
-    let datasetPath: string | null = null;
-    let datasetContent: string | null = null;
+    const datasetContent = await readDatasetFile(datasetPaths);
 
-    for (const path of datasetPaths) {
-      try {
-        datasetContent = readFileSync(path, 'utf-8');
-        datasetPath = path;
-        break;
-      } catch {
-        continue;
-      }
-    }
-
-    if (!datasetContent || !datasetPath) {
+    if (!datasetContent) {
       return [];
     }
 

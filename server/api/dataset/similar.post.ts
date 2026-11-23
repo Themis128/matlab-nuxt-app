@@ -1,5 +1,6 @@
-import { readFileSync, existsSync } from 'fs';
+import { existsSync } from 'fs';
 import { join } from 'path';
+import { readDatasetFile } from '../../utils/dataset-files';
 
 interface PhoneModel {
   modelName: string;
@@ -64,21 +65,13 @@ export default defineEventHandler(async (event: any): Promise<SimilarResponse> =
     // Find dataset file
     const projectRoot = process.cwd();
     const datasetPaths = [
+      join(projectRoot, 'data', 'Mobiles Dataset (2025).csv'),
       join(projectRoot, 'Mobiles Dataset (2025).csv'),
       join(projectRoot, 'mobiles-dataset-docs', 'Mobiles Dataset (2025).csv'),
       join(projectRoot, 'mobiles-dataset-docs', 'preprocessed', 'preprocessed_data.csv'),
     ];
 
-    let datasetContent: string | null = null;
-
-    for (const path of datasetPaths) {
-      try {
-        datasetContent = readFileSync(path, 'utf-8');
-        break;
-      } catch {
-        continue;
-      }
-    }
+    const datasetContent = await readDatasetFile(datasetPaths);
 
     if (!datasetContent) {
       throw createError({

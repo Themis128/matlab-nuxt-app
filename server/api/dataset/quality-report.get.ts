@@ -1,4 +1,4 @@
-import { readFileSync, existsSync } from 'fs';
+import { readDatasetFile } from '../../utils/dataset-files';
 import { join } from 'path';
 
 interface DataQualityReport {
@@ -37,9 +37,10 @@ interface DataQualityReport {
 
 export default defineEventHandler(async (): Promise<DataQualityReport> => {
   const projectRoot = process.cwd();
-  const summaryPath = join(projectRoot, 'data', 'Mobiles_Dataset_Final_fixes_report.json');
+  const summaryPath = join(projectRoot, 'data', 'Mobiles_Dataset_Cleaned_summary.json');
 
-  if (!existsSync(summaryPath)) {
+  const summaryContent = await readDatasetFile([summaryPath]);
+  if (!summaryContent) {
     throw createError({
       statusCode: 404,
       statusMessage: 'Cleaned dataset summary not found. Please run fix_dataset_issues.py first.',
@@ -47,10 +48,14 @@ export default defineEventHandler(async (): Promise<DataQualityReport> => {
   }
 
   try {
-    const summaryContent = readFileSync(summaryPath, 'utf-8');
     const summary = JSON.parse(summaryContent);
 
-    const finalStats = summary.final_stats || {};
+    const finalStats = summary.final_stats || {
+      total_rows: summary.final_rows ?? summary.total_rows,
+      columns: summary.columns || [],
+      missing_values: summary.missing_values || {},
+      numeric_ranges: summary.numeric_ranges || {},
+    };
     const numericRanges = finalStats.numeric_ranges || {};
 
     // Analyze missing values
