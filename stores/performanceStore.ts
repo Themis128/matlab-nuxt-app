@@ -383,9 +383,4 @@ export const usePerformanceStore = defineStore('performance', {
     },
   },
 
-  persist: {
-    key: 'performance-store',
-    storage: typeof window !== 'undefined' ? localStorage : undefined,
-    paths: ['metricsHistory', 'webVitalsHistory', 'pageLoadHistory', 'thresholds'],
-  },
 });

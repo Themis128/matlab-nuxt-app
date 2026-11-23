@@ -321,9 +321,4 @@ export const useApiStore = defineStore('api', {
     },
   },
 
-  persist: {
-    key: 'api-store',
-    storage: typeof window !== 'undefined' ? localStorage : undefined,
-    paths: ['lastChecked', 'lastSuccessAt', 'lastFailureAt', 'consecutiveFailures'],
-  },
 });
