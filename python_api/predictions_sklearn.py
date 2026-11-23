@@ -293,6 +293,80 @@ def predict_price(
         return _fallback_price_prediction(ram, battery, screen, weight, year, company)
 
 
+# Spec keys usable as model inputs. The predicted target ('ram' or
+# 'battery') is excluded from every feature term — the original training
+# pipeline leaked the target into X (ram*battery, ram**2, price/(ram+1), ...)
+# making inference impossible without knowing the answer.
+_SPEC_VARS = ("ram", "battery", "screen", "weight", "year", "price",
+              "front_camera", "back_camera", "storage")
+
+
+def build_spec_features(spec: dict, unique_companies: list, target: str) -> list:
+    """Build the target-free engineered feature vector.
+
+    Shared by retrain_ram_battery.py (fit) and predict_ram/predict_battery
+    (inference) so train/serve feature contracts cannot drift. Any term that
+    references `target` is dropped entirely.
+    """
+    vals = {k: float(spec.get(k) or 0.0) for k in _SPEC_VARS}
+    vals["year"] = float(int(vals["year"]))
+
+    def has(name):
+        return name != target
+
+    feats = []
+
+    # Base numerics — target column excluded
+    for name in _SPEC_VARS:
+        if has(name):
+            feats.append(vals[name])
+
+    # Company one-hot + processor encoding
+    feats.extend(encode_company(str(spec.get("company") or ""), unique_companies).tolist())
+    proc = encode_processor(spec.get("processor"))
+    feats.extend(proc.tolist())
+    high_end = proc[1]
+
+    def pair(a, b):
+        return vals[a] * vals[b] if has(a) and has(b) else None
+
+    # Interactions (multiplicative)
+    for a, b in [
+        ("screen", "weight"), ("front_camera", "back_camera"),
+        ("back_camera", "price"), ("storage", "price"),
+        ("screen", "year"), ("battery", "screen"), ("ram", "screen"),
+        ("ram", "storage"), ("battery", "weight"),
+    ]:
+        v = pair(a, b)
+        if v is not None:
+            feats.append(v)
+    feats.append(high_end * vals["price"])
+
+    # Ratios — skip any term touching the target
+    for num, den, off in [
+        ("price", "screen", 0.1), ("price", "storage", 1.0),
+        ("price", "battery", 1.0), ("price", "ram", 1.0),
+        ("screen", "weight", 1.0), ("battery", "weight", 1.0),
+        ("back_camera", "price", 1.0),
+    ]:
+        if has(num) and has(den):
+            feats.append(vals[num] / (vals[den] + off))
+
+    # Temporal
+    ysd = vals["year"] - 2020
+    feats.extend([ysd, 1.0 if vals["year"] >= 2023 else 0.0, ysd * ysd])
+
+    # Polynomials (target-free terms only)
+    feats.extend([
+        vals["screen"] ** 2,
+        np.sqrt(max(vals["screen"], 0.0)),
+        np.sqrt(max(vals["back_camera"], 0.0) + 1.0),
+        np.sqrt(max(vals["storage"], 0.0) + 1.0),
+    ])
+
+    return feats
+
+
 def predict_ram(
     battery: float,
     screen: float,
@@ -316,8 +390,6 @@ def predict_ram(
             logger.warning("RAM predictor model not available, using fallback")
             return _fallback_ram_prediction(battery, screen, weight, year, price, company)
 
-        # For RAM prediction, we need to create features but adjust for the different input order
-        # RAM is the target, so we don't include it in features
         front_camera = front_camera if front_camera is not None else 16.0
         back_camera = back_camera if back_camera is not None else 50.0
         storage = storage if storage is not None else 128.0
@@ -328,30 +400,18 @@ def predict_ram(
             metadata = json.load(f)
             unique_companies = metadata.get("unique_companies", [])
 
-        # Create features (without RAM)
-        base_features = [
-            battery,
-            screen,
-            weight,
-            year,
-            price,  # Different order for RAM prediction
-            front_camera,
-            back_camera,
-            storage,
-        ]
-
-        # Company encoding
-        company_encoded = encode_company(company, unique_companies)
-        base_features.extend(company_encoded)
-
-        # Processor encoding
-        processor_encoded = encode_processor(processor)
-        base_features.extend(processor_encoded)
-
-        X = np.array(base_features)
+        X = np.array([build_spec_features(
+            {
+                "battery": battery, "screen": screen, "weight": weight,
+                "year": year, "price": price, "front_camera": front_camera,
+                "back_camera": back_camera, "storage": storage,
+                "company": company, "processor": processor,
+            },
+            unique_companies, "ram",
+        )])
 
         # Scale and predict
-        X_scaled = scaler["X_scaler"].transform(X.reshape(1, -1))
+        X_scaled = scaler["X_scaler"].transform(X)
         y_pred_norm = model.predict(X_scaled)
         ram = scaler["y_scaler"].inverse_transform(y_pred_norm.reshape(-1, 1)).flatten()[0]
 
@@ -395,27 +455,15 @@ def predict_battery(
             metadata = json.load(f)
             unique_companies = metadata.get("unique_companies", [])
 
-        # Create features (without battery)
-        base_features = [
-            ram,
-            screen,
-            weight,
-            year,
-            price,  # Different order for battery prediction
-            front_camera,
-            back_camera,
-            storage,
-        ]
-
-        # Company encoding
-        company_encoded = encode_company(company, unique_companies)
-        base_features.extend(company_encoded)
-
-        # Processor encoding
-        processor_encoded = encode_processor(processor)
-        base_features.extend(processor_encoded)
-
-        X = np.array(base_features)
+        X = np.array([build_spec_features(
+            {
+                "ram": ram, "screen": screen, "weight": weight,
+                "year": year, "price": price, "front_camera": front_camera,
+                "back_camera": back_camera, "storage": storage,
+                "company": company, "processor": processor,
+            },
+            unique_companies, "battery",
+        )])
 
         # Scale and predict
         X_scaled = scaler["X_scaler"].transform(X.reshape(1, -1))
