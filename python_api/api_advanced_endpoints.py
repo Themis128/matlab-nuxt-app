@@ -31,6 +31,117 @@ except ImportError:
         predict_ram as sklearn_predict_ram,
     )
 
+try:
+    from .predictions_distilled import get_distilled_predictor
+except ImportError:
+    from predictions_distilled import get_distilled_predictor
+
+_MODE_FILE_CACHE: dict = {}
+
+
+def _load_model_file(filename: str, max_bytes: int = 100 * 1024 * 1024):
+    """Load a trained_models artifact, choosing joblib vs pickle by extension
+    of how it was written (xgboost_scaler was joblib.dump'ed; currency
+    scalers and company_encoder were pickle.dump'ed)."""
+    if filename in _MODE_FILE_CACHE:
+        return _MODE_FILE_CACHE[filename]
+
+    import joblib
+    from pathlib import Path
+
+    path = Path(__file__).parent / "trained_models" / filename
+    if filename == "xgboost_scaler.pkl":
+        obj = joblib.load(path)
+    else:
+        obj = safe_load_pickle(path, path.parent, max_size=max_bytes)
+    _MODE_FILE_CACHE[filename] = obj
+    return obj
+
+
+def _request_input_dict(request) -> dict:
+    return {
+        "ram": request.ram,
+        "battery": request.battery,
+        "screen": request.screen,
+        "weight": request.weight,
+        "year": request.year,
+        "company": request.company,
+        "front_camera": request.front_camera if request.front_camera is not None else 0.0,
+        "back_camera": request.back_camera if request.back_camera is not None else 0.0,
+        "processor": request.processor or "",
+        "storage": request.storage if request.storage is not None else 0.0,
+    }
+
+
+def _predict_xgboost(request, model_type: str) -> Optional[float]:
+    """xgboost_* models were trained on the same 13 SAFE_FEATURES as the
+    distilled model (see scripts/ml_pipeline/ensemble_methods/xgboost_ensemble.py)
+    with a shared StandardScaler at xgboost_scaler.pkl."""
+    import numpy as np
+
+    predictor = get_distilled_predictor()
+    if predictor is None or not predictor.is_available():
+        return None
+    features = predictor.build_features(_request_input_dict(request))
+    if features is None or len(features) != 13:
+        return None
+
+    model = load_advanced_model(model_type)
+    if model is None:
+        return None
+
+    scaler = _load_model_file("xgboost_scaler.pkl")
+    X = scaler.transform(np.array(features, dtype=float).reshape(1, -1))
+    return float(model.predict(X)[0])
+
+
+def _predict_currency(request, model_type: str) -> Optional[float]:
+    """price_{eur,inr,usd} RandomForests: 12 features
+    [storage, ram, battery, screen, weight, front_camera, back_camera,
+     phone_age, ram_battery_ratio, screen_weight_ratio, total_camera,
+     company_encoded] per scripts/ml_pipeline/model_training/
+    price_prediction_models.py, plus per-model scaler and company_encoder."""
+    import numpy as np
+
+    d = _request_input_dict(request)
+    year = float(d["year"])
+    ram = float(d["ram"])
+    battery = float(d["battery"])
+    screen = float(d["screen"])
+    weight = float(d["weight"])
+    front_camera = float(d["front_camera"])
+    back_camera = float(d["back_camera"])
+    storage = float(d["storage"])
+
+    company_encoder = _load_model_file("company_encoder.pkl")
+    try:
+        company_encoded = float(company_encoder.transform([str(d["company"])])[0])
+    except Exception:
+        # Unknown company — use the encoder's most common class (index 0)
+        company_encoded = 0.0
+
+    features = [
+        storage,
+        ram,
+        battery,
+        screen,
+        weight,
+        front_camera,
+        back_camera,
+        2025.0 - year,                       # phone_age
+        ram / (battery / 1000.0),            # ram_battery_ratio
+        screen / (weight / 100.0),           # screen_weight_ratio
+        front_camera + back_camera,          # total_camera
+        company_encoded,
+    ]
+
+    model = load_advanced_model(model_type)
+    if model is None:
+        return None
+    scaler = _load_model_file(f"{model_type}_scaler.pkl")
+    X = scaler.transform(np.array(features, dtype=float).reshape(1, -1))
+    return float(model.predict(X)[0])
+
 logger = logging.getLogger(__name__)
 
 router = APIRouter()
@@ -385,6 +496,52 @@ async def advanced_predict(request: AdvancedPredictionRequest):
             )
         except Exception as e:
             logger.warning(f"sklearn delegation failed for {request.model_type}: {e}")
+            return get_mock_prediction(request)
+
+    # distilled: same model as /api/distilled/predict/price
+    if request.model_type == "distilled":
+        try:
+            predictor = get_distilled_predictor()
+            if predictor is None or not predictor.is_available():
+                return get_mock_prediction(request)
+            result = predictor.predict(_request_input_dict(request))
+            if "error" in result:
+                return get_mock_prediction(request)
+            return AdvancedPredictionResponse(
+                price=round(max(50.0, float(result["predicted_price"])), 2),
+                model_used=request.model_type,
+                accuracy_info=None,
+                currency=request.currency,
+                currency_symbol=CURRENCY_SYMBOLS.get(request.currency, "$"),
+            )
+        except Exception as e:
+            logger.warning(f"distilled delegation failed: {e}")
+            return get_mock_prediction(request)
+
+    # xgboost_* and price_{eur,inr,usd}: real feature pipelines recovered from
+    # the training scripts (13 SAFE_FEATURES / 12 currency features).
+    if request.model_type.startswith("xgboost_") or request.model_type in (
+        "price_eur", "price_inr", "price_usd"
+    ):
+        try:
+            if request.model_type.startswith("xgboost_"):
+                value = _predict_xgboost(request, request.model_type)
+                currency = request.currency
+            else:
+                value = _predict_currency(request, request.model_type)
+                # Model predicts in its own currency — report it as such
+                currency = request.model_type.split("_", 1)[1].upper()
+            if value is None:
+                return get_mock_prediction(request)
+            return AdvancedPredictionResponse(
+                price=round(max(50.0, float(value)), 2),
+                model_used=request.model_type,
+                accuracy_info=None,
+                currency=currency,
+                currency_symbol=CURRENCY_SYMBOLS.get(currency, "$"),
+            )
+        except Exception as e:
+            logger.warning(f"advanced model {request.model_type} failed: {e}")
             return get_mock_prediction(request)
 
     try:

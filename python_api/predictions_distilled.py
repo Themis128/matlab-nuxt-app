@@ -47,6 +47,17 @@ LEAKAGE_FEATURES = {
     "cross_brand_price_delta",
 }
 
+# Dataset column names → request field names. Without this, base features
+# like "Battery Capacity" never matched the request's `battery` key and
+# silently resolved to 0.0.
+FEATURE_ALIASES = {
+    "RAM": "ram",
+    "Battery Capacity": "battery",
+    "Screen Size": "screen",
+    "Mobile Weight": "weight",
+    "Launched Year": "year",
+}
+
 
 class DistilledPredictor:
     """Fast, production-ready distilled decision tree (clean features, no leakage)"""
@@ -190,58 +201,9 @@ class DistilledPredictor:
             return {"error": "Distilled model not available"}
 
         try:
-            # Build feature vector matching training order
-            feature_values = []
-
-            for feat_name in self.feature_names:
-                # Handle encoded categorical features
-                if feat_name.endswith("_encoded"):
-                    base_name = feat_name.replace("_encoded", "")
-
-                    # Get value from input (handle different key formats)
-                    input_val = None
-                    for key in [base_name, base_name.lower(), base_name.replace(" ", "_").lower()]:
-                        if key in input_data:
-                            input_val = str(input_data[key])
-                            break
-
-                    # Encode using label encoder classes
-                    if self.categorical_encoders and base_name in self.categorical_encoders:
-                        encoder_classes = self.categorical_encoders[base_name]
-                        if input_val in encoder_classes:
-                            feature_values.append(float(encoder_classes.index(input_val)))
-                        else:
-                            # Unknown category: use most common (index 0) or middle
-                            feature_values.append(float(len(encoder_classes) // 2))
-                    else:
-                        feature_values.append(0.0)
-
-                # Handle numeric features
-                else:
-                    # Map feature name to input keys (handle different formats)
-                    value = None
-
-                    # Direct match
-                    if feat_name in input_data:
-                        value = float(input_data[feat_name])
-
-                    # Try lowercase/underscore variants
-                    else:
-                        key_variants = [
-                            feat_name.lower(),
-                            feat_name.replace(" ", "_").lower(),
-                            feat_name.replace("_", " ").title(),
-                        ]
-                        for key in key_variants:
-                            if key in input_data:
-                                value = float(input_data[key])
-                                break
-
-                    # Compute derived features if base features available
-                    if value is None:
-                        value = self._compute_derived_feature(feat_name, input_data)
-
-                    feature_values.append(value if value is not None else 0.0)
+            feature_values = self.build_features(input_data)
+            if feature_values is None:
+                return {"error": "Feature build failed"}
 
             # Predict
             X = np.array(feature_values).reshape(1, -1)
@@ -256,6 +218,74 @@ class DistilledPredictor:
 
         except Exception as e:
             return {"error": f"Prediction failed: {str(e)}"}
+
+    def build_features(self, input_data: Dict) -> Optional[list]:
+        """Build the feature vector in training order.
+
+        Shared by the distilled model and sibling models trained on the same
+        SAFE_FEATURES set (xgboost_*). Returns None when the model is not
+        loaded; callers must check is_available() first.
+        """
+        if not self.is_available():
+            return None
+
+        feature_values = []
+
+        for feat_name in self.feature_names:
+            # Handle encoded categorical features
+            if feat_name.endswith("_encoded"):
+                base_name = feat_name.replace("_encoded", "")
+
+                # Get value from input (handle different key formats)
+                input_val = None
+                for key in [base_name, base_name.lower(), base_name.replace(" ", "_").lower()]:
+                    if key in input_data:
+                        input_val = str(input_data[key])
+                        break
+
+                # Encode using label encoder classes
+                if self.categorical_encoders and base_name in self.categorical_encoders:
+                    encoder_classes = self.categorical_encoders[base_name]
+                    if input_val in encoder_classes:
+                        feature_values.append(float(encoder_classes.index(input_val)))
+                    else:
+                        # Unknown category: use most common (index 0) or middle
+                        feature_values.append(float(len(encoder_classes) // 2))
+                else:
+                    feature_values.append(0.0)
+
+            # Handle numeric features
+            else:
+                # Map feature name to input keys (handle different formats)
+                value = None
+
+                # Direct match
+                if feat_name in input_data:
+                    value = float(input_data[feat_name])
+
+                # Dataset-column alias ("Battery Capacity" -> "battery", etc.)
+                elif FEATURE_ALIASES.get(feat_name) in input_data:
+                    value = float(input_data[FEATURE_ALIASES[feat_name]])
+
+                # Try lowercase/underscore variants
+                else:
+                    key_variants = [
+                        feat_name.lower(),
+                        feat_name.replace(" ", "_").lower(),
+                        feat_name.replace("_", " ").title(),
+                    ]
+                    for key in key_variants:
+                        if key in input_data:
+                            value = float(input_data[key])
+                            break
+
+                # Compute derived features if base features available
+                if value is None:
+                    value = self._compute_derived_feature(feat_name, input_data)
+
+                feature_values.append(value if value is not None else 0.0)
+
+        return feature_values
 
     def _compute_derived_feature(self, feat_name: str, input_data: Dict) -> Optional[float]:
         """Compute derived engineered features from base inputs"""
