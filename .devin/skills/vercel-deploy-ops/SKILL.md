@@ -96,3 +96,10 @@ npx vue-tsc --noEmit     # optional; typecheck was historically broken, don't bl
 - Production `/api/health` returns 200 via that env var. Local `npm run dev`/preview 503s are **environmental**, not bugs: no local `.env` → falls back to `localhost:8000`, which on this host is **ComfyUI** (social-media-comfyui-gpu binds 127.0.0.1:8000) → 404.
 - Local fix: `.env` with `PYTHON_API_URL=https://matlab-api.cloudless.gr` (gitignored; created 2026-11-23).
 - Error-handling wart: `server/api/health.get.ts` outer catch re-wraps the inner 503 and masks the real upstream error — inner `data.error` is the useful field.
+
+## Public surfaces & portfolio listing (verified 2026-11-23)
+
+- **Production:** `https://matlab-nuxt-app.vercel.app` — promoted via `assign_alias` to the latest READY base-branch deployment (only user-authored squash merges build; `fix/*` branch deploys stay BLOCKED by Vercel verified-author preview protection).
+- **Backend:** `matlab-python-api` container on omv → `https://matlab-api.cloudless.gr` via the `omv-cloudless` Cloudflare Tunnel (host port 8010→8000). Image built from `Dockerfile.python-api` + `python_api/requirements-runtime.txt` — note the OMV build context uses a **root-level copy** of requirements-runtime.txt, keep both in sync. Git LFS models must be pulled before build (130-byte pointer stubs otherwise).
+- **Dataset endpoints on Vercel:** `data/**` is bundled via Nitro `serverAssets` (`nuxt.config.ts`) and read through `server/utils/dataset-files.ts` (`useStorage('assets:…')` fallback) — do NOT reintroduce `readFileSync` on dynamic candidate paths; @vercel/nft can't trace them.
+- **Portfolio listing:** the app is listed as an in-house build on cloudless.gr `/work` — AppFlowy `[Project] Mobile Price Intelligence` (Type=Internal) + `staticLabProjects` fallback in the cloudless.gr repo. Content-model doc: `docs/appflowy-content-model.md` there.
