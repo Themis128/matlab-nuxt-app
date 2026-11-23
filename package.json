@@ -9,7 +9,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "dev:python": "cd python_api && ..\\venv\\Scripts\\python api.py",
-    "dev:all": "echo '🚀 Starting MATLAB Nuxt App with all services...' && echo '📝 Loading environment variables...' && concurrently -n PYTHON,NUXT -c blue,green \"cd python_api && ..\\\\venv\\\\Scripts\\\\python api.py\" \"pwsh -NoProfile -File scripts/start-nuxt-dev.ps1 -Port 3000 -HostName localhost\"",
+    "dev:all": "echo '\ud83d\ude80 Starting MATLAB Nuxt App with all services...' && echo '\ud83d\udcdd Loading environment variables...' && concurrently -n PYTHON,NUXT -c blue,green \"cd python_api && ..\\\\venv\\\\Scripts\\\\python api.py\" \"pwsh -NoProfile -File scripts/start-nuxt-dev.ps1 -Port 3000 -HostName localhost\"",
     "dev:health": "pwsh -NoProfile -File scripts/check-dev-health.ps1",
     "dev:all:ensure": "pwsh -NoProfile -File scripts/clear-ports.ps1 -Force && npm run dev:all",
     "typecheck": "npm run typecheck:ci",
@@ -124,7 +124,7 @@
   "devDependencies": {
     "@formkit/auto-animate": "^0.10.2",
     "@myuon/refactor-mcp": "^1.2.0",
-    "@nuxt/devtools": "latest",
+    "@nuxt/devtools": "~3.4.4",
     "@nuxt/icon": "^2.6.2",
     "@nuxt/image": "^2.2.1",
     "@pinia/testing": "^1.0.3",
