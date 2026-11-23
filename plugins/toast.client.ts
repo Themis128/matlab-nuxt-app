@@ -2,7 +2,8 @@
  * Nuxt 4 plugin for toast notifications
  * Integrates with Nuxt UI toast system
  */
-export default defineNuxtPlugin((nuxtApp: any) => {
+import type { Plugin } from 'nuxt/app';
+const toastPlugin: Plugin = defineNuxtPlugin((nuxtApp: any) => {
   const toast = useToast();
 
   // Provide global toast methods
@@ -41,3 +42,5 @@ export default defineNuxtPlugin((nuxtApp: any) => {
     },
   });
 });
+
+export default toastPlugin;

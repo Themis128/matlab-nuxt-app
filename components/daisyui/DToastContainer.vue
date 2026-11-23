@@ -1,24 +1,42 @@
 <!-- components/daisyui/DToastContainer.vue -->
 <template>
   <div class="toast toast-top toast-end z-50">
-    <div v-for="toast in toasts" :key="toast.id" :class="`alert alert-${toast.type}`">
-      <Icon :name="getIcon(toast.type)" class="w-5 h-5" />
-      <span>{{ toast.message }}</span>
-      <button class="btn btn-sm btn-circle btn-ghost" @click="removeToast(toast.id)">✕</button>
+    <div v-for="toast in toasts" :key="toast.id" :class="`alert ${alertClass(toast.color)}`">
+      <Icon :name="toast.icon || getIcon(toast.color)" class="w-5 h-5" />
+      <div>
+        <p v-if="toast.title" class="font-semibold">{{ toast.title }}</p>
+        <p class="text-sm">{{ toast.description }}</p>
+      </div>
+      <button class="btn btn-sm btn-circle btn-ghost" @click="remove(toast.id)">✕</button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const { toasts, removeToast } = useToast();
+const { toasts, remove } = useToast();
 
-const getIcon = (type: string) => {
+const alertClass = (color?: string) => {
+  switch (color) {
+    case 'success':
+      return 'alert-success';
+    case 'error':
+      return 'alert-error';
+    case 'warning':
+      return 'alert-warning';
+    case 'info':
+      return 'alert-info';
+    default:
+      return 'alert-info';
+  }
+};
+
+const getIcon = (color?: string) => {
   const icons: Record<string, string> = {
     success: 'heroicons:check-circle',
     error: 'heroicons:x-circle',
     info: 'heroicons:information-circle',
     warning: 'heroicons:exclamation-triangle',
   };
-  return icons[type] || icons.info;
+  return icons[color ?? ''] || icons.info;
 };
 </script>
