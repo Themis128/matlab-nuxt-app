@@ -41,6 +41,8 @@ If a call 403s on team scope: the connection is personal-scope only. Call `autho
 | Build error: missing file e.g. `/avatar.png` | `public/` asset referenced but absent | Add the asset (e.g. `public/avatar.png`) |
 | `RolldownError: Invalid end tag` / `SyntaxError: Invalid end tag` at `pages/X.vue:NNN` | Orphan closing tag (`</DPageLayout>`, extra `</div>`) left after template edits | Remove the orphan; run the template checker (below) across ALL `.vue` files — these bugs cluster |
 | Nuxt build completes (`Build complete in Xs`) but deployment stays `BUILDING` forever; log says `process is still running: 1 timer` | A module-level `setInterval`/handle in `server/**` keeps the Node process alive during the Nitro build | Find the module-level timer (see below), add `.unref?.()` or lazy-init. Fixed instance: `server/utils/rate-limiter.ts` |
+| `ERROR` at `patchBuild`: `invalid_routes — should NOT have fewer than 1 properties` | Nitro writes `"headers": {}` verbatim into `.vercel/output/config.json` for routeRules with empty headers (e.g. `'/**': { headers: {} }`); Vercel rejects empty header objects (nitrojs/nitro#4963) | Remove the dead/empty routeRule — real headers belong in `server/middleware/`. Verify locally: `NITRO_PRESET=vercel npm run build` then scan `.vercel/output/config.json` for routes with empty `headers` |
+| Deployment stuck `QUEUED` for a long time | A previous deployment is hung in `BUILDING` holding the single build slot | `get_deployment` on the BUILDING one; if its build completed but state won't flip, `cancel_deployment` it — the queue drains immediately |
 
 ### Hunting the build-hang timer
 
