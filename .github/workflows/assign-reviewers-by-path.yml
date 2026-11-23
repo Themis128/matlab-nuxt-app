@@ -3,6 +3,10 @@ on:
   pull_request:
     types: [opened, reopened, synchronize]
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   assign:
     runs-on: ubuntu-latest
@@ -44,7 +48,8 @@ jobs:
               }
             });
 
-            const reviewers = Array.from(requested);
+            const prAuthor = context.payload.pull_request.user.login;
+            const reviewers = Array.from(requested).filter(r => r !== prAuthor);
             if (reviewers.length > 0) {
               await github.rest.pulls.requestReviewers({ owner: context.repo.owner, repo: context.repo.repo, pull_number: prNumber, reviewers });
             }

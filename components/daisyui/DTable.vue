@@ -40,7 +40,7 @@
                 :name="`cell-${column.key || column.field}`"
                 :row="row"
                 :column="column"
-                :value="row[column.field || column.key]"
+                :value="row[(column.field || column.key) ?? '']"
               >
                 {{ formatCellValue(row, column) }}
               </slot>
