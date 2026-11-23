@@ -21,12 +21,14 @@ export default defineEventHandler(async (event: any): Promise<AlgoliaSearchRespo
   const apiKey = config.ALGOLIA_ADMIN_API_KEY || process.env.ALGOLIA_ADMIN_API_KEY;
   const indexName = config.ALGOLIA_INDEX || process.env.ALGOLIA_INDEX || 'phones_index';
 
-  // Validate credentials are present and properly formatted
+  // Validate credentials are present and properly formatted.
+  // 503 (not 500): missing config is a service-availability state, not a
+  // server fault — lets clients/backoff distinguish it from real errors.
   if (!appId || !apiKey) {
     console.error('[Algolia Search] Missing credentials');
     throw createError({
-      statusCode: 500,
-      statusMessage: 'Algolia credentials not configured on server',
+      statusCode: 503,
+      statusMessage: 'Search is not configured on this deployment',
     });
   }
 
