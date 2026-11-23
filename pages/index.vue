@@ -75,7 +75,13 @@
                 </div>
                 <div class="text-right">
                   <div class="mb-1">Data quality: {{ qualityScore }}%</div>
-                  <div class="text-base-content/60 text-xs">Latency: {{ apiLatency }}ms</div>
+                  <div class="text-base-content/60 text-xs">
+                    Latency:
+                    <ClientOnly>
+                      {{ apiLatency }}ms
+                      <template #fallback>—ms</template>
+                    </ClientOnly>
+                  </div>
                 </div>
               </div>
             </div>
