@@ -20,7 +20,8 @@ export default defineEventHandler(async (event: any) => {
 
     // Transform field names from camelCase to snake_case for Python API
     const transformedBody = {
-      model_type: body.modelType,
+      // Clients send snake_case (model_type); legacy callers may send modelType
+      model_type: body.modelType ?? body.model_type,
       currency: body.currency,
       ram: body.ram,
       battery: body.battery,
