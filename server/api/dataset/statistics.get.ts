@@ -1,4 +1,4 @@
-import { readFileSync } from 'fs';
+import { readDatasetFile } from '../../utils/dataset-files';
 import { join } from 'path';
 
 interface DatasetStatistics {
@@ -23,8 +23,11 @@ export default defineEventHandler(async (): Promise<DatasetStatistics> => {
     const projectRoot = process.cwd();
     const csvPath = join(projectRoot, 'data', 'Mobiles Dataset (2025).csv');
 
-    // Read CSV file
-    const csvContent = readFileSync(csvPath, 'utf-8');
+    // Read CSV file (filesystem or bundled server asset)
+    const csvContent = await readDatasetFile([csvPath]);
+    if (!csvContent) {
+      throw new Error('Dataset file not found');
+    }
     const lines = csvContent.split('\n').filter((line) => line.trim());
 
     if (lines.length < 2) {

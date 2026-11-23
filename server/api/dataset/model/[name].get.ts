@@ -1,7 +1,8 @@
-import { readFileSync, existsSync } from 'fs';
+import { existsSync } from 'fs';
 import { join } from 'path';
 import { getRouterParam, createError, defineEventHandler } from 'h3';
 import type { H3Event } from 'h3';
+import { readDatasetFile } from '../../../utils/dataset-files';
 
 interface PhoneModel {
   modelName: string;
@@ -42,16 +43,7 @@ export default defineEventHandler(async (event: H3Event): Promise<PhoneModel | n
       join(projectRoot, 'mobiles-dataset-docs', 'preprocessed', 'preprocessed_data.csv'),
     ];
 
-    let datasetContent: string | null = null;
-
-    for (const path of datasetPaths) {
-      try {
-        datasetContent = readFileSync(path, 'utf-8');
-        break;
-      } catch {
-        continue;
-      }
-    }
+    const datasetContent = await readDatasetFile(datasetPaths);
 
     if (!datasetContent) {
       throw createError({

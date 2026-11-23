@@ -49,6 +49,13 @@ export default defineNuxtConfig({
     },
     // Database configuration
     // Supports both SQLite (development) and PostgreSQL (production)
+    // Server assets: bundle dataset CSVs/JSON into the serverless function.
+    // Vercel's file tracer can't follow the dynamic candidate-path loops in
+    // server/api/dataset/*, so these are read via useStorage('assets:...').
+    serverAssets: [
+      { baseName: 'data', dir: './data' },
+      { baseName: 'public-files', dir: './public', pattern: 'dataset_with_images.csv' },
+    ],
     database: {
       default: {
         // Use 'better-sqlite3' explicitly for Node.js < 22.5

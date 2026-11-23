@@ -1,4 +1,4 @@
-import { readFileSync, existsSync } from 'fs';
+import { readDatasetFile, datasetFileAvailable } from '../../utils/dataset-files';
 import { join } from 'path';
 
 interface PreprocessingStatus {
@@ -29,15 +29,15 @@ export default defineEventHandler(async (): Promise<PreprocessingStatus> => {
   const paths = {
     cleaned: join(projectRoot, 'data', 'Mobiles_Dataset_Final.csv'),
     original: join(projectRoot, 'data', 'Mobiles Dataset (2025).csv'),
-    summary: join(projectRoot, 'data', 'Mobiles_Dataset_Final_fixes_report.json'),
+    summary: join(projectRoot, 'data', 'Mobiles_Dataset_Cleaned_summary.json'),
     report: join(projectRoot, 'data', 'preprocessing_report.json'),
   };
 
   const status: PreprocessingStatus = {
-    cleanedDatasetExists: existsSync(paths.cleaned),
-    originalDatasetExists: existsSync(paths.original),
-    summaryReportExists: existsSync(paths.summary),
-    preprocessingReportExists: existsSync(paths.report),
+    cleanedDatasetExists: await datasetFileAvailable(paths.cleaned),
+    originalDatasetExists: await datasetFileAvailable(paths.original),
+    summaryReportExists: await datasetFileAvailable(paths.summary),
+    preprocessingReportExists: await datasetFileAvailable(paths.report),
     cleanedDataset: {
       path: null,
       rows: 0,
@@ -57,7 +57,8 @@ export default defineEventHandler(async (): Promise<PreprocessingStatus> => {
   // Load summary if available
   if (status.summaryReportExists) {
     try {
-      const summaryContent = readFileSync(paths.summary, 'utf-8');
+      const summaryContent = await readDatasetFile([paths.summary]);
+      if (!summaryContent) throw new Error('summary unreadable');
       const summary = JSON.parse(summaryContent);
 
       status.cleanedDataset = {
