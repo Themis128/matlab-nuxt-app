@@ -323,14 +323,11 @@ export default defineNuxtConfig({
         'Cache-Control': 's-maxage=60',
       },
     },
-    // Security headers for all routes (handled by middleware, but reinforced here)
-    '/**': {
-      headers: {
-        // Security headers are primarily set by server/middleware/security-headers.ts
-        // These can be customized per route if needed
-        // Middleware handles: CSP, X-Frame-Options, X-Content-Type-Options, etc.
-      },
-    },
+    // Security headers for all routes are set by
+    // server/middleware/security-headers.ts — do NOT add an empty
+    // `headers: {}` routeRule here: nitro emits it verbatim into
+    // .vercel/output/config.json and Vercel rejects empty header maps
+    // (invalid_routes: "should NOT have fewer than 1 properties").
   },
 
   // Color Mode Configuration (for better theme management)
