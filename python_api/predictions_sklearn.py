@@ -12,7 +12,11 @@ from typing import Optional
 
 import numpy as np
 
-from .pickle_security import safe_load_pickle, validate_pickle_path, validate_pickle_file
+try:
+    from .pickle_security import safe_load_pickle, validate_pickle_path, validate_pickle_file
+except ImportError:
+    # Top-level script mode (uvicorn api:app) — no package context
+    from pickle_security import safe_load_pickle, validate_pickle_path, validate_pickle_file
 
 logger = logging.getLogger(__name__)
 
