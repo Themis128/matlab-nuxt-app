@@ -18,6 +18,19 @@ except ImportError:
     # Top-level script mode (uvicorn api:app) — no package context
     from pickle_security import safe_load_pickle
 
+try:
+    from .predictions_sklearn import (
+        predict_battery as sklearn_predict_battery,
+        predict_price as sklearn_predict_price,
+        predict_ram as sklearn_predict_ram,
+    )
+except ImportError:
+    from predictions_sklearn import (
+        predict_battery as sklearn_predict_battery,
+        predict_price as sklearn_predict_price,
+        predict_ram as sklearn_predict_ram,
+    )
+
 logger = logging.getLogger(__name__)
 
 router = APIRouter()
@@ -329,6 +342,51 @@ def get_mock_prediction(request: AdvancedPredictionRequest):
 @router.post("/api/advanced/predict", response_model=AdvancedPredictionResponse)
 async def advanced_predict(request: AdvancedPredictionRequest):
     """Advanced price prediction using specified model type"""
+    # sklearn_* types: delegate to predictions_sklearn, which loads the
+    # packaged {model, scaler, metadata} pkls correctly. The generic advanced
+    # loader cannot unwrap those packages and create_features_advanced does
+    # not reproduce the training feature pipeline (wrong width/encodings),
+    # so every call silently fell back to a mock prediction.
+    if request.model_type in ("sklearn_price", "sklearn_ram", "sklearn_battery"):
+        try:
+            year = int(request.year)
+            if request.model_type == "sklearn_price":
+                value = sklearn_predict_price(
+                    request.ram, request.battery, request.screen, request.weight, year,
+                    request.company, request.front_camera, request.back_camera,
+                    request.processor, request.storage,
+                )
+            else:
+                # RAM/battery models take price as an input feature — derive it
+                # from the price model so the pipeline stays real end-to-end.
+                price = sklearn_predict_price(
+                    request.ram, request.battery, request.screen, request.weight, year,
+                    request.company, request.front_camera, request.back_camera,
+                    request.processor, request.storage,
+                )
+                if request.model_type == "sklearn_ram":
+                    value = sklearn_predict_ram(
+                        request.battery, request.screen, request.weight, year, price,
+                        request.company, request.front_camera, request.back_camera,
+                        request.processor, request.storage,
+                    )
+                else:
+                    value = sklearn_predict_battery(
+                        request.ram, request.screen, request.weight, year, price,
+                        request.company, request.front_camera, request.back_camera,
+                        request.processor, request.storage,
+                    )
+            return AdvancedPredictionResponse(
+                price=round(max(50.0, float(value)), 2),
+                model_used=request.model_type,
+                accuracy_info=None,
+                currency=request.currency,
+                currency_symbol=CURRENCY_SYMBOLS.get(request.currency, "$"),
+            )
+        except Exception as e:
+            logger.warning(f"sklearn delegation failed for {request.model_type}: {e}")
+            return get_mock_prediction(request)
+
     try:
         # Load the requested model
         model = load_advanced_model(request.model_type)
