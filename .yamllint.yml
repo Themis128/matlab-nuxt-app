@@ -47,10 +47,6 @@ rules:
     max-spaces-after: 1
     max-spaces-before: 0
 
-  # Allow dashes in sequences
-  dashes:
-    max-spaces-after: 1
-
   # Allow document start markers
   document-start:
     present: false

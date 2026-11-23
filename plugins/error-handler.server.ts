@@ -5,7 +5,9 @@
  * capture errors and send them to Sentry.
  */
 
-export default defineNuxtPlugin({
+import type { ObjectPlugin } from 'nuxt/app';
+
+const errorHandlerServerPlugin: ObjectPlugin = defineNuxtPlugin({
   name: 'error-handler-server',
   setup(nuxtApp: any) {
     // Handle Nitro errors
@@ -41,3 +43,5 @@ export default defineNuxtPlugin({
     });
   },
 });
+
+export default errorHandlerServerPlugin;

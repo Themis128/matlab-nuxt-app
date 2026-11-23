@@ -2,7 +2,9 @@
  * Nuxt 4 plugin for analytics integration
  * Supports Google Analytics, Plausible, and custom analytics
  */
-export default defineNuxtPlugin((nuxtApp: any) => {
+import type { Plugin } from 'nuxt/app';
+
+const analyticsPlugin: Plugin = defineNuxtPlugin((nuxtApp: any): void => {
   if (typeof window === 'undefined') return;
 
   const config = useRuntimeConfig();
@@ -58,6 +60,8 @@ export default defineNuxtPlugin((nuxtApp: any) => {
     analytics.trackPageView(route.path, route.meta.title as string);
   });
 });
+
+export default analyticsPlugin;
 
 // Extend Window interface
 declare global {

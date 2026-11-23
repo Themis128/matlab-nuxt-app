@@ -401,7 +401,6 @@
       </div>
     </section>
   </div>
-  </DPageLayout>
 </template>
 
 <script setup lang="ts">
