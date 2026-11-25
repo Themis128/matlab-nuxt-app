@@ -178,7 +178,8 @@
       "glob": "10.1.0"
     },
     "micromatch": "4.0.8",
-    "tar-fs": "2.1.4"
+    "tar-fs": "2.1.4",
+    "picomatch": ">=4.0.4"
   },
   "keywords": [
     "matlab",
