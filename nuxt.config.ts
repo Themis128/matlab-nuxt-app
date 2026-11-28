@@ -186,6 +186,17 @@ export default defineNuxtConfig({
         },
         // Theme color
         { name: 'theme-color', content: '#00DC82' },
+        // Declares light/dark support so native UI adapts; kept in sync with
+        // the stored 'ui-theme' override by the inline script below
+        { name: 'color-scheme', content: 'light dark' },
+      ],
+      script: [
+        {
+          // Apply the stored theme override to <meta name="color-scheme">
+          // before first paint to avoid a flash of the wrong scheme.
+          innerHTML:
+            "try{var t=localStorage.getItem('ui-theme');var m=document.querySelector('meta[name=\"color-scheme\"]');if(m){m.content=(t==='dark'||t==='light')?t:'light dark';}}catch(e){}",
+        },
       ],
       link: [
         // Canonical URL (will be set dynamically per page)

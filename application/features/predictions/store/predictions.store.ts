@@ -138,14 +138,10 @@ export const usePredictionsStore = defineStore('predictions', {
     },
 
     modelCategories: (state) => {
-      const categories: Record<string, AdvancedModel[]> = {};
-      state.availableModels.forEach((model) => {
-        if (!categories[model.category]) {
-          categories[model.category] = [];
-        }
-        categories[model.category]!.push(model);
-      });
-      return categories;
+      return Object.groupBy(state.availableModels, (model) => model.category) as Record<
+        string,
+        AdvancedModel[]
+      >;
     },
 
     currentModel: (state) => {

@@ -92,7 +92,8 @@ function validateEnv() {
       // In production, throw error to prevent startup with invalid config
       if (process.env.NODE_ENV === 'production') {
         throw new Error(
-          `Invalid environment configuration. Please check the following variables: ${missingVars.map((e) => e.path).join(', ')}`
+          `Invalid environment configuration. Please check the following variables: ${missingVars.map((e) => e.path).join(', ')}`,
+          { cause: error }
         );
       }
 

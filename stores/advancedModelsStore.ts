@@ -63,14 +63,10 @@ export const useAdvancedModelsStore = defineStore('advancedModels', {
      * Group models by category
      */
     modelCategories: (state) => {
-      const categories: Record<string, AdvancedModel[]> = {};
-      state.availableModels.forEach((model) => {
-        if (!categories[model.category]) {
-          categories[model.category] = [];
-        }
-        categories[model.category]!.push(model);
-      });
-      return categories;
+      return Object.groupBy(state.availableModels, (model) => model.category) as Record<
+        string,
+        AdvancedModel[]
+      >;
     },
 
     /**

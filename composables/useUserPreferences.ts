@@ -99,6 +99,16 @@ export function useUserPreferences() {
 
     // Trigger theme change event for other components
     root.setAttribute('data-theme', theme);
+
+    // Keep <meta name="color-scheme"> in sync so CSS color-scheme follows the
+    // applied theme; 'light dark' means "follow the system".
+    let colorSchemeMeta = document.querySelector<HTMLMetaElement>('meta[name="color-scheme"]');
+    if (!colorSchemeMeta) {
+      colorSchemeMeta = document.createElement('meta');
+      colorSchemeMeta.setAttribute('name', 'color-scheme');
+      document.head.appendChild(colorSchemeMeta);
+    }
+    colorSchemeMeta.setAttribute('content', theme === 'system' ? 'light dark' : theme);
   };
 
   // Apply animation preference

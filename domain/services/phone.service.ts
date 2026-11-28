@@ -110,7 +110,7 @@ export class PhoneService {
     sortBy: 'price' | 'ram' | 'battery' | 'value',
     order: 'asc' | 'desc' = 'asc'
   ): Phone[] {
-    const sorted = [...phones].sort((a, b) => {
+    const sorted = phones.toSorted((a, b) => {
       let comparison = 0;
 
       switch (sortBy) {

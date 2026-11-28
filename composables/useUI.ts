@@ -137,6 +137,16 @@ export function useUI() {
           root.classList.remove('dark');
         }
       }
+
+      // Reflect the override in <meta name="color-scheme"> so CSS color-scheme
+      // (and native UI) follows it; 'light dark' means "follow the system".
+      let colorSchemeMeta = document.querySelector<HTMLMetaElement>('meta[name="color-scheme"]');
+      if (!colorSchemeMeta) {
+        colorSchemeMeta = document.createElement('meta');
+        colorSchemeMeta.setAttribute('name', 'color-scheme');
+        document.head.appendChild(colorSchemeMeta);
+      }
+      colorSchemeMeta.setAttribute('content', newTheme === 'system' ? 'light dark' : newTheme);
     }
   };
 

@@ -103,7 +103,7 @@ export const useChartData = () => {
   };
 
   const formatTimeSeries = (data: any[], dateKey: string = 'date', valueKey: string = 'value') => {
-    const sorted = [...data].sort((a, b) => {
+    const sorted = data.toSorted((a, b) => {
       const dateA = new Date(a[dateKey]).getTime();
       const dateB = new Date(b[dateKey]).getTime();
       return dateA - dateB;
