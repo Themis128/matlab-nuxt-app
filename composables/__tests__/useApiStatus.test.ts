@@ -78,10 +78,7 @@ describe('useApiStatus', () => {
   });
 
   it('should set isChecking during health check', async () => {
-    let resolveFetch: (value: any) => void;
-    const fetchPromise = new Promise((resolve) => {
-      resolveFetch = resolve;
-    });
+    const { promise: fetchPromise, resolve: resolveFetch } = Promise.withResolvers<any>();
     mockFetch.mockReturnValue(fetchPromise);
 
     const { useApiStatus } = await import('../useApiStatus');

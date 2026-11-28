@@ -14,11 +14,11 @@ Object.defineProperty(global, 'import', {
 describe('useAccessibility', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    document.body.innerHTML = '';
+    document.body.replaceChildren();
   });
 
   afterEach(() => {
-    document.body.innerHTML = '';
+    document.body.replaceChildren();
   });
 
   it('should return accessibility methods', () => {

@@ -558,6 +558,17 @@ test.describe('Full App Coverage - Theme & UI', () => {
             document.documentElement.classList.remove('dark');
           }
 
+          // Keep <meta name="color-scheme"> in sync with the applied theme
+          let colorSchemeMeta = document.querySelector<HTMLMetaElement>(
+            'meta[name="color-scheme"]'
+          );
+          if (!colorSchemeMeta) {
+            colorSchemeMeta = document.createElement('meta');
+            colorSchemeMeta.setAttribute('name', 'color-scheme');
+            document.head.appendChild(colorSchemeMeta);
+          }
+          colorSchemeMeta.setAttribute('content', newIsDark ? 'dark' : 'light');
+
           // Also try calling the exposed function if available
           if ((window as any).__toggleTheme) {
             (window as any).__toggleTheme();
